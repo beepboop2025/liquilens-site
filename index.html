@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LiquiLens — Treasury &amp; Liquidity Software for Indian NBFCs &amp; Businesses</title>
 <meta name="description" content="LiquiLens is treasury and liquidity management software for Indian NBFCs, banks and businesses. Cash-flow forecasting, Liquidity-at-Risk, LCR and NSFR credit scoring, and RBI-aligned early warning, plus money-market access so idle cash earns overnight." />
-<!-- Google Search Console: create a URL-prefix property for https://liquilens.in/ and paste the token below, then uncomment. (DNS TXT domain-property is the more robust alternative; see setup notes.) -->
-<!-- <meta name="google-site-verification" content="PASTE_TOKEN_HERE" /> -->
+<!-- Google Search Console verified via the HTML-file method (2147d016bbe54619a8c528de85a1fd80.txt at site root). -->
+
 <link rel="canonical" href="https://liquilens.in/" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <meta name="theme-color" content="#0A0F1C" />
@@ -111,7 +111,10 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<!-- Load fonts without blocking first paint: fetch as print (non-blocking), then swap to all on load. Full-CSS <noscript> fallback for JS-off. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" /></noscript>
 <style>
   :root{
     --ink:#0A0F1C; --ink-2:#0E1424; --ink-3:#131B2E;
@@ -328,7 +331,7 @@
       LiquiLens <small>the liquidity network</small>
     </a>
     <span class="nav-right">
-      <a class="nav-link" href="https://demo.liquilens.in" target="_blank" rel="noopener">Live demo →</a>
+      <a class="nav-link" href="https://demo.liquilens.in" target="_blank" rel="noopener">Request demo access →</a>
       <a class="nav-cta" href="#contact">Start a conversation</a>
     </span>
   </nav>
@@ -342,7 +345,7 @@
       <h1>Idle cash should <em>never sleep.</em></h1>
       <p class="lede">The money market is the safest and most liquid corner of finance. It is also the most closed. <b>LiquiLens opens it,</b> so the cash a business already holds can work through the night, the way a bank's always has.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="https://demo.liquilens.in" target="_blank" rel="noopener">Walk the live demo →</a>
+        <a class="btn btn-primary" href="https://demo.liquilens.in" target="_blank" rel="noopener">Request demo access →</a>
         <a class="btn btn-ghost" href="#contact">Start a conversation</a>
       </div>
       <p style="margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Live in production · five validated signals · replayed on the 2018 to 2021 crisis record</p>
@@ -572,7 +575,7 @@
       </details>
       <details>
         <summary>Is LiquiLens live? How do I get access?</summary>
-        <p>Yes. The platform runs in production and the walkthrough is public: <b><a href="https://demo.liquilens.in" target="_blank" rel="noopener">demo.liquilens.in</a></b>, on synthetic data, no signup. Pilot tenants run isolated on the same infrastructure. If you run treasury at a business or risk at a lender, <b>email the founder or connect on LinkedIn below.</b> Design partners shape what gets built next.</p>
+        <p>Yes. The platform runs in production. The live walkthrough at <b><a href="https://demo.liquilens.in" target="_blank" rel="noopener">demo.liquilens.in</a></b> runs on synthetic data and is open by invitation while we work with early design partners: request an access code there and we open it for you. Pilot tenants run isolated on the same infrastructure. If you run treasury at a business or risk at a lender, <b>email the founder or connect on LinkedIn below.</b> Design partners shape what gets built next.</p>
       </details>
       <details>
         <summary>Has any of this been tested on real data?</summary>
@@ -591,7 +594,7 @@
     {"@type": "Question", "name": "Why does the money market matter for an ordinary business?", "acceptedAnswer": {"@type": "Answer", "text": "The money market is where banks and large corporates park cash overnight. It is the deepest, safest pool in Indian finance and has effectively been closed to smaller players. LiquiLens opens that access so a mid-size company's cash can work overnight the way a bank's does."}},
     {"@type": "Question", "name": "What is the RBI LCR change?", "acceptedAnswer": {"@type": "Answer", "text": "Under the RBI's Liquidity Risk Management Framework for NBFCs (November 2019), Liquidity Coverage Ratio requirements apply to non deposit taking NBFCs as balance sheets cross 5,000 crore rupees, requiring sufficient High Quality Liquid Assets to survive a 30 day acute liquidity stress scenario. The LiquiLens calculator estimates the month a lender's growth curve crosses that line."}},
     {"@type": "Question", "name": "How big is the gap LiquiLens is built for?", "acceptedAnswer": {"@type": "Answer", "text": "India's MSME credit gap was estimated at about 25 lakh crore rupees as of March 2025, with only 14% of MSMEs holding formal credit (Deloitte, 2025). MSMEs contribute roughly 30% of India's GDP and about 45% of exports (Ministry of MSME, 2024). RBI directions prohibit banks from paying interest on current accounts, so idle working capital earns zero."}},
-    {"@type": "Question", "name": "Is LiquiLens live and how do I get access?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. LiquiLens runs in production with a public walkthrough at demo.liquilens.in on synthetic data, no signup required. Pilot tenants run isolated on the same infrastructure. Treasury and risk leaders can request access by contacting the founder through liquilens.in."}},
+    {"@type": "Question", "name": "Is LiquiLens live and how do I get access?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. LiquiLens runs in production. The live walkthrough at demo.liquilens.in runs on synthetic data and is open by invitation while we work with early design partners; request an access code there to be let in. Pilot tenants run isolated on the same infrastructure. Treasury and risk leaders can also request access by contacting the founder through liquilens.in."}},
     {"@type": "Question", "name": "Has LiquiLens been tested on real data?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, on the public record. The early warning method was replayed on the 2018 to 2021 Indian NBFC and bank crisis using sourced rating timelines: 7 of 8 defaults flagged early at a median of 6.5 months, DHFL at 8 months and Altico at 11 months before first missed payment. Rules were frozen before scoring. It is a case study on public data; lender specific numbers come from a backtest on the lender's own book."}}
   ]
 }
