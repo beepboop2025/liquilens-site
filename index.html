@@ -106,7 +106,7 @@
       "isPartOf": { "@id": "https://liquilens.in/#site" },
       "about": { "@id": "https://liquilens.in/#org" },
       "datePublished": "2026-07-02",
-      "dateModified": "2026-07-12"
+      "dateModified": "2026-07-13"
     }
   ]
 }
@@ -121,13 +121,16 @@
   :root{
     --ink:#0A0F1C; --ink-2:#0E1424; --ink-3:#131B2E;
     --line:#1E2740; --line-2:#283354;
-    --gold:#E3B778; --gold-deep:#C8954E;
-    --teal:#5BD0C4;
+    --gold:#E3B778; --gold-deep:#C8954E; --gold-dim:rgba(227,183,120,.14);
+    --teal:#5BD0C4; --red:#E07070;
+    --sei:#9184d9; --sei-bright:#d2cefd; --sei-deep:#423a6a;
+    --calm:#79c2ad; --erosion:#d3ab6e; --strain:#d99274; --stress:#dd7a72;
     --text:#E9EBF2; --muted:#8B94AB; --muted-2:#5C657E;
     --serif:'Fraunces',Georgia,serif;
     --sans:'Inter',system-ui,sans-serif;
     --mono:'IBM Plex Mono',ui-monospace,monospace;
     --maxw:1120px;
+    --rule:linear-gradient(to right,transparent,var(--line) 64px,var(--line) calc(100% - 64px),transparent);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -138,6 +141,7 @@
     overflow-x:hidden;
   }
   a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
 
   /* ---------- ticker ---------- */
@@ -149,6 +153,7 @@
     color:var(--muted); position:sticky; top:0; z-index:50;
   }
   .ticker__track{display:inline-block;padding:11px 0;animation:scroll 38s linear infinite}
+  .ticker:hover .ticker__track{animation-play-state:paused}
   .ticker__track span{padding:0 26px}
   .ticker .up{color:var(--teal)}
   .ticker .tag{color:var(--gold)}
@@ -168,16 +173,17 @@
   .nav-right{display:flex;align-items:center;gap:22px}
   .nav-link{font-family:var(--mono);font-size:13px;color:var(--muted);transition:.2s}
   .nav-link:hover{color:var(--gold)}
+  .nav-link .sei-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--sei);margin-right:7px;vertical-align:1px}
 
   /* ---------- eyebrow ---------- */
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:9px}
   .eyebrow::before{content:"";width:22px;height:1px;background:var(--gold-deep)}
 
   /* ---------- hero ---------- */
-  .hero{padding:78px 0 96px;position:relative}
-  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+  .hero{padding:74px 0 96px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:52px;align-items:center}
   h1{
-    font-family:var(--serif);font-weight:500;font-size:clamp(44px,6.4vw,78px);
+    font-family:var(--serif);font-weight:500;font-size:clamp(44px,6.2vw,74px);
     line-height:1.02;letter-spacing:-.02em;margin:26px 0 24px;
   }
   h1 em{font-style:italic;color:var(--gold);font-weight:400}
@@ -200,15 +206,28 @@
   .dot{width:9px;height:9px;border-radius:50%}
   .dot.r{background:#E05A5A}.dot.y{background:var(--gold)}.dot.g{background:var(--teal)}
   .terminal__bar span{margin-left:auto;text-transform:uppercase}
-  .terminal__body{padding:22px 20px;font-family:var(--mono);font-size:14px}
-  .row{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px dashed var(--line)}
-  .row:last-of-type{border-bottom:none}
-  .row .k{color:var(--muted)}
-  .row .v{font-size:19px}
-  .v.work{color:var(--teal)}
-  .v.sleep{color:#E07070}
-  .terminal__foot{padding:16px 20px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12.5px;color:var(--muted);line-height:1.7}
+  .terminal__foot{padding:14px 18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.7}
   .terminal__foot b{color:var(--gold);font-weight:500}
+
+  /* the hero chart: the engine saw it first */
+  .lead-chart{display:block;width:100%;height:auto}
+  .lead-chart .grid-line{stroke:var(--line);stroke-width:1;stroke-dasharray:2 5}
+  .lead-chart .risk-line{stroke:var(--gold);stroke-width:2;fill:none;stroke-linecap:round}
+  .lead-chart .risk-fill{fill:url(#goldfade);opacity:0}
+  .lead-chart .flag-line{stroke:var(--gold);stroke-width:1.5}
+  .lead-chart .rec-line{stroke:var(--red);stroke-width:1.5}
+  .lead-chart .lbl{font-family:var(--mono);font-size:10.5px;fill:var(--muted)}
+  .lead-chart .lbl.gold{fill:var(--gold)}
+  .lead-chart .lbl.red{fill:var(--red)}
+  .lead-chart .lead-brace{stroke:var(--muted-2);stroke-width:1}
+  .lead-chart .lead-count{font-family:var(--mono);font-size:12.5px;fill:var(--text);font-weight:500}
+  .duel{display:flex;gap:0;border-top:1px solid var(--line)}
+  .duel > div{flex:1;padding:13px 18px;font-family:var(--mono);font-size:12px}
+  .duel > div + div{border-left:1px dashed var(--line)}
+  .duel .k{color:var(--muted-2);letter-spacing:.06em;text-transform:uppercase;font-size:10px;display:block;margin-bottom:3px}
+  .duel .v{font-size:16px}
+  .duel .v.work{color:var(--teal)}
+  .duel .v.sleep{color:var(--red)}
 
   /* ---------- LCR countdown tool ---------- */
   .lcr-tool{margin-top:34px;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line-2);border-radius:14px;padding:28px 26px;max-width:720px}
@@ -226,7 +245,7 @@
   .lcr-fine{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);margin-top:20px;line-height:1.7;letter-spacing:.02em}
 
   /* ---------- generic section ---------- */
-  .band{padding:92px 0;border-top:1px solid var(--line)}
+  .band{padding:92px 0;background:var(--rule) no-repeat top / 100% 1px}
   .band h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,3.9vw,46px);line-height:1.08;letter-spacing:-.02em;margin:22px 0 0;max-width:16em}
   .band h2 em{font-style:italic;color:var(--gold);font-weight:400}
   .band .body{font-size:17.5px;color:var(--muted);max-width:40em;margin-top:22px;line-height:1.66}
@@ -234,8 +253,10 @@
 
   /* engines */
   .engines{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:46px}
-  .engine{background:var(--ink-2);padding:26px 24px;transition:.2s}
+  .engine{background:var(--ink-2);padding:26px 24px;transition:.25s;position:relative}
+  .engine::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gold);opacity:0;transition:.25s}
   .engine:hover{background:var(--ink-3)}
+  .engine:hover::after{opacity:.8}
   .engine .no{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.08em}
   .engine h3{font-family:var(--sans);font-weight:600;font-size:17px;margin:13px 0 8px;letter-spacing:-.01em}
   .engine p{font-size:14.5px;color:var(--muted);line-height:1.55}
@@ -245,12 +266,25 @@
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:46px}
   .stat{background:var(--ink-2);padding:26px 24px;transition:.2s}
   .stat:hover{background:var(--ink-3)}
-  .stat .num{font-family:var(--serif);font-weight:500;font-size:clamp(26px,2.6vw,34px);color:var(--gold);letter-spacing:-.01em;line-height:1.1}
+  .stat .num{font-family:var(--serif);font-weight:500;font-size:clamp(26px,2.6vw,34px);color:var(--gold);letter-spacing:-.01em;line-height:1.1;font-variant-numeric:tabular-nums}
   .stat p{font-size:14px;color:var(--muted);line-height:1.55;margin-top:10px}
   .stat .src{display:block;font-family:var(--mono);font-size:11.5px;color:var(--muted-2);margin-top:14px;letter-spacing:.03em;line-height:1.6}
   .stat .src a{color:var(--muted-2);border-bottom:1px dotted var(--line-2);transition:.2s}
   .stat .src a:hover{color:var(--gold);border-color:var(--gold)}
   .stats-note{font-family:var(--mono);font-size:12.5px;color:var(--muted-2);margin-top:20px;line-height:1.7;letter-spacing:.02em;max-width:52em}
+
+  /* lead-time bars */
+  .leads{margin-top:46px;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:30px 28px}
+  .leads h3{font-family:var(--sans);font-weight:600;font-size:16px;letter-spacing:-.01em}
+  .leads .leads-sub{font-family:var(--mono);font-size:12px;color:var(--muted-2);margin-top:6px;letter-spacing:.03em}
+  .leadrow{display:grid;grid-template-columns:110px 1fr 84px;align-items:center;gap:16px;margin-top:22px}
+  .leadrow .who{font-family:var(--mono);font-size:13px;color:var(--muted)}
+  .leadrow .lane{position:relative;height:26px;background:var(--ink);border-radius:6px;overflow:visible}
+  .leadrow .bar{position:absolute;left:0;top:4px;bottom:4px;width:0;border-radius:4px;background:linear-gradient(90deg,var(--gold-deep),var(--gold));transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+  .leadrow .months{font-family:var(--mono);font-size:13px;color:var(--gold);text-align:right;font-variant-numeric:tabular-nums}
+  .leads .median{position:relative;margin-top:26px;padding-top:18px;border-top:1px dashed var(--line)}
+  .leads .median p{font-family:var(--mono);font-size:12px;color:var(--muted-2);line-height:1.7;letter-spacing:.02em}
+  .leads .median b{color:var(--muted)}
 
   /* regulator quote */
   .reg-quote{margin-top:36px;max-width:44em;border-left:2px solid var(--gold-deep);padding:8px 0 8px 24px}
@@ -266,6 +300,38 @@
   .card h3{font-family:var(--serif);font-weight:500;font-size:25px;margin:14px 0 12px;letter-spacing:-.01em}
   .card p{color:var(--muted);font-size:16px;line-height:1.62}
 
+  /* ---------- the desk: LiquiLens x Seiche ---------- */
+  .desk{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:46px}
+  .inst{border-radius:14px;padding:32px 30px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+  .inst--ll{background:var(--ink-2);border:1px solid var(--line-2)}
+  .inst--sei{background:#14162a;border:1px solid var(--sei-deep)}
+  .inst .role{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+  .inst--ll .role{color:var(--gold)}
+  .inst--sei .role{color:var(--sei)}
+  .inst h3{font-family:var(--serif);font-weight:500;font-size:26px;margin:14px 0 10px;letter-spacing:-.01em}
+  .inst > p{color:var(--muted);font-size:15.5px;line-height:1.62}
+  .inst .inst-links{display:flex;gap:16px;flex-wrap:wrap;margin-top:auto;padding-top:24px}
+  .inst .inst-links a{font-family:var(--mono);font-size:13px;border-bottom:1px solid transparent;transition:.2s}
+  .inst--ll .inst-links a{color:var(--gold)}
+  .inst--ll .inst-links a:hover{border-color:var(--gold)}
+  .inst--sei .inst-links a{color:var(--sei-bright)}
+  .inst--sei .inst-links a:hover{border-color:var(--sei)}
+  .sei-live{margin:20px 0 4px;border:1px solid var(--sei-deep);border-radius:11px;padding:18px;background:rgba(145,132,217,.05)}
+  .sei-live__head{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2)}
+  .sei-live__head .pulse{width:8px;height:8px;border-radius:50%;background:var(--sei);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .sei-live__main{display:flex;align-items:baseline;gap:14px;margin-top:12px;flex-wrap:wrap}
+  .sei-live__val{font-family:var(--serif);font-weight:500;font-size:44px;line-height:1;color:var(--text);font-variant-numeric:tabular-nums}
+  .sei-regime{font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:4px 11px;border-radius:999px;border:1px solid}
+  .sei-regime.CALM{color:var(--calm);border-color:var(--calm);background:rgba(121,194,173,.08)}
+  .sei-regime.EROSION{color:var(--erosion);border-color:var(--erosion);background:rgba(211,171,110,.08)}
+  .sei-regime.STRAIN{color:var(--strain);border-color:var(--strain);background:rgba(217,146,116,.08)}
+  .sei-regime.STRESS{color:var(--stress);border-color:var(--stress);background:rgba(221,122,114,.1)}
+  .sei-live__line{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.7}
+  .sei-live__proof{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);margin-top:12px;line-height:1.7;letter-spacing:.02em;border-top:1px dashed var(--sei-deep);padding-top:12px}
+  .sei-live__proof b{color:var(--muted);font-weight:500}
+  .desk-note{font-family:var(--mono);font-size:12.5px;color:var(--muted-2);margin-top:20px;line-height:1.7;letter-spacing:.02em;max-width:52em}
+
   /* founder */
   .founder{display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:start;margin-top:40px}
   .founder .glyph{width:64px;height:64px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(150deg,var(--ink-3),var(--ink-2));border:1px solid var(--line-2);font-family:var(--serif);font-style:italic;font-size:30px;color:var(--gold)}
@@ -274,7 +340,7 @@
   .founder .sig{font-family:var(--mono);font-size:13px;color:var(--muted-2);margin-top:16px;letter-spacing:.03em}
 
   /* close */
-  .close{padding:104px 0;text-align:center;border-top:1px solid var(--line);background:radial-gradient(120% 90% at 50% 0%,rgba(227,183,120,.06),transparent 60%)}
+  .close{padding:104px 0;text-align:center;background:var(--rule) no-repeat top / 100% 1px,radial-gradient(120% 90% at 50% 0%,rgba(227,183,120,.06),transparent 60%)}
   .close h2{font-family:var(--serif);font-weight:500;font-size:clamp(32px,4.6vw,54px);letter-spacing:-.02em;line-height:1.06;max-width:14em;margin:18px auto 30px}
   .close h2 em{font-style:italic;color:var(--gold);font-weight:400}
   .close .hero-actions{justify-content:center}
@@ -289,15 +355,18 @@
 
   @media (max-width:860px){
     .hero-grid{grid-template-columns:1fr;gap:40px}
-    .engines,.who{grid-template-columns:1fr}
+    .engines,.who,.desk{grid-template-columns:1fr}
     .stats{grid-template-columns:1fr 1fr}
     .founder{grid-template-columns:1fr;gap:18px}
     .band{padding:68px 0}
     nav .nav-cta{display:none}
+    .leadrow{grid-template-columns:86px 1fr 64px;gap:10px}
   }
   @media (prefers-reduced-motion:reduce){
     .ticker__track{animation:none}
+    .sei-live__head .pulse{animation:none}
     .reveal{opacity:1;transform:none;transition:none}
+    .leadrow .bar{transition:none}
     html{scroll-behavior:auto}
   }
 </style>
@@ -333,6 +402,7 @@
       LiquiLens <small>the liquidity network</small>
     </a>
     <span class="nav-right">
+      <a class="nav-link" href="#desk"><span class="sei-dot"></span>Seiche, our open terminal</a>
       <a class="nav-link" href="https://demo.liquilens.in" target="_blank" rel="noopener">Request demo access →</a>
       <a class="nav-cta" href="#contact">Start a conversation</a>
     </span>
@@ -356,14 +426,43 @@
     <div class="terminal reveal">
       <div class="terminal__bar">
         <i class="dot r"></i><i class="dot y"></i><i class="dot g"></i>
-        <span>overnight · same rupee</span>
+        <span>early warning · replayed record</span>
       </div>
-      <div class="terminal__body">
-        <div class="row"><span class="k">A bank's rupee</span><span class="v work">~7.0%</span></div>
-        <div class="row"><span class="k">A business's rupee</span><span class="v sleep">0.0%</span></div>
+      <svg class="lead-chart" viewBox="0 0 520 268" role="img" aria-label="A risk score rising and flagged by LiquiLens fifteen months before the public record breaks">
+        <defs>
+          <linearGradient id="goldfade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E3B778" stop-opacity=".18"/>
+            <stop offset="100%" stop-color="#E3B778" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <line class="grid-line" x1="30" y1="70" x2="496" y2="70"/>
+        <line class="grid-line" x1="30" y1="140" x2="496" y2="140"/>
+        <line class="grid-line" x1="30" y1="210" x2="496" y2="210"/>
+        <path id="riskFill" class="risk-fill" d="M30,218 C80,214 110,206 140,192 C170,178 200,178 232,166 C264,154 290,138 322,124 C354,110 386,104 414,88 C440,73 462,62 476,52 L476,230 L30,230 Z"/>
+        <path id="riskPath" class="risk-line" d="M30,218 C80,214 110,206 140,192 C170,178 200,178 232,166 C264,154 290,138 322,124 C354,110 386,104 414,88 C440,73 462,62 476,52"/>
+        <g id="flagGroup" opacity="0">
+          <line class="flag-line" x1="150" y1="58" x2="150" y2="230"/>
+          <circle cx="150" cy="189" r="4.5" fill="#E3B778"/>
+          <text class="lbl gold" x="142" y="46">LiquiLens flags</text>
+        </g>
+        <g id="recGroup" opacity="0">
+          <line class="rec-line" x1="476" y1="40" x2="476" y2="230"/>
+          <circle cx="476" cy="52" r="4.5" fill="#E07070"/>
+          <text class="lbl red" x="481" y="46" text-anchor="end" dx="-10">the record breaks</text>
+        </g>
+        <g id="braceGroup" opacity="0">
+          <line class="lead-brace" x1="150" y1="246" x2="476" y2="246"/>
+          <line class="lead-brace" x1="150" y1="241" x2="150" y2="251"/>
+          <line class="lead-brace" x1="476" y1="241" x2="476" y2="251"/>
+          <text class="lead-count" id="leadCount" x="313" y="262" text-anchor="middle">0 months of warning</text>
+        </g>
+      </svg>
+      <div class="duel" aria-hidden="true">
+        <div><span class="k">A bank's rupee, overnight</span><span class="v work">~7.0%</span></div>
+        <div><span class="k">A business's rupee</span><span class="v sleep">0.0%</span></div>
       </div>
       <div class="terminal__foot">
-        Same rupee. Same night. <b>One works, one sleeps.</b> That gap is not a market difference. It is who gets access.
+        Drawn to the published medians of the 2018 to 2021 replay: <b>15 months of warning</b> before the record broke. A schematic of the record, not one lender's chart.
       </div>
     </div>
   </div>
@@ -385,22 +484,22 @@
     <h2 class="reveal">Measured, <em>not asserted.</em></h2>
     <div class="stats reveal">
       <div class="stat">
-        <div class="num">₹25 lakh crore</div>
+        <div class="num">₹<span data-count="25">25</span> lakh crore</div>
         <p>India's MSME credit gap, the shortfall between credit demanded and credit supplied by formal lenders, as of March 2025.</p>
         <span class="src">Deloitte analysis, 2025 · <a href="https://www.policycircle.org/policy/india-msmes-funding-gap" target="_blank" rel="noopener">Standing Committee on Finance put it at ₹20 to 25 lakh crore</a></span>
       </div>
       <div class="stat">
-        <div class="num">14%</div>
+        <div class="num"><span data-count="14">14</span>%</div>
         <p>Share of Indian MSMEs with access to formal, institutional credit. The rest borrow informally or not at all.</p>
         <span class="src">Deloitte, 2025</span>
       </div>
       <div class="stat">
-        <div class="num">~30% of GDP</div>
+        <div class="num">~<span data-count="30">30</span>% of GDP</div>
         <p>What MSMEs contribute to India's economy, along with roughly 45% of exports, across more than 6 crore registered enterprises.</p>
         <span class="src"><a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2035073" target="_blank" rel="noopener">Ministry of MSME, via PIB, July 2024</a></span>
       </div>
       <div class="stat">
-        <div class="num">₹27.25 lakh crore</div>
+        <div class="num">₹<span data-count="27.25">27.25</span> lakh crore</div>
         <p>Bank credit outstanding to MSMEs as of March 2024, growing over 12% a year. The book is large, and it is getting larger faster than the tools that watch it.</p>
         <span class="src"><a href="https://www.bis.org/review/r241126v.htm" target="_blank" rel="noopener">RBI Deputy Governor Swaminathan J, November 2024</a></span>
       </div>
@@ -458,11 +557,35 @@
         <span class="src">2025 cycle tranche, vetted primary filings, run after the rules were frozen</span>
       </div>
       <div class="stat">
-        <div class="num">17 months</div>
+        <div class="num"><span data-count="17">17</span> months</div>
         <p>Lead on Yes Bank in the earlier network signal study, where 7 of 8 NBFC defaults of 2018 and 2019 were flagged at a median of 6.5 months, DHFL at 8 and Altico at 11.</p>
         <span class="src">Rating timeline case study, phases 1 and 2, predictions pre stated</span>
       </div>
     </div>
+
+    <div class="leads reveal" id="leads">
+      <h3>How far ahead the flag flew</h3>
+      <p class="leads-sub">Named leads from the rating timeline study, in months before the public record moved. Predictions pre stated, sources cited in the Evidence record.</p>
+      <div class="leadrow">
+        <span class="who">Yes Bank</span>
+        <div class="lane"><div class="bar" data-w="100"></div></div>
+        <span class="months">17 mo</span>
+      </div>
+      <div class="leadrow">
+        <span class="who">Altico</span>
+        <div class="lane"><div class="bar" data-w="64.7"></div></div>
+        <span class="months">11 mo</span>
+      </div>
+      <div class="leadrow">
+        <span class="who">DHFL</span>
+        <div class="lane"><div class="bar" data-w="47"></div></div>
+        <span class="months">8 mo</span>
+      </div>
+      <div class="median">
+        <p><b>Median across the study: 6.5 months</b> on 7 of 8 defaults of 2018 and 2019. The separate 36 institution balance sheet replay ran at a median of 15 months. Full record, misses included, in the <a href="https://demo.liquilens.in/?tab=evidence" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">Evidence tab</a>.</p>
+      </div>
+    </div>
+
     <p class="stats-note reveal">Read honestly: these are studies on public data, not claims about your book. The engine is also hard to flatter. When one stressed lender moved its bad loans to an asset reconstruction company and reported a dramatic recovery, the engine refused to re rate it upward and held its grade down. Managed books do not fool it, because we caught that blind spot ourselves and shipped the fix with tests. The numbers that matter next come from a lender's own book, run on the lender's own servers, and that backtest is exactly what we offer design partners.</p>
   </div>
 </section>
@@ -540,12 +663,43 @@
   </div>
 </section>
 
-<!-- the lab / seiche -->
-<section class="band" id="lab">
+<!-- the desk : liquilens x seiche -->
+<section class="band" id="desk">
   <div class="wrap">
-    <span class="eyebrow reveal">From the same lab</span>
-    <h2 class="reveal">The research runs deeper <em>than one product.</em></h2>
-    <p class="body reveal">LiquiLens grew out of a research practice in how liquidity behaves under stress. The same lab builds <b><a href="https://seiche.info" target="_blank" rel="noopener" style="color:var(--gold);border-bottom:1px solid var(--gold-deep)">Seiche</a></b>, a free and open source terminal that watches systemic market stress in real time, run as a public good with no paywall. What Seiche learns about markets under pressure sharpens the engines here. What lenders demand of those engines sharpens the research. The physics is shared. The books stay separate.</p>
+    <span class="eyebrow reveal">One desk, two instruments</span>
+    <h2 class="reveal">The product you can buy. The record <em>you can check.</em></h2>
+    <p class="body reveal">LiquiLens grew out of a research practice in how liquidity behaves under stress. The same desk builds <b>Seiche</b>, a free and open source terminal that watches funding stress in the US money market, run as a public good with no paywall and no sign in. Seiche publishes its forecasts before the outcome, seals them in a hash chained record, and keeps a public scoreboard of hits and misses. <b>What Seiche learns about markets under pressure sharpens the engines here. What lenders demand of those engines sharpens the research.</b> The physics is shared. The books stay separate.</p>
+
+    <div class="desk reveal">
+      <div class="inst inst--ll">
+        <span class="role">The product · private by design</span>
+        <h3>LiquiLens</h3>
+        <p>Treasury and early warning for Indian lenders and businesses. Runs in production, multi tenant, on your servers if your book cannot leave the building. The crisis validation record is open in the demo's Evidence tab, institution by institution, misses included.</p>
+        <div class="inst-links">
+          <a href="https://demo.liquilens.in/?tab=evidence" target="_blank" rel="noopener">Open the Evidence record →</a>
+          <a href="#contact">Talk to the desk →</a>
+        </div>
+      </div>
+      <div class="inst inst--sei">
+        <span class="role">The public record · free forever</span>
+        <h3>Seiche</h3>
+        <div class="sei-live" id="seiLive">
+          <div class="sei-live__head"><span class="pulse"></span><span id="seiStamp">connecting to the live board…</span></div>
+          <div class="sei-live__main">
+            <span class="sei-live__val" id="seiVal">··</span>
+            <span class="sei-regime" id="seiRegime" hidden></span>
+          </div>
+          <div class="sei-live__line" id="seiLine">The reading you see here is fetched from the live terminal as you load this page. If it does not appear, the terminal itself is one click away.</div>
+          <div class="sei-live__proof" id="seiProof"></div>
+        </div>
+        <div class="inst-links">
+          <a href="https://seiche.info" target="_blank" rel="noopener">Open the terminal →</a>
+          <a href="https://seiche.info/#proof" target="_blank" rel="noopener">Read the scoreboard →</a>
+          <a href="https://github.com/beepboop2025/seiche" target="_blank" rel="noopener">Source, AGPL →</a>
+        </div>
+      </div>
+    </div>
+    <p class="desk-note reveal">Why show you a second product we give away? Because an early warning vendor asking for trust should have a public track record you can audit without asking permission. Seiche is ours. Every number it has ever published is sealed and checkable, and the same discipline, point in time records, frozen rules, misses shown, is what LiquiLens brings to a lender's book.</p>
   </div>
 </section>
 
@@ -608,6 +762,10 @@
         <p>Yes, twice over, on the public record. We replayed the balance sheet engine on <b>36 institutions of the 2018 to 2021 crisis</b>, failed lenders, stressed survivors and healthy controls together: 9 of 10 failures flagged ahead of the record excluding books concealed by fraud, at a median lead of 15 months, with a 1 in 10 false alarm rate on healthy controls and significance at p &lt; 0.001. Then we ran a <b>fully out of sample replay on the 2025 microfinance cycle</b>: 11 more institutions, zero false alarms on 8 controls, and one lender flagged below investment grade a quarter before the rating agencies moved. The earlier network signal study on rating timelines flagged 7 of 8 defaults of 2018 and 2019 at a median of 6.5 months, with Yes Bank at 17 months in the pre stated confirmatory phase. These are studies on public data, not a validation on a live book. The next number comes from a lender backtest run on the lender's own servers, and that is exactly what we offer design partners.</p>
       </details>
       <details>
+        <summary>What is Seiche, and why does a treasury company run a free terminal?</summary>
+        <p>Seiche is our free, open source terminal for funding stress in the US money market. It runs on public data, publishes its forecasts before the outcome, and keeps a sealed scoreboard of hits and misses that anyone can audit at seiche.info. We run it because <b>an early warning vendor should have a public track record,</b> and because the research that watches the world's deepest money market is the same research that watches an Indian lender's book. Seiche stays free forever. It is the record; LiquiLens is the product.</p>
+      </details>
+      <details>
         <summary>What happens to our data? How is it protected?</summary>
         <p>Every lender's book is isolated to that lender. The regulatory tables, CRR, SLR, ALM and reports, are scoped per tenant and the isolation is enforced by automated tests on every commit, so a request for another tenant's data returns nothing at all. Access runs on short lived tokens with rotation and role based permissions, HTTPS is enforced everywhere, dependencies and secrets are scanned continuously, and a hash chained ledger records every alert as it was published so the history cannot be quietly rewritten. <b>For pilots that cannot let data leave the building, the entire platform runs on the lender's own servers.</b></p>
       </details>
@@ -626,6 +784,7 @@
     {"@type": "Question", "name": "How big is the gap LiquiLens is built for?", "acceptedAnswer": {"@type": "Answer", "text": "India's MSME credit gap was estimated at about 25 lakh crore rupees as of March 2025, with only 14% of MSMEs holding formal credit (Deloitte, 2025). MSMEs contribute roughly 30% of India's GDP and about 45% of exports (Ministry of MSME, 2024). RBI directions prohibit banks from paying interest on current accounts, so idle working capital earns zero."}},
     {"@type": "Question", "name": "Is LiquiLens live and how do I get access?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. LiquiLens runs in production. The live walkthrough at demo.liquilens.in is open by invitation while we work with early design partners; request an access code there to be let in. Its Evidence tab replays the crisis validation record on real public filings with every source cited and every miss shown, while the treasury console around it runs on synthetic data. Pilot tenants run isolated on the same infrastructure. Treasury and risk leaders can also request access by contacting the founder through liquilens.in."}},
     {"@type": "Question", "name": "Has LiquiLens been tested on real data?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, twice over, on the public record. A 36 institution replay of the 2018 to 2021 Indian crisis flagged 9 of 10 failures ahead of the record (excluding books concealed by fraud) at a median lead of 15 months, with a 1 in 10 false alarm rate on healthy controls and significance at p below 0.001. A fully out of sample replay of the 2025 microfinance cycle covered 11 more institutions with zero false alarms on 8 controls and flagged one lender below investment grade a quarter before the rating agencies moved. An earlier network signal study flagged 7 of 8 defaults of 2018 and 2019 at a median of 6.5 months. These are studies on public data; lender specific numbers come from a backtest on the lender's own book."}},
+    {"@type": "Question", "name": "What is Seiche and why does LiquiLens run a free terminal?", "acceptedAnswer": {"@type": "Answer", "text": "Seiche is a free, open source terminal for funding stress in the US money market, built by the same desk as LiquiLens. It runs on public data, publishes forecasts before outcomes, and keeps a sealed public scoreboard of hits and misses at seiche.info. It exists because an early warning vendor should have a public track record anyone can audit. Seiche is free forever; LiquiLens is the commercial product."}},
     {"@type": "Question", "name": "How is lender data protected in LiquiLens?", "acceptedAnswer": {"@type": "Answer", "text": "Every lender's book is isolated per tenant, including the regulatory tables for CRR, SLR, ALM and reports, and the isolation is enforced by automated tests on every commit. Access uses short lived tokens with rotation and role based permissions, HTTPS is enforced everywhere, dependencies and secrets are scanned continuously, and a hash chained point in time ledger records every alert as published. The platform can also run entirely on the lender's own servers."}}
   ]
 }
@@ -645,14 +804,15 @@
 
 <footer>
   <div class="wrap">
-    <span>© 2026 LiquiLens · The Liquidity Network · Updated 12 July 2026 · <a href="https://seiche.info" target="_blank" rel="noopener">Seiche, our free systemic stress terminal</a></span>
+    <span>© 2026 LiquiLens · The Liquidity Network · Updated 13 July 2026 · <a href="https://seiche.info" target="_blank" rel="noopener">Seiche, our free systemic stress terminal</a></span>
     <span>Rates shown are indicative of the Indian money market and for illustration only.</span>
   </div>
 </footer>
 
 <script>
-  // scroll reveal, respectful of reduced-motion
   const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll reveal, respectful of reduced-motion
   if(!rm && 'IntersectionObserver' in window){
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
@@ -661,6 +821,117 @@
   } else {
     document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
   }
+
+  // hero chart: the risk line draws, the flag plants, the record breaks, the lead counts
+  (function(){
+    const path = document.getElementById('riskPath');
+    if(!path) return;
+    const fill = document.getElementById('riskFill');
+    const flag = document.getElementById('flagGroup');
+    const rec = document.getElementById('recGroup');
+    const brace = document.getElementById('braceGroup');
+    const count = document.getElementById('leadCount');
+    const L = path.getTotalLength();
+    if(rm){
+      [flag,rec,brace].forEach(g=>g.setAttribute('opacity','1'));
+      fill.style.opacity = '1';
+      count.textContent = '15 months of warning';
+      return;
+    }
+    path.style.strokeDasharray = L;
+    path.style.strokeDashoffset = L;
+    function play(){
+      path.style.transition = 'none';
+      path.style.strokeDashoffset = L;
+      [flag,rec,brace].forEach(g=>{ g.style.transition='none'; g.setAttribute('opacity','0'); });
+      fill.style.transition = 'none'; fill.style.opacity = '0';
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        path.style.transition = 'stroke-dashoffset 2.6s cubic-bezier(.4,0,.2,1)';
+        path.style.strokeDashoffset = '0';
+        flag.style.transition = 'opacity .5s ease .7s';
+        flag.setAttribute('opacity','1');
+        rec.style.transition = 'opacity .5s ease 2.5s';
+        rec.setAttribute('opacity','1');
+        fill.style.transition = 'opacity 1s ease 2.2s';
+        fill.style.opacity = '1';
+        brace.style.transition = 'opacity .4s ease 2.7s';
+        brace.setAttribute('opacity','1');
+        const t0 = performance.now();
+        (function tick(now){
+          const p = Math.min(1,(now - t0 - 2700)/900);
+          if(p >= 0){ count.textContent = Math.round(15*p) + (Math.round(15*p)===1?' month':' months') + ' of warning'; }
+          if(p < 1) requestAnimationFrame(tick);
+        })(t0);
+      }));
+    }
+    let played = false;
+    const io2 = new IntersectionObserver((es)=>{
+      es.forEach(e=>{ if(e.isIntersecting && !played){ played = true; play(); io2.unobserve(e.target); setInterval(play, 11000); }});
+    },{threshold:.4});
+    io2.observe(path.closest('.terminal'));
+  })();
+
+  // count-up numbers on reveal
+  (function(){
+    if(rm || !('IntersectionObserver' in window)) return;
+    const els = document.querySelectorAll('[data-count]');
+    const io3 = new IntersectionObserver((es)=>{
+      es.forEach(e=>{
+        if(!e.isIntersecting) return;
+        io3.unobserve(e.target);
+        const el = e.target, target = parseFloat(el.dataset.count);
+        const dec = (el.dataset.count.split('.')[1]||'').length;
+        const t0 = performance.now();
+        (function tick(now){
+          const p = Math.min(1,(now-t0)/1100), ease = 1-Math.pow(1-p,3);
+          el.textContent = (target*ease).toFixed(dec);
+          if(p<1) requestAnimationFrame(tick);
+        })(t0);
+      });
+    },{threshold:.6});
+    els.forEach(el=>io3.observe(el));
+  })();
+
+  // lead bars grow on reveal
+  (function(){
+    const rows = document.querySelectorAll('#leads .bar');
+    if(!rows.length) return;
+    const grow = ()=>rows.forEach(b=>{ b.style.width = b.dataset.w + '%'; });
+    if(rm || !('IntersectionObserver' in window)){ grow(); return; }
+    const io4 = new IntersectionObserver((es)=>{
+      es.forEach(e=>{ if(e.isIntersecting){ grow(); io4.unobserve(e.target); }});
+    },{threshold:.35});
+    io4.observe(document.getElementById('leads'));
+  })();
+
+  // live Seiche reading: fetched from the public API in your browser; never faked
+  (function(){
+    const val = document.getElementById('seiVal');
+    if(!val) return;
+    const regime = document.getElementById('seiRegime');
+    const stamp = document.getElementById('seiStamp');
+    const line = document.getElementById('seiLine');
+    const proof = document.getElementById('seiProof');
+    fetch('https://api.seiche.info/api/public',{mode:'cors'})
+      .then(r=>{ if(!r.ok) throw new Error('unreachable'); return r.json(); })
+      .then(d=>{
+        const c = d.conclusion || {};
+        if(typeof c.value !== 'number') throw new Error('no reading');
+        val.textContent = Math.round(c.value);
+        if(c.regime){ regime.textContent = c.regime; regime.className = 'sei-regime ' + c.regime; regime.hidden = false; }
+        stamp.textContent = 'live from api.seiche.info · ' + (d.generated_at||'').slice(0,16).replace('T',' ') + 'Z';
+        line.textContent = 'The Seiche index, 0 to 100, over the US funding basin right now. ' + (c.tell_reading ? 'The Tell reads ' + (c.tell>0?'+':'') + Math.round(c.tell) + ': ' + c.tell_reading + '.' : '');
+        const p = d.proof || {};
+        if(typeof p.recall === 'number'){
+          proof.innerHTML = 'Its own scoreboard, stated honestly: <b>recall ' + Math.round(p.recall*100) + '%</b> on ' + p.n_events + ' labelled events, median lead <b>' + Math.round(p.median_lead_d) + ' days</b>, caveats published beside every number.';
+        }
+      })
+      .catch(()=>{
+        stamp.textContent = 'the live board did not answer from here';
+        val.textContent = '—';
+        line.textContent = 'No number is shown rather than a stale one. The terminal itself is one click below, and it always carries its own as of stamp.';
+      });
+  })();
 
   // LCR countdown — runs entirely client-side, nothing leaves the page
   (function(){
