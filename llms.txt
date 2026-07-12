@@ -25,9 +25,24 @@
 
 ## Proof on the public record
 
-- The early warning method was replayed on the 2018 to 2021 Indian NBFC and bank crisis using sourced public rating timelines: 7 of 8 defaults flagged early at a median of 6.5 months, DHFL at 8 months and Altico at 11 months before first missed payment, with rules frozen before scoring and pre stated predictions (including one designed to fail, which did)
+- A 36 institution replay of the 2018 to 2021 Indian crisis (failed lenders, stressed survivors and healthy controls, point in time audited): 9 of 10 failures flagged ahead of the record excluding books concealed by fraud, median lead 15 months, longest 29 months, false alarm rate 1 in 10 on healthy controls, significant at p below 0.001 and robust across a broad threshold sweep
+- A fully out of sample replay of the 2025 microfinance cycle: 11 more institutions, zero false alarms on 8 healthy controls, and one lender flagged below investment grade a quarter before the rating agencies moved
+- The engine holds its grade down when a stressed lender moves bad loans to an asset reconstruction company and reports a managed recovery; that blind spot was found internally and fixed with tests
+- The earlier network signal study on sourced public rating timelines: 7 of 8 defaults of 2018 and 2019 flagged early at a median of 6.5 months, DHFL at 8 months, Altico at 11, Yes Bank at 17 months in the pre stated confirmatory phase
 - Each of the five early warning signals shipped only after beating a pre registered bar on held out data; the validation scoreboard is inside the product model card
-- This is a case study on public data, not a validation on a live lender book; lender specific numbers come from a backtest on the lender's own servers
+- These are studies on public data, not a validation on a live lender book; lender specific numbers come from a backtest on the lender's own servers
+
+## Enterprise readiness
+
+- Per tenant isolation of every lender's regulatory book (CRR, SLR, ALM, reports), enforced by cross tenant tests on every commit
+- Short lived tokens with refresh rotation, role based access, account lockout, HTTPS enforced with HSTS
+- Dependency, container and secret scanning on every commit and weekly; production refuses to boot in an unsafe configuration
+- Hash chained point in time ledger of every watchlist and alert as published
+- Live metrics and error tracking, nightly database backups, more than 530 automated tests; self hosted deployment available so lender data never leaves the lender's perimeter
+
+## Related
+
+- Seiche (https://seiche.info): a free, open source systemic market stress terminal from the same lab, run as a public good with no paywall
 
 ## Status
 
