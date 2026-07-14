@@ -589,6 +589,53 @@
   </div>
 </section>
 
+<!-- the layers -->
+<section class="band" id="layers">
+  <div class="wrap">
+    <span class="eyebrow reveal">One engine, three markets</span>
+    <h2 class="reveal">The physics of a liquidity crisis is shared. <em>The books stay separate.</em></h2>
+    <p class="body reveal">The same early warning engine, point in time discipline and published validation now run against three books. Each layer is a market; none of them is a pivot. <b>What one layer learns about money under stress sharpens the other two.</b></p>
+    <style>
+      .layers{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:46px}
+      .layer{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:30px 28px;display:flex;flex-direction:column;transition:.25s;position:relative;overflow:hidden}
+      .layer:hover{background:var(--ink-3);border-color:var(--line-2);transform:translateY(-2px)}
+      .layer .lno{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+      .layer h3{font-family:var(--serif);font-weight:500;font-size:24px;margin:14px 0 10px;letter-spacing:-.01em}
+      .layer p{color:var(--muted);font-size:15px;line-height:1.62}
+      .layer .go{font-family:var(--mono);font-size:13px;color:var(--gold);margin-top:auto;padding-top:22px}
+      .layer .go span{border-bottom:1px solid transparent;transition:.2s}
+      .layer:hover .go span{border-color:var(--gold)}
+      .layer .badge{position:absolute;top:22px;right:22px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid}
+      .badge.live{color:var(--teal);border-color:rgba(91,208,196,.45)}
+      .badge.new{color:var(--gold);border-color:rgba(227,183,120,.45)}
+      @media (max-width:860px){.layers{grid-template-columns:1fr}}
+    </style>
+    <div class="layers reveal">
+      <a class="layer" href="#board">
+        <span class="badge live">In production</span>
+        <span class="lno">Layer 01 · India</span>
+        <h3>Lending and treasury</h3>
+        <p>Early warning, liquidity risk and treasury for Indian lenders and businesses. Validated on two full crisis cycles, 47 institutions, on public data alone. This page runs it live.</p>
+        <span class="go"><span>See the live board →</span></span>
+      </a>
+      <a class="layer" href="/us/">
+        <span class="badge new">New</span>
+        <span class="lno">Layer 02 · United States</span>
+        <h3>Bank run risk</h3>
+        <p>Every FDIC insured bank scored point in time since 2004. Both 2026 failures were on the watchlist a year early, out of sample, and the full confusion matrix is published, misses included.</p>
+        <span class="go"><span>Open the US layer →</span></span>
+      </a>
+      <a class="layer" href="/us/#reserves">
+        <span class="badge new">Research</span>
+        <span class="lno">Layer 03 · Digital dollars</span>
+        <h3>Stablecoin reserves</h3>
+        <p>Everyone rates the coin. Nobody scores the banks holding its cash. A reserve custodian map built from citable disclosures, joined to the same bank engine, for the GENIUS Act era.</p>
+        <span class="go"><span>See the reserve map →</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- engines -->
 <section class="band">
   <div class="wrap">
@@ -878,6 +925,10 @@
         <p>Two groups. Indian businesses sitting on idle cash that earns nothing overnight, and lenders, NBFCs in particular, who need to see liquidity stress in their book before it becomes a headline. Banks have had this machinery for decades. Everyone else has spreadsheets.</p>
       </details>
       <details>
+        <summary>Is LiquiLens only for India?</summary>
+        <p>India is the product market and the deepest build. The engine underneath is market agnostic, and it now runs a second live book: <b>run risk scores for every FDIC insured US bank</b>, validated against all 550 failures since 2008 with the full confusion matrix published. Both 2026 US failures were on that watchlist a year early, out of sample. <a href="/us/" style="color:var(--gold)">The US layer lives here</a>, and a stablecoin reserve layer rides on it.</p>
+      </details>
+      <details>
         <summary>Why does the money market matter for an ordinary business?</summary>
         <p>The money market is where banks and large corporates park cash overnight and borrow short term. It is the deepest, safest pool in Indian finance, and it has effectively been closed to everyone below a certain size. LiquiLens exists to open that access, so a mid-size company's cash can work through the night the way a bank's does.</p>
       </details>
@@ -945,7 +996,7 @@
 
 <footer>
   <div class="wrap">
-    <span>© 2026 LiquiLens · The Liquidity Network · Updated 13 July 2026 · <a href="https://seiche.info" target="_blank" rel="noopener">Seiche, our free systemic stress terminal</a></span>
+    <span>© 2026 LiquiLens · The Liquidity Network · Updated 14 July 2026 · <a href="/us/">The US bank layer</a> · <a href="https://seiche.info" target="_blank" rel="noopener">Seiche, our free systemic stress terminal</a></span>
     <span>Rates shown are indicative of the Indian money market and for illustration only.</span>
   </div>
 </footer>

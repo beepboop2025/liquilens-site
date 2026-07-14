@@ -119,6 +119,23 @@
   .terminal__foot{padding:14px 18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.7}
   .terminal__foot b{color:var(--gold);font-weight:500}
 
+  .lead-chart{display:block;width:100%;height:auto;padding:10px 6px 0}
+  .lead-chart .grid-line{stroke:var(--line);stroke-width:1;stroke-dasharray:2 5}
+  .lead-chart .risk-line{stroke:var(--gold);stroke-width:2;fill:none;stroke-linecap:round}
+  .lead-chart .flag-line{stroke:var(--gold);stroke-width:1.5;stroke-dasharray:3 4}
+  .lead-chart .rec-line{stroke:var(--red);stroke-width:1.5}
+  .lead-chart .lbl{font-family:var(--mono);font-size:10.5px;fill:var(--muted)}
+  .lead-chart .lbl.gold{fill:var(--gold)}
+  .lead-chart .lbl.red{fill:var(--red)}
+  .lead-chart .lead-brace{stroke:var(--muted-2);stroke-width:1}
+  .lead-chart .lead-count{font-family:var(--mono);font-size:12.5px;fill:var(--text);font-weight:500}
+
+  @media (prefers-reduced-motion: reduce){
+    .ticker__track{animation:none}
+    .reveal{opacity:1;transform:none;transition:none}
+    .leadrow .bar{transition:none}
+  }
+
   .band{padding:92px 0;background:var(--rule) no-repeat top / 100% 1px}
   .band h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,3.9vw,46px);line-height:1.08;letter-spacing:-.02em;margin:22px 0 0;max-width:16em}
   .band h2 em{font-style:italic;color:var(--gold);font-weight:400}
@@ -297,15 +314,39 @@
       </div>
     </div>
     <div class="terminal reveal">
-      <div class="terminal__bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span>validation · 550 failures · no fitting</span></div>
-      <div class="stats" style="margin:0;border:none;border-radius:0">
-        <div class="stat"><div class="num">73.1%</div><p>of all 550 FDIC failures since 2008 caught in advance</p></div>
-        <div class="stat"><div class="num">21.7 mo</div><p>median warning before the FDIC arrived</p></div>
-        <div class="stat"><div class="num">9.7%</div><p>false positive rate, published with the recall</p></div>
-        <div class="stat"><div class="num">6 of 6</div><p>balance sheet failures of 2023 to 2026 flagged early</p></div>
-      </div>
-      <div class="terminal__foot">Signal weights were fixed before the first backtest ran, so every number is <b>out of sample by construction</b>. The engine is the same one validated on two Indian crisis cycles.</div>
+      <div class="terminal__bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span>SVB · cert 24735 · actual score history</span></div>
+      <svg class="lead-chart" viewBox="0 0 560 300" role="img" aria-label="Silicon Valley Bank run risk score rising through 2021 and flagged 17.3 months before the March 2023 failure">
+        <defs>
+          <linearGradient id="goldfade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E3B778" stop-opacity=".22"/>
+            <stop offset="100%" stop-color="#E3B778" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <line class="grid-line" x1="40" y1="98"  x2="520" y2="98"/>
+        <line class="grid-line" x1="40" y1="155" x2="520" y2="155"/>
+        <line class="grid-line" x1="40" y1="213" x2="520" y2="213"/>
+        <text class="lbl" x="10" y="102">.66</text>
+        <text class="lbl" x="10" y="159">.60</text>
+        <text class="lbl" x="10" y="217">.54</text>
+        <path class="risk-fill" d="M40,213 L74,200 L109,181 L143,187 L177,187 L211,175 L246,148 L280,149 L314,98 L349,119 L383,157 L417,162 L451,171 L486,194 L486,262 L40,262 Z" fill="url(#goldfade)"/>
+        <path class="risk-line" d="M40,213 L74,200 L109,181 L143,187 L177,187 L211,175 L246,148 L280,149 L314,98 L349,119 L383,157 L417,162 L451,171 L486,194"/>
+        <line class="flag-line" x1="314" y1="70" x2="314" y2="262"/>
+        <circle cx="314" cy="98" r="4.5" fill="#E3B778"/>
+        <text class="lbl gold" x="130" y="60">first flagged · Sep 2021</text>
+        <line class="rec-line" x1="520" y1="70" x2="520" y2="262"/>
+        <text class="lbl red" x="404" y="284">FDIC · 10 Mar 2023</text>
+        <path class="lead-brace" d="M314,44 L314,36 L520,36 L520,44" fill="none"/>
+        <text class="lead-count" x="352" y="28">17.3 months of warning</text>
+        <text class="lbl" x="40" y="284">quarterly score, Sep 2019 to Dec 2022 · real values, not an illustration</text>
+      </svg>
+      <div class="terminal__foot">Every point on this curve is the score the engine computes for that quarter from filings available at that date. Weights were fixed before the first backtest ran, so the whole record is <b>out of sample by construction</b>.</div>
     </div>
+  </div>
+  <div class="stats reveal" style="margin-top:56px">
+    <div class="stat"><div class="num">73.1%</div><p>of all 550 FDIC failures since 2008 caught in advance</p></div>
+    <div class="stat"><div class="num">21.7 mo</div><p>median warning before the FDIC arrived</p></div>
+    <div class="stat"><div class="num">9.7%</div><p>false positive rate, published next to the recall</p></div>
+    <div class="stat"><div class="num">6 of 6</div><p>balance sheet failures of 2023 to 2026 flagged early</p></div>
   </div>
 </section>
 
