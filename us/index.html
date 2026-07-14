@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LiquiLens US | Bank run risk, scored a year early</title>
+<meta name="description" content="LiquiLens US scores every FDIC insured bank for run risk from public filings, point in time. The engine flagged SVB 17 months early and both 2026 failures out of sample. Full validation published, false positives included." />
+<link rel="canonical" href="https://liquilens.in/us/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0A0F1C" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E3B778'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%231A1206' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E" />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://liquilens.in/us/" />
+<meta property="og:site_name" content="LiquiLens" />
+<meta property="og:title" content="LiquiLens US | Both 2026 bank failures were on the watchlist a year early" />
+<meta property="og:description" content="Run risk scores for every US bank from free public data. Validation published in full: recall, false positive rate, lead times, and the misses, by name." />
+<meta property="og:image" content="https://liquilens.in/og-network.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="LiquiLens US | Bank run risk, scored a year early" />
+<meta name="twitter:description" content="The engine flagged SVB 17 months early and both 2026 failures out of sample. Full confusion matrix published." />
+<meta name="twitter:image" content="https://liquilens.in/og-network.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://liquilens.in/us/#page",
+      "url": "https://liquilens.in/us/",
+      "name": "LiquiLens US: bank run risk, scored early",
+      "isPartOf": { "@id": "https://liquilens.in/#site" },
+      "about": { "@id": "https://liquilens.in/#org" },
+      "datePublished": "2026-07-14",
+      "dateModified": "2026-07-14"
+    },
+    {
+      "@type": "Dataset",
+      "name": "LiquiLens US bank run risk validation record",
+      "description": "Point in time early warning scores for every FDIC insured US bank, validated against all 550 FDIC receiverships 2008 to 2026. Published with the full confusion matrix: recall 73.1 percent, false positive rate 9.7 percent, median lead 21.7 months, misses named.",
+      "url": "https://liquilens.in/us/",
+      "creator": { "@id": "https://liquilens.in/#org" },
+      "license": "https://liquilens.in/us/#method",
+      "isBasedOn": "https://banks.data.fdic.gov/",
+      "temporalCoverage": "2004-12-31/2026-03-31"
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" /></noscript>
+<style>
+  :root{
+    --ink:#0A0F1C; --ink-2:#0E1424; --ink-3:#131B2E;
+    --line:#1E2740; --line-2:#283354;
+    --gold:#E3B778; --gold-deep:#C8954E; --gold-dim:rgba(227,183,120,.14);
+    --teal:#5BD0C4; --red:#E07070;
+    --sei:#9184d9; --sei-bright:#d2cefd; --sei-deep:#423a6a;
+    --calm:#79c2ad; --erosion:#d3ab6e; --strain:#d99274; --stress:#dd7a72;
+    --text:#E9EBF2; --muted:#8B94AB; --muted-2:#5C657E;
+    --serif:'Fraunces',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+    --maxw:1120px;
+    --rule:linear-gradient(to right,transparent,var(--line) 64px,var(--line) calc(100% - 64px),transparent);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  .ticker{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0C1322,#0A0F1C);overflow:hidden;white-space:nowrap;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted);position:sticky;top:0;z-index:50}
+  .ticker__track{display:inline-block;padding:11px 0;animation:scroll 38s linear infinite}
+  .ticker:hover .ticker__track{animation-play-state:paused}
+  .ticker__track .half{display:inline-block;padding:0}
+  .ticker__track span{padding:0 26px}
+  .ticker .live{color:var(--teal)}
+  .ticker .sei-print{color:var(--sei-bright)}
+  .ticker .tag{color:var(--gold)}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:600;letter-spacing:-.01em;font-size:18px}
+  .brand .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(150deg,var(--gold),var(--gold-deep));display:grid;place-items:center;font-family:var(--serif);color:#1A1206;font-size:17px;font-weight:600}
+  .brand .us{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--muted);border:1px solid var(--line-2);border-radius:999px;padding:3px 9px;margin-left:2px}
+  .nav-right{display:flex;align-items:center;gap:22px}
+  .nav-link{font-family:var(--mono);font-size:13px;color:var(--muted);transition:.2s}
+  .nav-link:hover{color:var(--gold)}
+  .nav-cta{font-family:var(--mono);font-size:13px;color:var(--muted);border:1px solid var(--line-2);padding:9px 16px;border-radius:8px;transition:.2s}
+  .nav-cta:hover{color:var(--text);border-color:var(--gold)}
+
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:9px}
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--gold-deep)}
+
+  .hero{padding:74px 0 96px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:52px;align-items:center}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(40px,5.6vw,66px);line-height:1.04;letter-spacing:-.02em;margin:26px 0 24px}
+  h1 em{font-style:italic;color:var(--gold);font-weight:400}
+  .lede{font-size:18.5px;color:var(--muted);max-width:34em;line-height:1.62}
+  .lede b{color:var(--text);font-weight:500}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+  .btn{font-family:var(--mono);font-size:14px;padding:14px 22px;border-radius:9px;transition:.2s;display:inline-flex;align-items:center;gap:9px}
+  .btn-primary{background:linear-gradient(150deg,var(--gold),var(--gold-deep));color:#1A1206;font-weight:500}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 30px -10px rgba(227,183,120,.5)}
+  .btn-ghost{border:1px solid var(--line-2);color:var(--muted)}
+  .btn-ghost:hover{color:var(--text);border-color:var(--teal)}
+
+  .terminal{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.7)}
+  .terminal__bar{display:flex;align-items:center;gap:7px;padding:13px 16px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--muted-2);letter-spacing:.06em}
+  .dot{width:9px;height:9px;border-radius:50%}
+  .dot.r{background:#E05A5A}.dot.y{background:var(--gold)}.dot.g{background:var(--teal)}
+  .terminal__bar span{margin-left:auto;text-transform:uppercase}
+  .terminal__foot{padding:14px 18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.7}
+  .terminal__foot b{color:var(--gold);font-weight:500}
+
+  .band{padding:92px 0;background:var(--rule) no-repeat top / 100% 1px}
+  .band h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,3.9vw,46px);line-height:1.08;letter-spacing:-.02em;margin:22px 0 0;max-width:16em}
+  .band h2 em{font-style:italic;color:var(--gold);font-weight:400}
+  .band .body{font-size:17.5px;color:var(--muted);max-width:40em;margin-top:22px;line-height:1.66}
+  .band .body b{color:var(--text);font-weight:500}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:46px}
+  .stat{background:var(--ink-2);padding:26px 24px;transition:.2s}
+  .stat:hover{background:var(--ink-3)}
+  .stat .num{font-family:var(--serif);font-weight:500;font-size:clamp(26px,2.6vw,34px);color:var(--gold);letter-spacing:-.01em;line-height:1.1;font-variant-numeric:tabular-nums}
+  .stat p{font-size:14px;color:var(--muted);line-height:1.55;margin-top:10px}
+  .stats-note{font-family:var(--mono);font-size:12.5px;color:var(--muted-2);margin-top:20px;line-height:1.7;letter-spacing:.02em;max-width:52em}
+
+  .cmx{margin-top:46px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .cmx-table{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .cmx-table .cmx-head{padding:15px 22px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2)}
+  table.cm{width:100%;border-collapse:collapse}
+  .cm th,.cm td{padding:14px 18px;border-bottom:1px solid var(--line);font-size:14px;text-align:left}
+  .cm th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);font-weight:400}
+  .cm td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .cm tr:last-child td{border-bottom:none}
+  .cm .rowlab{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted)}
+  .cm .tp{color:var(--teal)} .cm .fp{color:var(--strain)} .cm .fn{color:var(--red)} .cm .tn{color:var(--muted)}
+
+  .leads{margin-top:46px;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:30px 28px}
+  .leads h3{font-family:var(--sans);font-weight:600;font-size:16px;letter-spacing:-.01em}
+  .leads .leads-sub{font-family:var(--mono);font-size:12px;color:var(--muted-2);margin-top:6px;letter-spacing:.03em}
+  .leadrow{display:grid;grid-template-columns:170px 1fr 84px;align-items:center;gap:16px;margin-top:22px}
+  .leadrow .who{font-family:var(--mono);font-size:13px;color:var(--muted)}
+  .leadrow .lane{position:relative;height:26px;background:var(--ink);border-radius:6px;overflow:visible}
+  .leadrow .bar{position:absolute;left:0;top:4px;bottom:4px;width:0;border-radius:4px;background:linear-gradient(90deg,var(--gold-deep),var(--gold));transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+  .leadrow .months{font-family:var(--mono);font-size:13px;color:var(--gold);text-align:right;font-variant-numeric:tabular-nums}
+  .leads .median{position:relative;margin-top:26px;padding-top:18px;border-top:1px dashed var(--line)}
+  .leads .median p{font-family:var(--mono);font-size:12px;color:var(--muted-2);line-height:1.7;letter-spacing:.02em}
+  .leads .median b{color:var(--muted)}
+
+  .miss{margin-top:24px;background:var(--ink-2);border:1px solid var(--line);border-left:2px solid var(--red);border-radius:14px;padding:26px 28px}
+  .miss h3{font-family:var(--sans);font-weight:600;font-size:16px}
+  .miss p{color:var(--muted);font-size:15px;margin-top:10px;line-height:1.65;max-width:52em}
+  .miss ul{margin-top:14px}
+  .miss li{list-style:none;font-family:var(--mono);font-size:13px;color:var(--muted);padding:7px 0;border-bottom:1px dashed var(--line);line-height:1.5}
+  .miss li:last-child{border-bottom:none}
+  .miss li b{color:var(--red);font-weight:500}
+
+  .board{margin-top:46px;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .board__head{display:flex;align-items:center;gap:10px;padding:15px 22px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);flex-wrap:wrap}
+  .board__head .pulse{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 2.4s ease-in-out infinite;flex-shrink:0}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .board__census{margin-left:auto;color:var(--muted);text-transform:none;letter-spacing:.03em}
+  .board__scroll{overflow-x:auto}
+  table.mfi{width:100%;border-collapse:collapse;min-width:680px}
+  .mfi th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);font-weight:400}
+  .mfi th:first-child,.mfi td:first-child{padding-left:22px}
+  .mfi th:last-child,.mfi td:last-child{padding-right:22px}
+  .mfi td{padding:11px 14px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}
+  .mfi tbody tr{transition:background .18s}
+  .mfi tbody tr:hover{background:rgba(227,183,120,.04)}
+  .mfi tbody tr:last-child td{border-bottom:none}
+  .mfi .inst-name{color:var(--text);font-weight:500;white-space:nowrap}
+  .mfi .basis{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);white-space:nowrap}
+  .mfi .score{font-family:var(--mono);font-size:14.5px;color:var(--text);font-variant-numeric:tabular-nums;text-align:right}
+  .mfi .hot{color:var(--strain)}
+  .board__foot{padding:16px 22px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--muted-2);line-height:1.7;letter-spacing:.02em}
+  .board__foot a{color:var(--gold)}
+
+  .engines{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:46px}
+  .engine{background:var(--ink-2);padding:26px 24px;transition:.25s;position:relative}
+  .engine::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gold);opacity:0;transition:.25s}
+  .engine:hover{background:var(--ink-3)}
+  .engine:hover::after{opacity:.8}
+  .engine .no{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.08em}
+  .engine h3{font-family:var(--sans);font-weight:600;font-size:17px;margin:13px 0 8px;letter-spacing:-.01em}
+  .engine p{font-size:14.5px;color:var(--muted);line-height:1.55}
+
+  .reg-quote{margin-top:36px;max-width:44em;border-left:2px solid var(--gold-deep);padding:8px 0 8px 24px}
+  .reg-quote p{font-family:var(--serif);font-style:italic;font-size:19.5px;color:var(--text);line-height:1.55}
+  .reg-quote cite{display:block;font-family:var(--mono);font-style:normal;font-size:12.5px;color:var(--muted-2);margin-top:14px;letter-spacing:.03em}
+
+  .sei-live{margin:36px 0 4px;border:1px solid var(--sei-deep);border-radius:11px;padding:18px;background:rgba(145,132,217,.05);max-width:560px}
+  .sei-live__head{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2)}
+  .sei-live__head .pulse{width:8px;height:8px;border-radius:50%;background:var(--sei);animation:pulse 2.4s ease-in-out infinite}
+  .sei-live__main{display:flex;align-items:baseline;gap:14px;margin-top:12px;flex-wrap:wrap}
+  .sei-live__val{font-family:var(--serif);font-weight:500;font-size:44px;line-height:1;color:var(--text);font-variant-numeric:tabular-nums}
+  .sei-regime{font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:4px 11px;border-radius:999px;border:1px solid}
+  .sei-regime.CALM{color:var(--calm);border-color:var(--calm);background:rgba(121,194,173,.08)}
+  .sei-regime.EROSION{color:var(--erosion);border-color:var(--erosion);background:rgba(211,171,110,.08)}
+  .sei-regime.STRAIN{color:var(--strain);border-color:var(--strain);background:rgba(217,146,116,.08)}
+  .sei-regime.STRESS{color:var(--stress);border-color:var(--stress);background:rgba(221,122,114,.1)}
+  .sei-live__line{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.7}
+  .sei-links{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px}
+  .sei-links a{font-family:var(--mono);font-size:13px;color:var(--sei-bright);border-bottom:1px solid transparent;transition:.2s}
+  .sei-links a:hover{border-color:var(--sei)}
+
+  .plumb{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:36px;background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:24px 22px}
+  .plumb div{min-width:0}
+  .plumb .k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2)}
+  .plumb .v{display:block;font-family:var(--mono);font-size:16px;color:var(--text);margin-top:5px;font-variant-numeric:tabular-nums}
+  .plumb .a{display:block;font-family:var(--mono);font-size:9.5px;color:var(--muted-2);margin-top:4px}
+
+  .fine{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);margin-top:20px;line-height:1.7;letter-spacing:.02em;max-width:60em}
+  .fine a{color:var(--muted);border-bottom:1px dotted var(--line-2)}
+  .fine a:hover{color:var(--gold);border-color:var(--gold)}
+
+  .close{padding:104px 0;text-align:center;background:var(--rule) no-repeat top / 100% 1px,radial-gradient(120% 90% at 50% 0%,rgba(227,183,120,.06),transparent 60%)}
+  .close h2{font-family:var(--serif);font-weight:500;font-size:clamp(32px,4.6vw,54px);letter-spacing:-.02em;line-height:1.06;max-width:14em;margin:18px auto 30px}
+  .close h2 em{font-style:italic;color:var(--gold);font-weight:400}
+  .close .hero-actions{justify-content:center}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;font-family:var(--mono);font-size:12.5px;color:var(--muted-2)}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+  footer a{color:var(--muted);transition:.2s}footer a:hover{color:var(--gold)}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;gap:40px}
+    .stats{grid-template-columns:1fr 1fr}
+    .cmx{grid-template-columns:1fr}
+    .engines{grid-template-columns:1fr}
+    .band{padding:68px 0}
+    nav .nav-cta{display:none}
+    .leadrow{grid-template-columns:120px 1fr 64px;gap:10px}
+    .plumb{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track" id="tickerTrack">
+    <span class="half">
+      <span><span class="tag">LIQUILENS US</span> run risk on every FDIC insured bank</span>
+      <span>panel <span class="live">527,760 bank quarters</span> · 9,903 institutions · 2004 to 2026</span>
+      <span>recall <span class="live">73.1%</span> of 550 failures · median lead <span class="live">21.7 months</span></span>
+      <span>SVB flagged <span class="live">17.3 months</span> before the run</span>
+      <span>both 2026 failures on the watchlist <span class="live">a year early</span>, out of sample</span>
+      <span><span class="sei-print">SEICHE</span> regime conditioning, live from the open terminal</span>
+      <span>false positive rate <span class="tag">9.7%</span>, published, not hidden</span>
+      <span>NDFI on watch universe books <span class="tag">$1.65T</span> as of 2026 Q1</span>
+    </span><span class="half">
+      <span><span class="tag">LIQUILENS US</span> run risk on every FDIC insured bank</span>
+      <span>panel <span class="live">527,760 bank quarters</span> · 9,903 institutions · 2004 to 2026</span>
+      <span>recall <span class="live">73.1%</span> of 550 failures · median lead <span class="live">21.7 months</span></span>
+      <span>SVB flagged <span class="live">17.3 months</span> before the run</span>
+      <span>both 2026 failures on the watchlist <span class="live">a year early</span>, out of sample</span>
+      <span><span class="sei-print">SEICHE</span> regime conditioning, live from the open terminal</span>
+      <span>false positive rate <span class="tag">9.7%</span>, published, not hidden</span>
+      <span>NDFI on watch universe books <span class="tag">$1.65T</span> as of 2026 Q1</span>
+    </span>
+  </div>
+</div>
+
+<header class="wrap">
+  <nav>
+    <a class="brand" href="/"><span class="mark">L</span>LiquiLens<span class="us">US</span></a>
+    <span class="nav-right">
+      <a class="nav-link" href="#validation">Validation</a>
+      <a class="nav-link" href="#ndfi">NDFI watch</a>
+      <a class="nav-link" href="#reserves">Stablecoin reserves</a>
+      <a class="nav-link" href="/">India platform →</a>
+      <a class="nav-cta" href="mailto:mrinal091997@gmail.com?subject=LiquiLens%20US%20research%20access">Request access</a>
+    </span>
+  </nav>
+</header>
+
+<section class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow">The US bank layer</span>
+      <h1>Both 2026 bank failures were on this watchlist <em>a year early.</em></h1>
+      <p class="lede">LiquiLens US scores every FDIC insured bank for run risk from free public filings, point in time, quarter by quarter since 2004. It knows <b>who is fragile</b>, watches <b>when the reaching for deposits starts</b>, reads <b>the funding tide</b> from our open Seiche terminal, and maps <b>where trouble travels</b>, from stablecoin reserves to private credit. The validation is published in full, false positives and misses included.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#validation">Read the validation →</a>
+        <a class="btn btn-ghost" href="mailto:mrinal091997@gmail.com?subject=LiquiLens%20US%20research%20access">Request the full table</a>
+      </div>
+    </div>
+    <div class="terminal reveal">
+      <div class="terminal__bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span>validation · 550 failures · no fitting</span></div>
+      <div class="stats" style="margin:0;border:none;border-radius:0">
+        <div class="stat"><div class="num">73.1%</div><p>of all 550 FDIC failures since 2008 caught in advance</p></div>
+        <div class="stat"><div class="num">21.7 mo</div><p>median warning before the FDIC arrived</p></div>
+        <div class="stat"><div class="num">9.7%</div><p>false positive rate, published with the recall</p></div>
+        <div class="stat"><div class="num">6 of 6</div><p>balance sheet failures of 2023 to 2026 flagged early</p></div>
+      </div>
+      <div class="terminal__foot">Signal weights were fixed before the first backtest ran, so every number is <b>out of sample by construction</b>. The engine is the same one validated on two Indian crisis cycles.</div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="validation">
+  <div class="wrap">
+    <span class="eyebrow reveal">Measured, not asserted</span>
+    <h2 class="reveal">Every early warning vendor quotes recall. <em>Ask for the rest of the matrix.</em></h2>
+    <p class="body reveal">A warning system that never says how often it cries wolf is not a warning system. Incumbent bank raters publish hit rates and stop there. We publish the entire confusion matrix on all 527,760 bank quarters, because the trade off is the product: <b>we place roughly ten percent of the industry on watch to catch 73 percent of failures one to two years early.</b></p>
+
+    <div class="cmx reveal">
+      <div class="cmx-table">
+        <div class="cmx-head">bank quarter confusion matrix · 24 month horizon · 2005 to 2026</div>
+        <table class="cm">
+          <tr><th></th><th>failure within 24m</th><th>no failure</th></tr>
+          <tr><td class="rowlab">flagged</td><td class="tp">2,179 caught</td><td class="fp">50,637 false alarms</td></tr>
+          <tr><td class="rowlab">not flagged</td><td class="fn">2,209 missed</td><td class="tn">472,735 correctly clear</td></tr>
+        </table>
+      </div>
+      <div class="cmx-table">
+        <div class="cmx-head">the honest numbers</div>
+        <table class="cm">
+          <tr><td class="rowlab">false positive rate</td><td>9.7%</td></tr>
+          <tr><td class="rowlab">precision</td><td>4.1%</td></tr>
+          <tr><td class="rowlab">failure base rate</td><td>0.83%</td></tr>
+          <tr><td class="rowlab">lift over base rate</td><td>5.0x</td></tr>
+          <tr><td class="rowlab">pooled AUC</td><td>0.853</td></tr>
+          <tr><td class="rowlab">recall, 95% interval</td><td>69.5% to 76.7%</td></tr>
+        </table>
+      </div>
+    </div>
+    <p class="stats-note reveal">Failures are rare, so most flags are not followed by one. That is what a 0.83 percent base rate means, and any vendor whose numbers sound better than this either fit their model to the past or is not telling you their false positive rate. Score versions are kept honest too: the preregistered score reads 73.1 percent, adding private credit exposure reads 72.0 percent, adding deposit desperation reads 75.5 percent, all at the same alarm budget.</p>
+  </div>
+</section>
+
+<section class="band" id="record">
+  <div class="wrap">
+    <span class="eyebrow reveal">The record, by name</span>
+    <h2 class="reveal">Every failure since 2023. <em>Catches and misses.</em></h2>
+
+    <div class="leads reveal">
+      <h3>Months on the watchlist before the FDIC arrived</h3>
+      <p class="leads-sub">every balance sheet driven failure of the rate shock era, from public filings alone</p>
+      <div class="leadrow"><span class="who">Signature Bank</span><div class="lane"><div class="bar" data-w="97"></div></div><span class="months">23.4</span></div>
+      <div class="leadrow"><span class="who">First Republic</span><div class="lane"><div class="bar" data-w="92"></div></div><span class="months">22.0</span></div>
+      <div class="leadrow"><span class="who">Republic First</span><div class="lane"><div class="bar" data-w="91"></div></div><span class="months">21.9</span></div>
+      <div class="leadrow"><span class="who">Metropolitan Capital</span><div class="lane"><div class="bar" data-w="79"></div></div><span class="months">19.0</span></div>
+      <div class="leadrow"><span class="who">Silicon Valley Bank</span><div class="lane"><div class="bar" data-w="72"></div></div><span class="months">17.3</span></div>
+      <div class="leadrow"><span class="who">CB&amp;T West Georgia</span><div class="lane"><div class="bar" data-w="54"></div></div><span class="months">13.0</span></div>
+      <div class="median"><p><b>The two 2026 failures are true out of sample events.</b> The signal set predates them and is timestamped in version control. Nothing in this pipeline was fitted to any outcome, in any era.</p></div>
+    </div>
+
+    <div class="miss reveal">
+      <h3>The five we missed, and why we show them</h3>
+      <p>Every miss of the 2023 to 2026 era is a small bank whose failure was publicly attributed to fraud or insider conduct. Embezzlement is invisible to balance sheet fundamentals. This engine predicts run risk and solvency erosion. It does not detect crime, and we would rather tell you that than let a marketing page imply otherwise.</p>
+      <ul>
+        <li><b>MISS</b> · Heartland Tri State Bank, 2023 · CEO wire fraud scheme</li>
+        <li><b>MISS</b> · Citizens Bank, Sac City, 2023 · concentrated fraudulent loans</li>
+        <li><b>MISS</b> · First National Bank of Lindsay, 2024 · false bank records</li>
+        <li><b>MISS</b> · Pulaski Savings Bank, 2025 · suspected fraud cited by the FDIC</li>
+        <li><b>MISS</b> · Santa Anna National Bank, 2025 · fraud reported</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="ndfi">
+  <div class="wrap">
+    <span class="eyebrow reveal">The 2026 exposure</span>
+    <h2 class="reveal">Banks carry $1.65 trillion of private credit lending. <em>We rank all of them.</em></h2>
+    <p class="body reveal">Loans to nondepository financial institutions, the private credit and fund finance pipeline, are the fastest growing corner of US bank lending, and the one regulators started forcing into disclosure in 2024. Analysts cover the twenty largest banks by hand. This engine ranks <b>every one of the 1,052 banks above one billion dollars in assets</b>, every quarter, against their own capital. The ten most concentrated, straight from Q1 2026 filings:</p>
+
+    <div class="board reveal">
+      <div class="board__head"><span class="pulse"></span><span>NDFI watch · top 10 by exposure to tier 1 capital</span><span class="board__census">FDIC call reports · as of 2026 03 31</span></div>
+      <div class="board__scroll">
+        <table class="mfi">
+          <thead><tr><th>Institution</th><th>State</th><th style="text-align:right">Assets</th><th style="text-align:right">NDFI loans</th><th style="text-align:right">NDFI / tier 1</th><th style="text-align:right">Uninsured deposits</th></tr></thead>
+          <tbody>
+            <tr><td class="inst-name">Northpointe Bank</td><td class="basis">Michigan</td><td class="score">$7.4B</td><td class="score">$3.9B</td><td class="score hot">5.64x</td><td class="score">8%</td></tr>
+            <tr><td class="inst-name">Axos Bank</td><td class="basis">California</td><td class="score">$28.2B</td><td class="score">$10.1B</td><td class="score hot">3.96x</td><td class="score">19%</td></tr>
+            <tr><td class="inst-name">EverBank</td><td class="basis">Florida</td><td class="score">$47.2B</td><td class="score">$16.4B</td><td class="score hot">3.96x</td><td class="score">13%</td></tr>
+            <tr><td class="inst-name">Stifel Bank</td><td class="basis">Missouri</td><td class="score">$12.1B</td><td class="score">$3.3B</td><td class="score hot">3.90x</td><td class="score">15%</td></tr>
+            <tr><td class="inst-name">Merchants Bank of Indiana</td><td class="basis">Indiana</td><td class="score">$20.3B</td><td class="score">$7.9B</td><td class="score hot">3.50x</td><td class="score">27%</td></tr>
+            <tr><td class="inst-name">Texas Capital Bank</td><td class="basis">Texas</td><td class="score">$33.2B</td><td class="score">$10.1B</td><td class="score">2.72x</td><td class="score">41%</td></tr>
+            <tr><td class="inst-name">Customers Bank</td><td class="basis">Pennsylvania</td><td class="score">$25.9B</td><td class="score">$6.0B</td><td class="score">2.57x</td><td class="score">43%</td></tr>
+            <tr><td class="inst-name">Forbright Bank</td><td class="basis">Maryland</td><td class="score">$8.3B</td><td class="score">$2.0B</td><td class="score">2.42x</td><td class="score">14%</td></tr>
+            <tr><td class="inst-name">Apple Bank</td><td class="basis">New York</td><td class="score">$19.2B</td><td class="score">$3.2B</td><td class="score">2.17x</td><td class="score">22%</td></tr>
+            <tr><td class="inst-name">Goldman Sachs Bank USA</td><td class="basis">New York</td><td class="score">$751.8B</td><td class="score">$122.8B</td><td class="score">1.96x</td><td class="score">42%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="board__foot">Facts above are computed directly from public FDIC call report filings and describe concentration, not misconduct and not a prediction. The full ranked table, with run risk percentiles and quarterly change, is available to research subscribers. <a href="mailto:mrinal091997@gmail.com?subject=NDFI%20watch%20full%20table">Request it →</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="reserves">
+  <div class="wrap">
+    <span class="eyebrow reveal">The digital dollar layer</span>
+    <h2 class="reveal">Everyone rates the stablecoin. <em>Nobody scores the banks holding its cash.</em></h2>
+    <p class="body reveal">In March 2023 USDC broke its peg because Circle's cash sat at Silicon Valley Bank. The GENIUS Act now regulates issuers like banks, but it sets <b>no limit on where the cash reserves sit</b>, and the New York Fed itself notes issuers are not required to name every bank servicing their deposits. So we map the edges: issuer by issuer, bank by bank, only from citable public disclosures, joined to the same run risk engine that scores every US bank above.</p>
+
+    <div class="board reveal">
+      <div class="board__head"><span class="pulse"></span><span>reserve custodian map · public disclosures only</span><span class="board__census">edges carry their source · undisclosed stays undisclosed</span></div>
+      <div class="board__scroll">
+        <table class="mfi">
+          <thead><tr><th>Issuer</th><th>Token</th><th>Named institution</th><th>Relationship</th><th style="text-align:right">NDFI / tier 1</th></tr></thead>
+          <tbody>
+            <tr><td class="inst-name">Circle</td><td class="basis">USDC</td><td>Bank of New York Mellon</td><td class="basis">reserve fund custody</td><td class="score">0.40x</td></tr>
+            <tr><td class="inst-name">Circle</td><td class="basis">USDC</td><td>Customers Bank</td><td class="basis">cash deposits</td><td class="score hot">2.57x</td></tr>
+            <tr><td class="inst-name">Circle</td><td class="basis">USDC</td><td>Cross River Bank</td><td class="basis">cash deposits</td><td class="score">1.50x</td></tr>
+            <tr><td class="inst-name">Tether</td><td class="basis">USDT</td><td>Cantor Fitzgerald</td><td class="basis">treasuries custody, non bank</td><td class="score">·</td></tr>
+            <tr><td class="inst-name">SoFi</td><td class="basis">sofiUSD</td><td>SoFi Bank, N.A.</td><td class="basis">bank issued</td><td class="score">0.00x</td></tr>
+            <tr><td class="inst-name">JPMorgan</td><td class="basis">JPMD</td><td>JPMorgan Chase Bank, N.A.</td><td class="basis">deposit token</td><td class="score">0.81x</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="board__foot">Worth sitting with: two of the banks named in Circle's own disclosures also appear in the private credit concentration table one section up. Cross exposure like that is exactly what a transmission map exists to show. Issuer level run risk scoring, redemption pressure reading and the full edge list ship to research subscribers. <a href="mailto:mrinal091997@gmail.com?subject=Reserve%20map%20access">Request access →</a></div>
+    </div>
+    <p class="fine reveal">Every edge above carries a citable public source: issuer transparency disclosures, SEC money market fund filings, bank quarterly reports. Where an issuer has not named its banks, we say undisclosed rather than guess. Nothing here alleges wrongdoing by any institution.</p>
+  </div>
+</section>
+
+<section class="band" id="desperation">
+  <div class="wrap">
+    <span class="eyebrow reveal">The fast layer</span>
+    <h2 class="reveal">A bank that suddenly pays up for deposits is telling you something. <em>We listen weekly.</em></h2>
+    <p class="body reveal">Reaching for deposits is one of the oldest tells in banking and one of the best documented in the academic record. As a quarterly signal from filings alone it catches <b>64.7 percent of all 550 failures by itself</b>, and adding it lifts the full engine from 72.0 to 75.5 percent recall at the same alarm budget. The live layer sharpens it to weeks: every bank's offered rates against the FDIC national baseline, where a legal ceiling already exists for banks that are less than well capitalized.</p>
+
+    <div class="plumb reveal">
+      <div><span class="k">savings, national</span><span class="v">0.38%</span><span class="a">cap 1.13%</span></div>
+      <div><span class="k">money market</span><span class="v">0.61%</span><span class="a">cap 1.36%</span></div>
+      <div><span class="k">3 month CD</span><span class="v">1.15%</span><span class="a">cap 1.90%</span></div>
+      <div><span class="k">6 month CD</span><span class="v">1.38%</span><span class="a">cap 2.13%</span></div>
+      <div><span class="k">12 month CD</span><span class="v">1.65%</span><span class="a">cap 2.40%</span></div>
+    </div>
+    <p class="stats-note reveal">FDIC national deposit rates and section 337.7 rate caps, as of June 15, 2026. The caps mark national rate plus 75 basis points, the legal ceiling for banks that are less than well capitalized. An institution bidding far above its peers, and rising fast, moves up this engine's watchlist weeks before the next quarterly filing lands. Deposit pricing vendors sell this data to banks to help them price. Nobody sells it as a distress signal, because their customers are the banks. Ours are not.</p>
+  </div>
+</section>
+
+<section class="band" id="regime">
+  <div class="wrap">
+    <span class="eyebrow reveal">The tide</span>
+    <h2 class="reveal">The same fragile bank is far more dangerous <em>when the tide is going out.</em></h2>
+    <p class="body reveal">Scores here are conditioned on the live funding regime read by <b>Seiche</b>, our free and open source terminal for US money market stress. Incumbent risk vendors condition on hypothetical scenario menus. Seiche infers the regime that is actually in force, right now, from the plumbing: repo, reserves, the Fed's own balance sheet prints. It publishes its calls before outcomes and keeps a public scoreboard, misses included.</p>
+    <div class="sei-live reveal" id="seiLive">
+      <div class="sei-live__head"><span class="pulse"></span><span id="seiStamp">connecting to the live board…</span></div>
+      <div class="sei-live__main">
+        <span class="sei-live__val" id="seiVal">··</span>
+        <span class="sei-regime" id="seiRegime" hidden></span>
+      </div>
+      <div class="sei-live__line" id="seiLine">This reading is fetched from the live terminal as you load this page. If it does not appear, the terminal itself is one click away.</div>
+    </div>
+    <div class="sei-links reveal">
+      <a href="https://seiche.info" target="_blank" rel="noopener">Open the terminal →</a>
+      <a href="https://seiche.info/#proof" target="_blank" rel="noopener">Read the scoreboard →</a>
+      <a href="https://github.com/beepboop2025/seiche" target="_blank" rel="noopener">Source, AGPL →</a>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="method">
+  <div class="wrap">
+    <span class="eyebrow reveal">Method and limits</span>
+    <h2 class="reveal">Read this before <em>relying on any of it.</em></h2>
+    <div class="engines reveal">
+      <div class="engine"><div class="no">POINT IN TIME</div><h3>No hindsight anywhere</h3><p>A score at any date uses only filings available at that date. Signal weights were fixed before the first backtest ran and never tuned on outcomes. Post hoc additions, private credit exposure and deposit desperation, are validated standalone and reported as separate score versions.</p></div>
+      <div class="engine"><div class="no">FRAUD BLINDNESS</div><h3>We do not detect crime</h3><p>Every 2023 to 2026 miss was a fraud driven failure. Balance sheet fundamentals cannot see embezzlement, and we will not pretend otherwise. A conduct and enforcement signal is a roadmap item, not a tuning fix.</p></div>
+      <div class="engine"><div class="no">PROXY, NOT TAPE</div><h3>Regulators see more</h3><p>The Fed watches actual payment flows in real time. Nobody outside can. Public data nowcasting approximates run pressure rather than observing it, and the honest word for that is proxy.</p></div>
+      <div class="engine"><div class="no">COVERAGE</div><h3>Known data gaps, disclosed</h3><p>Uninsured deposit estimates have a reporting gap for smaller banks between 2015 and 2019. The score reweights over available signals and records how many were present for every bank quarter.</p></div>
+    </div>
+    <p class="fine reveal" id="disclaimer">LiquiLens US outputs are screening percentiles computed from public FDIC filings. They are research, not credit ratings, not a prediction that any institution will fail, and not investment, legal or deposit placement advice. Named institutions are identified because their filings are public records; nothing on this page alleges wrongdoing by anyone. Data: FDIC BankFind Suite, public domain. Validation reproducible end to end; the full report travels with the product.</p>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center">Research access</span>
+    <h2>See your counterparties the way <em>the engine sees them.</em></h2>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="mailto:mrinal091997@gmail.com?subject=LiquiLens%20US%20research%20access">Request research access →</a>
+      <a class="btn btn-ghost" href="/">The India platform →</a>
+    </div>
+    <p class="fine" style="margin:26px auto 0;text-align:center">Fintechs watching a sponsor bank, treasurers sizing uninsured exposure, credit desks screening counterparties, stablecoin risk teams. One engine, published validation, misses included.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 LiquiLens · the US bank layer</span>
+    <span><a href="/">liquilens.in</a> · <a href="https://seiche.info" target="_blank" rel="noopener">seiche.info</a> · <a href="mailto:mrinal091997@gmail.com">write to the desk</a></span>
+  </div>
+</footer>
+
+<script>
+  // reveal on scroll
+  const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // lead bars animate in
+  const lb = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.bar').forEach(b=>{b.style.width=b.dataset.w+'%'});lb.unobserve(e.target)}})},{threshold:.3});
+  document.querySelectorAll('.leads').forEach(el=>lb.observe(el));
+
+  // live Seiche reading: fetched from the public API in your browser; never faked
+  (function(){
+    const ctl = new AbortController();
+    const t = setTimeout(()=>ctl.abort(), 6500);
+    fetch('https://api.seiche.info/api/public',{mode:'cors',signal:ctl.signal})
+      .then(r=>{clearTimeout(t);return r.ok?r.json():null})
+      .then(d=>{
+        if(!d) return;
+        const v=document.getElementById('seiVal'), rg=document.getElementById('seiRegime'),
+              st=document.getElementById('seiStamp'), ln=document.getElementById('seiLine');
+        const comp = d.composite && (d.composite.value ?? d.composite);
+        const regime = d.regime || (d.composite && d.composite.regime);
+        if(comp!=null){ v.textContent = Number(comp).toFixed(1); }
+        if(regime){ rg.textContent = regime; rg.className = 'sei-regime ' + regime; rg.hidden = false; }
+        st.textContent = 'live from api.seiche.info · ' + ((d.generated_at||d.as_of||'').slice(0,16).replace('T',' ')) + (d.generated_at||d.as_of?'Z':'');
+        ln.textContent = 'A composite funding stress index, 0 to 100, built from Fed, Treasury and repo market prints. Bank scores on this page are conditioned on this regime.';
+      })
+      .catch(()=>{ /* nothing shown rather than something stale */ });
+  })();
+</script>
+</body>
+</html>

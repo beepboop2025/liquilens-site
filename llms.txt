@@ -51,3 +51,14 @@ Live in production. Public walkthrough at https://demo.liquilens.in (synthetic d
 ## Pages
 
 - [Home](https://liquilens.in/): product overview, the six engines, sourced statistics, FAQ, and a free RBI LCR countdown calculator for NBFCs
+
+## LiquiLens US (the US bank layer, at /us/)
+
+- Run risk scores for every FDIC insured US bank, point in time, from free public FDIC call report data, 2004 to 2026 (527,760 bank quarters, 9,903 institutions)
+- Validation published in full: 73.1 percent recall on all 550 FDIC failures since 2008, 9.7 percent false positive rate, 21.7 month median lead, pooled AUC 0.853, misses named (all five 2023 to 2026 misses were fraud driven failures, which balance sheet data cannot see)
+- Flagged Silicon Valley Bank 17.3 months early, Signature 23.4, First Republic 22.0, Republic First 21.9, and both 2026 failures (Metropolitan Capital 19.0, Community Bank and Trust West Georgia 13.0) out of sample
+- NDFI watch: ranks all 1,052 US banks above one billion dollars in assets by private credit (nondepository financial institution) lending against tier 1 capital, from Q1 2026 filings
+- Reserve custodian map: which banks hold which stablecoin issuers' cash reserves, from citable public disclosures only, joined to the same bank run risk engine
+- Deposit desperation: a reaching for deposits signal (64.7 percent recall standalone) plus a live layer against FDIC national rates and section 337.7 caps
+- Scores are conditioned on the live US funding regime from Seiche (seiche.info), our free open source money market stress terminal
+- Outputs are research screening percentiles, not credit ratings, not predictions that any institution will fail, and not investment advice
