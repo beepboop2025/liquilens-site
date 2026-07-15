@@ -12,6 +12,8 @@
 - Contagion Radar: predicts which counterparties will delay payment before it lands
 - Liquidity Mesh: matches surplus cash to deficits and prices it inside the bank spread
 - Early Warning: a five signal lender suite (CE trajectory, network contagion, loan stacking velocity, coordinated fraud rings, single party concentration) under one false alert budget, aligned with RBI expectations on early warning systems and expected credit loss
+- Environment layer: coverage honest external factor observatories (monsoon and ENSO, food and fuel prices, funding conditions, political stress) for the regions the lenders operate in, refreshed every six hours from free public sources; a dark feed returns an explicit 503, never a calm looking zero (GET https://api.liquilens.in/api/environment/india, /egypt, /world)
+- Scoring gate: environment readings are context only and never move a risk score; whether they ever may is decided by pre registered studies on the crisis record, published win or lose. The monsoon study ran in July 2026 with two decades of sourced IMD rainfall data and came back short of the bar, so the gate is CLOSED; the verdict, data provenance and re run trigger are served at GET https://api.liquilens.in/api/environment/gate
 
 ## Who it is for
 
@@ -33,6 +35,7 @@
 - The earlier network signal study on sourced public rating timelines: 7 of 8 defaults of 2018 and 2019 flagged early at a median of 6.5 months, DHFL at 8 months, Altico at 11, Yes Bank at 17 months in the pre stated confirmatory phase
 - Seven European case files served beside the Indian and US records (Credit Suisse, Banco Popular, Northern Rock, Banco Espirito Santo failed; Deutsche Bank and Monte dei Paschi stressed survivors; UBS control), replayed point in time through the unrecalibrated Indian lenses from cited primary filings: Popular caught by the disclosure score 29 months out, Northern Rock lit up by its wholesale funding split 20 months before the 2007 run, Credit Suisse investment grade on reported ratios to the end and caught by the deposit run lens. Case studies, deliberately not a cohort statistic
 - Each of the five early warning signals shipped only after beating a pre registered bar on held out data; the validation scoreboard is inside the product model card
+- The same discipline runs in reverse: the pre registered monsoon to NPA lift study (July 2026) FAILED its own bar on today's record and was published anyway, keeping environment features out of scoring until the data earns them in
 - These are studies on public data, not a validation on a live lender book; lender specific numbers come from a backtest on the lender's own servers
 
 ## Enterprise readiness

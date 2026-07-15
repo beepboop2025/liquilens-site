@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LiquiLens | Failure Radar &amp; Early Warning for Banks, NBFCs &amp; MFIs</title>
-<meta name="description" content="LiquiLens spots failing financial institutions years before ratings move. A live failure radar over India's regulated lenders, banks, NBFCs and MFIs, plus a US bank run risk layer. Validated in the open on two markets, with every call on a tamper evident record. Treasury and liquidity tools ride on the same engine." />
+<meta name="description" content="LiquiLens spots failing financial institutions years before ratings move. A live failure radar over India's regulated lenders, banks, NBFCs and MFIs, a US bank run risk layer, and an environment layer that watches monsoon, politics and prices around them. Validated in the open on three markets, with every call on a tamper evident record. Treasury and liquidity tools ride on the same engine." />
 <!-- Google Search Console verified via the HTML-file method (2147d016bbe54619a8c528de85a1fd80.txt at site root). -->
 
 <link rel="canonical" href="https://liquilens.in/" />
@@ -46,7 +46,7 @@
       "disambiguatingDescription": "LiquiLens is a financial technology (fintech) software platform for institution failure early warning, liquidity risk and treasury automation in India and the US. It is a business finance software product and brand, not a physical device, medical, or optical product.",
       "areaServed": "IN",
       "industry": "Financial Technology",
-      "knowsAbout": ["treasury management", "liquidity risk management", "cash flow forecasting", "money markets", "NBFC early warning systems", "RBI Liquidity Coverage Ratio", "credit scoring", "expected credit loss", "Indian bank failure prediction", "RBI Prompt Corrective Action", "Merton distance to default", "US bank failure early warning", "bank run risk", "NDFI and private credit bank exposure", "stablecoin reserve risk"],
+      "knowsAbout": ["treasury management", "liquidity risk management", "cash flow forecasting", "money markets", "NBFC early warning systems", "RBI Liquidity Coverage Ratio", "credit scoring", "expected credit loss", "Indian bank failure prediction", "RBI Prompt Corrective Action", "Merton distance to default", "US bank failure early warning", "bank run risk", "NDFI and private credit bank exposure", "stablecoin reserve risk", "monsoon risk and rural credit stress", "external factor risk monitoring", "pre-registered model validation"],
       "email": "mrinal091997@liquilens.in",
       "sameAs": [
         "https://www.crunchbase.com/organization/liquilens",
@@ -587,7 +587,7 @@
   <div class="wrap">
     <span class="eyebrow reveal">What LiquiLens is</span>
     <h2 class="reveal">An early warning system for bank and lender failure, <em>proven in the open.</em></h2>
-    <p class="body reveal"><b>LiquiLens reads what institutions and regulators publish</b>, funding structure, filings and market signals, and flags the ones drifting toward distress. The method is validated on three markets on public data alone: 16 of 18 non fraud failures caught at a median lead of 21 months across two decades of Indian collapses, 73% recall across 550 US bank failures including the 2023 to 2026 wave, and seven European case files from Northern Rock to Credit Suisse replayed through the same lenses with every figure audited against primary filings. Every call is timestamped on a tamper evident record, so the track record cannot be rewritten later. The same engine carries the treasury side: cash forecasting, liquidity risk and credit scoring, calibrated to Indian money market data, not retrofitted from a Western playbook.</p>
+    <p class="body reveal"><b>LiquiLens reads what institutions and regulators publish</b>, funding structure, filings and market signals, and flags the ones drifting toward distress. The method is validated on three markets on public data alone: 16 of 18 non fraud failures caught at a median lead of 21 months across two decades of Indian collapses, 73% recall across 550 US bank failures including the 2023 to 2026 wave, and seven European case files from Northern Rock to Credit Suisse replayed through the same lenses with every figure audited against primary filings. Every call is timestamped on a tamper evident record, so the track record cannot be rewritten later. Around the institutions, the board now watches the world they operate in: monsoon, politics, funding conditions and prices, read from public sources every six hours and kept strictly outside the scores. The same engine carries the treasury side: cash forecasting, liquidity risk and credit scoring, calibrated to Indian money market data, not retrofitted from a Western playbook.</p>
   </div>
 </section>
 
@@ -689,6 +689,38 @@
       </a>
     </div>
     <p class="stats-note reveal">Different records support different kinds of claim, and the difference is stated on each panel: an institution level backtest in India, a budgeted watchlist backtest in the United States, named case files in Europe. The machine readable index is public at <a href="https://api.liquilens.in/api/evidence/markets" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">api.liquilens.in/api/evidence/markets</a>.</p>
+  </div>
+</section>
+
+<!-- the environment layer -->
+<section class="band" id="environment">
+  <div class="wrap">
+    <span class="eyebrow reveal">The environment layer</span>
+    <h2 class="reveal">The filings tell you about the lender. <em>They never tell you about the monsoon.</em></h2>
+    <p class="body reveal">An Indian microlender's repayments live and die with rural cash flows, and rural cash flows live and die with the kharif harvest. So the board now watches the world around the institutions, not just the institutions: monsoon and ENSO, food and fuel prices, funding conditions and political stress, refreshed every six hours from free public sources. Coverage is honest by construction. <b>When a feed goes dark, the board says a feed is dark.</b> Absence is never rendered as calm.</p>
+    <div class="layers reveal">
+      <a class="layer" href="https://demo.liquilens.in/?tab=worldradar" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">Observatories · live</span>
+        <h3>The world, read like a book</h3>
+        <p>Regional observatories publish a regime read from CALM to STRESS, the subscores behind it, and the exact coverage they had when they said it. India first, a stress calibration case beside it, and a scan across 25 countries behind them.</p>
+        <span class="go"><span>Open the World Radar →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/environment/india" target="_blank" rel="noopener">
+        <span class="badge live">By design</span>
+        <span class="lno">Context · not score</span>
+        <h3>On the board, never in the score</h3>
+        <p>Environment readings sit beside the risk scores as context for the humans reading them. They do not move a score by so much as a decimal. The separation is an explicit gate, enforced in code and tested on every commit, not a policy promise.</p>
+        <span class="go"><span>Read the live feed →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/environment/gate" target="_blank" rel="noopener">
+        <span class="badge new">Published</span>
+        <span class="lno">The gate · pre registered</span>
+        <h3>Tested, and published either way</h3>
+        <p>Whether monsoon stress may ever enter scoring was decided by a pre registered study on the crisis record, thresholds frozen before scoring. Today's data came back short of the bar, so the gate is closed, and the verdict is public along with the exact condition that reopens the question.</p>
+        <span class="go"><span>Query the gate →</span></span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -1035,6 +1067,10 @@
         <p>It is the production system's live scoring board for India's registered microfinance lenders, rendered on this page straight from the same API the product runs on. The RBI's official register lists over 9,000 NBFCs, 95 of them NBFC MFIs. Every MFI with a vetted dossier of primary filings gets scored by the same ensemble that was validated on two crisis cycles, and the trajectory next to each name is its score drawn quarter by quarter. <b>Scores are disclosure based reads of public filings, not credit ratings.</b> Coverage is published, exclusions carry a stated reason, and a row is dropped when its filings go stale.</p>
       </details>
       <details>
+        <summary>Does the weather really predict bank failure?</summary>
+        <p>We did not assume so. We tested it. A pre registered study replayed the crisis record with two decades of sourced monsoon data overlaid, hypotheses, thresholds and the pass bar all frozen before scoring. The honest answer on today's record is that the data is too thin to prove monsoon adds early warning, so <b>environment readings stay on the board as context and never touch a score.</b> The verdict, the rainfall data and the exact condition that would reopen the question are public at <a href="https://api.liquilens.in/api/environment/gate" target="_blank" rel="noopener" style="color:var(--gold)">api.liquilens.in/api/environment/gate</a>. When a vendor tells you their score blends in alternative data, ask to see their version of that study.</p>
+      </details>
+      <details>
         <summary>What happens to our data? How is it protected?</summary>
         <p>Every lender's book is isolated to that lender. The regulatory tables, CRR, SLR, ALM and reports, are scoped per tenant and the isolation is enforced by automated tests on every commit, so a request for another tenant's data returns nothing at all. Access runs on short lived tokens with rotation and role based permissions, HTTPS is enforced everywhere, dependencies and secrets are scanned continuously, and a hash chained ledger records every alert as it was published so the history cannot be quietly rewritten. <b>For pilots that cannot let data leave the building, the entire platform runs on the lender's own servers.</b></p>
       </details>
@@ -1055,6 +1091,7 @@
     {"@type": "Question", "name": "Has LiquiLens been tested on real data?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, three times over, on the public record. A 48 institution replay across two decades of Indian failures flagged 16 of 18 failures ahead of the record (excluding books concealed by fraud) at a median lead of 21 months, significant at p below 0.001. A fully out of sample replay of the 2025 microfinance cycle covered 11 more institutions with zero false alarms on 8 controls and flagged one lender below investment grade a quarter before the rating agencies moved. The US layer scored every FDIC insured bank point in time since 2004: 73% recall on all 550 failures since 2008, with both 2026 failures on the watchlist a year early, out of sample. These are studies on public data; lender specific numbers come from a backtest on the lender's own book."}},
     {"@type": "Question", "name": "What is Seiche and why does LiquiLens run a free terminal?", "acceptedAnswer": {"@type": "Answer", "text": "Seiche is a free, open source terminal for funding stress in the US money market, built by the same desk as LiquiLens. It runs on public data, publishes forecasts before outcomes, and keeps a sealed public scoreboard of hits and misses at seiche.info. It exists because an early warning vendor should have a public track record anyone can audit. Seiche is free forever; LiquiLens is the commercial product."}},
     {"@type": "Question", "name": "What is the LiquiLens MFI Risk Board?", "acceptedAnswer": {"@type": "Answer", "text": "The MFI Risk Board is LiquiLens's live scoring board for India's registered microfinance lenders. The RBI register lists over 9,000 NBFCs, 95 of them NBFC MFIs; every MFI with a vetted dossier of primary filings is scored by the same ensemble validated on two crisis cycles, with a quarter by quarter score trajectory. Scores are disclosure based reads of public filings, not credit ratings, coverage is published, and exclusions carry a stated reason."}},
+    {"@type": "Question", "name": "Does the weather really predict bank failure?", "acceptedAnswer": {"@type": "Answer", "text": "LiquiLens tested it rather than assuming it. A pre registered study replayed the crisis record with two decades of sourced IMD monsoon data overlaid, with hypotheses, thresholds and the pass bar frozen before scoring. On today's record the data is too thin to prove monsoon adds early warning, so environment readings stay on the board as context and never touch a risk score. The verdict and the re run condition are public at api.liquilens.in/api/environment/gate."}},
     {"@type": "Question", "name": "How is lender data protected in LiquiLens?", "acceptedAnswer": {"@type": "Answer", "text": "Every lender's book is isolated per tenant, including the regulatory tables for CRR, SLR, ALM and reports, and the isolation is enforced by automated tests on every commit. Access uses short lived tokens with rotation and role based permissions, HTTPS is enforced everywhere, dependencies and secrets are scanned continuously, and a hash chained point in time ledger records every alert as published. The platform can also run entirely on the lender's own servers."}}
   ]
 }
