@@ -1,6 +1,6 @@
 # LiquiLens
 
-> LiquiLens is an early warning system for bank and lender failure. It reads what institutions and regulators publish, funding structure, filings and market signals, and flags the ones drifting toward distress years before ratings move. Validated in the open on three markets: 16 of 18 non fraud failures caught at a median lead of 21 months across two decades of Indian collapses, 73% recall across 550 US bank failures, and seven named European case files from Northern Rock to Credit Suisse replayed through the same unrecalibrated lenses. Every call lands on a tamper evident, timestamped record. The same engine carries treasury, liquidity risk and credit scoring for Indian lenders and businesses.
+> LiquiLens is an early warning system for bank and lender failure. It reads what institutions and regulators publish, funding structure, filings and market signals, and flags the ones drifting toward distress years before ratings move. Validated in the open on three markets: 16 of 18 non fraud failures caught at a median lead of 21 months across two decades of Indian collapses, 73% recall across 550 US bank failures, and seven named European case files from Northern Rock to Credit Suisse replayed through the same unrecalibrated lenses. Every call lands on a tamper evident, timestamped record. The same engine carries treasury, liquidity risk and credit scoring for lenders and businesses, with live books over India's regulated lenders and every FDIC insured US bank.
 
 ## What it does
 
@@ -17,10 +17,11 @@
 
 ## Who it is for
 
+- Banks, NBFCs, microlenders and credit funds anywhere that need early warning on their own book or their counterparties; the live boards today cover India's regulated lenders and every FDIC insured US bank
 - Indian NBFCs and banks that need liquidity risk monitoring, credit scoring, and early warning on a live book
 - Indian MSMEs and mid size businesses whose working capital sits in current accounts earning zero (RBI directions prohibit interest on current account balances)
 
-## Why it matters (sourced)
+## Why India is the first market (sourced)
 
 - India's MSME credit gap was estimated at about Rs 25 lakh crore as of March 2025, with only 14% of MSMEs holding formal credit (Deloitte, 2025)
 - MSMEs contribute roughly 30% of India's GDP and about 45% of exports (Ministry of MSME via PIB, July 2024)
