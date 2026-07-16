@@ -45,7 +45,7 @@
       "disambiguatingDescription": "LiquiLens is a financial technology (fintech) software platform for institution failure early warning, liquidity risk and treasury automation for banks and lenders worldwide, with live books over India's regulated lenders and every FDIC insured US bank. It is a business finance software product and brand, not a physical device, medical, or optical product.",
       "areaServed": "Worldwide",
       "industry": "Financial Technology",
-      "knowsAbout": ["bank failure prediction", "treasury management", "liquidity risk management", "cash flow forecasting", "money markets", "NBFC early warning systems", "RBI Liquidity Coverage Ratio", "credit scoring", "expected credit loss", "RBI Prompt Corrective Action", "Merton distance to default", "US bank failure early warning", "European bank failure case studies", "bank run risk", "survival analysis probability of default", "conformal prediction risk alarms", "interbank contagion and DebtRank", "depositor run modelling", "NDFI and private credit bank exposure", "stablecoin reserve risk", "external factor risk monitoring", "pre-registered model validation"],
+      "knowsAbout": ["bank failure prediction", "treasury management", "liquidity risk management", "cash flow forecasting", "money markets", "NBFC early warning systems", "RBI Liquidity Coverage Ratio", "credit scoring", "expected credit loss", "RBI Prompt Corrective Action", "Merton distance to default", "US bank failure early warning", "European bank failure case studies", "bank run risk", "survival analysis probability of default", "conformal prediction risk alarms", "interbank contagion and DebtRank", "depositor run modelling", "NDFI and private credit bank exposure", "stablecoin reserve risk", "external factor risk monitoring", "pre-registered model validation", "news based early warning for financial institutions", "market regime change detection", "counterparty exposure monitoring"],
       "email": "mrinal091997@liquilens.in",
       "sameAs": [
         "https://www.crunchbase.com/organization/liquilens",
@@ -794,7 +794,7 @@
       <div class="engine"><div class="no">09</div><h3>Funding Fragility</h3><p>Reads the liability side for deposit runs and rollover freezes. It flagged Altico 30 months out while reported bad loans sat near zero.</p></div>
       <div class="engine"><div class="no">10</div><h3>Market Distance</h3><p>A daily market implied distance to default for 25 listed lenders, so the board reprices between filings instead of waiting for the next quarter.</p></div>
     </div>
-    <p class="engines-note reveal">And the bench keeps refilling. A July 2026 research pipeline implemented thirteen recent papers as validated engines and research surfaces: survival based PD term structures, conformal alarms with finite sample guarantees, solvency and liquidity run decomposition, multilayer contagion analytics and a depositor run simulator among them. Every one stays display and research only until it passes a pre registered gate study, the same bar that keeps monsoon data out of the scores today. The premise itself now has independent corroboration: Federal Reserve and MIT researchers, replaying 160 years of US bank failures, concluded that failures are predictable out of sample from public fundamentals (arXiv:2602.07327).</p>
+    <p class="engines-note reveal">And the bench keeps refilling. A July 2026 research pipeline implemented thirteen recent papers as validated engines and research surfaces: survival based PD term structures, conformal alarms with finite sample guarantees, solvency and liquidity run decomposition, multilayer contagion analytics and a depositor run simulator among them. Each one stays display and research only until it passes a pre registered gate study, the same bar that keeps monsoon data out of the scores today. <b>The first has now crossed that bar.</b> The conformal alarm passed its gate study and joined the watchlist tier in July 2026, wired deliberately narrow: it can lift a name off green, never demote one, never escalate past what the other signals justify, and the sign off that admitted it is published at <a href="https://api.liquilens.in/api/evidence/gates" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">api.liquilens.in/api/evidence/gates</a>. The premise itself now has independent corroboration: Federal Reserve and MIT researchers, replaying 160 years of US bank failures, concluded that failures are predictable out of sample from public fundamentals (arXiv:2602.07327).</p>
     <p class="engines-note reveal">Research grounded · calibrated per market · built to survive a real risk review.<br>The regulatory frame the engines compute against: <a href="https://www.bis.org/publ/bcbs238.htm" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">Basel III LCR standard (BIS, 2013)</a> · <a href="https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=11719&amp;Mode=0" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">RBI liquidity risk framework for NBFCs (2019)</a> · RBI Scale Based Regulation (2021).</p>
   </div>
 </section>
@@ -859,6 +859,38 @@
         <h3>Tested, and published either way</h3>
         <p>Whether monsoon stress may ever enter scoring was decided by a pre registered study on the crisis record, thresholds frozen before scoring. Today's data came back short of the bar, so the gate is closed, and the verdict is public along with the exact condition that reopens the question.</p>
         <span class="go"><span>Query the gate →</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- the public signals layer -->
+<section class="band" id="publicsignals">
+  <div class="wrap">
+    <span class="eyebrow reveal">The public signals layer</span>
+    <h2 class="reveal">No lender book. No supervisory feed. <em>The radar still turns.</em></h2>
+    <p class="body reveal">Strip away every private input and the record that remains, prices and the world's news, still carries warning. So the board now runs a standalone mode built from that record alone: a market regime detector over the bank index and the macro tape, and a news watch that reads the world's press per institution. Both are live, both are free public data end to end, and both sit <b>beside the scores, never inside them,</b> under the same gate discipline as everything else on the board.</p>
+    <div class="layers reveal">
+      <a class="layer" href="https://demo.liquilens.in/?tab=worldradar" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">Market regime · daily</span>
+        <h3>The tape, read for turns</h3>
+        <p>A sequential change detector watches how the bank index moves against the broad market, the rupee, crude, US yields and volatility, and calls the regime. Replayed blind on three years of data it recovered the June 2024 election shock and the 2026 Hormuz cluster on its own, and it has read SHIFT since 25 June 2026.</p>
+        <span class="go"><span>See the regime card →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/public-signals/news" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">News watch · per institution</span>
+        <h3>The press, read for pressure</h3>
+        <p>Every covered institution gets a news attention surge score against its own baseline, the tone of that coverage, and the share of it using distress language. Coverage today is partial, and the board says exactly which names it covers and which it cannot see yet. Thin coverage is flagged, never smoothed.</p>
+        <span class="go"><span>Read the live feed →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/public-signals" target="_blank" rel="noopener">
+        <span class="badge new">By design</span>
+        <span class="lno">Display only · stated in every payload</span>
+        <h3>Warning, not verdict</h3>
+        <p>Neither layer moves a score or a tier by so much as a decimal until a pre registered lift study on the crisis record says it has earned the right, the same bar that kept monsoon data out. Every payload states this about itself, so nothing downstream can mistake context for a score.</p>
+        <span class="go"><span>Query the layer →</span></span>
       </a>
     </div>
   </div>
@@ -985,6 +1017,16 @@
   </div>
 </section>
 
+<!-- exposure watch -->
+<section class="band" id="exposurewatch">
+  <div class="wrap">
+    <span class="eyebrow reveal">Exposure watch</span>
+    <h2 class="reveal">The radar watches everyone. <em>This watches your book.</em></h2>
+    <p class="body reveal">The public boards read the whole registry. Exposure watch reads it from your chair. A treasury or credit team records the institutions its money actually touches, partner banks, reserve custodians, borrower NBFCs and MFIs, and how much sits with each. The engine then overlays every name's live standing from whichever market scores it, diffs it against a daily baseline committed to the same tamper evident ledger, and routes any movement through alerting a named human governs. It computes <b>no new score of its own:</b> your exposure line travels beside the engine's numbers, verbatim, and a name the boards cannot see is reported as unseen, never as calm. When a review later asks whether anyone was actually watching, the answer is served, cryptographically verified, from the watch log itself.</p>
+    <p class="stats-note reveal">Tenant scoped and fail closed, like everything else that touches a book. Available to pilot tenants today through the <a href="https://demo.liquilens.in" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">product API</a>.</p>
+  </div>
+</section>
+
 <!-- who it is for -->
 <section class="band">
   <div class="wrap">
@@ -1014,7 +1056,7 @@
       <div class="engine"><div class="no">ISOLATION</div><h3>Every tenant sealed off</h3><p>Each lender's CRR, SLR, ALM and reporting book is scoped to that lender alone. Cross tenant isolation is proven by automated tests on every commit, and a probe for another tenant's report returns nothing, not even confirmation it exists.</p></div>
       <div class="engine"><div class="no">SECURITY</div><h3>Locked down by default</h3><p>Short lived tokens with rotation and role based access, account lockout, HTTPS enforced everywhere with HSTS, and dependency, container and secret scanning on every commit and every week. Production refuses to boot in an unsafe configuration.</p></div>
       <div class="engine"><div class="no">PROVENANCE</div><h3>Provable to a regulator</h3><p>A hash chained point in time ledger records every watchlist and alert as it was published. When a review asks what the engine said and when, the answer is cryptographic, not archaeological.</p></div>
-      <div class="engine"><div class="no">CONTINUITY</div><h3>Observable and recoverable</h3><p>Live metrics and error tracking in production, nightly database backups, more than 560 automated tests across the stack, and the option to run the whole platform on your own servers so your book never leaves your perimeter.</p></div>
+      <div class="engine"><div class="no">CONTINUITY</div><h3>Observable and recoverable</h3><p>Live metrics and error tracking in production, nightly database backups, more than 870 automated tests across the stack, and the option to run the whole platform on your own servers so your book never leaves your perimeter.</p></div>
     </div>
   </div>
 </section>

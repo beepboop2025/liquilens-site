@@ -14,6 +14,8 @@
 - Early Warning: a five signal lender suite (CE trajectory, network contagion, loan stacking velocity, coordinated fraud rings, single party concentration) under one false alert budget, aligned with RBI expectations on early warning systems and expected credit loss
 - Environment layer: coverage honest external factor observatories (monsoon and ENSO, food and fuel prices, funding conditions, political stress) for the regions the lenders operate in, refreshed every six hours from free public sources; a dark feed returns an explicit 503, never a calm looking zero (GET https://api.liquilens.in/api/environment/india, /egypt, /world)
 - Scoring gate: environment readings are context only and never move a risk score; whether they ever may is decided by pre registered studies on the crisis record, published win or lose. The monsoon study ran in July 2026 with two decades of sourced IMD rainfall data and came back short of the bar, so the gate is CLOSED; the verdict, data provenance and re run trigger are served at GET https://api.liquilens.in/api/environment/gate
+- Public signals layer (live July 2026): a standalone early warning mode built from free public data alone, no lender book and no supervisory feed. A market regime detector over the bank index and the macro tape (blind replay recovered the June 2024 election shock and the 2026 Hormuz cluster; reading SHIFT since 25 June 2026) and a per institution news watch (attention surge vs own baseline, tone, distress term share, thin coverage flagged never smoothed). Both display only, stated in every payload, until a pre registered lift study passes (GET https://api.liquilens.in/api/public-signals, /market-regime, /news)
+- Exposure watch (live July 2026): a tenant records the institutions its money touches (partner banks, reserve custodians, borrower NBFCs and MFIs) and how much; the engine overlays each name's live standing from whichever market scores it, diffs against a daily baseline committed to the tamper evident ledger, and routes movements through governed alerting. It computes no new score; unseen names are reported as unseen, never calm, and proof of watching (snapshot chain plus named human decision chain) is served verified from the watch log (tenant scoped, under /api/watch)
 
 ## Who it is for
 
@@ -38,7 +40,7 @@
 - Each of the five early warning signals shipped only after beating a pre registered bar on held out data; the validation scoreboard is inside the product model card
 - The same discipline runs in reverse: the pre registered monsoon to NPA lift study (July 2026) FAILED its own bar on today's record and was published anyway, keeping environment features out of scoring until the data earns them in
 - Independent corroboration of the thesis: Correia, Luck and Verner (Federal Reserve Richmond, New York Fed, MIT; arXiv:2602.07327, February 2026) conclude from 160 years of US bank failures that failures are predictable out of sample from public fundamentals and that runs rarely kill healthy banks — the premise LiquiLens is built on, stated by the Federal Reserve system
-- Research engine pipeline (July 2026): thirteen recent papers implemented as validated engines and research surfaces, including a structural HtM depositor-run clearing model reproducing the SVB collapse quarter by quarter (arXiv:2407.03285), conformal alarms with finite-sample guarantees (arXiv:2505.08578), IFRS 9 native survival PD term structures (arXiv:2507.15441), and layer-aware contagion analytics (arXiv:2602.10960); every engine is display and research only until it passes a pre registered gate study
+- Research engine pipeline (July 2026): thirteen recent papers implemented as validated engines and research surfaces, including a structural HtM depositor-run clearing model reproducing the SVB collapse quarter by quarter (arXiv:2407.03285), conformal alarms with finite-sample guarantees (arXiv:2505.08578), IFRS 9 native survival PD term structures (arXiv:2507.15441), and layer-aware contagion analytics (arXiv:2602.10960); every engine is display and research only until it passes a pre registered gate study. The first crossing happened in July 2026: the conformal alarm passed its gate on the healthy control calibration cohort and entered the watchlist tier, wired lift only (it can raise a name off green, never demote or escalate), with the signed approval served at GET https://api.liquilens.in/api/evidence/gates
 - These are studies on public data, not a validation on a live lender book; lender specific numbers come from a backtest on the lender's own servers
 
 ## Enterprise readiness
@@ -47,7 +49,7 @@
 - Short lived tokens with refresh rotation, role based access, account lockout, HTTPS enforced with HSTS
 - Dependency, container and secret scanning on every commit and weekly; production refuses to boot in an unsafe configuration
 - Hash chained point in time ledger of every watchlist and alert as published
-- Live metrics and error tracking, nightly database backups, more than 530 automated tests; self hosted deployment available so lender data never leaves the lender's perimeter
+- Live metrics and error tracking, nightly database backups, more than 870 automated tests; self hosted deployment available so lender data never leaves the lender's perimeter
 
 ## Related
 
