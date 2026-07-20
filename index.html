@@ -880,7 +880,7 @@
   <div class="wrap">
     <span class="eyebrow reveal">The public signals layer</span>
     <h2 class="reveal">No lender book. No supervisory feed. <em>The radar still turns.</em></h2>
-    <p class="body reveal">Strip away every private input and the record that remains, prices and the world's news, still carries warning. So the board now runs a standalone mode built from that record alone: a market regime detector over the bank index and the macro tape, and a news watch that reads the world's press per institution. Both are live, both are free public data end to end, and both sit <b>beside the scores, never inside them,</b> under the same gate discipline as everything else on the board.</p>
+    <p class="body reveal">Strip away every private input and the public record still carries warning. What began in early July as two layers, the tape and the press, is fifteen now. As of 20 July the board reads the full map of pressure around a bank: who is underwater on bonds, who is being shorted and by name where Europe forces names into the open, who actually provides the liquidity everyone assumes, who holds the sovereign debt, where deposits are quietly walking, and which institutions are too big to fail on paper. Every layer is free public data end to end, every threshold ships with its citation inside the payload, and all of it sits <b>beside the scores, never inside them.</b> Two boards opened red on day one and said exactly why. We consider that a feature.</p>
     <div class="layers reveal">
       <a class="layer" href="https://demo.liquilens.in/?tab=worldradar" target="_blank" rel="noopener">
         <span class="badge live">In production</span>
@@ -896,11 +896,74 @@
         <p>Every covered institution gets a news attention surge score against its own baseline, the tone of that coverage, and the share of it using distress language. Coverage today is partial, and the board says exactly which names it covers and which it cannot see yet. Thin coverage is flagged, never smoothed.</p>
         <span class="go"><span>Read the live feed →</span></span>
       </a>
+      <a class="layer" href="https://api.liquilens.in/api/public-signals/rails" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">Stablecoin rails · daily</span>
+        <h3>The dollar rails, watched at the issuer</h3>
+        <p>Issuer level early warning for onchain dollars: peg discount, redemption run velocity, and how concentrated each coin's chain footprint is, under published thresholds. Built for the treasury migration nobody's bank statement shows yet. The board opened at WATCH on its first read and said why.</p>
+        <span class="go"><span>Read the live feed →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/public-signals/crypto-exposure" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">Crypto exposure · cited register</span>
+        <h3>Which banks touch crypto, and how hard</h3>
+        <p>A cited per institution register of crypto exposure, channel by channel, joined to the US run risk board. The compound flag fires where an active crypto deposit channel meets a fragile funding base, and it fired on day one. Meme coin holdings are served as a stated absence, because nobody can observe them honestly.</p>
+        <span class="go"><span>Read the register →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/public-signals/bond-book" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">Bond book · per bank, quarterly</span>
+        <h3>The SVB arithmetic, run on every bank</h3>
+        <p>Unrealized bond losses against tier one capital for 1,487 FDIC banks, straight from the public filings, compounded with how runnable each deposit base is. Neither number alone killed SVB. Both together did. A rate nowcast marks the book to today's yield and wears an estimate label, because that is what it is.</p>
+        <span class="go"><span>Read the board →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/public-signals/short-pressure" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">Short pressure · per institution</span>
+        <h3>Who is betting against which bank</h3>
+        <p>FINRA short interest and daily short sale flow per US bank, joined to run risk. In Europe the registers name names: which fund is short which bank, above half a percent, by law. The rule is rising pressure on a fragile name, never a level alone. SVB's shorts were flat while it died, and the board says so.</p>
+        <span class="go"><span>Read the board →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/public-signals/market-makers" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">Dealer capacity · weekly</span>
+        <h3>The desks everyone assumes are deep</h3>
+        <p>How much spare intermediation capacity the primary dealers have left, from the New York Fed's own weekly numbers, next to a cited register of how few firms actually make the markets. When the warehouse runs low, the exit gets expensive for everyone at once. It read WATCH on arrival.</p>
+        <span class="go"><span>Read the board →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/public-signals/leverage" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">Hedge fund leverage · weekly + quarterly</span>
+        <h3>The crowd, measured against itself</h3>
+        <p>Hedge fund leverage from the OFR's Form PF aggregates, and gross short positioning across fourteen futures markets scored against each market's own history. Six sat past their 95th percentile stretch on the first read, so the board opened at ALARM and listed every one. Sterling 1992, the yen unwind of 2024 and Archegos ride along as case files.</p>
+        <span class="go"><span>Read the board →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/public-signals/bondholders" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">Bondholders · who holds the debt</span>
+        <h3>The basis trade, sized and clocked</h3>
+        <p>Leveraged fund Treasury shorts from CFTC positions plus the Cayman custody line, where book size alone can only ever reach WATCH and only a fast unwind can ALARM, calibrated to the pace the Bank of England documented in the gilt crisis. The UK leg is a cited register because no live feed exists, and it says so.</p>
+        <span class="go"><span>Read the board →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/public-signals/deposit-migration" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">Deposit migration · India, fortnightly</span>
+        <h3>Where the deposits are walking</h3>
+        <p>Credit growing five points faster than deposits is the RBI's own flagged condition, and the board opened at ALARM on exactly that. Mutual fund flows against deposit growth, deposit rate chase, margin compression, each channel honest about its lag. The one series with no public source ships as a stated gap, not a guess.</p>
+        <span class="go"><span>Read the board →</span></span>
+      </a>
+      <a class="layer" href="https://api.liquilens.in/api/public-signals/tbtf" target="_blank" rel="noopener">
+        <span class="badge live">In production</span>
+        <span class="lno">TBTF register · annual cadence, stated</span>
+        <h3>Too big to fail, on the record</h3>
+        <p>Every G SIB with its bucket and surcharge, India's D SIBs, Europe's sample, each joined to whatever live signal is firing on that name. No live TBTF score is served because none exists to compute, and pretending otherwise would be theater. Credit Suisse sits in the register permanently. Designation is not protection.</p>
+        <span class="go"><span>Read the register →</span></span>
+      </a>
       <a class="layer" href="https://api.liquilens.in/api/public-signals" target="_blank" rel="noopener">
         <span class="badge new">By design</span>
         <span class="lno">Display only · stated in every payload</span>
         <h3>Warning, not verdict</h3>
-        <p>Neither layer moves a score or a tier by so much as a decimal until a pre registered lift study on the crisis record says it has earned the right, the same bar that kept monsoon data out. Every payload states this about itself, so nothing downstream can mistake context for a score.</p>
+        <p>Fifteen layers, and not one moves a score or a tier by so much as a decimal until a pre registered lift study on the crisis record says it has earned the right, the same bar that kept monsoon data out. Every payload states this about itself, so nothing downstream can mistake context for a score.</p>
         <span class="go"><span>Query the layer →</span></span>
       </a>
     </div>
@@ -1304,7 +1367,7 @@
 
 <footer>
   <div class="wrap">
-    <span>© 2026 LiquiLens · The Liquidity Network · Updated 18 July 2026 · <a href="/us/">The US bank layer</a> · <a href="/research/">Research</a> · <a href="/ship-log/">Ship log</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a> · <a href="https://seiche.info" target="_blank" rel="noopener">Seiche, our free systemic stress terminal</a></span>
+    <span>© 2026 LiquiLens · The Liquidity Network · Updated 20 July 2026 · <a href="/us/">The US bank layer</a> · <a href="/research/">Research</a> · <a href="/ship-log/">Ship log</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a> · <a href="https://seiche.info" target="_blank" rel="noopener">Seiche, our free systemic stress terminal</a></span>
     <span>Rates shown are indicative of the Indian money market and for illustration only.</span>
   </div>
   <div class="wrap" style="margin-top:10px">
