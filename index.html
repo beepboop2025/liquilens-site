@@ -171,6 +171,20 @@
   .ticker .sei-print{color:var(--sei-bright)}
   .ticker .up{color:var(--teal)}
   .ticker .tag{color:var(--gold)}
+  .ticker .pcell{color:var(--muted);text-decoration:none;padding:0 26px;display:inline-block;transition:color .18s ease}
+  .ticker .pcell:hover{color:var(--text)}
+  .st{font-weight:600;letter-spacing:.06em}
+  .st-calm{color:var(--calm)}
+  .st-watch{color:var(--erosion)}
+  .st-shift{color:var(--gold)}
+  .st-reg{color:var(--muted)}
+  .st-alarm{color:var(--stress);animation:alarmpulse 1.7s ease-in-out infinite}
+  @keyframes alarmpulse{0%,100%{opacity:1;text-shadow:0 0 12px rgba(221,122,114,.55)}50%{opacity:.5;text-shadow:none}}
+  .badge.st-calm{color:var(--calm);border-color:rgba(121,194,173,.45)}
+  .badge.st-watch{color:var(--erosion);border-color:rgba(211,171,110,.5)}
+  .badge.st-shift{color:var(--gold);border-color:rgba(227,183,120,.5)}
+  .badge.st-reg{color:var(--muted);border-color:var(--line-2)}
+  .badge.st-alarm{color:var(--stress);border-color:rgba(221,122,114,.55);animation:alarmpulse 1.7s ease-in-out infinite}
   @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
   /* ---------- nav ---------- */
@@ -557,6 +571,7 @@
   }
   @media (prefers-reduced-motion:reduce){
     .ticker__track{animation:none}
+    .st-alarm{animation:none}
     .sei-live__head .pulse{animation:none}
     .board__head .pulse,.sei-board__head .pulse{animation:none}
     .reveal{opacity:1;transform:none;filter:none;transition:none}
@@ -576,10 +591,10 @@
 </head>
 <body>
 
-<!-- overnight rates ticker : the money market never closes -->
-<div class="ticker" aria-hidden="true">
+<!-- the pressure tape : the production board, printed onto the page -->
+<div class="ticker">
   <div class="ticker__track" id="tickerTrack">
-    <span class="half"><span>MIBOR O/N <b class="up">5.41%</b></span><span>TREPS <b class="up">5.38%</b></span><span>REPO <b class="up">5.25%</b></span><span>CBLO <b class="up">5.30%</b></span><span>91D T-BILL <b class="up">5.62%</b></span><span>CD 3M <b class="up">5.88%</b></span><span>CP 3M <b class="up">6.10%</b></span><span class="tag">the money market never sleeps</span><span><a href="/us/" style="color:var(--gold)">NEW · US bank layer: both 2026 failures flagged a year early →</a></span><span><a href="/undertow/" style="color:var(--gold)">NEW · Undertow: the cross market liquidity map →</a></span></span><span class="half"><span>MIBOR O/N <b class="up">5.41%</b></span><span>TREPS <b class="up">5.38%</b></span><span>REPO <b class="up">5.25%</b></span><span>CBLO <b class="up">5.30%</b></span><span>91D T-BILL <b class="up">5.62%</b></span><span>CD 3M <b class="up">5.88%</b></span><span>CP 3M <b class="up">6.10%</b></span><span class="tag">the money market never sleeps</span><span><a href="/us/" style="color:var(--gold)">NEW · US bank layer: both 2026 failures flagged a year early →</a></span><span><a href="/undertow/" style="color:var(--gold)">NEW · Undertow: the cross market liquidity map →</a></span></span>
+    <span class="half"><a class="pcell" href="#lyr-regime" data-pulse="market_regime">MARKET REGIME <b class="st st-shift">SHIFT</b></a><a class="pcell" href="#lyr-deposit-migration" data-pulse="deposit_migration">DEPOSIT MIGRATION <b class="st st-alarm">ALARM</b></a><a class="pcell" href="#lyr-leverage" data-pulse="leverage">LEVERAGE <b class="st st-alarm">ALARM</b></a><a class="pcell" href="#lyr-rails" data-pulse="rails">STABLECOIN RAILS <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-bond-book" data-pulse="bond_book">BOND BOOK <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-market-makers" data-pulse="market_makers">DEALER CAPACITY <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-bondholders" data-pulse="bondholders">BONDHOLDERS <b class="st st-watch">WATCH</b></a><a class="pcell" href="https://api.liquilens.in/api/public-signals/bond-market" data-pulse="bond_market">BOND MARKET <b class="st st-calm">CALM</b></a><a class="pcell" href="#lyr-short-pressure" data-pulse="short_pressure">SHORT PRESSURE <b class="st st-reg">1 FLAG</b></a><a class="pcell" href="#lyr-crypto" data-pulse="crypto_exposure">CRYPTO EXPOSURE <b class="st st-reg">1 FLAG</b></a><a class="pcell" href="#lyr-tbtf" data-pulse="tbtf">TBTF REGISTER <b class="st st-reg">15 FLAGS</b></a><a class="pcell" href="#lyr-news" data-pulse="news">NEWS WATCH <b class="st st-reg">20 WATCHED</b></a><span class="tag" data-pulse-asof>the board is live · as of 20 Jul 2026</span><span><a href="/us/" style="color:var(--gold)">US bank layer: both 2026 failures flagged a year early →</a></span><span><a href="/undertow/" style="color:var(--gold)">Undertow: the cross market liquidity map →</a></span></span><span class="half" aria-hidden="true"><a class="pcell" href="#lyr-regime" data-pulse="market_regime">MARKET REGIME <b class="st st-shift">SHIFT</b></a><a class="pcell" href="#lyr-deposit-migration" data-pulse="deposit_migration">DEPOSIT MIGRATION <b class="st st-alarm">ALARM</b></a><a class="pcell" href="#lyr-leverage" data-pulse="leverage">LEVERAGE <b class="st st-alarm">ALARM</b></a><a class="pcell" href="#lyr-rails" data-pulse="rails">STABLECOIN RAILS <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-bond-book" data-pulse="bond_book">BOND BOOK <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-market-makers" data-pulse="market_makers">DEALER CAPACITY <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-bondholders" data-pulse="bondholders">BONDHOLDERS <b class="st st-watch">WATCH</b></a><a class="pcell" href="https://api.liquilens.in/api/public-signals/bond-market" data-pulse="bond_market">BOND MARKET <b class="st st-calm">CALM</b></a><a class="pcell" href="#lyr-short-pressure" data-pulse="short_pressure">SHORT PRESSURE <b class="st st-reg">1 FLAG</b></a><a class="pcell" href="#lyr-crypto" data-pulse="crypto_exposure">CRYPTO EXPOSURE <b class="st st-reg">1 FLAG</b></a><a class="pcell" href="#lyr-tbtf" data-pulse="tbtf">TBTF REGISTER <b class="st st-reg">15 FLAGS</b></a><a class="pcell" href="#lyr-news" data-pulse="news">NEWS WATCH <b class="st st-reg">20 WATCHED</b></a><span class="tag" data-pulse-asof>the board is live · as of 20 Jul 2026</span><span><a href="/us/" style="color:var(--gold)">US bank layer: both 2026 failures flagged a year early →</a></span><span><a href="/undertow/" style="color:var(--gold)">Undertow: the cross market liquidity map →</a></span></span>
   </div>
 </div>
 
@@ -612,7 +627,7 @@
         <a class="btn btn-primary" href="https://demo.liquilens.in" target="_blank" rel="noopener">Request demo access →</a>
         <a class="btn btn-ghost" href="#contact">Start a conversation</a>
       </div>
-      <p style="margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Live in production · validated on three banking systems · every US bank scored since 2004 · a live radar over India's lender registry</p>
+      <p id="heroPulse" style="margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Board live · deposit migration and leverage read ALARM · as of 20 Jul 2026 · every US bank scored since 2004</p>
     </div>
 
     <div class="terminal reveal">
@@ -751,7 +766,7 @@
       .layers{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:46px}
       .layer{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:30px 28px;display:flex;flex-direction:column;transition:.25s;position:relative;overflow:hidden}
       .layer:hover{background:var(--ink-3);border-color:var(--line-2);transform:translateY(-2px)}
-      .layer .lno{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+      .layer .lno{display:block;padding-right:112px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
       .layer h3{font-family:var(--serif);font-weight:500;font-size:24px;margin:14px 0 10px;letter-spacing:-.01em}
       .layer p{color:var(--muted);font-size:15px;line-height:1.62}
       .layer .go{font-family:var(--mono);font-size:13px;color:var(--gold);margin-top:auto;padding-top:22px}
@@ -882,78 +897,78 @@
     <h2 class="reveal">No lender book. No supervisory feed. <em>The radar still turns.</em></h2>
     <p class="body reveal">Strip away every private input and the public record still carries warning. What began in early July as two layers, the tape and the press, is fifteen now. As of 20 July the board reads the full map of pressure around a bank: who is underwater on bonds, who is being shorted and by name where Europe forces names into the open, who actually provides the liquidity everyone assumes, who holds the sovereign debt, where deposits are quietly walking, and which institutions are too big to fail on paper. Every layer is free public data end to end, every threshold ships with its citation inside the payload, and all of it sits <b>beside the scores, never inside them.</b> Two boards opened red on day one and said exactly why. We consider that a feature.</p>
     <div class="layers reveal">
-      <a class="layer" href="https://demo.liquilens.in/?tab=worldradar" target="_blank" rel="noopener">
-        <span class="badge live">In production</span>
+      <a class="layer" id="lyr-regime" href="https://demo.liquilens.in/?tab=worldradar" target="_blank" rel="noopener">
+        <span class="badge st-shift" data-pulse-chip="market_regime">SHIFT</span>
         <span class="lno">Market regime · daily</span>
         <h3>The tape, read for turns</h3>
         <p>A sequential change detector watches how the bank index moves against the broad market, the rupee, crude, US yields and volatility, and calls the regime. Replayed blind on three years of data it recovered the June 2024 election shock and the 2026 Hormuz cluster on its own, and it has read SHIFT since 25 June 2026.</p>
         <span class="go"><span>See the regime card →</span></span>
       </a>
-      <a class="layer" href="https://api.liquilens.in/api/public-signals/news" target="_blank" rel="noopener">
-        <span class="badge live">In production</span>
+      <a class="layer" id="lyr-news" href="https://api.liquilens.in/api/public-signals/news" target="_blank" rel="noopener">
+        <span class="badge st-reg" data-pulse-chip="news">20 WATCHED</span>
         <span class="lno">News watch · per institution</span>
         <h3>The press, read for pressure</h3>
         <p>Every covered institution gets a news attention surge score against its own baseline, the tone of that coverage, and the share of it using distress language. Coverage today is partial, and the board says exactly which names it covers and which it cannot see yet. Thin coverage is flagged, never smoothed.</p>
         <span class="go"><span>Read the live feed →</span></span>
       </a>
-      <a class="layer" href="https://api.liquilens.in/api/public-signals/rails" target="_blank" rel="noopener">
-        <span class="badge live">In production</span>
+      <a class="layer" id="lyr-rails" href="https://api.liquilens.in/api/public-signals/rails" target="_blank" rel="noopener">
+        <span class="badge st-watch" data-pulse-chip="rails">WATCH</span>
         <span class="lno">Stablecoin rails · daily</span>
         <h3>The dollar rails, watched at the issuer</h3>
         <p>Issuer level early warning for onchain dollars: peg discount, redemption run velocity, and how concentrated each coin's chain footprint is, under published thresholds. Built for the treasury migration nobody's bank statement shows yet. The board opened at WATCH on its first read and said why.</p>
         <span class="go"><span>Read the live feed →</span></span>
       </a>
-      <a class="layer" href="https://api.liquilens.in/api/public-signals/crypto-exposure" target="_blank" rel="noopener">
-        <span class="badge live">In production</span>
+      <a class="layer" id="lyr-crypto" href="https://api.liquilens.in/api/public-signals/crypto-exposure" target="_blank" rel="noopener">
+        <span class="badge st-reg" data-pulse-chip="crypto_exposure">1 FLAG</span>
         <span class="lno">Crypto exposure · cited register</span>
         <h3>Which banks touch crypto, and how hard</h3>
         <p>A cited per institution register of crypto exposure, channel by channel, joined to the US run risk board. The compound flag fires where an active crypto deposit channel meets a fragile funding base, and it fired on day one. Meme coin holdings are served as a stated absence, because nobody can observe them honestly.</p>
         <span class="go"><span>Read the register →</span></span>
       </a>
-      <a class="layer" href="https://api.liquilens.in/api/public-signals/bond-book" target="_blank" rel="noopener">
-        <span class="badge live">In production</span>
+      <a class="layer" id="lyr-bond-book" href="https://api.liquilens.in/api/public-signals/bond-book" target="_blank" rel="noopener">
+        <span class="badge st-watch" data-pulse-chip="bond_book">WATCH</span>
         <span class="lno">Bond book · per bank, quarterly</span>
         <h3>The SVB arithmetic, run on every bank</h3>
         <p>Unrealized bond losses against tier one capital for 1,487 FDIC banks, straight from the public filings, compounded with how runnable each deposit base is. Neither number alone killed SVB. Both together did. A rate nowcast marks the book to today's yield and wears an estimate label, because that is what it is.</p>
         <span class="go"><span>Read the board →</span></span>
       </a>
-      <a class="layer" href="https://api.liquilens.in/api/public-signals/short-pressure" target="_blank" rel="noopener">
-        <span class="badge live">In production</span>
+      <a class="layer" id="lyr-short-pressure" href="https://api.liquilens.in/api/public-signals/short-pressure" target="_blank" rel="noopener">
+        <span class="badge st-reg" data-pulse-chip="short_pressure">1 FLAG</span>
         <span class="lno">Short pressure · per institution</span>
         <h3>Who is betting against which bank</h3>
         <p>FINRA short interest and daily short sale flow per US bank, joined to run risk. In Europe the registers name names: which fund is short which bank, above half a percent, by law. The rule is rising pressure on a fragile name, never a level alone. SVB's shorts were flat while it died, and the board says so.</p>
         <span class="go"><span>Read the board →</span></span>
       </a>
-      <a class="layer" href="https://api.liquilens.in/api/public-signals/market-makers" target="_blank" rel="noopener">
-        <span class="badge live">In production</span>
+      <a class="layer" id="lyr-market-makers" href="https://api.liquilens.in/api/public-signals/market-makers" target="_blank" rel="noopener">
+        <span class="badge st-watch" data-pulse-chip="market_makers">WATCH</span>
         <span class="lno">Dealer capacity · weekly</span>
         <h3>The desks everyone assumes are deep</h3>
         <p>How much spare intermediation capacity the primary dealers have left, from the New York Fed's own weekly numbers, next to a cited register of how few firms actually make the markets. When the warehouse runs low, the exit gets expensive for everyone at once. It read WATCH on arrival.</p>
         <span class="go"><span>Read the board →</span></span>
       </a>
-      <a class="layer" href="https://api.liquilens.in/api/public-signals/leverage" target="_blank" rel="noopener">
-        <span class="badge live">In production</span>
+      <a class="layer" id="lyr-leverage" href="https://api.liquilens.in/api/public-signals/leverage" target="_blank" rel="noopener">
+        <span class="badge st-alarm" data-pulse-chip="leverage">ALARM</span>
         <span class="lno">Hedge fund leverage · weekly + quarterly</span>
         <h3>The crowd, measured against itself</h3>
         <p>Hedge fund leverage from the OFR's Form PF aggregates, and gross short positioning across fourteen futures markets scored against each market's own history. Six sat past their 95th percentile stretch on the first read, so the board opened at ALARM and listed every one. Sterling 1992, the yen unwind of 2024 and Archegos ride along as case files.</p>
         <span class="go"><span>Read the board →</span></span>
       </a>
-      <a class="layer" href="https://api.liquilens.in/api/public-signals/bondholders" target="_blank" rel="noopener">
-        <span class="badge live">In production</span>
+      <a class="layer" id="lyr-bondholders" href="https://api.liquilens.in/api/public-signals/bondholders" target="_blank" rel="noopener">
+        <span class="badge st-watch" data-pulse-chip="bondholders">WATCH</span>
         <span class="lno">Bondholders · who holds the debt</span>
         <h3>The basis trade, sized and clocked</h3>
         <p>Leveraged fund Treasury shorts from CFTC positions plus the Cayman custody line, where book size alone can only ever reach WATCH and only a fast unwind can ALARM, calibrated to the pace the Bank of England documented in the gilt crisis. The UK leg is a cited register because no live feed exists, and it says so.</p>
         <span class="go"><span>Read the board →</span></span>
       </a>
-      <a class="layer" href="https://api.liquilens.in/api/public-signals/deposit-migration" target="_blank" rel="noopener">
-        <span class="badge live">In production</span>
+      <a class="layer" id="lyr-deposit-migration" href="https://api.liquilens.in/api/public-signals/deposit-migration" target="_blank" rel="noopener">
+        <span class="badge st-alarm" data-pulse-chip="deposit_migration">ALARM</span>
         <span class="lno">Deposit migration · India, fortnightly</span>
         <h3>Where the deposits are walking</h3>
         <p>Credit growing five points faster than deposits is the RBI's own flagged condition, and the board opened at ALARM on exactly that. Mutual fund flows against deposit growth, deposit rate chase, margin compression, each channel honest about its lag. The one series with no public source ships as a stated gap, not a guess.</p>
         <span class="go"><span>Read the board →</span></span>
       </a>
-      <a class="layer" href="https://api.liquilens.in/api/public-signals/tbtf" target="_blank" rel="noopener">
-        <span class="badge live">In production</span>
+      <a class="layer" id="lyr-tbtf" href="https://api.liquilens.in/api/public-signals/tbtf" target="_blank" rel="noopener">
+        <span class="badge st-reg" data-pulse-chip="tbtf">15 FLAGS</span>
         <span class="lno">TBTF register · annual cadence, stated</span>
         <h3>Too big to fail, on the record</h3>
         <p>Every G SIB with its bucket and surcharge, India's D SIBs, Europe's sample, each joined to whatever live signal is firing on that name. No live TBTF score is served because none exists to compute, and pretending otherwise would be theater. Credit Suisse sits in the register permanently. Designation is not protection.</p>
@@ -1484,6 +1499,47 @@
     const d = new Date(iso + 'T00:00:00Z');
     return d.getUTCDate() + ' ' + M[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
   }
+
+  // the pressure tape + layer chips: one 1KB read from the production pulse.
+  // the baked states are real prints from 20 Jul 2026, so a failed fetch
+  // leaves truth on the page, just not tonight's truth
+  (function(){
+    const CLS = {CALM:'st-calm',WATCH:'st-watch',ALARM:'st-alarm',SHIFT:'st-shift'};
+    function shortReg(t){
+      return (t||'')
+        .replace(/(\d+) (?:compound|structural) flag(s?)/, '$1 flag$2')
+        .replace(/(\d+) institutions? watched/, '$1 watched')
+        .toUpperCase();
+    }
+    function paint(b, v){
+      if(!v) return;
+      const base = b.classList.contains('badge') ? 'badge' : 'st';
+      if(v.error){ b.textContent = 'NO READ'; b.className = base + ' st-reg'; b.title = v.error; return; }
+      if(v.state){ b.textContent = v.state; b.className = base + ' ' + (CLS[v.state] || 'st-reg'); }
+      else if(v.register){ b.textContent = shortReg(v.register); b.className = base + ' st-reg'; b.title = v.register; }
+      if(v.stale){ b.title = ((b.title || '') + ' stale print, said in the payload').trim(); }
+    }
+    liveJSON('https://api.liquilens.in/api/public-signals/pulse').then(d=>{
+      const L = d.layers || {};
+      let alarms = 0, watches = 0, asof = '';
+      Object.keys(L).forEach(k=>{
+        const v = L[k] || {};
+        if(v.as_of && v.as_of > asof) asof = v.as_of;
+        if(v.state === 'ALARM') alarms++;
+        if(v.state === 'WATCH') watches++;
+      });
+      document.querySelectorAll('[data-pulse]').forEach(a=>{
+        const b = a.querySelector('.st'); if(b) paint(b, L[a.dataset.pulse]);
+      });
+      document.querySelectorAll('[data-pulse-chip]').forEach(b=>paint(b, L[b.dataset.pulseChip]));
+      document.querySelectorAll('[data-pulse-asof]').forEach(t=>{
+        t.textContent = 'the board is live · as of ' + fmtDate(asof);
+      });
+      const hero = document.getElementById('heroPulse');
+      if(hero) hero.textContent = 'Board live · ' + alarms + ' layer' + (alarms === 1 ? '' : 's') +
+        ' at ALARM · ' + watches + ' at WATCH · as of ' + fmtDate(asof) + ' · every US bank scored since 2004';
+    }).catch(()=>{});
+  })();
 
   // fetched once, consumed by the desk chip and the live desk panel
   const seiPublic = liveJSON('https://api.seiche.info/api/public');
