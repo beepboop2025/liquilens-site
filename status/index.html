@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.liquilens.in https://api.seiche.info https://demo.liquilens.in https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<title>Status | LiquiLens</title>
+<meta name="description" content="Live LiquiLens service status, fetched from the production API in your browser. If the fetch fails, that is the status.">
+<link rel="canonical" href="https://liquilens.in/status/">
+<meta property="og:title" content="Status | LiquiLens">
+<meta property="og:description" content="Live LiquiLens service status, fetched from the production API in your browser. If the fetch fails, that is the status.">
+<meta property="og:image" content="https://liquilens.in/og-radar.png">
+<meta property="og:url" content="https://liquilens.in/status/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E3B778'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%231A1206' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{--ink:#0A0F1C;--ink2:#0E1424;--line:#1E2740;--gold:#E3B778;--gold-deep:#C8954E;--teal:#5BD0C4;--red:#E06A6A;--text:#E9EBF2;--muted:#8B94AB;--muted2:#5C657E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:840px;margin:0 auto;padding:0 28px}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+.serif{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:-0.02em;line-height:1.12}
+.serif em{font-style:italic;color:var(--gold);font-weight:400}
+nav{border-bottom:1px solid var(--line);padding:20px 0;position:sticky;top:0;background:rgba(10,15,28,.92);backdrop-filter:blur(10px);z-index:9}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px;color:var(--text);font-weight:600;font-size:18px}
+.brand:hover{text-decoration:none}
+.mark{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(150deg,var(--gold),var(--gold-deep));color:#1A1206;font-family:'Fraunces',serif;font-weight:600;font-size:18px}
+.brand small{color:var(--muted2);font-weight:400;font-size:13px;margin-left:2px}
+.navlinks{display:flex;gap:22px;font-size:14.5px}
+.navlinks a{color:var(--muted)}.navlinks a:hover{color:var(--gold);text-decoration:none}
+header.hero{padding:74px 0 10px;background:radial-gradient(70% 90% at 80% 0%,rgba(227,183,120,.07),transparent 60%)}
+.kicker{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.kicker::before{content:"";width:26px;height:1px;background:var(--gold)}
+h1{font-size:clamp(34px,4.6vw,50px);margin:20px 0 14px}
+.lede{color:var(--muted);max-width:700px;font-size:17.5px}
+.lede b{color:var(--text)}
+section{padding:34px 0 66px}
+h2{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:24px;color:var(--text);margin:34px 0 10px}
+p.body{color:var(--muted);margin:10px 0;max-width:760px}
+p.body b{color:var(--text)}
+ul.plain{color:var(--muted);margin:10px 0 10px 20px;max-width:740px}
+ul.plain li{margin:7px 0}
+ul.plain b{color:var(--text)}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted2)}
+.statusrow{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;margin:10px 0;background:var(--ink2)}
+.badge{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.12em;padding:3px 10px;border-radius:6px;background:rgba(91,208,196,.12);color:var(--teal)}
+.badge.err{background:rgba(224,106,106,.12);color:var(--red)}
+.badge.wait{background:rgba(139,148,171,.12);color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:32px 0 44px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted2)}
+footer a{color:var(--muted)}
+@media (max-width:640px){.navlinks{display:none}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="/"><span class="mark">L</span>LiquiLens <small>status</small></a>
+  <span class="navlinks">
+    <a href="/">The radar</a>
+    <a href="/us/">US bank risk</a>
+    <a href="/research/">Research</a>
+    <a href="/about/">About</a>
+    <a href="/security/">Security</a>
+    <a href="/status/">Status</a>
+  </span>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="kicker">Status</div>
+  <h1 class="serif">Fetched in your browser, <em>never typed.</em></h1>
+  <p class="lede">This page asks the production systems directly from your browser. If a row cannot be reached, it says so. Absence is never dressed up as calm.</p>
+</div></header>
+
+<section><div class="wrap">
+  <div class="statusrow"><span class="badge wait" id="apiBadge">CHECKING</span><span><b>api.liquilens.in</b> · the radar API</span><span class="mono" id="apiNote" style="margin-left:auto"></span></div>
+  <div class="statusrow"><span class="badge wait" id="seiBadge">CHECKING</span><span><b>api.seiche.info</b> · Seiche, the funding stress terminal</span><span class="mono" id="seiNote" style="margin-left:auto"></span></div>
+  <div class="statusrow"><span class="badge wait" id="demoBadge">CHECKING</span><span><b>demo.liquilens.in</b> · the live walkthrough</span><span class="mono" id="demoNote" style="margin-left:auto"></span></div>
+
+  <h2>What OK means</h2>
+  <p class="body">The API health endpoint reports liveness: the service is up and answering. Data freshness is reported inside each data payload with its own as of stamp, because freshness is a property of each feed, not of the process. When a feed goes dark, the payload that depends on it says so instead of serving a stale number as current.</p>
+
+  <h2>Verify the record yourself</h2>
+  <ul class="plain">
+    <li><a href="https://api.liquilens.in/api/attest/pubkey" target="_blank" rel="noopener">api.liquilens.in/api/attest/pubkey</a> · the operator signing key</li>
+    <li><a href="https://api.liquilens.in/api/evidence/gates" target="_blank" rel="noopener">api.liquilens.in/api/evidence/gates</a> · the pre registered gate scoreboard</li>
+    <li><a href="https://api.liquilens.in/api/evidence/us" target="_blank" rel="noopener">api.liquilens.in/api/evidence/us</a> · the US validation pack, misses included</li>
+  </ul>
+  <p class="body mono" id="stamp">checked: never (JavaScript disabled?)</p>
+</div></section>
+
+<script>
+(function(){
+  function set(id, ok, note){
+    var b = document.getElementById(id);
+    b.textContent = ok===true ? 'OK' : (ok===false ? 'UNREACHABLE' : 'CHECKING');
+    b.className = 'badge' + (ok===true ? '' : (ok===false ? ' err' : ' wait'));
+    if(note) document.getElementById(id.replace('Badge','Note')).textContent = note;
+  }
+  function probe(url, id, parse){
+    var ctl = new AbortController();
+    var t = setTimeout(function(){ctl.abort()}, 7000);
+    fetch(url, {mode:'cors', signal:ctl.signal}).then(function(r){
+      clearTimeout(t);
+      if(!r.ok){ set(id, false, 'HTTP ' + r.status); return null; }
+      return r.json().catch(function(){ return {}; });
+    }).then(function(d){
+      if(d===null) return;
+      set(id, true, parse ? parse(d) : '');
+    }).catch(function(){ set(id, false, 'no response'); });
+  }
+  probe('https://api.liquilens.in/api/health', 'apiBadge', function(d){ return d && d.status ? ('status: ' + d.status) : ''; });
+  probe('https://api.seiche.info/api/public', 'seiBadge', function(d){
+    var when = d && (d.generated_at || d.as_of) || '';
+    return when ? ('as of ' + String(when).slice(0,16).replace('T',' ')) : '';
+  });
+  var ctl2 = new AbortController();
+  var t2 = setTimeout(function(){ctl2.abort()}, 7000);
+  fetch('https://demo.liquilens.in/', {mode:'no-cors', signal:ctl2.signal}).then(function(){
+    clearTimeout(t2); set('demoBadge', true, 'reachable');
+  }).catch(function(){ set('demoBadge', false, 'no response'); });
+  document.getElementById('stamp').textContent = 'checked from your browser at ' + new Date().toISOString().slice(0,19).replace('T',' ') + 'Z';
+})();
+</script>
+
+<footer><div class="wrap">
+  © 2026 LiquiLens · <a href="/">the failure radar</a> · <a href="/about/">about</a> · <a href="/security/">security</a> · <a href="/status/">status</a> · <a href="/privacy/">privacy</a> · <a href="/terms/">terms</a> · <a href="/ship-log/">ship log</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a>
+  <div style="margin-top:8px">LiquiLens is a product of ai.de, a Udyam registered sole proprietorship, Jaipur, India. · <a href="mailto:mrinal091997@liquilens.in">mrinal091997@liquilens.in</a> · Updated 20 July 2026</div>
+</div></footer>
+
+</body>
+</html>

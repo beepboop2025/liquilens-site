@@ -68,12 +68,18 @@ Live in production. Public walkthrough at https://demo.liquilens.in (synthetic d
 ## Pages
 
 - [Home](https://liquilens.in/): product overview, the ten engines, the live Failure Radar and MFI Risk Board, sourced statistics, FAQ, and a free RBI LCR countdown calculator for NBFCs
+- [About](https://liquilens.in/about/): who builds LiquiLens, the operating entity (ai.de, a Udyam registered sole proprietorship, Jaipur, India), and how to reach the founder
+- [Security](https://liquilens.in/security/): the security posture in plain language, the disclosure contact, and what the demo does and does not contain
+- [Status](https://liquilens.in/status/): live service status fetched from the public health endpoint, plus the cryptographic attestation surfaces
+- [Privacy](https://liquilens.in/privacy/): what this site collects, which is very little, and what the product stores
+- [Terms](https://liquilens.in/terms/): research use terms; outputs are screening research, not credit ratings and not investment advice
 
 ## LiquiLens US (the US bank layer, at /us/)
 
 - Run risk scores for every FDIC insured US bank, point in time, from free public FDIC call report data, 2004 to 2026 (527,760 bank quarters, 9,903 institutions)
-- Validation published in full: 73.1 percent recall on all 550 FDIC failures since 2008, 9.7 percent false positive rate, 21.7 month median lead, pooled AUC 0.853, misses named (all five 2023 to 2026 misses were fraud driven failures, which balance sheet data cannot see)
-- Flagged Silicon Valley Bank 17.3 months early, Signature 23.4, First Republic 22.0, Republic First 21.9, and both 2026 failures (Metropolitan Capital 19.0, Community Bank and Trust West Georgia 13.0) out of sample
+- Validation published in full: 73.1 percent recall on all 550 FDIC failures since 2008, 9.7 percent false positive rate, 21.7 month median lead, pooled AUC 0.853, misses named (seven for 2023 to 2026: five fraud driven failures, which balance sheet data cannot see, plus the two July 2026 microbanks, Kentland Federal S&L and Small Business Bank, below the watch decile and published as misses the week they failed)
+- Flagged Silicon Valley Bank 17.3 months early, Signature 23.4, First Republic 22.0, Republic First 21.9, and two of the four 2026 failures (Metropolitan Capital 19.0, Community Bank and Trust West Georgia 13.0) out of sample; the July 2026 failures, Kentland Federal S&L ($3.7M) and Small Business Bank ($73M), never reached the watch decile and are published as misses
+- SR 26-2 ready vendor validation pack: the Fed, OCC and FDIC replaced SR 11-7 with SR 26-2 on April 17, 2026; every engine ships design, intended use, limitations, data lineage, pre registered gate studies and the sealed publication ledger in that shape (request by email)
 - NDFI watch: ranks all 1,052 US banks above one billion dollars in assets by private credit (nondepository financial institution) lending against tier 1 capital, from Q1 2026 filings
 - Reserve custodian map: which banks hold which stablecoin issuers' cash reserves, from citable public disclosures only, joined to the same bank run risk engine
 - Deposit desperation: a reaching for deposits signal (64.7 percent recall standalone) plus a live layer against FDIC national rates and section 337.7 caps

@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.liquilens.in https://api.seiche.info https://demo.liquilens.in https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <title>LiquiLens US | Bank run risk, scored a year early</title>
-<meta name="description" content="LiquiLens US scores every FDIC insured bank for run risk from public filings, point in time. The engine flagged SVB 17 months early and both 2026 failures out of sample. Full validation published, false positives included." />
+<meta name="description" content="LiquiLens US scores every FDIC insured bank for run risk from public filings, point in time. The engine flagged SVB 17 months early and two of the four 2026 failures a year ahead, out of sample. Both July 2026 misses are published by name. Full validation public, false positives included." />
 <link rel="canonical" href="https://liquilens.in/us/" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <meta name="theme-color" content="#0A0F1C" />
@@ -15,12 +15,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://liquilens.in/us/" />
 <meta property="og:site_name" content="LiquiLens" />
-<meta property="og:title" content="LiquiLens US | Both 2026 bank failures were on the watchlist a year early" />
+<meta property="og:title" content="LiquiLens US | The 2026 scoreboard: two flagged a year early, two misses published" />
 <meta property="og:description" content="Run risk scores for every US bank from free public data. Validation published in full: recall, false positive rate, lead times, and the misses, by name." />
 <meta property="og:image" content="https://liquilens.in/og-radar.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="LiquiLens US | Bank run risk, scored a year early" />
-<meta name="twitter:description" content="The engine flagged SVB 17 months early and both 2026 failures out of sample. Full confusion matrix published." />
+<meta name="twitter:description" content="The engine flagged SVB 17 months early and two of the four 2026 failures a year ahead, out of sample. Both misses published. Full confusion matrix public." />
 <meta name="twitter:image" content="https://liquilens.in/og-radar.png" />
 
 <script type="application/ld+json">
@@ -35,12 +35,12 @@
       "isPartOf": { "@id": "https://liquilens.in/#site" },
       "about": { "@id": "https://liquilens.in/#org" },
       "datePublished": "2026-07-14",
-      "dateModified": "2026-07-14"
+      "dateModified": "2026-07-20"
     },
     {
       "@type": "Dataset",
       "name": "LiquiLens US bank run risk validation record",
-      "description": "Point in time early warning scores for every FDIC insured US bank, validated against all 550 FDIC receiverships 2008 to 2026. Published with the full confusion matrix: recall 73.1 percent, false positive rate 9.7 percent, median lead 21.7 months, misses named.",
+      "description": "Point in time early warning scores for every FDIC insured US bank, validated against all 550 FDIC receiverships 2008 to 2026. Published with the full confusion matrix: recall 73.1 percent, false positive rate 9.7 percent, median lead 21.7 months, misses named. 2026 scoreboard: two of four failures flagged a year early, and the two July 2026 microbank misses published by name.",
       "url": "https://liquilens.in/us/",
       "creator": { "@id": "https://liquilens.in/#org" },
       "license": "https://liquilens.in/us/#method",
@@ -275,7 +275,7 @@
       <span>panel <span class="live">527,760 bank quarters</span> · 9,903 institutions · 2004 to 2026</span>
       <span>recall <span class="live">73.1%</span> of 550 failures · median lead <span class="live">21.7 months</span></span>
       <span>SVB flagged <span class="live">17.3 months</span> before the run</span>
-      <span>both 2026 failures on the watchlist <span class="live">a year early</span>, out of sample</span>
+      <span>2026 scoreboard: two flagged <span class="live">a year early</span> · two misses published by name</span>
       <span><span class="sei-print">SEICHE</span> regime conditioning, live from the open terminal</span>
       <span>false positive rate <span class="tag">9.7%</span>, published, not hidden</span>
       <span>NDFI on watch universe books <span class="tag">$1.65T</span> as of 2026 Q1</span>
@@ -284,7 +284,7 @@
       <span>panel <span class="live">527,760 bank quarters</span> · 9,903 institutions · 2004 to 2026</span>
       <span>recall <span class="live">73.1%</span> of 550 failures · median lead <span class="live">21.7 months</span></span>
       <span>SVB flagged <span class="live">17.3 months</span> before the run</span>
-      <span>both 2026 failures on the watchlist <span class="live">a year early</span>, out of sample</span>
+      <span>2026 scoreboard: two flagged <span class="live">a year early</span> · two misses published by name</span>
       <span><span class="sei-print">SEICHE</span> regime conditioning, live from the open terminal</span>
       <span>false positive rate <span class="tag">9.7%</span>, published, not hidden</span>
       <span>NDFI on watch universe books <span class="tag">$1.65T</span> as of 2026 Q1</span>
@@ -310,7 +310,7 @@
   <div class="hero-grid">
     <div>
       <span class="eyebrow">The US bank layer</span>
-      <h1>Both 2026 bank failures were on this watchlist <em>a year early.</em></h1>
+      <h1>Four banks failed in 2026. Two were on this watchlist <em>a year early.</em> The two we missed are named below.</h1>
       <p class="lede">LiquiLens US scores every FDIC insured bank for run risk from free public filings, point in time, quarter by quarter since 2004. It knows <b>who is fragile</b>, watches <b>when the reaching for deposits starts</b>, reads <b>the funding tide</b> from our open Seiche terminal, and maps <b>where trouble travels</b>, from stablecoin reserves to private credit. The validation is published in full, false positives and misses included.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#validation">Read the validation →</a>
@@ -350,7 +350,7 @@
     <div class="stat"><div class="num">73.1%</div><p>of all 550 FDIC failures since 2008 caught in advance</p></div>
     <div class="stat"><div class="num">21.7 mo</div><p>median warning before the FDIC arrived</p></div>
     <div class="stat"><div class="num">9.7%</div><p>false positive rate, published next to the recall</p></div>
-    <div class="stat"><div class="num">6 of 6</div><p>balance sheet failures of 2023 to 2026 flagged early</p></div>
+    <div class="stat"><div class="num">6 of 8</div><p>balance sheet failures of the rate shock era flagged early, both 2026 misses published by name</p></div>
   </div>
 </section>
 
@@ -392,25 +392,29 @@
 
     <div class="leads reveal">
       <h3>Months on the watchlist before the FDIC arrived</h3>
-      <p class="leads-sub">every balance sheet driven failure of the rate shock era, from public filings alone</p>
+      <p class="leads-sub">every balance sheet driven failure of the rate shock era, from public filings alone, misses shown at zero</p>
       <div class="leadrow"><span class="who">Signature Bank</span><div class="lane"><div class="bar" data-w="97"></div></div><span class="months">23.4</span></div>
       <div class="leadrow"><span class="who">First Republic</span><div class="lane"><div class="bar" data-w="92"></div></div><span class="months">22.0</span></div>
       <div class="leadrow"><span class="who">Republic First</span><div class="lane"><div class="bar" data-w="91"></div></div><span class="months">21.9</span></div>
       <div class="leadrow"><span class="who">Metropolitan Capital</span><div class="lane"><div class="bar" data-w="79"></div></div><span class="months">19.0</span></div>
       <div class="leadrow"><span class="who">Silicon Valley Bank</span><div class="lane"><div class="bar" data-w="72"></div></div><span class="months">17.3</span></div>
       <div class="leadrow"><span class="who">CB&amp;T West Georgia</span><div class="lane"><div class="bar" data-w="54"></div></div><span class="months">13.0</span></div>
+      <div class="leadrow"><span class="who">Kentland Federal S&amp;L</span><div class="lane"><div class="bar" data-w="0"></div></div><span class="months">miss</span></div>
+      <div class="leadrow"><span class="who">Small Business Bank</span><div class="lane"><div class="bar" data-w="0"></div></div><span class="months">miss</span></div>
       <div class="median"><p><b>Nothing in this pipeline was fitted to any outcome, in any era.</b> The weights were frozen before the first backtest ever ran, so the same rule set that catches the 2008 failures catches the 2026 ones. From here the record runs forward: every quarterly watchlist is sealed when published, the same discipline as our open Seiche terminal.</p></div>
     </div>
 
     <div class="miss reveal">
-      <h3>The five we missed, and why we show them</h3>
-      <p>Every miss of the 2023 to 2026 era is a small bank whose failure was publicly attributed to fraud or insider conduct. Embezzlement is invisible to balance sheet fundamentals. This engine predicts run risk and solvency erosion. It does not detect crime, and we would rather tell you that than let a marketing page imply otherwise.</p>
+      <h3>The seven we missed, and why we show them</h3>
+      <p>Five misses of the 2023 to 2026 era are small banks whose failures were publicly attributed to fraud or insider conduct. Embezzlement is invisible to balance sheet fundamentals; this engine predicts run risk and solvency erosion, it does not detect crime. The two July 2026 misses are different, and harder to write. Both were tiny non fraud banks, $3.7M and $73M in assets, whose capital eroded while their deposit base stayed quiet, and a run risk lens ranks that low. We replayed both on their final filings the week they failed, found neither had ever reached the watch decile, and published exactly that instead of an excuse.</p>
       <ul>
         <li><b>MISS</b> · Heartland Tri State Bank, 2023 · CEO wire fraud scheme</li>
         <li><b>MISS</b> · Citizens Bank, Sac City, 2023 · concentrated fraudulent loans</li>
         <li><b>MISS</b> · First National Bank of Lindsay, 2024 · false bank records</li>
         <li><b>MISS</b> · Pulaski Savings Bank, 2025 · suspected fraud cited by the FDIC</li>
         <li><b>MISS</b> · Santa Anna National Bank, 2025 · fraud reported</li>
+        <li><b>MISS</b> · Kentland Federal Savings and Loan, 2026 · a $3.7M thrift, the smallest US bank. Never reached the watch decile; peak percentile 0.65 on its final filing</li>
+        <li><b>MISS</b> · Small Business Bank, Lenexa, 2026 · $73M, publicly undercapitalized since a 2023 Fed order. A solvency story our run risk weights underrank; peak percentile 0.46</li>
       </ul>
     </div>
   </div>
@@ -517,11 +521,22 @@
     <h2 class="reveal">Read this before <em>relying on any of it.</em></h2>
     <div class="engines reveal">
       <div class="engine"><div class="no">POINT IN TIME</div><h3>No hindsight anywhere</h3><p>A score at any date uses only filings available at that date. Signal weights were fixed before the first backtest ran and never tuned on outcomes. Post hoc additions, private credit exposure and deposit desperation, are validated standalone and reported as separate score versions.</p></div>
-      <div class="engine"><div class="no">FRAUD BLINDNESS</div><h3>We do not detect crime</h3><p>Every 2023 to 2026 miss was a fraud driven failure. Balance sheet fundamentals cannot see embezzlement, and we will not pretend otherwise. A conduct and enforcement signal is a roadmap item, not a tuning fix.</p></div>
+      <div class="engine"><div class="no">KNOWN BLIND SPOTS</div><h3>We do not detect crime, and we underrank quiet insolvency</h3><p>Five of the seven 2023 to 2026 misses were fraud driven failures; balance sheet fundamentals cannot see embezzlement, and we will not pretend otherwise. The July 2026 microbank misses state a second limit: slow solvency erosion in very small banks with a quiet deposit base ranks low on a run risk lens. A conduct signal and a dedicated solvency lens are roadmap items, not tuning fixes.</p></div>
       <div class="engine"><div class="no">PROXY, NOT TAPE</div><h3>Regulators see more</h3><p>The Fed watches actual payment flows in real time. Nobody outside can. Public data nowcasting approximates run pressure rather than observing it, and the honest word for that is proxy.</p></div>
       <div class="engine"><div class="no">COVERAGE</div><h3>Known data gaps, disclosed</h3><p>Uninsured deposit estimates have a reporting gap for smaller banks between 2015 and 2019. The score reweights over available signals and records how many were present for every bank quarter.</p></div>
     </div>
     <p class="fine reveal" id="disclaimer">LiquiLens US outputs are screening percentiles computed from public FDIC filings. They are research, not credit ratings, not a prediction that any institution will fail, and not investment, legal or deposit placement advice. Named institutions are identified because their filings are public records; nothing on this page alleges wrongdoing by anyone. Data: FDIC BankFind Suite, public domain. Validation reproducible end to end; the full report travels with the product.</p>
+  </div>
+</section>
+
+<section class="band" id="sr262">
+  <div class="wrap">
+    <span class="eyebrow reveal">For your model risk reviewer</span>
+    <h2 class="reveal">SR 11-7 retired in April. Your vendor file <em>should already speak SR 26-2.</em></h2>
+    <p class="body reveal">On April 17, 2026 the Federal Reserve, OCC and FDIC replaced SR 11-7 with SR 26-2, revised model risk guidance effective immediately. It drops the fixed annual validation ritual and asks for something harder: risk based tailoring, outcomes analysis against your own book, a documented validation cadence and effective challenge, with vendor models held to the same principles as internal ones. That is the shape this page already has. Every LiquiLens engine ships an SR 26-2 ready validation pack: design and intended use, limitations stated plainly, data lineage, the pre registered gate studies as a prospective validation protocol, and the sealed publication ledger as the outcomes analysis audit trail your examiner can replay.</p>
+    <div class="hero-actions reveal">
+      <a class="btn btn-ghost" href="mailto:mrinal091997@liquilens.in?subject=SR%2026-2%20validation%20pack">Request the SR 26-2 pack →</a>
+    </div>
   </div>
 </section>
 
@@ -540,7 +555,7 @@
 <footer>
   <div class="wrap">
     <span>© 2026 LiquiLens · the US bank layer</span>
-    <span><a href="/">liquilens.in</a> · <a href="https://seiche.info" target="_blank" rel="noopener">seiche.info</a> · <a href="mailto:mrinal091997@liquilens.in">write to the desk</a></span>
+    <span><a href="/">liquilens.in</a> · <a href="/about/">about</a> · <a href="/security/">security</a> · <a href="/status/">status</a> · <a href="/privacy/">privacy</a> · <a href="/terms/">terms</a> · <a href="https://seiche.info" target="_blank" rel="noopener">seiche.info</a> · <a href="mailto:mrinal091997@liquilens.in">write to the desk</a></span>
   </div>
   <div class="wrap" style="margin-top:10px">
     <span>LiquiLens is a product of ai.de, a Udyam registered sole proprietorship, Jaipur, India.</span>
