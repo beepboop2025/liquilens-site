@@ -55,10 +55,11 @@
 
 - Seiche (https://seiche.info): a free, open source systemic market stress terminal from the same lab, run as a public good with no paywall
 
-## Undertow (at /undertow/)
+## Undertow (liquilens-undertow.com)
 
 - Undertow, from the same lab, is the liquidity backbone monitor: who provides market liquidity, how concentrated that provision is, how fragile the providers are, and whether the class is stepping back. Scored segments (UST, IG, equity, FX) carry stress percentiles against their own published history; HY, ETF, China and crypto segments are PARTIAL — measures accrue openly and are labeled accruing until they clear 60 observations of their own record, and absence of data is never rendered as calm.
 - The ETF backbone map: $4.64 trillion of mapped create/redeem flow from SEC N-CEN filings across 1,009 funds, resolved to parent complexes — Bank of America carries 30.6% of mapped flow; the median fund routes 49.9% through its top complex. Nobody else publishes this map.
+- Product site and free web desk: https://liquilens-undertow.com/ and https://liquilens-undertow.com/app/ (Telegram login unlocks the paid tier on the web); a bridge page lives at /undertow/.
 - Retail desk in Telegram (@undertow_LiquiLens_bot, also a Mini App): free tier row and BTC exit cost desk; ⭐ tier ≈$29/mo; small desk $149–299/mo; founding subscription for funds $8,000/yr.
 - Web desk in any browser (https://liquilens.in/undertow/app/): the free tier surfaces (board, BTC exit desk, sealed calls record, Q-day watch, world overlay, strategy) with no signup; subscribers sign in with Telegram to unlock the full desk (ETH, venue-failure scenario S(-1), every measure note) — one subscription, both surfaces.
 - Agent access: x402 machine payable feed at https://api.seiche.info/undertow/x402/ — free /summary route; paid routes in USDC on Base from $0.05/call (unpaid calls get HTTP 402 with the offer); every paid response carries the point in time chain head and the post quantum publisher root for offline verification. Stdlib MCP server in the repo (python3 -m undertow_mm.mcp_server); record verifier (scripts/verify_record.py) and methodology at https://github.com/beepboop2025/liquilens-undertow.
