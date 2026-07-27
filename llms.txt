@@ -77,6 +77,7 @@ Live in production. Public walkthrough at https://demo.liquilens.in (synthetic d
 ## Pages
 
 - [Home](https://liquilens.in/): product overview, the ten engines, the live Failure Radar and MFI Risk Board, sourced statistics, FAQ, and a free RBI LCR countdown calculator for NBFCs
+- [Failure replays](https://liquilens.in/replay/): one page per institution on the published Indian validation record — how the action-zone and funding-fragility lenses read each failure before it happened, leads in months, misses shown as misses, every number served from the public validation API
 - [About](https://liquilens.in/about/): who builds LiquiLens, the operating entity (ai.de, a Udyam registered sole proprietorship, Jaipur, India), and how to reach the founder
 - [Security](https://liquilens.in/security/): the security posture in plain language, the disclosure contact, and what the demo does and does not contain
 - [Status](https://liquilens.in/status/): live service status fetched from the public health endpoint, plus the cryptographic attestation surfaces
