@@ -95,7 +95,7 @@ footer a{color:var(--muted)}
   <p class="body">The public health endpoint reports liveness only and returns no internals. Operational detail, model state and data freshness live on a loopback gated internal endpoint, because a degraded pipeline is an operations matter, not a public broadcast. The honest public view is the <a href="/status/">status page</a>, and every data payload carries its own as of stamp so staleness is visible where it matters.</p>
 
   <h2>The demo</h2>
-  <p class="body">demo.liquilens.in is open, with no signup and no access code. It contains public record evidence and a synthetic treasury book. Nothing confidential is inside, which is exactly why it can be open.</p>
+  <p class="body">demo.liquilens.in sits behind an access request and answers 401 until access is granted. It contains public record evidence and a synthetic treasury book. Nothing confidential is inside, so the gate manages access, it does not protect data.</p>
 
   <h2>Disclosure</h2>
   <p class="body">Security contact and policy: <a href="/.well-known/security.txt">/.well-known/security.txt</a>. Or email <a href="mailto:mrinal@liquilens.in?subject=SECURITY">mrinal@liquilens.in</a> with the subject SECURITY. Reports get a fast human answer, and reporters who want credit get credit.</p>

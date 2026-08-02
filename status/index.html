@@ -77,10 +77,11 @@ footer a{color:var(--muted)}
 <section><div class="wrap">
   <div class="statusrow"><span class="badge wait" id="apiBadge">CHECKING</span><span><b>api.liquilens.in</b> · the radar API</span><span class="mono" id="apiNote" style="margin-left:auto"></span></div>
   <div class="statusrow"><span class="badge wait" id="seiBadge">CHECKING</span><span><b>api.seiche.info</b> · Seiche, the funding stress terminal</span><span class="mono" id="seiNote" style="margin-left:auto"></span></div>
-  <div class="statusrow"><span class="badge wait" id="demoBadge">CHECKING</span><span><b>demo.liquilens.in</b> · the live walkthrough</span><span class="mono" id="demoNote" style="margin-left:auto"></span></div>
+  <div class="statusrow"><span class="badge wait" id="demoBadge">CHECKING</span><span><b>demo.liquilens.in</b> · the walkthrough, granted on request</span><span class="mono" id="demoNote" style="margin-left:auto"></span></div>
 
   <h2>What OK means</h2>
   <p class="body">The API health endpoint reports liveness: the service is up and answering. Data freshness is reported inside each data payload with its own as of stamp, because freshness is a property of each feed, not of the process. When a feed goes dark, the payload that depends on it says so instead of serving a stale number as current.</p>
+  <p class="body">ANSWERED is weaker than OK, and the demo row earns only that. demo.liquilens.in sits behind an access request and sends no cross origin headers, so your browser can see that the host replied and cannot read what it replied. A 401 and a 500 look identical from here, and calling either one OK would be dressing absence up as calm.</p>
 
   <h2>Verify the record yourself</h2>
   <ul class="plain">
@@ -95,7 +96,7 @@ footer a{color:var(--muted)}
 (function(){
   function set(id, ok, note){
     var b = document.getElementById(id);
-    b.textContent = ok===true ? 'OK' : (ok===false ? 'UNREACHABLE' : 'CHECKING');
+    b.textContent = ok===true ? 'OK' : (ok===false ? 'UNREACHABLE' : (ok==='answered' ? 'ANSWERED' : 'CHECKING'));
     b.className = 'badge' + (ok===true ? '' : (ok===false ? ' err' : ' wait'));
     if(note) document.getElementById(id.replace('Badge','Note')).textContent = note;
   }
@@ -119,7 +120,7 @@ footer a{color:var(--muted)}
   var ctl2 = new AbortController();
   var t2 = setTimeout(function(){ctl2.abort()}, 7000);
   fetch('https://demo.liquilens.in/', {mode:'no-cors', signal:ctl2.signal}).then(function(){
-    clearTimeout(t2); set('demoBadge', true, 'reachable');
+    clearTimeout(t2); set('demoBadge', 'answered', 'answered; status code not readable from your browser');
   }).catch(function(){ set('demoBadge', false, 'no response'); });
   document.getElementById('stamp').textContent = 'checked from your browser at ' + new Date().toISOString().slice(0,19).replace('T',' ') + 'Z';
 })();

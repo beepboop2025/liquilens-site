@@ -1,0 +1,340 @@
+{
+ "as_of": "2026-08-02",
+ "rows": [
+  {
+   "slug": "esaf-sfb",
+   "name": "ESAF Small Finance Bank",
+   "inst_type": "sfb",
+   "label": "stressed_survivor",
+   "as_of": "2025-09-30",
+   "quarter": "FY26Q2",
+   "age_months": 11,
+   "score": 66.0,
+   "grade": "BBB",
+   "hazard": {
+    "pd_12m": 0.004,
+    "pd_24m": 0.0079,
+    "pd_36m": 0.0118,
+    "grade": "A",
+    "drivers": {
+     "distress": 1.4553,
+     "aq_delta": 0.0081,
+     "aq_delta_unobserved": 0.0,
+     "funding_x_distress": 0.0
+    },
+    "basis": [
+     "GNPA 8.5%"
+    ]
+   },
+   "movement": {
+    "delta_pd_12m": 0.0009,
+    "reference": {
+     "from_q": "FY25Q2",
+     "from_period": "2024-09-30",
+     "pd_12m_then": 0.0031
+    }
+   },
+   "pca": {
+    "framework": null,
+    "applicable": false,
+    "status": "not_applicable",
+    "risk_level": 0,
+    "breaches": [],
+    "headroom": [],
+    "not_assessed": [
+     "CRAR"
+    ],
+    "note": "SFBs are outside the 2021 bank-PCA framework; headroom shown against the 15% licensing CRAR floor"
+   },
+   "funding": {
+    "index": 0.0,
+    "band": "stable",
+    "components": {
+     "deposit_run": 0.0
+    },
+    "flags": [],
+    "dark_lenses": [
+     "wholesale_reliance",
+     "cd_strain",
+     "lcr_headroom"
+    ],
+    "basis": [
+     "worst deposit QoQ +5.3%"
+    ]
+   },
+   "forensics": {
+    "eligible": true,
+    "fired": false,
+    "indicators": []
+   },
+   "market": {
+    "dd": 1.338,
+    "pd_merton_1y": 0.090499,
+    "equity_cr": 1908.0,
+    "barrier_cr": 23276.0,
+    "sigma_e": 0.4005,
+    "sigma_v": 0.1691,
+    "r_prior_1y": 0.1617,
+    "as_of": "2026-07-30",
+    "stale": false,
+    "basis": [
+     "market cap Rs 1,908 cr (ESAFSFB.NS, 2026-07-30)",
+     "sigma_E 40.1% (252d realized)",
+     "prior-1y return +16.2%",
+     "deposits Rs 23,276 cr",
+     "barrier from FY25Q4 disclosures (other liabilities not in dossier schema \u2014 barrier slightly understated)"
+    ],
+    "note": "naive DD (Bharath-Shumway 2008); N(-DD) is the Merton-form PD, a repricing/ranking signal \u2014 not calibrated to Indian failure frequencies"
+   },
+   "conformal": {
+    "alarm": true,
+    "threshold_distress": 26.799999999999997,
+    "distress": 34.0,
+    "gate": "G1 OPEN (PASS, founder sign-off 2026-07-15); classical layer only, lift-to-yellow only"
+   },
+   "signals_fired": [
+    "market_dd_below_2",
+    "conformal_alarm"
+   ],
+   "tier": "yellow",
+   "peer_percentile": {
+    "cohort": 100,
+    "cohort_n": 4,
+    "universe": 100
+   }
+  },
+  {
+   "slug": "utkarsh-sfb-2025",
+   "name": "Utkarsh Small Finance Bank",
+   "inst_type": "sfb",
+   "label": "stressed_survivor",
+   "as_of": "2025-03-31",
+   "quarter": "FY2025",
+   "age_months": 17,
+   "score": 74.9,
+   "grade": "A",
+   "hazard": {
+    "pd_12m": 0.0028,
+    "pd_24m": 0.0056,
+    "pd_36m": 0.0083,
+    "grade": "A",
+    "drivers": {
+     "distress": 1.0744,
+     "aq_delta": 0.0368,
+     "aq_delta_unobserved": 0.0,
+     "funding_x_distress": 0.0
+    },
+    "basis": [
+     "GNPA 9.4%"
+    ]
+   },
+   "movement": {
+    "delta_pd_12m": 0.0014,
+    "reference": {
+     "from_q": "FY2024",
+     "from_period": "2024-03-31",
+     "pd_12m_then": 0.0014
+    }
+   },
+   "pca": {
+    "framework": null,
+    "applicable": false,
+    "status": "not_applicable",
+    "risk_level": 0,
+    "breaches": [],
+    "headroom": [
+     {
+      "indicator": "CRAR",
+      "value": 20.93,
+      "entry_at": 15.0,
+      "headroom_pp": 5.93
+     }
+    ],
+    "not_assessed": [],
+    "note": "SFBs are outside the 2021 bank-PCA framework; headroom shown against the 15% licensing CRAR floor"
+   },
+   "funding": {
+    "index": null,
+    "band": "not_scored",
+    "components": {},
+    "flags": [],
+    "dark_lenses": [
+     "deposit_run (no consecutive deposit disclosures)",
+     "wholesale_reliance",
+     "cd_strain",
+     "lcr_headroom"
+    ],
+    "basis": []
+   },
+   "forensics": {
+    "eligible": false,
+    "fired": false,
+    "indicators": []
+   },
+   "market": {
+    "not_computed": "no disclosed liability stack to set a default barrier"
+   },
+   "conformal": {
+    "alarm": false,
+    "threshold_distress": 26.799999999999997,
+    "distress": 25.1,
+    "gate": "G1 OPEN (PASS, founder sign-off 2026-07-15); classical layer only, lift-to-yellow only"
+   },
+   "signals_fired": [],
+   "tier": "orange",
+   "peer_percentile": {
+    "cohort": 75,
+    "cohort_n": 4,
+    "universe": 95
+   }
+  }
+ ],
+ "excluded_stale": [
+  {
+   "slug": "bajaj-finance",
+   "name": "Bajaj Finance Ltd",
+   "reason": "latest vetted quarter FY21Q4 is 65 months old"
+  },
+  {
+   "slug": "can-fin-homes",
+   "name": "Can Fin Homes Ltd",
+   "reason": "latest vetted quarter FY22Q4 is 53 months old"
+  },
+  {
+   "slug": "cholamandalam",
+   "name": "Cholamandalam Investment & Finance Company Ltd",
+   "reason": "latest vetted quarter FY21Q4 is 65 months old"
+  },
+  {
+   "slug": "city-union-bank",
+   "name": "City Union Bank Ltd",
+   "reason": "latest vetted quarter FY2022 is 53 months old"
+  },
+  {
+   "slug": "ecl-finance-edelweiss",
+   "name": "ECL Finance Limited (Edelweiss Group NBFC)",
+   "reason": "latest vetted quarter FY21Q4 is 65 months old"
+  },
+  {
+   "slug": "equitas-sfb",
+   "name": "Equitas Small Finance Bank",
+   "reason": "latest vetted quarter FY21Q4 is 65 months old"
+  },
+  {
+   "slug": "federal-bank",
+   "name": "Federal Bank",
+   "reason": "latest vetted quarter FY21Q4 is 65 months old"
+  },
+  {
+   "slug": "hdfc-ltd",
+   "name": "Housing Development Finance Corporation Ltd (HDFC Ltd)",
+   "reason": "latest vetted quarter FY21Q4 is 65 months old"
+  },
+  {
+   "slug": "indiabulls-housing",
+   "name": "Indiabulls Housing Finance Limited (now Sammaan Capital Limited)",
+   "reason": "latest vetted quarter FY21Q4 is 65 months old"
+  },
+  {
+   "slug": "lic-housing-finance",
+   "name": "LIC Housing Finance Ltd",
+   "reason": "latest vetted quarter FY2022 is 53 months old"
+  },
+  {
+   "slug": "mahindra-finance",
+   "name": "Mahindra & Mahindra Financial Services Ltd",
+   "reason": "latest vetted quarter FY22Q4 is 53 months old"
+  },
+  {
+   "slug": "muthoot-finance",
+   "name": "Muthoot Finance Ltd",
+   "reason": "latest vetted quarter FY21Q4 is 65 months old"
+  },
+  {
+   "slug": "pnb-housing",
+   "name": "PNB Housing Finance Limited",
+   "reason": "latest vetted quarter FY22Q4 is 53 months old"
+  },
+  {
+   "slug": "rbl-bank",
+   "name": "RBL Bank Ltd",
+   "reason": "latest vetted quarter FY23Q4 is 41 months old"
+  },
+  {
+   "slug": "saraswat-ucb",
+   "name": "Saraswat Co-operative Bank",
+   "reason": "latest vetted quarter FY2021 is 65 months old"
+  },
+  {
+   "slug": "shriram-transport-finance",
+   "name": "Shriram Transport Finance Company Ltd (STFC)",
+   "reason": "latest vetted quarter FY21Q4 is 65 months old"
+  },
+  {
+   "slug": "sks-microfinance",
+   "name": "SKS Microfinance (later Bharat Financial Inclusion)",
+   "reason": "latest vetted quarter FY13Q4 is 161 months old"
+  },
+  {
+   "slug": "sundaram-finance",
+   "name": "Sundaram Finance Ltd",
+   "reason": "latest vetted quarter FY21Q4 is 65 months old"
+  },
+  {
+   "slug": "suryoday-sfb",
+   "name": "Suryoday Small Finance Bank",
+   "reason": "latest vetted quarter FY23Q4 is 41 months old"
+  },
+  {
+   "slug": "svc-ucb",
+   "name": "SVC Co-operative Bank",
+   "reason": "latest vetted quarter FY2021 is 65 months old"
+  },
+  {
+   "slug": "ujjivan-sfb",
+   "name": "Ujjivan Small Finance Bank",
+   "reason": "latest vetted quarter FY23Q4 is 41 months old"
+  }
+ ],
+ "tiers": {
+  "red": 0,
+  "orange": 1,
+  "yellow": 1,
+  "green": 17
+ },
+ "quadrant_rule": "red = level>= 1.00% AND deteriorating (>= +25% rel and >= +0.10pp abs over ~12m), or any RBI action-zone breach; orange = level >= 1.00%, or deteriorating from >= 0.25%, or market DD < 1; yellow = deteriorating, or level >= 0.25%, or a funding flag, or a forensic indicator, or market DD < 2; green = none of the above",
+ "market_layer": {
+  "available": true,
+  "as_of": "2026-07-30",
+  "source": "Yahoo Finance daily closes (auto-adjusted)",
+  "names": [
+   "au-sfb",
+   "bajaj-finance",
+   "can-fin-homes",
+   "cholamandalam",
+   "city-union-bank",
+   "creditaccess-grameen",
+   "equitas-sfb",
+   "esaf-sfb",
+   "federal-bank",
+   "five-star",
+   "fusion-finance",
+   "idbi-bank",
+   "indusind-bank",
+   "jana-sfb",
+   "lic-housing-finance",
+   "mahindra-finance",
+   "mas-financial",
+   "muthoot-finance",
+   "muthoot-microfin",
+   "rbl-bank",
+   "satin-creditcare",
+   "shriram-transport-finance",
+   "spandana-sphoorty",
+   "ugro-capital",
+   "utkarsh-sfb"
+  ],
+  "errors": {}
+ },
+ "method_note": "One row per institution with a fresh vetted public dossier (nothing older than 24 months is presented as current; failed institutions are replayed on the Evidence tab instead). Components are validated independently on the 48-institution record and fused only for presentation \u2014 the tier is a published rule over published components. PD levels are corpus-fitted and prior-corrected to a ~0.25%/yr population base rate (King-Zeng); the Merton PD is a market repricing signal, not a calibrated failure frequency. Institutions without vetted dossiers are absent by design: nothing here is scored from memory."
+}

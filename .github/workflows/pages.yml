@@ -18,7 +18,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify the published files agree with each other
+        env:
+          LIQUILENS_OFFLINE: '1'
+        run: python3 scripts/verify_public_claims.py
+      - name: Report where the live API disagrees with the published copy
+        continue-on-error: true
+        timeout-minutes: 3
+        run: python3 scripts/verify_public_claims.py
       - uses: actions/configure-pages@v5
+      - name: Keep the unscanned directories out of the artifact
+        run: rm -rf scripts tests
       - uses: actions/upload-pages-artifact@v3
         with:
           path: '.'

@@ -1,0 +1,139 @@
+{
+ "available": true,
+ "as_of": "2026-07-30",
+ "quarter": "2026-03-31",
+ "prev_quarter": "2025-12-31",
+ "stale": false,
+ "quarter_stale": false,
+ "quarter_age_days": 124,
+ "quarter_mismatch": false,
+ "universe": {
+  "scanned": 4352,
+  "admitted": 1487,
+  "readable": 1474,
+  "unreadable": 13,
+  "joined_undertow": 50,
+  "min_assets_usd_k": 1000000,
+  "small_underwater": 422
+ },
+ "counts": {
+  "compound_alarm": 3,
+  "compound_watch": 77,
+  "marked_insolvent": 3,
+  "securities_alarm_funding_calm": 68,
+  "unreadable": 13
+ },
+ "aggregate": {
+  "total_ugl_usd_k": 317295338,
+  "qoq": 0.0736,
+  "htm_share": 0.6739,
+  "prev_total_ugl_usd_k": 295540445,
+  "suspect_schema": false,
+  "qbp_reference": {
+   "latest_q": "2026Q1",
+   "latest_usd_b": 325.1,
+   "peak_q": "2022Q3",
+   "peak_usd_b": 689.9,
+   "citation": "FDIC Quarterly Banking Profile quarterly statements 2022-2026; QBP PDFs are the source of record"
+  },
+  "coverage_note": "admitted universe only \u2014 pack aggregate is not the QBP total; divergence stated, never reconciled"
+ },
+ "nowcast": {
+  "available": false,
+  "reason": "DGS10 read missing/failed at fetch (see pack errors) \u2014 nowcast disabled, stated never faked"
+ },
+ "rows": [
+  {
+   "cert": 27201,
+   "bank": "COMMUNITY STATE BANK",
+   "state": "OK",
+   "asset_usd_k": 87447.0,
+   "htm_ugl_k": 14146.0,
+   "afs_ugl_k": 0.0,
+   "total_ugl_k": 14146.0,
+   "ugl_coverage": "full",
+   "tier1_k": 6702.0,
+   "ugl_to_tier1": 2.1107,
+   "tier1_after_mark": -1.1107,
+   "marked_insolvent": true,
+   "uninsured_ratio": 0.0,
+   "undertow_score_v02": null,
+   "undertow_joined": false,
+   "securities_state": "ALARM",
+   "funding_state": "CALM",
+   "compound_state": "ALARM",
+   "wtd_maturity_yrs": 6.6485,
+   "est_duration_yrs": 6.6485,
+   "duration_divergence": null,
+   "nowcast_state": null,
+   "nowcast_ugl_to_tier1": null,
+   "nowcast_basis": null,
+   "qoq_ugl_to_tier1": -0.0116,
+   "notes": [
+    "AFS figure = SCAA-SCAF AOCI proxy (no direct AOCI field in risview)",
+    "cert not in the committed Undertow US board rows \u2014 join miss stated, funding falls back to uninsured share alone (absence is not a safety read)",
+    "nowcast unavailable \u2014 DGS10 read missing/failed in the pack (stated, never faked); filed states unaffected"
+   ]
+  },
+  {
+   "cert": 12013,
+   "bank": "UNION COUNTY SAVINGS BANK",
+   "state": "NJ",
+   "asset_usd_k": 1490109.0,
+   "htm_ugl_k": 0.0,
+   "afs_ugl_k": 194325.0,
+   "total_ugl_k": 194325.0,
+   "ugl_coverage": "full",
+   "tier1_k": 136129.0,
+   "ugl_to_tier1": 1.4275,
+   "tier1_after_mark": -0.4275,
+   "marked_insolvent": true,
+   "uninsured_ratio": 0.1443,
+   "undertow_score_v02": null,
+   "undertow_joined": false,
+   "securities_state": "ALARM",
+   "funding_state": "CALM",
+   "compound_state": "ALARM",
+   "wtd_maturity_yrs": 9.0634,
+   "est_duration_yrs": 9.0634,
+   "duration_divergence": null,
+   "nowcast_state": null,
+   "nowcast_ugl_to_tier1": null,
+   "nowcast_basis": null,
+   "qoq_ugl_to_tier1": 0.1016,
+   "notes": [
+    "AFS figure = SCAA-SCAF AOCI proxy (no direct AOCI field in risview)",
+    "cert not in the committed Undertow US board rows \u2014 join miss stated, funding falls back to uninsured share alone (absence is not a safety read)",
+    "nowcast unavailable \u2014 DGS10 read missing/failed in the pack (stated, never faked); filed states unaffected"
+   ]
+  }
+ ],
+ "thresholds": {
+  "ugl_tier1_watch": 0.25,
+  "ugl_tier1_alarm": 0.5,
+  "ugl_tier1_wipeout": 1.0,
+  "uninsured_watch": 0.5,
+  "uninsured_alarm": 0.9,
+  "runrisk_pctl_watch": 0.8,
+  "runrisk_pctl_alarm": 0.9,
+  "rate_backup_watch_pp": 0.5,
+  "duration_divergence_x": 1.5,
+  "systemic_assets_k": 10000000,
+  "board_share_watch": 0.1,
+  "agg_qoq_watch": 0.15,
+  "sc_mismatch_tol": 0.05,
+  "agg_sanity_band_usd_k": [
+   50000000.0,
+   1200000000.0
+  ],
+  "stale_days": 7,
+  "quarter_stale_days": 210,
+  "nowcast_stale_days": 7
+ },
+ "regime": "WATCH",
+ "regime_reasons": [
+  "compound WATCH-or-worse on: ANDOVER BANK, DU QUOIN STATE BANK, FIRST BANK OF OKARCHE, UINTA BANK, SOLUTIONS BANK (+75 more)",
+  "BOARD_SHARE_WATCH: 35.2% of the readable universe at securities WATCH-or-worse (>= 10% \u2014 the Jiang Q1-2023 crisis-vintage share)"
+ ],
+ "method_note": "bond-book layer (keyless FDIC BankFind financials API, $ thousands; risview fields, ~60-day Call Report publication lag stated): per-bank (HtM + AFS unrealized securities losses) / Tier-1 (RBCT1J) compounded with runnable-deposit funding \u2014 the SVB compound; lineage NBER w31048 (Jiang-Matvos-Piskorski-Seru), Fed Barr report 2023-04-28, FDIC QBP series, FDIC History of the Eighties, and arXiv:2407.03285 adjacency (inputs unblocked, math not duplicated); AFS figure is the SCAA-SCAF AOCI proxy (no direct AOCI field in risview); nowcast is basis:ESTIMATE and escalate-only; display-only \u2014 feeds no institution score and no watchlist tier"
+}
