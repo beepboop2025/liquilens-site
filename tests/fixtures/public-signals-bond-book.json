@@ -5,7 +5,7 @@
  "prev_quarter": "2025-12-31",
  "stale": false,
  "quarter_stale": false,
- "quarter_age_days": 124,
+ "quarter_age_days": 125,
  "quarter_mismatch": false,
  "universe": {
   "scanned": 4352,
@@ -19,7 +19,7 @@
  "counts": {
   "compound_alarm": 3,
   "compound_watch": 77,
-  "marked_insolvent": 3,
+  "tier1_negative_after_ugl_mark": 3,
   "securities_alarm_funding_calm": 68,
   "unreadable": 13
  },
@@ -55,7 +55,7 @@
    "tier1_k": 6702.0,
    "ugl_to_tier1": 2.1107,
    "tier1_after_mark": -1.1107,
-   "marked_insolvent": true,
+   "tier1_negative_after_ugl_mark": true,
    "uninsured_ratio": 0.0,
    "undertow_score_v02": null,
    "undertow_joined": false,
@@ -73,7 +73,8 @@
     "AFS figure = SCAA-SCAF AOCI proxy (no direct AOCI field in risview)",
     "cert not in the committed Undertow US board rows \u2014 join miss stated, funding falls back to uninsured share alone (absence is not a safety read)",
     "nowcast unavailable \u2014 DGS10 read missing/failed in the pack (stated, never faked); filed states unaffected"
-   ]
+   ],
+   "mark_qualifier": "tier1_negative_after_ugl_mark is arithmetic on public FDIC call-report figures: Tier-1 capital (RBCT1J) minus UNREALIZED securities losses (HtM + AFS) is below zero. It is not a regulatory capital ratio, not an FDIC or supervisory finding, and not a statement that the institution is insolvent, failing, or unable to meet its obligations. Unrealized held-to-maturity losses are excluded from regulatory capital by rule, and a bank that holds those securities to maturity may never realize them. Every institution named here is open and FDIC-insured as of the stated quarter."
   },
   {
    "cert": 12013,
@@ -87,7 +88,7 @@
    "tier1_k": 136129.0,
    "ugl_to_tier1": 1.4275,
    "tier1_after_mark": -0.4275,
-   "marked_insolvent": true,
+   "tier1_negative_after_ugl_mark": true,
    "uninsured_ratio": 0.1443,
    "undertow_score_v02": null,
    "undertow_joined": false,
@@ -105,7 +106,8 @@
     "AFS figure = SCAA-SCAF AOCI proxy (no direct AOCI field in risview)",
     "cert not in the committed Undertow US board rows \u2014 join miss stated, funding falls back to uninsured share alone (absence is not a safety read)",
     "nowcast unavailable \u2014 DGS10 read missing/failed in the pack (stated, never faked); filed states unaffected"
-   ]
+   ],
+   "mark_qualifier": "tier1_negative_after_ugl_mark is arithmetic on public FDIC call-report figures: Tier-1 capital (RBCT1J) minus UNREALIZED securities losses (HtM + AFS) is below zero. It is not a regulatory capital ratio, not an FDIC or supervisory finding, and not a statement that the institution is insolvent, failing, or unable to meet its obligations. Unrealized held-to-maturity losses are excluded from regulatory capital by rule, and a bank that holds those securities to maturity may never realize them. Every institution named here is open and FDIC-insured as of the stated quarter."
   }
  ],
  "thresholds": {
@@ -135,5 +137,6 @@
   "compound WATCH-or-worse on: ANDOVER BANK, DU QUOIN STATE BANK, FIRST BANK OF OKARCHE, UINTA BANK, SOLUTIONS BANK (+75 more)",
   "BOARD_SHARE_WATCH: 35.2% of the readable universe at securities WATCH-or-worse (>= 10% \u2014 the Jiang Q1-2023 crisis-vintage share)"
  ],
- "method_note": "bond-book layer (keyless FDIC BankFind financials API, $ thousands; risview fields, ~60-day Call Report publication lag stated): per-bank (HtM + AFS unrealized securities losses) / Tier-1 (RBCT1J) compounded with runnable-deposit funding \u2014 the SVB compound; lineage NBER w31048 (Jiang-Matvos-Piskorski-Seru), Fed Barr report 2023-04-28, FDIC QBP series, FDIC History of the Eighties, and arXiv:2407.03285 adjacency (inputs unblocked, math not duplicated); AFS figure is the SCAA-SCAF AOCI proxy (no direct AOCI field in risview); nowcast is basis:ESTIMATE and escalate-only; display-only \u2014 feeds no institution score and no watchlist tier"
+ "method_note": "bond-book layer (keyless FDIC BankFind financials API, $ thousands; risview fields, ~60-day Call Report publication lag stated): per-bank (HtM + AFS unrealized securities losses) / Tier-1 (RBCT1J) compounded with runnable-deposit funding \u2014 the SVB compound; lineage NBER w31048 (Jiang-Matvos-Piskorski-Seru), Fed Barr report 2023-04-28, FDIC QBP series, FDIC History of the Eighties, and arXiv:2407.03285 adjacency (inputs unblocked, math not duplicated); AFS figure is the SCAA-SCAF AOCI proxy (no direct AOCI field in risview); nowcast is basis:ESTIMATE and escalate-only; display-only \u2014 feeds no institution score and no watchlist tier",
+ "mark_semantics": "tier1_negative_after_ugl_mark is arithmetic on public FDIC call-report figures: Tier-1 capital (RBCT1J) minus UNREALIZED securities losses (HtM + AFS) is below zero. It is not a regulatory capital ratio, not an FDIC or supervisory finding, and not a statement that the institution is insolvent, failing, or unable to meet its obligations. Unrealized held-to-maturity losses are excluded from regulatory capital by rule, and a bank that holds those securities to maturity may never realize them. Every institution named here is open and FDIC-insured as of the stated quarter."
 }

@@ -40,7 +40,7 @@
     {
       "@type": "Dataset",
       "name": "LiquiLens US bank run risk validation record",
-      "description": "Point in time early warning scores for every FDIC insured US bank, validated against all 550 FDIC receiverships 2008 to 2026. Published with the full confusion matrix: recall 73.1 percent, false positive rate 9.7 percent, median lead 21.7 months, misses named. 2026 scoreboard: two of four failures flagged a year early, and the two July 2026 microbank misses published by name.",
+      "description": "Point in time early warning scores for every FDIC insured US bank, validated against all 552 FDIC receiverships 2008 to 2026. Published with the full confusion matrix: recall 72.8 percent, false positive rate 9.7 percent, median lead 21.7 months, misses named. 2026 scoreboard: two of four failures flagged a year early, and the two July 2026 microbank misses published by name.",
       "url": "https://liquilens.in/us/",
       "creator": { "@id": "https://liquilens.in/#org" },
       "license": "https://liquilens.in/us/#method",
@@ -274,7 +274,7 @@
     <span class="half">
       <span><span class="tag">LIQUILENS US</span> run risk on every FDIC insured bank</span>
       <span>panel <span class="live">527,760 bank quarters</span> · 9,903 institutions · 2004 to 2026</span>
-      <span>recall <span class="live">73.1%</span> of 550 failures · median lead <span class="live">21.7 months</span></span>
+      <span>recall <span class="live">72.8%</span> of 552 failures · median lead <span class="live">21.7 months</span></span>
       <span>SVB flagged <span class="live">17.3 months</span> before the run</span>
       <span>2026 scoreboard: two flagged <span class="live">a year early</span> · two misses published by name</span>
       <span><span class="sei-print">SEICHE</span> regime conditioning, live from the open terminal</span>
@@ -283,7 +283,7 @@
     </span><span class="half">
       <span><span class="tag">LIQUILENS US</span> run risk on every FDIC insured bank</span>
       <span>panel <span class="live">527,760 bank quarters</span> · 9,903 institutions · 2004 to 2026</span>
-      <span>recall <span class="live">73.1%</span> of 550 failures · median lead <span class="live">21.7 months</span></span>
+      <span>recall <span class="live">72.8%</span> of 552 failures · median lead <span class="live">21.7 months</span></span>
       <span>SVB flagged <span class="live">17.3 months</span> before the run</span>
       <span>2026 scoreboard: two flagged <span class="live">a year early</span> · two misses published by name</span>
       <span><span class="sei-print">SEICHE</span> regime conditioning, live from the open terminal</span>
@@ -348,7 +348,7 @@
     </div>
   </div>
   <div class="stats reveal" style="margin-top:56px">
-    <div class="stat"><div class="num">73.1%</div><p>of all 550 FDIC failures since 2008 caught in advance</p></div>
+    <div class="stat"><div class="num">72.8%</div><p>of all 552 FDIC failures since 2008 caught in advance</p></div>
     <div class="stat"><div class="num">21.7 mo</div><p>median warning before the FDIC arrived</p></div>
     <div class="stat"><div class="num">9.7%</div><p>false positive rate, published next to the recall</p></div>
     <div class="stat"><div class="num">6 of 8</div><p>balance sheet failures of the rate shock era flagged early, both 2026 misses published by name</p></div>
@@ -377,12 +377,12 @@
           <tr><td class="rowlab">precision</td><td>4.1%</td></tr>
           <tr><td class="rowlab">failure base rate</td><td>0.83%</td></tr>
           <tr><td class="rowlab">lift over base rate</td><td>5.0x</td></tr>
-          <tr><td class="rowlab">pooled AUC</td><td>0.853</td></tr>
-          <tr><td class="rowlab">recall, 95% interval</td><td>69.5% to 76.7%</td></tr>
+          <tr><td class="rowlab">pooled AUC</td><td>0.854</td></tr>
+          <tr><td class="rowlab">recall, 95% interval</td><td>69.0% to 76.6%</td></tr>
         </table>
       </div>
     </div>
-    <p class="stats-note reveal">Failures are rare, so most flags are not followed by one. That is what a 0.83 percent base rate means, and any vendor whose numbers sound better than this either fit their model to the past or is not telling you their false positive rate. Score versions are kept honest too: the preregistered score reads 73.1 percent, adding private credit exposure reads 72.0 percent, adding deposit desperation reads 75.5 percent, all at the same alarm budget.</p>
+    <p class="stats-note reveal">Failures are rare, so most flags are not followed by one. That is what a 0.83 percent base rate means, and any vendor whose numbers sound better than this either fit their model to the past or is not telling you their false positive rate. Score versions are kept honest too: the preregistered score reads 72.8 percent, adding private credit exposure reads 72.0 percent, adding deposit desperation reads 75.5 percent, all at the same alarm budget.</p>
   </div>
 </section>
 
@@ -482,7 +482,7 @@
   <div class="wrap">
     <span class="eyebrow reveal">The fast layer</span>
     <h2 class="reveal">A bank that suddenly pays up for deposits is telling you something. <em>We listen weekly.</em></h2>
-    <p class="body reveal">Reaching for deposits is one of the oldest tells in banking and one of the best documented in the academic record. As a quarterly signal from filings alone it catches <b>64.7 percent of all 550 failures by itself</b>, and adding it lifts the full engine from 72.0 to 75.5 percent recall at the same alarm budget. The live layer sharpens it to weeks: every bank's offered rates against the FDIC national baseline, where a legal ceiling already exists for banks that are less than well capitalized.</p>
+    <p class="body reveal">Reaching for deposits is one of the oldest tells in banking and one of the best documented in the academic record. As a quarterly signal from filings alone it catches <b>64.7 percent of all 552 failures by itself</b>, and adding it lifts the full engine from 72.0 to 75.5 percent recall at the same alarm budget. The live layer sharpens it to weeks: every bank's offered rates against the FDIC national baseline, where a legal ceiling already exists for banks that are less than well capitalized.</p>
 
     <div class="plumb reveal">
       <div><span class="k">savings, national</span><span class="v">0.38%</span><span class="a">cap 1.13%</span></div>
