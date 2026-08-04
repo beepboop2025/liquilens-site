@@ -12,16 +12,18 @@ Four rules, checked over every file the Pages workflow uploads:
   4. no surface claims something is withheld that a public API serves
 
 Rules 1 to 3 read only the checked out files, so they are deterministic and
-they set the exit code. Rule 4 reads the live API, whose state belongs to
+they set the exit code. An incomplete local walk or unreadable artifact also
+sets the exit code: uncertainty about what this checkout will publish is a
+failed verification. Rule 4 reads the live API, whose state belongs to
 another repo's deploy, so it only ever prints a warning. Set
 LIQUILENS_OFFLINE=1 to skip it; an endpoint that cannot be reached is never
 treated as evidence either way.
 
     python3 scripts/verify_public_claims.py
 
-Exit 1 only when a file in this checkout contradicts another file in this
-checkout. Everything else prints loudly and exits 0, because a gate that
-blocks the only publish path stops being a gate and starts being an outage.
+Exit 1 when a file in this checkout contradicts another file, or when the
+local publishable surface cannot be read completely. Live API failures stay
+advisory because that state belongs to another repository's deployment.
 """
 from __future__ import annotations
 
@@ -195,22 +197,15 @@ BOND_BOOK = "https://api.liquilens.in/api/public-signals/bond-book"
 FIELD_VS_LIVE = (
     ("tier1_negative_after_ugl_mark", BOND_BOOK,
      ("rows", 0, "tier1_negative_after_ugl_mark")),
-    ("mark_qualifier", BOND_BOOK, ("rows", 0, "mark_qualifier")),
     ("mark_semantics", BOND_BOOK, ("mark_semantics",)),
 )
 
+MARK_FIELD = "tier1_negative_after_ugl_mark"
+MARK_QUALIFIER = "mark_qualifier"
 
-def ignored_names(root: str) -> set[str]:
-    """Names .gitignore keeps out of the checkout the workflow uploads."""
-    names: set[str] = set()
-    path = os.path.join(root, ".gitignore")
-    if not os.path.exists(path):
-        return names
-    for line in open(path, encoding="utf-8").read().splitlines():
-        line = line.strip()
-        if line and not line.startswith(("#", "!")):
-            names.add(line.strip("/"))
-    return names
+
+class ScanError(RuntimeError):
+    """The local Pages surface could not be inspected completely."""
 
 
 def readable(path: str) -> str | None:
@@ -220,7 +215,10 @@ def readable(path: str) -> str | None:
     it strictly meant one mis-encoded file raised and left every rule on
     every other file unchecked.
     """
-    blob = open(path, "rb").read()
+    try:
+        blob = open(path, "rb").read()
+    except OSError as exc:
+        raise ScanError(f"cannot read publishable file {path}: {exc}") from exc
     if b"\x00" in blob:
         return None
     try:
@@ -239,18 +237,45 @@ def uncommented(raw: str) -> str:
 
 
 def published_files(root: str) -> list[str]:
-    ignored = ignored_names(root)
-    out = []
-    for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [d for d in dirnames
-                       if d not in SKIP_DIRS and d not in ignored]
-        for name in filenames:
-            if name in ignored or name.lower().endswith(BINARY_SUFFIXES):
-                continue
+    """Every regular file that can reach the Pages artifact.
+
+    Git ignore rules are intentionally irrelevant here. The upload action is
+    rooted at the workspace and can include ignored, untracked, or force-
+    tracked files. Only directories the workflow removes (and the upload
+    action's own metadata exclusions) are skipped.
+    """
+    if os.path.islink(root) or not os.path.isdir(root):
+        raise ScanError(f"publish root is not a readable directory: {root}")
+    excludes = artifact_excludes(root)
+
+    def walk_error(exc: OSError) -> None:
+        raise ScanError(f"cannot walk publishable surface: {exc}") from exc
+
+    out: list[str] = []
+    for dirpath, dirnames, filenames in os.walk(root, onerror=walk_error):
+        for name in dirnames:
             path = os.path.join(dirpath, name)
-            if readable(path) is None:
+            excluded = dirpath == root and name in excludes
+            if not excluded and os.path.islink(path):
+                raise ScanError(
+                    f"publishable directory is a symlink and cannot be "
+                    f"verified as a regular artifact path: {path}")
+        if dirpath == root:
+            dirnames[:] = [d for d in dirnames if d not in excludes]
+        for name in filenames:
+            path = os.path.join(dirpath, name)
+            rel = os.path.relpath(path, root)
+            if dirpath == root and name in excludes:
                 continue
-            out.append(os.path.relpath(path, root))
+            if os.path.islink(path):
+                raise ScanError(
+                    f"publishable file is a symlink and cannot be verified "
+                    f"as a regular artifact file: {path}")
+            if not os.path.isfile(path):
+                raise ScanError(f"publishable path is not a regular file: {path}")
+            if name.lower().endswith(BINARY_SUFFIXES):
+                continue
+            out.append(rel)
     return sorted(out)
 
 
@@ -276,7 +301,7 @@ def plain(text: str) -> str:
     def strip(m: re.Match) -> str:
         return " " + " ".join(attr_values(m.group(0))) + " "
 
-    return re.sub(r"\s+", " ", TAG.sub(strip, text)).strip()
+    return html.unescape(re.sub(r"\s+", " ", TAG.sub(strip, text))).strip()
 
 
 def plain_lines(raw: str) -> list[str]:
@@ -302,7 +327,8 @@ def visible(raw: str) -> str:
     anchor can hold several elements, so its own copy is read the same way.
     """
     def anchor(m: re.Match) -> str:
-        href = m.group("dq") or m.group("sq") or m.group("bare") or ""
+        href = html.unescape(
+            m.group("dq") or m.group("sq") or m.group("bare") or "")
         inner = elements(m.group(0)).strip("«» \t\n")
         if DEMO_HOST not in href.lower():
             return f" {inner} "
@@ -314,14 +340,16 @@ def visible(raw: str) -> str:
         return " " if name in INLINE_TAGS else ELEMENT_BREAK
 
     text = ANCHOR.sub(anchor, SCRIPT.sub(ELEMENT_BREAK, raw))
-    return re.sub(r"[^\S\n]+", " ", TAG.sub(tag, text))
+    return html.unescape(re.sub(r"[^\S\n]+", " ", TAG.sub(tag, text)))
 
 
 def marked(text: str) -> str:
     """Text with every pointer at the demo replaced by MARK."""
+    text = html.unescape(text)
     bare = MARK_OPEN + MARK_CLOSE
-    text = re.sub(r"https?://" + re.escape(DEMO_HOST) + r"\S*", bare, text,
-                  flags=re.I)
+    text = re.sub(
+        r"https?://" + re.escape(DEMO_HOST) + r"[^\s\"'<>]*", bare, text,
+        flags=re.I)
     return re.sub(re.escape(DEMO_HOST), bare, text, flags=re.I)
 
 
@@ -391,6 +419,14 @@ def pointer_problems_in(where: str, text: str, require_cue: bool) -> list[str]:
     return problems
 
 
+CONCAT_GAP = re.compile(r"\s*\+\s*")
+
+LINK_WRITER = re.compile(
+    r"<a\b|\b(?:innerHTML|outerHTML)\b|\binsertAdjacentHTML\b|"
+    r"\bdocument\.write\b|\.href\s*=|"
+    r"\bsetAttribute\s*\(\s*['\"]href['\"]", re.I)
+
+
 def script_texts(raw: str) -> list[tuple[str, str]]:
     """Every string a <script> or a <style> on this page could write into it.
 
@@ -402,11 +438,52 @@ def script_texts(raw: str) -> list[tuple[str, str]]:
         if JSONLD.match(m.group(0)):
             continue
         where = m.group(1).lower()
-        for lit in STRING_LITERAL.finditer(m.group(2)):
-            value = next((g for g in lit.groups() if g is not None), "")
+        body = m.group(2)
+        literals = list(STRING_LITERAL.finditer(body))
+        values = [next((g for g in lit.groups() if g is not None), "")
+                  for lit in literals]
+        seen: set[str] = set()
+
+        def emit(value: str) -> None:
             value = html.unescape(value).strip()
-            if WORDS.search(value):
+            if value and WORDS.search(value) and value not in seen:
+                seen.add(value)
                 out.append((where, value))
+
+        for value in values:
+            emit(value)
+
+        # JavaScript commonly builds markup by joining short literals. Scan
+        # each direct concatenation as the browser receives it, rather than
+        # letting a host split at the dot evade the pointer rules.
+        if literals:
+            run = values[0]
+            run_count = 1
+            for previous, current, value in zip(
+                    literals, literals[1:], values[1:]):
+                gap = body[previous.end():current.start()]
+                if CONCAT_GAP.fullmatch(gap):
+                    run += value
+                    run_count += 1
+                else:
+                    if run_count > 1:
+                        emit(run)
+                    run = value
+                    run_count = 1
+            if run_count > 1:
+                emit(run)
+
+        # Link builders may assemble the destination and label through local
+        # variables rather than one adjacent expression. Reconstructing their
+        # ordered literals is conservative only for scripts that can create a
+        # navigable link; a fetch-only health probe is deliberately excluded.
+        reconstructed = html.unescape("".join(values))
+        if LINK_WRITER.search(body) and DEMO_HOST in reconstructed.lower():
+            emit(reconstructed)
+            literal_context = " ".join(
+                html.unescape(value).strip() for value in values
+                if html.unescape(value).strip())
+            emit(f"{DEMO_HOST} {literal_context}")
     return out
 
 
@@ -480,7 +557,10 @@ def check(root: str = ROOT) -> list[str]:
     prices: dict[str, list[str]] = {}
 
     for rel in published_files(root):
-        raw = uncommented(readable(os.path.join(root, rel)) or "")
+        raw = readable(os.path.join(root, rel))
+        if raw is None:
+            continue
+        raw = uncommented(raw)
         text = plain(raw)
 
         for value in FAILURE_COUNT.findall(text):
@@ -547,11 +627,17 @@ def check_live(root: str = ROOT, fetch=live_fetch):
     named: dict[str, list[str]] = {}
 
     for rel in published_files(root):
-        text = plain(uncommented(readable(os.path.join(root, rel)) or ""))
+        raw = readable(os.path.join(root, rel))
+        if raw is None:
+            continue
+        text = plain(uncommented(raw))
         for label, pattern, _endpoints, _serves in WITHHOLD_VS_LIVE:
             if pattern.search(text):
                 claimed.setdefault(label, []).append(rel)
-        for field, _url, _path in FIELD_VS_LIVE:
+        watched_fields = [field for field, _url, _path in FIELD_VS_LIVE]
+        if MARK_QUALIFIER not in watched_fields:
+            watched_fields.append(MARK_QUALIFIER)
+        for field in watched_fields:
             if field in text:
                 named.setdefault(field, []).append(rel)
 
@@ -591,6 +677,45 @@ def check_live(root: str = ROOT, fetch=live_fetch):
                 f"{', '.join(sorted(set(named[field])))}: the site names the "
                 f"field {field}, and {url} no longer carries it at "
                 f"{'.'.join(str(p) for p in path)}")
+
+    if MARK_QUALIFIER not in named:
+        notes.append(
+            f"no published surface names {MARK_QUALIFIER}, so nothing is "
+            f"checked against {BOND_BOOK}")
+    else:
+        if BOND_BOOK not in payloads:
+            payloads[BOND_BOOK] = fetch(BOND_BOOK)
+        payload = payloads[BOND_BOOK]
+        if payload is None:
+            notes.append(
+                f"{BOND_BOOK} did not answer, {MARK_QUALIFIER} not checked")
+        else:
+            rows = dig(payload, ("rows",))
+            semantics = dig(payload, ("mark_semantics",))
+            if not isinstance(rows, list):
+                problems.append(
+                    f"{', '.join(sorted(set(named[MARK_QUALIFIER])))}: the "
+                    f"site says every flagged row carries {MARK_QUALIFIER}, "
+                    f"and {BOND_BOOK} has no rows list")
+            else:
+                for index, row in enumerate(rows):
+                    if not isinstance(row, dict) or \
+                            row.get(MARK_FIELD) is not True:
+                        continue
+                    qualifier = row.get(MARK_QUALIFIER)
+                    if not isinstance(qualifier, str) or not qualifier.strip():
+                        problems.append(
+                            f"{', '.join(sorted(set(named[MARK_QUALIFIER])))}: "
+                            f"the site says every {MARK_FIELD} row carries "
+                            f"{MARK_QUALIFIER}, and {BOND_BOOK} is missing it "
+                            f"at rows.{index}.{MARK_QUALIFIER}")
+                    elif isinstance(semantics, str) and semantics.strip() and \
+                            qualifier.strip() != semantics.strip():
+                        problems.append(
+                            f"{', '.join(sorted(set(named[MARK_QUALIFIER])))}: "
+                            f"{BOND_BOOK} carries a {MARK_QUALIFIER} at "
+                            f"rows.{index}.{MARK_QUALIFIER} that does not "
+                            f"match mark_semantics")
     return problems, notes
 
 
@@ -608,9 +733,9 @@ def main() -> int:
     try:
         local = check(root)
     except Exception as exc:
-        print(f"WARNING: the local checks could not run, so nothing was "
-              f"verified: {exc!r}", file=sys.stderr)
-        local = []
+        print(f"REFUSING: the local checks could not inspect the complete "
+              f"publishable surface: {exc!r}", file=sys.stderr)
+        return 1
 
     warnings, notes = live_warnings(root)
     for note in notes:

@@ -188,6 +188,23 @@ def test_the_host_is_matched_however_it_is_cased(tmp_path):
     assert any("open door" in p for p in problems), problems
 
 
+def test_html_entities_cannot_hide_the_host_in_visible_copy(tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures. The walkthrough at "
+          "demo&#x2e;liquilens&#46;in is open, no signup.</p>")
+    problems = vpc.check(str(tmp_path))
+    assert any("demo openness" in p for p in problems), problems
+
+
+def test_html_entities_cannot_hide_the_host_in_an_href(tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures. "
+          "<a href='https://demo&#46;liquilens&#x2e;in/?tab=evidence'>"
+          "Open the Evidence record</a></p>")
+    problems = vpc.check(str(tmp_path))
+    assert any("open door" in p for p in problems), problems
+
+
 def test_a_pointer_that_names_the_gate_passes(tmp_path):
     write(tmp_path, "index.html",
           "<p>550 failures. The record sits in the "
@@ -391,11 +408,36 @@ def test_a_field_the_site_stopped_naming_is_reported_not_dropped(monkeypatch):
 
 
 def test_the_bond_book_fixture_is_the_real_public_one():
-    row = payload(BOND_BOOK)["rows"][0]
+    rows = payload(BOND_BOOK)["rows"]
+    row = rows[0]
     assert row["bank"] == "COMMUNITY STATE BANK"
     assert MARK_FIELD in row
-    assert "mark_qualifier" in row
+    assert all(not candidate[MARK_FIELD] or candidate.get("mark_qualifier")
+               for candidate in rows)
     assert "mark_semantics" in payload(BOND_BOOK)
+
+
+def test_every_flagged_bond_book_row_must_carry_the_qualifier():
+    book = copy.deepcopy(payload(BOND_BOOK))
+    assert len(book["rows"]) > 1
+    assert book["rows"][1][MARK_FIELD] is True
+    book["rows"][1].pop("mark_qualifier")
+
+    problems, _ = vpc.check_live(
+        ROOT, fetch=serving(**{BOND_BOOK: book}))
+    assert any("rows.1.mark_qualifier" in problem for problem in problems), \
+        problems
+
+
+def test_every_flagged_bond_book_qualifier_must_match_the_payload_semantics():
+    book = copy.deepcopy(payload(BOND_BOOK))
+    book["rows"][1]["mark_qualifier"] = "This mark means insolvency."
+
+    problems, _ = vpc.check_live(
+        ROOT, fetch=serving(**{BOND_BOOK: book}))
+    assert any("rows.1.mark_qualifier" in problem and
+               "does not match mark_semantics" in problem
+               for problem in problems), problems
 
 
 def test_an_endpoint_that_does_not_answer_is_never_evidence():
@@ -732,6 +774,31 @@ def test_a_retired_claim_a_script_writes_into_the_page_is_refused(tmp_path):
                for p in problems), problems
 
 
+def test_a_javascript_built_link_cannot_split_the_host_across_literals(
+        tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures</p><div id='card'></div>"
+          "<script>const card = '<a href=\"https://demo&#46;' + "
+          "'liquilens&#46;in\">Open ' + 'the board now</a>'; "
+          "document.getElementById('card').innerHTML = card;</script>")
+    problems = vpc.check(str(tmp_path))
+    assert any("index.html script" in p and "open door" in p
+               for p in problems), problems
+
+
+def test_a_javascript_link_builder_cannot_separate_host_and_label_variables(
+        tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures</p><a id='card'></a>"
+          "<script>const host = 'https://demo.' + 'liquilens.in'; "
+          "const label = 'Open the board now'; "
+          "const card = document.getElementById('card'); "
+          "card.href = host; card.textContent = label;</script>")
+    problems = vpc.check(str(tmp_path))
+    assert any("index.html script" in p and "open door" in p
+               for p in problems), problems
+
+
 def test_a_retired_pointer_a_style_rule_writes_into_the_page_is_refused(
         tmp_path):
     write(tmp_path, "index.html",
@@ -802,9 +869,68 @@ def test_a_json_ld_answer_is_reported_once_and_under_its_own_name(tmp_path):
     assert "JSON-LD" in problems[0]
 
 
-def test_a_file_git_keeps_out_of_the_checkout_is_never_scanned(tmp_path):
+def test_gitignore_cannot_hide_a_file_that_the_pages_artifact_can_upload(
+        tmp_path):
     write(tmp_path, "index.html", "<p>550 failures</p>")
-    write(tmp_path, ".gitignore", ".pytest_cache/\n")
-    write(tmp_path, ".pytest_cache/v/cache/lastfailed.json",
-          "{\"552 US bank failures\": true}")
-    assert vpc.check(str(tmp_path)) == []
+    write(tmp_path, ".gitignore", "public/\n")
+    write(tmp_path, "public/index.html", "<p>552 US bank failures</p>")
+
+    assert "public/index.html" in vpc.published_files(str(tmp_path))
+    problems = vpc.check(str(tmp_path))
+    assert any("public/index.html" in problem and "study record is 550"
+               in problem for problem in problems), problems
+
+
+def test_only_top_level_workflow_exclusions_are_skipped(tmp_path):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    write(tmp_path, ".github/workflows/pages.yml", WORKFLOW_WITH_RM)
+    write(tmp_path, "public/tests/index.html",
+          "<p>552 US bank failures</p>")
+
+    assert "public/tests/index.html" in vpc.published_files(str(tmp_path))
+    problems = vpc.check(str(tmp_path))
+    assert any("public/tests/index.html" in problem for problem in problems), \
+        problems
+
+
+def test_a_broken_symlink_fails_the_local_gate_closed(
+        tmp_path, monkeypatch, capsys):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    public = tmp_path / "public"
+    public.mkdir()
+    os.symlink(tmp_path / "missing.html", public / "index.html")
+
+    monkeypatch.setattr(sys, "argv",
+                        ["verify_public_claims.py", str(tmp_path)])
+    monkeypatch.setenv("LIQUILENS_OFFLINE", "1")
+    assert vpc.main() == 1
+    error = capsys.readouterr().err
+    assert "REFUSING" in error and "symlink" in error
+
+
+def test_a_read_error_is_a_scan_error(tmp_path, monkeypatch):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    real_open = open
+    target = os.path.join(str(tmp_path), "index.html")
+
+    def denied(path, *args, **kwargs):
+        if os.fspath(path) == target:
+            raise PermissionError("read denied")
+        return real_open(path, *args, **kwargs)
+
+    monkeypatch.setattr("builtins.open", denied)
+    with pytest.raises(vpc.ScanError, match="cannot read publishable file"):
+        vpc.check(str(tmp_path))
+
+
+def test_a_walk_error_is_a_scan_error(tmp_path, monkeypatch):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+
+    def denied_walk(_root, onerror=None):
+        assert onerror is not None
+        onerror(PermissionError("walk denied"))
+        yield  # pragma: no cover - makes this a generator for os.walk's shape
+
+    monkeypatch.setattr(vpc.os, "walk", denied_walk)
+    with pytest.raises(vpc.ScanError, match="cannot walk publishable surface"):
+        vpc.check(str(tmp_path))
