@@ -3,6 +3,7 @@ import glob
 import importlib.util
 import json
 import os
+import re
 import sys
 
 import pytest
@@ -148,7 +149,7 @@ RETIRED_POINTERS = sorted(
 
 
 def test_the_retired_pointer_fixtures_were_captured():
-    assert len(RETIRED_POINTERS) == 6
+    assert len(RETIRED_POINTERS) == 7
 
 
 @pytest.mark.parametrize("name", RETIRED_POINTERS)
@@ -167,6 +168,24 @@ def test_the_gate_reads_a_pointer_that_lives_only_in_the_href(tmp_path):
           "Open the Evidence record</a></p>")
     problems = vpc.check(str(tmp_path))
     assert any("open door" in p for p in problems)
+
+
+def test_the_gate_reads_a_single_quoted_href_too(tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures. "
+          "<a href='https://demo.liquilens.in/?tab=evidence'>"
+          "Open the Evidence record</a></p>")
+    problems = vpc.check(str(tmp_path))
+    assert any("open door" in p for p in problems), problems
+
+
+def test_the_host_is_matched_however_it_is_cased(tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures. "
+          "<a href=\"https://DEMO.LiquiLens.in/?tab=evidence\">"
+          "Open the Evidence record</a></p>")
+    problems = vpc.check(str(tmp_path))
+    assert any("open door" in p for p in problems), problems
 
 
 def test_a_pointer_that_names_the_gate_passes(tmp_path):
@@ -345,29 +364,44 @@ def test_the_board_fixture_is_the_real_public_one():
     assert rows[0]["label"] != "failed"
 
 
+MARK_FIELD = "tier1_negative_after_ugl_mark"
+
+
 def test_the_site_names_a_bond_book_field_the_live_payload_still_carries():
     problems, _ = vpc.check_live(ROOT, fetch=serving())
-    assert not any("marked_insolvent" in p for p in problems)
+    assert not any(MARK_FIELD in p for p in problems)
 
 
 def test_renaming_that_field_at_the_api_refutes_the_site():
     book = copy.deepcopy(payload(BOND_BOOK))
     for row in book["rows"]:
-        row["mark_to_market_shortfall"] = row.pop("marked_insolvent")
+        row["marked_insolvent"] = row.pop(MARK_FIELD)
     problems, _ = vpc.check_live(ROOT, fetch=serving(**{BOND_BOOK: book}))
-    assert any("llms.txt" in p and "marked_insolvent" in p for p in problems)
+    assert any("llms.txt" in p and MARK_FIELD in p for p in problems)
+
+
+def test_a_field_the_site_stopped_naming_is_reported_not_dropped(monkeypatch):
+    monkeypatch.setattr(
+        vpc, "FIELD_VS_LIVE",
+        (("marked_insolvent", BOND_BOOK, ("rows", 0, "marked_insolvent")),))
+    problems, notes = vpc.check_live(ROOT, fetch=serving())
+    assert not any("marked_insolvent" in p for p in problems)
+    assert any("no published surface names marked_insolvent" in n
+               for n in notes)
 
 
 def test_the_bond_book_fixture_is_the_real_public_one():
     row = payload(BOND_BOOK)["rows"][0]
     assert row["bank"] == "COMMUNITY STATE BANK"
-    assert "marked_insolvent" in row
+    assert MARK_FIELD in row
+    assert "mark_qualifier" in row
+    assert "mark_semantics" in payload(BOND_BOOK)
 
 
 def test_an_endpoint_that_does_not_answer_is_never_evidence():
     problems, notes = vpc.check_live(ROOT, fetch=lambda url: None)
     assert problems == []
-    assert len(notes) == 3
+    assert len(notes) == 5
 
 
 def test_the_live_api_warns_and_publishes_while_a_local_clash_still_blocks(
@@ -390,7 +424,7 @@ def test_renaming_the_bond_book_field_at_the_api_never_blocks_the_deploy(
         monkeypatch):
     book = copy.deepcopy(payload(BOND_BOOK))
     for row in book["rows"]:
-        row["mark_to_market_shortfall"] = row.pop("marked_insolvent")
+        row["marked_insolvent"] = row.pop(MARK_FIELD)
     against_the_rename = vpc.check_live
 
     monkeypatch.setattr(sys, "argv", ["verify_public_claims.py"])
@@ -400,7 +434,7 @@ def test_renaming_the_bond_book_field_at_the_api_never_blocks_the_deploy(
         lambda root=vpc.ROOT: against_the_rename(
             root, fetch=serving(**{BOND_BOOK: book})))
     warnings, _ = vpc.check_live(ROOT)
-    assert any("marked_insolvent" in w for w in warnings)
+    assert any(MARK_FIELD in w for w in warnings)
     assert vpc.main() == 0
 
 
@@ -503,4 +537,274 @@ def test_a_cue_in_a_neighbouring_sentence_no_longer_excuses_the_pointer(
     assert any("says nothing about the gate" in p for p in problems), problems
 
     write(tmp_path, "index.html", CUE_IN_THE_SAME_SENTENCE)
+    assert vpc.check(str(tmp_path)) == []
+
+
+# List items carry no sentence punctuation, so tag stripping alone runs the
+# neighbour's cue and the pointer together into one line.
+CUE_IN_A_NEIGHBOURING_ELEMENT = (
+    "<p>550 failures</p>"
+    "<ul><li>Pilot access to the lender console is granted on request</li>"
+    "<li><a href=\"https://demo.liquilens.in\">The Evidence tab</a></li></ul>")
+
+CUE_IN_THE_SAME_ELEMENT = (
+    "<p>550 failures</p>"
+    "<ul><li>Pilot access to the lender console is granted on request</li>"
+    "<li><a href=\"https://demo.liquilens.in\">The Evidence tab</a>, granted "
+    "on request</li></ul>")
+
+
+def test_a_cue_in_a_neighbouring_element_no_longer_excuses_the_pointer(
+        tmp_path):
+    write(tmp_path, "index.html", CUE_IN_A_NEIGHBOURING_ELEMENT)
+    problems = vpc.check(str(tmp_path))
+    assert any("says nothing about the gate" in p for p in problems), problems
+
+    write(tmp_path, "index.html", CUE_IN_THE_SAME_ELEMENT)
+    assert vpc.check(str(tmp_path)) == []
+
+
+def test_an_inline_tag_inside_the_sentence_does_not_split_it(tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures. The record sits in the "
+          "<a href=\"https://demo.liquilens.in\">Evidence tab</a>, which is "
+          "<strong>granted <em>on request</em></strong>.</p>")
+    assert vpc.check(str(tmp_path)) == []
+
+
+def test_a_retired_access_claim_in_the_og_description_is_refused(tmp_path):
+    write(tmp_path, "index.html",
+          fixture(os.path.join("retired_meta", "og-description-access-claim"
+                                              ".html")))
+    problems = vpc.check(str(tmp_path))
+    assert any("demo openness" in p for p in problems), problems
+
+
+def test_the_meta_tags_that_carried_the_other_denominator_are_scanned(tmp_path):
+    write(tmp_path, "index.html",
+          fixture(os.path.join("retired_meta",
+                               "index-9-22-denominator.html")))
+    write(tmp_path, "us/index.html", "<p>recall 73.1% of 550 failures</p>")
+    problems = vpc.check(str(tmp_path))
+    assert any("2 different numbers" in p for p in problems), problems
+    assert any("552" in p and "study record is 550" in p for p in problems)
+
+
+def test_a_pointer_that_lives_only_in_a_card_description_is_read(tmp_path):
+    write(tmp_path, "index.html",
+          "<meta property=\"og:description\" content=\"The full board is at "
+          "demo.liquilens.in\" />"
+          "<p>550 failures. Pilot access is granted on request.</p>")
+    problems = vpc.check(str(tmp_path))
+    assert any("attribute" in p and "says nothing about the gate" in p
+               for p in problems), problems
+
+
+def test_an_open_door_promise_in_an_alt_or_aria_label_is_refused(tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures</p>"
+          "<img src=\"/og-radar.png\" alt=\"The demo.liquilens.in board is "
+          "one click away\" />")
+    problems = vpc.check(str(tmp_path))
+    assert any("attribute" in p and "open door" in p for p in problems), \
+        problems
+
+    write(tmp_path, "index.html",
+          "<p>550 failures</p>"
+          "<img src=\"/og-radar.png\" aria-label=\"The demo.liquilens.in "
+          "board, granted on request\" />")
+    assert vpc.check(str(tmp_path)) == []
+
+
+def test_an_anchors_own_label_is_read_beside_the_link_text(tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures. <a href=\"https://demo.liquilens.in\" "
+          "aria-label=\"Open it now\">the Evidence tab, granted on request"
+          "</a></p>")
+    problems = vpc.check(str(tmp_path))
+    assert any("open door" in p for p in problems), problems
+
+
+CSP = [line for line in
+       open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
+       .splitlines() if "Content-Security-Policy" in line]
+
+
+def test_the_content_security_policy_is_a_header_and_not_copy(tmp_path):
+    assert len(CSP) == 1 and vpc.DEMO_HOST in CSP[0]
+    write(tmp_path, "index.html", CSP[0] + "<p>550 failures</p>")
+    assert vpc.check(str(tmp_path)) == []
+
+
+RETIRED_CSS = ("/* banner copy, retired: demo.liquilens.in is open, "
+               "no signup and no code */\n.url b{color:#E3B778}\n")
+
+
+def test_a_retired_claim_in_a_served_stylesheet_is_refused(tmp_path):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    write(tmp_path, "brand/_banner.css", RETIRED_CSS)
+    problems = vpc.check(str(tmp_path))
+    assert any("brand/_banner.css" in p and "demo openness" in p
+               for p in problems), problems
+
+
+def test_a_served_file_with_no_suffix_at_all_is_refused(tmp_path):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    write(tmp_path, "brand/COPY", "banner strap: 552 US bank failures\n")
+    problems = vpc.check(str(tmp_path))
+    assert any("brand/COPY" in p and "study record is 550" in p
+               for p in problems), problems
+
+
+def test_the_stylesheets_the_site_serves_are_in_the_scan():
+    scanned = vpc.published_files(ROOT)
+    assert "brand/_banner.css" in scanned
+    assert "brand/_logo.css" in scanned
+    assert ".well-known/security.txt" in scanned
+
+
+def test_an_image_is_never_read_as_copy(tmp_path):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    (tmp_path / "og.png").write_bytes(
+        b"\x89PNG\r\n\x1a\n\x00\x00552 US bank failures\x00")
+    assert vpc.check(str(tmp_path)) == []
+    assert "og.png" not in vpc.published_files(str(tmp_path))
+
+
+def test_one_badly_encoded_file_no_longer_disarms_every_other_rule(tmp_path):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    (tmp_path / "us").mkdir(parents=True, exist_ok=True)
+    (tmp_path / "us" / "index.html").write_bytes(
+        "<p>caf\xe9 lenders: 552 US bank failures</p>".encode("latin-1"))
+    problems = vpc.check(str(tmp_path))
+    assert any("552" in p and "study record is 550" in p for p in problems)
+
+
+def test_a_cue_above_the_links_call_to_action_no_longer_excuses_it(tmp_path):
+    write(tmp_path, "index.html",
+          fixture(os.path.join("retired_pointers",
+                               "index-839-card-cue-above-the-call-to-action"
+                               ".html")))
+    problems = vpc.check(str(tmp_path))
+    assert any("says nothing about the gate" in p for p in problems), problems
+
+
+LAYER_CARD = re.compile(
+    r"<a class=\"layer\"[^>]*href=\"https://demo\.liquilens\.in[^\"]*\"[^>]*>"
+    r".*?</a>", re.S)
+
+
+def test_the_published_cards_carry_the_cue_in_their_call_to_action(tmp_path):
+    raw = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
+    cards = LAYER_CARD.findall(raw)
+    assert len(cards) == 5
+    for card in cards:
+        write(tmp_path, "index.html", card + "<p>550 failures</p>")
+        assert vpc.check(str(tmp_path)) == [], card[:200]
+
+
+# The promise window still covers the whole link, so a retired claim in the
+# card body is caught even when it is nowhere near the call to action. The
+# body sentence is index.html line 1207 as published before 2026-08-03.
+def test_an_open_door_claim_in_the_card_body_is_still_refused(tmp_path):
+    write(tmp_path, "index.html",
+          "<a class=\"layer\" "
+          "href=\"https://demo.liquilens.in/?tab=evidence\">"
+          "<h3>LiquiLens Treasury</h3>"
+          "<p>Treasury and early warning for Indian lenders and businesses. "
+          "Runs in production, multi tenant, on your servers if your book "
+          "cannot leave the building. The crisis validation record is open in "
+          "the demo's Evidence tab, institution by institution, misses "
+          "included.</p>"
+          "<span class=\"go\"><span>Read the board →</span></span></a>"
+          "<p>550 failures</p>")
+    problems = vpc.check(str(tmp_path))
+    assert any("open door" in p for p in problems), problems
+
+
+def test_a_retired_claim_a_script_writes_into_the_page_is_refused(tmp_path):
+    write(tmp_path, "index.html",
+          fixture(os.path.join("retired_injected",
+                               "index-1068-board-fallback-written-by-script"
+                               ".html")))
+    problems = vpc.check(str(tmp_path))
+    assert any("index.html script" in p and "open door" in p
+               for p in problems), problems
+
+
+def test_a_retired_pointer_a_style_rule_writes_into_the_page_is_refused(
+        tmp_path):
+    write(tmp_path, "index.html",
+          fixture(os.path.join("retired_injected",
+                               "status-353-row-written-by-a-style-rule"
+                               ".html")))
+    problems = vpc.check(str(tmp_path))
+    assert any("index.html style" in p and "says nothing about the gate" in p
+               for p in problems), problems
+
+
+def test_the_script_that_probes_the_demo_is_not_read_as_copy(tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures</p>"
+          "<script>fetch('https://demo.liquilens.in/', {mode:'no-cors'})"
+          ".then(function(){ set('demoBadge', 'answered'); });</script>")
+    assert vpc.check(str(tmp_path)) == []
+
+
+def test_a_retired_claim_parked_in_a_comment_is_refused(tmp_path):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    write(tmp_path, "ship-log/index.html",
+          fixture(os.path.join("retired_injected",
+                               "ship-log-340-parked-in-a-comment.html")))
+    problems = vpc.check(str(tmp_path))
+    assert any("demo openness" in p for p in problems), problems
+    assert any("open door" in p for p in problems), problems
+
+
+def test_the_copy_that_replaced_it_still_passes(tmp_path):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    write(tmp_path, "ship-log/index.html",
+          fixture(os.path.join("retired_injected",
+                               "ship-log-340-parked-in-a-comment.html"))
+          .split("-->")[-1])
+    assert vpc.check(str(tmp_path)) == []
+
+
+# The og:description sentence retired from index.html on 2026-08-03, in the
+# two attributes a tooltip and a form hint carry copy in.
+RETIRED_ACCESS_SENTENCE = (
+    "The live walkthrough at demo.liquilens.in is open, no signup and no "
+    "code.")
+
+
+@pytest.mark.parametrize("markup", [
+    "<span class=\"chip\" data-tip=\"%s\"></span>",
+    "<input id=\"lcrAssets\" placeholder=\"%s\">"])
+def test_a_retired_claim_in_a_tooltip_or_a_form_hint_is_refused(
+        tmp_path, markup):
+    write(tmp_path, "index.html",
+          "<p>550 failures</p>" + markup % RETIRED_ACCESS_SENTENCE)
+    problems = vpc.check(str(tmp_path))
+    assert any("demo openness" in p for p in problems), problems
+
+
+def test_a_data_attribute_that_is_machinery_is_never_read_as_copy(tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures</p>"
+          "<i class=\"bar\" data-w=\"552\"></i> failures flagged early")
+    assert vpc.check(str(tmp_path)) == []
+
+
+def test_a_json_ld_answer_is_reported_once_and_under_its_own_name(tmp_path):
+    write(tmp_path, "index.html", FAQ_JSONLD % JSONLD_OPEN_DOOR)
+    problems = vpc.check(str(tmp_path))
+    assert len(problems) == 1, problems
+    assert "JSON-LD" in problems[0]
+
+
+def test_a_file_git_keeps_out_of_the_checkout_is_never_scanned(tmp_path):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    write(tmp_path, ".gitignore", ".pytest_cache/\n")
+    write(tmp_path, ".pytest_cache/v/cache/lastfailed.json",
+          "{\"552 US bank failures\": true}")
     assert vpc.check(str(tmp_path)) == []

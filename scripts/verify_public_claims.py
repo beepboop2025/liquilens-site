@@ -5,7 +5,10 @@ Four rules, checked over every file the Pages workflow uploads:
 
   1. one US failure count, and it is the study denominator
   2. the Undertow price ladder, on Undertow surfaces only
-  3. no surface describes a gated door as open, hrefs and JSON-LD included
+  3. no surface describes a gated door as open, in any of the six ways a page
+     carries a claim: text, an href, attribute copy such as og:description,
+     JSON-LD, a string a script or a style rule writes into the page, and a
+     comment that ships unrendered
   4. no surface claims something is withheld that a public API serves
 
 Rules 1 to 3 read only the checked out files, so they are deterministic and
@@ -22,6 +25,7 @@ blocks the only publish path stops being a gate and starts being an outage.
 """
 from __future__ import annotations
 
+import html
 import json
 import os
 import re
@@ -39,7 +43,12 @@ US_FAILURE_COUNT = "550"
 # Undertow surfaces only; LiquiLens and Seiche prices are not on this ladder.
 UNDERTOW_PRICES = {"$29/mo", "$99/mo", "$199/mo", "$8,000/yr", "$0.05/call"}
 
-PUBLISHED_SUFFIXES = (".html", ".txt", ".xml", ".json")
+# Byte formats carry no readable copy. Everything else that survives a UTF-8
+# decode is scanned, because the artifact uploads the whole checkout and a
+# retired claim reads the same in a stylesheet comment as in a paragraph.
+BINARY_SUFFIXES = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".ico",
+                   ".pdf", ".woff", ".woff2", ".ttf", ".otf", ".eot", ".zip",
+                   ".gz", ".mp4", ".webm", ".mp3", ".wav")
 
 SKIP_DIRS = {".git", ".github", "scripts", "tests"}
 
@@ -52,7 +61,30 @@ DEMO_HOST = "demo.liquilens.in"
 
 TAG = re.compile(r"<[^>]+>")
 
-ANCHOR = re.compile(r"<a\b[^>]*?href=\"([^\"]*)\"[^>]*>(.*?)</a>", re.I | re.S)
+TAG_NAME = re.compile(r"</?\s*([a-zA-Z][^\s/>]*)")
+
+# Copy that lives in an attribute is what a social card and an LLM quote, and
+# stripping the tag takes the attribute with it. A data attribute is read by
+# the page's own script, which is one more way copy reaches the reader, so a
+# data value that reads like a sentence is read like one.
+ATTR = re.compile(
+    r"\b(?P<name>content|alt|title|aria-label|placeholder|data-[\w-]+)\s*=\s*"
+    r"(?:\"(?P<dq>[^\"]*)\"|'(?P<sq>[^']*)'|(?P<bare>[^\s\"'>]+))", re.I)
+
+# An http-equiv meta is an HTTP header, not prose. The CSP names the demo host
+# because the browser has to reach it, and that is not a claim about access.
+HTTP_EQUIV = re.compile(r"\bhttp-equiv\s*=", re.I)
+
+# Tags that sit inside a sentence. Everything else ends one.
+INLINE_TAGS = frozenset(
+    "a abbr b bdi bdo cite code data del dfn em i ins kbd mark q s samp small "
+    "span strong sub sup time u var wbr".split())
+
+ELEMENT_BREAK = "\n"
+
+ANCHOR = re.compile(
+    r"<a\b[^>]*?href\s*=\s*(?:\"(?P<dq>[^\"]*)\"|'(?P<sq>[^']*)'|"
+    r"(?P<bare>[^\s\"'>]+))[^>]*>.*?</a>", re.I | re.S)
 
 FAILURE_COUNT = re.compile(
     r"(?<![\d,])(\d{3,4})\s+(?:US\s+)?(?:FDIC\s+)?(?:bank\s+)?"
@@ -93,14 +125,30 @@ MARK_OPEN = "«DEMO "
 MARK_CLOSE = "»"
 MARK_WINDOW = 200
 
-SCRIPT = re.compile(r"<(script|style)\b.*?</\1>", re.I | re.S)
+SCRIPT = re.compile(r"<(script|style)\b[^>]*>(.*?)</\1>", re.I | re.S)
 
 # The JSON-LD lives inside <script>, so tag stripping never reaches it.
 JSONLD = re.compile(
     r"<script\b[^>]*\btype\s*=\s*[\"']application/ld\+json[\"'][^>]*>"
     r"(.*?)</script>", re.I | re.S)
 
-SENTENCE_END = re.compile(r"[.!?;:]\s")
+# A script writes copy into the page and a style rule writes copy into the
+# page, so dropping those elements drops the copy with them. The code is not
+# prose, the strings in it are, so the strings are what gets read.
+STRING_LITERAL = re.compile(
+    r"\"([^\"\\\n]*(?:\\.[^\"\\\n]*)*)\""
+    r"|'([^'\\\n]*(?:\\.[^'\\\n]*)*)'"
+    r"|`([^`\\]*(?:\\.[^`\\]*)*)`", re.S)
+
+# A string with no space in it is a URL, a selector, an element id or a class
+# name. A sentence a reader is shown has spaces.
+WORDS = re.compile(r"\S\s+\S")
+
+# A comment is never rendered and it still ships in the file, where a reader
+# who opens the source and a model that reads the page both find it.
+COMMENT = re.compile(r"<!--(.*?)-->", re.S)
+
+SPAN_END = re.compile(r"[.!?;:]\s|\n")
 
 # Dated history: exempt from the access cue, not from the open door rule.
 DATED_HISTORY = {os.path.join("ship-log", "index.html")}
@@ -140,44 +188,141 @@ WITHHOLD_VS_LIVE = (
      "serves named living institutions with their current score"),
 )
 
-# Payload field names the site spells out for agents to read.
+# Payload field names the site spells out for agents to read. A name the site
+# stopped using is reported as an unwatched name, never dropped in silence.
+BOND_BOOK = "https://api.liquilens.in/api/public-signals/bond-book"
+
 FIELD_VS_LIVE = (
-    ("marked_insolvent",
-     "https://api.liquilens.in/api/public-signals/bond-book",
-     ("rows", 0, "marked_insolvent")),
+    ("tier1_negative_after_ugl_mark", BOND_BOOK,
+     ("rows", 0, "tier1_negative_after_ugl_mark")),
+    ("mark_qualifier", BOND_BOOK, ("rows", 0, "mark_qualifier")),
+    ("mark_semantics", BOND_BOOK, ("mark_semantics",)),
 )
 
 
+def ignored_names(root: str) -> set[str]:
+    """Names .gitignore keeps out of the checkout the workflow uploads."""
+    names: set[str] = set()
+    path = os.path.join(root, ".gitignore")
+    if not os.path.exists(path):
+        return names
+    for line in open(path, encoding="utf-8").read().splitlines():
+        line = line.strip()
+        if line and not line.startswith(("#", "!")):
+            names.add(line.strip("/"))
+    return names
+
+
+def readable(path: str) -> str | None:
+    """The file as text, or None when it is bytes rather than copy.
+
+    Copy the checkout serves in some other encoding is still read. Decoding
+    it strictly meant one mis-encoded file raised and left every rule on
+    every other file unchecked.
+    """
+    blob = open(path, "rb").read()
+    if b"\x00" in blob:
+        return None
+    try:
+        return blob.decode("utf-8")
+    except UnicodeDecodeError:
+        return blob.decode("latin-1")
+
+
+def uncommented(raw: str) -> str:
+    """The file with its comments read as copy rather than dropped as markup.
+
+    Tag stripping swallows a comment whole, so a retired sentence parked in
+    one reads as gone while it is still served in the file.
+    """
+    return COMMENT.sub(lambda m: " " + m.group(1) + " ", raw)
+
+
 def published_files(root: str) -> list[str]:
+    ignored = ignored_names(root)
     out = []
     for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
+        dirnames[:] = [d for d in dirnames
+                       if d not in SKIP_DIRS and d not in ignored]
         for name in filenames:
-            if name.endswith(PUBLISHED_SUFFIXES):
-                out.append(os.path.relpath(os.path.join(dirpath, name), root))
+            if name in ignored or name.lower().endswith(BINARY_SUFFIXES):
+                continue
+            path = os.path.join(dirpath, name)
+            if readable(path) is None:
+                continue
+            out.append(os.path.relpath(path, root))
     return sorted(out)
 
 
+def attr_values(tag: str) -> list[str]:
+    """The quotable copy carried by one tag's attributes."""
+    if HTTP_EQUIV.search(tag):
+        return []
+    out = []
+    for m in ATTR.finditer(tag):
+        value = next((g for g in (m.group("dq"), m.group("sq"),
+                                  m.group("bare")) if g is not None), "")
+        value = html.unescape(value).strip()
+        if not value:
+            continue
+        if m.group("name").lower().startswith("data-") \
+                and not WORDS.search(value):
+            continue
+        out.append(value)
+    return out
+
+
 def plain(text: str) -> str:
-    return re.sub(r"\s+", " ", TAG.sub(" ", text)).strip()
+    def strip(m: re.Match) -> str:
+        return " " + " ".join(attr_values(m.group(0))) + " "
+
+    return re.sub(r"\s+", " ", TAG.sub(strip, text)).strip()
 
 
 def plain_lines(raw: str) -> list[str]:
     return [plain(line) for line in raw.splitlines()]
 
 
-def marked(raw: str) -> str:
-    """Plain text with every pointer at the demo replaced by MARK."""
+def elements(text: str) -> str:
+    """Tag stripping that keeps every element boundary as a break."""
+    def strip(m: re.Match) -> str:
+        name = TAG_NAME.match(m.group(0))
+        name = name.group(1).lower() if name else ""
+        edge = " " if name in INLINE_TAGS else ELEMENT_BREAK
+        return edge + " ".join(attr_values(m.group(0))) + edge
+
+    return TAG.sub(strip, text)
+
+
+def visible(raw: str) -> str:
+    """Reader-visible copy, with every element boundary kept as a break.
+
+    Tag stripping alone runs two neighbouring elements into one line, and a
+    cue in the neighbour then reads as though it sat beside the pointer. One
+    anchor can hold several elements, so its own copy is read the same way.
+    """
     def anchor(m: re.Match) -> str:
-        href, inner = m.group(1), plain(m.group(2)).strip("«»")
-        if DEMO_HOST not in href:
+        href = m.group("dq") or m.group("sq") or m.group("bare") or ""
+        inner = elements(m.group(0)).strip("«» \t\n")
+        if DEMO_HOST not in href.lower():
             return f" {inner} "
         return f" {MARK_OPEN}{inner}{MARK_CLOSE} "
 
-    text = plain(ANCHOR.sub(anchor, SCRIPT.sub(" ", raw)))
+    def tag(m: re.Match) -> str:
+        name = TAG_NAME.match(m.group(0))
+        name = name.group(1).lower() if name else ""
+        return " " if name in INLINE_TAGS else ELEMENT_BREAK
+
+    text = ANCHOR.sub(anchor, SCRIPT.sub(ELEMENT_BREAK, raw))
+    return re.sub(r"[^\S\n]+", " ", TAG.sub(tag, text))
+
+
+def marked(text: str) -> str:
+    """Text with every pointer at the demo replaced by MARK."""
     bare = MARK_OPEN + MARK_CLOSE
-    text = re.sub(r"https?://" + re.escape(DEMO_HOST) + r"\S*", bare, text)
-    return text.replace(DEMO_HOST, bare)
+    text = re.sub(r"https?://" + re.escape(DEMO_HOST) + r"\S*", bare, text,
+                  flags=re.I)
+    return re.sub(re.escape(DEMO_HOST), bare, text, flags=re.I)
 
 
 def jsonld_texts(raw: str) -> list[str]:
@@ -206,12 +351,17 @@ def jsonld_texts(raw: str) -> list[str]:
     return out
 
 
-def sentence_span(text: str, start: int, end: int) -> str:
-    """The sentences the pointer itself sits in, and nothing further out."""
+def sentence_span(text: str, at: int) -> str:
+    """The sentence and the element the pointer ends in, and nothing wider.
+
+    A link is read to its end, so that is where the pointer sits. An anchor
+    can carry a heading, a paragraph and a call to action, and a cue in the
+    element above the call to action is a cue about something else.
+    """
     left = 0
-    for m in SENTENCE_END.finditer(text[:start]):
+    for m in SPAN_END.finditer(text[:at]):
         left = m.end()
-    m = SENTENCE_END.search(text, end)
+    m = SPAN_END.search(text, at)
     right = m.start() if m else len(text)
     return text[left:right]
 
@@ -231,7 +381,7 @@ def pointer_problems_in(where: str, text: str, require_cue: bool) -> list[str]:
                     f"({hit.group(0)!r}), and the URL answers 401")
                 break
         else:
-            sentence = sentence_span(text, at, close)
+            sentence = sentence_span(text, close)
             if require_cue and not ACCESS_CUE.search(sentence):
                 problems.append(
                     f"{where}: a pointer at {DEMO_HOST} says nothing about "
@@ -241,12 +391,43 @@ def pointer_problems_in(where: str, text: str, require_cue: bool) -> list[str]:
     return problems
 
 
+def script_texts(raw: str) -> list[tuple[str, str]]:
+    """Every string a <script> or a <style> on this page could write into it.
+
+    The JSON-LD blocks are read as data elsewhere, so they are left alone
+    here rather than reported twice under two names.
+    """
+    out: list[tuple[str, str]] = []
+    for m in SCRIPT.finditer(raw):
+        if JSONLD.match(m.group(0)):
+            continue
+        where = m.group(1).lower()
+        for lit in STRING_LITERAL.finditer(m.group(2)):
+            value = next((g for g in lit.groups() if g is not None), "")
+            value = html.unescape(value).strip()
+            if WORDS.search(value):
+                out.append((where, value))
+    return out
+
+
+def copy_segments(rel: str, raw: str) -> list[tuple[str, str]]:
+    """Every surface a reader, a social card or an LLM quotes this file from."""
+    out = [(rel, visible(raw))]
+    for m in TAG.finditer(SCRIPT.sub(" ", raw)):
+        for value in attr_values(m.group(0)):
+            out.append((f"{rel} attribute", value))
+    for value in jsonld_texts(raw):
+        out.append((f"{rel} JSON-LD", value))
+    for where, value in script_texts(raw):
+        out.append((f"{rel} {where}", value))
+    return out
+
+
 def demo_pointer_problems(rel: str, raw: str) -> list[str]:
     require_cue = rel not in DATED_HISTORY
-    problems = pointer_problems_in(rel, marked(raw), require_cue)
-    for value in jsonld_texts(raw):
-        problems += pointer_problems_in(
-            f"{rel} JSON-LD", marked(value), require_cue)
+    problems = []
+    for where, text in copy_segments(rel, raw):
+        problems += pointer_problems_in(where, marked(text), require_cue)
     return problems
 
 
@@ -299,7 +480,7 @@ def check(root: str = ROOT) -> list[str]:
     prices: dict[str, list[str]] = {}
 
     for rel in published_files(root):
-        raw = open(os.path.join(root, rel), encoding="utf-8").read()
+        raw = uncommented(readable(os.path.join(root, rel)) or "")
         text = plain(raw)
 
         for value in FAILURE_COUNT.findall(text):
@@ -366,7 +547,7 @@ def check_live(root: str = ROOT, fetch=live_fetch):
     named: dict[str, list[str]] = {}
 
     for rel in published_files(root):
-        text = plain(open(os.path.join(root, rel), encoding="utf-8").read())
+        text = plain(uncommented(readable(os.path.join(root, rel)) or ""))
         for label, pattern, _endpoints, _serves in WITHHOLD_VS_LIVE:
             if pattern.search(text):
                 claimed.setdefault(label, []).append(rel)
@@ -395,6 +576,9 @@ def check_live(root: str = ROOT, fetch=live_fetch):
 
     for field, url, path in FIELD_VS_LIVE:
         if field not in named:
+            notes.append(
+                f"no published surface names {field}, so nothing is checked "
+                f"against {url}")
             continue
         if url not in payloads:
             payloads[url] = fetch(url)
