@@ -38,9 +38,48 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# The study-backed denominator. /us/ and /research/ own this result, so this is
-# where it changes, once, when the FDIC record grows.
-US_FAILURE_COUNT = "550"
+# This captured production response is the release evidence artifact used by
+# the site gate. Public copy must follow the artifact rather than a second
+# hand-maintained number in this verifier.
+US_VALIDATION_ARTIFACT = os.path.join(
+    ROOT, "tests", "fixtures", "us-radar-validation.json")
+
+
+def load_us_study_metrics(path: str = US_VALIDATION_ARTIFACT) -> dict[str, str]:
+    try:
+        with open(path, encoding="utf-8") as fh:
+            payload = json.load(fh)
+        validation = payload["validation"]
+        count = validation["n_failure_events_with_data"]
+        recall = validation["recall_overall"]
+        auc = validation["auc_pooled_24m"]
+    except (OSError, KeyError, TypeError, ValueError) as exc:
+        raise RuntimeError(
+            f"cannot read the US validation release artifact {path}: {exc}"
+        ) from exc
+    if isinstance(count, bool) or not isinstance(count, int) or count <= 0:
+        raise RuntimeError(
+            "US validation release artifact has no positive integer "
+            "n_failure_events_with_data")
+    if isinstance(recall, bool) or not isinstance(recall, (int, float)) or \
+            not 0 <= recall <= 1:
+        raise RuntimeError(
+            "US validation release artifact has no valid recall_overall")
+    if isinstance(auc, bool) or not isinstance(auc, (int, float)) or \
+            not 0 <= auc <= 1:
+        raise RuntimeError(
+            "US validation release artifact has no valid auc_pooled_24m")
+    return {
+        "failure_count": str(count),
+        "recall_pct": f"{recall * 100:.1f}",
+        "auc": f"{auc:.3f}",
+    }
+
+
+US_STUDY_METRICS = load_us_study_metrics()
+US_FAILURE_COUNT = US_STUDY_METRICS["failure_count"]
+US_RECALL_PCT = US_STUDY_METRICS["recall_pct"]
+US_AUC = US_STUDY_METRICS["auc"]
 
 # The Undertow ladder as it is priced on liquilens-undertow.com. It governs
 # Undertow surfaces only; LiquiLens and Seiche prices are not on this ladder.
@@ -686,10 +725,18 @@ def artifact_excludes(root: str) -> set[str]:
     return excludes
 
 
-def check(root: str = ROOT) -> list[str]:
+def check(root: str = ROOT,
+          expected_failure_count: str | None = None) -> list[str]:
     problems = []
     counts: dict[str, list[str]] = {}
     prices: dict[str, list[str]] = {}
+
+    # Synthetic test roots can exercise scanner behavior with any internally
+    # consistent denominator. The real publish root is always bound to the
+    # committed release response above.
+    if expected_failure_count is None and \
+            os.path.realpath(root) == os.path.realpath(ROOT):
+        expected_failure_count = US_FAILURE_COUNT
 
     for rel in published_files(root):
         raw = readable(os.path.join(root, rel))
@@ -730,11 +777,12 @@ def check(root: str = ROOT) -> list[str]:
             f"the US failure count is published as {len(counts)} different "
             f"numbers: {detail}")
     for value, files in sorted(counts.items()):
-        if value != US_FAILURE_COUNT:
+        if expected_failure_count is not None and \
+                value != expected_failure_count:
             problems.append(
                 f"the US failure count is published as {value} in "
                 f"{', '.join(sorted(set(files)))}, and the study record is "
-                f"{US_FAILURE_COUNT}")
+                f"{expected_failure_count}")
     for token, files in sorted(prices.items()):
         if token not in UNDERTOW_PRICES:
             problems.append(

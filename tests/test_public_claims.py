@@ -42,6 +42,27 @@ def payload(url):
         return json.load(fh)
 
 
+def test_us_metrics_come_from_the_captured_release_response():
+    validation = payload(US_VALIDATION)["validation"]
+    assert vpc.US_FAILURE_COUNT == str(
+        validation["n_failure_events_with_data"])
+    assert vpc.US_RECALL_PCT == f"{validation['recall_overall'] * 100:.1f}"
+    assert vpc.US_AUC == f"{validation['auc_pooled_24m']:.3f}"
+
+    exact_surfaces = {
+        "brand/_x-banner.html": (f"{vpc.US_RECALL_PCT}%",),
+        "index.html": (f"{vpc.US_RECALL_PCT}%", vpc.US_AUC),
+        "llms.txt": (f"{vpc.US_RECALL_PCT} percent", vpc.US_AUC),
+        "research/index.html": (f"{vpc.US_RECALL_PCT}%", vpc.US_AUC),
+        "us/index.html": (f"{vpc.US_RECALL_PCT}%", vpc.US_AUC),
+    }
+    for rel, exact_metrics in exact_surfaces.items():
+        raw = open(os.path.join(ROOT, rel), encoding="utf-8").read()
+        assert vpc.US_FAILURE_COUNT in raw, rel
+        for metric in exact_metrics:
+            assert metric in raw, (rel, metric)
+
+
 def serving(**overrides):
     """A fetch stub answering with the live payloads, edits applied."""
     def fetch(url):
@@ -67,28 +88,39 @@ def test_the_published_site_agrees_with_itself():
 
 
 def test_one_failure_count_everywhere(tmp_path):
+    other_count = str(int(vpc.US_FAILURE_COUNT) + 1)
     write(tmp_path, "index.html",
-          "<p>73% recall on 552 US bank collapses</p>")
+          f"<p>73% recall on {vpc.US_FAILURE_COUNT} US bank collapses</p>")
     write(tmp_path, "us/index.html",
-          "<p>recall 73.1% of 550 failures</p>")
-    problems = vpc.check(str(tmp_path))
+          f"<p>recall 73% of {other_count} failures</p>")
+    problems = vpc.check(
+        str(tmp_path), expected_failure_count=vpc.US_FAILURE_COUNT)
     assert any("2 different numbers" in p for p in problems)
-    assert any("552" in p and "study record is 550" in p for p in problems)
+    assert any(other_count in p and
+               f"study record is {vpc.US_FAILURE_COUNT}" in p
+               for p in problems)
 
 
 def test_the_study_number_alone_passes(tmp_path):
     write(tmp_path, "index.html",
-          "<p>73% recall on 550 US bank collapses</p>")
+          f"<p>73% recall on {vpc.US_FAILURE_COUNT} US bank collapses</p>")
     write(tmp_path, "us/index.html",
-          "<p>recall 73.1% of 550 failures</p>")
-    assert vpc.check(str(tmp_path)) == []
+          f"<p>recall {vpc.US_RECALL_PCT}% of "
+          f"{vpc.US_FAILURE_COUNT} failures</p>")
+    assert vpc.check(
+        str(tmp_path), expected_failure_count=vpc.US_FAILURE_COUNT) == []
 
 
 def test_a_number_agreed_everywhere_still_has_to_be_the_study_number(tmp_path):
-    write(tmp_path, "index.html", "<p>73% recall on 552 US bank failures</p>")
-    write(tmp_path, "us/index.html", "<p>all 552 FDIC failures</p>")
-    problems = vpc.check(str(tmp_path))
-    assert any("study record is 550" in p for p in problems)
+    other_count = str(int(vpc.US_FAILURE_COUNT) + 1)
+    write(tmp_path, "index.html",
+          f"<p>73% recall on {other_count} US bank failures</p>")
+    write(tmp_path, "us/index.html",
+          f"<p>all {other_count} FDIC failures</p>")
+    problems = vpc.check(
+        str(tmp_path), expected_failure_count=vpc.US_FAILURE_COUNT)
+    assert any(f"study record is {vpc.US_FAILURE_COUNT}" in p
+               for p in problems)
 
 
 def test_a_year_beside_the_word_failures_is_not_a_count(tmp_path):
@@ -694,7 +726,7 @@ def test_the_meta_tags_that_carried_the_other_denominator_are_scanned(tmp_path):
     write(tmp_path, "us/index.html", "<p>recall 73.1% of 550 failures</p>")
     problems = vpc.check(str(tmp_path))
     assert any("2 different numbers" in p for p in problems), problems
-    assert any("552" in p and "study record is 550" in p for p in problems)
+    assert any("552" in p and "550" in p for p in problems)
 
 
 def test_a_pointer_that_lives_only_in_a_card_description_is_read(tmp_path):
@@ -759,7 +791,7 @@ def test_a_served_file_with_no_suffix_at_all_is_refused(tmp_path):
     write(tmp_path, "index.html", "<p>550 failures</p>")
     write(tmp_path, "brand/COPY", "banner strap: 552 US bank failures\n")
     problems = vpc.check(str(tmp_path))
-    assert any("brand/COPY" in p and "study record is 550" in p
+    assert any("brand/COPY" in p and "2 different numbers" in p
                for p in problems), problems
 
 
@@ -784,7 +816,7 @@ def test_one_badly_encoded_file_no_longer_disarms_every_other_rule(tmp_path):
     (tmp_path / "us" / "index.html").write_bytes(
         "<p>caf\xe9 lenders: 552 US bank failures</p>".encode("latin-1"))
     problems = vpc.check(str(tmp_path))
-    assert any("552" in p and "study record is 550" in p for p in problems)
+    assert any("552" in p and "550" in p for p in problems)
 
 
 def test_a_cue_above_the_links_call_to_action_no_longer_excuses_it(tmp_path):
@@ -806,7 +838,8 @@ def test_the_published_cards_carry_the_cue_in_their_call_to_action(tmp_path):
     cards = LAYER_CARD.findall(raw)
     assert len(cards) == 5
     for card in cards:
-        write(tmp_path, "index.html", card + "<p>550 failures</p>")
+        write(tmp_path, "index.html",
+              card + f"<p>{vpc.US_FAILURE_COUNT} failures</p>")
         assert vpc.check(str(tmp_path)) == [], card[:200]
 
 
@@ -966,7 +999,7 @@ def test_gitignore_cannot_hide_a_file_that_the_pages_artifact_can_upload(
 
     assert "public/index.html" in vpc.published_files(str(tmp_path))
     problems = vpc.check(str(tmp_path))
-    assert any("public/index.html" in problem and "study record is 550"
+    assert any("public/index.html" in problem and "2 different numbers"
                in problem for problem in problems), problems
 
 
