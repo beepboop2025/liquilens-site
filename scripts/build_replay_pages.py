@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the per-institution failure-replay pages from the published record.
 
-Source of truth: GET https://api.liquilens.in/api/failure-radar/validation —
+Source of truth: GET https://api.liquilens.in/api/failure-radar/validation,
 the same payload the research page cites. Every number rendered here is that
 payload's, verbatim; institutions absent from it get no page. Fail-loud: any
 fetch or schema problem aborts the build with no partial output.
@@ -25,7 +25,7 @@ API = "https://api.liquilens.in/api/failure-radar/validation"
 SITE = "https://liquilens.in"
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-# Display names derive from the record's slugs only — titleised, with
+# Display names derive from the record's slugs only, titleised, with
 # initialisms restored. Nothing is appended that the slug does not carry.
 ACRONYMS = {"ilfs": "IL&FS", "pmc": "PMC", "ckp": "CKP"}
 TYPE_GLOSS = {
@@ -52,19 +52,26 @@ def name_from_slug(slug: str) -> str:
 
 
 def esc(s) -> str:
+    # Em and en dashes are normalised to a plain hyphen on the way out. The
+    # house rule is that no published page carries them, and prose arriving
+    # from the validation payload is outside this repo's control: three of its
+    # fields carry em dashes today, and one of them renders on the index. A
+    # substitution here holds the line whatever upstream does next. It is
+    # typographic only, so no quoted number or claim changes meaning.
     return (str(s).replace("&", "&amp;").replace("<", "&lt;")
-            .replace(">", "&gt;").replace('"', "&quot;"))
+            .replace(">", "&gt;").replace('"', "&quot;")
+            .replace("—", "-").replace("–", "-"))
 
 
 def fetch() -> dict:
     req = urllib.request.Request(API, headers={"User-Agent": "liquilens-site-replay-build"})
     with urllib.request.urlopen(req, timeout=45) as r:
         if r.status != 200:
-            sys.exit(f"validation endpoint answered {r.status} — aborting, no pages written")
+            sys.exit(f"validation endpoint answered {r.status}, aborting, no pages written")
         d = json.load(r)
     for key in ("pca_replay", "funding_replay", "hazard"):
         if key not in d:
-            sys.exit(f"payload missing {key} — schema drift, aborting")
+            sys.exit(f"payload missing {key}: schema drift, aborting")
     return d
 
 
@@ -140,7 +147,7 @@ footer a{{color:var(--muted)}}
 FOOT = """
 <footer><div class="wrap">
 <p>Every number on this page is served from
-<a href="https://api.liquilens.in/api/failure-radar/validation">GET /api/failure-radar/validation</a> —
+<a href="https://api.liquilens.in/api/failure-radar/validation">GET /api/failure-radar/validation</a>,
 the same payload the <a href="/research/">research index</a> cites. Outputs are
 point-in-time research screening, not credit ratings and not investment advice.
 &copy; 2026 LiquiLens.</p>
@@ -168,7 +175,7 @@ def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> st
     gloss = TYPE_GLOSS.get(itype, itype)
     default_date = (pca or {}).get("default_date")
 
-    title = f"{name} failure — point-in-time early-warning replay | LiquiLens"
+    title = f"{name} failure: point-in-time early-warning replay | LiquiLens"
     desc = (f"How the LiquiLens lenses read {name} ({gloss}) before its failure"
             + (f" on {default_date}" if default_date else "")
             + ": action-zone replay, funding-fragility replay, and what was missed, from the published validation record.")
@@ -182,10 +189,10 @@ def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> st
         rows.append('<div class="factrow fraud"><span class="k">Fraud-masked books</span>'
                     '<span class="v">The record marks this failure as concealed by fraud: reported financials '
                     'did not carry the distress, which balance-sheet lenses cannot see. It is excluded from the '
-                    'headline non-fraud recall and kept visible here — the record keeps its misses.</span></div>')
+                    'headline non-fraud recall and kept visible here. The record keeps its misses.</span></div>')
 
     # PCA / SAF action-zone replay
-    pca_html = '<p class="body miss">No action-zone entry before failure on this record — shown as a miss.</p>'
+    pca_html = '<p class="body miss">No action-zone entry before failure on this record, shown as a miss.</p>'
     if pca and pca.get("first_action_zone"):
         z = pca["first_action_zone"]
         raw_status = z.get("status", "")
@@ -193,7 +200,7 @@ def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> st
         # prettified; both branches are safe HTML by construction
         status_html = (f"<b>{esc(STATUS_GLOSS[raw_status])}</b>" if raw_status in STATUS_GLOSS
                        else f'action zone the record labels <span class="mono">{esc(raw_status)}</span>')
-        breaches = ", ".join(z.get("breaches", [])) or "—"
+        breaches = ", ".join(z.get("breaches", [])) or "-"
         lead = pca.get("lead_months")
         lead_txt = f'<b>{lead} months</b> before the failure date' if lead is not None else "lead not scored"
         pca_html = (f'<p class="body">First entered the {status_html} in {esc(z.get("q",""))} '
@@ -201,10 +208,10 @@ def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> st
                     f'breaching: <b>{esc(breaches)}</b>. That is {lead_txt}.</p>')
 
     # Funding-fragility replay
-    fund_html = '<p class="body miss">No funding-side signal before failure on this record — shown as a miss.</p>'
+    fund_html = '<p class="body miss">No funding-side signal before failure on this record, shown as a miss.</p>'
     if fund and fund.get("first_signal"):
         s = fund["first_signal"]
-        flags = "; ".join(s.get("flags", [])) or "—"
+        flags = "; ".join(s.get("flags", [])) or "-"
         lead = fund.get("lead_months")
         lead_txt = f'<b>{lead} months</b> of lead' if lead is not None else "lead not scored"
         fund_html = (f'<p class="body">First funding-fragility signal at period ending '
@@ -229,8 +236,8 @@ def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> st
   {pca_html}
   <h2 class="serif">Funding-fragility replay (liability side)</h2>
   {fund_html}
-  <p class="body">Context for these two lenses — cohort recall, leads, controls and the
-  misses — is on the <a href="/replay/">replay index</a> and the
+  <p class="body">Context for these two lenses (cohort recall, leads, controls and
+  the misses) is on the <a href="/replay/">replay index</a> and the
   <a href="/research/">research page</a>.</p>
 </div></section>
 """
@@ -239,7 +246,7 @@ def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> st
 
 
 def index_page(d: dict, slugs: list[str], pca_by: dict, fund_by: dict, fraud_set: set) -> str:
-    title = "Failure replays — every institution on the published record | LiquiLens"
+    title = "Failure replays: every institution on the published record | LiquiLens"
     desc = ("Per-institution point-in-time replays of two decades of Indian lender failures "
             "through the LiquiLens lenses: action-zone distance, funding fragility, leads in months, "
             "and the misses, from the published validation payload.")
@@ -255,7 +262,7 @@ def index_page(d: dict, slugs: list[str], pca_by: dict, fund_by: dict, fraud_set
         trs.append(
             f'<tr><td><a href="/replay/{slug}/">{esc(name)}</a></td>'
             f'<td class="n">{esc((p or f or {}).get("inst_type",""))}</td>'
-            f'<td class="n">{esc((p or {}).get("default_date","—"))}</td>'
+            f'<td class="n">{esc((p or {}).get("default_date","-"))}</td>'
             f'<td class="n">{esc(pl) if pl is not None else "<span class=miss>miss</span>"}</td>'
             f'<td class="n">{esc(fl) if fl is not None else "<span class=miss>miss</span>"}</td>'
             f'<td class="n">{"yes" if slug in fraud_set else "no"}</td></tr>')
@@ -265,7 +272,7 @@ def index_page(d: dict, slugs: list[str], pca_by: dict, fund_by: dict, fraud_set
   <p class="kicker">Failure replays · the record, institution by institution</p>
   <h1 class="serif">Every failure on the published record</h1>
   <p class="lede">One page per institution: how each lens read it before it failed,
-  with leads in months — and where a lens saw nothing, a <b>miss shown as a miss</b>.
+  with leads in months, and where a lens saw nothing, a <b>miss shown as a miss</b>.
   Hazard panel behind the headline: <span class="mono">{hz["panel"]["institutions"]} institutions,
   {hz["panel"]["rows"]} panel rows, {hz["panel"]["events"]} failure events</span>.</p>
 </div></header>
@@ -276,7 +283,7 @@ def index_page(d: dict, slugs: list[str], pca_by: dict, fund_by: dict, fraud_set
   <tbody>{''.join(trs)}</tbody></table></div>
   <h2 class="serif">How to read this</h2>
   <p class="body">{esc(d.get("complementarity_note", ""))}</p>
-  <p class="body mono">Hazard method, verbatim from the payload: {esc(hz.get("method", ""))}</p>
+  <p class="body mono">Hazard method, as served by the payload: {esc(hz.get("method", ""))}</p>
 </div></section>
 """
     return HEAD.format(title=esc(title), desc=esc(desc), canonical=url,
@@ -325,7 +332,7 @@ def main() -> int:
     fraud_set = set(d["hazard"].get("fit_exclusions", {}).get("fraud_masked_failures", []))
     slugs = sorted(set(pca_by) | set(fund_by))
     if not slugs:
-        sys.exit("no institutions in payload — aborting")
+        sys.exit("no institutions in payload, aborting")
 
     outdir = ROOT / "replay"
     outdir.mkdir(exist_ok=True)

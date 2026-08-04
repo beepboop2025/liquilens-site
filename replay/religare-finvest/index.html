@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.liquilens.in https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<title>Religare Finvest failure — point-in-time early-warning replay | LiquiLens</title>
+<title>Religare Finvest failure: point-in-time early-warning replay | LiquiLens</title>
 <meta name="description" content="How the LiquiLens lenses read Religare Finvest (non-banking financial company (NBFC)) before its failure on 2018-01-18: action-zone replay, funding-fragility replay, and what was missed, from the published validation record.">
 <link rel="canonical" href="https://liquilens.in/replay/religare-finvest/">
-<meta property="og:title" content="Religare Finvest failure — point-in-time early-warning replay | LiquiLens">
+<meta property="og:title" content="Religare Finvest failure: point-in-time early-warning replay | LiquiLens">
 <meta property="og:description" content="How the LiquiLens lenses read Religare Finvest (non-banking financial company (NBFC)) before its failure on 2018-01-18: action-zone replay, funding-fragility replay, and what was missed, from the published validation record.">
 <meta property="og:image" content="https://liquilens.in/og-radar.png">
 <meta property="og:url" content="https://liquilens.in/replay/religare-finvest/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E3B778'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%231A1206' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Religare Finvest failure \u2014 point-in-time early-warning replay | LiquiLens", "description": "How the LiquiLens lenses read Religare Finvest (non-banking financial company (NBFC)) before its failure on 2018-01-18: action-zone replay, funding-fragility replay, and what was missed, from the published validation record.", "url": "https://liquilens.in/replay/religare-finvest/", "isPartOf": {"@type": "WebSite", "name": "LiquiLens", "url": "https://liquilens.in/"}, "isBasedOn": "https://api.liquilens.in/api/failure-radar/validation"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Religare Finvest failure: point-in-time early-warning replay | LiquiLens", "description": "How the LiquiLens lenses read Religare Finvest (non-banking financial company (NBFC)) before its failure on 2018-01-18: action-zone replay, funding-fragility replay, and what was missed, from the published validation record.", "url": "https://liquilens.in/replay/religare-finvest/", "isPartOf": {"@type": "WebSite", "name": "LiquiLens", "url": "https://liquilens.in/"}, "isBasedOn": "https://api.liquilens.in/api/failure-radar/validation"}</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 :root{--ink:#0A0F1C;--ink2:#0E1424;--line:#1E2740;--gold:#E3B778;--gold-deep:#C8954E;--teal:#5BD0C4;--red:#E06A6A;--text:#E9EBF2;--muted:#8B94AB;--muted2:#5C657E}
@@ -73,19 +73,19 @@ footer a{color:var(--muted)}
 </div></header>
 
 <section><div class="wrap">
-  <div class="factrow"><span class="k">Institution type</span><span class="v">non-banking financial company (NBFC)</span></div><div class="factrow"><span class="k">Failure date on record</span><span class="v mono">2018-01-18</span></div><div class="factrow fraud"><span class="k">Fraud-masked books</span><span class="v">The record marks this failure as concealed by fraud: reported financials did not carry the distress, which balance-sheet lenses cannot see. It is excluded from the headline non-fraud recall and kept visible here — the record keeps its misses.</span></div>
+  <div class="factrow"><span class="k">Institution type</span><span class="v">non-banking financial company (NBFC)</span></div><div class="factrow"><span class="k">Failure date on record</span><span class="v mono">2018-01-18</span></div><div class="factrow fraud"><span class="k">Fraud-masked books</span><span class="v">The record marks this failure as concealed by fraud: reported financials did not carry the distress, which balance-sheet lenses cannot see. It is excluded from the headline non-fraud recall and kept visible here. The record keeps its misses.</span></div>
   <h2 class="serif">Action-zone replay (distance to PCA/SAF)</h2>
-  <p class="body miss">No action-zone entry before failure on this record — shown as a miss.</p>
+  <p class="body miss">No action-zone entry before failure on this record, shown as a miss.</p>
   <h2 class="serif">Funding-fragility replay (liability side)</h2>
-  <p class="body">First funding-fragility signal at period ending <span class="mono">2016-03-31</span>: index <span class="mono">44.3</span>, band <b>watch</b>, flags: <b>—</b>. That is <b>22 months</b> of lead.</p>
-  <p class="body">Context for these two lenses — cohort recall, leads, controls and the
-  misses — is on the <a href="/replay/">replay index</a> and the
+  <p class="body">First funding-fragility signal at period ending <span class="mono">2016-03-31</span>: index <span class="mono">44.3</span>, band <b>watch</b>, flags: <b>-</b>. That is <b>22 months</b> of lead.</p>
+  <p class="body">Context for these two lenses (cohort recall, leads, controls and
+  the misses) is on the <a href="/replay/">replay index</a> and the
   <a href="/research/">research page</a>.</p>
 </div></section>
 
 <footer><div class="wrap">
 <p>Every number on this page is served from
-<a href="https://api.liquilens.in/api/failure-radar/validation">GET /api/failure-radar/validation</a> —
+<a href="https://api.liquilens.in/api/failure-radar/validation">GET /api/failure-radar/validation</a>,
 the same payload the <a href="/research/">research index</a> cites. Outputs are
 point-in-time research screening, not credit ratings and not investment advice.
 &copy; 2026 LiquiLens.</p>
