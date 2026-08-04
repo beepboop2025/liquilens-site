@@ -33,6 +33,7 @@ import os
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -60,6 +61,12 @@ ARTIFACT_BUILTIN_EXCLUDES = {".git", ".github"}
 WORKFLOW = os.path.join(".github", "workflows", "pages.yml")
 
 DEMO_HOST = "demo.liquilens.in"
+
+URL_TOKEN = re.compile(r"(?:https?:)?//[^\s\"'<>]+", re.I)
+
+HOST_BOUNDARY = re.compile(
+    r"(?<![a-zA-Z0-9.-])" + re.escape(DEMO_HOST) +
+    r"(?![a-zA-Z0-9.-])", re.I)
 
 TAG = re.compile(r"<[^>]+>")
 
@@ -202,6 +209,7 @@ FIELD_VS_LIVE = (
 
 MARK_FIELD = "tier1_negative_after_ugl_mark"
 MARK_QUALIFIER = "mark_qualifier"
+MARK_SEMANTICS = "mark_semantics"
 
 
 class ScanError(RuntimeError):
@@ -255,17 +263,21 @@ def published_files(root: str) -> list[str]:
     for dirpath, dirnames, filenames in os.walk(root, onerror=walk_error):
         for name in dirnames:
             path = os.path.join(dirpath, name)
-            excluded = dirpath == root and name in excludes
+            excluded = name in ARTIFACT_BUILTIN_EXCLUDES or \
+                (dirpath == root and name in excludes)
             if not excluded and os.path.islink(path):
                 raise ScanError(
                     f"publishable directory is a symlink and cannot be "
                     f"verified as a regular artifact path: {path}")
-        if dirpath == root:
-            dirnames[:] = [d for d in dirnames if d not in excludes]
+        dirnames[:] = [
+            name for name in dirnames
+            if name not in ARTIFACT_BUILTIN_EXCLUDES and
+            not (dirpath == root and name in excludes)]
         for name in filenames:
             path = os.path.join(dirpath, name)
             rel = os.path.relpath(path, root)
-            if dirpath == root and name in excludes:
+            if name in ARTIFACT_BUILTIN_EXCLUDES or \
+                    (dirpath == root and name in excludes):
                 continue
             if os.path.islink(path):
                 raise ScanError(
@@ -330,7 +342,7 @@ def visible(raw: str) -> str:
         href = html.unescape(
             m.group("dq") or m.group("sq") or m.group("bare") or "")
         inner = elements(m.group(0)).strip("«» \t\n")
-        if DEMO_HOST not in href.lower():
+        if not is_demo_url(href):
             return f" {inner} "
         return f" {MARK_OPEN}{inner}{MARK_CLOSE} "
 
@@ -343,14 +355,47 @@ def visible(raw: str) -> str:
     return html.unescape(re.sub(r"[^\S\n]+", " ", TAG.sub(tag, text)))
 
 
+def canonical_hostname(value: str) -> str | None:
+    """The decoded DNS host for an absolute or protocol-relative URL."""
+    try:
+        parsed = urllib.parse.urlsplit(html.unescape(value).strip())
+        host = parsed.hostname
+    except ValueError:
+        return None
+    if not host or (parsed.scheme and parsed.scheme.lower() not in
+                    {"http", "https"}):
+        return None
+    try:
+        return urllib.parse.unquote(host).rstrip(".").lower()
+    except (UnicodeDecodeError, ValueError):
+        return None
+
+
+def is_demo_url(value: str) -> bool:
+    """True only when the URL actually navigates to the gated demo host."""
+    return canonical_hostname(value) == DEMO_HOST
+
+
+def _mark_bare_host(text: str) -> str:
+    return HOST_BOUNDARY.sub(MARK_OPEN + MARK_CLOSE, text)
+
+
 def marked(text: str) -> str:
-    """Text with every pointer at the demo replaced by MARK."""
+    """Text with every real pointer at the demo replaced by MARK.
+
+    URLs are parsed before bare prose is considered. This keeps a demo URL in
+    another site's query string or user-info from becoming a false pointer.
+    """
     text = html.unescape(text)
-    bare = MARK_OPEN + MARK_CLOSE
-    text = re.sub(
-        r"https?://" + re.escape(DEMO_HOST) + r"[^\s\"'<>]*", bare, text,
-        flags=re.I)
-    return re.sub(re.escape(DEMO_HOST), bare, text, flags=re.I)
+    out: list[str] = []
+    end = 0
+    for match in URL_TOKEN.finditer(text):
+        out.append(_mark_bare_host(text[end:match.start()]))
+        value = match.group(0)
+        out.append(MARK_OPEN + MARK_CLOSE if is_demo_url(value) else value)
+        end = match.end()
+    out.append(_mark_bare_host(text[end:]))
+    return "".join(out)
 
 
 def jsonld_texts(raw: str) -> list[str]:
@@ -421,10 +466,72 @@ def pointer_problems_in(where: str, text: str, require_cue: bool) -> list[str]:
 
 CONCAT_GAP = re.compile(r"\s*\+\s*")
 
-LINK_WRITER = re.compile(
-    r"<a\b|\b(?:innerHTML|outerHTML)\b|\binsertAdjacentHTML\b|"
-    r"\bdocument\.write\b|\.href\s*=|"
-    r"\bsetAttribute\s*\(\s*['\"]href['\"]", re.I)
+JS_NAME = r"[a-zA-Z_$][\w$]*"
+
+JS_DECLARATION = re.compile(
+    rf"^\s*(?:const|let|var)\s+(?P<name>{JS_NAME})\s*=\s*(?P<expr>.+?)\s*$",
+    re.S)
+
+JS_HREF_ASSIGNMENT = re.compile(
+    rf"^\s*(?P<receiver>{JS_NAME})\.href\s*=\s*(?P<expr>.+?)\s*$",
+    re.S)
+
+JS_HREF_ATTRIBUTE = re.compile(
+    rf"^\s*(?P<receiver>{JS_NAME})\.setAttribute\s*\(\s*"
+    r"['\"]href['\"]\s*,\s*(?P<expr>.+?)\s*\)\s*$", re.S)
+
+JS_LABEL_ASSIGNMENT = re.compile(
+    rf"^\s*(?P<receiver>{JS_NAME})\."
+    r"(?:textContent|innerText)\s*=\s*(?P<expr>.+?)\s*$", re.S)
+
+
+def javascript_statements(body: str) -> list[str]:
+    """Split on semicolons outside string literals.
+
+    This is intentionally a small recognizer, not a JavaScript parser. Its
+    only job is to stop values from unrelated statements being reconstructed
+    as one browser-visible link.
+    """
+    literals = iter(STRING_LITERAL.finditer(body))
+    literal = next(literals, None)
+    start = 0
+    out: list[str] = []
+    at = 0
+    while at < len(body):
+        if literal is not None and at == literal.start():
+            at = literal.end()
+            literal = next(literals, None)
+            continue
+        if body[at] == ";":
+            statement = body[start:at].strip()
+            if statement:
+                out.append(statement)
+            start = at + 1
+        at += 1
+    statement = body[start:].strip()
+    if statement:
+        out.append(statement)
+    return out
+
+
+def string_expression(expression: str,
+                      variables: dict[str, str]) -> str | None:
+    """Resolve a literal/identifier `+` expression without executing JS."""
+    values: list[str] = []
+    for term in CONCAT_GAP.split(expression.strip()):
+        term = term.strip()
+        while len(term) >= 2 and term[0] == "(" and term[-1] == ")":
+            term = term[1:-1].strip()
+        literal = STRING_LITERAL.fullmatch(term)
+        if literal:
+            values.append(next(
+                (group for group in literal.groups() if group is not None),
+                ""))
+        elif re.fullmatch(JS_NAME, term) and term in variables:
+            values.append(variables[term])
+        else:
+            return None
+    return "".join(values) if values else None
 
 
 def script_texts(raw: str) -> list[tuple[str, str]]:
@@ -473,17 +580,45 @@ def script_texts(raw: str) -> list[tuple[str, str]]:
             if run_count > 1:
                 emit(run)
 
-        # Link builders may assemble the destination and label through local
-        # variables rather than one adjacent expression. Reconstructing their
-        # ordered literals is conservative only for scripts that can create a
-        # navigable link; a fetch-only health probe is deliberately excluded.
-        reconstructed = html.unescape("".join(values))
-        if LINK_WRITER.search(body) and DEMO_HOST in reconstructed.lower():
-            emit(reconstructed)
-            literal_context = " ".join(
-                html.unescape(value).strip() for value in values
-                if html.unescape(value).strip())
-            emit(f"{DEMO_HOST} {literal_context}")
+        if where != "script":
+            continue
+
+        # Follow simple string values into the href and label assignments of
+        # the same element. This catches split link builders without joining a
+        # health-probe URL to an unrelated contact link elsewhere in a script.
+        variables: dict[str, str] = {}
+        links: dict[str, dict[str, str]] = {}
+
+        def assign_link(receiver: str, kind: str, value: str) -> None:
+            link = links.setdefault(receiver, {})
+            link[kind] = html.unescape(value).strip()
+            href = link.get("href", "")
+            label = link.get("label", "")
+            if is_demo_url(href) and label:
+                emit(f"{href} {label}")
+
+        for statement in javascript_statements(body):
+            declaration = JS_DECLARATION.fullmatch(statement)
+            if declaration:
+                value = string_expression(
+                    declaration.group("expr"), variables)
+                if value is not None:
+                    variables[declaration.group("name")] = value
+                continue
+
+            href = (JS_HREF_ASSIGNMENT.fullmatch(statement) or
+                    JS_HREF_ATTRIBUTE.fullmatch(statement))
+            if href:
+                value = string_expression(href.group("expr"), variables)
+                if value is not None:
+                    assign_link(href.group("receiver"), "href", value)
+                continue
+
+            label = JS_LABEL_ASSIGNMENT.fullmatch(statement)
+            if label:
+                value = string_expression(label.group("expr"), variables)
+                if value is not None:
+                    assign_link(label.group("receiver"), "label", value)
     return out
 
 
@@ -672,47 +807,72 @@ def check_live(root: str = ROOT, fetch=live_fetch):
         if payload is None:
             notes.append(f"{url} did not answer, {field} not checked")
             continue
-        if dig(payload, path) is MISSING:
+        value = dig(payload, path)
+        if value is MISSING:
             problems.append(
                 f"{', '.join(sorted(set(named[field])))}: the site names the "
                 f"field {field}, and {url} no longer carries it at "
                 f"{'.'.join(str(p) for p in path)}")
+        elif field == MARK_SEMANTICS and \
+                (not isinstance(value, str) or not value.strip()):
+            problems.append(
+                f"{', '.join(sorted(set(named[field])))}: the site names the "
+                f"field {field}, and {url} does not carry a non-empty string "
+                f"at {'.'.join(str(p) for p in path)}")
 
     if MARK_QUALIFIER not in named:
         notes.append(
             f"no published surface names {MARK_QUALIFIER}, so nothing is "
             f"checked against {BOND_BOOK}")
-    else:
+    schema_names = [
+        field for field in (MARK_FIELD, MARK_QUALIFIER) if field in named]
+    if schema_names:
         if BOND_BOOK not in payloads:
             payloads[BOND_BOOK] = fetch(BOND_BOOK)
         payload = payloads[BOND_BOOK]
         if payload is None:
-            notes.append(
-                f"{BOND_BOOK} did not answer, {MARK_QUALIFIER} not checked")
+            if MARK_QUALIFIER in named:
+                notes.append(
+                    f"{BOND_BOOK} did not answer, {MARK_QUALIFIER} not "
+                    f"checked")
         else:
             rows = dig(payload, ("rows",))
             semantics = dig(payload, ("mark_semantics",))
+            sources = ", ".join(sorted({
+                rel for field in schema_names for rel in named[field]}))
             if not isinstance(rows, list):
                 problems.append(
-                    f"{', '.join(sorted(set(named[MARK_QUALIFIER])))}: the "
-                    f"site says every flagged row carries {MARK_QUALIFIER}, "
+                    f"{sources}: the site names the bond-book mark schema, "
                     f"and {BOND_BOOK} has no rows list")
             else:
                 for index, row in enumerate(rows):
-                    if not isinstance(row, dict) or \
-                            row.get(MARK_FIELD) is not True:
+                    if not isinstance(row, dict):
+                        problems.append(
+                            f"{sources}: {BOND_BOOK} carries a non-object "
+                            f"bank row at "
+                            f"rows.{index}")
+                        continue
+                    mark = row.get(MARK_FIELD, MISSING)
+                    if not isinstance(mark, bool):
+                        problems.append(
+                            f"{sources}: "
+                            f"{BOND_BOOK} must carry a boolean {MARK_FIELD} "
+                            f"for every bank, and rows.{index}.{MARK_FIELD} "
+                            f"is missing or not boolean")
+                        continue
+                    if mark is not True or MARK_QUALIFIER not in named:
                         continue
                     qualifier = row.get(MARK_QUALIFIER)
                     if not isinstance(qualifier, str) or not qualifier.strip():
                         problems.append(
-                            f"{', '.join(sorted(set(named[MARK_QUALIFIER])))}: "
+                            f"{sources}: "
                             f"the site says every {MARK_FIELD} row carries "
                             f"{MARK_QUALIFIER}, and {BOND_BOOK} is missing it "
                             f"at rows.{index}.{MARK_QUALIFIER}")
                     elif isinstance(semantics, str) and semantics.strip() and \
                             qualifier.strip() != semantics.strip():
                         problems.append(
-                            f"{', '.join(sorted(set(named[MARK_QUALIFIER])))}: "
+                            f"{sources}: "
                             f"{BOND_BOOK} carries a {MARK_QUALIFIER} at "
                             f"rows.{index}.{MARK_QUALIFIER} that does not "
                             f"match mark_semantics")

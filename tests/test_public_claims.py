@@ -205,6 +205,27 @@ def test_html_entities_cannot_hide_the_host_in_an_href(tmp_path):
     assert any("open door" in p for p in problems), problems
 
 
+def test_a_percent_encoded_demo_hostname_is_still_the_demo(tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures. "
+          "<a href='https://%64emo%2Eliquilens%2Ein/evidence'>"
+          "Open the Evidence record</a></p>")
+    problems = vpc.check(str(tmp_path))
+    assert any("open door" in p for p in problems), problems
+
+
+@pytest.mark.parametrize("href", [
+    "https://demo.liquilens.in.evil.example/evidence",
+    "https://demo.liquilens.in@evil.example/evidence",
+    "https://example.com/?next=https%3A%2F%2Fdemo.liquilens.in",
+])
+def test_a_lookalike_or_embedded_demo_string_is_not_a_demo_link(
+        tmp_path, href):
+    write(tmp_path, "index.html",
+          f"<p>550 failures. <a href='{href}'>Open the Evidence record</a></p>")
+    assert vpc.check(str(tmp_path)) == []
+
+
 def test_a_pointer_that_names_the_gate_passes(tmp_path):
     write(tmp_path, "index.html",
           "<p>550 failures. The record sits in the "
@@ -438,6 +459,50 @@ def test_every_flagged_bond_book_qualifier_must_match_the_payload_semantics():
     assert any("rows.1.mark_qualifier" in problem and
                "does not match mark_semantics" in problem
                for problem in problems), problems
+
+
+@pytest.mark.parametrize("semantics", ["", "   ", None, {}, []])
+def test_mark_semantics_must_be_a_non_empty_string(semantics):
+    book = copy.deepcopy(payload(BOND_BOOK))
+    book["mark_semantics"] = semantics
+
+    problems, _ = vpc.check_live(
+        ROOT, fetch=serving(**{BOND_BOOK: book}))
+    assert any("mark_semantics" in problem and "non-empty string" in problem
+               for problem in problems), problems
+
+
+@pytest.mark.parametrize("bad_mark", [None, 1, 0, "true", "false", [], {}])
+def test_every_bond_book_row_must_carry_a_boolean_mark(bad_mark):
+    book = copy.deepcopy(payload(BOND_BOOK))
+    book["rows"][1][MARK_FIELD] = bad_mark
+
+    problems, _ = vpc.check_live(
+        ROOT, fetch=serving(**{BOND_BOOK: book}))
+    assert any(f"rows.1.{MARK_FIELD}" in problem and "not boolean" in problem
+               for problem in problems), problems
+
+
+def test_every_bond_book_row_must_carry_the_mark_field():
+    book = copy.deepcopy(payload(BOND_BOOK))
+    book["rows"][1].pop(MARK_FIELD)
+
+    problems, _ = vpc.check_live(
+        ROOT, fetch=serving(**{BOND_BOOK: book}))
+    assert any(f"rows.1.{MARK_FIELD}" in problem and "missing" in problem
+               for problem in problems), problems
+
+
+def test_mark_schema_checks_do_not_depend_on_the_qualifier_being_named(
+        tmp_path):
+    write(tmp_path, "llms.txt", f"The public field is {MARK_FIELD}.")
+    book = copy.deepcopy(payload(BOND_BOOK))
+    book["rows"][1].pop(MARK_FIELD)
+
+    problems, _ = vpc.check_live(
+        str(tmp_path), fetch=serving(**{BOND_BOOK: book}))
+    assert any(f"rows.1.{MARK_FIELD}" in problem for problem in problems), \
+        problems
 
 
 def test_an_endpoint_that_does_not_answer_is_never_evidence():
@@ -799,6 +864,30 @@ def test_a_javascript_link_builder_cannot_separate_host_and_label_variables(
                for p in problems), problems
 
 
+def test_a_demo_probe_and_an_unrelated_contact_link_are_not_combined(
+        tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures</p><a id='contact'></a>"
+          "<script>fetch('https://demo.liquilens.in/'); "
+          "const label = 'Open the contact page now'; "
+          "const contact = document.getElementById('contact'); "
+          "contact.href = 'mailto:sales@liquilens.in'; "
+          "contact.textContent = label;</script>")
+    assert vpc.check(str(tmp_path)) == []
+
+
+def test_separate_link_receivers_are_not_combined(tmp_path):
+    write(tmp_path, "index.html",
+          "<p>550 failures</p><a id='demo'></a><a id='contact'></a>"
+          "<script>const demo = document.getElementById('demo'); "
+          "const contact = document.getElementById('contact'); "
+          "demo.href = 'https://demo.liquilens.in/'; "
+          "contact.textContent = 'Open the contact page now'; "
+          "contact.href = 'mailto:sales@liquilens.in'; "
+          "demo.textContent = 'Granted on request';</script>")
+    assert vpc.check(str(tmp_path)) == []
+
+
 def test_a_retired_pointer_a_style_rule_writes_into_the_page_is_refused(
         tmp_path):
     write(tmp_path, "index.html",
@@ -891,6 +980,31 @@ def test_only_top_level_workflow_exclusions_are_skipped(tmp_path):
     problems = vpc.check(str(tmp_path))
     assert any("public/tests/index.html" in problem for problem in problems), \
         problems
+
+
+def test_upload_artifact_metadata_excludes_apply_at_every_depth(tmp_path):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    write(tmp_path, "vendor/.git/config", "552 US bank failures")
+    write(tmp_path, "archive/.github/workflows/retired.yml",
+          "demo.liquilens.in is open, no signup")
+
+    scanned = vpc.published_files(str(tmp_path))
+    assert "vendor/.git/config" not in scanned
+    assert "archive/.github/workflows/retired.yml" not in scanned
+    assert vpc.check(str(tmp_path)) == []
+
+
+def test_names_that_only_resemble_artifact_metadata_are_still_scanned(
+        tmp_path):
+    write(tmp_path, "index.html", "<p>550 failures</p>")
+    write(tmp_path, "vendor/.github-pages/index.html",
+          "<p>552 US bank failures</p>")
+
+    assert "vendor/.github-pages/index.html" in vpc.published_files(
+        str(tmp_path))
+    problems = vpc.check(str(tmp_path))
+    assert any("vendor/.github-pages/index.html" in problem
+               for problem in problems), problems
 
 
 def test_a_broken_symlink_fails_the_local_gate_closed(
