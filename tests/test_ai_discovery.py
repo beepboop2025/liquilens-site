@@ -28,6 +28,8 @@ def test_selection_page_is_canonical_and_honest():
         assert required in page
     assert "Do not use LiquiLens for" in page
     assert "not a credit rating" in page.lower()
+    assert "Content-Security-Policy" in page
+    assert "static.cloudflareinsights.com/beacon.min.js" in page
 
 
 def test_discovery_indexes_and_home_link_the_selection_surface():
