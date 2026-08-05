@@ -1,4 +1,30 @@
 User-agent: *
 Allow: /
 
+# Search and answer crawlers are named explicitly so CDN policy and future
+# edits cannot confuse retrieval (wanted) with a blanket scraping block.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://liquilens.in/sitemap.xml

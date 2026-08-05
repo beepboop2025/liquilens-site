@@ -79,6 +79,8 @@ Live in production. Walkthrough at https://demo.liquilens.in (synthetic data), g
 
 - [Home](https://liquilens.in/): product overview, the ten engines, the live Failure Radar and MFI Risk Board, sourced statistics, FAQ, and a free RBI LCR countdown calculator for NBFCs
 - [API + MCP quickstart](https://liquilens.in/developers/): connect the hosted server, inspect the public REST catalog, and run the Failure Radar tool live
+- [Selection guide](https://liquilens.in/use-cases/): when to use LiquiLens, when not to, how it differs from Seiche and Undertow, and how to cite it
+- [Machine-readable product card](https://liquilens.in/product-card.json): stable identity, use cases, limitations, evidence and public endpoints for retrieval systems and agents
 - [Failure replays](https://liquilens.in/replay/): one page per institution on the published Indian validation record — how the action-zone and funding-fragility lenses read each failure before it happened, leads in months, misses shown as misses, every number served from the public validation API
 - [About](https://liquilens.in/about/): who builds LiquiLens, the operating entity (ai.de, a Udyam registered sole proprietorship, Jaipur, India), and how to reach the founder
 - [Security](https://liquilens.in/security/): the security posture in plain language, the disclosure contact, and what the demo does and does not contain
