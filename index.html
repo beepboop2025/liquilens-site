@@ -210,11 +210,11 @@
   .eyebrow::before{content:"";width:22px;height:1px;background:var(--gold-deep)}
 
   /* ---------- hero ---------- */
-  .hero{padding:74px 0 96px;position:relative}
+  .hero{padding:38px 0 88px;position:relative}
   .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:52px;align-items:center}
   h1{
-    font-family:var(--serif);font-weight:500;font-size:clamp(44px,6.2vw,74px);
-    line-height:1.02;letter-spacing:-.02em;margin:26px 0 24px;
+    font-family:var(--serif);font-weight:500;font-size:clamp(44px,5.4vw,66px);
+    line-height:1.02;letter-spacing:-.02em;margin:20px 0 22px;
   }
   h1 em{font-style:italic;color:var(--gold);font-weight:400}
   .lede{font-size:18.5px;color:var(--muted);max-width:34em;line-height:1.62}
@@ -561,7 +561,8 @@
     .stats{grid-template-columns:1fr 1fr}
     .founder{grid-template-columns:1fr;gap:18px}
     .band{padding:68px 0}
-    nav .nav-cta{display:none}
+    nav .nav-link{display:none}
+    nav .nav-cta{display:inline-flex;padding:8px 11px;font-size:11px}
     .leadrow{grid-template-columns:86px 1fr 64px;gap:10px}
     .sei-grid{grid-template-columns:1fr}
     .plumb{grid-template-columns:repeat(3,1fr)}
@@ -611,10 +612,10 @@
       <a class="nav-link" href="#board">The live board</a>
       <a class="nav-link" href="/us/">US bank risk</a>
       <a class="nav-link" href="/research/">Research</a>
-      <a class="nav-link" href="https://liquilens-undertow.com">Market liquidity · NEW</a>
+      <a class="nav-link" href="https://liquilens-undertow.com/app/?ref=liquilens_nav">Undertow desk · sign in required</a>
       <a class="nav-link" href="#desk"><span class="sei-dot"></span>Seiche, our open terminal</a>
       <a class="nav-link" href="/replay/">Failure replays</a>
-      <a class="nav-cta" href="#contact">Start a conversation</a>
+      <a class="nav-cta" href="https://demo.liquilens.in/?ref=site_nav&amp;tab=overview">Enter private demo · sign in</a>
     </span>
   </nav>
 </div>
@@ -625,12 +626,12 @@
     <div>
       <span class="eyebrow">Early warning for institutional failure</span>
       <h1>See failure coming, <em>years before ratings move.</em></h1>
-      <p class="lede">LiquiLens reads what institutions and regulators publish, filings, funding structure and market signals, and flags the lenders drifting toward failure. <b>Proven in the open on three markets:</b> two decades of failures replayed at a 21 month median lead, 73% recall on 552 US bank collapses, and named European case files from Northern Rock to Credit Suisse. Every call lands on a tamper evident record, so the track record cannot be rewritten later.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="/replay/">Read the failure replays →</a>
-        <a class="btn btn-ghost" href="#contact">Start a conversation</a>
+        <a class="btn btn-primary" href="https://demo.liquilens.in/?ref=site_hero&amp;tab=overview">Enter private demo · sign in required →</a>
+        <a class="btn btn-ghost" href="/replay/">Audit the failure replays</a>
       </div>
-      <p style="margin-top:16px;font-size:14.5px;line-height:1.6;color:var(--muted);max-width:34em">Fifteen institutions, replayed point in time on the published record, the misses kept in, every number served from the same validation payload. Nothing to sign. The product walkthrough is a separate gated demo, granted by hand on request: <a href="mailto:mrinal@liquilens.in?subject=LiquiLens%20demo%20access" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">write to the desk</a>.</p>
+      <p class="lede" style="margin-top:28px">LiquiLens reads what institutions and regulators publish, filings, funding structure and market signals, and flags the lenders drifting toward failure. <b>Proven in the open on three markets:</b> two decades of failures replayed at a 21 month median lead, 73% recall on 552 US bank collapses, and named European case files from Northern Rock to Credit Suisse. Every call lands on a tamper evident record, so the track record cannot be rewritten later.</p>
+      <p style="margin-top:16px;font-size:14.5px;line-height:1.6;color:var(--muted);max-width:38em">The private walkthrough combines public failure evidence with synthetic operating workflows, so no customer data is exposed. Use the sign-in credentials sent with your demo link. Also evaluating market liquidity? <a href="https://liquilens-undertow.com/app/?ref=liquilens_hero" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">Enter the Undertow private desk · sign in required →</a></p>
       <p id="heroPulse" style="margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Board live · deposit migration and leverage read ALARM · as of 20 Jul 2026 · every US bank scored since 2004</p>
     </div>
 
