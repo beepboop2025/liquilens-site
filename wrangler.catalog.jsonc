@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "liquilens-ai-catalog",
+  "main": "edge/catalog-worker.mjs",
+  "compatibility_date": "2026-08-06",
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "liquilens.in/.well-known/ai-catalog.json",
+      "zone_name": "liquilens.in"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}
