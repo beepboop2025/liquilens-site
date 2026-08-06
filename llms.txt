@@ -68,6 +68,7 @@
 
 - Human quickstart and live tool runner: https://liquilens.in/developers/
 - Curated OpenAPI 3.1 contract for the anonymous REST surface: https://api.liquilens.in/api/openapi.json
+- Agentic Resource Discovery catalog: https://liquilens.in/.well-known/ai-catalog.json — the LiquiLens MCP and OpenAPI contracts plus nested discovery for Seiche and Undertow, with representative intent queries and Telegram access metadata
 - LiquiLens is agent native: an MCP server at https://api.liquilens.in/mcp (streamable HTTP, no auth) exposes the Failure Radar board and institutions, the three market validation record, the RBI registry and supervisory tape, and the cryptographic record verifier as tools any LLM agent can call
 - A grounded ask layer (POST https://api.liquilens.in/api/ask) answers questions strictly from served payloads: every figure is verified to exist in the sources it cites, and an answer that fails that check is refused
 - The governance line: the generative layer explains; only the validated deterministic layer scores. Numbers never come from a model

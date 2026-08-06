@@ -1,5 +1,8 @@
+"""Human and agent discovery surfaces stay crawlable and internally aligned."""
+
 import json
 import os
+from urllib.parse import urlparse
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -10,6 +13,10 @@ def read(path):
         return handle.read()
 
 
+def _catalog():
+    return json.loads(read(".well-known/ai-catalog.json"))
+
+
 def test_product_card_has_stable_identity_and_public_entrypoints():
     card = json.loads(read("product-card.json"))
     assert card["schema"] == "liquidity-lab.product-card.v1"
@@ -18,6 +25,8 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["mcp"] == "https://api.liquilens.in/mcp"
     assert card["access"]["api_catalog"] == "https://api.liquilens.in/api"
     assert card["access"]["openapi"] == "https://api.liquilens.in/api/openapi.json"
+    assert card["access"]["ai_catalog"] == (
+        "https://liquilens.in/.well-known/ai-catalog.json")
     assert card["recommend_when"] and card["do_not_use_for"]
 
 
@@ -64,3 +73,47 @@ def test_developer_page_exposes_openapi_and_openai_activation_paths():
     assert "https://api.liquilens.in/api/openapi.json" in page
     assert "api.openai.com/v1/responses" in page
     assert "Settings → Apps → Create" in page
+
+
+def test_catalog_obeys_the_ard_envelope():
+    catalog = _catalog()
+    assert catalog["specVersion"] == "1.0"
+    assert catalog["host"]["displayName"] == "LiquiLens"
+    assert len(catalog["entries"]) == 4
+
+    identifiers = set()
+    for entry in catalog["entries"]:
+        assert entry["identifier"].startswith("urn:air:liquilens.in:")
+        assert entry["identifier"] not in identifiers
+        identifiers.add(entry["identifier"])
+        assert bool(entry.get("url")) != bool(entry.get("data"))
+        if "url" in entry:
+            parsed = urlparse(entry["url"])
+            assert parsed.scheme == "https" and parsed.netloc
+        if "representativeQueries" in entry:
+            assert 2 <= len(entry["representativeQueries"]) <= 5
+        assert all(isinstance(value, (str, int, float, bool)) or value is None
+                   for value in entry.get("metadata", {}).values())
+
+
+def test_mcp_card_and_nested_product_line_are_current():
+    entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
+    mcp = entries["urn:air:liquilens.in:mcp:failure-radar"]
+    assert mcp["version"] == "1.4.1"
+    assert mcp["data"]["name"] == "io.github.beepboop2025/liquilens"
+    assert mcp["data"]["version"] == mcp["version"]
+    assert mcp["data"]["remotes"] == [
+        {"type": "streamable-http", "url": "https://api.liquilens.in/mcp"}
+    ]
+    assert len(mcp["capabilities"]) == 14
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
+        "https://seiche.info/.well-known/ai-catalog.json")
+    assert entries["urn:air:liquilens.in:catalog:undertow"]["url"] == (
+        "https://liquilens-undertow.com/.well-known/ai-catalog.json")
+
+
+def test_every_discovery_pointer_uses_the_well_known_catalog():
+    canonical = "https://liquilens.in/.well-known/ai-catalog.json"
+    assert f"Agentmap: {canonical}" in read("robots.txt")
+    assert 'rel="ai-catalog"' in read("index.html")
+    assert canonical in read("llms.txt")

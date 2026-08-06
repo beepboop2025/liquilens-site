@@ -43,6 +43,7 @@
     "quickstart": "https://liquilens.in/developers/",
     "api_catalog": "https://api.liquilens.in/api",
     "openapi": "https://api.liquilens.in/api/openapi.json",
+    "ai_catalog": "https://liquilens.in/.well-known/ai-catalog.json",
     "rest_example": "https://api.liquilens.in/api/failure-radar/board",
     "mcp": "https://api.liquilens.in/mcp",
     "authentication": "The public hosted MCP and public evidence endpoints require no token."

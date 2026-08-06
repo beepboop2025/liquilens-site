@@ -27,4 +27,5 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
+Agentmap: https://liquilens.in/.well-known/ai-catalog.json
 Sitemap: https://liquilens.in/sitemap.xml
