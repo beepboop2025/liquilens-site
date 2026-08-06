@@ -1,0 +1,155 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "LiquiLens",
+    "documentationUrl": "https://liquilens.in/llms.txt",
+    "logoUrl": "https://liquilens.in/og.png"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:liquilens.in:mcp:failure-radar",
+      "displayName": "LiquiLens Failure Radar MCP Server",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+        "name": "io.github.beepboop2025/liquilens",
+        "title": "LiquiLens — the Failure Radar",
+        "description": "Bank and lender failure early warning, with the validated record served beside every claim.",
+        "version": "1.4.1",
+        "repository": {
+          "url": "https://github.com/beepboop2025/LiquiLens",
+          "source": "github"
+        },
+        "websiteUrl": "https://liquilens.in",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://api.liquilens.in/mcp"
+          }
+        ]
+      },
+      "description": "Public, read-only tools for Indian bank and NBFC failure risk, RBI supervisory actions, institution dossiers, and the published validation record.",
+      "tags": [
+        "bank failure early warning",
+        "NBFC risk",
+        "RBI",
+        "financial institutions",
+        "India",
+        "validation"
+      ],
+      "capabilities": [
+        "failure_radar_board",
+        "failure_radar_institution",
+        "institution_review_packet",
+        "evidence_markets",
+        "evidence_india",
+        "evidence_institution",
+        "evidence_us",
+        "evidence_europe",
+        "universe_search",
+        "rbi_supervisory_tape",
+        "verify_published_record",
+        "corporate_transmission_board",
+        "household_credit_board",
+        "forward_odds"
+      ],
+      "representativeQueries": [
+        "Which Indian banks or NBFCs are showing failure risk?",
+        "How fragile is ESAF Small Finance Bank?",
+        "Show the validation record for bank-failure early warning.",
+        "What RBI supervisory actions were published recently?",
+        "Find an RBI-registered NBFC by name or CIN."
+      ],
+      "version": "1.4.1",
+      "updatedAt": "2026-08-06T13:08:34Z",
+      "metadata": {
+        "authentication": "none",
+        "access": "public-read-only",
+        "publicToolCount": 14,
+        "telegramBot": "https://t.me/LiquiLens_bot",
+        "telegramChannel": "https://t.me/LiquidityLabDesk"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:openapi:failure-radar",
+      "displayName": "LiquiLens Public REST API",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://api.liquilens.in/api/openapi.json",
+      "description": "Curated OpenAPI contract for public failure-radar, evidence, regulatory, and external-factor endpoints.",
+      "tags": [
+        "OpenAPI",
+        "bank risk API",
+        "NBFC data",
+        "RBI data",
+        "early warning"
+      ],
+      "capabilities": [
+        "failure radar board",
+        "institution dossier",
+        "validation evidence",
+        "RBI supervisory tape",
+        "public signals"
+      ],
+      "representativeQueries": [
+        "Give me an API for Indian bank failure risk.",
+        "Find public evidence for an early-warning claim about a lender.",
+        "Retrieve recent RBI supervisory actions as structured data."
+      ],
+      "version": "1.4.1",
+      "updatedAt": "2026-08-06T13:08:34Z",
+      "metadata": {
+        "authentication": "none",
+        "access": "public-read-only",
+        "documentation": "https://liquilens.in/llms.txt"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:catalog:seiche",
+      "displayName": "Seiche Funding-Stress Catalog",
+      "type": "application/ai-catalog+json",
+      "url": "https://seiche.info/.well-known/ai-catalog.json",
+      "description": "Sibling catalog for US dollar funding stress, repo, reserves, Treasury cash, positioning, analogs, and the public backtest.",
+      "tags": [
+        "funding liquidity",
+        "repo",
+        "Federal Reserve",
+        "money markets"
+      ],
+      "representativeQueries": [
+        "What is the current US dollar funding stress regime?",
+        "Are reserves, repo, reverse repo or Treasury cash signaling strain?"
+      ],
+      "version": "0.8.0",
+      "updatedAt": "2026-08-06T13:08:34Z",
+      "metadata": {
+        "productUrl": "https://seiche.info",
+        "telegramBot": "https://t.me/seiche_desk_bot",
+        "telegramChannel": "https://t.me/LiquidityLabDesk"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:catalog:undertow",
+      "displayName": "Undertow Market-Liquidity Catalog",
+      "type": "application/ai-catalog+json",
+      "url": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
+      "description": "Sibling catalog for cross-market liquidity tiers, live crypto exit costs, venue concentration, depth collapses, and the sealed calls record.",
+      "tags": [
+        "market liquidity",
+        "exit cost",
+        "crypto depth",
+        "cross-market"
+      ],
+      "representativeQueries": [
+        "What would it cost to sell a large BTC position across venues?",
+        "Are Treasury, credit, FX or crypto liquidity conditions strained?"
+      ],
+      "version": "1.7.0",
+      "updatedAt": "2026-08-06T13:08:34Z",
+      "metadata": {
+        "productUrl": "https://liquilens-undertow.com",
+        "telegramBot": "https://t.me/Undertow_LiquiLens_bot",
+        "telegramChannel": "https://t.me/LiquidityCryptoDesk"
+      }
+    }
+  ]
+}
