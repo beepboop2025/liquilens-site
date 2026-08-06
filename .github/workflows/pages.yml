@@ -29,9 +29,11 @@ jobs:
         continue-on-error: true
         timeout-minutes: 3
         run: python3 scripts/verify_public_claims.py
+      - name: Verify the catalog edge fallback
+        run: node --test tests/test_catalog_worker.mjs
       - uses: actions/configure-pages@v5
       - name: Keep the unscanned directories out of the artifact
-        run: rm -rf scripts tests
+        run: rm -rf scripts tests edge wrangler.catalog.jsonc
       - uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
