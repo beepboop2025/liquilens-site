@@ -128,9 +128,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <!-- Load fonts without blocking first paint: fetch as print (non-blocking), then swap to all on load. Full-CSS <noscript> fallback for JS-off. -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-<noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" /></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=optional" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=optional" rel="stylesheet" media="print" onload="this.media='all'" />
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=optional" rel="stylesheet" /></noscript>
 <style>
   :root{
     --ink:#0A0F1C; --ink-2:#0E1424; --ink-3:#131B2E;
@@ -139,7 +139,7 @@
     --teal:#5BD0C4; --red:#E07070;
     --sei:#9184d9; --sei-bright:#d2cefd; --sei-deep:#423a6a;
     --calm:#79c2ad; --erosion:#d3ab6e; --strain:#d99274; --stress:#dd7a72;
-    --text:#E9EBF2; --muted:#8B94AB; --muted-2:#5C657E;
+    --text:#E9EBF2; --muted:#8B94AB; --muted-2:#7F89A3;
     --serif:'Fraunces',Georgia,serif;
     --sans:'Inter',system-ui,sans-serif;
     --mono:'IBM Plex Mono',ui-monospace,monospace;
@@ -624,6 +624,7 @@
 </div>
 
 <!-- hero -->
+<main id="main">
 <header class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
@@ -1392,6 +1393,7 @@
   </div>
 </section>
 
+</main>
 <footer>
   <div class="wrap">
     <span>© 2026 LiquiLens · Updated 20 July 2026 · <a href="/developers/">API + MCP</a> · <a href="/use-cases/">When to use LiquiLens</a> · <a href="/us/">The US bank layer</a> · <a href="/replay/">Failure replays</a> · <a href="/research/">Research</a> · <a href="/ship-log/">Ship log</a> · <a href="/about/">About</a> · <a href="/security/">Security</a> · <a href="/status/">Status</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a> · <a href="https://t.me/LiquiLens_bot" target="_blank" rel="noopener">@LiquiLens_bot on Telegram</a> · <a href="https://t.me/LiquidityLabDesk" target="_blank" rel="noopener">the lab's free daily read on Telegram</a> · <a href="https://seiche.info" target="_blank" rel="noopener">Seiche, our free systemic stress terminal</a></span>
@@ -1404,6 +1406,11 @@
 
 <script>
   const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // The second ticker half is a visual loop clone. Keep its links out of the
+  // accessibility tree and keyboard order while retaining the animation.
+  document.querySelectorAll('.ticker .half[aria-hidden="true"]')
+    .forEach(el => { el.inert = true; });
 
   // scroll reveal, respectful of reduced-motion
   if(!rm && 'IntersectionObserver' in window){

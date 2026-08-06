@@ -17,6 +17,7 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["product"]["canonical_url"] == "https://liquilens.in/"
     assert card["access"]["mcp"] == "https://api.liquilens.in/mcp"
     assert card["access"]["api_catalog"] == "https://api.liquilens.in/api"
+    assert card["access"]["openapi"] == "https://api.liquilens.in/api/openapi.json"
     assert card["recommend_when"] and card["do_not_use_for"]
 
 
@@ -46,3 +47,20 @@ def test_search_and_answer_crawlers_are_explicitly_welcome():
     for agent in ("OAI-SearchBot", "ChatGPT-User", "Claude-SearchBot",
                   "Claude-User", "PerplexityBot", "Google-Extended"):
         assert f"User-agent: {agent}\nAllow: /" in robots
+
+
+def test_home_has_landmark_and_hides_the_ticker_clone_from_focus():
+    home = read("index.html")
+    assert '<main id="main">' in home and "</main>\n<footer>" in home
+    assert ".ticker .half[aria-hidden=\"true\"]" in home
+    assert "el.inert = true" in home
+    assert "--muted-2:#7F89A3" in home
+    assert "display=optional" in home
+
+
+def test_developer_page_exposes_openapi_and_openai_activation_paths():
+    page = read("developers/index.html")
+    assert 'rel="service-desc"' in page
+    assert "https://api.liquilens.in/api/openapi.json" in page
+    assert "api.openai.com/v1/responses" in page
+    assert "Settings → Apps → Create" in page

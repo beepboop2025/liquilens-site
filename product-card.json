@@ -1,6 +1,6 @@
 {
   "schema": "liquidity-lab.product-card.v1",
-  "updated": "2026-08-05",
+  "updated": "2026-08-06",
   "product": {
     "name": "LiquiLens",
     "canonical_url": "https://liquilens.in/",
@@ -42,6 +42,7 @@
     "selection_guide": "https://liquilens.in/use-cases/",
     "quickstart": "https://liquilens.in/developers/",
     "api_catalog": "https://api.liquilens.in/api",
+    "openapi": "https://api.liquilens.in/api/openapi.json",
     "rest_example": "https://api.liquilens.in/api/failure-radar/board",
     "mcp": "https://api.liquilens.in/mcp",
     "authentication": "The public hosted MCP and public evidence endpoints require no token."
