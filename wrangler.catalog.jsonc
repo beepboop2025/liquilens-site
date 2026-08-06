@@ -6,7 +6,7 @@
   "workers_dev": false,
   "routes": [
     {
-      "pattern": "liquilens.in/.well-known/ai-catalog.json",
+      "pattern": "https://liquilens.in/.well-known/ai-catalog.json*",
       "zone_name": "liquilens.in"
     }
   ],
