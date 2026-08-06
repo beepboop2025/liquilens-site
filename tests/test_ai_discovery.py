@@ -36,7 +36,9 @@ def test_discovery_indexes_and_home_link_the_selection_surface():
     assert "https://liquilens.in/use-cases/" in read("sitemap.xml")
     assert "https://liquilens.in/use-cases/" in read("llms.txt")
     assert "https://liquilens.in/product-card.json" in read("llms.txt")
-    assert 'href="/use-cases/"' in read("index.html")
+    home = read("index.html")
+    assert '<a class="nav-link" href="/use-cases/">Use cases</a>' in home
+    assert '<a class="btn btn-ghost" href="/use-cases/">Find your use case</a>' in home
 
 
 def test_search_and_answer_crawlers_are_explicitly_welcome():
