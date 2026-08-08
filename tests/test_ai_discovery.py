@@ -30,6 +30,19 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
         "https://github.com/beepboop2025/liquilens-cli")
     assert card["access"]["ai_catalog"] == (
         "https://liquilens.in/.well-known/ai-catalog.json")
+    assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
+    expected_status = {
+        "india": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+        "united_states": "CURRENT_AMENDED_CONSTRUCTION_PIT",
+        "europe": "NAMED_CASE_FILES_CONSTRUCTION_PIT",
+    }
+    assert {
+        market: evidence["status"]
+        for market, evidence in card["evidence"]["markets"].items()
+    } == expected_status
+    for evidence in card["evidence"]["markets"].values():
+        assert evidence["validated_backtest_eligible"] is False
+        assert evidence["real_money_eligible"] is False
     assert card["recommend_when"] and card["do_not_use_for"]
 
 
@@ -139,17 +152,47 @@ def test_catalog_obeys_the_ard_envelope():
 def test_mcp_card_and_nested_product_line_are_current():
     entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
     mcp = entries["urn:air:liquilens.in:mcp:failure-radar"]
-    assert mcp["version"] == "1.4.1"
+    assert mcp["version"] == "1.5.0"
     assert mcp["data"]["name"] == "io.github.beepboop2025/liquilens"
     assert mcp["data"]["version"] == mcp["version"]
     assert mcp["data"]["remotes"] == [
         {"type": "streamable-http", "url": "https://api.liquilens.in/mcp"}
     ]
-    assert len(mcp["capabilities"]) == 14
+    assert len(mcp["capabilities"]) == 17
+    assert mcp["metadata"]["publicToolCount"] == 17
+    for tool in ("crypto_regime_board", "stablecoin_rails_board",
+                 "crypto_exposure_board"):
+        assert tool in mcp["capabilities"]
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.9.1"
+    assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.7.1"
     assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
         "https://seiche.info/.well-known/ai-catalog.json")
     assert entries["urn:air:liquilens.in:catalog:undertow"]["url"] == (
         "https://liquilens-undertow.com/.well-known/ai-catalog.json")
+
+
+def test_human_claim_surfaces_print_the_same_evidence_boundary():
+    statuses = (
+        "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+        "CURRENT_AMENDED_CONSTRUCTION_PIT",
+        "NAMED_CASE_FILES_CONSTRUCTION_PIT",
+    )
+    for path in ("index.html", "research/index.html",
+                 "developers/index.html", "llms.txt"):
+        surface = read(path)
+        for status in statuses:
+            assert status in surface, (path, status)
+        lowered = surface.lower()
+        assert "validated-backtest eligible" in lowered, path
+        assert "real-money eligible" in lowered, path
+
+
+def test_release_status_page_names_non_live_modes_without_softening_them():
+    status = read("status/index.html")
+    for token in ("shadow_review_only", "execution disabled", "PAPER ONLY",
+                  "real_orders false", "parent watchlist claim reproduces FAIL",
+                  "no automatic publication"):
+        assert token in status
 
 
 def test_every_discovery_pointer_uses_the_well_known_catalog():

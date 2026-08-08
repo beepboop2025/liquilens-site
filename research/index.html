@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.liquilens.in https://api.seiche.info https://demo.liquilens.in https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<title>LiquiLens Research | The validation record, published</title>
+<title>LiquiLens Research | Historical evidence, status published</title>
 <meta name="description" content="Replays, studies and method notes from the LiquiLens desk and Seiche, our open funding stress terminal. 552 US bank failures, 48 Indian institutions, 7 European case files. Full confusion matrix, misses named.">
 <link rel="canonical" href="https://liquilens.in/research/">
 <meta property="og:title" content="LiquiLens Research">
@@ -97,53 +97,53 @@ footer a{color:var(--muted)}
 <header class="hero"><div class="wrap">
   <div class="kicker">Research · the record, written up</div>
   <h1 class="serif">Measured, published, <em>misses included.</em></h1>
-  <p class="lede">Everything on this page is a study you can check: replays on public filings with the rules frozen before scoring, live studies served by the same API the product runs on, and method notes that say exactly what we withhold and why. <b>No claim here outruns its receipt.</b></p>
+  <p class="lede">Everything on this page is a study you can check: historical diagnostics with explicit claim boundaries, live studies served by the same API the product runs on, and method notes that say what each record can support. <b>Status and eligibility travel with the numbers.</b></p>
   <p class="agejab">The company is young. <b>The record runs 2004 to 2026,</b> three banking systems, every date sourced.</p>
 </div></header>
 
 <section id="replays"><div class="wrap">
   <div class="kicker">The replays</div>
-  <h2 class="serif">Three banking systems, <em>one frozen rule set.</em></h2>
-  <p class="sub">A failure engine you can only audit in one country is a story about that country. These are the three records, served by the public API, with the misses and false alarms printed beside the catches.</p>
+  <h2 class="serif">Three banking systems, <em>three explicit boundaries.</em></h2>
+  <p class="sub">These records are served by the public API with misses and false alarms. All three currently report validated-backtest eligible: NO and real-money eligible: NO; the exact status token on each card explains why.</p>
   <div class="grid">
 
     <article class="note">
-      <div class="chiprow"><span class="chip">BACKTESTED</span><span class="when">July 2026</span></div>
+      <div class="chiprow"><span class="chip">CONSTRUCTION-PIT</span><span class="when">8 August 2026</span></div>
       <h3>The United States: <em>552 failures, quarter by quarter</em></h3>
-      <p>Every FDIC insured bank scored point in time from free call report filings, 2004 to 2026. Weights were fixed before the first backtest ran, so the whole record is out of sample by construction. Two of the four 2026 failures were on the watchlist more than a year before the FDIC arrived. The seven misses of the 2023 to 2026 wave are named: five books concealed by fraud, which balance sheets cannot see, and the two July 2026 microbanks, Kentland Federal S&amp;L and Small Business Bank, which never reached the watch decile and were published as misses the week they failed. We say so either way.</p>
+      <p><b>CURRENT_AMENDED_CONSTRUCTION_PIT.</b> Every FDIC insured bank is replayed quarter by quarter using currently available amended call reports. Two of the four 2026 failures were on the watchlist more than a year before the FDIC arrived; seven recent misses are named. Because the history is current-amended rather than a complete as-published archive, it is not validated-backtest or real-money eligible.</p>
       <div class="stats">
         <div class="stat"><b>72.8%</b><span>recall (69.0 to 76.6)</span></div>
         <div class="stat"><b>21.7 mo</b><span>median lead</span></div>
         <div class="stat"><b>0.854</b><span>AUC</span></div>
         <div class="stat"><b>9.7%</b><span>false positive rate</span></div>
       </div>
-      <p>The trade off, stated as the product: roughly ten percent of the industry sits on watch to catch 73 percent of failures one to two years early. Precision 4.1 percent against a 0.83 percent base rate is a 5.0x lift, and we publish the entire confusion matrix because a warning system that never says how often it cries wolf is not a warning system.</p>
+      <p>The construction-PIT diagnostic puts roughly ten percent of the industry on watch while reporting 72.8 percent recall. Precision is 4.1 percent against a 0.83 percent base rate, and the entire confusion matrix stays public. These descriptive figures do not override the eligibility flags.</p>
       <p class="src">527,760 bank quarters · 9,903 institutions · free FDIC data end to end · <a href="/us/">the full US record →</a></p>
     </article>
 
     <article class="note">
-      <div class="chiprow"><span class="chip">BACKTESTED</span><span class="when">July 2026</span></div>
+      <div class="chiprow"><span class="chip">CONSTRUCTION-PIT</span><span class="when">8 August 2026</span></div>
       <h3>India: <em>48 institutions, two decades</em></h3>
-      <p>Failed institutions, stressed survivors and healthy controls from vetted primary filings, banks and co-operatives next to NBFCs and microlenders, post default quarters walled off so nothing leaks from the future. 16 of 18 non fraud failures flagged at a <b>median lead of 21 months</b>, significant at p &lt; 0.001, discriminating at AUC 0.713 against healthy controls.</p>
-      <p>Both dials ship. Conservative mode caught 11 of 16 with zero false alarms on healthy books. Sensitive mode adds the funding lens and caught 16 of 18 at the price of three healthy names warned. A second, fully out of sample replay on the 2025 microfinance cycle covered 11 more institutions with no retuning.</p>
+      <p><b>PERIOD_END_PROXY_CONSTRUCTION_PIT.</b> Failed institutions, stressed survivors and healthy controls from vetted primary filings sit in one 48-institution diagnostic. Post-default quarters are walled off, but historical filing availability is proxied rather than reconstructed from a complete as-published archive.</p>
+      <p>The served headline is 88.9 percent recall and a 21.5-month median lead. Both alert dials and all misses remain visible. Validated-backtest eligible: NO. Real-money eligible: NO.</p>
       <div class="stats">
-        <div class="stat"><b>16 / 18</b><span>non fraud failures</span></div>
-        <div class="stat"><b>21 mo</b><span>median lead</span></div>
+        <div class="stat"><b>88.9%</b><span>served recall</span></div>
+        <div class="stat"><b>21.5 mo</b><span>median lead</span></div>
         <div class="stat"><b>0</b><span>false alarms, cons. mode</span></div>
       </div>
       <p class="src">every dossier cited to primary filings · <a href="https://demo.liquilens.in" target="_blank" rel="noopener">the Evidence tab replays it, on request →</a></p>
     </article>
 
     <article class="note">
-      <div class="chiprow"><span class="chip gold">AUDITED</span><span class="when">July 2026</span></div>
+      <div class="chiprow"><span class="chip gold">NAMED CASE FILES</span><span class="when">8 August 2026</span></div>
       <h3>Europe: <em>seven case files, no recalibration</em></h3>
-      <p>Northern Rock to Credit Suisse, replayed through the same lenses with nothing refit to the new market. Deliberately case studies rather than a cohort statistic, because seven collapses do not make a distribution. Every figure was audited against primary filings after the fact: <b>142 checked, 3 corrected in the open.</b> The corrections stayed in the record, because a record you can quietly fix is not a record.</p>
+      <p><b>NAMED_CASE_FILES_CONSTRUCTION_PIT.</b> Northern Rock to Credit Suisse, replayed as seven named files rather than a cohort statistic. Every figure was audited against primary filings after the fact: <b>142 checked, 3 corrected in the open.</b> Validated-backtest eligible: NO. Real-money eligible: NO.</p>
       <div class="stats">
         <div class="stat"><b>7</b><span>case files</span></div>
         <div class="stat"><b>142</b><span>figures audited</span></div>
         <div class="stat"><b>3</b><span>corrected, in public</span></div>
       </div>
-      <p class="src">Northern Rock · Banco Popular · Credit Suisse and four more · <a href="/#validation">the validation record →</a></p>
+      <p class="src">Northern Rock · Banco Popular · Credit Suisse and four more · <a href="/#evidence-status">the evidence-status ledger →</a></p>
     </article>
 
   </div>
@@ -298,7 +298,7 @@ footer a{color:var(--muted)}
 </div></footer>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"CollectionPage","name":"LiquiLens Research","url":"https://liquilens.in/research/","description":"Replays, live studies and method notes from LiquiLens and Seiche: 552 US bank failures, 48 Indian institutions, 7 European case files, full confusion matrix, misses named.","isPartOf":{"@type":"WebSite","url":"https://liquilens.in/"},"about":[{"@type":"Thing","name":"bank failure early warning"},{"@type":"Thing","name":"funding stress"},{"@type":"Thing","name":"point in time backtesting"}],"mainEntity":{"@type":"ItemList","itemListElement":[
+{"@context":"https://schema.org","@type":"CollectionPage","name":"LiquiLens Research","url":"https://liquilens.in/research/","description":"Status-bound historical diagnostics and method notes from LiquiLens and Seiche: 552 US failures, 48 Indian institutions and 7 European case files, misses named and eligibility flags explicit.","isPartOf":{"@type":"WebSite","url":"https://liquilens.in/"},"about":[{"@type":"Thing","name":"bank failure early warning"},{"@type":"Thing","name":"funding stress"},{"@type":"Thing","name":"construction-PIT historical diagnostics"}],"mainEntity":{"@type":"ItemList","itemListElement":[
 {"@type":"ListItem","position":1,"name":"The United States: 552 failures, quarter by quarter","url":"https://liquilens.in/research/#replays"},
 {"@type":"ListItem","position":2,"name":"India: 48 institutions, two decades","url":"https://liquilens.in/research/#replays"},
 {"@type":"ListItem","position":3,"name":"Europe: seven case files, no recalibration","url":"https://liquilens.in/research/#replays"},

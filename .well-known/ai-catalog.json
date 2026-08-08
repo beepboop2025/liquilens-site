@@ -14,8 +14,8 @@
         "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
         "name": "io.github.beepboop2025/liquilens",
         "title": "LiquiLens — the Failure Radar",
-        "description": "Bank and lender failure early warning, with the validated record served beside every claim.",
-        "version": "1.4.1",
+        "description": "Bank and lender failure early warning, with historical-evidence status and eligibility flags served beside every historical claim.",
+        "version": "1.5.0",
         "repository": {
           "url": "https://github.com/beepboop2025/LiquiLens",
           "source": "github"
@@ -28,7 +28,7 @@
           }
         ]
       },
-      "description": "Public, read-only tools for Indian bank and NBFC failure risk, RBI supervisory actions, institution dossiers, and the published validation record.",
+      "description": "Seventeen public, read-only tools for Indian bank and NBFC failure risk, RBI supervisory actions, institution dossiers, construction-PIT historical diagnostics, and display-only crypto transmission context.",
       "tags": [
         "bank failure early warning",
         "NBFC risk",
@@ -51,21 +51,24 @@
         "verify_published_record",
         "corporate_transmission_board",
         "household_credit_board",
-        "forward_odds"
+        "forward_odds",
+        "crypto_regime_board",
+        "stablecoin_rails_board",
+        "crypto_exposure_board"
       ],
       "representativeQueries": [
         "Which Indian banks or NBFCs are showing failure risk?",
         "How fragile is ESAF Small Finance Bank?",
-        "Show the validation record for bank-failure early warning.",
+        "Show the historical evidence status and eligibility flags for bank-failure early warning.",
         "What RBI supervisory actions were published recently?",
         "Find an RBI-registered NBFC by name or CIN."
       ],
-      "version": "1.4.1",
-      "updatedAt": "2026-08-06T13:08:34Z",
+      "version": "1.5.0",
+      "updatedAt": "2026-08-08T16:45:00Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
-        "publicToolCount": 14,
+        "publicToolCount": 17,
         "telegramBot": "https://t.me/LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityLabDesk"
       }
@@ -95,8 +98,8 @@
         "Find public evidence for an early-warning claim about a lender.",
         "Retrieve recent RBI supervisory actions as structured data."
       ],
-      "version": "1.4.1",
-      "updatedAt": "2026-08-06T13:08:34Z",
+      "version": "1.5.0",
+      "updatedAt": "2026-08-08T16:45:00Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
@@ -108,7 +111,7 @@
       "displayName": "Seiche Funding-Stress Catalog",
       "type": "application/ai-catalog+json",
       "url": "https://seiche.info/.well-known/ai-catalog.json",
-      "description": "Sibling catalog for US dollar funding stress, repo, reserves, Treasury cash, positioning, analogs, and the public backtest.",
+      "description": "Sibling catalog for US dollar funding stress, repo, reserves, Treasury cash, positioning, analogs, and a status-bound construction-PIT historical diagnostic.",
       "tags": [
         "funding liquidity",
         "repo",
@@ -119,8 +122,8 @@
         "What is the current US dollar funding stress regime?",
         "Are reserves, repo, reverse repo or Treasury cash signaling strain?"
       ],
-      "version": "0.8.0",
-      "updatedAt": "2026-08-06T13:08:34Z",
+      "version": "0.9.1",
+      "updatedAt": "2026-08-08T16:45:00Z",
       "metadata": {
         "productUrl": "https://seiche.info",
         "telegramBot": "https://t.me/seiche_desk_bot",
@@ -143,8 +146,8 @@
         "What would it cost to sell a large BTC position across venues?",
         "Are Treasury, credit, FX or crypto liquidity conditions strained?"
       ],
-      "version": "1.7.0",
-      "updatedAt": "2026-08-06T13:08:34Z",
+      "version": "1.7.1",
+      "updatedAt": "2026-08-08T16:45:00Z",
       "metadata": {
         "productUrl": "https://liquilens-undertow.com",
         "telegramBot": "https://t.me/Undertow_LiquiLens_bot",
