@@ -90,6 +90,7 @@ def test_paid_pilot_has_a_bounded_offer_and_replaces_the_401_as_primary_cta():
     assert "mailto:mrinal@liquilens.in" in pilot
     assert 'data-event="email_clicked"' in pilot
     assert "https://api.liquilens.in/api/events" in read("pilot/app.js")
+    assert "within 30 days" not in pilot
 
     home = read("index.html")
     assert 'data-funnel="pilot_cta_clicked" href="/pilot/"' in home
