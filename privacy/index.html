@@ -76,13 +76,13 @@ footer a{color:var(--muted)}
 
 <section><div class="wrap">
   <h2>This website</h2>
-  <p class="body">liquilens.in is a static site. It sets no cookies, runs no advertising trackers and builds no visitor profiles. Aggregate, cookieless page counts via Cloudflare Web Analytics may be enabled; they identify nobody. The site is served by GitHub Pages behind Cloudflare, which produce standard server logs (IP address, user agent, timestamps) as any host does.</p>
+  <p class="body">liquilens.in is a static site. It sets no cookies, runs no advertising trackers and builds no visitor profiles. Aggregate, cookieless page counts via Cloudflare Web Analytics may be enabled; they identify nobody. The developer and pilot pages also send a short allow-listed event name, such as <span class="mono">cli_install_copied</span> or <span class="mono">email_clicked</span>, to the LiquiLens API. Those events contain no email address, free text, device ID or user property and exist only to measure whether a public surface helps someone take the next step. The site is served by GitHub Pages behind Cloudflare, which produce standard server logs (IP address, user agent, timestamps) as any host does.</p>
 
   <h2>Email</h2>
   <p class="body">If you write to <a href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a>, your message and address are kept as ordinary correspondence, used to reply to you, and shared with nobody. Ask and the thread gets deleted.</p>
 
   <h2>The demo and the public API</h2>
-  <p class="body">The demo at demo.liquilens.in is granted on request and asks for no personal data beyond the address you write from. It contains public record evidence and a synthetic treasury book. The public API keeps standard access logs for security and rate limiting, with short retention, and nothing in it is personal data by design: the subjects are institutions, scored from their own public filings.</p>
+  <p class="body">The demo at demo.liquilens.in is granted on request and asks for no personal data beyond the address you write from. It contains public record evidence and a synthetic treasury book. The public API keeps standard access logs for security and rate limiting, with short retention. The CLI labels its requests only as <span class="mono">cli</span> so aggregate board activations can be counted; it sends no installation ID, command arguments or cache contents. Nothing in the public product data is personal data by design: the subjects are institutions, scored from their own public filings.</p>
 
   <h2>Pilots and the product</h2>
   <p class="body">A pilot tenant's data is governed by the pilot agreement, which supersedes this page. The deployment we recommend to regulated lenders is self hosted, so your book never reaches our servers at all. We do not sell data. Not visitor data, not tenant data, not any data.</p>

@@ -25,6 +25,9 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["mcp"] == "https://api.liquilens.in/mcp"
     assert card["access"]["api_catalog"] == "https://api.liquilens.in/api"
     assert card["access"]["openapi"] == "https://api.liquilens.in/api/openapi.json"
+    assert card["access"]["pilot"] == "https://liquilens.in/pilot/"
+    assert card["access"]["cli"] == (
+        "https://github.com/beepboop2025/liquilens-cli")
     assert card["access"]["ai_catalog"] == (
         "https://liquilens.in/.well-known/ai-catalog.json")
     assert card["recommend_when"] and card["do_not_use_for"]
@@ -73,6 +76,42 @@ def test_developer_page_exposes_openapi_and_openai_activation_paths():
     assert "https://api.liquilens.in/api/openapi.json" in page
     assert "api.openai.com/v1/responses" in page
     assert "Settings → Apps → Create" in page
+    assert "npx --yes github:beepboop2025/liquilens-cli" in page
+    assert 'data-event="cli_install_copied"' in page
+    assert "https://api.liquilens.in/api/events" in read("developers/app.js")
+
+
+def test_paid_pilot_has_a_bounded_offer_and_replaces_the_401_as_primary_cta():
+    pilot = read("pilot/index.html")
+    for required in ("₹2.5 lakh", "₹12 lakh/yr", "six weeks",
+                     "credited toward", "Runs in your environment",
+                     "Alerts per catch"):
+        assert required.lower() in pilot.lower()
+    assert "mailto:mrinal@liquilens.in" in pilot
+    assert 'data-event="email_clicked"' in pilot
+    assert "https://api.liquilens.in/api/events" in read("pilot/app.js")
+
+    home = read("index.html")
+    assert 'data-funnel="pilot_cta_clicked" href="/pilot/"' in home
+    assert "Design partner pilots are free" not in home
+    assert "https://liquilens.in/pilot/" in read("sitemap.xml")
+    assert "https://liquilens.in/pilot/" in read("llms.txt")
+
+    for surface in ("index.html", "about/index.html", "pilot/index.html"):
+        copy = read(surface)
+        assert "₹2.5 lakh" in copy
+        assert "₹12 lakh" in copy
+
+    machine_copy = read("llms.txt")
+    assert "INR 250,000" in machine_copy
+    assert "INR 1,200,000 per year" in machine_copy
+
+
+def test_aggregate_funnel_events_are_documented_as_property_free():
+    privacy = read("privacy/index.html")
+    assert "short allow-listed event name" in privacy
+    assert "no email address, free text, device ID or user property" in privacy
+    assert "cli_install_copied" in privacy
 
 
 def test_catalog_obeys_the_ard_envelope():
