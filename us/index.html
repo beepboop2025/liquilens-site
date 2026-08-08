@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.liquilens.in https://api.seiche.info https://demo.liquilens.in https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <title>LiquiLens US | Bank run risk, scored a year early</title>
-<meta name="description" content="LiquiLens US scores every FDIC insured bank for run risk from public filings, point in time. The engine flagged SVB 17 months early and two of the four 2026 failures a year ahead, out of sample. Both July 2026 misses are published by name. Full validation public, false positives included." />
+<meta name="description" content="LiquiLens US serves current bank run-risk screens plus a CURRENT_AMENDED_CONSTRUCTION_PIT historical diagnostic over 552 failures, with misses and eligibility flags published." />
 <link rel="canonical" href="https://liquilens.in/us/" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <meta name="theme-color" content="#0A0F1C" />
@@ -16,11 +16,11 @@
 <meta property="og:url" content="https://liquilens.in/us/" />
 <meta property="og:site_name" content="LiquiLens" />
 <meta property="og:title" content="LiquiLens US | The 2026 scoreboard: two flagged a year early, two misses published" />
-<meta property="og:description" content="Run risk scores for every US bank from free public data. Validation published in full: recall, false positive rate, lead times, and the misses, by name." />
+<meta property="og:description" content="Run-risk screens for US banks plus a current-amended construction-PIT diagnostic. Recall, false positives, misses and eligibility flags are public." />
 <meta property="og:image" content="https://liquilens.in/og-radar.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="LiquiLens US | Bank run risk, scored a year early" />
-<meta name="twitter:description" content="The engine flagged SVB 17 months early and two of the four 2026 failures a year ahead, out of sample. Both misses published. Full confusion matrix public." />
+<meta name="twitter:description" content="Current bank screens plus a construction-PIT historical diagnostic over 552 failures. Misses and both eligibility flags published." />
 <meta name="twitter:image" content="https://liquilens.in/og-radar.png" />
 
 <script type="application/ld+json">
@@ -39,8 +39,8 @@
     },
     {
       "@type": "Dataset",
-      "name": "LiquiLens US bank run risk validation record",
-      "description": "Point in time early warning scores for every FDIC insured US bank, validated against all 552 FDIC receiverships 2008 to 2026. Published with the full confusion matrix: recall 72.8 percent, false positive rate 9.7 percent, median lead 21.7 months, misses named. 2026 scoreboard: two of four failures flagged a year early, and the two July 2026 microbank misses published by name.",
+      "name": "LiquiLens US bank run risk historical diagnostic",
+      "description": "CURRENT_AMENDED_CONSTRUCTION_PIT diagnostic over 552 FDIC receiverships from 2008 to 2026. The served record reports recall 72.8 percent, false positive rate 9.7 percent, median lead 21.7 months and named misses. Validated-backtest eligible false; real-money eligible false.",
       "url": "https://liquilens.in/us/",
       "creator": { "@id": "https://liquilens.in/#org" },
       "license": "https://liquilens.in/us/#method",
@@ -274,7 +274,7 @@
     <span class="half">
       <span><span class="tag">LIQUILENS US</span> run risk on every FDIC insured bank</span>
       <span>panel <span class="live">527,760 bank quarters</span> · 9,903 institutions · 2004 to 2026</span>
-      <span>recall <span class="live">72.8%</span> of 552 failures · median lead <span class="live">21.7 months</span></span>
+      <span>construction-PIT diagnostic · recall <span class="live">72.8%</span> of 552 failures · median lead <span class="live">21.7 months</span></span>
       <span>SVB flagged <span class="live">17.3 months</span> before the run</span>
       <span>2026 scoreboard: two flagged <span class="live">a year early</span> · two misses published by name</span>
       <span><span class="sei-print">SEICHE</span> regime conditioning, live from the open terminal</span>
@@ -283,7 +283,7 @@
     </span><span class="half">
       <span><span class="tag">LIQUILENS US</span> run risk on every FDIC insured bank</span>
       <span>panel <span class="live">527,760 bank quarters</span> · 9,903 institutions · 2004 to 2026</span>
-      <span>recall <span class="live">72.8%</span> of 552 failures · median lead <span class="live">21.7 months</span></span>
+      <span>construction-PIT diagnostic · recall <span class="live">72.8%</span> of 552 failures · median lead <span class="live">21.7 months</span></span>
       <span>SVB flagged <span class="live">17.3 months</span> before the run</span>
       <span>2026 scoreboard: two flagged <span class="live">a year early</span> · two misses published by name</span>
       <span><span class="sei-print">SEICHE</span> regime conditioning, live from the open terminal</span>
@@ -297,7 +297,7 @@
   <nav>
     <a class="brand" href="/"><span class="mark">L</span>LiquiLens<span class="us">US</span></a>
     <span class="nav-right">
-      <a class="nav-link" href="#validation">Validation</a>
+      <a class="nav-link" href="#validation">Historical evidence</a>
       <a class="nav-link" href="#ndfi">NDFI watch</a>
       <a class="nav-link" href="#reserves">Stablecoin reserves</a>
       <a class="nav-link" href="/research/">Research</a>
@@ -312,9 +312,9 @@
     <div>
       <span class="eyebrow">The US bank layer</span>
       <h1>Four banks failed in 2026. Two were on this watchlist <em>a year early.</em> The two we missed are named below.</h1>
-      <p class="lede">LiquiLens US scores every FDIC insured bank for run risk from free public filings, point in time, quarter by quarter since 2004. It knows <b>who is fragile</b>, watches <b>when the reaching for deposits starts</b>, reads <b>the funding tide</b> from our open Seiche terminal, and maps <b>where trouble travels</b>, from stablecoin reserves to private credit. The validation is published in full, false positives and misses included.</p>
+      <p class="lede">LiquiLens US serves current run-risk screens from free public filings. Its historical layer replays banks quarter by quarter using currently available amended call reports, so the API labels it <b>CURRENT_AMENDED_CONSTRUCTION_PIT</b>. The full diagnostic, false positives, misses and both eligibility flags are public.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#validation">Read the validation →</a>
+        <a class="btn btn-primary" href="#validation">Read the evidence boundary →</a>
         <a class="btn btn-ghost" href="mailto:mrinal@liquilens.in?subject=LiquiLens%20US%20research%20access">Request the full table</a>
       </div>
     </div>
@@ -341,14 +341,14 @@
         <line class="rec-line" x1="520" y1="70" x2="520" y2="262"/>
         <text class="lbl red" x="414" y="272">FDIC · 10 Mar 2023</text>
         <path class="lead-brace" d="M314,44 L314,36 L520,36 L520,44" fill="none"/>
-        <text class="lead-count" x="352" y="28">17.3 months of warning</text>
+        <text class="lead-count" x="352" y="28">17.3 mo diagnostic lead</text>
         <text class="lbl" x="40" y="284">quarterly score, Sep 2019 to Dec 2022 · real values, not an illustration</text>
       </svg>
-      <div class="terminal__foot">Every point on this curve is the score the engine computes for that quarter from filings available at that date. Weights were fixed before the first backtest ran, so the whole record is <b>out of sample by construction</b>.</div>
+      <div class="terminal__foot">Every point is recomputed by quarter, but from current-amended history rather than a complete archive of what was available then. This is a <b>construction-PIT diagnostic</b>, not validated-backtest evidence.</div>
     </div>
   </div>
   <div class="stats reveal" style="margin-top:56px">
-    <div class="stat"><div class="num">72.8%</div><p>of all 552 FDIC failures since 2008 caught in advance</p></div>
+    <div class="stat"><div class="num">72.8%</div><p>served recall in the 552-failure construction-PIT diagnostic</p></div>
     <div class="stat"><div class="num">21.7 mo</div><p>median warning before the FDIC arrived</p></div>
     <div class="stat"><div class="num">9.7%</div><p>false positive rate, published next to the recall</p></div>
     <div class="stat"><div class="num">6 of 8</div><p>balance sheet failures of the rate shock era flagged early, both 2026 misses published by name</p></div>
@@ -357,9 +357,10 @@
 
 <section class="band" id="validation">
   <div class="wrap">
-    <span class="eyebrow reveal">Measured, not asserted</span>
-    <h2 class="reveal">Every early warning vendor quotes recall. <em>Ask for the rest of the matrix.</em></h2>
-    <p class="body reveal">A warning system that never says how often it cries wolf is not a warning system. Incumbent bank raters publish hit rates and stop there. We publish the entire confusion matrix on all 527,760 bank quarters, because the trade off is the product: <b>we place roughly ten percent of the industry on watch to catch 73 percent of failures one to two years early.</b></p>
+    <span class="eyebrow reveal">Historical evidence · measured and bounded</span>
+    <h2 class="reveal">Every early warning vendor quotes recall. <em>Ask for status first.</em></h2>
+    <p class="body reveal">The confusion matrix below is reproducible over 527,760 bank quarters, but it uses current-amended historical filings. The production API therefore serves the result as a construction-PIT diagnostic rather than validated-backtest evidence.</p>
+    <div class="miss reveal"><h3>CURRENT_AMENDED_CONSTRUCTION_PIT</h3><p>Validated-backtest eligible: <b>NO</b> · real-money eligible: <b>NO</b>. Metrics describe this diagnostic; they do not override its eligibility flags. <a href="https://api.liquilens.in/api/evidence/us">Read the served contract →</a></p></div>
 
     <div class="cmx reveal">
       <div class="cmx-table">
@@ -382,7 +383,7 @@
         </table>
       </div>
     </div>
-    <p class="stats-note reveal">Failures are rare, so most flags are not followed by one. That is what a 0.83 percent base rate means, and any vendor whose numbers sound better than this either fit their model to the past or is not telling you their false positive rate. Score versions are kept honest too: the preregistered score reads 72.8 percent, adding private credit exposure reads 72.0 percent, adding deposit desperation reads 75.5 percent, all at the same alarm budget.</p>
+    <p class="stats-note reveal">Failures are rare, so most flags are not followed by one. The diagnostic reports a 0.83 percent base rate. Score variants are printed separately: the frozen policy reads 72.8 percent, adding private-credit exposure reads 72.0 percent, and adding deposit desperation reads 75.5 percent at the same alarm budget. None is promoted beyond the served construction-PIT boundary.</p>
   </div>
 </section>
 
@@ -402,7 +403,7 @@
       <div class="leadrow"><span class="who">CB&amp;T West Georgia</span><div class="lane"><div class="bar" data-w="54"></div></div><span class="months">13.0</span></div>
       <div class="leadrow"><span class="who">Kentland Federal S&amp;L</span><div class="lane"><div class="bar" data-w="0"></div></div><span class="months">miss</span></div>
       <div class="leadrow"><span class="who">Small Business Bank</span><div class="lane"><div class="bar" data-w="0"></div></div><span class="months">miss</span></div>
-      <div class="median"><p><b>Nothing in this pipeline was fitted to any outcome, in any era.</b> The weights were frozen before the first backtest ever ran, so the same rule set that catches the 2008 failures catches the 2026 ones. From here the record runs forward: every quarterly watchlist is sealed when published, the same discipline as our open Seiche terminal.</p></div>
+      <div class="median"><p><b>The weights were frozen before this diagnostic ran, but that alone does not make the inputs as-published.</b> Historical call reports are current-amended, so the record remains construction-PIT. Forward quarterly watchlists are separately sealed when published.</p></div>
     </div>
 
     <div class="miss reveal">
@@ -521,12 +522,12 @@
     <span class="eyebrow reveal">Method and limits</span>
     <h2 class="reveal">Read this before <em>relying on any of it.</em></h2>
     <div class="engines reveal">
-      <div class="engine"><div class="no">POINT IN TIME</div><h3>No hindsight anywhere</h3><p>A score at any date uses only filings available at that date. Signal weights were fixed before the first backtest ran and never tuned on outcomes. Post hoc additions, private credit exposure and deposit desperation, are validated standalone and reported as separate score versions.</p></div>
+      <div class="engine"><div class="no">CONSTRUCTION-PIT</div><h3>Chronology without an as-published archive</h3><p>Transforms run in historical order and weights are frozen, but call reports are current-amended. Private-credit exposure and deposit desperation are reported as separate diagnostic variants. The API keeps validated-backtest eligibility false.</p></div>
       <div class="engine"><div class="no">KNOWN BLIND SPOTS</div><h3>We do not detect crime, and we underrank quiet insolvency</h3><p>Five of the seven 2023 to 2026 misses were fraud driven failures; balance sheet fundamentals cannot see embezzlement, and we will not pretend otherwise. The July 2026 microbank misses state a second limit: slow solvency erosion in very small banks with a quiet deposit base ranks low on a run risk lens. A conduct signal and a dedicated solvency lens are roadmap items, not tuning fixes.</p></div>
       <div class="engine"><div class="no">PROXY, NOT TAPE</div><h3>Regulators see more</h3><p>The Fed watches actual payment flows in real time. Nobody outside can. Public data nowcasting approximates run pressure rather than observing it, and the honest word for that is proxy.</p></div>
       <div class="engine"><div class="no">COVERAGE</div><h3>Known data gaps, disclosed</h3><p>Uninsured deposit estimates have a reporting gap for smaller banks between 2015 and 2019. The score reweights over available signals and records how many were present for every bank quarter.</p></div>
     </div>
-    <p class="fine reveal" id="disclaimer">LiquiLens US outputs are screening percentiles computed from public FDIC filings. They are research, not credit ratings, not a prediction that any institution will fail, and not investment, legal or deposit placement advice. Named institutions are identified because their filings are public records; nothing on this page alleges wrongdoing by anyone. Data: FDIC BankFind Suite, public domain. Validation reproducible end to end; the full report travels with the product.</p>
+    <p class="fine reveal" id="disclaimer">LiquiLens US outputs are screening percentiles computed from public FDIC filings. They are research, not credit ratings, not a prediction that any institution will fail, and not investment, legal or deposit placement advice. Named institutions are identified because their filings are public records; nothing on this page alleges wrongdoing by anyone. Data: FDIC BankFind Suite, public domain. The construction-PIT diagnostic is reproducible end to end and travels with its claim boundary.</p>
   </div>
 </section>
 
@@ -549,7 +550,7 @@
       <a class="btn btn-primary" href="mailto:mrinal@liquilens.in?subject=LiquiLens%20US%20research%20access">Request research access →</a>
       <a class="btn btn-ghost" href="/">The India platform →</a>
     </div>
-    <p class="fine" style="margin:26px auto 0;text-align:center">Fintechs watching a sponsor bank, treasurers sizing uninsured exposure, credit desks screening counterparties, stablecoin risk teams. One engine, published validation, misses included.</p>
+    <p class="fine" style="margin:26px auto 0;text-align:center">Fintechs watching a sponsor bank, treasurers sizing uninsured exposure, credit desks screening counterparties, stablecoin risk teams. One engine, status-bound historical evidence, misses included.</p>
   </div>
 </section>
 

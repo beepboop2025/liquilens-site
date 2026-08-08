@@ -70,14 +70,23 @@ footer a{color:var(--muted)}
 
 <header class="hero"><div class="wrap">
   <div class="kicker">Status</div>
-  <h1 class="serif">Fetched in your browser, <em>never typed.</em></h1>
-  <p class="lede">This page asks the production systems directly from your browser. If a row cannot be reached, it says so. Absence is never dressed up as calm.</p>
+  <h1 class="serif">Live reachability, <em>explicit release boundaries.</em></h1>
+  <p class="lede">The first rows ask production directly from your browser. The release ledger below states what each deployed product is allowed to do. Reachability and product eligibility are separate facts.</p>
 </div></header>
 
 <section><div class="wrap">
   <div class="statusrow"><span class="badge wait" id="apiBadge">CHECKING</span><span><b>api.liquilens.in</b> · the radar API</span><span class="mono" id="apiNote" style="margin-left:auto"></span></div>
   <div class="statusrow"><span class="badge wait" id="seiBadge">CHECKING</span><span><b>api.seiche.info</b> · Seiche, the funding stress terminal</span><span class="mono" id="seiNote" style="margin-left:auto"></span></div>
   <div class="statusrow"><span class="badge wait" id="demoBadge">CHECKING</span><span><b>demo.liquilens.in</b> · the walkthrough, granted on request</span><span class="mono" id="demoNote" style="margin-left:auto"></span></div>
+
+  <h2>Release contract · 8 August 2026</h2>
+  <div class="statusrow"><span class="badge">LIVE</span><span><b>LiquiLens core + MCP 1.5.0</b> · 17 public read-only tools; Telegram live</span></div>
+  <div class="statusrow"><span class="badge wait">SHADOW</span><span><b>LiquiLens Lab 0.7.0</b> · shadow_review_only; execution disabled</span></div>
+  <div class="statusrow"><span class="badge">LIVE</span><span><b>Seiche 0.9.1</b> · eight free MCP tools; historical diagnostic is construction-PIT</span></div>
+  <div class="statusrow"><span class="badge wait">PAPER ONLY</span><span><b>Riptide 1.0.0</b> · deployed research; real_orders false</span></div>
+  <div class="statusrow"><span class="badge">LIVE</span><span><b>Undertow 1.7.1</b> · 8 free + 8 subscriber MCP tools; Telegram and web desk live</span></div>
+  <div class="statusrow"><span class="badge wait">RESEARCH</span><span><b>v5 six-module family</b> · reproducibly released; parent watchlist claim reproduces FAIL</span></div>
+  <div class="statusrow"><span class="badge wait">HUMAN REVIEW</span><span><b>Palimpsest ↔ ScamShield</b> · pack 2026-08-08.2; no automatic publication</span></div>
 
   <h2>What OK means</h2>
   <p class="body">The API health endpoint reports liveness: the service is up and answering. Data freshness is reported inside each data payload with its own as of stamp, because freshness is a property of each feed, not of the process. When a feed goes dark, the payload that depends on it says so instead of serving a stale number as current.</p>
@@ -87,7 +96,8 @@ footer a{color:var(--muted)}
   <ul class="plain">
     <li><a href="https://api.liquilens.in/api/attest/pubkey" target="_blank" rel="noopener">api.liquilens.in/api/attest/pubkey</a> · the operator signing key</li>
     <li><a href="https://api.liquilens.in/api/evidence/gates" target="_blank" rel="noopener">api.liquilens.in/api/evidence/gates</a> · the pre registered gate scoreboard</li>
-    <li><a href="https://api.liquilens.in/api/evidence/us" target="_blank" rel="noopener">api.liquilens.in/api/evidence/us</a> · the US validation pack, misses included</li>
+    <li><a href="https://api.liquilens.in/api/evidence/markets" target="_blank" rel="noopener">api.liquilens.in/api/evidence/markets</a> · exact market status and eligibility flags</li>
+    <li><a href="https://api.liquilens.in/api/evidence/us" target="_blank" rel="noopener">api.liquilens.in/api/evidence/us</a> · the US construction-PIT diagnostic, misses included</li>
   </ul>
   <p class="body mono" id="stamp">checked: never (JavaScript disabled?)</p>
 </div></section>
@@ -128,7 +138,7 @@ footer a{color:var(--muted)}
 
 <footer><div class="wrap">
   © 2026 LiquiLens · <a href="/">the failure radar</a> · <a href="/about/">about</a> · <a href="/security/">security</a> · <a href="/status/">status</a> · <a href="/privacy/">privacy</a> · <a href="/terms/">terms</a> · <a href="/ship-log/">ship log</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a>
-  <div style="margin-top:8px">LiquiLens is a product of ai.de, a Udyam registered sole proprietorship, Jaipur, India. · <a href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a> · Updated 20 July 2026</div>
+  <div style="margin-top:8px">LiquiLens is a product of ai.de, a Udyam registered sole proprietorship, Jaipur, India. · <a href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a> · Updated 8 August 2026</div>
 </div></footer>
 
 </body>

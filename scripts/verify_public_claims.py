@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Check that the public surfaces of liquilens.in agree with reality.
 
-Four rules, checked over every file the Pages workflow uploads:
+Five rules, checked over every file the Pages workflow uploads:
 
   1. one US failure count, and it is the study denominator
   2. the Undertow price ladder, on Undertow surfaces only
@@ -10,6 +10,8 @@ Four rules, checked over every file the Pages workflow uploads:
      JSON-LD, a string a script or a style rule writes into the page, and a
      comment that ships unrendered
   4. no surface claims something is withheld that a public API serves
+  5. release discovery and human evidence ledgers carry the same exact status
+     tokens, eligibility flags, MCP version, and public tool count
 
 Rules 1 to 3 read only the checked out files, so they are deterministic and
 they set the exit code. An incomplete local walk or unreadable artifact also
@@ -80,6 +82,30 @@ US_STUDY_METRICS = load_us_study_metrics()
 US_FAILURE_COUNT = US_STUDY_METRICS["failure_count"]
 US_RECALL_PCT = US_STUDY_METRICS["recall_pct"]
 US_AUC = US_STUDY_METRICS["auc"]
+
+EVIDENCE_STATUSES = (
+    "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+    "CURRENT_AMENDED_CONSTRUCTION_PIT",
+    "NAMED_CASE_FILES_CONSTRUCTION_PIT",
+)
+EVIDENCE_SURFACES = (
+    "index.html",
+    os.path.join("research", "index.html"),
+    os.path.join("developers", "index.html"),
+    "llms.txt",
+)
+MCP_VERSION = "1.5.0"
+MCP_TOOL_COUNT = 17
+LEGACY_OVERCLAIMS = (
+    re.compile(r"\bfully out of sample replay\b", re.I),
+    re.compile(r"\bout of sample by construction\b", re.I),
+    re.compile(r"\bthree validated records\b", re.I),
+    re.compile(r"\bpoint.in.time model validation\b", re.I),
+    re.compile(r"\bvalidated against all 552\b", re.I),
+    re.compile(r"\bpublished validation covers\b", re.I),
+    re.compile(r"\b\d+(?:\.\d+)?% caught early\b", re.I),
+    re.compile(r"\b\d+(?:\.\d+)? months of warning\b", re.I),
+)
 
 # The Undertow ladder as it is priced on liquilens-undertow.com. It governs
 # Undertow surfaces only; LiquiLens and Seiche prices are not on this ladder.
@@ -725,6 +751,69 @@ def artifact_excludes(root: str) -> set[str]:
     return excludes
 
 
+def release_contract_problems(root: str) -> list[str]:
+    """Pin cross-surface product truth without calling another deployment."""
+    problems: list[str] = []
+    for rel in EVIDENCE_SURFACES:
+        path = os.path.join(root, rel)
+        raw = readable(path)
+        if raw is None:
+            problems.append(f"{rel}: evidence contract surface is unreadable")
+            continue
+        for status in EVIDENCE_STATUSES:
+            if status not in raw:
+                problems.append(f"{rel}: evidence contract omits {status}")
+        lowered = raw.lower()
+        for flag in ("validated-backtest eligible", "real-money eligible"):
+            if flag not in lowered:
+                problems.append(f"{rel}: evidence contract omits {flag}")
+        for pattern in LEGACY_OVERCLAIMS:
+            match = pattern.search(plain(uncommented(raw)))
+            if match:
+                problems.append(
+                    f"{rel}: retired historical overclaim remains: "
+                    f"{match.group(0)!r}")
+
+    try:
+        with open(os.path.join(root, "product-card.json"), encoding="utf-8") as fh:
+            card = json.load(fh)
+        markets = card["evidence"]["markets"]
+        served = tuple(markets[name]["status"] for name in
+                       ("india", "united_states", "europe"))
+        if served != EVIDENCE_STATUSES:
+            problems.append(
+                "product-card.json: market status tuple differs from the "
+                "release contract")
+        for name, evidence in markets.items():
+            if evidence.get("validated_backtest_eligible") is not False or \
+                    evidence.get("real_money_eligible") is not False:
+                problems.append(
+                    f"product-card.json: {name} eligibility does not fail closed")
+    except (OSError, KeyError, TypeError, ValueError) as exc:
+        problems.append(f"product-card.json: invalid evidence contract: {exc}")
+
+    try:
+        with open(os.path.join(root, ".well-known", "ai-catalog.json"),
+                  encoding="utf-8") as fh:
+            catalog = json.load(fh)
+        mcp = next(entry for entry in catalog["entries"]
+                   if entry["identifier"] ==
+                   "urn:air:liquilens.in:mcp:failure-radar")
+        if mcp.get("version") != MCP_VERSION or \
+                mcp.get("data", {}).get("version") != MCP_VERSION:
+            problems.append(
+                f"ai-catalog.json: MCP version is not {MCP_VERSION}")
+        count = len(mcp.get("capabilities", []))
+        metadata_count = mcp.get("metadata", {}).get("publicToolCount")
+        if count != MCP_TOOL_COUNT or metadata_count != MCP_TOOL_COUNT:
+            problems.append(
+                "ai-catalog.json: public tool count does not agree at "
+                f"{MCP_TOOL_COUNT}")
+    except (OSError, KeyError, StopIteration, TypeError, ValueError) as exc:
+        problems.append(f"ai-catalog.json: invalid MCP release contract: {exc}")
+    return problems
+
+
 def check(root: str = ROOT,
           expected_failure_count: str | None = None) -> list[str]:
     problems = []
@@ -798,6 +887,9 @@ def check(root: str = ROOT,
                 f"{skipped}/ is never scanned for retired claims and is not "
                 f"excluded from the Pages upload, so it publishes at "
                 f"liquilens.in/{skipped}/")
+
+    if os.path.realpath(root) == os.path.realpath(ROOT):
+        problems.extend(release_contract_problems(root))
 
     return problems
 

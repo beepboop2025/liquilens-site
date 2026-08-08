@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.liquilens.in https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<title>Altico failure: point-in-time early-warning replay | LiquiLens</title>
-<meta name="description" content="How the LiquiLens lenses read Altico (non-banking financial company (NBFC)) before its failure on 2019-09-12: action-zone replay, funding-fragility replay, and what was missed, from the published validation record.">
+<title>Altico failure: construction-PIT historical replay | LiquiLens</title>
+<meta name="description" content="How the LiquiLens lenses read Altico (non-banking financial company (NBFC)) before its failure on 2019-09-12: action-zone replay, funding-fragility replay, and what was missed, from the published construction-PIT diagnostic.">
 <link rel="canonical" href="https://liquilens.in/replay/altico/">
-<meta property="og:title" content="Altico failure: point-in-time early-warning replay | LiquiLens">
-<meta property="og:description" content="How the LiquiLens lenses read Altico (non-banking financial company (NBFC)) before its failure on 2019-09-12: action-zone replay, funding-fragility replay, and what was missed, from the published validation record.">
+<meta property="og:title" content="Altico failure: construction-PIT historical replay | LiquiLens">
+<meta property="og:description" content="How the LiquiLens lenses read Altico (non-banking financial company (NBFC)) before its failure on 2019-09-12: action-zone replay, funding-fragility replay, and what was missed, from the published construction-PIT diagnostic.">
 <meta property="og:image" content="https://liquilens.in/og-radar.png">
 <meta property="og:url" content="https://liquilens.in/replay/altico/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E3B778'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%231A1206' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Altico failure: point-in-time early-warning replay | LiquiLens", "description": "How the LiquiLens lenses read Altico (non-banking financial company (NBFC)) before its failure on 2019-09-12: action-zone replay, funding-fragility replay, and what was missed, from the published validation record.", "url": "https://liquilens.in/replay/altico/", "isPartOf": {"@type": "WebSite", "name": "LiquiLens", "url": "https://liquilens.in/"}, "isBasedOn": "https://api.liquilens.in/api/failure-radar/validation"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Altico failure: construction-PIT historical replay | LiquiLens", "description": "How the LiquiLens lenses read Altico (non-banking financial company (NBFC)) before its failure on 2019-09-12: action-zone replay, funding-fragility replay, and what was missed, from the published construction-PIT diagnostic.", "url": "https://liquilens.in/replay/altico/", "isPartOf": {"@type": "WebSite", "name": "LiquiLens", "url": "https://liquilens.in/"}, "isBasedOn": "https://api.liquilens.in/api/failure-radar/validation"}</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 :root{--ink:#0A0F1C;--ink2:#0E1424;--line:#1E2740;--gold:#E3B778;--gold-deep:#C8954E;--teal:#5BD0C4;--red:#E06A6A;--text:#E9EBF2;--muted:#8B94AB;--muted2:#5C657E}
@@ -67,9 +67,9 @@ footer a{color:var(--muted)}
 <header class="hero"><div class="wrap">
   <p class="kicker">Failure replay · NBFC</p>
   <h1 class="serif">Altico</h1>
-  <p class="lede">Point-in-time replay of <b>Altico</b> through the LiquiLens lenses,
-  from the published three-market validation record. Each lens reads only what was
-  public before the failure; nothing here is fitted after the fact.</p>
+  <p class="lede">Historical replay of <b>Altico</b> through the LiquiLens lenses,
+  from the published India construction-PIT diagnostic. Filing availability is proxied rather than
+  fully reconstructed, so this is not validated-backtest or real-money evidence.</p>
 </div></header>
 
 <section><div class="wrap">
@@ -86,8 +86,9 @@ footer a{color:var(--muted)}
 <footer><div class="wrap">
 <p>Every number on this page is served from
 <a href="https://api.liquilens.in/api/failure-radar/validation">GET /api/failure-radar/validation</a>,
-the same payload the <a href="/research/">research index</a> cites. Outputs are
-point-in-time research screening, not credit ratings and not investment advice.
+the same payload the <a href="/research/">research index</a> cites. Its status is
+<code>PERIOD_END_PROXY_CONSTRUCTION_PIT</code>; it is not validated-backtest or
+real-money evidence, a credit rating or investment advice.
 &copy; 2026 LiquiLens.</p>
 </div></footer>
 </body>

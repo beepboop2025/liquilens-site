@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the per-institution failure-replay pages from the published record.
+"""Build per-institution replay pages from the construction-PIT diagnostic.
 
 Source of truth: GET https://api.liquilens.in/api/failure-radar/validation,
 the same payload the research page cites. Every number rendered here is that
@@ -54,7 +54,7 @@ def name_from_slug(slug: str) -> str:
 def esc(s) -> str:
     # Em and en dashes are normalised to a plain hyphen on the way out. The
     # house rule is that no published page carries them, and prose arriving
-    # from the validation payload is outside this repo's control: three of its
+    # from the historical diagnostic payload is outside this repo's control: three of its
     # fields carry em dashes today, and one of them renders on the index. A
     # substitution here holds the line whatever upstream does next. It is
     # typographic only, so no quoted number or claim changes meaning.
@@ -148,8 +148,9 @@ FOOT = """
 <footer><div class="wrap">
 <p>Every number on this page is served from
 <a href="https://api.liquilens.in/api/failure-radar/validation">GET /api/failure-radar/validation</a>,
-the same payload the <a href="/research/">research index</a> cites. Outputs are
-point-in-time research screening, not credit ratings and not investment advice.
+the same payload the <a href="/research/">research index</a> cites. Its status is
+<code>PERIOD_END_PROXY_CONSTRUCTION_PIT</code>; it is not validated-backtest or
+real-money evidence, a credit rating or investment advice.
 &copy; 2026 LiquiLens.</p>
 </div></footer>
 </body>
@@ -175,10 +176,10 @@ def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> st
     gloss = TYPE_GLOSS.get(itype, itype)
     default_date = (pca or {}).get("default_date")
 
-    title = f"{name} failure: point-in-time early-warning replay | LiquiLens"
+    title = f"{name} failure: construction-PIT historical replay | LiquiLens"
     desc = (f"How the LiquiLens lenses read {name} ({gloss}) before its failure"
             + (f" on {default_date}" if default_date else "")
-            + ": action-zone replay, funding-fragility replay, and what was missed, from the published validation record.")
+            + ": action-zone replay, funding-fragility replay, and what was missed, from the published construction-PIT diagnostic.")
     url = f"{SITE}/replay/{slug}/"
 
     rows = []
@@ -225,9 +226,9 @@ def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> st
 <header class="hero"><div class="wrap">
   <p class="kicker">Failure replay · {esc(itype.upper())}</p>
   <h1 class="serif">{esc(name)}</h1>
-  <p class="lede">Point-in-time replay of <b>{esc(name)}</b> through the LiquiLens lenses,
-  from the published three-market validation record. Each lens reads only what was
-  public before the failure; nothing here is fitted after the fact.</p>
+  <p class="lede">Historical replay of <b>{esc(name)}</b> through the LiquiLens lenses,
+  from the published India construction-PIT diagnostic. Filing availability is proxied rather than
+  fully reconstructed, so this is not validated-backtest or real-money evidence.</p>
 </div></header>
 
 <section><div class="wrap">
@@ -247,9 +248,9 @@ def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> st
 
 def index_page(d: dict, slugs: list[str], pca_by: dict, fund_by: dict, fraud_set: set) -> str:
     title = "Failure replays: every institution on the published record | LiquiLens"
-    desc = ("Per-institution point-in-time replays of two decades of Indian lender failures "
+    desc = ("Per-institution construction-PIT historical replays of two decades of Indian lender failures "
             "through the LiquiLens lenses: action-zone distance, funding fragility, leads in months, "
-            "and the misses, from the published validation payload.")
+            "and the misses, from the published construction-PIT diagnostic.")
     url = f"{SITE}/replay/"
     hz = d["hazard"]
 
