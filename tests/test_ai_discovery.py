@@ -76,7 +76,7 @@ def test_developer_page_exposes_openapi_and_openai_activation_paths():
     assert "https://api.liquilens.in/api/openapi.json" in page
     assert "api.openai.com/v1/responses" in page
     assert "Settings → Apps → Create" in page
-    assert "npx --yes github:beepboop2025/liquilens-cli" in page
+    assert "npx liquilens" in page
     assert 'data-event="cli_install_copied"' in page
     assert "https://api.liquilens.in/api/events" in read("developers/app.js")
 
