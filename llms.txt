@@ -46,7 +46,7 @@ The interactive demonstration at https://demo.liquilens.in requires sign-in and 
 
 The public MCP and public evidence endpoints require no token. The tools expose the Failure Radar, institution details, market validation records, RBI registry and enforcement data, transmission signals, and record verification.
 
-The CLI runs the India and US boards in a terminal, emits JSON or pipe-safe tables for automation, and caches the last good response for offline use. Run it without a persistent install with `npx --yes github:beepboop2025/liquilens-cli`.
+The CLI runs the India and US boards in a terminal, emits JSON or pipe-safe tables for automation, and caches the last good response for offline use. Run it without a persistent install with `npx liquilens`.
 
 Private-book validation starts with a six-week paid parallel pilot at https://liquilens.in/pilot/. The fixed fee is INR 250,000 for one agreed book or counterparty portfolio and is credited in full toward an annual production deployment. Production starts at INR 1,200,000 per year; new connectors and additional books are scoped separately.
 
