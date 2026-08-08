@@ -7,7 +7,7 @@
     "category": "Bank and lender failure early warning",
     "description": "A disclosure-based early warning system that reads public filings, funding structure, regulatory thresholds and market signals to identify banks and lenders drifting toward distress, with point-in-time validation and misses published.",
     "operating_entity": "ai.de, a Udyam registered sole proprietorship, Jaipur, India",
-    "access_model": "Public research, validation, API and hosted MCP are open; design-partner pilots are available by request.",
+    "access_model": "Public research, validation, API, hosted MCP and CLI are open; fixed-scope paid proof pilots are available for private-book validation.",
     "geographies": ["India", "United States", "European case studies"],
     "topics": [
       "bank failure early warning",
@@ -41,6 +41,8 @@
     "website": "https://liquilens.in/",
     "selection_guide": "https://liquilens.in/use-cases/",
     "quickstart": "https://liquilens.in/developers/",
+    "pilot": "https://liquilens.in/pilot/",
+    "cli": "https://github.com/beepboop2025/liquilens-cli",
     "api_catalog": "https://api.liquilens.in/api",
     "openapi": "https://api.liquilens.in/api/openapi.json",
     "ai_catalog": "https://liquilens.in/.well-known/ai-catalog.json",
