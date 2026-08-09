@@ -1,6 +1,6 @@
 {
   "schema": "liquidity-lab.product-card.v1",
-  "updated": "2026-08-08",
+  "updated": "2026-08-09",
   "product": {
     "name": "LiquiLens",
     "canonical_url": "https://liquilens.in/",
@@ -50,6 +50,7 @@
       }
     },
     "research_index": "https://liquilens.in/research/",
+    "lab_reviewed_status": "https://liquilens.in/research/lab-reviewed-status-2026-08-09.json",
     "failure_replays": "https://liquilens.in/replay/",
     "us_validation": "https://api.liquilens.in/api/us-radar/validation",
     "model_card": "https://api.liquilens.in/api/failure-radar/model-card",

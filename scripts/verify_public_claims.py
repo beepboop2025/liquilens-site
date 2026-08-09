@@ -96,6 +96,60 @@ EVIDENCE_SURFACES = (
 )
 MCP_VERSION = "1.5.0"
 MCP_TOOL_COUNT = 17
+LAB_STATUS_RECEIPT = os.path.join(
+    "research", "lab-reviewed-status-2026-08-09.json")
+LAB_STATUS_ID = (
+    "sha256:2a726eeec94d364abfed05584951141c0f2481f4e219ea55184504a994eb6c86")
+LAB_STATUS_SURFACES = (
+    "index.html",
+    os.path.join("status", "index.html"),
+    os.path.join("research", "index.html"),
+    os.path.join("ship-log", "index.html"),
+    "llms.txt",
+)
+LAB_STATUS_COPY = (
+    "VALIDATED_NOT_COMPLETE",
+    "5,273 events",
+    "421,620 evaluations",
+    "413,828 gaps",
+    "51,870 root causes",
+    "32 of 47 national jurisdictions",
+    "4,191 verified event identities / 1,082 unresolved event mappings",
+    "12 event-producing / 3 reviewed-no-event / 82 discovery-only",
+    "1 supplemental event source",
+    "3 products / 4,146 genuine forward rows / 0 of 7 retrospective eligible",
+    "14 robustness claim blockers",
+    "zero model changes",
+)
+LAB_STATUS_VALUES = (
+    (("schema",), "liquilens.lab.reviewed-status.v1"),
+    (("reviewed_cut",), "2026-08-09"),
+    (("status",), "VALIDATED_NOT_COMPLETE"),
+    (("status_id",), LAB_STATUS_ID),
+    (("definition_complete",), False),
+    (("model_changes",), 0),
+    (("replay", "events"), 5273),
+    (("replay", "evaluations"), 421620),
+    (("replay", "gaps"), 413828),
+    (("replay", "root_causes"), 51870),
+    (("national_event_coverage", "jurisdictions_with_events"), 32),
+    (("national_event_coverage", "jurisdictions_in_contract"), 47),
+    (("event_identity", "verified"), 4191),
+    (("event_identity", "unresolved"), 1082),
+    (("official_sources", "baseline_event_producing"), 12),
+    (("official_sources", "baseline_reviewed_no_event"), 3),
+    (("official_sources", "baseline_discovery_only"), 82),
+    (("official_sources", "supplemental_event_sources"), 1),
+    (("forward_histories", "products_with_genuine_forward_rows"), 3),
+    (("forward_histories", "forward_rows"), 4146),
+    (("forward_histories", "requested_products"), 7),
+    (("forward_histories", "retrospective_backtest_eligible_products"), 0),
+    (("robustness", "claim_blockers"), 14),
+    (("claim_boundaries", "performance_improvement_claim_authorized"), False),
+    (("claim_boundaries", "promotion_authorized"), False),
+    (("claim_boundaries", "production_execution_authorized"), False),
+    (("claim_boundaries", "model_change_authorized"), False),
+)
 LEGACY_OVERCLAIMS = (
     re.compile(r"\bfully out of sample replay\b", re.I),
     re.compile(r"\bout of sample by construction\b", re.I),
@@ -789,6 +843,12 @@ def release_contract_problems(root: str) -> list[str]:
                     evidence.get("real_money_eligible") is not False:
                 problems.append(
                     f"product-card.json: {name} eligibility does not fail closed")
+        lab_pointer = card.get("evidence", {}).get("lab_reviewed_status")
+        if lab_pointer != (
+                "https://liquilens.in/" + LAB_STATUS_RECEIPT):
+            problems.append(
+                "product-card.json: reviewed Lab receipt pointer differs "
+                "from the release contract")
     except (OSError, KeyError, TypeError, ValueError) as exc:
         problems.append(f"product-card.json: invalid evidence contract: {exc}")
 
@@ -811,6 +871,35 @@ def release_contract_problems(root: str) -> list[str]:
                 f"{MCP_TOOL_COUNT}")
     except (OSError, KeyError, StopIteration, TypeError, ValueError) as exc:
         problems.append(f"ai-catalog.json: invalid MCP release contract: {exc}")
+
+    try:
+        with open(os.path.join(root, LAB_STATUS_RECEIPT),
+                  encoding="utf-8") as fh:
+            lab_status = json.load(fh)
+        for path, expected in LAB_STATUS_VALUES:
+            actual = dig(lab_status, path)
+            if actual != expected or type(actual) is not type(expected):
+                dotted = ".".join(path)
+                problems.append(
+                    f"{LAB_STATUS_RECEIPT}: {dotted} is {actual!r}, "
+                    f"expected {expected!r}")
+    except (OSError, TypeError, ValueError) as exc:
+        problems.append(f"{LAB_STATUS_RECEIPT}: invalid Lab receipt: {exc}")
+
+    receipt_pointer = "/" + LAB_STATUS_RECEIPT
+    for rel in LAB_STATUS_SURFACES:
+        raw = readable(os.path.join(root, rel))
+        if raw is None:
+            problems.append(f"{rel}: Lab status surface is unreadable")
+            continue
+        copy = plain(uncommented(raw))
+        for required in LAB_STATUS_COPY:
+            if required.lower() not in copy.lower():
+                problems.append(
+                    f"{rel}: reviewed Lab status omits {required!r}")
+        if receipt_pointer not in raw:
+            problems.append(
+                f"{rel}: reviewed Lab status omits receipt pointer")
     return problems
 
 

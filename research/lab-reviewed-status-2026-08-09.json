@@ -1,0 +1,51 @@
+{
+  "schema": "liquilens.lab.reviewed-status.v1",
+  "reviewed_cut": "2026-08-09",
+  "status": "VALIDATED_NOT_COMPLETE",
+  "status_id": "sha256:2a726eeec94d364abfed05584951141c0f2481f4e219ea55184504a994eb6c86",
+  "definition_complete": false,
+  "execution_pass_sealed": true,
+  "model_changes": 0,
+  "replay": {
+    "events": 5273,
+    "evaluations": 421620,
+    "gaps": 413828,
+    "root_causes": 51870,
+    "unexplained_gap_kinds": 0
+  },
+  "national_event_coverage": {
+    "jurisdictions_with_events": 32,
+    "jurisdictions_in_contract": 47,
+    "jurisdictions_without_events": 15
+  },
+  "event_identity": {
+    "verified": 4191,
+    "unresolved": 1082
+  },
+  "official_sources": {
+    "baseline_ledger_records": 97,
+    "baseline_event_producing": 12,
+    "baseline_reviewed_no_event": 3,
+    "baseline_discovery_only": 82,
+    "supplemental_event_sources": 1
+  },
+  "forward_histories": {
+    "products_with_genuine_forward_rows": 3,
+    "forward_rows": 4146,
+    "requested_products": 7,
+    "retrospective_backtest_eligible_products": 0
+  },
+  "robustness": {
+    "claim_blockers": 14
+  },
+  "claim_boundaries": {
+    "performance_improvement_claim_authorized": false,
+    "promotion_authorized": false,
+    "production_execution_authorized": false,
+    "model_change_authorized": false
+  },
+  "source_artifact": {
+    "format": "liquilens-gap-closing-status-v2",
+    "cut_date": "2026-08-09"
+  }
+}

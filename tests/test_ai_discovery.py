@@ -31,6 +31,9 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["ai_catalog"] == (
         "https://liquilens.in/.well-known/ai-catalog.json")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
+    assert card["updated"] == "2026-08-09"
+    assert card["evidence"]["lab_reviewed_status"] == (
+        "https://liquilens.in/research/lab-reviewed-status-2026-08-09.json")
     expected_status = {
         "india": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
         "united_states": "CURRENT_AMENDED_CONSTRUCTION_PIT",
@@ -189,10 +192,85 @@ def test_human_claim_surfaces_print_the_same_evidence_boundary():
 
 def test_release_status_page_names_non_live_modes_without_softening_them():
     status = read("status/index.html")
-    for token in ("shadow_review_only", "execution disabled", "PAPER ONLY",
+    for token in ("VALIDATED_NOT_COMPLETE", "execution disabled", "PAPER ONLY",
                   "real_orders false", "parent watchlist claim reproduces FAIL",
-                  "no automatic publication"):
+                  "no automatic publication", "zero model changes"):
         assert token in status
+
+
+def test_reviewed_lab_receipt_and_human_surfaces_stay_aligned():
+    receipt_path = "research/lab-reviewed-status-2026-08-09.json"
+    receipt = json.loads(read(receipt_path))
+    assert receipt == {
+        "schema": "liquilens.lab.reviewed-status.v1",
+        "reviewed_cut": "2026-08-09",
+        "status": "VALIDATED_NOT_COMPLETE",
+        "status_id": (
+            "sha256:2a726eeec94d364abfed05584951141c0f2481f4e219ea55184504a994eb6c86"),
+        "definition_complete": False,
+        "execution_pass_sealed": True,
+        "model_changes": 0,
+        "replay": {
+            "events": 5273,
+            "evaluations": 421620,
+            "gaps": 413828,
+            "root_causes": 51870,
+            "unexplained_gap_kinds": 0,
+        },
+        "national_event_coverage": {
+            "jurisdictions_with_events": 32,
+            "jurisdictions_in_contract": 47,
+            "jurisdictions_without_events": 15,
+        },
+        "event_identity": {"verified": 4191, "unresolved": 1082},
+        "official_sources": {
+            "baseline_ledger_records": 97,
+            "baseline_event_producing": 12,
+            "baseline_reviewed_no_event": 3,
+            "baseline_discovery_only": 82,
+            "supplemental_event_sources": 1,
+        },
+        "forward_histories": {
+            "products_with_genuine_forward_rows": 3,
+            "forward_rows": 4146,
+            "requested_products": 7,
+            "retrospective_backtest_eligible_products": 0,
+        },
+        "robustness": {"claim_blockers": 14},
+        "claim_boundaries": {
+            "performance_improvement_claim_authorized": False,
+            "promotion_authorized": False,
+            "production_execution_authorized": False,
+            "model_change_authorized": False,
+        },
+        "source_artifact": {
+            "format": "liquilens-gap-closing-status-v2",
+            "cut_date": "2026-08-09",
+        },
+    }
+
+    required_copy = (
+        "VALIDATED_NOT_COMPLETE",
+        "5,273 events",
+        "421,620 evaluations",
+        "413,828 gaps",
+        "51,870 root causes",
+        "32 of 47 national jurisdictions",
+        "4,191 verified event identities / 1,082 unresolved event mappings",
+        "12 event-producing / 3 reviewed-no-event / 82 discovery-only",
+        "1 supplemental event source",
+        "3 products / 4,146 genuine forward rows / 0 of 7 retrospective eligible",
+        "14 robustness claim blockers",
+        "zero model changes",
+    )
+    for path in ("index.html", "status/index.html", "research/index.html",
+                 "ship-log/index.html", "llms.txt"):
+        surface = read(path)
+        assert f"/{receipt_path}" in surface, path
+        for token in required_copy:
+            assert token.lower() in surface.lower(), (path, token)
+    assert "https://liquilens.in/research/lab-reviewed-status-2026-08-09.json" \
+        in read("sitemap.xml")
 
 
 def test_every_discovery_pointer_uses_the_well_known_catalog():
