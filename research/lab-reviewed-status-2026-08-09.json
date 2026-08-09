@@ -7,6 +7,7 @@
   "execution_pass_sealed": true,
   "model_changes": 0,
   "replay": {
+    "products": 10,
     "events": 5273,
     "evaluations": 421620,
     "gaps": 413828,
@@ -33,9 +34,11 @@
     "products_with_genuine_forward_rows": 3,
     "forward_rows": 4146,
     "requested_products": 7,
-    "retrospective_backtest_eligible_products": 0
+    "retrospective_backtest_eligible_products": 0,
+    "record_type": "prospective_forward_score"
   },
   "robustness": {
+    "audit_records": 82556,
     "claim_blockers": 14
   },
   "claim_boundaries": {

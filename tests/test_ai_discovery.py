@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 from urllib.parse import urlparse
 
 
@@ -211,6 +212,7 @@ def test_reviewed_lab_receipt_and_human_surfaces_stay_aligned():
         "execution_pass_sealed": True,
         "model_changes": 0,
         "replay": {
+            "products": 10,
             "events": 5273,
             "evaluations": 421620,
             "gaps": 413828,
@@ -235,8 +237,9 @@ def test_reviewed_lab_receipt_and_human_surfaces_stay_aligned():
             "forward_rows": 4146,
             "requested_products": 7,
             "retrospective_backtest_eligible_products": 0,
+            "record_type": "prospective_forward_score",
         },
-        "robustness": {"claim_blockers": 14},
+        "robustness": {"audit_records": 82556, "claim_blockers": 14},
         "claim_boundaries": {
             "performance_improvement_claim_authorized": False,
             "promotion_authorized": False,
@@ -249,18 +252,16 @@ def test_reviewed_lab_receipt_and_human_surfaces_stay_aligned():
         },
     }
 
-    required_copy = (
+    required_headline_copy = (
         "VALIDATED_NOT_COMPLETE",
-        "5,273 events",
+        "ten-product replay pass",
         "421,620 evaluations",
-        "413,828 gaps",
+        "5,273 canonical events",
+        "413,828 exactly bound gap rows",
         "51,870 root causes",
-        "named-event coverage is 32 of 47 national jurisdictions; "
-        "15 have no named event rows",
-        "4,191 verified event identities / 1,082 unresolved event mappings",
-        "12 event-producing / 3 reviewed-no-event / 82 discovery-only",
-        "1 supplemental event source",
-        "3 products / 4,146 genuine forward rows / 0 of 7 retrospective eligible",
+        "82,556 robustness audit records",
+        "4,146 genuine prospective forward",
+        "0 of 7 requested products",
         "14 robustness claim blockers",
         "zero model changes",
     )
@@ -268,8 +269,21 @@ def test_reviewed_lab_receipt_and_human_surfaces_stay_aligned():
                  "ship-log/index.html", "llms.txt"):
         surface = read(path)
         assert f"/{receipt_path}" in surface, path
-        for token in required_copy:
+        for token in required_headline_copy:
             assert token.lower() in surface.lower(), (path, token)
+
+    required_provenance_copy = (
+        "named-event coverage is 32 of 47 national jurisdictions",
+        "15 have no named event rows",
+        "4,191 verified event identities / 1,082 unresolved",
+        "12 event-producing / 3 reviewed-no-event / 82 discovery-only",
+        "1 supplemental event source",
+    )
+    for path in ("research/index.html", "llms.txt"):
+        surface = read(path)
+        visible_copy = re.sub(r"<[^>]+>", "", surface)
+        for token in required_provenance_copy:
+            assert token.lower() in visible_copy.lower(), (path, token)
     assert "https://liquilens.in/research/lab-reviewed-status-2026-08-09.json" \
         in read("sitemap.xml")
 

@@ -109,16 +109,17 @@ LAB_STATUS_SURFACES = (
 )
 LAB_STATUS_COPY = (
     "VALIDATED_NOT_COMPLETE",
-    "5,273 events",
+    "ten-product replay pass",
+    "5,273 canonical events",
     "421,620 evaluations",
-    "413,828 gaps",
+    "413,828 exactly bound gap rows",
     "51,870 root causes",
-    "named-event coverage is 32 of 47 national jurisdictions; "
-    "15 have no named event rows",
-    "4,191 verified event identities / 1,082 unresolved event mappings",
-    "12 event-producing / 3 reviewed-no-event / 82 discovery-only",
-    "1 supplemental event source",
-    "3 products / 4,146 genuine forward rows / 0 of 7 retrospective eligible",
+    "82,556 robustness audit records",
+    "4,191 verified",
+    "1,082 unresolved",
+    "4,146 genuine prospective forward",
+    "0 of 7 requested products",
+    "retrospective backtesting",
     "14 robustness claim blockers",
     "zero model changes",
 )
@@ -130,6 +131,7 @@ LAB_STATUS_VALUES = (
     (("definition_complete",), False),
     (("execution_pass_sealed",), True),
     (("model_changes",), 0),
+    (("replay", "products"), 10),
     (("replay", "events"), 5273),
     (("replay", "evaluations"), 421620),
     (("replay", "gaps"), 413828),
@@ -149,6 +151,8 @@ LAB_STATUS_VALUES = (
     (("forward_histories", "forward_rows"), 4146),
     (("forward_histories", "requested_products"), 7),
     (("forward_histories", "retrospective_backtest_eligible_products"), 0),
+    (("forward_histories", "record_type"), "prospective_forward_score"),
+    (("robustness", "audit_records"), 82556),
     (("robustness", "claim_blockers"), 14),
     (("claim_boundaries", "performance_improvement_claim_authorized"), False),
     (("claim_boundaries", "promotion_authorized"), False),
@@ -835,6 +839,7 @@ def release_contract_problems(root: str) -> list[str]:
                     f"{rel}: retired historical overclaim remains: "
                     f"{match.group(0)!r}")
 
+    card = None
     try:
         with open(os.path.join(root, "product-card.json"), encoding="utf-8") as fh:
             card = json.load(fh)
@@ -890,7 +895,29 @@ def release_contract_problems(root: str) -> list[str]:
                 problems.append(
                     f"{LAB_STATUS_RECEIPT}: {dotted} is {actual!r}, "
                     f"expected {expected!r}")
-    except (OSError, TypeError, ValueError) as exc:
+        if card is not None:
+            card_lab = card["evidence"]["lab_review_2026_08_09"]
+            card_receipt_map = {
+                "status": ("status",),
+                "products_in_replay_pass": ("replay", "products"),
+                "canonical_events": ("replay", "events"),
+                "replay_evaluations": ("replay", "evaluations"),
+                "robustness_audit_records": ("robustness", "audit_records"),
+                "products_with_prospective_forward_records": (
+                    "forward_histories", "products_with_genuine_forward_rows"),
+                "prospective_forward_records": (
+                    "forward_histories", "forward_rows"),
+                "requested_products": (
+                    "forward_histories", "requested_products"),
+                "retrospective_backtest_eligible_products": (
+                    "forward_histories", "retrospective_backtest_eligible_products"),
+            }
+            for card_key, receipt_path in card_receipt_map.items():
+                if card_lab.get(card_key) != dig(lab_status, receipt_path):
+                    problems.append(
+                        "product-card.json: lab_review_2026_08_09."
+                        f"{card_key} differs from {LAB_STATUS_RECEIPT}")
+    except (OSError, KeyError, TypeError, ValueError) as exc:
         problems.append(f"{LAB_STATUS_RECEIPT}: invalid Lab receipt: {exc}")
 
     receipt_pointer = "/" + LAB_STATUS_RECEIPT
