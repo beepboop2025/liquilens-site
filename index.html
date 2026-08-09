@@ -145,6 +145,7 @@
     --sans:'Inter',system-ui,sans-serif;
     --mono:'IBM Plex Mono',ui-monospace,monospace;
     --maxw:1120px;
+    --site-chrome-height:117px;
     --rule:linear-gradient(to right,transparent,var(--line) 64px,var(--line) calc(100% - 64px),transparent);
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -153,7 +154,7 @@
     background:var(--ink); color:var(--text);
     font-family:var(--sans); line-height:1.6;
     -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
+    overflow-x:clip;
   }
   a{color:inherit;text-decoration:none}
   :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
@@ -508,66 +509,6 @@
     .layers:hover .layer:hover{opacity:1}
   }
 
-  /* tactile cards: pointer tilt + specular glare (JS sets --rx/--ry/--gx/--gy).
-     The reveal-stagger rules also set transform, so the tilt transform is
-     restated at higher specificity for revealed grid children. */
-  .tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);
-    transition:transform .5s var(--ease-soft);position:relative}
-  .layers.reveal.in>.layer.tilt,.who.reveal.in>.card.tilt,.desk.reveal.in>.inst.tilt{
-    transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);
-    transition:transform .5s var(--ease-soft)}
-  .tilt::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;
-    background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%),rgba(233,235,242,.055),transparent 55%);
-    opacity:0;transition:opacity .35s var(--ease-soft)}
-  .tilt:hover::before{opacity:1}
-  .tilt:hover,.layers.reveal.in>.layer.tilt:hover,.who.reveal.in>.card.tilt:hover,.desk.reveal.in>.inst.tilt:hover{
-    transition:transform .12s linear}
-
-  /* magnetic primary buttons (JS sets --mx/--my) */
-  .btn-primary{transform:translate(var(--mx,0),var(--my,0));transition:transform .35s var(--ease-soft),box-shadow .25s}
-
-  /* ---------- T minus: the warning period, scrubbed by scroll ---------- */
-  .tminus{position:relative;height:380vh}
-  .tminus__pin{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden;
-    background:radial-gradient(130% 100% at 50% 110%,rgba(224,112,112,calc(var(--tp,0)*.12)),transparent 62%)}
-  .tminus__inner{width:100%}
-  .tminus__count{display:flex;align-items:baseline;gap:18px;margin:26px 0 10px;flex-wrap:wrap}
-  .tminus__num{font-family:var(--serif);font-weight:500;font-size:clamp(84px,15vw,190px);line-height:.95;
-    letter-spacing:-.03em;color:var(--text);font-variant-numeric:tabular-nums;
-    font-feature-settings:"tnum";display:inline-block;min-width:3.2ch}
-  .tminus__num em{font-style:normal;color:var(--gold)}
-  .tminus__unit{font-family:var(--mono);font-size:clamp(13px,1.6vw,16px);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  .tminus__cap{min-height:3.4em;max-width:36em;font-size:clamp(15.5px,1.9vw,18.5px);color:var(--muted);line-height:1.6;transition:opacity .4s var(--ease-soft)}
-  .tminus__cap b{color:var(--text);font-weight:500}
-  .tminus__cap.swap{opacity:0}
-  .tminus__track{position:relative;height:2px;background:var(--line);border-radius:2px;margin:54px 0 12px}
-  .tminus__fill{position:absolute;inset:0;border-radius:2px;
-    background:linear-gradient(90deg,var(--gold-deep),var(--gold) 72%,var(--red));
-    clip-path:inset(0 calc((1 - var(--tp,0))*100%) 0 0)}
-  .tminus__mark{position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
-    transform:translate(-50%,-50%);background:var(--ink);border:2px solid var(--line-2);transition:border-color .3s,background .3s,box-shadow .3s}
-  .tminus__mark.lit{border-color:var(--gold);background:var(--gold);box-shadow:0 0 14px rgba(227,183,120,.5)}
-  .tminus__mark.term{border-color:var(--red)}
-  .tminus__mark.term.lit{background:var(--red);box-shadow:0 0 16px rgba(224,112,112,.55)}
-  .tminus__labels{position:relative;height:52px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted-2)}
-  .tminus__labels span{position:absolute;top:8px;transform:translateX(-50%);white-space:nowrap;transition:color .3s}
-  .tminus__labels span:nth-child(even){top:30px}
-  .tminus__labels span:nth-child(even)::before{content:"";position:absolute;left:50%;top:-22px;height:16px;width:1px;background:var(--line-2)}
-  .tminus__labels span.lit{color:var(--gold)}
-  .tminus__labels span.term.lit{color:var(--red)}
-  .tminus__foot{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);margin-top:26px;letter-spacing:.03em;line-height:1.7;max-width:52em}
-  /* static fallback: no pinning, everything lit */
-  .tminus.static{height:auto;padding:92px 0}
-  .tminus.static .tminus__pin{position:static;height:auto;overflow:visible;display:block;background:none}
-  .tminus.static .tminus__fill{clip-path:none}
-  .tminus.static .tminus__mark,.tminus.static .tminus__labels span{border-color:var(--gold)}
-  .tminus.static .tminus__cap{min-height:0}
-  @media (max-width:860px){
-    .tminus{height:300vh}
-    .tminus__labels span{display:none}
-    .tminus__labels span:nth-child(1),.tminus__labels span:nth-child(3),.tminus__labels span:nth-child(6){display:block}
-  }
-
   @media (max-width:860px){
     .hero-grid{grid-template-columns:1fr;gap:40px}
     .engines,.who,.desk{grid-template-columns:1fr}
@@ -597,14 +538,11 @@
     .reveal{opacity:1;transform:none;filter:none;transition:none}
     .layers.reveal>.layer,.engines.reveal>.engine,.stats.reveal>.stat,.who.reveal>.card,.desk.reveal>.inst{opacity:1;transform:none;transition:none}
     .leadrow .bar{transition:none}
-    .tilt,.tilt:hover{transform:none;transition:none}
-    .tilt::before{display:none}
-    .btn-primary{transform:none}
     #scrollProgress{display:none}
     html{scroll-behavior:auto}
   }
 </style>
-<link rel="stylesheet" href="/experience.css?v=20260809b" />
+<link rel="stylesheet" href="/experience.css?v=20260809e" />
 <noscript><style>
   .reveal{opacity:1;transform:none;filter:none}
   .layers.reveal>.layer,.engines.reveal>.engine,.stats.reveal>.stat,.who.reveal>.card,.desk.reveal>.inst{opacity:1;transform:none}
@@ -654,9 +592,10 @@
   <nav>
     <a href="#top" data-chapter-link="top" aria-label="Opening record"><i></i></a>
     <a href="#lab-reviewed-status" data-chapter-link="lab-reviewed-status" aria-label="Latest replay"><i></i></a>
-    <a href="#evidence-status" data-chapter-link="evidence-status" aria-label="Evidence boundary"><i></i></a>
     <a href="#leadtime" data-chapter-link="leadtime" aria-label="Warning period"><i></i></a>
-    <a href="#board" data-chapter-link="board" aria-label="Live board"><i></i></a>
+    <a href="#evidence-status" data-chapter-link="evidence-status" aria-label="Evidence system"><i></i></a>
+    <a href="#proof" data-chapter-link="proof" aria-label="Historical proof"><i></i></a>
+    <a href="#board" data-chapter-link="board" aria-label="Boards and tools"><i></i></a>
     <a href="#contact" data-chapter-link="contact" aria-label="Run a proof"><i></i></a>
   </nav>
 </aside>
@@ -839,44 +778,72 @@
   </div>
 </section>
 
-<!-- T minus: scroll through the warning period -->
-<section class="tminus static" id="leadtime" aria-label="Selected diagnostic markers drawn to scale: median PCA lead 41 months; named signals at 27, 17 and 8 months.">
-  <div class="tminus__pin">
-    <div class="wrap tminus__inner">
-      <span class="eyebrow">The warning period, to scale</span>
-      <div class="tminus__count" aria-hidden="true">
-        <span class="tminus__num">T<em>−</em><span id="tmNum">41</span></span>
-        <span class="tminus__unit">months before the record breaks</span>
+<!-- Warning horizon: the visible chapters are the source of truth; the sticky stage reflects them. -->
+<section class="tminus" id="leadtime" aria-labelledby="leadtimeTitle">
+  <h2 class="sr-only" id="leadtimeTitle">The warning period, to scale</h2>
+  <div class="wrap tminus__layout">
+    <div class="tminus__stage" aria-hidden="true">
+      <div class="tminus__meta">
+        <span class="eyebrow">The warning period, to scale</span>
+        <span class="tminus__step"><b id="tmStep">01</b><i>/</i>06</span>
       </div>
-      <p class="tminus__cap" id="tmCap" aria-hidden="true">In the published construction-PIT diagnostic, the RBI's own PCA tripwires fired a median of <b>41 months</b> before the regulator moved.</p>
-      <div class="tminus__track" aria-hidden="true">
+      <div class="tminus__count">
+        <span class="tminus__num">T<em>−</em><span id="tmNum">41</span></span>
+        <span class="tminus__unit"><b id="tmPhase">Supervisory threshold</b><small>months before the public outcome</small></span>
+      </div>
+      <div class="tminus__track">
         <div class="tminus__fill"></div>
-        <span class="tminus__mark" style="left:0%"></span>
+        <span class="tminus__mark is-active" style="left:0%"></span>
         <span class="tminus__mark" style="left:34.1%"></span>
         <span class="tminus__mark" style="left:47.6%"></span>
         <span class="tminus__mark" style="left:58.5%"></span>
         <span class="tminus__mark" style="left:80.5%"></span>
         <span class="tminus__mark term" style="left:100%"></span>
       </div>
-      <div class="tminus__labels" aria-hidden="true">
-        <span style="left:0%">T−41 · PCA tripwires</span>
-        <span style="left:34.1%">T−27 · Altico funding flag</span>
-        <span style="left:47.6%">T−21.5 · median alert</span>
-        <span style="left:58.5%">T−17 · Yes Bank sub-IG</span>
-        <span style="left:80.5%">T−8 · DHFL network signal</span>
-        <span class="term" style="left:100%">T−0 · the record breaks</span>
-      </div>
-      <p class="tminus__foot">Every marker is a published number from the historical diagnostic: the PCA tripwire replay median, Altico's funding fragility flag, the 48 institution replay median, Yes Bank's sub investment grade score, and the DHFL network signal. The construction-PIT status above limits the claim those numbers support.</p>
-      <ol class="sr-only">
-        <li>41 months before regulator action: median RBI PCA tripwire signal in the construction-PIT diagnostic.</li>
-        <li>27 months before outcome: Altico funding fragility flag.</li>
-        <li>21.5 months before outcome: median alert across the 48-institution diagnostic.</li>
-        <li>17 months before outcome: Yes Bank moved below investment grade on the LiquiLens score.</li>
-        <li>8 months before outcome: DHFL network signal.</li>
-        <li>0 months: the public record breaks.</li>
-      </ol>
+      <div class="tminus__scale"><span>first signal</span><span>public outcome</span></div>
+      <div class="tminus__cue"><span>Scroll the evidence record</span><i></i></div>
     </div>
+
+    <ol class="tminus__steps">
+      <li class="tminus__chapter is-current" data-month="41" data-progress="0" data-phase="Supervisory threshold" aria-current="step">
+        <span class="tminus__chapter-index">01 / 06 <b>41 months</b></span>
+        <h3>Supervision moved before the headline.</h3>
+        <p>In the published construction-PIT diagnostic, the RBI's own PCA tripwires fired a median of <b>41 months</b> before the regulator moved.</p>
+        <code>RBI PCA · CONSTRUCTION-PIT</code>
+      </li>
+      <li class="tminus__chapter" data-month="27" data-progress=".341" data-phase="Funding fracture">
+        <span class="tminus__chapter-index">02 / 06 <b>27 months</b></span>
+        <h3>The funding structure broke first.</h3>
+        <p>Funding fragility flagged <b>Altico 27 months out</b> in the same diagnostic, while reported bad loans still sat near zero.</p>
+        <code>ALTICO · FUNDING FRAGILITY</code>
+      </li>
+      <li class="tminus__chapter" data-month="21.5" data-progress=".476" data-phase="Cohort median">
+        <span class="tminus__chapter-index">03 / 06 <b>21.5 months</b></span>
+        <h3>The cohort clears the noise.</h3>
+        <p>The 48-institution construction-PIT diagnostic records a <b>21.5-month median alert</b> across the replayed warning set.</p>
+        <code>48 INSTITUTIONS · MEDIAN ALERT</code>
+      </li>
+      <li class="tminus__chapter" data-month="17" data-progress=".585" data-phase="Score downgrade">
+        <span class="tminus__chapter-index">04 / 06 <b>17 months</b></span>
+        <h3>The institution score leaves investment grade.</h3>
+        <p><b>Yes Bank moved below investment grade</b> on the LiquiLens score 17 months before the moratorium weekend.</p>
+        <code>YES BANK · SUB-INVESTMENT GRADE</code>
+      </li>
+      <li class="tminus__chapter" data-month="8" data-progress=".805" data-phase="Network fracture">
+        <span class="tminus__chapter-index">05 / 06 <b>8 months</b></span>
+        <h3>The network catches the strain.</h3>
+        <p>The same public record produced a <b>DHFL network signal eight months out</b>, before the outcome reached the headline.</p>
+        <code>DHFL · NETWORK SIGNAL</code>
+      </li>
+      <li class="tminus__chapter is-terminal" data-month="0" data-progress="1" data-phase="Public outcome">
+        <span class="tminus__chapter-index">06 / 06 <b>the record breaks</b></span>
+        <h3>The evidence becomes the event.</h3>
+        <p><b>The public record breaks.</b> The warning horizon closes; the diagnostic is preserved with its misses and construction limits intact.</p>
+        <code>T−0 · PUBLIC OUTCOME</code>
+      </li>
+    </ol>
   </div>
+  <p class="wrap tminus__foot">Every marker is a published number from the historical diagnostic. This sequence is evidence of warning behavior inside a construction-PIT replay—not validated-backtest or real-money eligibility.</p>
 </section>
 
 <!-- the release truth rail: exact tokens from /api/evidence/markets -->
@@ -1242,7 +1209,7 @@
         <span class="pulse"></span><span id="boardStamp">connecting to the public board…</span>
         <span class="board__census" id="boardCensus"></span>
       </div>
-      <div class="board__scroll" id="boardScroll" hidden>
+      <div class="board__scroll" id="boardScroll" tabindex="0" aria-label="MFI screening table; scroll horizontally to inspect all columns" hidden>
         <table class="mfi" id="mfiTable">
           <thead>
             <tr><th>Institution</th><th>Grade</th><th style="text-align:right">Score</th><th>Trajectory</th><th>Scored on</th></tr>
@@ -1281,7 +1248,7 @@
         <span class="pulse"></span><span id="radarStamp">connecting to the public radar…</span>
         <span class="board__census" id="radarCensus"></span>
       </div>
-      <div class="board__scroll" id="radarScroll" hidden>
+      <div class="board__scroll" id="radarScroll" tabindex="0" aria-label="Failure radar table; scroll horizontally to inspect all columns" hidden>
         <table class="mfi" id="radarTable">
           <thead>
             <tr><th>Institution</th><th>Type</th><th>Tier</th><th style="text-align:right">Failure PD, 12m</th><th style="text-align:right">12m move</th><th style="text-align:right">Market DD</th></tr>
@@ -1359,7 +1326,7 @@
         </label>
         <button class="btn btn-primary" id="lcrRun">Run the countdown</button>
       </div>
-      <div class="lcr-out" id="lcrOut" hidden>
+      <div class="lcr-out" id="lcrOut" role="status" aria-live="polite" aria-atomic="true" hidden>
         <div class="lcr-headline" id="lcrHeadline"></div>
         <div class="lcr-sub" id="lcrSub"></div>
         <a class="lcr-cta" href="mailto:mrinal@liquilens.in?subject=LCR%20parallel%20run">Ask about a parallel run before the clock starts →</a>
@@ -1646,28 +1613,6 @@
       es.forEach(e=>{ if(e.isIntersecting && !played){ played = true; play(); io2.unobserve(e.target); setInterval(play, 11000); }});
     },{threshold:.4});
     io2.observe(path.closest('.terminal'));
-  })();
-
-  // count-up numbers on reveal
-  (function(){
-    if(rm || !('IntersectionObserver' in window)) return;
-    const els = document.querySelectorAll('[data-count]');
-    const io3 = new IntersectionObserver((es)=>{
-      es.forEach(e=>{
-        if(!e.isIntersecting) return;
-        io3.unobserve(e.target);
-        const el = e.target, target = parseFloat(el.dataset.count);
-        const dec = (el.dataset.count.split('.')[1]||'').length;
-        const t0 = performance.now();
-        (function tick(now){
-          const p = Math.min(1,(now-t0)/1100), ease = 1-Math.pow(1-p,3);
-          const value = target * ease;
-          el.textContent = dec ? value.toFixed(dec) : (target >= 1000 ? Math.round(value).toLocaleString('en-US') : Math.round(value));
-          if(p<1) requestAnimationFrame(tick);
-        })(t0);
-      });
-    },{threshold:.6});
-    els.forEach(el=>io3.observe(el));
   })();
 
   // lead bars grow on reveal
@@ -2017,14 +1962,13 @@
   })();
 </script>
 
-<!-- motion layer: scroll playhead, T-minus scrub, tactile cards, magnetic CTAs.
-     Pure enhancement — the page reads perfectly with none of it. -->
+<!-- Motion layer: one page playhead and one evidence-led scroll narrative.
+     Pure enhancement — the complete record remains readable without it. -->
 <div id="scrollProgress" aria-hidden="true"></div>
 <script>
 (function(){
   'use strict';
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
   // scroll playhead — one rAF, transform only
   (function(){
@@ -2041,96 +1985,66 @@
     paint();
   })();
 
-  // T minus: scrub the warning period with scroll
+  // Warning horizon: visible evidence chapters drive the decorative stage.
   (function(){
     var sec = document.getElementById('leadtime');
     if(!sec || rm) return;
     var num = document.getElementById('tmNum');
-    var cap = document.getElementById('tmCap');
-    var pin = sec.querySelector('.tminus__pin');
-    var marks = sec.querySelectorAll('.tminus__mark');
-    var labels = sec.querySelectorAll('.tminus__labels span');
-    // published record: [months, caption]
-    var STOPS = [
-      [41, 'In the construction-PIT diagnostic, the RBI’s own PCA tripwires fired a median of <b>41 months</b> before the regulator moved.'],
-      [27, 'Funding fragility flagged <b>Altico 27 months out</b> in the same diagnostic, while reported bad loans still sat near zero.'],
-      [21.5, 'The <b>21.5-month median alert of the 48 institution diagnostic</b>.'],
-      [17, '<b>Yes Bank left investment grade</b> on the LiquiLens score, 17 months before the moratorium weekend.'],
-      [8,  'The network signal caught <b>DHFL eight months out</b>, on the same public data a rules based screen read a month late.'],
-      [0,  '<b>The record breaks.</b> Ratings collapse in a weekend, depositors queue, and the board asks who knew. The answer was on this timeline the whole time.']
-    ];
-    sec.classList.remove('static');
-    var cur = -1, raf = 0;
-    function paint(){
-      raf = 0;
-      var r = sec.getBoundingClientRect();
-      var span = sec.offsetHeight - window.innerHeight;
-      var p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 1;
-      pin.style.setProperty('--tp', p.toFixed(4));
-      sec.querySelector('.tminus__fill').style.setProperty('--tp', p.toFixed(4));
-      var m = 41 * (1 - p);
-      num.textContent = String(Math.round(m));
-      var idx = 0;
-      for(var i = 0; i < STOPS.length; i++){ if(m <= STOPS[i][0] + 0.4) idx = i; }
-      for(var j = 0; j < marks.length; j++){
-        marks[j].classList.toggle('lit', j <= idx);
-        if(labels[j]) labels[j].classList.toggle('lit', j <= idx);
-      }
-      if(idx !== cur){
-        cur = idx;
-        cap.classList.add('swap');
-        setTimeout(function(){ cap.innerHTML = STOPS[idx][1]; cap.classList.remove('swap'); }, 180);
-      }
-    }
-    window.addEventListener('scroll', function(){ if(!raf) raf = requestAnimationFrame(paint); }, {passive:true});
-    window.addEventListener('resize', function(){ if(!raf) raf = requestAnimationFrame(paint); }, {passive:true});
-    paint();
-  })();
+    var phase = document.getElementById('tmPhase');
+    var stepNo = document.getElementById('tmStep');
+    var stage = sec.querySelector('.tminus__stage');
+    var steps = Array.prototype.slice.call(sec.querySelectorAll('.tminus__chapter'));
+    var marks = Array.prototype.slice.call(sec.querySelectorAll('.tminus__mark'));
+    if(!num || !phase || !stepNo || !stage || steps.length !== marks.length) return;
 
-  // tactile cards: tilt toward the pointer, specular glare follows it
-  (function(){
-    if(rm || !fine) return;
-    var cards = document.querySelectorAll('.layer,.card,.inst');
-    var raf = 0, queue = null;
-    function apply(){
-      raf = 0;
-      if(!queue) return;
-      var el = queue.el, e = queue.ev, r = el.getBoundingClientRect();
-      var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-      el.style.setProperty('--ry', ((px - .5) * 3.2).toFixed(2) + 'deg');
-      el.style.setProperty('--rx', ((.5 - py) * 2.6).toFixed(2) + 'deg');
-      el.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
-      el.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
-    }
-    cards.forEach(function(el){
-      el.classList.add('tilt');
-      el.addEventListener('pointermove', function(e){
-        queue = {el: el, ev: e};
-        if(!raf) raf = requestAnimationFrame(apply);
-      }, {passive:true});
-      el.addEventListener('pointerleave', function(){
-        el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg');
-      }, {passive:true});
-    });
-  })();
+    var current = null;
+    function activate(step){
+      if(!step || step === current) return;
+      current = step;
+      var index = steps.indexOf(step);
+      var progress = Number(step.dataset.progress);
 
-  // magnetic primary buttons
-  (function(){
-    if(rm || !fine) return;
-    document.querySelectorAll('.btn-primary').forEach(function(b){
-      b.addEventListener('pointermove', function(e){
-        var r = b.getBoundingClientRect();
-        b.style.setProperty('--mx', ((e.clientX - r.left - r.width/2) * .14).toFixed(1) + 'px');
-        b.style.setProperty('--my', ((e.clientY - r.top - r.height/2) * .22).toFixed(1) + 'px');
-      }, {passive:true});
-      b.addEventListener('pointerleave', function(){
-        b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px');
-      }, {passive:true});
-    });
+      steps.forEach(function(candidate){
+        var active = candidate === step;
+        candidate.classList.toggle('is-current', active);
+        if(active) candidate.setAttribute('aria-current', 'step');
+        else candidate.removeAttribute('aria-current');
+      });
+      marks.forEach(function(mark, markIndex){
+        mark.classList.toggle('is-active', markIndex === index);
+        mark.classList.toggle('is-passed', markIndex < index);
+      });
+
+      stage.classList.add('is-changing');
+      num.textContent = step.dataset.month;
+      phase.textContent = step.dataset.phase;
+      stepNo.textContent = String(index + 1).padStart(2, '0');
+      sec.style.setProperty('--tp', String(progress));
+      requestAnimationFrame(function(){ stage.classList.remove('is-changing'); });
+    }
+
+    sec.setAttribute('data-enhanced', 'true');
+    activate(steps[0]);
+    var raf = 0;
+    function sync(){
+      raf = 0;
+      var focus = window.innerHeight * .5;
+      var nearest = steps[0], distance = Infinity;
+      steps.forEach(function(step){
+        var rect = step.getBoundingClientRect();
+        var nextDistance = Math.abs((rect.top + rect.bottom) * .5 - focus);
+        if(nextDistance < distance){ nearest = step; distance = nextDistance; }
+      });
+      activate(nearest);
+    }
+    function queue(){ if(!raf) raf = requestAnimationFrame(sync); }
+    window.addEventListener('scroll', queue, {passive:true});
+    window.addEventListener('resize', queue, {passive:true});
+    sync();
   })();
 })();
 </script>
-<script src="/experience.js?v=20260809b" defer></script>
+<script src="/experience.js?v=20260809e" defer></script>
 <script src="/funnel.js" defer></script>
 </body>
 </html>
