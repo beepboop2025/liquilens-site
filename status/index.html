@@ -6,10 +6,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.liquilens.in https://api.seiche.info https://demo.liquilens.in https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <title>Status | LiquiLens</title>
-<meta name="description" content="Live LiquiLens service status, fetched from the production API in your browser. If the fetch fails, that is the status.">
+<meta name="description" content="Live LiquiLens service status and the sealed 9 August 2026 Lab evidence boundary. The reviewed Lab pass is validated, not complete.">
 <link rel="canonical" href="https://liquilens.in/status/">
 <meta property="og:title" content="Status | LiquiLens">
-<meta property="og:description" content="Live LiquiLens service status, fetched from the production API in your browser. If the fetch fails, that is the status.">
+<meta property="og:description" content="Live service reachability and the sealed LiquiLens Lab VALIDATED_NOT_COMPLETE evidence boundary.">
 <meta property="og:image" content="https://liquilens.in/og-radar.png">
 <meta property="og:url" content="https://liquilens.in/status/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E3B778'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%231A1206' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
@@ -79,14 +79,21 @@ footer a{color:var(--muted)}
   <div class="statusrow"><span class="badge wait" id="seiBadge">CHECKING</span><span><b>api.seiche.info</b> · Seiche, the funding stress terminal</span><span class="mono" id="seiNote" style="margin-left:auto"></span></div>
   <div class="statusrow"><span class="badge wait" id="demoBadge">CHECKING</span><span><b>demo.liquilens.in</b> · the walkthrough, granted on request</span><span class="mono" id="demoNote" style="margin-left:auto"></span></div>
 
-  <h2>Release contract · 8 August 2026</h2>
+  <h2>Release contract · 9 August 2026</h2>
   <div class="statusrow"><span class="badge">LIVE</span><span><b>LiquiLens core + MCP 1.5.0</b> · 17 public read-only tools; Telegram live</span></div>
-  <div class="statusrow"><span class="badge wait">SHADOW</span><span><b>LiquiLens Lab 0.7.0</b> · shadow_review_only; execution disabled</span></div>
+  <div class="statusrow"><span class="badge wait">VALIDATED / INCOMPLETE</span><span><b>LiquiLens Lab 0.7.1</b> · <code>VALIDATED_NOT_COMPLETE</code>; execution disabled; zero model changes</span></div>
   <div class="statusrow"><span class="badge">LIVE</span><span><b>Seiche 0.9.1</b> · eight free MCP tools; historical diagnostic is construction-PIT</span></div>
   <div class="statusrow"><span class="badge wait">PAPER ONLY</span><span><b>Riptide 1.0.0</b> · deployed research; real_orders false</span></div>
   <div class="statusrow"><span class="badge">LIVE</span><span><b>Undertow 1.7.1</b> · 8 free + 8 subscriber MCP tools; Telegram and web desk live</span></div>
   <div class="statusrow"><span class="badge wait">RESEARCH</span><span><b>v5 six-module family</b> · reproducibly released; parent watchlist claim reproduces FAIL</span></div>
   <div class="statusrow"><span class="badge wait">HUMAN REVIEW</span><span><b>Palimpsest ↔ ScamShield</b> · pack 2026-08-08.2; no automatic publication</span></div>
+
+  <h2>Lab reviewed evidence · 9 August 2026</h2>
+  <p class="body"><b><code>VALIDATED_NOT_COMPLETE</code>.</b> The executable review pass is sealed and internally consistent. The research definition remains incomplete because the bound evidence set does not satisfy every completion criterion.</p>
+  <p class="body">Measured snapshot: <b>5,273 events</b> · <b>421,620 evaluations</b> · <b>413,828 gaps</b> · <b>51,870 root causes</b>; <b>named-event coverage is 32 of 47 national jurisdictions; 15 have no named event rows</b>; <b>4,191 verified event identities / 1,082 unresolved event mappings</b>; baseline ledger <b>12 event-producing / 3 reviewed-no-event / 82 discovery-only</b>, plus <b>1 supplemental event source</b>; <b>3 products / 4,146 genuine forward rows / 0 of 7 retrospective eligible</b>; <b>14 robustness claim blockers</b>; <b>zero model changes</b>.</p>
+  <p class="body">This pass validates lineage, replay integrity and the stated counts. It does not establish a performance improvement, authorize model promotion, or enable production execution.</p>
+  <p class="body mono">Status ID: sha256:2a726eeec94d364abfed05584951141c0f2481f4e219ea55184504a994eb6c86</p>
+  <p class="body"><a href="/research/lab-reviewed-status-2026-08-09.json">Read the bounded machine-readable receipt →</a></p>
 
   <h2>What OK means</h2>
   <p class="body">The API health endpoint reports liveness: the service is up and answering. Data freshness is reported inside each data payload with its own as of stamp, because freshness is a property of each feed, not of the process. When a feed goes dark, the payload that depends on it says so instead of serving a stale number as current.</p>
@@ -138,7 +145,7 @@ footer a{color:var(--muted)}
 
 <footer><div class="wrap">
   © 2026 LiquiLens · <a href="/">the failure radar</a> · <a href="/about/">about</a> · <a href="/security/">security</a> · <a href="/status/">status</a> · <a href="/privacy/">privacy</a> · <a href="/terms/">terms</a> · <a href="/ship-log/">ship log</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a>
-  <div style="margin-top:8px">LiquiLens is a product of ai.de, a Udyam registered sole proprietorship, Jaipur, India. · <a href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a> · Updated 8 August 2026</div>
+  <div style="margin-top:8px">LiquiLens is a product of ai.de, a Udyam registered sole proprietorship, Jaipur, India. · <a href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a> · Updated 9 August 2026</div>
 </div></footer>
 
 </body>
