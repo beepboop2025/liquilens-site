@@ -288,6 +288,56 @@ def test_reviewed_lab_receipt_and_human_surfaces_stay_aligned():
         in read("sitemap.xml")
 
 
+def test_ten_product_replay_atlas_reconciles_to_the_reviewed_receipt():
+    atlas_path = "research/replay-atlas-2026-08-09.json"
+    atlas = json.loads(read(atlas_path))
+    receipt = json.loads(read("research/lab-reviewed-status-2026-08-09.json"))
+    products = atlas["products"]
+
+    assert atlas["schema"] == "liquilens.lab.replay-atlas.v1"
+    assert atlas["status_id"] == receipt["status_id"]
+    assert atlas["status"] == receipt["status"] == "VALIDATED_NOT_COMPLETE"
+    assert atlas["definition_complete"] is False
+    assert atlas["model_change_authorized"] is False
+    assert len(products) == atlas["summary"]["products"] == 10
+    assert [product["index"] for product in products] == list(range(1, 11))
+    assert len({product["id"] for product in products}) == 10
+
+    assert sum(product["evaluations"] for product in products) == 421620
+    assert sum(product["gaps"] for product in products) == 413828
+    assert sum(product["forward_records"] for product in products) == 4146
+    assert sum(bool(product["forward_records"]) for product in products) == 3
+
+    classification_names = {
+        "captured_event": "captured",
+        "correct_rejection": "correct_rejection",
+        "false_positive": "false_positive",
+        "missed_event": "missed",
+        "not_applicable": "not_applicable",
+        "unevaluable": "unevaluable",
+    }
+    for global_name, product_name in classification_names.items():
+        assert sum(
+            product["classifications"][product_name] for product in products
+        ) == atlas["global_classifications"][global_name]
+    for product in products:
+        assert sum(product["classifications"].values()) == product["evaluations"]
+
+    assert atlas["summary"]["events"] == receipt["replay"]["events"]
+    assert atlas["summary"]["evaluations"] == receipt["replay"]["evaluations"]
+    assert atlas["summary"]["gaps"] == receipt["replay"]["gaps"]
+    assert atlas["summary"]["root_causes"] == receipt["replay"]["root_causes"]
+    assert atlas["summary"]["robustness_records"] == receipt["robustness"]["audit_records"]
+    assert atlas["summary"]["robustness_claim_blockers"] == receipt["robustness"]["claim_blockers"]
+    assert atlas["summary"]["forward_records"] == receipt["forward_histories"]["forward_rows"]
+    assert atlas["summary"]["retrospective_backtest_eligible_products"] == 0
+    assert not any(atlas["claim_boundaries"].values())
+
+    for path in ("index.html", "research/index.html", "llms.txt",
+                 "product-card.json", "sitemap.xml"):
+        assert "replay-atlas-2026-08-09.json" in read(path), path
+
+
 def test_every_discovery_pointer_uses_the_well_known_catalog():
     canonical = "https://liquilens.in/.well-known/ai-catalog.json"
     assert f"Agentmap: {canonical}" in read("robots.txt")
