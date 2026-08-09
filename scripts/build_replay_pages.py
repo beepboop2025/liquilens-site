@@ -18,8 +18,10 @@ from __future__ import annotations
 import datetime
 import json
 import pathlib
+import subprocess
 import sys
 import urllib.request
+import xml.etree.ElementTree as ET
 
 API = "https://api.liquilens.in/api/failure-radar/validation"
 SITE = "https://liquilens.in"
@@ -61,6 +63,30 @@ def esc(s) -> str:
     return (str(s).replace("&", "&amp;").replace("<", "&lt;")
             .replace(">", "&gt;").replace('"', "&quot;")
             .replace("—", "-").replace("–", "-"))
+
+
+def complementarity_note(d: dict) -> str:
+    """Build the public note from structured replay rows, never upstream prose.
+
+    The API's free-text note can lag its structured replay fields.  Deriving the
+    examples here keeps generated pages consistent with the numbers they print.
+    """
+    pca = {row["slug"]: row for row in d["pca_replay"]["failures"]}
+    funding = {row["slug"]: row for row in d["funding_replay"]["failures"]}
+
+    def lead(rows: dict, slug: str) -> str:
+        value = rows.get(slug, {}).get("lead_months")
+        return "a miss" if value is None else f"{value} months early"
+
+    return (
+        "The four engines catch different failure physics on the same corpus: "
+        f"PCA/score tripwires catch ratio-visible deterioration (GTB {lead(pca, 'global-trust-bank')}, "
+        f"Abhyudaya {lead(pca, 'abhyudaya-co-operative-bank')}); the funding lens catches "
+        f"rollover/run failures the ratios miss (Altico {lead(funding, 'altico')} on CP reliance, "
+        f"IL&FS {lead(funding, 'ilfs')}, Sambandh {lead(funding, 'sambandh-finserve')}); "
+        "the forensic screen owns fabricated reporting; the market layer reprices daily "
+        "between filings for listed names."
+    )
 
 
 def fetch() -> dict:
@@ -283,7 +309,7 @@ def index_page(d: dict, slugs: list[str], pca_by: dict, fund_by: dict, fraud_set
   <thead><tr><th>Institution</th><th>Type</th><th>Failed</th><th>Action-zone lead (mo)</th><th>Funding lead (mo)</th><th>Fraud-masked</th></tr></thead>
   <tbody>{''.join(trs)}</tbody></table></div>
   <h2 class="serif">How to read this</h2>
-  <p class="body">{esc(d.get("complementarity_note", ""))}</p>
+  <p class="body">{esc(complementarity_note(d))}</p>
   <p class="body mono">Hazard method, as served by the payload: {esc(hz.get("method", ""))}</p>
 </div></section>
 """
@@ -292,36 +318,96 @@ def index_page(d: dict, slugs: list[str], pca_by: dict, fund_by: dict, fraud_set
 
 
 BASE_SITEMAP = [
-    ("/", "weekly", "1.0"),
-    ("/us/", "weekly", "0.9"),
-    ("/research/", "weekly", "0.9"),
-    ("/replay/", "weekly", "0.8"),
-    ("/ship-log/", "weekly", "0.7"),
-    ("/undertow/", None, None),
-    ("/undertow/app/", None, None),
-    ("/about/", None, None),
-    ("/security/", None, None),
-    ("/status/", None, None),
-    ("/privacy/", None, None),
-    ("/terms/", None, None),
+    ("/", "2026-08-09", "weekly", "1.0"),
+    ("/developers/", "2026-08-05", "monthly", "0.9"),
+    ("/use-cases/", "2026-08-09", "monthly", "0.9"),
+    ("/pilot/", "2026-08-08", "monthly", "0.9"),
+    ("/us/", "2026-08-09", "weekly", "0.9"),
+    ("/research/", "2026-08-09", "weekly", "0.9"),
+    ("/research/lab-reviewed-status-2026-08-09.json", "2026-08-09", "never", "0.8"),
+    ("/replay/", "2026-08-04", "weekly", "0.8"),
+    ("/ship-log/", "2026-08-09", "weekly", "0.7"),
+    ("/undertow/", "2026-08-04", None, None),
+    ("/undertow/app/", "2026-08-04", None, None),
+    ("/about/", "2026-08-04", None, None),
+    ("/security/", "2026-08-09", None, None),
+    ("/status/", "2026-08-09", None, None),
+    ("/privacy/", "2026-08-04", None, None),
+    ("/terms/", "2026-08-04", None, None),
 ]
 
 
-def write_sitemap(slugs: list[str]) -> None:
+def write_if_changed(path: pathlib.Path, content: str) -> bool:
+    """Write generated content and report whether it changed."""
+    if path.exists() and path.read_text() == content:
+        return False
+    path.write_text(content)
+    return True
+
+
+def differs_from_head(path: pathlib.Path) -> bool:
+    """Keep today's lastmod when this worktree already changed a generated page."""
+    try:
+        rel = path.relative_to(ROOT)
+        result = subprocess.run(
+            ["git", "diff", "--quiet", "HEAD", "--", str(rel)],
+            cwd=ROOT,
+            check=False,
+            capture_output=True,
+        )
+        return result.returncode == 1
+    except (OSError, ValueError):
+        return False
+
+
+def committed_lastmods() -> dict[str, str]:
+    """Read prior dates from the committed sitemap, falling back to the file."""
+    try:
+        result = subprocess.run(
+            ["git", "show", "HEAD:sitemap.xml"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        source = result.stdout
+    except (OSError, subprocess.CalledProcessError):
+        source = (ROOT / "sitemap.xml").read_text()
+    try:
+        root = ET.fromstring(source)
+    except ET.ParseError:
+        return {}
+    ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    return {
+        node.findtext("sm:loc", default="", namespaces=ns):
+        node.findtext("sm:lastmod", default="", namespaces=ns)
+        for node in root.findall("sm:url", ns)
+    }
+
+
+def write_sitemap(
+        slugs: list[str], changed_slugs: set[str], replay_index_changed: bool) -> None:
     today = datetime.date.today().isoformat()
+    previous = committed_lastmods()
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for path, freq, prio in BASE_SITEMAP:
+    for path, configured_lastmod, freq, prio in BASE_SITEMAP:
+        url = f"{SITE}{path}"
+        lastmod = configured_lastmod
+        if path == "/replay/":
+            lastmod = today if replay_index_changed else previous.get(url, configured_lastmod)
         out.append("  <url>")
-        out.append(f"    <loc>{SITE}{path}</loc>")
-        out.append(f"    <lastmod>{today}</lastmod>")
+        out.append(f"    <loc>{url}</loc>")
+        out.append(f"    <lastmod>{lastmod}</lastmod>")
         if freq:
             out.append(f"    <changefreq>{freq}</changefreq>")
         if prio:
             out.append(f"    <priority>{prio}</priority>")
         out.append("  </url>")
     for slug in slugs:
-        out.append(f"  <url><loc>{SITE}/replay/{slug}/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq></url>")
+        url = f"{SITE}/replay/{slug}/"
+        lastmod = today if slug in changed_slugs else previous.get(url, today)
+        out.append(f"  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod><changefreq>monthly</changefreq></url>")
     out.append("</urlset>")
     (ROOT / "sitemap.xml").write_text("\n".join(out) + "\n")
 
@@ -337,13 +423,22 @@ def main() -> int:
 
     outdir = ROOT / "replay"
     outdir.mkdir(exist_ok=True)
+    changed_slugs = set()
     for slug in slugs:
         page_dir = outdir / slug
         page_dir.mkdir(exist_ok=True)
-        (page_dir / "index.html").write_text(
-            inst_page(slug, pca_by.get(slug), fund_by.get(slug), slug in fraud_set))
-    (outdir / "index.html").write_text(index_page(d, slugs, pca_by, fund_by, fraud_set))
-    write_sitemap(slugs)
+        page_path = page_dir / "index.html"
+        changed = write_if_changed(
+            page_path,
+            inst_page(slug, pca_by.get(slug), fund_by.get(slug), slug in fraud_set),
+        )
+        if changed or differs_from_head(page_path):
+            changed_slugs.add(slug)
+    index_path = outdir / "index.html"
+    index_changed = write_if_changed(
+        index_path, index_page(d, slugs, pca_by, fund_by, fraud_set))
+    index_changed = index_changed or differs_from_head(index_path)
+    write_sitemap(slugs, changed_slugs, index_changed)
     print(f"wrote {len(slugs)} institution pages + index + sitemap ({len(BASE_SITEMAP) + len(slugs)} urls)")
     return 0
 

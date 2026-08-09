@@ -32,6 +32,17 @@
   ],
   "evidence": {
     "market_status_source": "https://api.liquilens.in/api/evidence/markets",
+    "lab_review_2026_08_09": {
+      "status": "VALIDATED_NOT_COMPLETE",
+      "products_in_replay_pass": 10,
+      "canonical_events": 5273,
+      "replay_evaluations": 421620,
+      "robustness_audit_records": 82556,
+      "products_with_prospective_forward_records": 3,
+      "prospective_forward_records": 4146,
+      "requested_products": 7,
+      "retrospective_backtest_eligible_products": 0
+    },
     "markets": {
       "india": {
         "status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",

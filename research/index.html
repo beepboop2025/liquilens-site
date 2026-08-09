@@ -6,10 +6,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.liquilens.in https://api.seiche.info https://demo.liquilens.in https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <title>LiquiLens Research | Historical evidence, status published</title>
-<meta name="description" content="Replays, studies and method notes from the LiquiLens desk and Seiche, our open funding stress terminal. 552 US bank failures, 48 Indian institutions, 7 European case files. Full confusion matrix, misses named.">
+<meta name="description" content="Replays, studies and method notes from LiquiLens and Seiche. 552 US bank failures since 2008, 48 Indian institutions and 7 European case files, with misses named.">
 <link rel="canonical" href="https://liquilens.in/research/">
 <meta property="og:title" content="LiquiLens Research">
-<meta property="og:description" content="The company is young. The record is 2004 to 2026. Replays, studies and method notes, misses included.">
+<meta property="og:description" content="The panel begins in 2004; the 552-failure US denominator begins in 2008. Replays, studies and method notes, misses included.">
 <meta property="og:image" content="https://liquilens.in/og-radar.png">
 <meta property="og:url" content="https://liquilens.in/research/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E3B778'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%231A1206' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
@@ -106,8 +106,8 @@ footer a{color:var(--muted)}
   <h2 class="serif">A validated execution pass, <em>not a completed research definition.</em></h2>
   <div class="corro">
     <div class="mono">VALIDATED_NOT_COMPLETE</div>
-    <p>The sealed ten-product pass accounts for <b>5,273 events</b>, <b>421,620 evaluations</b>, <b>413,828 gaps</b> and <b>51,870 root causes</b>. <b>Named-event coverage is 32 of 47 national jurisdictions; 15 have no named event rows</b>, with <b>4,191 verified event identities / 1,082 unresolved event mappings</b>.</p>
-    <p>The baseline source ledger is <b>12 event-producing / 3 reviewed-no-event / 82 discovery-only</b>, plus <b>1 supplemental event source</b>. Genuine forward history covers <b>3 products / 4,146 genuine forward rows / 0 of 7 retrospective eligible</b>, and <b>14 robustness claim blockers</b> remain. There were <b>zero model changes</b>; this review authorizes no performance claim, model promotion or production execution.</p>
+    <p>One sealed <b>ten-product replay pass</b> contains <b>421,620 evaluations</b> across <b>5,273 canonical events</b>, producing <b>413,828 exactly bound gap rows</b> and <b>51,870 root causes</b>, alongside <b>82,556 robustness audit records</b>. Named-event coverage is <b>32 of 47 national jurisdictions</b>; <b>15 have no named event rows</b>. The pass contains <b>4,191 verified event identities / 1,082 unresolved mappings</b>.</p>
+    <p>The baseline source ledger is <b>12 event-producing / 3 reviewed-no-event / 82 discovery-only</b>, plus <b>1 supplemental event source</b>. Three products have <b>4,146 genuine prospective forward score records</b>; <b>0 of 7 requested products is eligible for retrospective backtesting</b>. <b>14 robustness claim blockers</b> remain. There were <b>zero model changes</b>; this review authorizes no performance claim, model promotion or production execution.</p>
     <p class="mono">Status ID: sha256:2a726eeec94d364abfed05584951141c0f2481f4e219ea55184504a994eb6c86 · <a href="/research/lab-reviewed-status-2026-08-09.json">machine-readable receipt</a></p>
   </div>
 </div></section>
@@ -120,7 +120,7 @@ footer a{color:var(--muted)}
 
     <article class="note">
       <div class="chiprow"><span class="chip">CONSTRUCTION-PIT</span><span class="when">8 August 2026</span></div>
-      <h3>The United States: <em>552 failures, quarter by quarter</em></h3>
+      <h3>The United States: <em>552 failures since 2008, quarter by quarter</em></h3>
       <p><b>CURRENT_AMENDED_CONSTRUCTION_PIT.</b> Every FDIC insured bank is replayed quarter by quarter using currently available amended call reports. Two of the four 2026 failures were on the watchlist more than a year before the FDIC arrived; seven recent misses are named. Because the history is current-amended rather than a complete as-published archive, it is not validated-backtest or real-money eligible.</p>
       <div class="stats">
         <div class="stat"><b>72.8%</b><span>recall (69.0 to 76.6)</span></div>
@@ -195,7 +195,7 @@ footer a{color:var(--muted)}
       <p>In March 2023 USDC broke its peg not because of anything on chain, but because part of Circle's reserve cash sat at Silicon Valley Bank. That is a bank run risk problem wearing a crypto costume. We map which banks hold stablecoin reserve cash from citable public disclosures and join that map to the same failure engine that scores every other bank, for the era in which reserve custody is regulated business.</p>
       <div class="stats">
         <div class="stat"><b>1</b><span>depeg, bank caused</span></div>
-        <div class="stat"><b>every</b><span>custodian scored</span></div>
+        <div class="stat"><b>disclosed</b><span>resolvable bank custodians scored</span></div>
       </div>
       <p class="src">built from public disclosures only · <a href="/us/#reserves">the reserve custodian map →</a></p>
     </article>
@@ -285,7 +285,7 @@ footer a{color:var(--muted)}
         <li>Every miss, named, with the reason it was missed</li>
         <li>Corrections, made in the open and left visible</li>
         <li>Negative results, like the closed monsoon gate</li>
-        <li>The as published score history, on a tamper evident ledger</li>
+        <li>Prospective, content-bound forward score histories from capture onward, on a tamper evident ledger</li>
         <li>The live board, every institution on it named, with its current score, grade and tier</li>
         <li>The tier rule that sorts that board, thresholds and all</li>
         <li>Seiche, end to end, as AGPL open source</li>
@@ -309,8 +309,8 @@ footer a{color:var(--muted)}
 </div></footer>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"CollectionPage","name":"LiquiLens Research","url":"https://liquilens.in/research/","description":"Status-bound historical diagnostics and method notes from LiquiLens and Seiche: 552 US failures, 48 Indian institutions and 7 European case files, misses named and eligibility flags explicit.","isPartOf":{"@type":"WebSite","url":"https://liquilens.in/"},"about":[{"@type":"Thing","name":"bank failure early warning"},{"@type":"Thing","name":"funding stress"},{"@type":"Thing","name":"construction-PIT historical diagnostics"}],"mainEntity":{"@type":"ItemList","itemListElement":[
-{"@type":"ListItem","position":1,"name":"The United States: 552 failures, quarter by quarter","url":"https://liquilens.in/research/#replays"},
+{"@context":"https://schema.org","@type":"CollectionPage","name":"LiquiLens Research","url":"https://liquilens.in/research/","description":"Status-bound historical diagnostics and method notes from LiquiLens and Seiche: 552 US failures since 2008, 48 Indian institutions and 7 European case files, misses named and eligibility flags explicit.","isPartOf":{"@type":"WebSite","url":"https://liquilens.in/"},"about":[{"@type":"Thing","name":"bank failure early warning"},{"@type":"Thing","name":"funding stress"},{"@type":"Thing","name":"construction-PIT historical diagnostics"}],"mainEntity":{"@type":"ItemList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"The United States: 552 failures since 2008, quarter by quarter","url":"https://liquilens.in/research/#replays"},
 {"@type":"ListItem","position":2,"name":"India: 48 institutions, two decades","url":"https://liquilens.in/research/#replays"},
 {"@type":"ListItem","position":3,"name":"Europe: seven case files, no recalibration","url":"https://liquilens.in/research/#replays"},
 {"@type":"ListItem","position":4,"name":"Deposit desperation: the liability side talks first","url":"https://liquilens.in/research/#studies"},
