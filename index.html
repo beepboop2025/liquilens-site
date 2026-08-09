@@ -200,8 +200,9 @@
     color:#1A1206;font-family:var(--serif);font-weight:600;font-size:16px;
   }
   .brand small{color:var(--muted);font-weight:400;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
-  .nav-cta{font-family:var(--mono);font-size:13px;color:var(--muted);border:1px solid var(--line-2);padding:9px 16px;border-radius:8px;transition:.2s}
-  .nav-cta:hover{color:var(--text);border-color:var(--gold)}
+  .nav-cta{font-family:var(--mono);font-size:13px;border:1px solid transparent;padding:9px 16px;border-radius:8px;transition:.2s;display:inline-flex;align-items:center;gap:7px;background:linear-gradient(150deg,var(--gold),var(--gold-deep));color:#1A1206;font-weight:500;white-space:nowrap}
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px -10px rgba(227,183,120,.6)}
+  .nav-cta .nav-gate{font-size:9px;letter-spacing:.04em;text-transform:uppercase;opacity:.72}
   .nav-right{display:flex;align-items:center;gap:22px}
   .nav-link{font-family:var(--mono);font-size:13px;color:var(--muted);transition:.2s}
   .nav-link:hover{color:var(--gold)}
@@ -225,6 +226,8 @@
   .btn{font-family:var(--mono);font-size:14px;padding:14px 22px;border-radius:9px;transition:.2s;display:inline-flex;align-items:center;gap:9px}
   .btn-primary{background:linear-gradient(150deg,var(--gold),var(--gold-deep));color:#1A1206;font-weight:500}
   .btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 30px -10px rgba(227,183,120,.5)}
+  .btn-demo{flex-direction:column;align-items:flex-start;justify-content:center;gap:1px;line-height:1.25}
+  .btn-demo small{font-size:9px;letter-spacing:.07em;text-transform:uppercase;opacity:.72}
   .btn-ghost{border:1px solid var(--line-2);color:var(--muted)}
   .btn-ghost:hover{color:var(--text);border-color:var(--teal)}
 
@@ -583,6 +586,9 @@
     table.mfi{min-width:430px}
     .mfi .inst-name{white-space:normal;font-size:13.5px}
   }
+  @media (max-width:480px){
+    .brand small,.nav-cta .nav-gate{display:none}
+  }
   @media (prefers-reduced-motion:reduce){
     .ticker__track{animation:none}
     .st-alarm{animation:none}
@@ -625,10 +631,10 @@
       <a class="nav-link" href="/use-cases/">Use cases</a>
       <a class="nav-link" href="/us/">US bank risk</a>
       <a class="nav-link" href="/research/">Research</a>
-      <a class="nav-link" href="https://liquilens-undertow.com/app/?ref=liquilens_nav">Undertow desk · sign in required</a>
       <a class="nav-link" href="#desk"><span class="sei-dot"></span>Seiche, our open terminal</a>
       <a class="nav-link" href="/replay/">Failure replays</a>
-      <a class="nav-cta" data-funnel="pilot_cta_clicked" href="/pilot/">Run a proof pilot</a>
+      <a class="nav-link" data-funnel="pilot_cta_clicked" href="/pilot/">Proof pilot</a>
+      <a class="nav-cta" data-funnel="investor_demo_clicked" href="https://demo.liquilens.in/?demo=1&amp;ref=liquilens_nav&amp;tab=overview" target="_blank" rel="noopener" aria-label="Investor demo, sign in required"><span>Investor demo</span><small class="nav-gate">sign in required</small></a>
     </span>
   </nav>
 </div>
@@ -641,10 +647,10 @@
       <span class="eyebrow">Early warning for institutional failure</span>
       <h1>Identify lender distress <em>before ratings change.</em></h1>
       <div class="hero-actions">
-        <a class="btn btn-primary" data-funnel="pilot_cta_clicked" href="/pilot/">Prove it on my book →</a>
+        <a class="btn btn-primary btn-demo" data-funnel="investor_demo_clicked" href="https://demo.liquilens.in/?demo=1&amp;ref=liquilens_hero&amp;tab=overview" target="_blank" rel="noopener"><span>Enter investor demo →</span><small>sign in required · same password</small></a>
+        <a class="btn btn-ghost" data-funnel="pilot_cta_clicked" href="/pilot/">Run a proof pilot</a>
         <a class="btn btn-ghost" href="/replay/">Audit the failure replays</a>
         <a class="btn btn-ghost" href="/use-cases/">Find your use case</a>
-        <a class="btn btn-ghost" href="/developers/">Connect the free API + MCP</a>
       </div>
       <p class="lede" style="margin-top:28px">LiquiLens reads public filings, funding structure, regulatory actions and market signals to flag lenders showing signs of distress. Its historical layer contains three reproducible diagnostics with different construction-PIT limits: 48 Indian institutions, 552 US failures and seven named European case files. None is currently validated-backtest or real-money eligible, and the API serves those flags beside every headline.</p>
       <p style="margin-top:16px;font-size:14.5px;line-height:1.6;color:var(--muted);max-width:38em">The public record is open. Private-book work starts with a six-week, fixed-fee parallel run inside the lender's environment, with the success bar frozen before scoring. Qualified teams receive access to the synthetic product walkthrough during scoping. Also evaluating market liquidity? <a href="https://liquilens-undertow.com/app/?ref=liquilens_hero" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">Enter the Undertow private desk · sign in required →</a></p>
