@@ -255,7 +255,8 @@ def test_reviewed_lab_receipt_and_human_surfaces_stay_aligned():
         "421,620 evaluations",
         "413,828 gaps",
         "51,870 root causes",
-        "32 of 47 national jurisdictions",
+        "named-event coverage is 32 of 47 national jurisdictions; "
+        "15 have no named event rows",
         "4,191 verified event identities / 1,082 unresolved event mappings",
         "12 event-producing / 3 reviewed-no-event / 82 discovery-only",
         "1 supplemental event source",
