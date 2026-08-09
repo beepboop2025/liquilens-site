@@ -303,6 +303,12 @@ def test_ten_product_replay_atlas_reconciles_to_the_reviewed_receipt():
     assert [product["index"] for product in products] == list(range(1, 11))
     assert len({product["id"] for product in products}) == 10
 
+    assert atlas["horizons_days"] == [30, 90, 180, 365]
+    assert atlas["timing_conditions"] == ["baseline", "extra_lag"]
+    assert atlas["extra_lag_days"] == 1
+    assert atlas["event_checkpoints_per_product"] == 42162
+    assert {product["evaluations"] for product in products} == {42162}
+    assert atlas["summary"]["evaluations"] == 42162 * len(products)
     assert sum(product["evaluations"] for product in products) == 421620
     assert sum(product["gaps"] for product in products) == 413828
     assert sum(product["forward_records"] for product in products) == 4146
@@ -332,6 +338,12 @@ def test_ten_product_replay_atlas_reconciles_to_the_reviewed_receipt():
     assert atlas["summary"]["forward_records"] == receipt["forward_histories"]["forward_rows"]
     assert atlas["summary"]["retrospective_backtest_eligible_products"] == 0
     assert not any(atlas["claim_boundaries"].values())
+
+    homepage = read("index.html")
+    assert "42,162 checkpoints × 10 contracts" in homepage
+    assert "not a count of unique product-event pairs, institutions, or backtests" \
+        in homepage
+    assert "8 passes" not in homepage
 
     for path in ("index.html", "research/index.html", "llms.txt",
                  "product-card.json", "sitemap.xml"):
