@@ -7,7 +7,9 @@
   "definition_complete": false,
   "model_change_authorized": false,
   "horizons_days": [30, 90, 180, 365],
-  "passes_per_product": 8,
+  "timing_conditions": ["baseline", "extra_lag"],
+  "extra_lag_days": 1,
+  "event_checkpoints_per_product": 42162,
   "summary": {
     "products": 10,
     "events": 5273,
@@ -44,7 +46,7 @@
       "forward_records": 0,
       "classifications": {"captured": 0, "correct_rejection": 0, "missed": 0, "false_positive": 0, "unevaluable": 0, "not_applicable": 42162},
       "description": "The market-liquidity layer is evaluated as display context. The reviewed history does not contain a frozen scalar score joined to a market-liquidity outcome cut.",
-      "establishes": "The product boundary and its context-only disposition are reproduced across every event and horizon.",
+      "establishes": "The product boundary and its context-only disposition are reproduced across every generated event checkpoint.",
       "boundary": "No retrospective performance statistic or institution-level outcome discrimination."
     },
     {
