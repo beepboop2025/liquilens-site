@@ -43,6 +43,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://liquilens.in/research/replay-atlas-2026-08-09.json</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://liquilens.in/replay/</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>

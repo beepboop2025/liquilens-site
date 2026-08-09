@@ -129,9 +129,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <!-- Load fonts without blocking first paint: fetch as print (non-blocking), then swap to all on load. Full-CSS <noscript> fallback for JS-off. -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=optional" />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=optional" rel="stylesheet" media="print" onload="this.media='all'" />
-<noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=optional" rel="stylesheet" /></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&amp;display=optional" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&amp;display=optional" rel="stylesheet" media="print" onload="this.media='all'" />
+<noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&amp;display=optional" rel="stylesheet" /></noscript>
 <style>
   :root{
     --ink:#0A0F1C; --ink-2:#0E1424; --ink-3:#131B2E;
@@ -604,6 +604,7 @@
     html{scroll-behavior:auto}
   }
 </style>
+<link rel="stylesheet" href="/experience.css?v=20260809b" />
 <noscript><style>
   .reveal{opacity:1;transform:none;filter:none}
   .layers.reveal>.layer,.engines.reveal>.engine,.stats.reveal>.stat,.who.reveal>.card,.desk.reveal>.inst{opacity:1;transform:none}
@@ -611,14 +612,17 @@
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "43b422e63bb44fb5975c7bb39bd0ba24"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- the pressure tape: the public board, printed onto the page -->
-<div class="ticker">
+<div class="ticker" aria-label="Live market and LiquiLens system status">
   <div class="ticker__track" id="tickerTrack">
     <span class="half"><a class="pcell" href="#lyr-regime" data-pulse="market_regime">MARKET REGIME <b class="st st-calm">CALM</b></a><a class="pcell" href="#lyr-deposit-migration" data-pulse="deposit_migration">DEPOSIT MIGRATION <b class="st st-alarm">ALARM</b></a><a class="pcell" href="#lyr-leverage" data-pulse="leverage">LEVERAGE <b class="st st-alarm">ALARM</b></a><a class="pcell" href="#lyr-rails" data-pulse="rails">STABLECOIN RAILS <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-bond-book" data-pulse="bond_book">BOND BOOK <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-market-makers" data-pulse="market_makers">DEALER CAPACITY <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-bondholders" data-pulse="bondholders">BONDHOLDERS <b class="st st-watch">WATCH</b></a><a class="pcell" href="https://api.liquilens.in/api/public-signals/bond-market" data-pulse="bond_market">BOND MARKET <b class="st st-calm">CALM</b></a><a class="pcell" href="https://api.liquilens.in/api/public-signals/corporate-transmission" data-pulse="corporate_transmission">CORPORATE TRANSMISSION <b class="st st-calm">CALM</b></a><a class="pcell" href="https://api.liquilens.in/api/public-signals/household-credit" data-pulse="household_credit">HOUSEHOLD CREDIT <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-short-pressure" data-pulse="short_pressure">SHORT PRESSURE <b class="st st-reg">0 FLAGS</b></a><a class="pcell" href="#lyr-crypto" data-pulse="crypto_exposure">CRYPTO EXPOSURE <b class="st st-reg">1 FLAG</b></a><a class="pcell" href="#lyr-tbtf" data-pulse="tbtf">TBTF REGISTER <b class="st st-reg">15 FLAGS</b></a><a class="pcell" href="#lyr-news" data-pulse="news">NEWS WATCH <b class="st st-reg">NO READ</b></a><span class="tag" data-pulse-asof>captured fallback · 9 Aug 2026; live fetch replaces it</span><span><a href="/us/" style="color:var(--gold)">US bank layer: the 2026 scoreboard, two flagged a year early, two misses published →</a></span><span><a href="https://liquilens-undertow.com/#record" style="color:var(--gold)">Undertow: the cross market liquidity map, sealed calls and misses kept, verify the record →</a></span></span><span class="half" aria-hidden="true"><a class="pcell" href="#lyr-regime" data-pulse="market_regime">MARKET REGIME <b class="st st-calm">CALM</b></a><a class="pcell" href="#lyr-deposit-migration" data-pulse="deposit_migration">DEPOSIT MIGRATION <b class="st st-alarm">ALARM</b></a><a class="pcell" href="#lyr-leverage" data-pulse="leverage">LEVERAGE <b class="st st-alarm">ALARM</b></a><a class="pcell" href="#lyr-rails" data-pulse="rails">STABLECOIN RAILS <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-bond-book" data-pulse="bond_book">BOND BOOK <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-market-makers" data-pulse="market_makers">DEALER CAPACITY <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-bondholders" data-pulse="bondholders">BONDHOLDERS <b class="st st-watch">WATCH</b></a><a class="pcell" href="https://api.liquilens.in/api/public-signals/bond-market" data-pulse="bond_market">BOND MARKET <b class="st st-calm">CALM</b></a><a class="pcell" href="https://api.liquilens.in/api/public-signals/corporate-transmission" data-pulse="corporate_transmission">CORPORATE TRANSMISSION <b class="st st-calm">CALM</b></a><a class="pcell" href="https://api.liquilens.in/api/public-signals/household-credit" data-pulse="household_credit">HOUSEHOLD CREDIT <b class="st st-watch">WATCH</b></a><a class="pcell" href="#lyr-short-pressure" data-pulse="short_pressure">SHORT PRESSURE <b class="st st-reg">0 FLAGS</b></a><a class="pcell" href="#lyr-crypto" data-pulse="crypto_exposure">CRYPTO EXPOSURE <b class="st st-reg">1 FLAG</b></a><a class="pcell" href="#lyr-tbtf" data-pulse="tbtf">TBTF REGISTER <b class="st st-reg">15 FLAGS</b></a><a class="pcell" href="#lyr-news" data-pulse="news">NEWS WATCH <b class="st st-reg">NO READ</b></a><span class="tag" data-pulse-asof>captured fallback · 9 Aug 2026; live fetch replaces it</span><span><a href="/us/" style="color:var(--gold)">US bank layer: the 2026 scoreboard, two flagged a year early, two misses published →</a></span><span><a href="https://liquilens-undertow.com/#record" style="color:var(--gold)">Undertow: the cross market liquidity map, sealed calls and misses kept, verify the record →</a></span></span>
   </div>
+  <button class="ticker-toggle" id="tickerToggle" type="button" aria-pressed="false"><span aria-hidden="true">Ⅱ</span><b>Pause live tape</b></button>
 </div>
 
+<div class="nav-shell">
 <div class="wrap">
   <nav>
     <a class="brand" href="#top">
@@ -626,6 +630,7 @@
       LiquiLens <small>the failure radar</small>
     </a>
     <span class="nav-right">
+      <a class="nav-link" href="#lab-reviewed-status">Latest replay</a>
       <a class="nav-link" href="#board">The live board</a>
       <a class="nav-link" href="/developers/">API + MCP</a>
       <a class="nav-link" href="/use-cases/">Use cases</a>
@@ -635,29 +640,75 @@
       <a class="nav-link" href="/replay/">Failure replays</a>
       <a class="nav-link" data-funnel="pilot_cta_clicked" href="/pilot/">Proof pilot</a>
       <a class="nav-cta" data-funnel="investor_demo_clicked" href="https://demo.liquilens.in/?demo=1&amp;ref=liquilens_nav&amp;tab=overview" target="_blank" rel="noopener" aria-label="Investor demo, sign in required"><span>Investor demo</span><small class="nav-gate">sign in required</small></a>
+      <button class="nav-menu" id="navMenu" type="button" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span><b class="sr-only">Open navigation</b></button>
     </span>
   </nav>
+  <div class="mobile-nav" id="mobileNav" hidden>
+    <a href="#lab-reviewed-status">Latest replay</a><a href="#evidence-status">Evidence records</a><a href="#board">Live board</a><a href="/developers/">API + MCP</a><a href="/use-cases/">Use cases</a><a href="/research/">Research</a><a href="/pilot/">Proof pilot</a>
+  </div>
 </div>
+</div>
+
+<aside class="chapter-rail" id="chapterRail" aria-label="Page chapters">
+  <span class="chapter-rail__label" id="chapterLabel">Opening record</span>
+  <nav>
+    <a href="#top" data-chapter-link="top" aria-label="Opening record"><i></i></a>
+    <a href="#lab-reviewed-status" data-chapter-link="lab-reviewed-status" aria-label="Latest replay"><i></i></a>
+    <a href="#evidence-status" data-chapter-link="evidence-status" aria-label="Evidence boundary"><i></i></a>
+    <a href="#leadtime" data-chapter-link="leadtime" aria-label="Warning period"><i></i></a>
+    <a href="#board" data-chapter-link="board" aria-label="Live board"><i></i></a>
+    <a href="#contact" data-chapter-link="contact" aria-label="Run a proof"><i></i></a>
+  </nav>
+</aside>
 
 <!-- hero -->
 <main id="main">
 <header class="hero" id="top">
+  <div class="hero-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Early warning for institutional failure</span>
-      <h1>Identify lender distress <em>before ratings change.</em></h1>
+    <div class="hero-copy">
+      <div class="hero-kicker"><span class="eyebrow">Institutional failure, read in event time</span><span class="hero-kicker__status"><i></i> reviewed cut · 09 aug 2026</span></div>
+      <h1>Ratings move last. <em>The evidence moves first.</em></h1>
+      <p class="lede hero-lede">LiquiLens reads public filings, funding structure and market signals as a chronological record—then shows exactly where the warning holds, where it misses, and where the evidence stops.</p>
       <div class="hero-actions">
         <a class="btn btn-primary btn-demo" data-funnel="investor_demo_clicked" href="https://demo.liquilens.in/?demo=1&amp;ref=liquilens_hero&amp;tab=overview" target="_blank" rel="noopener"><span>Enter investor demo →</span><small>sign in required · same password</small></a>
-        <a class="btn btn-ghost" data-funnel="pilot_cta_clicked" href="/pilot/">Run a proof pilot</a>
-        <a class="btn btn-ghost" href="/replay/">Audit the failure replays</a>
+        <a class="btn btn-ghost" href="#lab-reviewed-status">Explore the latest replay</a>
+        <a class="btn btn-text" data-funnel="pilot_cta_clicked" href="/pilot/">Run a proof pilot <span>↗</span></a>
         <a class="btn btn-ghost" href="/use-cases/">Find your use case</a>
       </div>
-      <p class="lede" style="margin-top:28px">LiquiLens reads public filings, funding structure, regulatory actions and market signals to flag lenders showing signs of distress. Its historical layer contains three reproducible diagnostics with different construction-PIT limits: 48 Indian institutions, 552 US failures since 2008 and seven named European case files. None is currently validated-backtest or real-money eligible, and the API serves those flags beside every headline.</p>
-      <p style="margin-top:16px;font-size:14.5px;line-height:1.6;color:var(--muted);max-width:38em">The public record is open. Private-book work starts with a six-week, fixed-fee parallel run inside the lender's environment, with the success bar frozen before scoring. Qualified teams receive access to the synthetic product walkthrough during scoping. Also evaluating market liquidity? <a href="https://liquilens-undertow.com/app/?ref=liquilens_hero" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">Enter the Undertow private desk · sign in required →</a></p>
-      <p id="heroPulse" style="margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Captured fallback · deposit migration and leverage read ALARM · as of 9 Aug 2026 · live fetch replaces this line</p>
+      <div class="hero-proof" aria-label="Latest reviewed replay summary">
+        <a href="#lab-reviewed-status"><b data-count="5273">5,273</b><span>canonical events</span></a>
+        <a href="#lab-reviewed-status"><b data-count="421620">421,620</b><span>evaluations</span></a>
+        <a href="#lab-reviewed-status"><b data-count="10">10</b><span>product contracts</span></a>
+        <a href="#evidence-status"><b>0 / 7</b><span>retrospective eligible</span></a>
+      </div>
+      <p class="hero-boundary"><code>VALIDATED_NOT_COMPLETE</code> is the current Lab status. The execution pass is sealed; independent validation and retrospective eligibility are not implied.</p>
     </div>
 
-    <div class="terminal reveal">
+    <div class="replay-loom reveal" aria-label="Animated map of the ten-product reviewed replay">
+      <div class="replay-loom__bar"><span><i></i> latest replay / sealed</span><b>RUN D34D2AE66F9F</b></div>
+      <div class="replay-loom__head">
+        <div><span>EVENT FIELD</span><b>5,273</b></div><i>→</i><div><span>10 CONTRACTS</span><b>× 8 passes</b></div><i>→</i><div><span>OUTCOMES</span><b>421,620</b></div>
+      </div>
+      <div class="loom" aria-hidden="true">
+        <span class="loom__scan"></span>
+        <div class="loom__axis"><span>source</span><span>knowledge time</span><span>horizon</span><span>outcome</span></div>
+        <div class="loom__lane" style="--lane:0;--tone:var(--context)"><b>CAPITAL</b><i></i><i></i><i></i></div>
+        <div class="loom__lane" style="--lane:1;--tone:var(--context)"><b>CORPORATE</b><i></i><i></i></div>
+        <div class="loom__lane is-scored" style="--lane:2;--tone:var(--verified)"><b>INSTITUTION</b><i></i><i></i><i></i><i></i></div>
+        <div class="loom__lane" style="--lane:3;--tone:var(--context)"><b>LAB</b><i></i><i></i></div>
+        <div class="loom__lane is-blocked" style="--lane:4;--tone:var(--blocked)"><b>MFI</b><i></i><i></i><i></i></div>
+        <div class="loom__lane" style="--lane:5;--tone:var(--context)"><b>ECONOMY</b><i></i><i></i></div>
+        <div class="loom__lane has-forward" style="--lane:6;--tone:var(--signal)"><b>RIPTIDE</b><i></i><i></i><i></i></div>
+        <div class="loom__lane has-forward" style="--lane:7;--tone:var(--signal)"><b>SEICHE</b><i></i><i></i><i></i><i></i></div>
+        <div class="loom__lane is-scored" style="--lane:8;--tone:var(--verified)"><b>BANK LEGACY</b><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="loom__lane has-forward" style="--lane:9;--tone:var(--signal)"><b>UNDERTOW</b><i></i><i></i><i></i></div>
+      </div>
+      <div class="replay-loom__foot"><span><i class="verified"></i> scored outcome</span><span><i class="signal"></i> genuine forward row</span><span><i class="context"></i> context / abstention</span><span><i class="blocked"></i> evidence blocked</span></div>
+      <a class="replay-loom__link" href="#lab-reviewed-status">Open every product result <span>↓</span></a>
+    </div>
+
+    <div class="terminal reveal legacy-hero-chart">
       <div class="terminal__bar">
         <i class="dot r"></i><i class="dot y"></i><i class="dot g"></i>
         <span>early warning · replayed record</span>
@@ -702,6 +753,92 @@
   </div>
 </header>
 
+<!-- latest reviewed replay: the product-by-product record, not a marketing summary -->
+<section class="band replay-atlas" id="lab-reviewed-status" data-chapter="Latest replay">
+  <div class="wrap">
+    <div class="atlas-intro">
+      <div>
+        <span class="eyebrow reveal">Reviewed 9 August 2026 · ten-product replay</span>
+        <h2 class="reveal">Every result is here. <em>Including the gaps.</em></h2>
+      </div>
+      <div class="atlas-intro__copy reveal">
+        <p>The newest sealed pass evaluates ten product contracts across four horizons and an added-lag pair. Select a row to inspect what was scored, what abstained, and why none of the seven requested histories is presently eligible for retrospective backtesting.</p>
+        <div class="status-stamp"><i></i><span><b>VALIDATED_NOT_COMPLETE</b> execution sealed · definition incomplete</span></div>
+      </div>
+    </div>
+
+    <div class="atlas-summary reveal" aria-label="Reviewed replay totals">
+      <div><span>event field</span><b data-atlas-count="5273">5,273</b><small>canonical events</small></div>
+      <div><span>evaluation field</span><b data-atlas-count="421620">421,620</b><small>10 contracts × 8 passes</small></div>
+      <div><span>accounted gaps</span><b data-atlas-count="413828">413,828</b><small>0 unexplained kinds</small></div>
+      <div><span>robustness layer</span><b data-atlas-count="82556">82,556</b><small>14 claim blockers remain</small></div>
+      <div><span>event coverage</span><b>32 / 47</b><small>national jurisdictions</small></div>
+    </div>
+
+    <details class="atlas-receipt reveal">
+      <summary>Read the exact integrity and coverage receipt <span>+</span></summary>
+      <p>One sealed <b>ten-product replay pass</b> contains <b>421,620 evaluations</b> across <b>5,273 canonical events</b>, producing <b>413,828 exactly bound gap rows</b> and <b>51,870 root causes</b>, alongside <b>82,556 robustness audit records</b>. Named-event coverage is <b>32 of 47 national jurisdictions</b>, with <b>4,191 verified event identities / 1,082 unresolved mappings</b>. Three products have <b>4,146 genuine prospective forward records</b>; <b>0 of 7 requested products is eligible for retrospective backtesting</b>. <b>14 robustness claim blockers</b> remain; there were <b>zero model changes</b>.</p>
+      <p>This is an integrity and coverage receipt, not a performance-improvement or promotion claim. <a href="/research/lab-reviewed-status-2026-08-09.json">Read the machine-readable receipt →</a></p>
+    </details>
+
+    <div class="atlas-shell reveal" data-replay-atlas data-source="/research/replay-atlas-2026-08-09.json">
+      <div class="atlas-toolbar">
+        <div>
+          <span class="atlas-toolbar__label">Outcome field</span>
+          <span class="atlas-legend"><i class="captured"></i>captured <i class="rejected"></i>correct rejection <i class="missed"></i>missed <i class="false-positive"></i>false positive <i class="unscored"></i>not scored</span>
+        </div>
+        <div class="atlas-toolbar__meta"><span>30d</span><span>90d</span><span>180d</span><span>365d</span><b>baseline + added lag</b></div>
+      </div>
+
+      <div class="atlas-main">
+        <div class="product-list" role="listbox" aria-label="Replay products" aria-controls="productDetail">
+          <button type="button" class="product-row" data-product="liquilens_capital_markets" role="option" aria-selected="false"><span class="product-row__index">01</span><span><b>Capital markets</b><small>market context</small></span><em>context only</em></button>
+          <button type="button" class="product-row" data-product="liquilens_corporate" role="option" aria-selected="false"><span class="product-row__index">02</span><span><b>Corporate</b><small>counterparty context</small></span><em>context only</em></button>
+          <button type="button" class="product-row" data-product="liquilens_institution_risk" role="option" aria-selected="false"><span class="product-row__index">03</span><span><b>Institution risk</b><small>outcome discrimination</small></span><em>160 scored</em></button>
+          <button type="button" class="product-row" data-product="liquilens_lab" role="option" aria-selected="false"><span class="product-row__index">04</span><span><b>LiquiLens Lab</b><small>provenance foundation</small></span><em>abstention</em></button>
+          <button type="button" class="product-row" data-product="liquilens_mfi" role="option" aria-selected="false"><span class="product-row__index">05</span><span><b>MFI</b><small>institution risk</small></span><em>8 scored</em></button>
+          <button type="button" class="product-row" data-product="liquilens_real_economy" role="option" aria-selected="false"><span class="product-row__index">06</span><span><b>Real economy</b><small>economic context</small></span><em>context only</em></button>
+          <button type="button" class="product-row" data-product="riptide_paper" role="option" aria-selected="false"><span class="product-row__index">07</span><span><b>Riptide Paper</b><small>paper scenario risk</small></span><em>5 forward</em></button>
+          <button type="button" class="product-row" data-product="seiche" role="option" aria-selected="false"><span class="product-row__index">08</span><span><b>Seiche</b><small>funding context</small></span><em>31 forward</em></button>
+          <button type="button" class="product-row is-active" data-product="undertow_bank_legacy" role="option" aria-selected="true"><span class="product-row__index">09</span><span><b>Undertow bank</b><small>legacy bank record</small></span><em>8,976 scored</em></button>
+          <button type="button" class="product-row" data-product="undertow_markets" role="option" aria-selected="false"><span class="product-row__index">10</span><span><b>Undertow markets</b><small>exit-liquidity context</small></span><em>4,110 forward</em></button>
+        </div>
+
+        <article class="product-detail" id="productDetail" aria-live="polite">
+          <div class="product-detail__top">
+            <div><span class="product-detail__eyebrow" data-detail-role>INSTITUTION RISK · PRODUCT 09</span><h3 data-detail-name>Undertow — bank legacy</h3></div>
+            <span class="eligibility-pill is-blocked" data-detail-status>RETROSPECTIVE: INELIGIBLE</span>
+          </div>
+          <p class="product-detail__desc" data-detail-description>The legacy bank record produced the largest scored slice in this replay. Its generic threshold sweep cannot reproduce the native ranking rule, and the panel does not contain one coherent as-published revision for every bank-quarter.</p>
+          <div class="outcome-track" data-outcome-track role="img" aria-label="Outcome composition: 4,026 captured, 3,681 correct rejections, 478 missed, 791 false positives, and 33,186 not scored">
+            <i class="captured" style="--share:9.55%"></i><i class="rejected" style="--share:8.73%"></i><i class="missed" style="--share:1.13%"></i><i class="false-positive" style="--share:1.88%"></i><i class="unscored" style="--share:78.71%"></i>
+          </div>
+          <div class="detail-metrics">
+            <div><span>evaluations</span><b data-metric="evaluations">42,162</b></div>
+            <div><span>scored</span><b data-metric="scored">8,976</b></div>
+            <div><span>captured</span><b data-metric="captured">4,026</b></div>
+            <div><span>missed</span><b data-metric="missed">478</b></div>
+            <div><span>false positive</span><b data-metric="falsePositive">791</b></div>
+            <div><span>gap rows</span><b data-metric="gaps">34,455</b></div>
+          </div>
+          <div class="product-detail__boundary">
+            <div><span>What this establishes</span><p data-detail-establishes>An internally consistent evaluation record with exact outcome bindings and a visible case-review trail.</p></div>
+            <div><span>What it does not establish</span><p data-detail-boundary>A vintage-complete retrospective performance claim or independently validated model.</p></div>
+          </div>
+          <div class="forward-read" data-forward-read hidden><span>Genuine prospective record</span><b data-forward-count>0</b><small data-forward-note>forward score rows</small></div>
+          <p class="product-detail__fine">Counts are evaluation outcomes across horizons and lag conditions, not unique institutions. “Captured” is displayed only where a score cut and matching outcome are present; absent evidence remains absent.</p>
+        </article>
+      </div>
+      <div class="atlas-foot">
+        <span><b>SEALED</b> run_d34d2ae66f9f · receipt sha256:2a726eeec94d…</span>
+        <span>4,191 identities verified · 1,082 unresolved · zero model changes</span>
+        <a href="/research/replay-atlas-2026-08-09.json">Machine-readable replay atlas →</a>
+      </div>
+      <noscript><p class="atlas-noscript">The static default above is the Undertow bank legacy result. Enable JavaScript to inspect all ten rows; the complete machine-readable record remains available at the link above.</p></noscript>
+    </div>
+  </div>
+</section>
+
 <!-- T minus: scroll through the warning period -->
 <section class="tminus static" id="leadtime" aria-label="Selected diagnostic markers drawn to scale: median PCA lead 41 months; named signals at 27, 17 and 8 months.">
   <div class="tminus__pin">
@@ -730,6 +867,14 @@
         <span class="term" style="left:100%">T−0 · the record breaks</span>
       </div>
       <p class="tminus__foot">Every marker is a published number from the historical diagnostic: the PCA tripwire replay median, Altico's funding fragility flag, the 48 institution replay median, Yes Bank's sub investment grade score, and the DHFL network signal. The construction-PIT status above limits the claim those numbers support.</p>
+      <ol class="sr-only">
+        <li>41 months before regulator action: median RBI PCA tripwire signal in the construction-PIT diagnostic.</li>
+        <li>27 months before outcome: Altico funding fragility flag.</li>
+        <li>21.5 months before outcome: median alert across the 48-institution diagnostic.</li>
+        <li>17 months before outcome: Yes Bank moved below investment grade on the LiquiLens score.</li>
+        <li>8 months before outcome: DHFL network signal.</li>
+        <li>0 months: the public record breaks.</li>
+      </ol>
     </div>
   </div>
 </section>
@@ -737,25 +882,16 @@
 <!-- the release truth rail: exact tokens from /api/evidence/markets -->
 <section class="band" id="evidence-status">
   <div class="wrap">
-    <span class="eyebrow reveal">Historical evidence · served claim boundary</span>
-    <h2 class="reveal">The numbers stay. <em>Their eligibility is explicit.</em></h2>
-    <p class="body reveal">The LiquiLens public API is live and its deterministic policy serves current screening scores. The historical records below are useful diagnostics, but the API marks all three as ineligible for validated-backtest and real-money claims. These exact tokens, not surrounding marketing copy, are authoritative.</p>
-    <div class="truth-grid reveal">
-      <article class="truth-card"><div class="market">India · 48 institutions</div><code>PERIOD_END_PROXY_CONSTRUCTION_PIT</code><p>Filing-availability-proxied construction-PIT diagnostic. Served headline: 88.9% recall and 21.5-month median lead.</p><div class="flags">Validated-backtest eligible: NO<br>Real-money eligible: NO</div></article>
-      <article class="truth-card"><div class="market">United States · 552 failures since 2008</div><code>CURRENT_AMENDED_CONSTRUCTION_PIT</code><p>Current-amended-vintage construction-PIT diagnostic. Served headline: 72.8% recall, 21.7-month median lead and AUC 0.854.</p><div class="flags">Validated-backtest eligible: NO<br>Real-money eligible: NO</div></article>
-      <article class="truth-card"><div class="market">Europe · 7 institutions</div><code>NAMED_CASE_FILES_CONSTRUCTION_PIT</code><p>Named case files with no cohort-level performance estimate.</p><div class="flags">Validated-backtest eligible: NO<br>Real-money eligible: NO</div></article>
+    <div class="evidence-intro">
+      <div><span class="eyebrow reveal">Historical evidence · served claim boundary</span><h2 class="reveal">The number never travels <em>without its boundary.</em></h2></div>
+      <div class="evidence-intro__copy reveal"><p>The public API serves current screening scores and three separate historical records. Each record carries its own cohort, construction method and eligibility flags. Select or focus a passport to expose its evidence state.</p><span><i class="current"></i>current screening <i class="diagnostic"></i>historical diagnostic <i class="research"></i>Lab / research</span></div>
     </div>
-    <p class="stats-note reveal">Machine-readable source: <a href="https://api.liquilens.in/api/evidence/markets" target="_blank" rel="noopener">api.liquilens.in/api/evidence/markets</a> · terminal: <code>npx liquilens --record</code>.</p>
-  </div>
-</section>
-
-<!-- the reviewed Lab boundary -->
-<section class="band" id="lab-reviewed-status">
-  <div class="wrap">
-    <span class="eyebrow reveal">LiquiLens Lab · reviewed 9 August 2026</span>
-    <h2 class="reveal">The execution pass is validated. <em>The research definition is not complete.</em></h2>
-    <p class="body reveal"><code>VALIDATED_NOT_COMPLETE</code>. One sealed <b>ten-product replay pass</b> contains <b>421,620 evaluations</b> across <b>5,273 canonical events</b>, producing <b>413,828 exactly bound gap rows</b> and <b>51,870 root causes</b>, alongside <b>82,556 robustness audit records</b>. Named-event coverage is <b>32 of 47 national jurisdictions</b>, with <b>4,191 verified event identities / 1,082 unresolved mappings</b>. Three products have <b>4,146 genuine prospective forward records</b>; <b>0 of 7 requested products is eligible for retrospective backtesting</b>. <b>14 robustness claim blockers</b> remain; there were <b>zero model changes</b>.</p>
-    <p class="stats-note reveal">This is an integrity and coverage receipt, not a performance-improvement or promotion claim. <a href="/research/lab-reviewed-status-2026-08-09.json">Read the machine-readable receipt →</a></p>
+    <div class="truth-grid reveal">
+      <article class="truth-card" tabindex="0" data-market="IN"><span class="truth-card__no">IN / 01</span><div class="market">India · 48 institutions</div><h3>Institution diagnostic</h3><div class="truth-card__metrics"><span><b>88.9%</b> recall</span><span><b>21.5 mo</b> median lead</span></div><code>PERIOD_END_PROXY_CONSTRUCTION_PIT</code><p>Filing availability is proxied rather than reconstructed from a complete as-published archive.</p><div class="flags"><span>Validated backtest <b>NO</b></span><span>Real money <b>NO</b></span></div></article>
+      <article class="truth-card" tabindex="0" data-market="US"><span class="truth-card__no">US / 02</span><div class="market">United States · 552 failures since 2008</div><h3>Bank-failure diagnostic</h3><div class="truth-card__metrics"><span><b>72.8%</b> recall</span><span><b>0.854</b> pooled AUC</span><span><b>21.7 mo</b> median lead</span></div><code>CURRENT_AMENDED_CONSTRUCTION_PIT</code><p>The replay uses currently available amended call-report vintages, with misses named.</p><div class="flags"><span>Validated backtest <b>NO</b></span><span>Real money <b>NO</b></span></div></article>
+      <article class="truth-card" tabindex="0" data-market="EU"><span class="truth-card__no">EU / 03</span><div class="market">Europe · 7 institutions</div><h3>Named case files</h3><div class="truth-card__metrics"><span><b>7</b> named records</span><span><b>0</b> cohort estimates</span></div><code>NAMED_CASE_FILES_CONSTRUCTION_PIT</code><p>Northern Rock through Credit Suisse: auditable files, not a population performance estimate.</p><div class="flags"><span>Validated backtest <b>NO</b></span><span>Real money <b>NO</b></span></div></article>
+    </div>
+    <div class="evidence-source reveal"><span>AUTHORITATIVE SURFACE</span><a href="https://api.liquilens.in/api/evidence/markets" target="_blank" rel="noopener">api.liquilens.in/api/evidence/markets ↗</a><code>npx liquilens --record</code><b>If prose and payload differ, the payload wins.</b></div>
   </div>
 </section>
 
@@ -1525,7 +1661,8 @@
         const t0 = performance.now();
         (function tick(now){
           const p = Math.min(1,(now-t0)/1100), ease = 1-Math.pow(1-p,3);
-          el.textContent = (target*ease).toFixed(dec);
+          const value = target * ease;
+          el.textContent = dec ? value.toFixed(dec) : (target >= 1000 ? Math.round(value).toLocaleString('en-US') : Math.round(value));
           if(p<1) requestAnimationFrame(tick);
         })(t0);
       });
@@ -1993,6 +2130,7 @@
   })();
 })();
 </script>
+<script src="/experience.js?v=20260809b" defer></script>
 <script src="/funnel.js" defer></script>
 </body>
 </html>
