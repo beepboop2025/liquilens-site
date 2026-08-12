@@ -69,6 +69,7 @@ The scoring boundary is fixed: generative features may explain served evidence, 
 
 - Seiche, https://seiche.info/: US dollar funding stress from public Federal Reserve, repo, Treasury, positioning, and market data.
 - Undertow, https://liquilens-undertow.com/: market-liquidity tiers, depth concentration, and estimated exit cost by venue and position size.
+- My Quant Doesn't Speak English, https://myquantdoesntspeakenglish.com/: every Seiche, LiquiLens, and Undertow dispatch in one editorial wire, plus original investigations.
 - Groundcheck, https://groundcheck.seiche.info/: live-source claim and citation verification.
 
 ## Citation

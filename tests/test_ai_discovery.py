@@ -71,6 +71,15 @@ def test_discovery_indexes_and_home_link_the_selection_surface():
     assert '<a class="btn btn-ghost" href="/use-cases/">Find your use case</a>' in home
 
 
+def test_contextual_product_network_is_visible_and_machine_readable():
+    hub = "https://myquantdoesntspeakenglish.com/"
+    home = read("index.html")
+    card = json.loads(read("product-card.json"))
+    assert hub in home
+    assert hub in read("llms.txt")
+    assert any(sibling["url"] == hub for sibling in card["siblings"])
+
+
 def test_search_and_answer_crawlers_are_explicitly_welcome():
     robots = read("robots.txt")
     for agent in ("OAI-SearchBot", "ChatGPT-User", "Claude-SearchBot",
