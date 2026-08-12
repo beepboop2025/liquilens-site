@@ -80,6 +80,8 @@
     "ai_catalog": "https://liquilens.in/.well-known/ai-catalog.json",
     "rest_example": "https://api.liquilens.in/api/failure-radar/board",
     "mcp": "https://api.liquilens.in/mcp",
+    "telegram_bot": "https://t.me/LiquiLens_bot",
+    "telegram_channel": "https://t.me/LiquidityLabDesk",
     "authentication": "The public hosted MCP and public evidence endpoints require no token."
   },
   "siblings": [

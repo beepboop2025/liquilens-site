@@ -65,6 +65,13 @@ Private-book validation starts with a six-week paid parallel pilot at https://li
 
 The scoring boundary is fixed: generative features may explain served evidence, but the deterministic screening policy scores institutions. Historical-diagnostic eligibility is reported separately and never inferred from the presence of a score. A grounded answer that cannot verify its figures against served payloads is refused.
 
+## Telegram
+
+- Institution-risk bot: https://t.me/LiquiLens_bot
+- Funding-stress bot: https://t.me/seiche_desk_bot
+- Market-exit bot: https://t.me/undertow_LiquiLens_bot
+- Free reviewed daily channel: https://t.me/LiquidityLabDesk
+
 ## Related products
 
 - Seiche, https://seiche.info/: US dollar funding stress from public Federal Reserve, repo, Treasury, positioning, and market data.
