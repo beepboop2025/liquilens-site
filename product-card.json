@@ -92,6 +92,11 @@
       "name": "Undertow",
       "use_for": "Cross-market liquidity fragility and exit cost",
       "url": "https://liquilens-undertow.com/"
+    },
+    {
+      "name": "My Quant Doesn't Speak English",
+      "use_for": "Every Seiche, LiquiLens, and Undertow dispatch in one editorial wire",
+      "url": "https://myquantdoesntspeakenglish.com/"
     }
   ],
   "citation": "LiquiLens. Bank and lender failure early-warning research system. https://liquilens.in/ (cite the specific validation or API response and its as-of date for quantitative claims)."
