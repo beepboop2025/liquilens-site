@@ -12,6 +12,7 @@
 <link rel="canonical" href="https://liquilens.in/" />
 <link rel="alternate" type="application/json" href="/product-card.json" title="LiquiLens product card" />
 <link rel="ai-catalog" type="application/ai-catalog+json" href="/.well-known/ai-catalog.json" />
+<link rel="stylesheet" href="/authority-actions.css" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <meta name="theme-color" content="#0A0F1C" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E3B778'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%231A1206' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E" />
@@ -641,6 +642,14 @@
         <a class="btn btn-ghost" href="#lab-reviewed-status">Explore the latest replay</a>
         <a class="btn btn-text" data-funnel="pilot_cta_clicked" href="/pilot/">Run a proof pilot <span>↗</span></a>
         <a class="btn btn-ghost" href="/use-cases/">Find your use case</a>
+      </div>
+      <div class="authority-actions" data-authority-actions data-product="LiquiLens" data-title="Bank and lender failure early warning" data-description="Public-data early warning for banks, NBFCs and MFIs, with methods, evidence limits and crisis replays." data-event-endpoint="https://api.liquilens.in/api/events" data-event-surface="homepage">
+        <button type="button" data-authority-action="share_opened">Share</button>
+        <button type="button" data-authority-action="citation_copied">Copy citation</button>
+        <button type="button" data-authority-action="link_copied">Copy tracked link</button>
+        <button type="button" data-authority-action="share_card_downloaded">Download card</button>
+        <a href="https://api.liquilens.in/api/failure-radar/board" data-authority-action="source_data_opened">Download radar data</a>
+        <span class="authority-actions__status" data-authority-status role="status"></span>
       </div>
       <div class="hero-proof" aria-label="Latest reviewed replay summary">
         <a href="#lab-reviewed-status"><b data-count="5273">5,273</b><span>canonical events</span></a>
@@ -2086,5 +2095,6 @@
 </script>
 <script src="/experience.js?v=20260809e" defer></script>
 <script src="/funnel.js" defer></script>
+<script src="/authority-actions.js" defer></script>
 </body>
 </html>
