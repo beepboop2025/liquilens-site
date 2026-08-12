@@ -318,7 +318,10 @@ def index_page(d: dict, slugs: list[str], pca_by: dict, fund_by: dict, fraud_set
 
 
 BASE_SITEMAP = [
-    ("/", "2026-08-09", "weekly", "1.0"),
+    ("/", "2026-08-12", "weekly", "1.0"),
+    ("/investigations/", "2026-08-12", "weekly", "0.9"),
+    ("/investigations/the-5-64x-private-credit-concentration/",
+     "2026-08-12", "monthly", "0.8"),
     ("/developers/", "2026-08-05", "monthly", "0.9"),
     ("/use-cases/", "2026-08-09", "monthly", "0.9"),
     ("/pilot/", "2026-08-08", "monthly", "0.9"),

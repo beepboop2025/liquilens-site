@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">One public concentration sits apart</title>
+  <desc id="desc">Horizontal bars rank ten banks by loans to nondepository financial institutions divided by Tier 1 capital. Northpointe Bank is highest at 5.64 times. The bars start at zero. The ratio is a concentration measure, not a loss estimate.</desc>
+  <rect width="1600" height="900" fill="#0d1420"/>
+  <circle cx="1420" cy="80" r="340" fill="#f0b65f" opacity=".045"/>
+  <text x="95" y="84" fill="#66d2c8" font-family="ui-monospace,monospace" font-size="17" letter-spacing="3">LIQUILENS / US NDFI WATCH</text>
+  <text x="95" y="140" fill="#f4f0e7" font-family="Newsreader,Georgia,serif" font-size="44">One public concentration sits apart</text>
+  <text x="95" y="180" fill="#adb4bf" font-family="Manrope,system-ui,sans-serif" font-size="19">NDFI loans / Tier 1 capital · March 31, 2026 · top 10 of 25 watched banks</text>
+
+  <g stroke="#f4f0e7" stroke-opacity=".09">
+    <line x1="440" y1="215" x2="440" y2="795"/>
+    <line x1="610" y1="215" x2="610" y2="795"/>
+    <line x1="780" y1="215" x2="780" y2="795"/>
+    <line x1="950" y1="215" x2="950" y2="795"/>
+    <line x1="1120" y1="215" x2="1120" y2="795"/>
+    <line x1="1290" y1="215" x2="1290" y2="795"/>
+    <line x1="1460" y1="215" x2="1460" y2="795"/>
+  </g>
+  <g fill="#747f91" font-family="ui-monospace,monospace" font-size="14" text-anchor="middle">
+    <text x="440" y="818">0×</text><text x="610" y="818">1×</text><text x="780" y="818">2×</text><text x="950" y="818">3×</text><text x="1120" y="818">4×</text><text x="1290" y="818">5×</text><text x="1460" y="818">6×</text>
+  </g>
+  <g fill="#adb4bf" font-family="Manrope,system-ui,sans-serif" font-size="17" text-anchor="end">
+    <text x="420" y="257">Northpointe Bank</text><text x="420" y="312">Axos Bank</text><text x="420" y="367">EverBank, N.A.</text><text x="420" y="422">Stifel Bank</text><text x="420" y="477">Merchants Bank of Indiana</text><text x="420" y="532">Texas Capital Bank</text><text x="420" y="587">Customers Bank</text><text x="420" y="642">Forbright Bank</text><text x="420" y="697">Apple Bank</text><text x="420" y="752">Goldman Sachs Bank USA</text>
+  </g>
+  <g>
+    <rect x="440" y="238" width="959" height="27" fill="#f0b65f"/>
+    <rect x="440" y="293" width="673" height="27" fill="#66d2c8" opacity=".82"/>
+    <rect x="440" y="348" width="673" height="27" fill="#66d2c8" opacity=".77"/>
+    <rect x="440" y="403" width="663" height="27" fill="#66d2c8" opacity=".72"/>
+    <rect x="440" y="458" width="595" height="27" fill="#66d2c8" opacity=".67"/>
+    <rect x="440" y="513" width="463" height="27" fill="#747f91" opacity=".78"/>
+    <rect x="440" y="568" width="437" height="27" fill="#747f91" opacity=".74"/>
+    <rect x="440" y="623" width="412" height="27" fill="#747f91" opacity=".70"/>
+    <rect x="440" y="678" width="369" height="27" fill="#747f91" opacity=".66"/>
+    <rect x="440" y="733" width="333" height="27" fill="#747f91" opacity=".62"/>
+  </g>
+  <g fill="#f4f0e7" font-family="ui-monospace,monospace" font-size="17">
+    <text x="1412" y="258">5.64×</text><text x="1126" y="313">3.96×</text><text x="1126" y="368">3.96×</text><text x="1116" y="423">3.90×</text><text x="1048" y="478">3.50×</text><text x="916" y="533">2.72×</text><text x="890" y="588">2.57×</text><text x="865" y="643">2.42×</text><text x="822" y="698">2.17×</text><text x="786" y="753">1.96×</text>
+  </g>
+  <line x1="94" y1="844" x2="1504" y2="844" stroke="#f4f0e7" stroke-opacity=".12"/>
+  <text x="95" y="878" fill="#adb4bf" font-family="Manrope,system-ui,sans-serif" font-size="16">Concentration, not impairment. Public Call Report aggregates contain no borrower, collateral or maturity detail.</text>
+  <text x="1504" y="878" fill="#f0b65f" font-family="ui-monospace,monospace" font-size="15" text-anchor="end">liquilens.in/investigations</text>
+</svg>

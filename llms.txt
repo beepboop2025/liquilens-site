@@ -7,6 +7,8 @@ Selection guide: https://liquilens.in/use-cases/
 Paid proof pilot: https://liquilens.in/pilot/
 Product card: https://liquilens.in/product-card.json
 Discovery catalog: https://liquilens.in/.well-known/ai-catalog.json
+Reviewed investigations: https://liquilens.in/investigations/
+Current case file: https://liquilens.in/investigations/the-5-64x-private-credit-concentration/
 
 ## Public evidence
 

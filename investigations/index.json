@@ -1,0 +1,17 @@
+{
+  "schema": "liquilens.investigation-index.v1",
+  "publication_policy": "reviewed_longform",
+  "articles": [
+    {
+      "slug": "the-5-64x-private-credit-concentration",
+      "headline": "The 5.64× private-credit concentration hiding in a call report",
+      "published_at": "2026-08-12T12:00:00+05:30",
+      "modified_at": "2026-08-12T12:00:00+05:30",
+      "editorial_status": "reviewed",
+      "canonical_url": "https://liquilens.in/investigations/the-5-64x-private-credit-concentration/",
+      "chart": "/investigations/the-5-64x-private-credit-concentration/ndfi-ranking.png",
+      "evidence_as_of": "2026-03-31",
+      "related_products": ["seiche", "liquilens-undertow"]
+    }
+  ]
+}
