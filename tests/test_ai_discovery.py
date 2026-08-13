@@ -71,6 +71,12 @@ def test_discovery_indexes_and_home_link_the_selection_surface():
     assert '<a class="btn btn-ghost" href="/use-cases/">Find your use case</a>' in home
 
 
+def test_sitemap_excludes_cross_domain_undertow_mirrors():
+    sitemap = read("sitemap.xml")
+    assert "https://liquilens.in/undertow/" not in sitemap
+    assert "https://liquilens.in/undertow/app/" not in sitemap
+
+
 def test_contextual_product_network_is_visible_and_machine_readable():
     hub = "https://myquantdoesntspeakenglish.com/"
     home = read("index.html")
@@ -83,7 +89,8 @@ def test_contextual_product_network_is_visible_and_machine_readable():
 def test_search_and_answer_crawlers_are_explicitly_welcome():
     robots = read("robots.txt")
     for agent in ("OAI-SearchBot", "ChatGPT-User", "Claude-SearchBot",
-                  "Claude-User", "PerplexityBot", "Google-Extended"):
+                  "Claude-User", "PerplexityBot", "Perplexity-User",
+                  "Google-Extended", "Googlebot", "Bingbot"):
         assert f"User-agent: {agent}\nAllow: /" in robots
 
 

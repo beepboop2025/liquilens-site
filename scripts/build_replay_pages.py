@@ -433,8 +433,6 @@ BASE_SITEMAP = [
     ("/replay/", "2026-08-04", "weekly", "0.8"),
     ("/replay/index.json", "2026-08-09", "weekly", "0.8"),
     ("/ship-log/", "2026-08-09", "weekly", "0.7"),
-    ("/undertow/", "2026-08-04", None, None),
-    ("/undertow/app/", "2026-08-04", None, None),
     ("/about/", "2026-08-04", None, None),
     ("/security/", "2026-08-09", None, None),
     ("/status/", "2026-08-09", None, None),
