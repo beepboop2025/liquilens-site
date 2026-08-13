@@ -9,6 +9,7 @@ fetch or schema problem aborts the build with no partial output.
 Output:
   replay/index.html            the replay index (all institutions)
   replay/<slug>/index.html     one page per institution
+  replay/index.json            machine-readable historical case-file feed
   sitemap.xml                  regenerated: base pages + replay pages
 
 Run from the repo root:  python3 scripts/build_replay_pages.py
@@ -317,6 +318,105 @@ def index_page(d: dict, slugs: list[str], pca_by: dict, fund_by: dict, fraud_set
                        jsonld=jsonld_page(title, desc, url)) + body + FOOT
 
 
+def replay_verdict(row: dict | None, field: str, *, scoreable: bool = True) -> str:
+    """Grade one lens without collapsing separate model behaviours together."""
+    if not scoreable:
+        return "VOID"
+    return "HIT" if row and row.get(field) else "MISS"
+
+
+def case_file_record(
+        slug: str, pca: dict | None, fund: dict | None, fraud: bool,
+        published_at: str) -> dict:
+    source = pca or fund or {}
+    name = name_from_slug(slug)
+    default_date = (pca or {}).get("default_date")
+    pca_verdict = replay_verdict(pca, "first_action_zone")
+    funding_verdict = replay_verdict(
+        fund, "first_signal", scoreable=bool(fund and fund.get("scoreable", True)))
+    pca_lead = pca.get("lead_months") if pca else None
+    funding_lead = fund.get("lead_months") if fund else None
+
+    if pca_verdict == "HIT" and funding_verdict == "HIT":
+        headline = f"Two LiquiLens lenses flagged {name} before the recorded failure"
+    elif pca_verdict == "HIT":
+        headline = f"The action-zone lens flagged {name}; the funding lens did not"
+    elif funding_verdict == "HIT":
+        headline = f"The funding lens flagged {name}; the action-zone lens missed it"
+    elif funding_verdict == "VOID":
+        headline = f"The action-zone lens missed {name}; the funding lens was not scoreable"
+    else:
+        headline = f"Both published LiquiLens lenses missed {name}"
+
+    outcomes = []
+    outcomes.append(
+        f"Action-zone lens: {pca_verdict}"
+        + (f", first flag {pca_lead} months before the recorded failure." if pca_lead is not None
+           else ", with no pre-failure action-zone entry in this record."))
+    if funding_verdict == "VOID":
+        outcomes.append("Funding-fragility lens: VOID because the record was not scoreable on that lens.")
+    else:
+        outcomes.append(
+            f"Funding-fragility lens: {funding_verdict}"
+            + (f", first flag {funding_lead} months before the recorded failure." if funding_lead is not None
+               else ", with no pre-failure signal in this record."))
+    if fraud:
+        outcomes.append(
+            "The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.")
+
+    return {
+        "id": f"liquilens:case-file:{slug}",
+        "slug": slug,
+        "article_type": "case_file",
+        "headline": headline,
+        "dek": " ".join(outcomes),
+        "beat": "historical-institution-replay",
+        "editorial_class": "case_file",
+        "publication_status": "PUBLISHED",
+        "published_at": published_at,
+        "modified_at": published_at,
+        "canonical_url": f"{SITE}/replay/{slug}/",
+        "clocks": {
+            "event_time": default_date or published_at,
+            "knowledge_time": published_at,
+        },
+        "evidence_as_of": "2026-08-09",
+        "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+        "point_in_time_status": "RECONSTRUCTED_LATER",
+        "outcome_window": {
+            "end": default_date,
+            "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic.",
+        },
+        "verdicts": {
+            "action_zone": pca_verdict,
+            "funding_fragility": funding_verdict,
+        },
+        "fraud_masked": fraud,
+        "original_contribution": {
+            "kinds": ["historical_case_file", "misses_included"],
+            "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately.",
+        },
+        "limitations": [
+            "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+        ],
+    }
+
+
+def case_file_index(
+        slugs: list[str], pca_by: dict, fund_by: dict, fraud_set: set,
+        published_at: str = "2026-08-09T20:27:48+05:30") -> dict:
+    return {
+        "schema": "liquilens.case-file-index.v1",
+        "publication_policy": "construction_pit_replay_misses_included",
+        "articles": [
+            case_file_record(
+                slug, pca_by.get(slug), fund_by.get(slug),
+                slug in fraud_set, published_at)
+            for slug in slugs
+        ],
+    }
+
+
 BASE_SITEMAP = [
     ("/", "2026-08-12", "weekly", "1.0"),
     ("/investigations/", "2026-08-12", "weekly", "0.9"),
@@ -328,7 +428,10 @@ BASE_SITEMAP = [
     ("/us/", "2026-08-09", "weekly", "0.9"),
     ("/research/", "2026-08-09", "weekly", "0.9"),
     ("/research/lab-reviewed-status-2026-08-09.json", "2026-08-09", "never", "0.8"),
+    ("/research/replay-atlas-2026-08-09.json", "2026-08-09", "never", "0.8"),
+    ("/desk/", "2026-08-11", "daily", "0.9"),
     ("/replay/", "2026-08-04", "weekly", "0.8"),
+    ("/replay/index.json", "2026-08-09", "weekly", "0.8"),
     ("/ship-log/", "2026-08-09", "weekly", "0.7"),
     ("/undertow/", "2026-08-04", None, None),
     ("/undertow/app/", "2026-08-04", None, None),
@@ -441,6 +544,11 @@ def main() -> int:
     index_changed = write_if_changed(
         index_path, index_page(d, slugs, pca_by, fund_by, fraud_set))
     index_changed = index_changed or differs_from_head(index_path)
+    write_if_changed(
+        outdir / "index.json",
+        json.dumps(case_file_index(slugs, pca_by, fund_by, fraud_set), indent=2)
+        + "\n",
+    )
     write_sitemap(slugs, changed_slugs, index_changed)
     print(f"wrote {len(slugs)} institution pages + index + sitemap ({len(BASE_SITEMAP) + len(slugs)} urls)")
     return 0

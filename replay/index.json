@@ -1,0 +1,591 @@
+{
+  "schema": "liquilens.case-file-index.v1",
+  "publication_policy": "construction_pit_replay_misses_included",
+  "articles": [
+    {
+      "id": "liquilens:case-file:abhyudaya-co-operative-bank",
+      "slug": "abhyudaya-co-operative-bank",
+      "article_type": "case_file",
+      "headline": "The action-zone lens flagged Abhyudaya Co-operative Bank; the funding lens did not",
+      "dek": "Action-zone lens: HIT, first flag 29 months before the recorded failure. Funding-fragility lens: MISS, with no pre-failure signal in this record.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/abhyudaya-co-operative-bank/",
+      "clocks": {
+        "event_time": "2023-11-24",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2023-11-24",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "HIT",
+        "funding_fragility": "MISS"
+      },
+      "fraud_masked": false,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:altico",
+      "slug": "altico",
+      "article_type": "case_file",
+      "headline": "The funding lens flagged Altico; the action-zone lens missed it",
+      "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: HIT, first flag 27 months before the recorded failure.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/altico/",
+      "clocks": {
+        "event_time": "2019-09-12",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2019-09-12",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "MISS",
+        "funding_fragility": "HIT"
+      },
+      "fraud_masked": false,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:ckp-co-operative-bank",
+      "slug": "ckp-co-operative-bank",
+      "article_type": "case_file",
+      "headline": "The action-zone lens missed CKP Co-operative Bank; the funding lens was not scoreable",
+      "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: VOID because the record was not scoreable on that lens.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/ckp-co-operative-bank/",
+      "clocks": {
+        "event_time": "2020-04-30",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2020-04-30",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "MISS",
+        "funding_fragility": "VOID"
+      },
+      "fraud_masked": false,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:first-leasing-company-of-india",
+      "slug": "first-leasing-company-of-india",
+      "article_type": "case_file",
+      "headline": "Both published LiquiLens lenses missed First Leasing Company of India",
+      "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: MISS, with no pre-failure signal in this record. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/first-leasing-company-of-india/",
+      "clocks": {
+        "event_time": "2013-12-02",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2013-12-02",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "MISS",
+        "funding_fragility": "MISS"
+      },
+      "fraud_masked": true,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:global-trust-bank",
+      "slug": "global-trust-bank",
+      "article_type": "case_file",
+      "headline": "The action-zone lens flagged Global Trust Bank; the funding lens did not",
+      "dek": "Action-zone lens: HIT, first flag 25 months before the recorded failure. Funding-fragility lens: VOID because the record was not scoreable on that lens. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/global-trust-bank/",
+      "clocks": {
+        "event_time": "2004-07-24",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2004-07-24",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "HIT",
+        "funding_fragility": "VOID"
+      },
+      "fraud_masked": true,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:ilfs",
+      "slug": "ilfs",
+      "article_type": "case_file",
+      "headline": "The funding lens flagged IL&FS; the action-zone lens missed it",
+      "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: HIT, first flag 38 months before the recorded failure. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/ilfs/",
+      "clocks": {
+        "event_time": "2018-08-28",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2018-08-28",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "MISS",
+        "funding_fragility": "HIT"
+      },
+      "fraud_masked": true,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:madhavpura-mercantile-co-operative-bank",
+      "slug": "madhavpura-mercantile-co-operative-bank",
+      "article_type": "case_file",
+      "headline": "The action-zone lens missed Madhavpura Mercantile Co-operative Bank; the funding lens was not scoreable",
+      "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: VOID because the record was not scoreable on that lens. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/madhavpura-mercantile-co-operative-bank/",
+      "clocks": {
+        "event_time": "2012-06-04",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2012-06-04",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "MISS",
+        "funding_fragility": "VOID"
+      },
+      "fraud_masked": true,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:nedungadi-bank",
+      "slug": "nedungadi-bank",
+      "article_type": "case_file",
+      "headline": "The action-zone lens flagged Nedungadi Bank; the funding lens did not",
+      "dek": "Action-zone lens: HIT, first flag 41 months before the recorded failure. Funding-fragility lens: VOID because the record was not scoreable on that lens.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/nedungadi-bank/",
+      "clocks": {
+        "event_time": "2002-11-02",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2002-11-02",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "HIT",
+        "funding_fragility": "VOID"
+      },
+      "fraud_masked": false,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:new-india-co-operative-bank",
+      "slug": "new-india-co-operative-bank",
+      "article_type": "case_file",
+      "headline": "The action-zone lens flagged New India Co-operative Bank; the funding lens did not",
+      "dek": "Action-zone lens: HIT, first flag 44 months before the recorded failure. Funding-fragility lens: MISS, with no pre-failure signal in this record. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/new-india-co-operative-bank/",
+      "clocks": {
+        "event_time": "2025-02-13",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2025-02-13",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "HIT",
+        "funding_fragility": "MISS"
+      },
+      "fraud_masked": true,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:pmc-bank",
+      "slug": "pmc-bank",
+      "article_type": "case_file",
+      "headline": "Both published LiquiLens lenses missed PMC Bank",
+      "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: MISS, with no pre-failure signal in this record. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/pmc-bank/",
+      "clocks": {
+        "event_time": "2019-09-23",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2019-09-23",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "MISS",
+        "funding_fragility": "MISS"
+      },
+      "fraud_masked": true,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:religare-finvest",
+      "slug": "religare-finvest",
+      "article_type": "case_file",
+      "headline": "The funding lens flagged Religare Finvest; the action-zone lens missed it",
+      "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: HIT, first flag 19 months before the recorded failure. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/religare-finvest/",
+      "clocks": {
+        "event_time": "2018-01-18",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2018-01-18",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "MISS",
+        "funding_fragility": "HIT"
+      },
+      "fraud_masked": true,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:rupee-co-operative-bank",
+      "slug": "rupee-co-operative-bank",
+      "article_type": "case_file",
+      "headline": "The action-zone lens missed Rupee Co-operative Bank; the funding lens was not scoreable",
+      "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: VOID because the record was not scoreable on that lens.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/rupee-co-operative-bank/",
+      "clocks": {
+        "event_time": "2022-09-22",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2022-09-22",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "MISS",
+        "funding_fragility": "VOID"
+      },
+      "fraud_masked": false,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:sambandh-finserve",
+      "slug": "sambandh-finserve",
+      "article_type": "case_file",
+      "headline": "The funding lens flagged Sambandh Finserve; the action-zone lens missed it",
+      "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: HIT, first flag 52 months before the recorded failure. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/sambandh-finserve/",
+      "clocks": {
+        "event_time": "2020-10-13",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2020-10-13",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "MISS",
+        "funding_fragility": "HIT"
+      },
+      "fraud_masked": true,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:sri-guru-raghavendra-sahakara-bank",
+      "slug": "sri-guru-raghavendra-sahakara-bank",
+      "article_type": "case_file",
+      "headline": "Both published LiquiLens lenses missed Sri Guru Raghavendra Sahakara Bank",
+      "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: MISS, with no pre-failure signal in this record. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/sri-guru-raghavendra-sahakara-bank/",
+      "clocks": {
+        "event_time": "2020-01-10",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2020-01-10",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "MISS",
+        "funding_fragility": "MISS"
+      },
+      "fraud_masked": true,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    },
+    {
+      "id": "liquilens:case-file:united-western-bank",
+      "slug": "united-western-bank",
+      "article_type": "case_file",
+      "headline": "The action-zone lens flagged United Western Bank; the funding lens did not",
+      "dek": "Action-zone lens: HIT, first flag 63 months before the recorded failure. Funding-fragility lens: MISS, with no pre-failure signal in this record.",
+      "beat": "historical-institution-replay",
+      "editorial_class": "case_file",
+      "publication_status": "PUBLISHED",
+      "published_at": "2026-08-09T20:27:48+05:30",
+      "modified_at": "2026-08-09T20:27:48+05:30",
+      "canonical_url": "https://liquilens.in/replay/united-western-bank/",
+      "clocks": {
+        "event_time": "2006-09-02",
+        "knowledge_time": "2026-08-09T20:27:48+05:30"
+      },
+      "evidence_as_of": "2026-08-09",
+      "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "point_in_time_status": "RECONSTRUCTED_LATER",
+      "outcome_window": {
+        "end": "2006-09-02",
+        "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
+      },
+      "verdicts": {
+        "action_zone": "HIT",
+        "funding_fragility": "MISS"
+      },
+      "fraud_masked": false,
+      "original_contribution": {
+        "kinds": [
+          "historical_case_file",
+          "misses_included"
+        ],
+        "statement": "A per-institution comparison of two distinct historical lenses against the recorded failure date, preserving hits, misses, and unscoreable cases separately."
+      },
+      "limitations": [
+        "Filing availability is proxied rather than fully reconstructed, so this is reconstructed construction-PIT analysis, not a publication-vintage validated backtest or real-money evidence."
+      ]
+    }
+  ]
+}

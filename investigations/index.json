@@ -3,11 +3,29 @@
   "publication_policy": "reviewed_longform",
   "articles": [
     {
+      "id": "liquilens:investigation:the-5-64x-private-credit-concentration",
       "slug": "the-5-64x-private-credit-concentration",
+      "article_type": "investigation",
       "headline": "The 5.64× private-credit concentration hiding in a call report",
+      "dek": "Northpointe Bank reports loans to nondepository financial institutions equal to 5.64 times Tier 1 capital, the highest ratio in LiquiLens's 25-bank NDFI watch. That is a concentration measure, not evidence of loss or distress.",
+      "beat": "institution-risk",
+      "editorial_class": "investigation",
+      "publication_status": "PUBLISHED",
       "published_at": "2026-08-12T12:00:00+05:30",
       "modified_at": "2026-08-12T12:00:00+05:30",
       "editorial_status": "reviewed",
+      "clocks": {
+        "event_time": "2026-03-31T00:00:00Z",
+        "knowledge_time": "2026-08-12T12:00:00+05:30"
+      },
+      "evidence_status": "CURRENT_AMENDED_CONSTRUCTION_PIT",
+      "original_contribution": {
+        "kinds": ["cross_bank_private_credit_concentration"],
+        "statement": "A like-for-like public call-report concentration audit that names the unanswered loan-detail questions without alleging distress."
+      },
+      "limitations": [
+        "The data are current-amended construction-PIT, not a complete archive of values first published each quarter. This is not a validated backtest, default forecast, credit rating, or real-money signal."
+      ],
       "canonical_url": "https://liquilens.in/investigations/the-5-64x-private-credit-concentration/",
       "chart": "/investigations/the-5-64x-private-credit-concentration/ndfi-ranking.png",
       "evidence_as_of": "2026-03-31",
