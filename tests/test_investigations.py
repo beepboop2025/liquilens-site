@@ -40,6 +40,17 @@ def test_network_links_connect_all_three_editorial_desks():
         assert "https://liquilens-undertow.com/investigations/" in page
 
 
+def test_articles_front_door_connects_every_editorial_format():
+    hub = HUB.read_text()
+    home = (ROOT / "index.html").read_text()
+    assert "LIQUILENS / ARTICLES" in hub
+    assert 'href="/replay/"' in hub
+    assert 'href="/desk/"' in hub
+    assert "https://myquantdoesntspeakenglish.com/" in hub
+    assert "material evidence, not a quota" in hub
+    assert '<a class="nav-link" href="/investigations/">Articles</a>' in home
+
+
 def test_manifest_and_share_assets_are_publication_ready():
     manifest = json.loads((ROOT / "investigations" / "index.json").read_text())
     assert manifest["publication_policy"] == "reviewed_longform"
@@ -60,7 +71,7 @@ def test_investigation_is_reachable_from_human_and_machine_navigation():
     home = (ROOT / "index.html").read_text()
     sitemap = (ROOT / "sitemap.xml").read_text()
     llms = (ROOT / "llms.txt").read_text()
-    assert 'href="/investigations/"' in home
+    assert '<a class="nav-link" href="/investigations/">Articles</a>' in home
     assert "https://liquilens.in/investigations/" in sitemap
     assert "the-5-64x-private-credit-concentration" in sitemap
     assert "Reviewed investigations" in llms
