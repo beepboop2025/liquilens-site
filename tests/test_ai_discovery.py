@@ -71,6 +71,19 @@ def test_discovery_indexes_and_home_link_the_selection_surface():
     assert '<a class="btn btn-ghost" href="/use-cases/">Find your use case</a>' in home
 
 
+def test_home_exposes_an_attributed_daily_brief_above_the_mobile_fold():
+    home = read("index.html")
+    hero = home[home.index('<div class="hero-actions">'):
+                home.index('</div>', home.index('<div class="hero-actions">'))]
+    telegram = "https://t.me/LiquiLens_bot?start=liquilens_home_hero"
+
+    assert f'href="{telegram}"' in hero
+    assert "Get 09:00 IST brief" in hero
+    assert "daily failure radar · /stop any time" in hero
+    assert 'target="_blank" rel="noopener noreferrer"' in hero
+    assert hero.index(telegram) < hero.index('href="/replay/"')
+
+
 def test_sitemap_excludes_cross_domain_undertow_mirrors():
     sitemap = read("sitemap.xml")
     assert "https://liquilens.in/undertow/" not in sitemap
