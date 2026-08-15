@@ -9,9 +9,9 @@
   "headline": "ESAF Small Finance Bank's market warning is fresher than its filing",
   "dek": "LiquiLens places ESAF Small Finance Bank in YELLOW, but the useful story is the clock mismatch: accounts dated 2025-09-30 beside a market distance-to-default reading dated 2026-08-11.",
   "canonical_url": "https://liquilens.in/articles/2026-08-15-esaf-small-finance-bank-s-market-warning-is-fresher-than-its-filing/",
-  "published_at": "2026-08-15T07:21:33Z",
-  "evidence_as_of": "2026-08-14",
-  "board_signature": "4d5c12b2f042141506c21417b49ac688657be929128aba6897ee606758aaf7de",
+  "published_at": "2026-08-15T10:48:37Z",
+  "evidence_as_of": "2026-08-15",
+  "board_signature": "84bb24a7ffdbec3d3dc3af10b4d42d2100880979d3fda8cf666d59513cbcbc49",
   "subject": {
     "slug": "esaf-sfb",
     "name": "ESAF Small Finance Bank",
@@ -131,26 +131,28 @@
   },
   "word_count": 1246,
   "editorial_memory": {
-    "status": "unavailable",
-    "source_run_id": null,
-    "memory_fingerprint": null,
+    "status": "applied",
+    "source_run_id": "sha256:665d73087c195f19484706e11c5f3dedbf1695b553c07f936277f47bab97066a",
+    "memory_fingerprint": "sha256:2e223acafa9fb50e48bb03431766e131aaaf17c8f8ebfa48f7a25fcc882bb837",
     "rubric_version": "mqdnse.editorial-rubric.v1",
-    "directives": [],
-    "reason": "HTTPError: HTTP Error 404: Not Found"
+    "directives": [
+      "preserve_current_standard"
+    ]
   },
   "generation": {
     "mode": "deterministic_fallback",
     "model": null,
     "passes": 0,
-    "dossier_sha256": "ceb98197820a8c4338d6645d475f23f783fe43dae0645146151ee8bccf26fcf8",
-    "fallback_reason": "editorial model is not configured",
+    "dossier_sha256": "8124c6046f3e10a2e90d9faf4ab65ace9964bc76ae0c68bab13ea8a771d7a3c7",
+    "fallback_reason": "RuntimeError: writer pass failed: HTTPError: HTTP Error 401: Unauthorized",
     "editorial_memory": {
-      "status": "unavailable",
-      "source_run_id": null,
-      "memory_fingerprint": null,
+      "status": "applied",
+      "source_run_id": "sha256:665d73087c195f19484706e11c5f3dedbf1695b553c07f936277f47bab97066a",
+      "memory_fingerprint": "sha256:2e223acafa9fb50e48bb03431766e131aaaf17c8f8ebfa48f7a25fcc882bb837",
       "rubric_version": "mqdnse.editorial-rubric.v1",
-      "directives": [],
-      "reason": "HTTPError: HTTP Error 404: Not Found"
+      "directives": [
+        "preserve_current_standard"
+      ]
     }
   },
   "funnel": [
