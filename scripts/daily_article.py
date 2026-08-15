@@ -976,7 +976,13 @@ def quality_issues(article: dict) -> list[str]:
 def build_article(datasets: dict[str, dict], *, date: str,
                   recent_index: list[dict] | None = None,
                   configured_model: dict[str, str] | None | bool = False,
-                  editorial_memory: dict | None = None) -> dict:
+                  editorial_memory: dict | None = None,
+                  published_at: datetime | None = None) -> dict:
+    publication_clock = published_at or datetime.now(timezone.utc)
+    if publication_clock.tzinfo is None:
+        raise ValueError("published_at must include a timezone")
+    publication_clock = publication_clock.astimezone(timezone.utc).replace(microsecond=0)
+    publication_timestamp = publication_clock.isoformat().replace("+00:00", "Z")
     index = recent_index or []
     signature = board_signature(datasets["board"])
     previous_signature = str(index[0].get("board_signature") or "") if index else ""
@@ -1041,7 +1047,7 @@ def build_article(datasets: dict[str, dict], *, date: str,
         "schema": SCHEMA, "id": f"liquilens:article:{slug}", "product": "liquilens",
         "slug": slug, "date": date, "article_type": article_type, "topic": topic,
         "headline": headline, "dek": dek, "canonical_url": f"{SITE}/articles/{slug}/",
-        "published_at": f"{date}T11:15:00Z",
+        "published_at": publication_timestamp,
         "evidence_as_of": datasets["board"].get("as_of"),
         "board_signature": signature, "subject": subject,
         "body_md": body.strip() + "\n",

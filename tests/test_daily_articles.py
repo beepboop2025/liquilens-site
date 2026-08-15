@@ -100,6 +100,7 @@ def datasets():
 def test_first_changed_board_gets_current_analysis():
     article = daily_article.build_article(
         datasets(), date="2026-08-15", recent_index=[], configured_model=None,
+        published_at=datetime(2026, 8, 15, 7, 21, 34, tzinfo=timezone.utc),
     )
     assert article["article_type"] == "current_analysis"
     assert article["topic"] == "example-sfb"
@@ -108,6 +109,8 @@ def test_first_changed_board_gets_current_analysis():
     assert "market warning is fresher" in article["headline"]
     assert "****" not in article["body_md"]
     assert "forensic lens fired is **none published**" in article["body_md"]
+    assert article["published_at"] == "2026-08-15T07:21:34Z"
+    assert article["published_at"] != "2026-08-15T11:15:00Z"
 
 
 def test_unchanged_board_opens_historical_record():
