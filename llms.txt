@@ -90,5 +90,5 @@ LiquiLens. Bank and lender failure early-warning research system. https://liquil
 
 Archive and full-text feeds: https://liquilens.in/articles/, https://liquilens.in/articles/feed.json (JSON Feed 1.1), and https://liquilens.in/articles/feed.xml (Atom)
 
-- [ESAF Small Finance Bank's market warning is fresher than its filing](https://liquilens.in/articles/2026-08-15-esaf-small-finance-bank-s-market-warning-is-fresher-than-its-filing.md): 2026-08-15, current analysis. LiquiLens places ESAF Small Finance Bank in YELLOW, but the useful story is the clock mismatch: accounts dated 2025-09-30 beside a market distance-to-default reading dated 2026-08-11.
+- [ESAF’s warning is a dated filing signal meeting a live market-price signal—not evidence of a funding run](https://liquilens.in/articles/2026-08-15-esaf-s-warning-is-a-dated-filing-signal-meeting-a-live-market-price-signal-n.md): 2026-08-15, current analysis. ESAF Small Finance Bank is a yellow-tier monitoring case because an elevated GNPA reading sits beside a market distance-to-default below the screen threshold. The filing, price and model signals should not be treated as the same thing.
 <!-- DAILY-ARTICLES:END -->
