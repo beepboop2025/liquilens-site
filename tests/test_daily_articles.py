@@ -162,6 +162,10 @@ def test_write_builds_page_archive_feed_and_discovery(tmp_path):
     assert article["headline"] in (article_dir / article["slug"] / "index.html").read_text()
     assert article["headline"] in (article_dir / "index.html").read_text()
     assert "<feed xmlns=" in (article_dir / "feed.xml").read_text()
+    json_feed = json.loads((article_dir / "feed.json").read_text())
+    assert json_feed["version"] == "https://jsonfeed.org/version/1.1"
+    assert json_feed["items"][0]["content_text"] == article["body_md"]
+    assert json_feed["items"][0]["_liquidity_lab"]["quality_gate"]["status"] == "PASS"
     assert article["canonical_url"] in (tmp_path / "sitemap.xml").read_text()
     assert f"{article['slug']}.md" in (tmp_path / "llms.txt").read_text()
     sidecar = json.loads((article_dir / f"{article['slug']}.json").read_text())

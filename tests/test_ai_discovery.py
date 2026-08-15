@@ -32,7 +32,12 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["ai_catalog"] == (
         "https://liquilens.in/.well-known/ai-catalog.json")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
-    assert card["updated"] == "2026-08-09"
+    assert card["updated"] == "2026-08-15"
+    assert card["access"]["daily_articles"] == "https://liquilens.in/articles/"
+    assert card["access"]["article_json_feed"] == (
+        "https://liquilens.in/articles/feed.json")
+    assert card["access"]["article_atom_feed"] == (
+        "https://liquilens.in/articles/feed.xml")
     assert card["evidence"]["lab_reviewed_status"] == (
         "https://liquilens.in/research/lab-reviewed-status-2026-08-09.json")
     expected_status = {
@@ -185,19 +190,22 @@ def test_catalog_obeys_the_ard_envelope():
 def test_mcp_card_and_nested_product_line_are_current():
     entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
     mcp = entries["urn:air:liquilens.in:mcp:failure-radar"]
-    assert mcp["version"] == "1.5.0"
+    assert mcp["version"] == "1.6.0"
     assert mcp["data"]["name"] == "io.github.beepboop2025/liquilens"
     assert mcp["data"]["version"] == mcp["version"]
     assert mcp["data"]["remotes"] == [
         {"type": "streamable-http", "url": "https://api.liquilens.in/mcp"}
     ]
-    assert len(mcp["capabilities"]) == 17
-    assert mcp["metadata"]["publicToolCount"] == 17
+    assert len(mcp["capabilities"]) == 18
+    assert mcp["metadata"]["publicToolCount"] == 18
+    assert mcp["metadata"]["articleJsonFeed"] == (
+        "https://liquilens.in/articles/feed.json")
+    assert "latest_article" in mcp["capabilities"]
     for tool in ("crypto_regime_board", "stablecoin_rails_board",
                  "crypto_exposure_board"):
         assert tool in mcp["capabilities"]
-    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.9.1"
-    assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.7.1"
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.10.0"
+    assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.8.0"
     assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
         "https://seiche.info/.well-known/ai-catalog.json")
     assert entries["urn:air:liquilens.in:catalog:undertow"]["url"] == (

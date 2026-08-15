@@ -94,8 +94,8 @@ EVIDENCE_SURFACES = (
     os.path.join("developers", "index.html"),
     "llms.txt",
 )
-MCP_VERSION = "1.5.0"
-MCP_TOOL_COUNT = 17
+MCP_VERSION = "1.6.0"
+MCP_TOOL_COUNT = 18
 LAB_STATUS_RECEIPT = os.path.join(
     "research", "lab-reviewed-status-2026-08-09.json")
 LAB_STATUS_ID = (

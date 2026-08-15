@@ -15,7 +15,7 @@
         "name": "io.github.beepboop2025/liquilens",
         "title": "LiquiLens — the Failure Radar",
         "description": "Bank and lender failure early warning, with historical-evidence status and eligibility flags served beside every historical claim.",
-        "version": "1.5.0",
+        "version": "1.6.0",
         "repository": {
           "url": "https://github.com/beepboop2025/LiquiLens",
           "source": "github"
@@ -28,7 +28,7 @@
           }
         ]
       },
-      "description": "Seventeen public, read-only tools for Indian bank and NBFC failure risk, RBI supervisory actions, institution dossiers, construction-PIT historical diagnostics, and display-only crypto transmission context.",
+      "description": "Eighteen public, read-only tools for the latest full-text editorial, Indian bank and NBFC failure risk, RBI supervisory actions, institution dossiers, construction-PIT historical diagnostics, and display-only crypto transmission context.",
       "tags": [
         "bank failure early warning",
         "NBFC risk",
@@ -38,6 +38,7 @@
         "validation"
       ],
       "capabilities": [
+        "latest_article",
         "failure_radar_board",
         "failure_radar_institution",
         "institution_review_packet",
@@ -63,12 +64,13 @@
         "What RBI supervisory actions were published recently?",
         "Find an RBI-registered NBFC by name or CIN."
       ],
-      "version": "1.5.0",
-      "updatedAt": "2026-08-08T16:45:00Z",
+      "version": "1.6.0",
+      "updatedAt": "2026-08-15T12:00:00Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
-        "publicToolCount": 17,
+        "publicToolCount": 18,
+        "articleJsonFeed": "https://liquilens.in/articles/feed.json",
         "telegramBot": "https://t.me/LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityLabDesk"
       }
@@ -98,8 +100,8 @@
         "Find public evidence for an early-warning claim about a lender.",
         "Retrieve recent RBI supervisory actions as structured data."
       ],
-      "version": "1.5.0",
-      "updatedAt": "2026-08-08T16:45:00Z",
+      "version": "1.6.0",
+      "updatedAt": "2026-08-15T12:00:00Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
@@ -122,8 +124,8 @@
         "What is the current US dollar funding stress regime?",
         "Are reserves, repo, reverse repo or Treasury cash signaling strain?"
       ],
-      "version": "0.9.1",
-      "updatedAt": "2026-08-08T16:45:00Z",
+      "version": "0.10.0",
+      "updatedAt": "2026-08-15T12:00:00Z",
       "metadata": {
         "productUrl": "https://seiche.info",
         "telegramBot": "https://t.me/seiche_desk_bot",
@@ -146,8 +148,8 @@
         "What would it cost to sell a large BTC position across venues?",
         "Are Treasury, credit, FX or crypto liquidity conditions strained?"
       ],
-      "version": "1.7.1",
-      "updatedAt": "2026-08-08T16:45:00Z",
+      "version": "1.8.0",
+      "updatedAt": "2026-08-15T12:00:00Z",
       "metadata": {
         "productUrl": "https://liquilens-undertow.com",
         "telegramBot": "https://t.me/Undertow_LiquiLens_bot",

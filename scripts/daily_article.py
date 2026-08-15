@@ -1124,7 +1124,11 @@ ARTICLE_CSS = """
 
 def page_shell(*, title: str, description: str, canonical: str, jsonld: dict,
                body: str, feed: bool = True) -> str:
-    feed_link = '<link rel="alternate" type="application/atom+xml" href="/articles/feed.xml" title="LiquiLens articles">' if feed else ""
+    feed_link = (
+        '<link rel="alternate" type="application/feed+json" href="/articles/feed.json" title="LiquiLens articles JSON Feed">'
+        '<link rel="alternate" type="application/atom+xml" href="/articles/feed.xml" title="LiquiLens articles">'
+        if feed else ""
+    )
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
@@ -1209,6 +1213,55 @@ def render_feed(index: list[dict], bodies: dict[str, str]) -> str:
     )
 
 
+def render_json_feed(index: list[dict], bodies: dict[str, str],
+                     metadata: dict[str, dict]) -> str:
+    """Full-text JSON Feed shared by MCP, Telegram and syndicators."""
+    items = []
+    for row in index[:50]:
+        slug = row["slug"]
+        meta = metadata.get(slug) or {}
+        generation = meta.get("generation") or {}
+        quality = meta.get("quality_gate") or {}
+        items.append({
+            "id": str(meta.get("id") or f"liquilens:article:{slug}"),
+            "url": row["canonical_url"],
+            "title": row["headline"],
+            "summary": row["dek"],
+            "content_text": bodies.get(slug, ""),
+            "date_published": row["published_at"],
+            "tags": [str(row.get("article_type") or "analysis"), "institution risk"],
+            "_liquidity_lab": {
+                "schema": "liquidity-lab.editorial-item.v1",
+                "product": "liquilens",
+                "article_type": row.get("article_type"),
+                "evidence_as_of": row.get("evidence_as_of"),
+                "word_count": row.get("word_count"),
+                "evidence_fingerprint": generation.get("dossier_sha256"),
+                "generation_mode": generation.get("mode"),
+                "quality_gate": {
+                    "status": quality.get("status"),
+                    "checks": list(quality.get("checks") or []),
+                },
+                "authority": {
+                    "factual_authority": "published_article_only",
+                    "training_allowed": False,
+                },
+            },
+        })
+    return json.dumps({
+        "version": "https://jsonfeed.org/version/1.1",
+        "title": "LiquiLens daily institution-risk articles",
+        "home_page_url": f"{SITE}/articles/",
+        "feed_url": f"{SITE}/articles/feed.json",
+        "description": (
+            "Evidence-led bank and lender analysis, with historical failure "
+            "replays when the current board is quiet."
+        ),
+        "authors": [{"name": "LiquiLens", "url": f"{SITE}/"}],
+        "items": items,
+    }, indent=2, ensure_ascii=False) + "\n"
+
+
 def replace_marked_block(text: str, start: str, end: str, block: str,
                          before: str | None = None) -> str:
     marked = f"{start}\n{block.rstrip()}\n{end}"
@@ -1240,7 +1293,7 @@ def update_discovery_files(index: list[dict], root: pathlib.Path) -> None:
     llms_rows = [
         "## Daily institution-risk articles",
         "",
-        f"Archive and full-text feed: {SITE}/articles/ and {SITE}/articles/feed.xml",
+        f"Archive and full-text feeds: {SITE}/articles/, {SITE}/articles/feed.json (JSON Feed 1.1), and {SITE}/articles/feed.xml (Atom)",
         "",
     ]
     llms_rows.extend(
@@ -1300,29 +1353,58 @@ def write_article(article: dict, *, root: pathlib.Path = ROOT) -> list[str]:
         if old_dir.exists() and not any(old_dir.iterdir()):
             old_dir.rmdir()
 
+    derived = refresh_article_surfaces(root=root)
+    return [
+        str(md_path), str(json_path), str(index_path), *derived,
+    ]
+
+
+def refresh_article_surfaces(*, root: pathlib.Path = ROOT) -> list[str]:
+    """Rebuild every derived article surface from reviewed local artifacts.
+
+    This migration path is intentionally offline: it never fetches evidence or
+    writes new prose. It is also useful after a new syndication surface lands,
+    because today's already-published revision can be redistributed verbatim.
+    """
+    article_dir = root / "articles"
+    index = load_index(article_dir / "index.json")
+    if not index:
+        raise SystemExit("article surface refresh requires a non-empty index")
     bodies = {}
+    metadata = {}
+    pages = []
     for row in index:
-        path = article_dir / f"{row['slug']}.md"
-        if not path.exists():
-            raise SystemExit(f"article index lists {row['slug']} but its markdown is missing")
-        sidecar_path = article_dir / f"{row['slug']}.json"
-        if not sidecar_path.exists():
-            raise SystemExit(f"article index lists {row['slug']} but its sidecar is missing")
+        slug = str(row.get("slug") or "")
+        if not re.fullmatch(r"[a-z0-9-]+", slug):
+            raise SystemExit(f"unsafe article slug in index: {slug!r}")
+        md_path = article_dir / f"{slug}.md"
+        sidecar_path = article_dir / f"{slug}.json"
+        if not md_path.exists() or not sidecar_path.exists():
+            raise SystemExit(
+                f"article index lists {slug} but its markdown or sidecar is missing")
         meta = json.loads(sidecar_path.read_text())
-        if meta.get("quality_gate", {}).get("status") != "PASS":
-            raise SystemExit(f"article sidecar failed quality gate: {sidecar_path}")
-        bodies[row["slug"]] = path.read_text()
+        if meta.get("slug") != slug or \
+                meta.get("quality_gate", {}).get("status") != "PASS":
+            raise SystemExit(f"article sidecar failed identity/quality gate: {sidecar_path}")
+        body = md_path.read_text()
+        bodies[slug] = body
+        metadata[slug] = meta
+        page_path = article_dir / slug / "index.html"
+        page_path.parent.mkdir(parents=True, exist_ok=True)
+        page_path.write_text(render_article({**meta, "body_md": body}))
+        pages.append(str(page_path))
 
     learning_path = write_learning_feed(article_dir, index, bodies)
     archive_path = article_dir / "index.html"
     feed_path = article_dir / "feed.xml"
+    json_feed_path = article_dir / "feed.json"
     archive_path.write_text(render_archive(index))
     feed_path.write_text(render_feed(index, bodies))
+    json_feed_path.write_text(render_json_feed(index, bodies, metadata))
     update_discovery_files(index, root)
     return [
-        str(md_path), str(json_path), str(page_path), str(index_path),
-        str(learning_path), str(archive_path), str(feed_path),
-        str(root / "sitemap.xml"), str(root / "llms.txt"),
+        *pages, str(learning_path), str(archive_path), str(feed_path),
+        str(json_feed_path), str(root / "sitemap.xml"), str(root / "llms.txt"),
     ]
 
 
@@ -1396,7 +1478,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--date", help="publication day, YYYY-MM-DD")
     parser.add_argument("--force", action="store_true", help="replace today's article")
     parser.add_argument("--input-dir", type=pathlib.Path, help="read named JSON datasets instead of live APIs")
+    parser.add_argument(
+        "--refresh-surfaces", action="store_true",
+        help="rebuild pages and feeds from reviewed local articles without fetching",
+    )
     args = parser.parse_args(argv)
+    if args.refresh_surfaces:
+        for path in refresh_article_surfaces():
+            print(f"wrote {path}")
+        return 0
     date = args.date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     index = load_index()
     if not args.force and any(row.get("date") == date for row in index):

@@ -1,6 +1,6 @@
 {
   "schema": "liquidity-lab.product-card.v1",
-  "updated": "2026-08-09",
+  "updated": "2026-08-15",
   "product": {
     "name": "LiquiLens",
     "canonical_url": "https://liquilens.in/",
@@ -79,6 +79,9 @@
     "openapi": "https://api.liquilens.in/api/openapi.json",
     "ai_catalog": "https://liquilens.in/.well-known/ai-catalog.json",
     "rest_example": "https://api.liquilens.in/api/failure-radar/board",
+    "daily_articles": "https://liquilens.in/articles/",
+    "article_json_feed": "https://liquilens.in/articles/feed.json",
+    "article_atom_feed": "https://liquilens.in/articles/feed.xml",
     "mcp": "https://api.liquilens.in/mcp",
     "telegram_bot": "https://t.me/LiquiLens_bot",
     "telegram_channel": "https://t.me/LiquidityLabDesk",
