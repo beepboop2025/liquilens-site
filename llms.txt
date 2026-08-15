@@ -84,3 +84,11 @@ The scoring boundary is fixed: generative features may explain served evidence, 
 Cite the specific validation page or API response and include its as-of or generated-at date. Suggested project citation:
 
 LiquiLens. Bank and lender failure early-warning research system. https://liquilens.in/ (accessed YYYY-MM-DD).
+
+<!-- DAILY-ARTICLES:START -->
+## Daily institution-risk articles
+
+Archive and full-text feed: https://liquilens.in/articles/ and https://liquilens.in/articles/feed.xml
+
+- [ESAF Small Finance Bank's market warning is fresher than its filing](https://liquilens.in/articles/2026-08-15-esaf-small-finance-bank-s-market-warning-is-fresher-than-its-filing.md): 2026-08-15, current analysis. LiquiLens places ESAF Small Finance Bank in YELLOW, but the useful story is the clock mismatch: accounts dated 2025-09-30 beside a market distance-to-default reading dated 2026-08-11.
+<!-- DAILY-ARTICLES:END -->

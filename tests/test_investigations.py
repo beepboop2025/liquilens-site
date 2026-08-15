@@ -47,8 +47,9 @@ def test_articles_front_door_connects_every_editorial_format():
     assert 'href="/replay/"' in hub
     assert 'href="/desk/"' in hub
     assert "https://myquantdoesntspeakenglish.com/" in hub
-    assert "material evidence, not a quota" in hub
-    assert '<a class="nav-link" href="/investigations/">Articles</a>' in home
+    assert "Daily publication does not force a breaking-news claim" in hub
+    assert 'href="/articles/">Daily articles</a>' in hub
+    assert '<a class="nav-link" href="/articles/">Articles</a>' in home
 
 
 def test_manifest_and_share_assets_are_publication_ready():
@@ -71,7 +72,7 @@ def test_investigation_is_reachable_from_human_and_machine_navigation():
     home = (ROOT / "index.html").read_text()
     sitemap = (ROOT / "sitemap.xml").read_text()
     llms = (ROOT / "llms.txt").read_text()
-    assert '<a class="nav-link" href="/investigations/">Articles</a>' in home
+    assert '<a class="nav-link" href="/articles/">Articles</a>' in home
     assert "https://liquilens.in/investigations/" in sitemap
     assert "the-5-64x-private-credit-concentration" in sitemap
     assert "Reviewed investigations" in llms

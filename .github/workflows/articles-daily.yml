@@ -1,0 +1,76 @@
+name: Publish daily institution-risk article
+
+on:
+  schedule:
+    - cron: "15 11 * * *" # after the public board refresh and Seiche's daily edition
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Replace today's edition after an editorial-code change
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: liquilens-daily-article
+  cancel-in-progress: false
+
+jobs:
+  write-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Write today's evidence-led article
+        env:
+          FORCE: ${{ inputs.force }}
+          # No secret means the deterministic newsroom edition still ships.
+          # With the secret, the evidence dossier receives writer and standards
+          # editor passes before the same deterministic gate.
+          EDITORIAL_LLM_API_KEY: ${{ secrets.EDITORIAL_LLM_API_KEY }}
+          EDITORIAL_LLM_BASE_URL: ${{ vars.EDITORIAL_LLM_BASE_URL }}
+          EDITORIAL_LLM_MODEL: ${{ vars.EDITORIAL_LLM_MODEL }}
+          EDITORIAL_REVIEW_MODEL: ${{ vars.EDITORIAL_REVIEW_MODEL }}
+          EDITORIAL_REASONING_EFFORT: ${{ vars.EDITORIAL_REASONING_EFFORT }}
+        run: |
+          ARGS=""
+          if [ "$FORCE" = "true" ]; then ARGS="--force"; fi
+          python3 scripts/daily_article.py $ARGS
+
+      - name: Run editorial and public-surface tests
+        run: |
+          python3 -m pip install 'pytest>=8,<9'
+          python3 -m pytest tests/test_daily_articles.py tests/test_investigations.py tests/test_ai_discovery.py -q
+
+      - name: Commit the edition
+        run: |
+          git config user.name "liquilens-desk"
+          git config user.email "desk@liquilens.in"
+          git add articles sitemap.xml llms.txt
+          if git diff --cached --quiet; then
+            echo "nothing new to publish today"
+            exit 0
+          fi
+          HEADLINE=$(python3 -c "import json; print(json.load(open('articles/index.json'))[0]['headline'])")
+          git commit -m "articles: $HEADLINE"
+          git pull --rebase origin main
+          git push origin main
+          echo "PUSHED=1" >> "$GITHUB_ENV"
+
+      # A push made with GITHUB_TOKEN does not start another workflow. Trigger
+      # Pages explicitly so the article URL exists before this job finishes.
+      - name: Trigger Pages deployment
+        if: env.PUSHED == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
