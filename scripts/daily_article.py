@@ -1078,6 +1078,7 @@ def build_article(datasets: dict[str, dict], *, date: str,
     config = model_config() if configured_model is False else configured_model
     model_copy = None
     if isinstance(config, dict):
+        passes = 0
         try:
             candidate = draft_with_model(dossier, config)
             passes = 2
@@ -1085,9 +1086,11 @@ def build_article(datasets: dict[str, dict], *, date: str,
                 candidate, dossier, article_type=article_type,
                 editorial_memory=editorial_memory,
             )
-            if issues:
+            for _repair_attempt in range(2):
+                if not issues:
+                    break
                 candidate = repair_with_model(dossier, candidate, issues, config)
-                passes = 3
+                passes += 1
                 issues = candidate_publish_issues(
                     candidate, dossier, article_type=article_type,
                     editorial_memory=editorial_memory,
@@ -1102,6 +1105,7 @@ def build_article(datasets: dict[str, dict], *, date: str,
                 "editorial_memory": generation["editorial_memory"],
             }
         except Exception as exc:  # noqa: BLE001 - safe copy still publishes
+            generation["passes"] = passes
             generation["fallback_reason"] = f"{type(exc).__name__}: {str(exc)[:240]}"
 
     if model_copy:
