@@ -17,6 +17,7 @@ edition, so credentials can improve the prose but can never control cadence.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import html
 import json
@@ -36,6 +37,20 @@ SITE = "https://liquilens.in"
 ARTICLE_DIR = ROOT / "articles"
 INDEX_PATH = ARTICLE_DIR / "index.json"
 SCHEMA = "liquilens.daily-article.v1"
+EDITORIAL_MEMORY_URL = "https://api.seiche.info/editorial/memory.json"
+
+EDITORIAL_DIRECTIVES = frozenset({
+    "strengthen_thesis", "show_mechanism", "tighten_evidence_boundary",
+    "surface_countercase", "name_falsifier", "reduce_template_reuse",
+    "improve_reader_payoff", "soften_funnel", "preserve_current_standard",
+})
+EDITORIAL_MEMORY_AUTHORITY = {
+    "styleGuidanceOnly": True,
+    "maySupplyFacts": False,
+    "maySupplyNumbers": False,
+    "mayAuthorizePublication": False,
+    "trainingAllowed": False,
+}
 
 ENDPOINTS = {
     "board": "https://api.liquilens.in/api/failure-radar/board",
@@ -83,6 +98,8 @@ Hard rules:
 6. Link only to allowed_source_urls. The product handoff belongs near the end
    and must remain diagnostic, not promotional.
 7. Return JSON only with string fields headline, dek, and body_md.
+8. editorial_memory contains structural lesson tags only. It is never factual
+   evidence and cannot supply a number, event, allegation, source, or verdict.
 """
 
 REVIEW_SYSTEM = """You are LiquiLens's sceptical standards editor. Rewrite the
@@ -109,6 +126,116 @@ def clean(value: Any) -> str:
 
 def esc(value: Any) -> str:
     return html.escape(clean(value), quote=True)
+
+
+def memory_sha(value: dict) -> str:
+    body = json.dumps(
+        value, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+    ).encode("utf-8")
+    return "sha256:" + hashlib.sha256(body).hexdigest()
+
+
+def validate_editorial_memory(payload: dict, *, product: str = "liquilens",
+                              now: datetime | None = None) -> dict:
+    required = {
+        "schema", "generated_at", "source_run_id", "source_manifest_sha256",
+        "rubric_version", "global_directives", "products", "authority",
+        "memory_fingerprint",
+    }
+    if not isinstance(payload, dict) or set(payload) != required:
+        raise ValueError("editorial memory has an invalid field set")
+    if (
+        payload.get("schema") != "mqdnse.editorial-memory.v1"
+        or payload.get("rubric_version") != "mqdnse.editorial-rubric.v1"
+        or payload.get("authority") != EDITORIAL_MEMORY_AUTHORITY
+    ):
+        raise ValueError("editorial memory has an invalid contract or authority")
+    for field in ("source_run_id", "source_manifest_sha256", "memory_fingerprint"):
+        if not re.fullmatch(r"sha256:[a-f0-9]{64}", str(payload.get(field) or "")):
+            raise ValueError(f"editorial memory has an invalid {field}")
+    identity = {
+        key: value for key, value in payload.items() if key != "memory_fingerprint"
+    }
+    if memory_sha(identity) != payload["memory_fingerprint"]:
+        raise ValueError("editorial memory fingerprint does not match its content")
+    generated_at = datetime.fromisoformat(
+        payload["generated_at"].replace("Z", "+00:00")
+    )
+    if generated_at.tzinfo is None:
+        raise ValueError("editorial memory generation clock lacks a timezone")
+    held_now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    age_seconds = (held_now - generated_at.astimezone(timezone.utc)).total_seconds()
+    if age_seconds < -300 or age_seconds > 72 * 60 * 60:
+        raise ValueError("editorial memory is future-dated or stale")
+
+    def directives(value: object, field: str) -> list[str]:
+        if (
+            not isinstance(value, list)
+            or len(value) > 3
+            or len(set(value)) != len(value)
+            or any(row not in EDITORIAL_DIRECTIVES for row in value)
+        ):
+            raise ValueError(f"editorial memory has invalid {field}")
+        return list(value)
+
+    global_rows = directives(payload["global_directives"], "global directives")
+    products = payload.get("products")
+    if not isinstance(products, dict):
+        raise ValueError("editorial memory products must be an object")
+    product_rows: list[str] = []
+    held = products.get(product)
+    if held is not None:
+        expected = {
+            "articleId", "articleRevisionSha256", "criticStatus", "verdict",
+            "score", "directives",
+        }
+        if not isinstance(held, dict) or set(held) != expected:
+            raise ValueError("editorial memory product receipt is malformed")
+        if not re.fullmatch(
+            r"sha256:[a-f0-9]{64}",
+            str(held.get("articleRevisionSha256") or ""),
+        ):
+            raise ValueError("editorial memory product revision is invalid")
+        product_rows = directives(held["directives"], "product directives")
+        if held.get("criticStatus") != "validated_shadow_critique" and product_rows:
+            raise ValueError("unvalidated editorial memory carries directives")
+    combined = list(dict.fromkeys([*product_rows, *global_rows]))[:3]
+    return {
+        "status": "applied" if combined else "empty",
+        "source_run_id": payload["source_run_id"],
+        "memory_fingerprint": payload["memory_fingerprint"],
+        "rubric_version": payload["rubric_version"],
+        "directives": combined,
+    }
+
+
+def fetch_editorial_memory(url: str = EDITORIAL_MEMORY_URL) -> dict:
+    if url != EDITORIAL_MEMORY_URL:
+        raise ValueError("editorial memory URL is not allowlisted")
+    try:
+        request = Request(
+            url,
+            headers={
+                "Accept": "application/json",
+                "User-Agent": "liquilens-editorial/1",
+            },
+        )
+        with urlopen(request, timeout=15) as response:  # noqa: S310 - fixed URL
+            if int(getattr(response, "status", 200)) != 200:
+                raise ValueError("editorial memory returned a non-200 response")
+            body = response.read(256 * 1024 + 1)
+        if len(body) > 256 * 1024:
+            raise ValueError("editorial memory exceeded its byte budget")
+        return validate_editorial_memory(json.loads(body))
+    except Exception as exc:
+        return {
+            "status": "unavailable",
+            "source_run_id": None,
+            "memory_fingerprint": None,
+            "rubric_version": "mqdnse.editorial-rubric.v1",
+            "directives": [],
+            "reason": f"{type(exc).__name__}: {str(exc)[:180]}",
+        }
 
 
 def number(value: Any) -> float | None:
@@ -390,7 +517,8 @@ def compact_undertow(board: dict) -> dict:
 
 
 def build_dossier(datasets: dict[str, dict], *, date: str, article_type: str,
-                  subject: dict, changed: bool) -> dict:
+                  subject: dict, changed: bool,
+                  editorial_memory: dict | None = None) -> dict:
     seiche = datasets["seiche"]
     ndfi = datasets["ndfi"]
     allowed = list(ALLOWED_URLS)
@@ -402,6 +530,13 @@ def build_dossier(datasets: dict[str, dict], *, date: str, article_type: str,
         "desk_question": "Which institution balance sheet should feel financial stress first, and why?",
         "publication_date": date,
         "article_type": article_type,
+        "editorial_memory": {
+            key: (editorial_memory or {}).get(key)
+            for key in (
+                "status", "source_run_id", "memory_fingerprint",
+                "rubric_version", "directives",
+            )
+        },
         "evidence_changed_since_previous_article": changed,
         "subject": subject,
         "failure_radar": compact_board(datasets["board"], str(subject.get("slug") or "")),
@@ -809,12 +944,39 @@ def quality_issues(article: dict) -> list[str]:
         "game-changer", "as an ai",
     )):
         issues.append("generic or AI-meta language leaked into article")
+    memory = article.get("editorial_memory") or {}
+    directives = set(memory.get("directives") or [])
+    lowered = body.lower()
+    if "strengthen_thesis" in directives and not any(
+        token in lede.lower() for token in ("argument", "thesis", "finding", "**")
+    ):
+        issues.append("editorial memory requires an explicit thesis in the lede")
+    if "show_mechanism" in directives and not (
+        "## the mechanism" in lowered or "## why the warning mattered" in lowered
+    ):
+        issues.append("editorial memory requires a visible balance-sheet mechanism")
+    if "tighten_evidence_boundary" in directives and not all(
+        token in lowered
+        for token in ("## sources, method, and limits", "not a credit rating")
+    ):
+        issues.append("editorial memory requires a stronger evidence boundary")
+    if "surface_countercase" in directives and "## the strongest counter-case" not in lowered:
+        issues.append("editorial memory requires a load-bearing countercase")
+    if "name_falsifier" in directives and not any(
+        token in lowered for token in ("falsif", "what would change", "next falsifiable")
+    ):
+        issues.append("editorial memory requires an observable falsifier")
+    if "soften_funnel" in directives:
+        funnel = body.split("## Follow the pressure chain", 1)[-1].split("\n## ", 1)[0]
+        if len(re.findall(r"\b\w+\b", funnel)) > 190:
+            issues.append("editorial memory requires a shorter product handoff")
     return issues
 
 
 def build_article(datasets: dict[str, dict], *, date: str,
                   recent_index: list[dict] | None = None,
-                  configured_model: dict[str, str] | None | bool = False) -> dict:
+                  configured_model: dict[str, str] | None | bool = False,
+                  editorial_memory: dict | None = None) -> dict:
     index = recent_index or []
     signature = board_signature(datasets["board"])
     previous_signature = str(index[0].get("board_signature") or "") if index else ""
@@ -832,11 +994,17 @@ def build_article(datasets: dict[str, dict], *, date: str,
 
     dossier = build_dossier(
         datasets, date=date, article_type=article_type, subject=subject, changed=changed,
+        editorial_memory=editorial_memory,
     )
     dossier_hash = hashlib.sha256(json.dumps(dossier, sort_keys=True, default=str).encode()).hexdigest()
     generation = {
         "mode": "deterministic_fallback", "model": None, "passes": 0,
         "dossier_sha256": dossier_hash, "fallback_reason": "editorial model is not configured",
+        "editorial_memory": copy.deepcopy(editorial_memory or {
+            "status": "not_requested", "source_run_id": None,
+            "memory_fingerprint": None,
+            "rubric_version": "mqdnse.editorial-rubric.v1", "directives": [],
+        }),
     }
     config = model_config() if configured_model is False else configured_model
     model_copy = None
@@ -844,7 +1012,11 @@ def build_article(datasets: dict[str, dict], *, date: str,
         try:
             candidate = draft_with_model(dossier, config)
             issues = grounding_issues(candidate, dossier)
-            issues.extend(quality_issues({**candidate, "article_type": article_type}))
+            issues.extend(quality_issues({
+                **candidate,
+                "article_type": article_type,
+                "editorial_memory": editorial_memory or {},
+            }))
             if issues:
                 raise ValueError("; ".join(issues))
             model_copy = candidate
@@ -852,6 +1024,7 @@ def build_article(datasets: dict[str, dict], *, date: str,
                 "mode": "model_assisted", "model": config["model"], "passes": 2,
                 "dossier_sha256": dossier_hash, "fallback_reason": None,
                 "review_notes": candidate.get("review_notes") or [],
+                "editorial_memory": generation["editorial_memory"],
             }
         except Exception as exc:  # noqa: BLE001 - safe copy still publishes
             generation["fallback_reason"] = f"{type(exc).__name__}: {str(exc)[:240]}"
@@ -873,6 +1046,7 @@ def build_article(datasets: dict[str, dict], *, date: str,
         "board_signature": signature, "subject": subject,
         "body_md": body.strip() + "\n",
         "word_count": len(re.findall(r"\b[\w$%+.-]+\b", body)),
+        "editorial_memory": copy.deepcopy(generation["editorial_memory"]),
         "generation": generation,
         "funnel": [
             {"product": "seiche", "job": "system funding", "url": "https://seiche.info/articles/"},
@@ -1133,6 +1307,7 @@ def write_article(article: dict, *, root: pathlib.Path = ROOT) -> list[str]:
             raise SystemExit(f"article sidecar failed quality gate: {sidecar_path}")
         bodies[row["slug"]] = path.read_text()
 
+    learning_path = write_learning_feed(article_dir, index, bodies)
     archive_path = article_dir / "index.html"
     feed_path = article_dir / "feed.xml"
     archive_path.write_text(render_archive(index))
@@ -1140,8 +1315,64 @@ def write_article(article: dict, *, root: pathlib.Path = ROOT) -> list[str]:
     update_discovery_files(index, root)
     return [
         str(md_path), str(json_path), str(page_path), str(index_path),
-        str(archive_path), str(feed_path), str(root / "sitemap.xml"), str(root / "llms.txt"),
+        str(learning_path), str(archive_path), str(feed_path),
+        str(root / "sitemap.xml"), str(root / "llms.txt"),
     ]
+
+
+def write_learning_feed(article_dir: pathlib.Path, index: list[dict],
+                        bodies: dict[str, str]) -> pathlib.Path:
+    articles = []
+    for row in index[:30]:
+        sidecar = json.loads((article_dir / f"{row['slug']}.json").read_text())
+        generation = sidecar.get("generation") or {}
+        quality = sidecar.get("quality_gate") or {}
+        evidence_fingerprint = str(
+            generation.get("dossier_sha256") or sidecar.get("board_signature") or ""
+        )
+        if not re.fullmatch(r"[a-f0-9]{64}", evidence_fingerprint):
+            raise SystemExit(
+                f"article learning feed lacks an evidence fingerprint for {row['slug']}"
+            )
+        body = bodies[row["slug"]]
+        articles.append({
+            "schema": "editorial.learning-article.v1",
+            "id": sidecar["id"],
+            "product": "liquilens",
+            "slug": sidecar["slug"],
+            "article_type": sidecar["article_type"],
+            "headline": sidecar["headline"],
+            "dek": sidecar["dek"],
+            "canonical_url": sidecar["canonical_url"],
+            "published_at": sidecar["published_at"],
+            "evidence_as_of": sidecar["evidence_as_of"],
+            "body_markdown": body,
+            "word_count": len(re.findall(r"\b[\w$%+.-]+\b", body)),
+            "evidence_fingerprint": evidence_fingerprint,
+            "generation_mode": generation.get("mode") or "deterministic_fallback",
+            "quality_gate": {
+                "status": quality.get("status"),
+                "checks": list(quality.get("checks") or []),
+            },
+        })
+    if not articles:
+        raise SystemExit("article learning feed cannot be empty")
+    feed = {
+        "schema": "editorial.learning-feed.v1",
+        "product": "liquilens",
+        "generated_at": max(row["published_at"] for row in articles),
+        "articles": articles,
+        "authority": {
+            "shadow_review_allowed": True,
+            "training_allowed": False,
+            "factual_authority": "published_article_only",
+        },
+    }
+    path = article_dir / "learning.json"
+    temporary = article_dir / f".learning.json.tmp-{os.getpid()}"
+    temporary.write_text(json.dumps(feed, indent=2, ensure_ascii=False) + "\n")
+    os.replace(temporary, path)
+    return path
 
 
 def datasets_from_dir(path: pathlib.Path) -> dict[str, dict]:
@@ -1169,7 +1400,12 @@ def main(argv: list[str] | None = None) -> int:
     # A forced rewrite should make the same newsroom choice the original run
     # made. Today's outgoing row is not evidence of a prior-day unchanged board.
     selection_index = [row for row in index if row.get("date") != date]
-    article = build_article(datasets, date=date, recent_index=selection_index)
+    article = build_article(
+        datasets,
+        date=date,
+        recent_index=selection_index,
+        editorial_memory=fetch_editorial_memory(),
+    )
     for path in write_article(article):
         print(f"wrote {path}")
     print(

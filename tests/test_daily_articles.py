@@ -1,6 +1,6 @@
 """Daily editorial cadence and evidence boundaries for LiquiLens."""
 
-from copy import deepcopy
+from datetime import datetime, timezone
 import json
 from pathlib import Path
 import sys
@@ -163,6 +163,10 @@ def test_write_builds_page_archive_feed_and_discovery(tmp_path):
     assert f"{article['slug']}.md" in (tmp_path / "llms.txt").read_text()
     sidecar = json.loads((article_dir / f"{article['slug']}.json").read_text())
     assert sidecar["quality_gate"]["status"] == "PASS"
+    learning = json.loads((article_dir / "learning.json").read_text())
+    assert learning["schema"] == "editorial.learning-feed.v1"
+    assert learning["authority"]["training_allowed"] is False
+    assert learning["articles"][0]["body_markdown"] == article["body_md"]
 
 
 def test_html_renderer_escapes_untrusted_markup():
@@ -170,3 +174,41 @@ def test_html_renderer_escapes_untrusted_markup():
     assert "<script>" not in rendered
     assert "&lt;script&gt;" in rendered
     assert 'href="#"' in rendered
+
+
+def test_tag_only_editorial_memory_is_bound_and_applied():
+    identity = {
+        "schema": "mqdnse.editorial-memory.v1",
+        "generated_at": "2026-08-15T09:00:00Z",
+        "source_run_id": "sha256:" + "a" * 64,
+        "source_manifest_sha256": "sha256:" + "b" * 64,
+        "rubric_version": "mqdnse.editorial-rubric.v1",
+        "global_directives": ["show_mechanism"],
+        "products": {
+            "liquilens": {
+                "articleId": "liquilens:article:prior",
+                "articleRevisionSha256": "sha256:" + "c" * 64,
+                "criticStatus": "validated_shadow_critique",
+                "verdict": "publishable",
+                "score": 12,
+                "directives": ["tighten_evidence_boundary"],
+            }
+        },
+        "authority": daily_article.EDITORIAL_MEMORY_AUTHORITY,
+    }
+    payload = {**identity, "memory_fingerprint": daily_article.memory_sha(identity)}
+    memory = daily_article.validate_editorial_memory(
+        payload,
+        now=datetime(2026, 8, 15, 10, 0, tzinfo=timezone.utc),
+    )
+    article = daily_article.build_article(
+        datasets(),
+        date="2026-08-15",
+        recent_index=[],
+        configured_model=None,
+        editorial_memory=memory,
+    )
+
+    assert memory["directives"] == ["tighten_evidence_boundary", "show_mechanism"]
+    assert article["generation"]["editorial_memory"] == memory
+    assert article["quality_gate"]["status"] == "PASS"
