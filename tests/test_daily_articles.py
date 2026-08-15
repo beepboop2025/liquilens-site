@@ -184,6 +184,22 @@ def test_gate_feedback_can_repair_copy(monkeypatch):
     assert article["generation"]["passes"] == 3
 
 
+def test_boundary_overlay_adds_only_fixed_disclosures():
+    candidate = {"headline": "Held", "dek": "Held", "body_md": "Evidence-led copy."}
+    overlaid, applied = daily_article.apply_boundary_overlay(
+        candidate, article_type="historical_replay",
+    )
+    assert applied == [
+        "historical_news_and_forecast_boundary",
+        "not_a_credit_rating",
+        "not_investment_advice",
+    ]
+    assert overlaid["headline"] == candidate["headline"]
+    assert "not current news and not a forecast" in overlaid["body_md"].lower()
+    assert "not a credit rating" in overlaid["body_md"].lower()
+    assert "not investment advice" in overlaid["body_md"].lower()
+
+
 def test_write_builds_page_archive_feed_and_discovery(tmp_path):
     (tmp_path / "sitemap.xml").write_text(
         '<?xml version="1.0"?><urlset><url><loc>https://liquilens.in/</loc></url></urlset>\n'

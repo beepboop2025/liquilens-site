@@ -1036,6 +1036,26 @@ def candidate_publish_issues(candidate: dict, dossier: dict, *,
     return issues
 
 
+def apply_boundary_overlay(candidate: dict, *, article_type: str) -> tuple[dict, list[str]]:
+    """Add fixed risk disclosures without altering any factual claim."""
+    overlaid = copy.deepcopy(candidate)
+    body = str(overlaid.get("body_md") or "").strip()
+    applied = []
+    if article_type == "historical_replay":
+        lower = body.lower()
+        if "not current news" not in lower or "not a forecast" not in lower:
+            body = "This historical replay is not current news and not a forecast.\n\n" + body
+            applied.append("historical_news_and_forecast_boundary")
+    if "not a credit rating" not in body.lower():
+        body += "\n\nThis is not a credit rating."
+        applied.append("not_a_credit_rating")
+    if "not investment advice" not in body.lower():
+        body += " Research and market data, not investment advice."
+        applied.append("not_investment_advice")
+    overlaid["body_md"] = body
+    return overlaid, applied
+
+
 def build_article(datasets: dict[str, dict], *, date: str,
                   recent_index: list[dict] | None = None,
                   configured_model: dict[str, str] | None | bool = False,
@@ -1082,6 +1102,9 @@ def build_article(datasets: dict[str, dict], *, date: str,
         try:
             candidate = draft_with_model(dossier, config)
             passes = 2
+            candidate, boundary_overlay = apply_boundary_overlay(
+                candidate, article_type=article_type,
+            )
             issues = candidate_publish_issues(
                 candidate, dossier, article_type=article_type,
                 editorial_memory=editorial_memory,
@@ -1091,6 +1114,13 @@ def build_article(datasets: dict[str, dict], *, date: str,
                     break
                 candidate = repair_with_model(dossier, candidate, issues, config)
                 passes += 1
+                candidate, added_boundaries = apply_boundary_overlay(
+                    candidate, article_type=article_type,
+                )
+                boundary_overlay.extend(
+                    boundary for boundary in added_boundaries
+                    if boundary not in boundary_overlay
+                )
                 issues = candidate_publish_issues(
                     candidate, dossier, article_type=article_type,
                     editorial_memory=editorial_memory,
@@ -1101,6 +1131,7 @@ def build_article(datasets: dict[str, dict], *, date: str,
             generation = {
                 "mode": "model_assisted", "model": config["model"], "passes": passes,
                 "dossier_sha256": dossier_hash, "fallback_reason": None,
+                "deterministic_boundary_overlay": boundary_overlay,
                 "review_notes": candidate.get("review_notes") or [],
                 "editorial_memory": generation["editorial_memory"],
             }
