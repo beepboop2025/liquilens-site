@@ -328,7 +328,6 @@ def replay_verdict(row: dict | None, field: str, *, scoreable: bool = True) -> s
 def case_file_record(
         slug: str, pca: dict | None, fund: dict | None, fraud: bool,
         published_at: str) -> dict:
-    source = pca or fund or {}
     name = name_from_slug(slug)
     default_date = (pca or {}).get("default_date")
     pca_verdict = replay_verdict(pca, "first_action_zone")

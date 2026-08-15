@@ -5,10 +5,86 @@ import json
 from pathlib import Path
 import sys
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts import daily_article  # noqa: E402
+
+
+class FakeResponse:
+    def __init__(self, body: bytes, *, content_length: str | None = None):
+        self.body = body
+        self.headers = {}
+        if content_length is not None:
+            self.headers["Content-Length"] = content_length
+
+    def read(self, size: int = -1) -> bytes:
+        return self.body if size < 0 else self.body[:size]
+
+
+def test_strict_json_rejects_ambiguous_or_nonfinite_values():
+    with pytest.raises(ValueError, match="duplicate JSON key"):
+        daily_article.strict_json_loads('{"status":"PASS","status":"FAIL"}')
+    with pytest.raises(ValueError, match="non-finite JSON value"):
+        daily_article.strict_json_loads('{"score":NaN}')
+
+
+def test_bounded_reader_checks_declared_and_actual_sizes():
+    with pytest.raises(ValueError, match="byte budget"):
+        daily_article.read_bounded(
+            FakeResponse(b"{}", content_length="1025"), 1024, "test response"
+        )
+    with pytest.raises(ValueError, match="byte budget"):
+        daily_article.read_bounded(
+            FakeResponse(b"x" * 1025), 1024, "test response"
+        )
+    assert daily_article.read_bounded(
+        FakeResponse(b"{}", content_length="2"), 1024, "test response"
+    ) == b"{}"
+
+
+def test_dataset_fetcher_refuses_unlisted_urls_before_network(monkeypatch):
+    monkeypatch.setattr(
+        daily_article,
+        "urlopen",
+        lambda *_args, **_kwargs: pytest.fail("network should not be reached"),
+    )
+    with pytest.raises(ValueError, match="not allowlisted"):
+        daily_article.fetch_json("https://example.invalid/private")
+
+
+def test_editorial_model_base_url_requires_a_clean_https_url(monkeypatch):
+    monkeypatch.setenv("EDITORIAL_LLM_BASE_URL", "http://127.0.0.1:8080/api")
+    with pytest.raises(ValueError, match="must be an HTTPS"):
+        daily_article.model_config()
+
+    monkeypatch.setenv(
+        "EDITORIAL_LLM_BASE_URL", "https://models.example.test/v1/"
+    )
+    config = daily_article.model_config()
+    assert config is not None
+    assert config["base_url"] == "https://models.example.test/v1"
+
+
+def test_article_index_is_empty_only_when_missing(tmp_path):
+    path = tmp_path / "index.json"
+    assert daily_article.load_index(path) == []
+
+    path.write_text('[{"slug":"first"},{"slug":"second"}]', encoding="utf-8")
+    assert [row["slug"] for row in daily_article.load_index(path)] == [
+        "first",
+        "second",
+    ]
+
+    path.write_text('{"slug":"not-a-list"}', encoding="utf-8")
+    with pytest.raises(RuntimeError, match="not a list of objects"):
+        daily_article.load_index(path)
+
+    path.write_text('{"slug":"one","slug":"two"}', encoding="utf-8")
+    with pytest.raises(RuntimeError, match="invalid JSON"):
+        daily_article.load_index(path)
 
 
 def datasets():

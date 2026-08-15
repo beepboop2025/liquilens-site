@@ -37,6 +37,7 @@ import sys
 import urllib.error
 import urllib.parse
 import urllib.request
+from typing import Any
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -45,12 +46,38 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # hand-maintained number in this verifier.
 US_VALIDATION_ARTIFACT = os.path.join(
     ROOT, "tests", "fixtures", "us-radar-validation.json")
+MAX_LIVE_JSON_BYTES = 8 * 1024 * 1024
+
+
+def _reject_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    value: dict[str, Any] = {}
+    for key, item in pairs:
+        if key in value:
+            raise ValueError(f"duplicate JSON key: {key}")
+        value[key] = item
+    return value
+
+
+def _reject_nonfinite_json(token: str) -> None:
+    raise ValueError(f"non-finite JSON value: {token}")
+
+
+def strict_json_loads(value: str | bytes | bytearray) -> Any:
+    return json.loads(
+        value,
+        object_pairs_hook=_reject_duplicate_keys,
+        parse_constant=_reject_nonfinite_json,
+    )
+
+
+def strict_json_load(handle: Any) -> Any:
+    return strict_json_loads(handle.read())
 
 
 def load_us_study_metrics(path: str = US_VALIDATION_ARTIFACT) -> dict[str, str]:
     try:
         with open(path, encoding="utf-8") as fh:
-            payload = json.load(fh)
+            payload = strict_json_load(fh)
         validation = payload["validation"]
         count = validation["n_failure_events_with_data"]
         recall = validation["recall_overall"]
@@ -94,8 +121,42 @@ EVIDENCE_SURFACES = (
     os.path.join("developers", "index.html"),
     "llms.txt",
 )
-MCP_VERSION = "1.6.0"
-MCP_TOOL_COUNT = 18
+MCP_VERSION = "1.7.0"
+OPENAPI_VERSION = "1.0.0"
+MCP_PROTOCOL_VERSIONS = (
+    "2026-07-28",
+    "2025-11-25",
+    "2025-06-18",
+    "2025-03-26",
+)
+MCP_TOOLS = (
+    "corporate_transmission_board",
+    "crypto_exposure_board",
+    "crypto_regime_board",
+    "evidence_europe",
+    "evidence_india",
+    "evidence_institution",
+    "evidence_markets",
+    "evidence_us",
+    "failure_radar_board",
+    "failure_radar_institution",
+    "forward_odds",
+    "household_credit_board",
+    "institution_review_packet",
+    "latest_article",
+    "rbi_supervisory_tape",
+    "stablecoin_rails_board",
+    "universe_search",
+    "verify_published_record",
+)
+MCP_PROMPTS = (
+    "crypto_liquidity_briefing",
+    "failure_radar_briefing",
+    "institution_health_check",
+    "stress_evidence_pack",
+)
+MCP_RESOURCE_TEMPLATES: tuple[str, ...] = ()
+MCP_TOOL_COUNT = len(MCP_TOOLS)
 LAB_STATUS_RECEIPT = os.path.join(
     "research", "lab-reviewed-status-2026-08-09.json")
 LAB_STATUS_ID = (
@@ -538,7 +599,7 @@ def jsonld_texts(raw: str) -> list[str]:
     for m in JSONLD.finditer(raw):
         body = m.group(1)
         try:
-            payload = json.loads(body)
+            payload = strict_json_loads(body)
         except ValueError:
             out.append(body)
             continue
@@ -796,7 +857,15 @@ def live_fetch(url: str):
     request = urllib.request.Request(url, headers=FETCH_HEADERS)
     try:
         with urllib.request.urlopen(request, timeout=10) as r:
-            return json.loads(r.read().decode("utf-8"))
+            raw_length = r.headers.get("Content-Length")
+            if raw_length not in (None, ""):
+                declared = int(raw_length)
+                if declared < 0 or declared > MAX_LIVE_JSON_BYTES:
+                    return None
+            body = r.read(MAX_LIVE_JSON_BYTES + 1)
+            if len(body) > MAX_LIVE_JSON_BYTES:
+                return None
+            return strict_json_loads(body)
     except (urllib.error.URLError, OSError, ValueError):
         return None
 
@@ -842,7 +911,7 @@ def release_contract_problems(root: str) -> list[str]:
     card = None
     try:
         with open(os.path.join(root, "product-card.json"), encoding="utf-8") as fh:
-            card = json.load(fh)
+            card = strict_json_load(fh)
         markets = card["evidence"]["markets"]
         served = tuple(markets[name]["status"] for name in
                        ("india", "united_states", "europe"))
@@ -867,17 +936,36 @@ def release_contract_problems(root: str) -> list[str]:
     try:
         with open(os.path.join(root, ".well-known", "ai-catalog.json"),
                   encoding="utf-8") as fh:
-            catalog = json.load(fh)
+            catalog = strict_json_load(fh)
         mcp = next(entry for entry in catalog["entries"]
                    if entry["identifier"] ==
                    "urn:air:liquilens.in:mcp:failure-radar")
+        openapi = next(entry for entry in catalog["entries"]
+                       if entry["identifier"] ==
+                       "urn:air:liquilens.in:openapi:failure-radar")
         if mcp.get("version") != MCP_VERSION or \
                 mcp.get("data", {}).get("version") != MCP_VERSION:
             problems.append(
                 f"ai-catalog.json: MCP version is not {MCP_VERSION}")
-        count = len(mcp.get("capabilities", []))
+        if openapi.get("version") != OPENAPI_VERSION:
+            problems.append(
+                f"ai-catalog.json: OpenAPI release is not {OPENAPI_VERSION}")
+        if tuple(mcp.get("capabilities", [])) != MCP_TOOLS:
+            problems.append(
+                "ai-catalog.json: MCP tool inventory differs from production")
+        if tuple(mcp.get("protocolVersions", [])) != MCP_PROTOCOL_VERSIONS:
+            problems.append(
+                "ai-catalog.json: MCP protocol inventory differs from production")
+        if tuple(mcp.get("prompts", [])) != MCP_PROMPTS:
+            problems.append(
+                "ai-catalog.json: MCP prompt inventory differs from production")
+        if "resourceTemplates" not in mcp or \
+                tuple(mcp.get("resourceTemplates", [])) != MCP_RESOURCE_TEMPLATES:
+            problems.append(
+                "ai-catalog.json: MCP resource-template inventory differs "
+                "from production")
         metadata_count = mcp.get("metadata", {}).get("publicToolCount")
-        if count != MCP_TOOL_COUNT or metadata_count != MCP_TOOL_COUNT:
+        if metadata_count != MCP_TOOL_COUNT:
             problems.append(
                 "ai-catalog.json: public tool count does not agree at "
                 f"{MCP_TOOL_COUNT}")
@@ -887,7 +975,7 @@ def release_contract_problems(root: str) -> list[str]:
     try:
         with open(os.path.join(root, LAB_STATUS_RECEIPT),
                   encoding="utf-8") as fh:
-            lab_status = json.load(fh)
+            lab_status = strict_json_load(fh)
         for path, expected in LAB_STATUS_VALUES:
             actual = dig(lab_status, path)
             if actual != expected or type(actual) is not type(expected):

@@ -57,7 +57,9 @@ The interactive demonstration at https://demo.liquilens.in requires sign-in and 
 - Hosted MCP: https://api.liquilens.in/mcp
 - Terminal CLI: https://github.com/beepboop2025/liquilens-cli
 
-The public MCP and public evidence endpoints require no token. MCP v1.6.0 exposes 18 read-only tools: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification.
+The public MCP and public evidence endpoints require no token. MCP v1.7.0 exposes 18 read-only tools and 4 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification.
+
+The hosted endpoint accepts the current MCP 2026-07-28 method-discovery contract and its declared legacy protocol versions. It publishes empty resource and resource-template catalogs explicitly rather than implying unavailable resources.
 
 The CLI v0.5.0 runs the India and US boards in a terminal, emits JSON or pipe-safe tables for automation, and caches the last good response for offline use. Run it without a persistent install with `npx liquilens`. Use `npx liquilens --record` for the three-market status ledger and `--record --json` to preserve the served evidence payload exactly.
 

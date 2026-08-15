@@ -15,31 +15,36 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
+      - name: Install hash-locked verification dependencies
+        run: >-
+          python3 -m pip install --disable-pip-version-check
+          --only-binary=:all: --require-hashes -r requirements-ci.txt
       - name: Verify the published files agree with each other
         env:
           LIQUILENS_OFFLINE: '1'
         run: python3 scripts/verify_public_claims.py
       - name: Run the public-surface test suite
-        run: |
-          python3 -m pip install 'pytest>=8,<9'
-          python3 -m pytest tests -q
+        run: python3 -m pytest tests -q
       - name: Report where the live API disagrees with the published copy
         continue-on-error: true
         timeout-minutes: 3
         run: python3 scripts/verify_public_claims.py
       - name: Verify the catalog edge fallback
         run: node --test tests/test_catalog_worker.mjs
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - name: Keep the unscanned directories out of the artifact
-        run: rm -rf scripts tests edge wrangler.catalog.jsonc
-      - uses: actions/upload-pages-artifact@v3
+        run: rm -rf scripts tests edge wrangler.catalog.jsonc requirements-ci.txt
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: '.'
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0

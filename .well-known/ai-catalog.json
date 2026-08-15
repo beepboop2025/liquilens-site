@@ -14,8 +14,8 @@
         "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
         "name": "io.github.beepboop2025/liquilens",
         "title": "LiquiLens — the Failure Radar",
-        "description": "Bank and lender failure early warning, with historical-evidence status and eligibility flags served beside every historical claim.",
-        "version": "1.6.0",
+        "description": "Bank and lender monitoring with historical-evidence limits and eligibility flags beside every claim.",
+        "version": "1.7.0",
         "repository": {
           "url": "https://github.com/beepboop2025/LiquiLens",
           "source": "github"
@@ -38,25 +38,38 @@
         "validation"
       ],
       "capabilities": [
-        "latest_article",
-        "failure_radar_board",
-        "failure_radar_institution",
-        "institution_review_packet",
-        "evidence_markets",
+        "corporate_transmission_board",
+        "crypto_exposure_board",
+        "crypto_regime_board",
+        "evidence_europe",
         "evidence_india",
         "evidence_institution",
+        "evidence_markets",
         "evidence_us",
-        "evidence_europe",
-        "universe_search",
-        "rbi_supervisory_tape",
-        "verify_published_record",
-        "corporate_transmission_board",
-        "household_credit_board",
+        "failure_radar_board",
+        "failure_radar_institution",
         "forward_odds",
-        "crypto_regime_board",
+        "household_credit_board",
+        "institution_review_packet",
+        "latest_article",
+        "rbi_supervisory_tape",
         "stablecoin_rails_board",
-        "crypto_exposure_board"
+        "universe_search",
+        "verify_published_record"
       ],
+      "protocolVersions": [
+        "2026-07-28",
+        "2025-11-25",
+        "2025-06-18",
+        "2025-03-26"
+      ],
+      "prompts": [
+        "crypto_liquidity_briefing",
+        "failure_radar_briefing",
+        "institution_health_check",
+        "stress_evidence_pack"
+      ],
+      "resourceTemplates": [],
       "representativeQueries": [
         "Which Indian banks or NBFCs are showing failure risk?",
         "How fragile is ESAF Small Finance Bank?",
@@ -64,8 +77,8 @@
         "What RBI supervisory actions were published recently?",
         "Find an RBI-registered NBFC by name or CIN."
       ],
-      "version": "1.6.0",
-      "updatedAt": "2026-08-15T12:00:00Z",
+      "version": "1.7.0",
+      "updatedAt": "2026-08-15T20:55:00Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
@@ -100,8 +113,8 @@
         "Find public evidence for an early-warning claim about a lender.",
         "Retrieve recent RBI supervisory actions as structured data."
       ],
-      "version": "1.6.0",
-      "updatedAt": "2026-08-15T12:00:00Z",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-15T20:55:00Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",

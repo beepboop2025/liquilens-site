@@ -29,6 +29,7 @@ import time
 from datetime import datetime, timezone
 from typing import Any
 from urllib.error import HTTPError
+from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
 
@@ -63,6 +64,11 @@ ENDPOINTS = {
 
 DEFAULT_EDITORIAL_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_EDITORIAL_MODEL = "openai/gpt-5.6-terra"
+
+MAX_DATASET_RESPONSE_BYTES = 16 * 1024 * 1024
+MAX_EDITORIAL_MEMORY_BYTES = 256 * 1024
+MAX_MODEL_RESPONSE_BYTES = 2 * 1024 * 1024
+MAX_ERROR_RESPONSE_BYTES = 64 * 1024
 
 ALLOWED_URLS = tuple(ENDPOINTS.values()) + (
     f"{SITE}/articles/",
@@ -124,6 +130,44 @@ body_md, and notes (a short list of material edits). No prose outside JSON.
 
 TIER_RANK = {"red": 0, "orange": 1, "yellow": 2, "green": 3}
 ACRONYMS = {"ilfs": "IL&FS", "pmc": "PMC", "ckp": "CKP"}
+
+
+def _reject_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    value: dict[str, Any] = {}
+    for key, item in pairs:
+        if key in value:
+            raise ValueError(f"duplicate JSON key: {key}")
+        value[key] = item
+    return value
+
+
+def _reject_nonfinite_json(token: str) -> None:
+    raise ValueError(f"non-finite JSON value: {token}")
+
+
+def strict_json_loads(value: str | bytes | bytearray) -> Any:
+    """Decode JSON without accepting duplicate keys or non-finite numbers."""
+    return json.loads(
+        value,
+        object_pairs_hook=_reject_duplicate_keys,
+        parse_constant=_reject_nonfinite_json,
+    )
+
+
+def read_bounded(response: Any, limit: int, label: str) -> bytes:
+    """Read an HTTP body while enforcing both declared and actual size."""
+    raw_length = getattr(response, "headers", {}).get("Content-Length")
+    if raw_length not in (None, ""):
+        try:
+            declared = int(raw_length)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"{label} returned an invalid Content-Length") from exc
+        if declared < 0 or declared > limit:
+            raise ValueError(f"{label} exceeded its byte budget")
+    body = response.read(limit + 1)
+    if len(body) > limit:
+        raise ValueError(f"{label} exceeded its byte budget")
+    return body
 
 
 def clean(value: Any) -> str:
@@ -230,10 +274,10 @@ def fetch_editorial_memory(url: str = EDITORIAL_MEMORY_URL) -> dict:
         with urlopen(request, timeout=15) as response:  # noqa: S310 - fixed URL
             if int(getattr(response, "status", 200)) != 200:
                 raise ValueError("editorial memory returned a non-200 response")
-            body = response.read(256 * 1024 + 1)
-        if len(body) > 256 * 1024:
-            raise ValueError("editorial memory exceeded its byte budget")
-        return validate_editorial_memory(json.loads(body))
+            body = read_bounded(
+                response, MAX_EDITORIAL_MEMORY_BYTES, "editorial memory"
+            )
+        return validate_editorial_memory(strict_json_loads(body))
     except Exception as exc:
         return {
             "status": "unavailable",
@@ -275,9 +319,13 @@ def name_from_slug(slug: str) -> str:
 
 
 def fetch_json(url: str) -> dict:
+    if url not in ENDPOINTS.values():
+        raise ValueError("dataset URL is not allowlisted")
     request = Request(url, headers={"User-Agent": "liquilens-daily-editorial/1.0"})
     with urlopen(request, timeout=60) as response:  # noqa: S310 - fixed public endpoints
-        value = json.loads(response.read())
+        value = strict_json_loads(
+            read_bounded(response, MAX_DATASET_RESPONSE_BYTES, "public dataset")
+        )
     if not isinstance(value, dict):
         raise RuntimeError(f"{url} returned a non-object")
     return value
@@ -299,9 +347,28 @@ def model_config() -> dict[str, str] | None:
     base = os.environ.get("EDITORIAL_LLM_BASE_URL")
     if not key and not base:
         return None
+    base_url = (base or DEFAULT_EDITORIAL_BASE_URL).rstrip("/")
+    parsed = urlsplit(base_url)
+    try:
+        parsed_port = parsed.port
+    except ValueError as exc:
+        raise ValueError("editorial model base URL has an invalid port") from exc
+    if (
+        parsed.scheme != "https"
+        or not parsed.hostname
+        or parsed.username is not None
+        or parsed.password is not None
+        or parsed.query
+        or parsed.fragment
+        or parsed_port is not None and not 1 <= parsed_port <= 65535
+    ):
+        raise ValueError(
+            "editorial model base URL must be an HTTPS origin/path without "
+            "credentials, query, or fragment"
+        )
     return {
         "key": key or "",
-        "base_url": (base or DEFAULT_EDITORIAL_BASE_URL).rstrip("/"),
+        "base_url": base_url,
         "model": os.environ.get("EDITORIAL_LLM_MODEL") or DEFAULT_EDITORIAL_MODEL,
         "review_model": (
             os.environ.get("EDITORIAL_REVIEW_MODEL")
@@ -316,7 +383,7 @@ def parse_json_object(text: str) -> dict:
     if candidate.startswith("```"):
         candidate = re.sub(r"^```(?:json)?\s*", "", candidate, flags=re.I)
         candidate = re.sub(r"\s*```$", "", candidate)
-    value = json.loads(candidate)
+    value = strict_json_loads(candidate)
     if not isinstance(value, dict):
         raise ValueError("editorial model returned a non-object")
     return value
@@ -342,11 +409,17 @@ def complete_json(config: dict[str, str], messages: list[dict], max_tokens: int)
             request = Request(endpoint, data=json.dumps(body).encode(), headers=headers, method="POST")
             try:
                 with urlopen(request, timeout=150) as response:  # noqa: S310 - operator-configured endpoint
-                    return json.loads(response.read())
+                    return strict_json_loads(
+                        read_bounded(
+                            response,
+                            MAX_MODEL_RESPONSE_BYTES,
+                            "editorial model response",
+                        )
+                    )
             except HTTPError as exc:
                 if exc.code != 429 or attempt == 2:
                     raise
-                detail = exc.read().decode(errors="replace")
+                detail = exc.read(MAX_ERROR_RESPONSE_BYTES).decode(errors="replace")
                 match = re.search(r"try again in\s+([0-9.]+)s", detail, flags=re.I)
                 retry_after = number(exc.headers.get("Retry-After"))
                 delay = retry_after if retry_after is not None else (
@@ -367,10 +440,18 @@ def complete_json(config: dict[str, str], messages: list[dict], max_tokens: int)
 
 def load_index(path: pathlib.Path = INDEX_PATH) -> list[dict]:
     try:
-        rows = json.loads(path.read_text())
-    except (OSError, ValueError):
+        raw = path.read_text(encoding="utf-8")
+    except FileNotFoundError:
         return []
-    return rows if isinstance(rows, list) else []
+    except OSError as exc:
+        raise RuntimeError(f"cannot read article index {path}: {exc}") from exc
+    try:
+        rows = strict_json_loads(raw)
+    except ValueError as exc:
+        raise RuntimeError(f"article index is invalid JSON: {path}") from exc
+    if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
+        raise RuntimeError(f"article index is not a list of objects: {path}")
+    return rows
 
 
 def board_signature(board: dict) -> str:
@@ -1486,7 +1567,7 @@ def refresh_article_surfaces(*, root: pathlib.Path = ROOT) -> list[str]:
         if not md_path.exists() or not sidecar_path.exists():
             raise SystemExit(
                 f"article index lists {slug} but its markdown or sidecar is missing")
-        meta = json.loads(sidecar_path.read_text())
+        meta = strict_json_loads(sidecar_path.read_text(encoding="utf-8"))
         if meta.get("slug") != slug or \
                 meta.get("quality_gate", {}).get("status") != "PASS":
             raise SystemExit(f"article sidecar failed identity/quality gate: {sidecar_path}")
@@ -1516,7 +1597,9 @@ def write_learning_feed(article_dir: pathlib.Path, index: list[dict],
                         bodies: dict[str, str]) -> pathlib.Path:
     articles = []
     for row in index[:30]:
-        sidecar = json.loads((article_dir / f"{row['slug']}.json").read_text())
+        sidecar = strict_json_loads(
+            (article_dir / f"{row['slug']}.json").read_text(encoding="utf-8")
+        )
         generation = sidecar.get("generation") or {}
         quality = sidecar.get("quality_gate") or {}
         evidence_fingerprint = str(
@@ -1573,7 +1656,7 @@ def datasets_from_dir(path: pathlib.Path) -> dict[str, dict]:
         candidate = path / f"{key}.json"
         if not candidate.exists():
             raise SystemExit(f"offline dataset is missing {candidate}")
-        datasets[key] = json.loads(candidate.read_text())
+        datasets[key] = strict_json_loads(candidate.read_text(encoding="utf-8"))
     return datasets
 
 

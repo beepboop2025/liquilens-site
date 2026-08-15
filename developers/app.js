@@ -2,6 +2,45 @@
   "use strict";
 
   var MCP_URL = "https://api.liquilens.in/mcp";
+  var MCP_PROTOCOL_VERSION = "2026-07-28";
+  var MAX_MCP_RESPONSE_BYTES = 1024 * 1024;
+
+  function boundedJson(response) {
+    var declared = response.headers.get("content-length");
+    if (declared !== null) {
+      if (!/^\d+$/.test(declared) || Number(declared) > MAX_MCP_RESPONSE_BYTES) {
+        throw new Error("response exceeded the 1 MiB display limit");
+      }
+    }
+    if (!response.body || typeof response.body.getReader !== "function") {
+      throw new Error("this browser cannot safely stream the response");
+    }
+
+    var reader = response.body.getReader();
+    var chunks = [];
+    var received = 0;
+
+    function consume(part) {
+      if (part.done) {
+        var body = new Uint8Array(received);
+        var offset = 0;
+        chunks.forEach(function (chunk) {
+          body.set(chunk, offset);
+          offset += chunk.byteLength;
+        });
+        return JSON.parse(new TextDecoder("utf-8", {fatal: true}).decode(body));
+      }
+      received += part.value.byteLength;
+      if (received > MAX_MCP_RESPONSE_BYTES) {
+        reader.cancel().catch(function () {});
+        throw new Error("response exceeded the 1 MiB display limit");
+      }
+      chunks.push(part.value);
+      return reader.read().then(consume);
+    }
+
+    return reader.read().then(consume);
+  }
 
   function track(eventName) {
     fetch("https://api.liquilens.in/api/events", {
@@ -53,18 +92,38 @@
   document.getElementById("runTool").addEventListener("click", function () {
     var button = this;
     var output = document.getElementById("toolResult");
+    var controller = new AbortController();
+    var timeout = window.setTimeout(function () { controller.abort(); }, 12000);
     button.disabled = true;
     track("live_tool_run");
     output.textContent = "Calling failure_radar_board…";
     fetch(MCP_URL, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json, text/event-stream",
+        "MCP-Protocol-Version": MCP_PROTOCOL_VERSION,
+        "Mcp-Method": "tools/call",
+        "Mcp-Name": "failure_radar_board"
+      },
+      signal: controller.signal,
       body: JSON.stringify({jsonrpc: "2.0", id: 1, method: "tools/call",
-        params: {name: "failure_radar_board", arguments: {}}})
+        params: {
+          name: "failure_radar_board",
+          arguments: {},
+          _meta: {
+            "io.modelcontextprotocol/protocolVersion": MCP_PROTOCOL_VERSION,
+            "io.modelcontextprotocol/clientInfo": {
+              name: "liquilens-developer-page",
+              version: "1.7.0"
+            },
+            "io.modelcontextprotocol/clientCapabilities": {}
+          }
+        }})
     })
       .then(function (response) {
         if (!response.ok) throw new Error("HTTP " + response.status);
-        return response.json();
+        return boundedJson(response);
       })
       .then(function (message) {
         var result = message.result || {};
@@ -72,7 +131,14 @@
           ((result.content || [])[0] || {}).text || message;
         output.textContent = typeof value === "string" ? value : JSON.stringify(value, null, 2);
       })
-      .catch(function (error) { output.textContent = "Live call failed: " + error.message; })
-      .finally(function () { button.disabled = false; });
+      .catch(function (error) {
+        output.textContent = error.name === "AbortError"
+          ? "Live call timed out after 12 seconds"
+          : "Live call failed: " + error.message;
+      })
+      .finally(function () {
+        window.clearTimeout(timeout);
+        button.disabled = false;
+      });
   });
 }());

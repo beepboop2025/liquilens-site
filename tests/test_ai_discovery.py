@@ -129,7 +129,18 @@ def test_developer_page_exposes_openapi_and_openai_activation_paths():
     assert "Settings → Apps → Create" in page
     assert "npx liquilens" in page
     assert 'data-event="cli_install_copied"' in page
-    assert "https://api.liquilens.in/api/events" in read("developers/app.js")
+    app = read("developers/app.js")
+    assert "https://api.liquilens.in/api/events" in app
+    for token in (
+        'MCP_PROTOCOL_VERSION = "2026-07-28"',
+        '"Mcp-Method": "tools/call"',
+        '"Mcp-Name": "failure_radar_board"',
+        '"io.modelcontextprotocol/clientInfo"',
+        '"io.modelcontextprotocol/clientCapabilities"',
+        "MAX_MCP_RESPONSE_BYTES",
+        "AbortController",
+    ):
+        assert token in app
 
 
 def test_paid_pilot_has_a_bounded_offer_and_replaces_the_401_as_primary_cta():
@@ -190,13 +201,42 @@ def test_catalog_obeys_the_ard_envelope():
 def test_mcp_card_and_nested_product_line_are_current():
     entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
     mcp = entries["urn:air:liquilens.in:mcp:failure-radar"]
-    assert mcp["version"] == "1.6.0"
+    assert mcp["version"] == "1.7.0"
     assert mcp["data"]["name"] == "io.github.beepboop2025/liquilens"
     assert mcp["data"]["version"] == mcp["version"]
     assert mcp["data"]["remotes"] == [
         {"type": "streamable-http", "url": "https://api.liquilens.in/mcp"}
     ]
-    assert len(mcp["capabilities"]) == 18
+    assert mcp["capabilities"] == [
+        "corporate_transmission_board",
+        "crypto_exposure_board",
+        "crypto_regime_board",
+        "evidence_europe",
+        "evidence_india",
+        "evidence_institution",
+        "evidence_markets",
+        "evidence_us",
+        "failure_radar_board",
+        "failure_radar_institution",
+        "forward_odds",
+        "household_credit_board",
+        "institution_review_packet",
+        "latest_article",
+        "rbi_supervisory_tape",
+        "stablecoin_rails_board",
+        "universe_search",
+        "verify_published_record",
+    ]
+    assert mcp["protocolVersions"] == [
+        "2026-07-28", "2025-11-25", "2025-06-18", "2025-03-26",
+    ]
+    assert mcp["prompts"] == [
+        "crypto_liquidity_briefing",
+        "failure_radar_briefing",
+        "institution_health_check",
+        "stress_evidence_pack",
+    ]
+    assert mcp["resourceTemplates"] == []
     assert mcp["metadata"]["publicToolCount"] == 18
     assert mcp["metadata"]["articleJsonFeed"] == (
         "https://liquilens.in/articles/feed.json")
@@ -206,6 +246,8 @@ def test_mcp_card_and_nested_product_line_are_current():
         assert tool in mcp["capabilities"]
     assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.10.0"
     assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.8.0"
+    assert entries["urn:air:liquilens.in:openapi:failure-radar"]["version"] == (
+        "1.0.0")
     assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
         "https://seiche.info/.well-known/ai-catalog.json")
     assert entries["urn:air:liquilens.in:catalog:undertow"]["url"] == (
