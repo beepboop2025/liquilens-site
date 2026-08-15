@@ -95,11 +95,15 @@ Hard rules:
    gate: copy under 850 words is discarded. No tables. Use every exact required
    heading from the dossier, including The strongest counter-case, Follow the
    pressure chain, and Sources, method, and limits.
-6. Link only to allowed_source_urls. The product handoff belongs near the end
-   and must remain diagnostic, not promotional.
+6. Include at least seven Markdown source links, all drawn verbatim from
+   allowed_source_urls. The product handoff belongs near the end and must remain
+   diagnostic, not promotional.
 7. Return JSON only with string fields headline, dek, and body_md.
 8. editorial_memory contains structural lesson tags only. It is never factual
    evidence and cannot supply a number, event, allegation, source, or verdict.
+9. Before returning, scan every numeral against the dossier and delete any
+   unsupported one. The body must contain the exact phrases "not investment
+   advice" and "not a credit rating".
 """
 
 REVIEW_SYSTEM = """You are LiquiLens's sceptical standards editor. Rewrite the
@@ -110,6 +114,9 @@ signal, and a model derivation. Make the counter-case capable of defeating the
 thesis. Preserve all eligibility and missing-data disclosures. The rewritten
 body must be 1,050 to 1,250 words and use every required dossier heading; copy
 under 850 words is automatically rejected.
+Return publish only after the copy contains at least seven allowed Markdown
+links, the exact research and institution-risk boundary phrases, and no numeral
+absent from the dossier. If any check fails, repair it in the returned article.
 
 Return JSON only with verdict (the literal string publish), headline, dek,
 body_md, and notes (a short list of material edits). No prose outside JSON.
@@ -845,6 +852,49 @@ def draft_with_model(dossier: dict, config: dict[str, str]) -> dict:
     }
 
 
+def repair_with_model(dossier: dict, candidate: dict, failures: list[str],
+                      config: dict[str, str]) -> dict:
+    """Run one standards pass targeted at deterministic gate failures."""
+    repair_config = {**config, "model": config.get("review_model") or config["model"]}
+    try:
+        repaired = complete_json(
+            repair_config,
+            [
+                {"role": "system", "content": REVIEW_SYSTEM},
+                {
+                    "role": "user",
+                    "content": (
+                        "The deterministic publication gate rejected this copy. Repair every "
+                        "listed failure using only the dossier; do not weaken or argue with "
+                        "the gate. Return the complete article, not a patch.\n\n"
+                        "GATE FAILURES:\n" + json.dumps(failures, ensure_ascii=False)
+                        + "\n\nEVIDENCE DOSSIER:\n" + json.dumps(dossier, ensure_ascii=False)
+                        + "\n\nREJECTED COPY:\n" + json.dumps(candidate, ensure_ascii=False)
+                    ),
+                },
+            ],
+            2800,
+        )
+    except Exception as exc:
+        raise RuntimeError(f"repair pass failed: {type(exc).__name__}: {str(exc)[:160]}") from exc
+    if str(repaired.get("verdict") or "").lower() != "publish":
+        raise ValueError("repair editor did not return publish")
+    for field in ("headline", "dek", "body_md"):
+        if not isinstance(repaired.get(field), str) or not repaired[field].strip():
+            raise ValueError(f"repair editor omitted {field}")
+    prior_notes = candidate.get("review_notes")
+    repair_notes = repaired.get("notes")
+    return {
+        "headline": repaired["headline"].strip(),
+        "dek": repaired["dek"].strip(),
+        "body_md": repaired["body_md"].strip(),
+        "review_notes": (
+            (prior_notes if isinstance(prior_notes, list) else [])
+            + (repair_notes if isinstance(repair_notes, list) else [])
+        ),
+    }
+
+
 URL_RE = re.compile(r"https?://[^\s)>\]]+")
 NUMBER_RE = re.compile(r"(?<![A-Za-z])[-+]?\$?\d[\d,]*(?:\.\d+)?(?:%|bps?|bp|x|cr|bn|tn|[BMK])?", re.I)
 
@@ -973,6 +1023,19 @@ def quality_issues(article: dict) -> list[str]:
     return issues
 
 
+def candidate_publish_issues(candidate: dict, dossier: dict, *,
+                             article_type: str,
+                             editorial_memory: dict | None) -> list[str]:
+    """Apply identical immutable gates after review and after repair."""
+    issues = grounding_issues(candidate, dossier)
+    issues.extend(quality_issues({
+        **candidate,
+        "article_type": article_type,
+        "editorial_memory": editorial_memory or {},
+    }))
+    return issues
+
+
 def build_article(datasets: dict[str, dict], *, date: str,
                   recent_index: list[dict] | None = None,
                   configured_model: dict[str, str] | None | bool = False,
@@ -1017,17 +1080,23 @@ def build_article(datasets: dict[str, dict], *, date: str,
     if isinstance(config, dict):
         try:
             candidate = draft_with_model(dossier, config)
-            issues = grounding_issues(candidate, dossier)
-            issues.extend(quality_issues({
-                **candidate,
-                "article_type": article_type,
-                "editorial_memory": editorial_memory or {},
-            }))
+            passes = 2
+            issues = candidate_publish_issues(
+                candidate, dossier, article_type=article_type,
+                editorial_memory=editorial_memory,
+            )
+            if issues:
+                candidate = repair_with_model(dossier, candidate, issues, config)
+                passes = 3
+                issues = candidate_publish_issues(
+                    candidate, dossier, article_type=article_type,
+                    editorial_memory=editorial_memory,
+                )
             if issues:
                 raise ValueError("; ".join(issues))
             model_copy = candidate
             generation = {
-                "mode": "model_assisted", "model": config["model"], "passes": 2,
+                "mode": "model_assisted", "model": config["model"], "passes": passes,
                 "dossier_sha256": dossier_hash, "fallback_reason": None,
                 "review_notes": candidate.get("review_notes") or [],
                 "editorial_memory": generation["editorial_memory"],

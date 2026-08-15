@@ -140,6 +140,10 @@ def test_model_cannot_publish_an_invented_number(monkeypatch):
         }
 
     monkeypatch.setattr(daily_article, "draft_with_model", invented)
+    monkeypatch.setattr(
+        daily_article, "repair_with_model",
+        lambda _dossier, candidate, _failures, _config: candidate,
+    )
     article = daily_article.build_article(
         data, date="2026-08-15", recent_index=[],
         configured_model={"key": "x", "base_url": "https://invalid", "model": "test"},
@@ -147,6 +151,37 @@ def test_model_cannot_publish_an_invented_number(monkeypatch):
     assert article["generation"]["mode"] == "deterministic_fallback"
     assert "unsupported numbers" in article["generation"]["fallback_reason"]
     assert "987654321" not in article["body_md"]
+
+
+def test_gate_feedback_can_repair_copy(monkeypatch):
+    data = datasets()
+    safe = daily_article.build_article(
+        data, date="2026-08-15", recent_index=[], configured_model=None,
+    )
+    rejected = {
+        "headline": safe["headline"], "dek": safe["dek"],
+        "body_md": safe["body_md"] + "\nDeposits vanished by 987654321%.",
+        "review_notes": [],
+    }
+    observed_failures = []
+    monkeypatch.setattr(daily_article, "draft_with_model", lambda *_args: rejected)
+
+    def repair(_dossier, _candidate, failures, _config):
+        observed_failures.extend(failures)
+        return {
+            "headline": safe["headline"], "dek": safe["dek"],
+            "body_md": safe["body_md"].replace("12-month", "one-year"),
+            "review_notes": ["Removed unsupported copy."],
+        }
+
+    monkeypatch.setattr(daily_article, "repair_with_model", repair)
+    article = daily_article.build_article(
+        data, date="2026-08-15", recent_index=[],
+        configured_model={"key": "x", "base_url": "https://invalid", "model": "test"},
+    )
+    assert any("unsupported numbers" in issue for issue in observed_failures)
+    assert article["generation"]["mode"] == "model_assisted"
+    assert article["generation"]["passes"] == 3
 
 
 def test_write_builds_page_archive_feed_and_discovery(tmp_path):
