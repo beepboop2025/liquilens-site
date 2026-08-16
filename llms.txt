@@ -92,5 +92,6 @@ LiquiLens. Bank and lender failure early-warning research system. https://liquil
 
 Archive and full-text feeds: https://liquilens.in/articles/, https://liquilens.in/articles/feed.json (JSON Feed 1.1), and https://liquilens.in/articles/feed.xml (Atom)
 
+- [Global Trust Bank replay: disclosed capital and asset-quality stress arrived first](https://liquilens.in/articles/2026-08-16-global-trust-bank-replay-disclosed-capital-and-asset-quality-stress-arrived.md): 2026-08-16, historical replay. The replay places Global Trust Bank in an RBI action zone before its default date, but fraud-masking, an unscoreable funding lens, and period-end timing proxies sharply limit what that sequence can prove.
 - [ESAF’s warning is a dated filing signal meeting a live market-price signal—not evidence of a funding run](https://liquilens.in/articles/2026-08-15-esaf-s-warning-is-a-dated-filing-signal-meeting-a-live-market-price-signal-n.md): 2026-08-15, current analysis. ESAF Small Finance Bank is a yellow-tier monitoring case because an elevated GNPA reading sits beside a market distance-to-default below the screen threshold. The filing, price and model signals should not be treated as the same thing.
 <!-- DAILY-ARTICLES:END -->
