@@ -1,5 +1,18 @@
 [
   {
+    "slug": "2026-08-17-il-fs-replay-the-funding-signal-arrived-first-but-the-record-cannot-prove-ca",
+    "date": "2026-08-17",
+    "article_type": "historical_replay",
+    "topic": "ilfs",
+    "headline": "IL&FS replay: the funding signal arrived first, but the record cannot prove causation",
+    "dek": "The IL&FS replay identifies a liability-side watch signal before default and before any recorded PCA action-zone entry. That is a filing-period result under optimistic timing assumptions, not a market-price verdict, a live backtest, or a forecast for today’s screens.",
+    "canonical_url": "https://liquilens.in/articles/2026-08-17-il-fs-replay-the-funding-signal-arrived-first-but-the-record-cannot-prove-ca/",
+    "published_at": "2026-08-17T11:41:06Z",
+    "evidence_as_of": "2026-08-15",
+    "board_signature": "84bb24a7ffdbec3d3dc3af10b4d42d2100880979d3fda8cf666d59513cbcbc49",
+    "word_count": 1442
+  },
+  {
     "slug": "2026-08-16-global-trust-bank-replay-disclosed-capital-and-asset-quality-stress-arrived",
     "date": "2026-08-16",
     "article_type": "historical_replay",
