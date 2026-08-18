@@ -1,13 +1,13 @@
 {
   "schema": "liquidity-lab.product-card.v1",
-  "updated": "2026-08-15",
+  "updated": "2026-08-18",
   "product": {
     "name": "LiquiLens",
     "canonical_url": "https://liquilens.in/",
     "category": "Bank and lender failure early warning",
     "description": "A disclosure-based early warning system that reads public filings, funding structure, regulatory thresholds and market signals to identify banks and lenders drifting toward distress. Historical diagnostics publish misses plus explicit claim-eligibility flags.",
     "operating_entity": "ai.de, a Udyam registered sole proprietorship, Jaipur, India",
-    "access_model": "Public research, historical diagnostics, API, hosted MCP and CLI are open; fixed-scope paid proof pilots are available for private-book validation.",
+    "access_model": "Public research, historical diagnostics, API, hosted MCP and CLI are open. Paid named-list software watches public counterparties without a customer book. Fixed-scope proof pilots remain available for private-book validation.",
     "geographies": ["India", "United States", "European case studies"],
     "topics": [
       "bank failure early warning",
@@ -72,6 +72,8 @@
     "website": "https://liquilens.in/",
     "selection_guide": "https://liquilens.in/use-cases/",
     "quickstart": "https://liquilens.in/developers/",
+    "named_list": "https://liquilens.in/access/",
+    "named_list_sample": "https://liquilens.in/access/sample/",
     "pilot": "https://liquilens.in/pilot/",
     "cli": "https://github.com/beepboop2025/liquilens-cli",
     "cli_evidence_command": "npx liquilens --record",
