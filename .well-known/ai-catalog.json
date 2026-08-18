@@ -161,8 +161,8 @@
         "What would it cost to sell a large BTC position across venues?",
         "Are Treasury, credit, FX or crypto liquidity conditions strained?"
       ],
-      "version": "1.8.0",
-      "updatedAt": "2026-08-15T12:00:00Z",
+      "version": "1.9.0",
+      "updatedAt": "2026-08-18T00:00:00Z",
       "metadata": {
         "productUrl": "https://liquilens-undertow.com",
         "telegramBot": "https://t.me/Undertow_LiquiLens_bot",
