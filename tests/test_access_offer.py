@@ -16,10 +16,12 @@ def read(path):
 def test_named_list_offer_is_software_and_asks_for_names():
     page = read("access/index.html")
     assert "Send 15 names" in page
-    assert "₹3 lakh" in page
-    assert "₹75,000" in page
-    assert "₹2.5 lakh" in page
-    assert "₹12 lakh" in page
+    assert "Write the founder" in page
+    assert "Ask the founder" in page
+    assert "₹3 lakh" not in page
+    assert "₹75,000" not in page
+    assert "₹2.5 lakh" not in page
+    assert "₹12 lakh" not in page
     assert "software subscription" in page.lower()
     assert "no customer loan book" in page.lower() or "customer loan book never" in page.lower()
     assert "mailto:mrinal@liquilens.in?subject=LiquiLens%20named-list%20seat" in page
@@ -49,7 +51,8 @@ def test_home_and_pilot_point_at_named_list_first():
     home = read("index.html")
     assert 'data-funnel="access_cta_clicked" href="/access/"' in home
     assert "Send 15 counterparties" in home
-    assert "₹3 lakh" in home
+    assert "₹3 lakh" not in home
+    assert "Write the founder" in home or "mrinal@liquilens.in" in home
     pilot = read("pilot/index.html")
     assert 'href="/access/"' in pilot
     assert "Send 15 names instead" in pilot
@@ -58,9 +61,10 @@ def test_home_and_pilot_point_at_named_list_first():
 
 def test_about_keeps_book_pilot_prices_and_adds_the_seat():
     about = read("about/index.html")
-    assert "₹3 lakh" in about
-    assert "₹2.5 lakh" in about
-    assert "₹12 lakh" in about
+    assert "₹3 lakh" not in about
+    assert "₹2.5 lakh" not in about
+    assert "₹12 lakh" not in about
+    assert "Write the founder" in about
     assert "/access/" in about
     assert "The public-good house" in about
     assert "palimpsest.info/fund.html" in about
