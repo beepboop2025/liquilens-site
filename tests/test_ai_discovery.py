@@ -256,7 +256,7 @@ def test_mcp_card_and_nested_product_line_are_current():
                  "crypto_exposure_board"):
         assert tool in mcp["capabilities"]
     assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.10.0"
-    assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.8.0"
+    assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.9.0"
     assert entries["urn:air:liquilens.in:openapi:failure-radar"]["version"] == (
         "1.0.0")
     assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
