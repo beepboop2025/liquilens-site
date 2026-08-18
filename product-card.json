@@ -7,7 +7,7 @@
     "category": "Bank and lender failure early warning",
     "description": "A disclosure-based early warning system that reads public filings, funding structure, regulatory thresholds and market signals to identify banks and lenders drifting toward distress. Historical diagnostics publish misses plus explicit claim-eligibility flags.",
     "operating_entity": "ai.de, a Udyam registered sole proprietorship, Jaipur, India",
-    "access_model": "Public research, historical diagnostics, API, hosted MCP and CLI are open. Paid named-list software watches public counterparties without a customer book. Fixed-scope proof pilots remain available for private-book validation.",
+    "access_model": "Public research, historical diagnostics, API, hosted MCP and CLI are open. Paid named-list software watches public India Failure Radar names and served US FDIC-board names without a customer book. Europe remains named case files. Fixed-scope proof pilots remain available for private-book validation.",
     "geographies": ["India", "United States", "European case studies"],
     "topics": [
       "bank failure early warning",

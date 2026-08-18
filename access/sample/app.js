@@ -1,7 +1,8 @@
 (function () {
   "use strict";
 
-  var BOARD_URL = "https://api.liquilens.in/api/failure-radar/board";
+  var INDIA_BOARD_URL = "https://api.liquilens.in/api/failure-radar/board";
+  var US_BOARD_URL = "https://api.liquilens.in/api/us-radar/board";
   var REVIEW_URL = "https://api.liquilens.in/api/failure-radar/review/";
   var GAUGE_URL = "https://api.seiche.info/api/gauge";
   var WATCH_TIERS = {red: true, orange: true, yellow: true};
@@ -18,41 +19,65 @@
     });
   }
 
-  function watchRows(board) {
-    var rows = Array.isArray(board.rows) ? board.rows : [];
+  function indiaWatch(board) {
+    var rows = Array.isArray(board && board.rows) ? board.rows : [];
     return rows.filter(function (row) {
       return WATCH_TIERS[row.tier] === true;
     }).slice(0, 8);
   }
 
-  function coverLine(board, watch) {
-    var asOf = board.as_of || "an unknown as-of date";
-    var n = Array.isArray(board.rows) ? board.rows.length : 0;
-    return "As of " + asOf + ", " + n + " public names were on the served India board; "
-      + watch.length + " sit yellow or worse.";
+  function usWatch(board) {
+    var rows = Array.isArray(board && board.board) ? board.board : [];
+    return rows.slice(0, 8);
   }
 
-  function renderWatch(rows) {
+  function coverLine(india, us, indiaWatchRows, usWatchRows) {
+    var parts = [];
+    if (india && Array.isArray(india.rows)) {
+      parts.push(india.rows.length + " India names as of " + (india.as_of || "?"));
+    }
+    if (us && Array.isArray(us.board)) {
+      var scored = us.universe && us.universe.banks_scored
+        ? us.universe.banks_scored + " FDIC banks scored"
+        : "US board";
+      parts.push(scored + ", " + us.board.length + " served as of " + (us.as_of || "?"));
+    }
+    var watch = (indiaWatchRows ? indiaWatchRows.length : 0)
+      + (usWatchRows ? usWatchRows.length : 0);
+    if (!parts.length) {
+      return "Neither public board answered. No stale pack is shown.";
+    }
+    return parts.join("; ") + ". " + watch + " names sit on the sample watch slice.";
+  }
+
+  function addName(list, market, label, detail) {
+    var item = document.createElement("li");
+    var tier = document.createElement("span");
+    tier.className = "tier";
+    tier.textContent = market;
+    var body = document.createElement("span");
+    body.textContent = label + (detail ? " · " + detail : "");
+    item.appendChild(tier);
+    item.appendChild(body);
+    list.appendChild(item);
+  }
+
+  function renderWatch(indiaRows, usRows) {
     var list = document.getElementById("watchList");
     list.innerHTML = "";
-    if (!rows.length) {
-      text("watchFine", "No red, orange or yellow names on the served board. Quiet is a reading too.");
+    indiaRows.forEach(function (row) {
+      var signals = Array.isArray(row.signals_fired) ? row.signals_fired.join(", ") : "";
+      addName(list, "IN " + (row.tier || "n/a"), row.name || row.slug || "unnamed", signals);
+    });
+    usRows.forEach(function (row) {
+      var score = row.undertow_score_v02 == null ? "" : "score " + row.undertow_score_v02;
+      addName(list, "US cert " + (row.cert || "?"), row.bank || "unnamed", score);
+    });
+    if (!indiaRows.length && !usRows.length) {
+      text("watchFine", "No watch names returned. Quiet is a reading too.");
       return;
     }
-    rows.forEach(function (row) {
-      var item = document.createElement("li");
-      var tier = document.createElement("span");
-      tier.className = "tier";
-      tier.textContent = String(row.tier || "n/a");
-      var body = document.createElement("span");
-      var signals = Array.isArray(row.signals_fired) ? row.signals_fired.join(", ") : "";
-      body.textContent = (row.name || row.slug || "unnamed")
-        + (signals ? " · " + signals : "");
-      item.appendChild(tier);
-      item.appendChild(body);
-      list.appendChild(item);
-    });
-    text("watchFine", "Copied from the public board. The pack does not re-score.");
+    text("watchFine", "Copied from the public boards. The pack does not re-score.");
   }
 
   function renderDark(packets) {
@@ -73,7 +98,7 @@
     });
     if (!shown) {
       var empty = document.createElement("li");
-      empty.textContent = "No dark-lens rows returned on the fetched packets.";
+      empty.textContent = "No dark-lens rows returned on the fetched India packets. US rows have no review-packet dark lenses.";
       list.appendChild(empty);
     }
   }
@@ -87,19 +112,27 @@
     text("plumbingLine", "Seiche " + gauge.regime + " " + (gauge.index == null ? "?" : gauge.index) + "/100" + tell + ".");
   }
 
-  Promise.allSettled([json(BOARD_URL), json(GAUGE_URL)]).then(function (results) {
-    var board = results[0].status === "fulfilled" ? results[0].value : null;
-    var gauge = results[1].status === "fulfilled" ? results[1].value : null;
-    if (!board || !Array.isArray(board.rows)) {
-      text("packStatus", "The Failure Radar did not answer. No stale pack is shown.");
+  Promise.allSettled([
+    json(INDIA_BOARD_URL),
+    json(US_BOARD_URL),
+    json(GAUGE_URL)
+  ]).then(function (results) {
+    var india = results[0].status === "fulfilled" ? results[0].value : null;
+    var us = results[1].status === "fulfilled" ? results[1].value : null;
+    var gauge = results[2].status === "fulfilled" ? results[2].value : null;
+    if ((!india || !Array.isArray(india.rows)) && (!us || !Array.isArray(us.board))) {
+      text("packStatus", "The public boards did not answer. No stale pack is shown.");
       return;
     }
-    var watch = watchRows(board);
-    text("packStatus", "Served as of " + (board.as_of || "?") + " · " + board.rows.length + " institutions.");
-    text("coverLine", coverLine(board, watch));
-    renderWatch(watch);
+    var indiaRows = indiaWatch(india);
+    var usRows = usWatch(us);
+    var indiaCount = india && Array.isArray(india.rows) ? india.rows.length : 0;
+    var usCount = us && Array.isArray(us.board) ? us.board.length : 0;
+    text("packStatus", "India " + indiaCount + " · US served " + usCount + ".");
+    text("coverLine", coverLine(india, us, indiaRows, usRows));
+    renderWatch(indiaRows, usRows);
     renderGauge(gauge);
-    var slugs = watch.map(function (row) { return row.slug; }).filter(Boolean).slice(0, 5);
+    var slugs = indiaRows.map(function (row) { return row.slug; }).filter(Boolean).slice(0, 5);
     return Promise.allSettled(slugs.map(function (slug) {
       return json(REVIEW_URL + encodeURIComponent(slug));
     })).then(function (packetResults) {
