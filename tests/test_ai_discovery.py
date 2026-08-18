@@ -26,13 +26,16 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["mcp"] == "https://api.liquilens.in/mcp"
     assert card["access"]["api_catalog"] == "https://api.liquilens.in/api"
     assert card["access"]["openapi"] == "https://api.liquilens.in/api/openapi.json"
+    assert card["access"]["named_list"] == "https://liquilens.in/access/"
+    assert card["access"]["named_list_sample"] == (
+        "https://liquilens.in/access/sample/")
     assert card["access"]["pilot"] == "https://liquilens.in/pilot/"
     assert card["access"]["cli"] == (
         "https://github.com/beepboop2025/liquilens-cli")
     assert card["access"]["ai_catalog"] == (
         "https://liquilens.in/.well-known/ai-catalog.json")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
-    assert card["updated"] == "2026-08-15"
+    assert card["updated"] == "2026-08-18"
     assert card["access"]["daily_articles"] == "https://liquilens.in/articles/"
     assert card["access"]["article_json_feed"] == (
         "https://liquilens.in/articles/feed.json")
@@ -159,6 +162,10 @@ def test_paid_pilot_has_a_bounded_offer_and_replaces_the_401_as_primary_cta():
     assert "Design partner pilots are free" not in home
     assert "https://liquilens.in/pilot/" in read("sitemap.xml")
     assert "https://liquilens.in/pilot/" in read("llms.txt")
+    assert "https://liquilens.in/access/" in read("sitemap.xml")
+    assert "https://liquilens.in/access/" in read("llms.txt")
+    assert "INR 300,000 per year" in read("llms.txt")
+    assert "INR 75,000" in read("llms.txt")
 
     for surface in ("index.html", "about/index.html", "pilot/index.html"):
         copy = read(surface)
