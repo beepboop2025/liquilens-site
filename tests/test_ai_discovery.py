@@ -148,10 +148,12 @@ def test_developer_page_exposes_openapi_and_openai_activation_paths():
 
 def test_paid_pilot_has_a_bounded_offer_and_replaces_the_401_as_primary_cta():
     pilot = read("pilot/index.html")
-    for required in ("₹2.5 lakh", "₹12 lakh/yr", "six weeks",
+    for required in ("Ask the founder", "Write the founder", "six weeks",
                      "credited toward", "Runs in your environment",
                      "Alerts per catch"):
         assert required.lower() in pilot.lower()
+    assert "₹2.5 lakh" not in pilot
+    assert "₹12 lakh" not in pilot
     assert "mailto:mrinal@liquilens.in" in pilot
     assert 'data-event="email_clicked"' in pilot
     assert "https://api.liquilens.in/api/events" in read("pilot/app.js")
@@ -164,17 +166,19 @@ def test_paid_pilot_has_a_bounded_offer_and_replaces_the_401_as_primary_cta():
     assert "https://liquilens.in/pilot/" in read("llms.txt")
     assert "https://liquilens.in/access/" in read("sitemap.xml")
     assert "https://liquilens.in/access/" in read("llms.txt")
-    assert "INR 300,000 per year" in read("llms.txt")
-    assert "INR 75,000" in read("llms.txt")
+    assert "no list price" in read("llms.txt")
+    assert "mrinal@liquilens.in" in read("llms.txt")
+    assert "INR 300,000 per year" not in read("llms.txt")
+    assert "INR 75,000" not in read("llms.txt")
 
     for surface in ("index.html", "about/index.html", "pilot/index.html"):
         copy = read(surface)
-        assert "₹2.5 lakh" in copy
-        assert "₹12 lakh" in copy
+        assert "₹2.5 lakh" not in copy
+        assert "₹12 lakh" not in copy
 
     machine_copy = read("llms.txt")
-    assert "INR 250,000" in machine_copy
-    assert "INR 1,200,000 per year" in machine_copy
+    assert "INR 250,000" not in machine_copy
+    assert "INR 1,200,000 per year" not in machine_copy
 
 
 def test_aggregate_funnel_events_are_documented_as_property_free():
