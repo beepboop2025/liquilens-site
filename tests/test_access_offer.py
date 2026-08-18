@@ -1,5 +1,6 @@
 """Named-list software is the first paid door; the book pilot stays last."""
 
+import json
 import os
 import re
 
@@ -61,3 +62,15 @@ def test_about_keeps_book_pilot_prices_and_adds_the_seat():
     assert "₹2.5 lakh" in about
     assert "₹12 lakh" in about
     assert "/access/" in about
+    assert "The public-good house" in about
+    assert "palimpsest.info/fund.html" in about
+    assert "EvidenceSignalDesk" in about
+    assert "named-list software" in about
+    llms = read("llms.txt")
+    assert "Public-good house (grants, not invoices)" in llms
+    assert "https://palimpsest.info/fund.html" in llms
+    card = json.loads(read("product-card.json"))
+    assert any(sibling["url"] == "https://palimpsest.info/fund.html"
+               for sibling in card["siblings"])
+    assert any("NarcoScope public goods" in item
+               for item in card["do_not_use_for"])

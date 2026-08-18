@@ -28,7 +28,8 @@
     "A credit rating, a statement that a living institution will fail, or investment advice.",
     "System-wide US money-market funding stress; use Seiche for that question.",
     "Market-depth and execution-cost analysis; use Undertow for that question.",
-    "Private-book or supervisory conclusions unless LiquiLens is deployed inside the user's own controlled environment."
+    "Private-book or supervisory conclusions unless LiquiLens is deployed inside the user's own controlled environment.",
+    "Censorship observation, sealed evals, or official drug-market evidence; those are Palimpsest, Evidence Signal and NarcoScope public goods."
   ],
   "evidence": {
     "market_status_source": "https://api.liquilens.in/api/evidence/markets",
@@ -104,6 +105,11 @@
       "name": "My Quant Doesn't Speak English",
       "use_for": "Every Seiche, LiquiLens, and Undertow dispatch in one editorial wire",
       "url": "https://myquantdoesntspeakenglish.com/"
+    },
+    {
+      "name": "Palimpsest",
+      "use_for": "Public-good house for grants: censorship observation, sealed evals, Evidence Signal and NarcoScope. No financial authority.",
+      "url": "https://palimpsest.info/fund.html"
     }
   ],
   "citation": "LiquiLens. Bank and lender failure early-warning research system. https://liquilens.in/ (cite the specific validation or API response and its as-of date for quantitative claims)."

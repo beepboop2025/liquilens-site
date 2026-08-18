@@ -82,6 +82,15 @@ The scoring boundary is fixed: generative features may explain served evidence, 
 - My Quant Doesn't Speak English, https://myquantdoesntspeakenglish.com/: every Seiche, LiquiLens, and Undertow dispatch in one editorial wire, plus original investigations.
 - Groundcheck, https://groundcheck.seiche.info/: live-source claim and citation verification.
 
+## Public-good house (grants, not invoices)
+
+Palimpsest, Evidence Signal, and NarcoScope are free public goods. They observe and seal. They do not size financial risk and they are not named-list software.
+
+- Funding page: https://palimpsest.info/fund.html
+- Evidence Signal: https://t.me/EvidenceSignalDesk
+- Palimpsest: https://palimpsest.info/
+- NarcoScope: https://narcoscope.com/
+
 ## Citation
 
 Cite the specific validation page or API response and include its as-of or generated-at date. Suggested project citation:
