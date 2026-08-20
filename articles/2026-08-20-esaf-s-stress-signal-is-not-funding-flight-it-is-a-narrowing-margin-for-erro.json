@@ -1,0 +1,198 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-08-20-esaf-s-stress-signal-is-not-funding-flight-it-is-a-narrowing-margin-for-erro",
+  "product": "liquilens",
+  "slug": "2026-08-20-esaf-s-stress-signal-is-not-funding-flight-it-is-a-narrowing-margin-for-erro",
+  "date": "2026-08-20",
+  "article_type": "current_analysis",
+  "topic": "esaf-sfb",
+  "headline": "ESAF’s stress signal is not funding flight. It is a narrowing margin for error.",
+  "dek": "ESAF Small Finance Bank is a yellow-screen priority because an asset-quality burden and a stale market repricing signal can interact before a visible funding break. The available deposit signal is stable, while key liquidity evidence remains dark.",
+  "canonical_url": "https://liquilens.in/articles/2026-08-20-esaf-s-stress-signal-is-not-funding-flight-it-is-a-narrowing-margin-for-erro/",
+  "published_at": "2026-08-20T11:43:01Z",
+  "evidence_as_of": "2026-08-20",
+  "board_signature": "0ab066abbc1aaccecb2de82af97b7a436a2c1fc96bb9883555395f5d6a67ed3d",
+  "subject": {
+    "slug": "esaf-sfb",
+    "name": "ESAF Small Finance Bank",
+    "inst_type": "sfb",
+    "label": "stressed_survivor",
+    "as_of": "2025-09-30",
+    "quarter": "FY26Q2",
+    "knowledge_time_proxy": "2025-11-29",
+    "age_months": 11,
+    "score": 66.0,
+    "grade": "BBB",
+    "hazard": {
+      "pd_12m": 0.0042,
+      "pd_24m": 0.0085,
+      "pd_36m": 0.0127,
+      "grade": "A",
+      "drivers": {
+        "distress": 1.3658,
+        "aq_delta": 0.0099,
+        "aq_delta_unobserved": 0.0,
+        "funding_x_distress": 0.0
+      },
+      "basis": [
+        "GNPA 8.5%"
+      ],
+      "score_scope": "corpus_monitoring_probability_not_credit_rating",
+      "historical_evidence": {
+        "status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+        "validated_backtest_eligible": false,
+        "real_money_eligible": false,
+        "bitemporal_input_contract": false,
+        "filing_lag_days": 60,
+        "availability_time_basis": "explicit publication clock when present; otherwise period_end + 60 days",
+        "lead_times_optimistic": true,
+        "reason": "the committed crisis dossiers do not preserve a complete public-availability/revision archive; a conservative filing lag prevents quarter-end lookahead but cannot reconstruct overwritten amendments"
+      },
+      "validated_backtest": false,
+      "real_money_eligible": false
+    },
+    "movement": {
+      "delta_pd_12m": 0.0008,
+      "reference": {
+        "from_q": "FY25Q2",
+        "from_period": "2024-09-30",
+        "pd_12m_then": 0.0034
+      }
+    },
+    "pca": {
+      "framework": null,
+      "applicable": false,
+      "status": "not_applicable",
+      "risk_level": 0,
+      "breaches": [],
+      "headroom": [],
+      "not_assessed": [
+        "CRAR"
+      ],
+      "note": "SFBs are outside the 2021 bank-PCA framework; headroom shown against the 15% licensing CRAR floor"
+    },
+    "funding": {
+      "index": 0.0,
+      "band": "stable",
+      "components": {
+        "deposit_run": 0.0
+      },
+      "flags": [],
+      "dark_lenses": [
+        "wholesale_reliance",
+        "cd_strain",
+        "lcr_headroom"
+      ],
+      "basis": [
+        "worst deposit QoQ +5.3%"
+      ]
+    },
+    "forensics": {
+      "eligible": true,
+      "fired": false,
+      "indicators": []
+    },
+    "market": {
+      "dd": 1.927,
+      "pd_merton_1y": 0.02696,
+      "equity_cr": 2056.0,
+      "barrier_cr": 23276.0,
+      "sigma_e": 0.4288,
+      "sigma_v": 0.1792,
+      "r_prior_1y": 0.2769,
+      "as_of": "2026-08-11",
+      "stale": true,
+      "basis": [
+        "market cap Rs 2,056 cr (ESAFSFB.NS, 2026-08-11)",
+        "sigma_E 42.9% (252d realized)",
+        "prior-1y return +27.7%",
+        "deposits Rs 23,276 cr",
+        "barrier from FY25Q4 disclosures (other liabilities not in dossier schema — barrier slightly understated)"
+      ],
+      "note": "naive DD (Bharath-Shumway 2008); N(-DD) is the Merton-form PD, a repricing/ranking signal — not calibrated to Indian failure frequencies"
+    },
+    "conformal": {
+      "alarm": true,
+      "threshold_distress": 26.799999999999997,
+      "distress": 34.0,
+      "gate": "CLOSED_REVALIDATION_REQUIRED",
+      "wiring_status": "SUSPENDED_REVALIDATION_REQUIRED",
+      "tier_authority": false
+    },
+    "signals_fired": [
+      "market_dd_below_2"
+    ],
+    "tier": "yellow",
+    "peer_percentile": {
+      "cohort": 100,
+      "cohort_n": 4,
+      "universe": 100
+    }
+  },
+  "word_count": 1266,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:c6faad8fe5e28a5d7a327122d55a43e1e10483019ce1123f193215eb0375eb4c",
+    "memory_fingerprint": "sha256:062e0765d7530ed5e6374ca1ea72b2bbee1d40fc41a8c3f9f04767d2ee1ba368",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 2,
+    "dossier_sha256": "5681249fdc330a9c15e99486b80e0e37e8aa0c4e127db3fa0ddbe0e640ffb363",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Removed unsupported implications of current funding stress and capital erosion.",
+      "Separated filing-period facts, market-price signals, and model-derived probabilities.",
+      "Retained stale-data, eligibility, construction-PIT, and missing-data limits; strengthened the counter-case."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:c6faad8fe5e28a5d7a327122d55a43e1e10483019ce1123f193215eb0375eb4c",
+      "memory_fingerprint": "sha256:062e0765d7530ed5e6374ca1ea72b2bbee1d40fc41a8c3f9f04767d2ee1ba368",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
