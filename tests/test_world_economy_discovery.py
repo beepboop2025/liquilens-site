@@ -16,6 +16,7 @@ CATALOG_URL = "https://liquilens.in/world-economy/evidence-catalog.json"
 
 DATASETS = {
     "https://liquilens.in/research/#bank-lender-early-warning-dataset": {
+        "date_modified": "2026-08-21",
         "identifier": (
             "urn:liquidity-lab:dataset:liquilens-bank-lender-early-warning"
         ),
@@ -31,6 +32,7 @@ DATASETS = {
         },
     },
     "https://seiche.info/#dollar-funding-dataset": {
+        "date_modified": "2026-08-22",
         "identifier": (
             "urn:liquidity-lab:dataset:seiche-dollar-funding-money-markets"
         ),
@@ -51,6 +53,7 @@ DATASETS = {
         },
     },
     "https://liquilens-undertow.com/#market-liquidity-dataset": {
+        "date_modified": "2026-08-21",
         "identifier": (
             "urn:liquidity-lab:dataset:undertow-market-liquidity-exit-cost"
         ),
@@ -118,7 +121,7 @@ def test_machine_catalog_has_three_distinct_bounded_datasets():
     assert data["@type"] == "DataCatalog"
     assert data["@id"] == CATALOG_ID
     assert data["url"] == WORLD_ECONOMY_URL
-    assert data["dateModified"] == "2026-08-21"
+    assert data["dateModified"] == "2026-08-22"
     assert "not a complete database of the world economy" in data[
         "description"
     ].lower()
@@ -136,7 +139,7 @@ def test_machine_catalog_has_three_distinct_bounded_datasets():
         assert dataset["identifier"].startswith("urn:liquidity-lab:dataset:")
         assert dataset["url"] == dataset["sameAs"] == expected["url"]
         assert 50 <= len(dataset["description"]) <= 5000
-        assert dataset["dateModified"] == "2026-08-21"
+        assert dataset["dateModified"] == expected["date_modified"]
         assert dataset["includedInDataCatalog"] == {"@id": CATALOG_ID}
         assert dataset["isAccessibleForFree"] is True
         assert dataset["measurementTechnique"]
@@ -247,7 +250,7 @@ def test_world_economy_routes_are_discoverable_across_human_and_agent_surfaces()
         if node.findtext("sm:loc", namespaces=namespace) == WORLD_ECONOMY_URL
     ]
     assert len(nodes) == 1
-    assert nodes[0].findtext("sm:lastmod", namespaces=namespace) == "2026-08-21"
+    assert nodes[0].findtext("sm:lastmod", namespaces=namespace) == "2026-08-22"
 
     for path in (
         "index.html",
@@ -292,7 +295,7 @@ def test_seiche_routes_and_release_count_do_not_regress():
     assert "https://seiche.info/use-cases.html" not in use_cases
     assert "https://seiche.info/developers" in developers
     assert "https://seiche.info/developers.html" not in developers
-    assert "Seiche 0.10.0" in status
+    assert "Seiche 0.10.1" in status
     assert "eleven free MCP tools" in status
     assert "ten free MCP tools" not in status
     assert "global money-market context" in status
