@@ -39,6 +39,7 @@ DATASETS = {
             "https://api.seiche.info/api/gauge",
             "https://api.seiche.info/api/money-markets",
             "https://api.seiche.info/api/v2/money-markets",
+            "https://api.seiche.info/api/v2/world-markets",
             "https://api.seiche.info/api/v2/coverage",
             "https://api.seiche.info/api/openapi.json",
         },
@@ -292,6 +293,7 @@ def test_seiche_routes_and_release_count_do_not_regress():
     assert "https://seiche.info/developers" in developers
     assert "https://seiche.info/developers.html" not in developers
     assert "Seiche 0.10.0" in status
-    assert "ten free MCP tools" in status
-    assert "nine free MCP tools" not in status
+    assert "eleven free MCP tools" in status
+    assert "ten free MCP tools" not in status
     assert "global money-market context" in status
+    assert "bounded money/FX/macro-capital context" in status

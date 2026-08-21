@@ -297,10 +297,14 @@ def test_mcp_card_and_nested_product_line_are_current():
     assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
         "https://seiche.info/.well-known/ai-catalog.json")
     assert entries["urn:air:liquilens.in:catalog:seiche"]["metadata"][
-        "publicToolCount"] == 10
+        "publicToolCount"] == 11
     assert entries["urn:air:liquilens.in:catalog:seiche"]["metadata"][
         "globalMoneyMarketAtlas"] == (
             "https://api.seiche.info/api/v2/money-markets")
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["metadata"][
+        "worldMarketsApi"] == "https://api.seiche.info/api/v2/world-markets"
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["metadata"][
+        "worldMarketsPage"] == "https://seiche.info/markets/"
     assert entries[
         "urn:air:liquilens.in:catalog:world-economy-evidence"
     ]["url"] == "https://liquilens.in/world-economy/evidence-catalog.json"
