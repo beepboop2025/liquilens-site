@@ -1,4 +1,5 @@
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 
 # Search and answer crawlers are named explicitly so CDN policy and future
@@ -7,9 +8,6 @@ User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
-Allow: /
-
-User-agent: ClaudeBot
 Allow: /
 
 User-agent: Claude-SearchBot
@@ -31,6 +29,9 @@ User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
+Allow: /
+
+User-agent: DuckAssistBot
 Allow: /
 
 Agentmap: https://liquilens.in/.well-known/ai-catalog.json

@@ -43,6 +43,8 @@ Run the verifier without `LIQUILENS_OFFLINE=1` to compare public copy with the l
 - [`sitemap.xml`](sitemap.xml) lists canonical public pages.
 - [`llms.txt`](llms.txt) provides a compact product and documentation index.
 - [`product-card.json`](product-card.json) states identity, use cases, limits, and public endpoints.
+- [`world-economy/index.html`](world-economy/index.html) routes system-funding, institution-risk, and market-exit questions without collapsing them into one score.
+- [`world-economy/evidence-catalog.json`](world-economy/evidence-catalog.json) publishes stable Schema.org `DataCatalog` and `Dataset` identifiers, source lineage, and canonical JSON distributions.
 - [`research/lab-reviewed-status-2026-08-09.json`](research/lab-reviewed-status-2026-08-09.json) publishes the bounded LiquiLens Lab reviewed-status receipt.
 - [`.well-known/ai-catalog.json`](.well-known/ai-catalog.json) describes public resources for compatible agents.
 - [`.well-known/security.txt`](.well-known/security.txt) gives the vulnerability-reporting route.

@@ -122,11 +122,46 @@
       }
     },
     {
+      "identifier": "urn:air:liquilens.in:catalog:world-economy-evidence",
+      "displayName": "World Economy Financial-Plumbing Evidence Catalog",
+      "type": "application/ld+json",
+      "url": "https://liquilens.in/world-economy/evidence-catalog.json",
+      "description": "Schema.org DataCatalog routing distinct system-funding, institution-risk and market-exit questions to Seiche, LiquiLens and Undertow with canonical JSON distributions, source lineage and explicit evidence boundaries.",
+      "tags": [
+        "world economy data",
+        "financial plumbing",
+        "funding liquidity",
+        "bank risk",
+        "market liquidity"
+      ],
+      "capabilities": [
+        "route economic evidence questions",
+        "discover canonical datasets",
+        "discover JSON distributions",
+        "inspect source and evidence boundaries"
+      ],
+      "representativeQueries": [
+        "Is global financial stress coming from system funding, weak institutions or market exits?",
+        "How could tighter dollar funding transmit to banks and lenders?",
+        "Which public APIs cover repo, bank fragility and market liquidity?",
+        "What evidence can and cannot establish about current world-economy liquidity?"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-08-21T17:50:00Z",
+      "metadata": {
+        "authentication": "none",
+        "access": "public-read-only",
+        "humanLandingPage": "https://liquilens.in/world-economy/",
+        "schemaType": "https://schema.org/DataCatalog",
+        "datasetCount": 3
+      }
+    },
+    {
       "identifier": "urn:air:liquilens.in:catalog:seiche",
       "displayName": "Seiche Funding-Stress Catalog",
       "type": "application/ai-catalog+json",
       "url": "https://seiche.info/.well-known/ai-catalog.json",
-      "description": "Sibling catalog for US dollar funding stress, repo, reserves, Treasury cash, positioning, analogs, and a status-bound construction-PIT historical diagnostic.",
+      "description": "Sibling catalog for US dollar funding stress, the granular USD money-market desk, a licence-aware global atlas, repo, reserves, Treasury cash, positioning, analogs, and a status-bound construction-PIT historical diagnostic.",
       "tags": [
         "funding liquidity",
         "repo",
@@ -135,12 +170,15 @@
       ],
       "representativeQueries": [
         "What is the current US dollar funding stress regime?",
-        "Are reserves, repo, reverse repo or Treasury cash signaling strain?"
+        "Are reserves, repo, reverse repo or Treasury cash signaling strain?",
+        "Compare registered global money markets without treating missing coverage as calm."
       ],
       "version": "0.10.0",
-      "updatedAt": "2026-08-15T12:00:00Z",
+      "updatedAt": "2026-08-21T12:00:00Z",
       "metadata": {
         "productUrl": "https://seiche.info",
+        "publicToolCount": 10,
+        "globalMoneyMarketAtlas": "https://api.seiche.info/api/v2/money-markets",
         "telegramBot": "https://t.me/seiche_desk_bot",
         "telegramChannel": "https://t.me/LiquidityLabDesk"
       }

@@ -1,0 +1,201 @@
+{
+  "@context": "https://schema.org",
+  "@type": "DataCatalog",
+  "@id": "https://liquilens.in/world-economy/evidence-catalog.json#catalog",
+  "name": "Liquidity Lab World Economy Evidence Catalog",
+  "description": "A public catalog that routes financial-plumbing questions to three distinct evidence layers: Seiche for system-wide dollar funding and global money-market context, LiquiLens for bank and lender failure-risk screening, and Undertow for market-liquidity and position-sized exit evidence. It is not a complete database of the world economy.",
+  "url": "https://liquilens.in/world-economy/",
+  "dateModified": "2026-08-21",
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://liquilens.in/#org",
+    "name": "LiquiLens",
+    "url": "https://liquilens.in/"
+  },
+  "dataset": [
+    {
+      "@type": "Dataset",
+      "@id": "https://liquilens.in/research/#bank-lender-early-warning-dataset",
+      "identifier": "urn:liquidity-lab:dataset:liquilens-bank-lender-early-warning",
+      "name": "LiquiLens Bank and Lender Early-Warning Evidence",
+      "alternateName": "LiquiLens Failure Radar evidence",
+      "description": "Disclosure-based bank and lender screening built from public filings, funding structure, regulatory thresholds and market signals. Its public historical evidence keeps the India, United States and Europe records separate, names misses, and carries explicit validated-backtest and real-money eligibility flags.",
+      "url": "https://liquilens.in/research/",
+      "sameAs": "https://liquilens.in/research/",
+      "dateModified": "2026-08-21",
+      "creator": {
+        "@type": "Organization",
+        "name": "LiquiLens",
+        "url": "https://liquilens.in/"
+      },
+      "includedInDataCatalog": {
+        "@id": "https://liquilens.in/world-economy/evidence-catalog.json#catalog"
+      },
+      "isAccessibleForFree": true,
+      "spatialCoverage": [
+        "India",
+        "United States",
+        "Europe: seven named case files"
+      ],
+      "keywords": "bank failure early warning, lender distress, NBFC risk, MFI risk, FDIC failures, RBI thresholds, construction-PIT",
+      "measurementTechnique": "India is a filing-availability-proxied construction-PIT diagnostic; the United States is a current-amended construction-PIT diagnostic; Europe is seven named case files rather than a cohort estimate. All three currently report validated_backtest_eligible=false and real_money_eligible=false.",
+      "variableMeasured": [
+        "failure-risk screen",
+        "funding fragility",
+        "regulatory action-zone distance",
+        "market-implied distance to default",
+        "historical alert lead time",
+        "evidence eligibility"
+      ],
+      "isBasedOn": [
+        "https://www.rbi.org.in/",
+        "https://banks.data.fdic.gov/"
+      ],
+      "usageInfo": "https://liquilens.in/terms/",
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Three-market evidence status index",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://api.liquilens.in/api/evidence/markets"
+        },
+        {
+          "@type": "DataDownload",
+          "name": "Current institution Failure Radar board",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://api.liquilens.in/api/failure-radar/board"
+        },
+        {
+          "@type": "DataDownload",
+          "name": "Public OpenAPI 3.1 contract",
+          "encodingFormat": "application/vnd.oai.openapi+json",
+          "contentUrl": "https://api.liquilens.in/api/openapi.json"
+        }
+      ]
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://seiche.info/#dollar-funding-dataset",
+      "identifier": "urn:liquidity-lab:dataset:seiche-dollar-funding-money-markets",
+      "name": "Seiche Dollar-Funding and Money-Market Evidence",
+      "alternateName": "Seiche funding-stress terminal",
+      "description": "A free public-data terminal for US dollar funding stress with a live regime, source-specific clocks, forward event odds, historical analogs, a granular USD money-market desk and a licence-aware global money-market atlas. Registered markets, live coverage and validation support are reported as separate claims.",
+      "url": "https://seiche.info/",
+      "sameAs": "https://seiche.info/",
+      "dateModified": "2026-08-21",
+      "version": "0.10.0",
+      "creator": {
+        "@type": "Organization",
+        "name": "Seiche",
+        "url": "https://seiche.info/"
+      },
+      "includedInDataCatalog": {
+        "@id": "https://liquilens.in/world-economy/evidence-catalog.json#catalog"
+      },
+      "isAccessibleForFree": true,
+      "spatialCoverage": "US dollar funding system, with a licence-aware global money-market discovery atlas",
+      "keywords": "US dollar funding, SOFR, IORB, repo, reserves, Treasury General Account, Standing Repo Facility, global money markets",
+      "measurementTechnique": "Public Federal Reserve, New York Fed, Office of Financial Research, Treasury and other source series retain their native publication clocks. The historical diagnostic is FINAL_VINTAGE_CONSTRUCTION_PIT with validated_backtest_eligible=false and real_money_eligible=false.",
+      "variableMeasured": [
+        "funding-stress regime",
+        "SOFR minus IORB",
+        "repo distributions",
+        "reserve balances",
+        "Treasury cash",
+        "liquidity-facility use",
+        "global money-market availability"
+      ],
+      "isBasedOn": [
+        "https://www.federalreserve.gov/releases/h41/",
+        "https://www.newyorkfed.org/markets/data-hub",
+        "https://www.financialresearch.gov/short-term-funding-monitor/",
+        "https://fiscaldata.treasury.gov/"
+      ],
+      "usageInfo": "https://seiche.info/terms",
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Current funding-stress gauge",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://api.seiche.info/api/gauge"
+        },
+        {
+          "@type": "DataDownload",
+          "name": "Granular USD money-market desk",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://api.seiche.info/api/money-markets"
+        },
+        {
+          "@type": "DataDownload",
+          "name": "Global money-market atlas",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://api.seiche.info/api/v2/money-markets"
+        },
+        {
+          "@type": "DataDownload",
+          "name": "Live market-pack coverage ledger",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://api.seiche.info/api/v2/coverage"
+        },
+        {
+          "@type": "DataDownload",
+          "name": "Public OpenAPI 3.1 contract",
+          "encodingFormat": "application/vnd.oai.openapi+json",
+          "contentUrl": "https://api.seiche.info/api/openapi.json"
+        }
+      ]
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://liquilens-undertow.com/#market-liquidity-dataset",
+      "identifier": "urn:liquidity-lab:dataset:undertow-market-liquidity-exit-cost",
+      "name": "Undertow Market-Liquidity and Exit-Cost Evidence",
+      "alternateName": "Undertow cross-market liquidity map",
+      "description": "A public market-liquidity summary covering provider concentration, market-depth fragility, segment evidence states and position-sized exit costs where observable. A PARTIAL or UNAVAILABLE segment is an evidence warning, never a calm reading, and historical replays remain separately labeled construction-PIT evidence.",
+      "url": "https://liquilens-undertow.com/",
+      "sameAs": "https://liquilens-undertow.com/",
+      "dateModified": "2026-08-21",
+      "version": "1.9.0",
+      "creator": {
+        "@type": "Organization",
+        "name": "Undertow by LiquiLens",
+        "url": "https://liquilens-undertow.com/"
+      },
+      "includedInDataCatalog": {
+        "@id": "https://liquilens.in/world-economy/evidence-catalog.json#catalog"
+      },
+      "isAccessibleForFree": true,
+      "spatialCoverage": "Cross-market: US Treasuries, credit, equities, ETFs, FX, China, crypto and borrowed stock",
+      "keywords": "market liquidity, exit cost, market depth, venue concentration, liquidity providers, cross-market fragility",
+      "measurementTechnique": "Each measure is scored only against its own history after coverage and replay gates clear. Historical replay status is CONSTRUCTION_PIT with truncated-latest vintages, validated_backtest_eligible=false and real_money_eligible=false.",
+      "variableMeasured": [
+        "market-liquidity evidence state",
+        "provider concentration",
+        "position-sized exit cost",
+        "market depth",
+        "replay-gate status"
+      ],
+      "isBasedOn": [
+        "https://fred.stlouisfed.org/",
+        "https://www.newyorkfed.org/markets/primarydealer_statistics",
+        "https://fiscaldata.treasury.gov/",
+        "https://www.sec.gov/edgar/search/"
+      ],
+      "usageInfo": "https://liquilens-undertow.com/terms/",
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Free cross-market liquidity summary",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://api.seiche.info/undertow/x402/summary"
+        },
+        {
+          "@type": "DataDownload",
+          "name": "Public OpenAPI 3.1 contract",
+          "encodingFormat": "application/vnd.oai.openapi+json",
+          "contentUrl": "https://api.seiche.info/undertow/x402/openapi.json"
+        }
+      ]
+    }
+  ]
+}
