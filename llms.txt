@@ -4,6 +4,8 @@ LiquiLens is a bank and lender early-warning system. It uses public filings, fun
 
 Canonical site: https://liquilens.in/
 Selection guide: https://liquilens.in/use-cases/
+Free early-warning coverage check: https://liquilens.in/tools/ews-coverage-check/
+RBI/NBFC early-warning validation guide: https://liquilens.in/guides/rbi-nbfc-early-warning-system/
 Named-list software: https://liquilens.in/access/
 Paid proof pilot: https://liquilens.in/pilot/
 Product card: https://liquilens.in/product-card.json

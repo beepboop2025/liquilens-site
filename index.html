@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://liquilens.in/og-radar.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="LiquiLens, the failure radar for banks and lenders. See failure coming, years before ratings move." />
+<meta property="og:image:alt" content="LiquiLens, the public-evidence early-warning radar for banks and lenders." />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -98,13 +98,7 @@
       ],
       "audience": {
         "@type": "Audience",
-        "audienceType": "Banks, NBFCs, MFIs, credit funds, businesses, and treasury and risk teams, with live coverage in India and the United States"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "INR",
-        "description": "Private pilots and early access for design partners"
+        "audienceType": "Regulated financial institutions, asset managers, accounting and advisory firms, market-data platforms, and treasury and risk teams, with public screening coverage in India and the United States"
       }
     },
     {
@@ -606,12 +600,13 @@
       <a class="nav-link" href="#desk"><span class="sei-dot"></span>Seiche, our open terminal</a>
       <a class="nav-link" data-funnel="access_cta_clicked" href="/access/">Named list</a>
       <a class="nav-link" data-funnel="pilot_cta_clicked" href="/pilot/">Proof pilot</a>
+      <a class="nav-link" data-funnel="coverage_check_clicked" href="/tools/ews-coverage-check/">Free EWS check</a>
       <a class="nav-cta" data-funnel="investor_demo_clicked" href="https://demo.liquilens.in/?demo=1&amp;ref=liquilens_nav&amp;tab=overview" target="_blank" rel="noopener" aria-label="Investor demo, sign in required"><span>Investor demo</span><small class="nav-gate">sign in required</small></a>
       <button class="nav-menu" id="navMenu" type="button" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span><b class="sr-only">Open navigation</b></button>
     </span>
   </nav>
   <div class="mobile-nav" id="mobileNav" hidden>
-    <a href="/articles/">Articles</a><a href="/replay/">Historical case files</a><a href="/desk/">Intelligence desk</a><a href="https://myquantdoesntspeakenglish.com/">Plain-English edition</a><a href="#lab-reviewed-status">Latest replay</a><a href="#evidence-status">Evidence records</a><a href="#board">Live board</a><a href="https://liquilens-undertow.com/app/?ref=liquilens_mobile_nav">Undertow desk</a><a href="/developers/">API + MCP</a><a href="/use-cases/">Use cases</a><a href="/research/">Research</a><a href="/access/">Named list</a><a href="/pilot/">Proof pilot</a>
+    <a href="/articles/">Articles</a><a href="/replay/">Historical case files</a><a href="/desk/">Intelligence desk</a><a href="https://myquantdoesntspeakenglish.com/">Plain-English edition</a><a href="#lab-reviewed-status">Latest replay</a><a href="#evidence-status">Evidence records</a><a href="#board">Live board</a><a href="https://liquilens-undertow.com/app/?ref=liquilens_mobile_nav">Undertow desk</a><a href="/developers/">API + MCP</a><a href="/use-cases/">Use cases</a><a href="/research/">Research</a><a href="/tools/ews-coverage-check/">Free EWS check</a><a href="/access/">Named list</a><a href="/pilot/">Proof pilot</a>
   </div>
 </div>
 </div>
@@ -645,6 +640,7 @@
         <a class="btn btn-text" href="https://myquantdoesntspeakenglish.com/">Get the plain-English edition <span>↗</span></a>
         <a class="btn btn-ghost" href="/desk/">Read short desk analysis</a>
         <a class="btn btn-ghost" href="/use-cases/">Find your use case</a>
+        <a class="btn btn-ghost" data-funnel="coverage_check_clicked" href="/tools/ews-coverage-check/"><span>Check your EWS coverage</span><small>12 controls · 5 minutes · browser-only</small></a>
         <a class="btn btn-text" data-funnel="investor_demo_clicked" href="https://demo.liquilens.in/?demo=1&amp;ref=liquilens_hero&amp;tab=overview" target="_blank" rel="noopener">Enter investor demo · sign in required · same password <span>↗</span></a>
       </div>
       <div class="authority-actions" data-authority-actions data-product="LiquiLens" data-title="Bank and lender failure early warning" data-description="Public-data early warning for banks, NBFCs and MFIs, with methods, evidence limits and crisis replays." data-event-endpoint="https://api.liquilens.in/api/events" data-event-surface="homepage">
@@ -909,37 +905,7 @@
     <h2 class="reveal">Public filings can surface deterioration <em>before ratings change.</em></h2>
     <p class="body reveal">The IL&amp;FS, DHFL, Yes Bank and Altico records contain changes in funding structure and balance-sheet quality before their public outcomes. LiquiLens standardizes those disclosures into chronological signals. The historical API labels the replay <code>PERIOD_END_PROXY_CONSTRUCTION_PIT</code> because filing availability is proxied rather than fully reconstructed from as-published vintages.</p>
     <p class="body reveal">Regulatory databases provide the underlying filings, but teams still have to reconcile dates, definitions and missing periods. LiquiLens performs that reading systematically and publishes both successful and missed historical alerts. Its public record includes the two 2026 US balance-sheet failures, flagged 13 and 19 months in advance.</p>
-  </div>
-</section>
-
-<!-- the numbers -->
-<section class="band" id="numbers">
-  <div class="wrap">
-    <span class="eyebrow reveal">The numbers · the first market</span>
-    <h2 class="reveal">Market context</h2>
-    <div class="stats reveal">
-      <div class="stat">
-        <div class="num">₹<span data-count="25">25</span> lakh crore</div>
-        <p>India's MSME credit gap, the shortfall between credit demanded and credit supplied by formal lenders, as of March 2025.</p>
-        <span class="src">Deloitte analysis, 2025 · <a href="https://www.policycircle.org/policy/india-msmes-funding-gap" target="_blank" rel="noopener">Standing Committee on Finance put it at ₹20 to 25 lakh crore</a></span>
-      </div>
-      <div class="stat">
-        <div class="num"><span data-count="14">14</span>%</div>
-        <p>Share of Indian MSMEs with access to formal, institutional credit. The rest borrow informally or not at all.</p>
-        <span class="src">Deloitte, 2025</span>
-      </div>
-      <div class="stat">
-        <div class="num">~<span data-count="30">30</span>% of GDP</div>
-        <p>What MSMEs contribute to India's economy, along with roughly 45% of exports, across more than 6 crore registered enterprises.</p>
-        <span class="src"><a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2035073" target="_blank" rel="noopener">Ministry of MSME, via PIB, July 2024</a></span>
-      </div>
-      <div class="stat">
-        <div class="num">₹<span data-count="27.25">27.25</span> lakh crore</div>
-        <p>Bank credit outstanding to MSMEs as of March 2024, growing over 12% a year. The book is large, and it is getting larger faster than the tools that watch it.</p>
-        <span class="src"><a href="https://www.bis.org/review/r241126v.htm" target="_blank" rel="noopener">RBI Deputy Governor Swaminathan J, November 2024</a></span>
-      </div>
-    </div>
-    <p class="stats-note reveal">And the rupee that is already in the bank earns nothing while it waits: RBI's Master Direction on Interest Rate on Deposits prohibits banks from paying interest on current account balances. That is the idle side of the same gap.</p>
+    <p class="stats-note reveal">Building or reviewing an NBFC fraud-risk workflow? Read the source-linked <a href="/guides/rbi-nbfc-early-warning-system/" style="color:var(--gold)">RBI early-warning system validation guide →</a></p>
   </div>
 </section>
 
@@ -977,8 +943,8 @@
       <a class="layer" href="#board">
         <span class="badge live">Public board live</span>
         <span class="lno">Layer 01 · India</span>
-        <h3>Lending and treasury</h3>
-        <p>Early warning, liquidity risk and treasury for Indian lenders and businesses. The live board runs now; its 48-institution history is a filing-availability-proxied construction-PIT diagnostic, not validated-backtest evidence.</p>
+        <h3>Institution risk and treasury</h3>
+        <p>Early warning and liquidity-risk review for regulated Indian financial institutions and the teams exposed to them. The live board runs now; its 48-institution history is a filing-availability-proxied construction-PIT diagnostic, not validated-backtest evidence.</p>
         <span class="go"><span>See the live board →</span></span>
       </a>
       <a class="layer" href="/us/">
@@ -1323,9 +1289,9 @@
         <p>The early warning, credit scoring and drift monitoring that the RBI's push on early warning systems and expected credit loss now expects, ready before the regulator asks.</p>
       </div>
       <div class="card">
-        <span class="tag">For businesses</span>
-        <h3>MSMEs sitting on idle cash</h3>
-        <p>The treasury function a large corporate has and a small business never could, so working capital earns overnight instead of resting in a current account.</p>
+        <span class="tag">For exposed teams</span>
+        <h3>Asset managers, advisers and treasury desks</h3>
+        <p>Repeatable evidence packets for teams monitoring bank and lender counterparties, with timestamps, missingness and review boundaries attached.</p>
       </div>
     </div>
   </div>
@@ -1381,7 +1347,7 @@
   <div class="wrap">
     <span class="eyebrow reveal">Why now</span>
     <h2 class="reveal">Public data is available; systematic monitoring remains uneven</h2>
-    <p class="body reveal">India built the payment rails and the regulator is rewriting how lenders manage risk. The plumbing to put idle cash to work and to watch a live book for trouble is the part still missing for everyone but the largest players. <b>That is the gap LiquiLens was built to close.</b></p>
+    <p class="body reveal">Public filings and regulatory actions are available, but reconstructing what changed, when it became knowable and what remained dark is still manual for many risk teams. <b>LiquiLens turns that scattered record into a bounded, repeatable review.</b></p>
   </div>
 </section>
 
@@ -1396,7 +1362,7 @@
       <div class="inst inst--ll">
         <span class="role">The product · private by design</span>
         <h3>LiquiLens</h3>
-        <p>Treasury and early warning for Indian lenders and businesses. The reviewer-facing product is preproduction and available for controlled, self-hosted pilots. The construction-PIT crisis diagnostic sits in the demo's Evidence tab, institution by institution, misses included, and access to it is granted on request.</p>
+        <p>Early-warning and evidence infrastructure for regulated financial institutions and the teams exposed to them. The reviewer-facing product is preproduction and available for controlled, self-hosted pilots. The construction-PIT crisis diagnostic sits in the demo's Evidence tab, institution by institution, misses included, and access to it is granted on request.</p>
         <div class="inst-links">
           <a href="https://demo.liquilens.in/?tab=evidence" target="_blank" rel="noopener">Request the Evidence record →</a>
           <a href="#contact">Talk to the desk →</a>
@@ -1504,11 +1470,11 @@
     <div class="faq reveal">
       <details>
         <summary>What is LiquiLens?</summary>
-        <p>LiquiLens is an early warning system for bank and lender failure. It reads what institutions and regulators publish, funding structure, filings and market signals, and flags names drifting toward distress. Historical diagnostics cover 48 Indian institutions, 552 US failures since 2008 and seven European case files, with misses published and exact status tokens beside the figures. <b>Ten engines, each grounded in published research, do the watching,</b> and the same platform carries treasury, liquidity risk and credit scoring for lenders and businesses. The public diagnostics are not validated-backtest or real-money eligible.</p>
+        <p>LiquiLens is early-warning and evidence infrastructure for bank and lender risk. It reads what institutions and regulators publish, funding structure, filings and market signals, and flags names for human review. Historical diagnostics cover 48 Indian institutions, 552 US failures since 2008 and seven European case files, with misses published and exact status tokens beside the figures. <b>Ten engines, each grounded in published research, do the watching.</b> The public diagnostics are not validated-backtest or real-money eligible.</p>
       </details>
       <details>
         <summary>Who is it for?</summary>
-        <p>Risk and treasury teams reviewing India's regulated lenders or FDIC insured US banks, plus Indian businesses managing idle cash. The current public boards cover India's regulated lenders and every FDIC insured US bank; private-book workflows remain part of controlled pilots.</p>
+        <p>Regulated financial institutions, asset managers, accounting and advisory firms, market-data platforms, and risk or treasury teams reviewing Indian lenders or FDIC-insured US banks. Private-book workflows remain part of controlled pilots.</p>
       </details>
       <details>
         <summary>Is the Failure Radar a credit rating?</summary>
@@ -1519,16 +1485,8 @@
         <p>LiquiLens began with Indian NBFC diagnostics, then extended into <b>current run-risk screens for FDIC insured US banks</b> and a current-amended construction-PIT diagnostic over 552 failures since 2008. Work across additional countries and institution types is market specific; the current European evidence consists of seven named case files with no cohort model. The portable layer is the evidence discipline, and all three historical records currently report both eligibility flags false.</p>
       </details>
       <details>
-        <summary>Why does the money market matter for an ordinary business?</summary>
-        <p>The money market is where banks and large corporates park cash overnight and borrow short term. It is the deepest, safest pool in any financial system, and in most markets it is effectively closed to everyone below a certain size. LiquiLens exists to open that access, so a mid-size company's cash can work through the night the way a bank's does.</p>
-      </details>
-      <details>
         <summary>What is the RBI LCR change and why is there a countdown on this page?</summary>
         <p>Under the RBI framework, LCR applies to every deposit-taking NBFC and, subject to RBI exclusions, to non-deposit-taking systemically important NBFCs with assets of 5,000 crore rupees or more. Excluded classes include CICs, Type I NBFCs, NOFHCs and SPDs. The calculator estimates when a growth path reaches the published asset threshold; it does not determine regulatory classification or continuing applicability.</p>
-      </details>
-      <details>
-        <summary>How big is the gap LiquiLens is built for?</summary>
-        <p>Large, and documented. India's MSME credit gap was estimated at about <b>₹25 lakh crore as of March 2025</b>, with only 14% of MSMEs holding formal credit (Deloitte, 2025). MSMEs contribute roughly 30% of India's GDP and about 45% of exports (Ministry of MSME, 2024). On the cash side, RBI directions prohibit banks from paying interest on current accounts, so idle working capital earns zero by rule, not by accident.</p>
       </details>
       <details>
         <summary>Is LiquiLens live? How do I get access?</summary>
@@ -1563,10 +1521,8 @@
   "@type": "FAQPage",
   "mainEntity": [
     {"@type": "Question", "name": "What is LiquiLens?", "acceptedAnswer": {"@type": "Answer", "text": "LiquiLens is an early warning system for bank and lender failure. It serves live disclosure-based screening plus status-bound historical diagnostics for 48 Indian institutions, 552 US failures since 2008 and seven European case files. All three historical records currently report validated-backtest eligible false and real-money eligible false."}},
-    {"@type": "Question", "name": "Who is LiquiLens for?", "acceptedAnswer": {"@type": "Answer", "text": "Risk and treasury teams reviewing India's regulated lenders or FDIC insured US banks, plus Indian businesses managing idle cash. The current public boards cover India's regulated lenders and every FDIC insured US bank; private-book workflows remain part of controlled pilots."}},
-    {"@type": "Question", "name": "Why does the money market matter for an ordinary business?", "acceptedAnswer": {"@type": "Answer", "text": "The money market is where banks and large corporates park cash overnight. It is the deepest, safest pool in any financial system and in most markets it is closed to smaller players. LiquiLens opens that access so a mid-size company's cash can work overnight the way a bank's does."}},
+    {"@type": "Question", "name": "Who is LiquiLens for?", "acceptedAnswer": {"@type": "Answer", "text": "LiquiLens serves regulated financial institutions, asset managers, accounting and advisory firms, market-data platforms, and risk or treasury teams reviewing Indian lenders or FDIC-insured US banks. Private-book workflows remain part of controlled pilots."}},
     {"@type": "Question", "name": "What is the RBI LCR framework?", "acceptedAnswer": {"@type": "Answer", "text": "Under the RBI's Liquidity Risk Management Framework for NBFCs, Liquidity Coverage Ratio requirements apply to every deposit-taking NBFC and, subject to RBI exclusions, to non-deposit-taking systemically important NBFCs with assets of 5,000 crore rupees or more. Excluded classes include CICs, Type I NBFCs, NOFHCs and SPDs. The LiquiLens calculator is a planning screen for the published asset threshold, not a regulatory determination."}},
-    {"@type": "Question", "name": "How big is the gap LiquiLens is built for?", "acceptedAnswer": {"@type": "Answer", "text": "India's MSME credit gap was estimated at about 25 lakh crore rupees as of March 2025, with only 14% of MSMEs holding formal credit (Deloitte, 2025). MSMEs contribute roughly 30% of India's GDP and about 45% of exports (Ministry of MSME, 2024). RBI directions prohibit banks from paying interest on current accounts, so idle working capital earns zero."}},
     {"@type": "Question", "name": "Is LiquiLens live and how do I get access?", "acceptedAnswer": {"@type": "Answer", "text": "The public screening API and boards are live. The reviewer-facing product remains preproduction and is available for controlled pilots. The walkthrough at demo.liquilens.in returns 401 until access is granted; it presents three status-bound historical records on real public data, while the treasury console uses synthetic operating data. A paid pilot evaluates private-book workflows with no production decisions during the proof."}},
     {"@type": "Question", "name": "Has LiquiLens been tested on real data?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, as reproducible historical research with explicit limits. India is PERIOD_END_PROXY_CONSTRUCTION_PIT over 48 institutions; the US is CURRENT_AMENDED_CONSTRUCTION_PIT over 552 failures since 2008; Europe is NAMED_CASE_FILES_CONSTRUCTION_PIT over seven files. These public diagnostics are not validated-backtest or real-money eligible. A paid pilot pre-registers a separate evaluation inside the lender's environment."}},
     {"@type": "Question", "name": "What is Seiche and why does LiquiLens run a free terminal?", "acceptedAnswer": {"@type": "Answer", "text": "Seiche is a free, open source US funding-stress terminal from the same lab. It keeps forward-issued calls as published and serves a construction-PIT historical diagnostic with explicit eligibility flags at seiche.info."}},
@@ -1581,6 +1537,7 @@
 <section class="close" id="contact">
   <div class="wrap">
     <span class="eyebrow" style="justify-content:center">Watch names you already have limits on</span>
+    <p style="margin:18px auto 0;max-width:620px;font-family:var(--mono);font-size:12.5px;color:var(--muted)">Not ready to send a list? <a data-funnel="coverage_check_clicked" href="/tools/ews-coverage-check/" style="color:var(--gold)">Audit your current early-warning process in five minutes →</a></p>
     <h2>Send 15 counterparties. The engine files the pack.</h2>
     <div class="hero-actions">
       <a class="btn btn-primary" data-funnel="access_cta_clicked" href="/access/">Named-list software →</a>
@@ -1593,7 +1550,7 @@
 </main>
 <footer>
   <div class="wrap">
-    <span>© 2026 LiquiLens · Updated 12 August 2026 · <a href="/articles/">Articles</a> · <a href="/investigations/">Investigations</a> · <a href="/desk/">Intelligence desk</a> · <a href="/developers/">API + MCP</a> · <a href="/use-cases/">When to use LiquiLens</a> · <a href="/us/">The US bank layer</a> · <a href="/replay/">Historical case files</a> · <a href="/research/">Research</a> · <a href="/ship-log/">Ship log</a> · <a href="/about/">About</a> · <a href="/security/">Security</a> · <a href="/status/">Status</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a> · <a href="https://t.me/LiquiLens_bot" target="_blank" rel="noopener">@LiquiLens_bot on Telegram</a> · <a href="https://t.me/LiquidityLabDesk" target="_blank" rel="noopener">the lab's free daily read on Telegram</a> · <a href="https://seiche.info/">Seiche, the systemic stress layer</a> · <a href="https://liquilens-undertow.com/">Undertow, the market-exit layer</a> · <a href="https://myquantdoesntspeakenglish.com/">Every article in plain English on My Quant Doesn’t Speak English</a></span>
+    <span>© 2026 LiquiLens · Updated 21 August 2026 · <a href="/articles/">Articles</a> · <a href="/investigations/">Investigations</a> · <a href="/desk/">Intelligence desk</a> · <a href="/tools/ews-coverage-check/">Free EWS coverage check</a> · <a href="/developers/">API + MCP</a> · <a href="/use-cases/">When to use LiquiLens</a> · <a href="/us/">The US bank layer</a> · <a href="/replay/">Historical case files</a> · <a href="/research/">Research</a> · <a href="/ship-log/">Ship log</a> · <a href="/about/">About</a> · <a href="/security/">Security</a> · <a href="/status/">Status</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a> · <a href="https://t.me/LiquiLens_bot" target="_blank" rel="noopener">@LiquiLens_bot on Telegram</a> · <a href="https://t.me/LiquidityLabDesk" target="_blank" rel="noopener">the lab's free daily read on Telegram</a> · <a href="https://seiche.info/">Seiche, the systemic stress layer</a> · <a href="https://liquilens-undertow.com/">Undertow, the market-exit layer</a> · <a href="https://myquantdoesntspeakenglish.com/">Every article in plain English on My Quant Doesn’t Speak English</a></span>
     <span>Rates shown are indicative of the Indian money market and for illustration only.</span>
   </div>
   <div class="wrap" style="margin-top:10px">

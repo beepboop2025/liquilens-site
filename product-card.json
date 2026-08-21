@@ -1,6 +1,6 @@
 {
   "schema": "liquidity-lab.product-card.v1",
-  "updated": "2026-08-18",
+  "updated": "2026-08-21",
   "product": {
     "name": "LiquiLens",
     "canonical_url": "https://liquilens.in/",
@@ -72,6 +72,8 @@
   "access": {
     "website": "https://liquilens.in/",
     "selection_guide": "https://liquilens.in/use-cases/",
+    "early_warning_coverage_check": "https://liquilens.in/tools/ews-coverage-check/",
+    "rbi_nbfc_ews_guide": "https://liquilens.in/guides/rbi-nbfc-early-warning-system/",
     "quickstart": "https://liquilens.in/developers/",
     "named_list": "https://liquilens.in/access/",
     "named_list_sample": "https://liquilens.in/access/sample/",

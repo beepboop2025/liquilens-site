@@ -27,6 +27,10 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["api_catalog"] == "https://api.liquilens.in/api"
     assert card["access"]["openapi"] == "https://api.liquilens.in/api/openapi.json"
     assert card["access"]["named_list"] == "https://liquilens.in/access/"
+    assert card["access"]["early_warning_coverage_check"] == (
+        "https://liquilens.in/tools/ews-coverage-check/")
+    assert card["access"]["rbi_nbfc_ews_guide"] == (
+        "https://liquilens.in/guides/rbi-nbfc-early-warning-system/")
     assert card["access"]["named_list_sample"] == (
         "https://liquilens.in/access/sample/")
     assert card["access"]["pilot"] == "https://liquilens.in/pilot/"
@@ -35,7 +39,7 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["ai_catalog"] == (
         "https://liquilens.in/.well-known/ai-catalog.json")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
-    assert card["updated"] == "2026-08-18"
+    assert card["updated"] == "2026-08-21"
     assert card["access"]["daily_articles"] == "https://liquilens.in/articles/"
     assert card["access"]["article_json_feed"] == (
         "https://liquilens.in/articles/feed.json")
@@ -186,6 +190,29 @@ def test_aggregate_funnel_events_are_documented_as_property_free():
     assert "short allow-listed event name" in privacy
     assert "no email address, free text, device ID or user property" in privacy
     assert "cli_install_copied" in privacy
+    assert "homepage, use-case, developer, named-list, pilot and free-tool" in privacy
+
+
+def test_homepage_schema_matches_the_institutional_product_boundary():
+    home = read("index.html")
+    blocks = re.findall(
+        r'<script type="application/ld\+json">\s*(.*?)\s*</script>', home,
+        flags=re.S,
+    )
+    graph = json.loads(blocks[0])["@graph"]
+    software = next(row for row in graph if row.get("@type") == "SoftwareApplication")
+
+    assert "offers" not in software
+    audience = software["audience"]["audienceType"]
+    for segment in (
+        "Regulated financial institutions",
+        "asset managers",
+        "accounting and advisory firms",
+        "market-data platforms",
+    ):
+        assert segment in audience
+    assert "MSMEs sitting on idle cash" not in home
+    assert "Indian businesses managing idle cash" not in home
 
 
 def test_catalog_obeys_the_ard_envelope():
