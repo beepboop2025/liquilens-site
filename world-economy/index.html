@@ -67,7 +67,7 @@
         "@id": "https://seiche.info/#dollar-funding-dataset",
         "identifier": "urn:liquidity-lab:dataset:seiche-dollar-funding-money-markets",
         "name": "Seiche Dollar-Funding and Money-Market Evidence",
-        "description": "A free public-data terminal for US dollar funding stress with a live regime, source-specific clocks, forward event odds, historical analogs, a granular USD money-market desk and a licence-aware global money-market atlas. Registered markets, live coverage and validation support are reported as separate claims.",
+        "description": "A free public-data terminal for US dollar funding stress with a live regime, source-specific clocks, forward event odds, historical analogs, a granular USD money-market desk, a licence-aware global money-market atlas and bounded money, FX and macro-capital context. Registered markets, live coverage and validation support are reported as separate claims.",
         "url": "https://seiche.info/",
         "sameAs": "https://seiche.info/",
         "isAccessibleForFree": true,
@@ -75,7 +75,8 @@
         "distribution": [
           {"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://api.seiche.info/api/gauge"},
           {"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://api.seiche.info/api/money-markets"},
-          {"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://api.seiche.info/api/v2/money-markets"}
+          {"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://api.seiche.info/api/v2/money-markets"},
+          {"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://api.seiche.info/api/v2/world-markets"}
         ]
       },
       {
@@ -190,6 +191,7 @@
       <div class="machine">
         <a href="https://api.seiche.info/api/money-markets">Live USD desk JSON</a>
         <a href="https://api.seiche.info/api/v2/money-markets">Live global atlas JSON</a>
+        <a href="https://api.seiche.info/api/v2/world-markets">Live money/FX/macro-capital JSON</a>
         <a href="https://api.seiche.info/api/v2/coverage">Live Seiche coverage ledger</a>
         <a href="https://api.liquilens.in/api/evidence/markets">Live LiquiLens evidence status</a>
         <a href="https://api.seiche.info/undertow/x402/summary">Live Undertow summary</a>
@@ -207,6 +209,7 @@
           <tr><td>What public evidence preceded a bank or NBFC failure?</td><td><a href="/replay/">LiquiLens replays</a> and <a href="https://api.liquilens.in/api/evidence/markets">market evidence index</a></td><td>Construction status, misses, validated-backtest flag and real-money flag.</td></tr>
           <tr><td>Can a position-sized exit clear the market?</td><td><a href="https://liquilens-undertow.com/exit/">Undertow exit desk</a> and <a href="https://api.seiche.info/undertow/x402/summary">public summary</a></td><td>Position size, venue or segment, observation time, coverage, replay gate and withholding reason.</td></tr>
           <tr><td>What is happening across global money markets?</td><td><a href="https://api.seiche.info/api/v2/money-markets">Seiche global atlas</a></td><td>AVAILABLE, DERIVED_CONTEXT, POLICY_ONLY or DECLARED_UNAVAILABLE state; never infer calm from absence.</td></tr>
+          <tr><td>What is happening across money, FX and macro-capital markets?</td><td><a href="https://seiche.info/markets/">Seiche World Markets</a> and <a href="https://api.seiche.info/api/v2/world-markets">bounded context JSON</a></td><td>Observation and generation clocks, observed/derived/structural/restricted/unavailable status, coverage boundaries and source links.</td></tr>
         </tbody>
       </table>
     </section>

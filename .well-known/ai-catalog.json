@@ -161,24 +161,29 @@
       "displayName": "Seiche Funding-Stress Catalog",
       "type": "application/ai-catalog+json",
       "url": "https://seiche.info/.well-known/ai-catalog.json",
-      "description": "Sibling catalog for US dollar funding stress, the granular USD money-market desk, a licence-aware global atlas, repo, reserves, Treasury cash, positioning, analogs, and a status-bound construction-PIT historical diagnostic.",
+      "description": "Sibling catalog with eleven anonymous read-only tools for US dollar funding stress, granular money-market context, bounded money/FX/macro-capital world-markets context, positioning, analogs, and a status-bound construction-PIT historical diagnostic.",
       "tags": [
         "funding liquidity",
         "repo",
         "Federal Reserve",
-        "money markets"
+        "money markets",
+        "foreign exchange",
+        "capital markets"
       ],
       "representativeQueries": [
         "What is the current US dollar funding stress regime?",
         "Are reserves, repo, reverse repo or Treasury cash signaling strain?",
-        "Compare registered global money markets without treating missing coverage as calm."
+        "Compare registered global money markets without treating missing coverage as calm.",
+        "What do current money, FX and macro-capital indicators say, with their evidence clocks and coverage limits?"
       ],
       "version": "0.10.0",
-      "updatedAt": "2026-08-21T12:00:00Z",
+      "updatedAt": "2026-08-21T18:29:48Z",
       "metadata": {
         "productUrl": "https://seiche.info",
-        "publicToolCount": 10,
+        "publicToolCount": 11,
         "globalMoneyMarketAtlas": "https://api.seiche.info/api/v2/money-markets",
+        "worldMarketsApi": "https://api.seiche.info/api/v2/world-markets",
+        "worldMarketsPage": "https://seiche.info/markets/",
         "telegramBot": "https://t.me/seiche_desk_bot",
         "telegramChannel": "https://t.me/LiquidityLabDesk"
       }
