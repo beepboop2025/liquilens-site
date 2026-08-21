@@ -176,8 +176,8 @@
         "Compare registered global money markets without treating missing coverage as calm.",
         "What do current money, FX and macro-capital indicators say, with their evidence clocks and coverage limits?"
       ],
-      "version": "0.10.0",
-      "updatedAt": "2026-08-21T18:29:48Z",
+      "version": "0.10.1",
+      "updatedAt": "2026-08-21T19:02:50Z",
       "metadata": {
         "productUrl": "https://seiche.info",
         "publicToolCount": 11,

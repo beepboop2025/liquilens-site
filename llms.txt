@@ -91,7 +91,7 @@ The scoring boundary is fixed: generative features may explain served evidence, 
 
 ## Related products
 
-- Seiche 0.10.0, https://seiche.info/: US dollar funding stress, a granular USD money-market desk, a licence-aware global atlas and bounded money/FX/macro-capital context built from public sources. Its hosted MCP exposes eleven anonymous read-only tools, including money_market_context and world_markets_context. World-markets evidence: https://seiche.info/markets/ and https://api.seiche.info/api/v2/world-markets
+- Seiche 0.10.1, https://seiche.info/: US dollar funding stress, a granular USD money-market desk, a licence-aware global atlas and bounded money/FX/macro-capital context built from public sources. Its hosted MCP exposes eleven anonymous read-only tools, including money_market_context and world_markets_context. World-markets evidence: https://seiche.info/markets/ and https://api.seiche.info/api/v2/world-markets
 - Undertow 1.9.0, https://liquilens-undertow.com/: market-liquidity tiers, depth concentration, and estimated exit cost by venue and position size.
 - My Quant Doesn't Speak English, https://myquantdoesntspeakenglish.com/: every Seiche, LiquiLens, and Undertow dispatch in one editorial wire, plus original investigations.
 - Groundcheck, https://groundcheck.seiche.info/: live-source claim and citation verification.
