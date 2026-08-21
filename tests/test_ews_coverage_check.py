@@ -58,6 +58,7 @@ def test_coverage_check_is_private_by_design_and_has_bounded_events():
     assert "sessionStorage" not in app
     assert "URLSearchParams" not in app
     assert "email" not in app.lower()
+    assert 'typeof navigator.clipboard.writeText !== "function"' in app
     assert "JSON.stringify({surface: \"coverage_check\", event: eventName})" in app
 
 

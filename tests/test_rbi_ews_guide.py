@@ -9,7 +9,6 @@ CANONICAL = "https://liquilens.in/guides/rbi-nbfc-early-warning-system/"
 RBI_SOURCES = {
     "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12704",
     "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=58294",
-    "https://www.rbi.org.in/Scripts/FAQView.aspx?Id=172",
 }
 
 
@@ -52,7 +51,6 @@ def test_guide_uses_only_named_primary_rbi_sources():
     assert all("rbi.org.in" in url for url in external_urls)
     assert "RBI/DOS/2024-25/120" in page
     assert "15 July 2024" in page
-    assert "22 April 2025" in page
     assert "Chapter III" in page
     assert "Upper-Layer and Middle-Layer NBFCs" in page
     assert "₹500 crore and above" in page

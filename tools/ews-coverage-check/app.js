@@ -105,6 +105,10 @@
   });
 
   document.getElementById("copyReport").addEventListener("click", function () {
+    if (!navigator.clipboard || typeof navigator.clipboard.writeText !== "function") {
+      say("Copy blocked — use Print instead");
+      return;
+    }
     navigator.clipboard.writeText(reportText()).then(function () {
       track("report_copied");
       say("Gap report copied");
