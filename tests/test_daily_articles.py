@@ -2,7 +2,9 @@
 
 from datetime import datetime, timezone
 import json
+from html import unescape
 from pathlib import Path
+import re
 import sys
 
 import pytest
@@ -202,6 +204,36 @@ def test_unchanged_board_opens_historical_record():
     assert "construction-PIT" in article["body_md"]
 
 
+def test_recent_current_topic_cools_down_to_historical_record():
+    data = datasets()
+    recent = [{
+        "board_signature": "different-fingerprint",
+        "article_type": "current_analysis",
+        "topic": "example-sfb",
+        "date": "2026-08-14",
+    }]
+    article = daily_article.build_article(
+        data, date="2026-08-15", recent_index=recent, configured_model=None,
+    )
+    assert article["article_type"] == "historical_replay"
+    assert article["topic"] == "altico"
+
+
+def test_current_topic_is_eligible_after_cooldown():
+    data = datasets()
+    older = [{
+        "board_signature": "different-fingerprint",
+        "article_type": "current_analysis",
+        "topic": "example-sfb",
+        "date": "2026-08-01",
+    }]
+    article = daily_article.build_article(
+        data, date="2026-08-15", recent_index=older, configured_model=None,
+    )
+    assert article["article_type"] == "current_analysis"
+    assert article["topic"] == "example-sfb"
+
+
 def test_model_cannot_publish_an_invented_number(monkeypatch):
     data = datasets()
     safe = daily_article.build_article(
@@ -286,7 +318,17 @@ def test_write_builds_page_archive_feed_and_discovery(tmp_path):
     )
     daily_article.write_article(article, root=tmp_path)
     article_dir = tmp_path / "articles"
-    assert article["headline"] in (article_dir / article["slug"] / "index.html").read_text()
+    article_page = (article_dir / article["slug"] / "index.html").read_text()
+    assert article["headline"] in article_page
+    assert "/tools/ews-coverage-check/?utm_source=liquilens" in article_page
+    assert "/access/?utm_source=liquilens" in article_page
+    title = re.search(r"<title>(.*?)</title>", article_page).group(1)
+    description = re.search(
+        r'<meta name="description" content="(.*?)">', article_page
+    ).group(1)
+    assert len(unescape(title)) <= 63
+    assert len(unescape(description)) <= 155
+    assert '<meta name="twitter:card" content="summary_large_image">' in article_page
     assert article["headline"] in (article_dir / "index.html").read_text()
     assert "<feed xmlns=" in (article_dir / "feed.xml").read_text()
     json_feed = json.loads((article_dir / "feed.json").read_text())

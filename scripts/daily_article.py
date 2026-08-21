@@ -69,6 +69,7 @@ MAX_DATASET_RESPONSE_BYTES = 16 * 1024 * 1024
 MAX_EDITORIAL_MEMORY_BYTES = 256 * 1024
 MAX_MODEL_RESPONSE_BYTES = 2 * 1024 * 1024
 MAX_ERROR_RESPONSE_BYTES = 64 * 1024
+CURRENT_TOPIC_COOLDOWN_DAYS = 10
 
 ALLOWED_URLS = tuple(ENDPOINTS.values()) + (
     f"{SITE}/articles/",
@@ -475,10 +476,9 @@ def board_signature(board: dict) -> str:
             "market": {
                 "dd": (row.get("market") or {}).get("dd"),
                 "pd_merton_1y": (row.get("market") or {}).get("pd_merton_1y"),
-                "as_of": (row.get("market") or {}).get("as_of"),
             },
         })
-    payload = {"as_of": board.get("as_of"), "tiers": board.get("tiers"), "rows": rows}
+    payload = {"tiers": board.get("tiers"), "rows": rows}
     return hashlib.sha256(json.dumps(payload, sort_keys=True, default=str).encode()).hexdigest()
 
 
@@ -498,9 +498,12 @@ def row_interest(row: dict) -> float:
     return score
 
 
-def choose_current_subject(board: dict) -> dict | None:
+def choose_current_subject(board: dict, excluded_topics: set[str] | None = None) -> dict | None:
+    excluded = excluded_topics or set()
     material = []
     for row in board.get("rows") or []:
+        if str(row.get("slug") or "") in excluded:
+            continue
         pca = row.get("pca") or {}
         funding = row.get("funding") or {}
         market = row.get("market") or {}
@@ -514,6 +517,25 @@ def choose_current_subject(board: dict) -> dict | None:
         ):
             material.append(row)
     return max(material, key=row_interest) if material else None
+
+
+def recent_current_topics(index: list[dict], date: str, *,
+                          cooldown_days: int = CURRENT_TOPIC_COOLDOWN_DAYS) -> set[str]:
+    """Return current-analysis subjects still inside the editorial cooldown."""
+    publication_day = datetime.strptime(date, "%Y-%m-%d").date()
+    topics = set()
+    for row in index:
+        if row.get("article_type") != "current_analysis":
+            continue
+        try:
+            age_days = (publication_day - datetime.strptime(
+                str(row.get("date") or ""), "%Y-%m-%d").date()).days
+        except ValueError:
+            continue
+        topic = str(row.get("topic") or "")
+        if topic and 0 <= age_days < cooldown_days:
+            topics.add(topic)
+    return topics
 
 
 def choose_historical(validation: dict, date: str, recent_topics: list[str]) -> dict:
@@ -1151,7 +1173,10 @@ def build_article(datasets: dict[str, dict], *, date: str,
     signature = board_signature(datasets["board"])
     previous_signature = str(index[0].get("board_signature") or "") if index else ""
     changed = not previous_signature or previous_signature != signature
-    current_subject = choose_current_subject(datasets["board"])
+    cooled_topics = recent_current_topics(index, date)
+    current_subject = choose_current_subject(
+        datasets["board"], excluded_topics=cooled_topics,
+    )
     if changed and current_subject is not None:
         article_type = "current_analysis"
         subject = current_subject
@@ -1242,6 +1267,7 @@ def build_article(datasets: dict[str, dict], *, date: str,
         "funnel": [
             {"product": "seiche", "job": "system funding", "url": "https://seiche.info/articles/"},
             {"product": "undertow", "job": "market exits", "url": "https://liquilens-undertow.com/articles/"},
+            {"product": "liquilens-coverage-check", "job": "workflow audit", "url": f"{SITE}/tools/ews-coverage-check/"},
             {"product": "liquilens-pilot", "job": "private-book proof", "url": f"{SITE}/pilot/"},
         ],
     }
@@ -1301,9 +1327,18 @@ def markdown_to_html(markdown: str) -> str:
     return "\n".join(out)
 
 
+def meta_excerpt(value: str, limit: int) -> str:
+    """Shorten metadata at a word boundary without changing visible copy."""
+    clean = re.sub(r"\s+", " ", str(value)).strip()
+    if len(clean) <= limit:
+        return clean
+    clipped = clean[:limit - 1].rsplit(" ", 1)[0].rstrip(" ,.;:—-")
+    return (clipped or clean[:limit - 1]).rstrip() + "…"
+
+
 ARTICLE_CSS = """
 :root{--ink:#080d18;--panel:#0e1524;--line:#24304a;--gold:#e3b778;--gold2:#f1d399;--text:#edf0f6;--muted:#9aa4ba;--mono:'IBM Plex Mono',monospace;--serif:'Newsreader',Georgia,serif;--sans:'Manrope',system-ui,sans-serif;color-scheme:dark}
-*{box-sizing:border-box}body{margin:0;background:var(--ink);color:var(--text);font:16px/1.72 var(--sans);-webkit-font-smoothing:antialiased}a{color:var(--gold2);text-decoration:none}a:hover{text-decoration:underline}.wrap{width:min(760px,calc(100% - 40px));margin:auto}.mast{border-bottom:1px solid var(--line);padding:21px 0}.mast .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{font:600 19px var(--serif);color:var(--text)}.brand b{display:inline-grid;place-items:center;width:29px;height:29px;margin-right:9px;border-radius:7px;background:var(--gold);color:#181106}.nav{display:flex;gap:18px;font:11px var(--mono);color:var(--muted)}.hero{padding:64px 0 35px}.kicker{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}h1{font:500 clamp(38px,6vw,63px)/1.03 var(--serif);letter-spacing:-.035em;margin:15px 0 18px}.dek{font:20px/1.5 var(--serif);color:#c1c6d2}.meta{font:10px var(--mono);letter-spacing:.08em;color:var(--muted);margin-top:22px;text-transform:uppercase}.copy{padding:12px 0 70px}.copy>p:first-child{font:20px/1.58 var(--serif);color:#dfe2e9}.copy p{margin:0 0 20px}.copy h2{font:500 31px/1.15 var(--serif);letter-spacing:-.018em;margin:52px 0 17px;padding-top:20px;border-top:1px solid var(--line)}.copy strong{font-weight:600;color:#fff}.copy ul{padding-left:20px;margin:0 0 24px}.copy li{margin:0 0 10px}.copy code{font:13px var(--mono);background:var(--panel);padding:2px 5px}.receipt{border:1px solid var(--line);background:var(--panel);padding:19px 21px;margin:0 0 55px;font:11px/1.7 var(--mono);color:var(--muted)}footer{border-top:1px solid var(--line);padding:30px 0 45px;font:11px/1.8 var(--mono);color:var(--muted)}.cards{display:grid;gap:15px;padding:15px 0 70px}.card{display:block;border:1px solid var(--line);background:var(--panel);padding:23px}.card:hover{border-color:#655a42;text-decoration:none}.card small{font:10px var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--gold)}.card h2{font:500 28px/1.18 var(--serif);margin:10px 0}.card p{color:var(--muted);margin:0}.intro{padding:70px 0 25px}.intro h1{max-width:690px}.formats{border:1px solid var(--line);padding:18px 20px;color:var(--muted);margin:0 0 26px}@media(max-width:620px){.nav a:nth-child(n+3){display:none}.hero{padding-top:45px}h1{font-size:42px}.copy h2{font-size:27px}}
+*{box-sizing:border-box}body{margin:0;background:var(--ink);color:var(--text);font:16px/1.72 var(--sans);-webkit-font-smoothing:antialiased}a{color:var(--gold2);text-decoration:none}a:hover{text-decoration:underline}.wrap{width:min(760px,calc(100% - 40px));margin:auto}.mast{border-bottom:1px solid var(--line);padding:21px 0}.mast .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{font:600 19px var(--serif);color:var(--text)}.brand b{display:inline-grid;place-items:center;width:29px;height:29px;margin-right:9px;border-radius:7px;background:var(--gold);color:#181106}.nav{display:flex;gap:18px;font:11px var(--mono);color:var(--muted)}.hero{padding:64px 0 35px}.kicker{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}h1{font:500 clamp(38px,6vw,63px)/1.03 var(--serif);letter-spacing:-.035em;margin:15px 0 18px}.dek{font:20px/1.5 var(--serif);color:#c1c6d2}.meta{font:10px var(--mono);letter-spacing:.08em;color:var(--muted);margin-top:22px;text-transform:uppercase}.copy{padding:12px 0 70px}.copy>p:first-child{font:20px/1.58 var(--serif);color:#dfe2e9}.copy p{margin:0 0 20px}.copy h2{font:500 31px/1.15 var(--serif);letter-spacing:-.018em;margin:52px 0 17px;padding-top:20px;border-top:1px solid var(--line)}.copy strong{font-weight:600;color:#fff}.copy ul{padding-left:20px;margin:0 0 24px}.copy li{margin:0 0 10px}.copy code{font:13px var(--mono);background:var(--panel);padding:2px 5px}.handoff{border:1px solid #55482f;background:linear-gradient(135deg,rgba(227,183,120,.12),var(--panel));padding:24px;margin:0 auto 20px}.handoff h2{font:500 27px/1.2 var(--serif);margin:0 0 8px}.handoff p{color:var(--muted);margin:0 0 15px}.handoff .actions{display:flex;flex-wrap:wrap;gap:10px}.handoff .actions a{border:1px solid #655a42;padding:8px 11px;font:11px var(--mono)}.receipt{border:1px solid var(--line);background:var(--panel);padding:19px 21px;margin:0 0 55px;font:11px/1.7 var(--mono);color:var(--muted)}footer{border-top:1px solid var(--line);padding:30px 0 45px;font:11px/1.8 var(--mono);color:var(--muted)}.cards{display:grid;gap:15px;padding:15px 0 70px}.card{display:block;border:1px solid var(--line);background:var(--panel);padding:23px}.card:hover{border-color:#655a42;text-decoration:none}.card small{font:10px var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--gold)}.card h2{font:500 28px/1.18 var(--serif);margin:10px 0}.card p{color:var(--muted);margin:0}.intro{padding:70px 0 25px}.intro h1{max-width:690px}.formats{border:1px solid var(--line);padding:18px 20px;color:var(--muted);margin:0 0 26px}@media(max-width:620px){.nav a:nth-child(n+3){display:none}.hero{padding-top:45px}h1{font-size:42px}.copy h2{font-size:27px}}
 """
 
 
@@ -1320,6 +1355,7 @@ def page_shell(*, title: str, description: str, canonical: str, jsonld: dict,
 <title>{esc(title)}</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="{esc(canonical)}">{feed_link}
 <meta name="robots" content="index, follow, max-image-preview:large"><meta name="theme-color" content="#080d18">
 <meta property="og:type" content="article"><meta property="og:site_name" content="LiquiLens"><meta property="og:url" content="{esc(canonical)}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:image" content="{SITE}/og-radar.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(description)}"><meta name="twitter:image" content="{SITE}/og-radar.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500&amp;display=swap">
 <script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script><style>{ARTICLE_CSS}</style>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{{"token":"43b422e63bb44fb5975c7bb39bd0ba24"}}'></script><!-- End Cloudflare Web Analytics -->
@@ -1350,9 +1386,15 @@ def render_article(article: dict) -> str:
         f'<h1>{esc(article["headline"])}</h1><p class="dek">{esc(article["dek"])}</p>'
         f'<p class="meta">{esc(article["word_count"])} words · institution risk · open evidence</p></div></section>'
         f'<article class="copy wrap">{markdown_to_html(article["body_md"])}</article>'
+        '<aside class="handoff wrap"><h2>Turn the public screen into a repeatable review.</h2>'
+        '<p>Audit the controls around your current early-warning process, or send a named list of public India or US institutions for a generated review pack.</p>'
+        '<div class="actions"><a href="/tools/ews-coverage-check/?utm_source=liquilens&amp;utm_medium=owned_content&amp;utm_campaign=daily_articles&amp;utm_content=article_handoff">Run the free coverage check</a>'
+        '<a href="/access/?utm_source=liquilens&amp;utm_medium=owned_content&amp;utm_campaign=daily_articles&amp;utm_content=article_handoff">Review a named list</a></div></aside>'
         f'<aside class="receipt wrap">{receipt}</aside></main>'
     )
-    return page_shell(title=f"{article['headline']} | LiquiLens", description=article["dek"],
+    seo_title = f"{meta_excerpt(article['headline'], 50)} | LiquiLens"
+    seo_description = meta_excerpt(article["dek"], 155)
+    return page_shell(title=seo_title, description=seo_description,
                       canonical=url, jsonld=jsonld, body=body)
 
 
