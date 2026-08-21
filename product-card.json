@@ -71,6 +71,8 @@
   },
   "access": {
     "website": "https://liquilens.in/",
+    "world_economy_evidence_map": "https://liquilens.in/world-economy/",
+    "world_economy_dataset_catalog": "https://liquilens.in/world-economy/evidence-catalog.json",
     "selection_guide": "https://liquilens.in/use-cases/",
     "early_warning_coverage_check": "https://liquilens.in/tools/ews-coverage-check/",
     "rbi_nbfc_ews_guide": "https://liquilens.in/guides/rbi-nbfc-early-warning-system/",
@@ -95,7 +97,7 @@
   "siblings": [
     {
       "name": "Seiche",
-      "use_for": "US money-market funding stress",
+      "use_for": "US dollar funding stress, the granular USD money-market desk and the licence-aware global money-market atlas",
       "url": "https://seiche.info/"
     },
     {

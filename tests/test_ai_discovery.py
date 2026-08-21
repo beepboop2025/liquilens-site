@@ -38,6 +38,10 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
         "https://github.com/beepboop2025/liquilens-cli")
     assert card["access"]["ai_catalog"] == (
         "https://liquilens.in/.well-known/ai-catalog.json")
+    assert card["access"]["world_economy_evidence_map"] == (
+        "https://liquilens.in/world-economy/")
+    assert card["access"]["world_economy_dataset_catalog"] == (
+        "https://liquilens.in/world-economy/evidence-catalog.json")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
     assert card["updated"] == "2026-08-21"
     assert card["access"]["daily_articles"] == "https://liquilens.in/articles/"
@@ -113,10 +117,14 @@ def test_contextual_product_network_is_visible_and_machine_readable():
 
 def test_search_and_answer_crawlers_are_explicitly_welcome():
     robots = read("robots.txt")
+    assert "Content-Signal: search=yes, ai-input=yes, ai-train=no" in robots
     for agent in ("OAI-SearchBot", "ChatGPT-User", "Claude-SearchBot",
                   "Claude-User", "PerplexityBot", "Perplexity-User",
                   "Google-Extended", "Googlebot", "Bingbot"):
         assert f"User-agent: {agent}\nAllow: /" in robots
+    for training_agent in ("GPTBot", "ClaudeBot", "anthropic-ai", "CCBot",
+                           "Applebot-Extended"):
+        assert f"User-agent: {training_agent}\nAllow: /" not in robots
 
 
 def test_home_has_landmark_and_hides_the_ticker_clone_from_focus():
@@ -219,7 +227,7 @@ def test_catalog_obeys_the_ard_envelope():
     catalog = _catalog()
     assert catalog["specVersion"] == "1.0"
     assert catalog["host"]["displayName"] == "LiquiLens"
-    assert len(catalog["entries"]) == 4
+    assert len(catalog["entries"]) == 5
 
     identifiers = set()
     for entry in catalog["entries"]:
@@ -288,6 +296,14 @@ def test_mcp_card_and_nested_product_line_are_current():
         "1.0.0")
     assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
         "https://seiche.info/.well-known/ai-catalog.json")
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["metadata"][
+        "publicToolCount"] == 10
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["metadata"][
+        "globalMoneyMarketAtlas"] == (
+            "https://api.seiche.info/api/v2/money-markets")
+    assert entries[
+        "urn:air:liquilens.in:catalog:world-economy-evidence"
+    ]["url"] == "https://liquilens.in/world-economy/evidence-catalog.json"
     assert entries["urn:air:liquilens.in:catalog:undertow"]["url"] == (
         "https://liquilens-undertow.com/.well-known/ai-catalog.json")
 

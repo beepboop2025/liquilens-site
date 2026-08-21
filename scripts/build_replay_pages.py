@@ -19,6 +19,7 @@ from __future__ import annotations
 import datetime
 import json
 import pathlib
+import re
 import subprocess
 import sys
 import urllib.request
@@ -180,6 +181,7 @@ the same payload the <a href="/research/">research index</a> cites. Its status i
 real-money evidence, a credit rating or investment advice.
 &copy; 2026 LiquiLens.</p>
 </div></footer>
+<script src="/ai-referral.js" defer></script>
 </body>
 </html>
 """
@@ -417,15 +419,20 @@ def case_file_index(
 
 
 BASE_SITEMAP = [
-    ("/", "2026-08-12", "weekly", "1.0"),
+    ("/", "2026-08-21", "weekly", "1.0"),
     ("/investigations/", "2026-08-12", "weekly", "0.9"),
     ("/investigations/the-5-64x-private-credit-concentration/",
      "2026-08-12", "monthly", "0.8"),
-    ("/developers/", "2026-08-05", "monthly", "0.9"),
-    ("/use-cases/", "2026-08-09", "monthly", "0.9"),
-    ("/pilot/", "2026-08-08", "monthly", "0.9"),
+    ("/developers/", "2026-08-21", "monthly", "0.9"),
+    ("/use-cases/", "2026-08-21", "monthly", "0.9"),
+    ("/world-economy/", "2026-08-21", "weekly", "0.95"),
+    ("/tools/ews-coverage-check/", "2026-08-21", "monthly", "0.9"),
+    ("/guides/rbi-nbfc-early-warning-system/", "2026-08-21", "monthly", "0.9"),
+    ("/access/", "2026-08-18", "monthly", "0.95"),
+    ("/access/sample/", "2026-08-18", "daily", "0.8"),
+    ("/pilot/", "2026-08-08", "monthly", "0.8"),
     ("/us/", "2026-08-09", "weekly", "0.9"),
-    ("/research/", "2026-08-09", "weekly", "0.9"),
+    ("/research/", "2026-08-21", "weekly", "0.9"),
     ("/research/lab-reviewed-status-2026-08-09.json", "2026-08-09", "never", "0.8"),
     ("/research/replay-atlas-2026-08-09.json", "2026-08-09", "never", "0.8"),
     ("/desk/", "2026-08-11", "daily", "0.9"),
@@ -434,8 +441,8 @@ BASE_SITEMAP = [
     ("/ship-log/", "2026-08-09", "weekly", "0.7"),
     ("/about/", "2026-08-04", None, None),
     ("/security/", "2026-08-09", None, None),
-    ("/status/", "2026-08-09", None, None),
-    ("/privacy/", "2026-08-04", None, None),
+    ("/status/", "2026-08-21", None, None),
+    ("/privacy/", "2026-08-21", None, None),
     ("/terms/", "2026-08-04", None, None),
 ]
 
@@ -511,6 +518,15 @@ def write_sitemap(
         url = f"{SITE}/replay/{slug}/"
         lastmod = today if slug in changed_slugs else previous.get(url, today)
         out.append(f"  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod><changefreq>monthly</changefreq></url>")
+    current_sitemap = ROOT / "sitemap.xml"
+    if current_sitemap.exists():
+        match = re.search(
+            r"<!-- DAILY-ARTICLES:START -->.*?<!-- DAILY-ARTICLES:END -->",
+            current_sitemap.read_text(),
+            flags=re.S,
+        )
+        if match:
+            out.append(match.group(0))
     out.append("</urlset>")
     (ROOT / "sitemap.xml").write_text("\n".join(out) + "\n")
 
