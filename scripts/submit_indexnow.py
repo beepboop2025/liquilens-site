@@ -8,7 +8,7 @@ import json
 import pathlib
 import re
 import subprocess
-from urllib.parse import urlsplit
+from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
 
@@ -45,7 +45,8 @@ def public_urls(paths: list[str], base_url: str) -> list[str]:
         if path == pathlib.PurePosixPath("index.html"):
             routes.add(f"{base}/")
         elif path.name == "index.html" and not any(part.startswith(".") for part in path.parts):
-            routes.add(f"{base}/{'/'.join(path.parts[:-1])}/")
+            route = quote("/".join(path.parts[:-1]), safe="/")
+            routes.add(f"{base}/{route}/")
     return sorted(routes)
 
 

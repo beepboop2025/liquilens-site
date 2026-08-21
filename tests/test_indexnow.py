@@ -15,6 +15,7 @@ def test_changed_html_paths_map_only_to_canonical_routes():
         "index.html",
         "guides/rbi-nbfc-early-warning-system/index.html",
         "articles/example/index.html",
+        "guides/risk & controls/index.html",
         ".hidden/index.html",
         "articles/feed.xml",
         "scripts/tool.py",
@@ -22,6 +23,7 @@ def test_changed_html_paths_map_only_to_canonical_routes():
         "https://liquilens.in/",
         "https://liquilens.in/articles/example/",
         "https://liquilens.in/guides/rbi-nbfc-early-warning-system/",
+        "https://liquilens.in/guides/risk%20%26%20controls/",
     ]
 
 
@@ -85,7 +87,7 @@ def test_pages_workflow_notifies_only_after_deployment():
     workflow = (ROOT / ".github" / "workflows" / "pages.yml").read_text(
         encoding="utf-8"
     )
-    assert "fetch-depth: 2" in workflow
+    assert "fetch-depth: 0" in workflow
     assert "submit_indexnow.py" in workflow
     assert "continue-on-error: true" in workflow
     assert workflow.index("id: deployment") < workflow.index("Notify IndexNow")
