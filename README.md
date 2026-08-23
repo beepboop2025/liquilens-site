@@ -56,17 +56,25 @@ These files describe the same product from different interfaces. When changing a
 ## Telegram-to-X handoff
 
 [`go/x/index.html`](go/x/index.html) is a noindex, first-party handoff used by
-reviewed Telegram buttons. It maps a bounded `from` family and either the
-`profile` or `share` action to a property-free `community_growth` event, waits
-at most 180 ms for that event, and then continues even if analytics is down.
-The share action opens a user-controlled X draft; it never posts automatically.
-`operator_rehearsal` deliberately emits no growth event.
+reviewed Telegram buttons. It requires exactly one allowed `from`, `topic`, and
+`action` value before emitting a property-free `community_growth` event. The
+`follow` action opens X's official follow intent, while `share` opens a
+topic-matched draft with fixed, reviewed copy; neither action follows or posts
+automatically. The analytics request is a CORS-safelisted, keepalive delivery
+and navigation does not wait for it.
+
+Shared drafts link to [`go/telegram/index.html`](go/telegram/index.html), a
+noindex Open Graph fallback that returns readers to the matching useful bot
+view. Its compact `x26_crypto_<source>_<intent>` references remain within
+Telegram's 64-byte start-parameter limit. Missing, invalid, duplicate, and
+`operator_rehearsal` inputs still navigate safely through the non-counting
+`qa` route but emit no growth event. An explicitly valid `organic` source is
+countable; malformed attribution is never silently relabeled organic.
 
 Release the API event allowlist first, this static route second, and bot/channel
 buttons last. A bridge redirect measures an attempted X profile or composer
-handoff. The draft carries the controlled `x26_crypto_share_market` bot link so
-new X readers return to a useful, attributable market view before the channel
-CTA. A composer open is not evidence of a follow or a published post.
+handoff or an attempted return to Telegram. It is not evidence of a follow, a
+published post, a bot activation, or a retained member.
 
 ## Deployment
 
