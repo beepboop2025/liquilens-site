@@ -1,0 +1,118 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-08-23-nedungadi-bank-s-capital-breach-preceded-the-event-the-harder-question-is-wh",
+  "product": "liquilens",
+  "slug": "2026-08-23-nedungadi-bank-s-capital-breach-preceded-the-event-the-harder-question-is-wh",
+  "date": "2026-08-23",
+  "article_type": "historical_replay",
+  "topic": "nedungadi-bank",
+  "headline": "Nedungadi Bank’s capital breach preceded the event. The harder question is what that warning could—and could not—establish.",
+  "dek": "The replay records an RBI action-zone CRAR breach for Nedungadi Bank at FY1999, before its default. It is evidence of an early disclosed constraint under a proxy clock, not proof of a tradable forecast or a complete account of the institution’s failure.",
+  "canonical_url": "https://liquilens.in/articles/2026-08-23-nedungadi-bank-s-capital-breach-preceded-the-event-the-harder-question-is-wh/",
+  "published_at": "2026-08-23T11:34:58Z",
+  "evidence_as_of": "2026-08-23",
+  "board_signature": "11b8f7897ecd041af916ebef625d096a850763c28879ac3f256e8179a0d72721",
+  "subject": {
+    "slug": "nedungadi-bank",
+    "name": "Nedungadi Bank",
+    "inst_type": "bank",
+    "default_date": "2002-11-02",
+    "fraud_masked": false,
+    "pca": {
+      "slug": "nedungadi-bank",
+      "inst_type": "bank",
+      "default_date": "2002-11-02",
+      "first_action_zone": {
+        "period_end": "1999-03-31",
+        "q": "FY1999",
+        "status": "threshold_1",
+        "knowledge_time_proxy": "1999-05-30",
+        "breaches": [
+          "CRAR"
+        ]
+      },
+      "lead_months": 41,
+      "fraud_masked": false
+    },
+    "funding": {
+      "slug": "nedungadi-bank",
+      "inst_type": "bank",
+      "scoreable": false,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1458,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:457cbd1eb3dc6d092087c184d265d40773770b2b948be9c1b0eb723eb81881fe",
+    "memory_fingerprint": "sha256:59ac779098b0ebc83379e0088388693ddb3f43e159ec6f18355ba9c0771b7bab",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 2,
+    "dossier_sha256": "76308bcb5a00e0ca0cf86f31dfe8cb36a94537d6e05d763c9b32e3c5066879cb",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "not_a_credit_rating",
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Removed unsupported causal mechanics and the unsupported credit-rating and investment-advice language.",
+      "Made filing-period, availability-proxy, market-price, and model-rule distinctions explicit.",
+      "Preserved eligibility, funding missing-data, forensic, timing, and diagnostic-performance limits.",
+      "Added required product-boundary language and source links."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:457cbd1eb3dc6d092087c184d265d40773770b2b948be9c1b0eb723eb81881fe",
+      "memory_fingerprint": "sha256:59ac779098b0ebc83379e0088388693ddb3f43e159ec6f18355ba9c0771b7bab",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
