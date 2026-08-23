@@ -33,6 +33,7 @@ The release gate checks that claims remain consistent across visible pages, meta
 ```bash
 LIQUILENS_OFFLINE=1 python3 scripts/verify_public_claims.py
 python3 -m pytest tests -q
+node --test tests/*.mjs
 ```
 
 Run the verifier without `LIQUILENS_OFFLINE=1` to compare public copy with the live API. Live-service differences are reported separately because that deployment is maintained outside this repository.
@@ -51,6 +52,21 @@ Run the verifier without `LIQUILENS_OFFLINE=1` to compare public copy with the l
 - [`.well-known/security.txt`](.well-known/security.txt) gives the vulnerability-reporting route.
 
 These files describe the same product from different interfaces. When changing a product claim or endpoint, update every affected surface and run the verification suite.
+
+## Telegram-to-X handoff
+
+[`go/x/index.html`](go/x/index.html) is a noindex, first-party handoff used by
+reviewed Telegram buttons. It maps a bounded `from` family and either the
+`profile` or `share` action to a property-free `community_growth` event, waits
+at most 180 ms for that event, and then continues even if analytics is down.
+The share action opens a user-controlled X draft; it never posts automatically.
+`operator_rehearsal` deliberately emits no growth event.
+
+Release the API event allowlist first, this static route second, and bot/channel
+buttons last. A bridge redirect measures an attempted X profile or composer
+handoff. The draft carries the controlled `x26_crypto_share_market` bot link so
+new X readers return to a useful, attributable market view before the channel
+CTA. A composer open is not evidence of a follow or a published post.
 
 ## Deployment
 
