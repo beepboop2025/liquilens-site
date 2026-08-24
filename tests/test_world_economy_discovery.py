@@ -32,7 +32,7 @@ DATASETS = {
         },
     },
     "https://seiche.info/#dollar-funding-dataset": {
-        "date_modified": "2026-08-22",
+        "date_modified": "2026-08-24",
         "identifier": (
             "urn:liquidity-lab:dataset:seiche-dollar-funding-money-markets"
         ),
@@ -184,6 +184,18 @@ def test_machine_catalog_has_four_distinct_bounded_datasets():
     palimpsest = next(
         dataset for dataset in datasets if dataset["creator"]["name"] == "Palimpsest"
     )
+    seiche = next(
+        dataset for dataset in datasets if dataset["creator"]["name"] == "Seiche"
+    )
+    undertow = next(
+        dataset for dataset in datasets
+        if dataset["identifier"] == (
+            "urn:liquidity-lab:dataset:undertow-market-liquidity-exit-cost"
+        )
+    )
+    assert seiche["version"] == "0.11.1"
+    assert undertow["version"] == "1.9.0"
+    assert palimpsest["version"] == "1.9.0"
     assert palimpsest["additionalProperty"] == {
         "@type": "PropertyValue",
         "name": "financial authority",
@@ -322,8 +334,16 @@ def test_seiche_routes_and_release_count_do_not_regress():
     assert "https://seiche.info/use-cases.html" not in use_cases
     assert "https://seiche.info/developers" in developers
     assert "https://seiche.info/developers.html" not in developers
-    assert "Seiche 0.10.1" in status
-    assert "eleven free MCP tools" in status
+    assert "Seiche 0.11.1" in status
+    assert "11 public read-only MCP tools" in status
+    assert "4 prompts and 0 resources" in status
     assert "ten free MCP tools" not in status
+    assert "signed tag, exact PyPI artifacts, static catalog" in status
     assert "global money-market context" in status
     assert "bounded money/FX/macro-capital context" in status
+
+    llms = read("llms.txt")
+    assert "Seiche 0.11.1" in llms
+    assert "https://api.seiche.info/.well-known/mcp.json" in llms
+    assert "https://pypi.org/project/seiche/0.11.1/" in llms
+    assert "io.github.beepboop2025%2Fseiche/versions/0.11.1" in llms

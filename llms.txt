@@ -137,8 +137,8 @@ The scoring boundary is fixed: generative features may explain served evidence, 
 
 ## Related products
 
-- Seiche 0.10.1, https://seiche.info/: US dollar funding stress, a granular USD money-market desk, a licence-aware global atlas and bounded money/FX/macro-capital context built from public sources. Its hosted MCP exposes eleven anonymous read-only tools, including money_market_context and world_markets_context. World-markets evidence: https://seiche.info/markets/ and https://api.seiche.info/api/v2/world-markets
-- Undertow 1.9.0, https://liquilens-undertow.com/: market-liquidity tiers, depth concentration, and estimated exit cost by venue and position size.
+- Seiche 0.11.1, https://seiche.info/: US dollar funding stress, a granular USD money-market desk, a licence-aware global atlas and bounded money/FX/macro-capital context built from public sources. Its hosted MCP at https://api.seiche.info/mcp exposes exactly eleven anonymous read-only tools, four visible prompts and zero resources, including money_market_context and world_markets_context. Discovery: https://api.seiche.info/.well-known/mcp.json. Install: seiche==0.11.1 from https://pypi.org/project/seiche/0.11.1/. Official Registry: https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.11.1. World-markets evidence: https://seiche.info/markets/ and https://api.seiche.info/api/v2/world-markets
+- Undertow 1.9.0, https://liquilens-undertow.com/: market-liquidity tiers, depth concentration, and estimated exit cost by venue and position size. Its hosted MCP at https://api.seiche.info/undertow/mcp exposes exactly nine anonymous public read-only tools, three visible prompts and zero resources; eight additional tools require a subscriber token.
 - My Quant Doesn't Speak English, https://myquantdoesntspeakenglish.com/: every Seiche, LiquiLens, and Undertow dispatch in one editorial wire, plus original investigations.
 - Groundcheck, https://groundcheck.seiche.info/: live-source claim and citation verification.
 
@@ -148,7 +148,7 @@ Palimpsest, Evidence Signal, and NarcoScope are free public goods. They observe 
 
 - Funding page: https://palimpsest.info/fund.html
 - Evidence Signal: https://t.me/EvidenceSignalDesk
-- Palimpsest: https://palimpsest.info/
+- Palimpsest 1.9.0: https://palimpsest.info/ — six anonymous public read-only MCP tools, four visible prompts and zero resources at https://api.seiche.info/palimpsest/mcp. The catalog publishes exact deployment and official MCP Registry receipt URLs and hashes; initialize the remote and compare serverInfo.version for live authority: https://palimpsest.info/.well-known/ai-catalog.json
 - NarcoScope: https://narcoscope.com/
 
 ## Citation

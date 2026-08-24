@@ -165,7 +165,7 @@
       "displayName": "Seiche Funding-Stress Catalog",
       "type": "application/ai-catalog+json",
       "url": "https://seiche.info/.well-known/ai-catalog.json",
-      "description": "Sibling catalog with eleven anonymous read-only tools for US dollar funding stress, granular money-market context, bounded money/FX/macro-capital world-markets context, positioning, analogs, and a status-bound construction-PIT historical diagnostic.",
+      "description": "Sibling catalog with eleven anonymous read-only tools, four prompts and zero resources for US dollar funding stress, granular money-market context, bounded money/FX/macro-capital world-markets context, positioning, analogs, and a status-bound construction-PIT historical diagnostic.",
       "tags": [
         "funding liquidity",
         "repo",
@@ -180,11 +180,59 @@
         "Compare registered global money markets without treating missing coverage as calm.",
         "What do current money, FX and macro-capital indicators say, with their evidence clocks and coverage limits?"
       ],
-      "version": "0.10.1",
-      "updatedAt": "2026-08-21T19:02:50Z",
+      "capabilities": [
+        "latest_article",
+        "funding_stress_now",
+        "historical_analogs",
+        "proof_backtest",
+        "data_health",
+        "crypto_stress_record",
+        "institutional_flows",
+        "oil_funding_context",
+        "fx_materials_passage",
+        "money_market_context",
+        "world_markets_context"
+      ],
+      "prompts": [
+        "is_now_dangerous",
+        "money_market_deep_dive",
+        "world_markets_briefing",
+        "cross_market_cash_pressure"
+      ],
+      "resourceTemplates": [],
+      "version": "0.11.1",
+      "updatedAt": "2026-08-24T14:52:00Z",
       "metadata": {
         "productUrl": "https://seiche.info",
         "publicToolCount": 11,
+        "publicPromptCount": 4,
+        "publicResourceCount": 0,
+        "mcpServerName": "io.github.beepboop2025/seiche",
+        "mcpEndpoint": "https://api.seiche.info/mcp",
+        "mcpDiscovery": "https://api.seiche.info/.well-known/mcp.json",
+        "apiCatalog": "https://api.seiche.info/api",
+        "openapi": "https://api.seiche.info/api/openapi.json",
+        "productCard": "https://seiche.info/product-card.json",
+        "pypiProject": "https://pypi.org/project/seiche/0.11.1/",
+        "pypiSpec": "seiche==0.11.1",
+        "releaseCommit": "0cd20bfd0a4d274c8bb8173f6fe59e2d2f5259db",
+        "signedTag": "v0.11.1",
+        "signedTagObject": "fc1742880be1be06837c5fc703b4ba5312ff4b2b",
+        "pypiRun": "https://github.com/beepboop2025/seiche/actions/runs/32758138386/attempts/2",
+        "pypiWheelSha256": "sha256:01b5b770d88391d31ba406ca651ab5d6054b2e4c6f6c3cf6138f713f4374e4a1",
+        "pypiWheelBytes": 1101154,
+        "pypiSdistSha256": "sha256:0fa965b00f0c81a5f9ad8a5d66a4140523a90f962f3bdcf196fd884d89057a15",
+        "pypiSdistBytes": 980967,
+        "staticRun": "https://github.com/beepboop2025/seiche/actions/runs/32758837757",
+        "staticDeployment": "https://699fdc4e.seiche.pages.dev",
+        "catalogSha256": "sha256:735516115752afebd3b8a3637a22f806ff8f592826381ce1bbe32ab5b7b5cc74",
+        "productCardSha256": "sha256:1d382ad21d4fa8c35433f9270946d74dca592fb833c454c02cc3613a6c2edf08",
+        "mcpDiscoverySha256": "sha256:1db329dbc3155a0a695a3ddf7e7dcd37d7edaea22d4898b97002cbf172c931fe",
+        "registryRun": "https://github.com/beepboop2025/seiche/actions/runs/32758834990",
+        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.11.1",
+        "registryPublishedAt": "2026-08-24T17:50:12.865984Z",
+        "registryServerSha256": "sha256:2a7a82905c2466684fdf61de0862a5dbfb9b1d2703918c88a594d0017dd8b6f1",
+        "liveVersionAuthority": "Initialize the linked MCP remote and compare serverInfo.version before treating a release as deployed.",
         "globalMoneyMarketAtlas": "https://api.seiche.info/api/v2/money-markets",
         "worldMarketsApi": "https://api.seiche.info/api/v2/world-markets",
         "worldMarketsPage": "https://seiche.info/markets/",
@@ -197,7 +245,7 @@
       "displayName": "Undertow Market-Liquidity Catalog",
       "type": "application/ai-catalog+json",
       "url": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
-      "description": "Sibling catalog for cross-market liquidity tiers, live crypto exit costs, venue concentration, depth collapses, and the sealed calls record.",
+      "description": "Sibling catalog with nine public read-only tools and three prompt templates for cross-market liquidity tiers, live crypto exit costs, venue concentration, depth collapses, and the sealed calls record.",
       "tags": [
         "market liquidity",
         "exit cost",
@@ -208,10 +256,41 @@
         "What would it cost to sell a large BTC position across venues?",
         "Are Treasury, credit, FX or crypto liquidity conditions strained?"
       ],
+      "capabilities": [
+        "agent_access_status",
+        "depth_episodes",
+        "exit_cost",
+        "latest_article",
+        "liquidity_tiers",
+        "sealed_record",
+        "unwind_watch",
+        "venue_concentration",
+        "venue_price_reconciliation"
+      ],
+      "protocolVersions": [
+        "2026-07-28",
+        "2025-11-25",
+        "2025-06-18",
+        "2025-03-26"
+      ],
+      "prompts": [
+        "can_this_book_exit",
+        "exit_cost_check",
+        "market_liquidity_briefing"
+      ],
+      "resourceTemplates": [],
       "version": "1.9.0",
       "updatedAt": "2026-08-18T00:00:00Z",
       "metadata": {
         "productUrl": "https://liquilens-undertow.com",
+        "publicToolCount": 9,
+        "subscriberToolCount": 8,
+        "publicPromptCount": 3,
+        "publicResourceCount": 0,
+        "mcpServerName": "io.github.beepboop2025/undertow",
+        "mcpEndpoint": "https://api.seiche.info/undertow/mcp",
+        "openapi": "https://api.seiche.info/undertow/x402/openapi.json",
+        "productCard": "https://liquilens-undertow.com/product-card.json",
         "telegramBot": "https://t.me/Undertow_LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityCryptoDesk"
       }
@@ -221,7 +300,7 @@
       "displayName": "Palimpsest Revision-Safe China Evidence",
       "type": "application/ai-catalog+json",
       "url": "https://palimpsest.info/.well-known/ai-catalog.json",
-      "description": "Independent public-good catalog for revision-safe China economic observations, information conditions, release and collection clocks, provenance, coverage gates and abstentions. Financial authority: none.",
+      "description": "Independent public-good catalog with six public read-only tools and four prompts for revision-safe China economic observations, information conditions, release and collection clocks, provenance, coverage gates and abstentions. Financial authority: none.",
       "tags": [
         "China economy",
         "economic revisions",
@@ -234,13 +313,54 @@
         "Which China economic observations are currently covered, stale or unavailable?",
         "Has the public information record changed or disappeared?"
       ],
-      "updatedAt": "2026-08-24T00:00:00Z",
+      "capabilities": [
+        "list_signals",
+        "get_signal",
+        "get_newsroom",
+        "query_economic_observations",
+        "whats_happening",
+        "gfw_reading"
+      ],
+      "protocolVersions": [
+        "2025-06-18",
+        "2025-03-26"
+      ],
+      "prompts": [
+        "evidence_desk_briefing",
+        "censorship_briefing",
+        "gfw_status_check",
+        "signal_deep_dive"
+      ],
+      "resourceTemplates": [],
+      "version": "1.9.0",
+      "updatedAt": "2026-08-24T13:51:23.905708Z",
       "metadata": {
         "productUrl": "https://palimpsest.info/",
         "humanLandingPage": "https://palimpsest.info/china/",
         "observationManifest": "https://palimpsest.info/readings/china-econ-observations-latest.json",
         "financialAuthority": "none",
-        "access": "public-read-only"
+        "access": "public-read-only",
+        "publicToolCount": 6,
+        "publicPromptCount": 4,
+        "publicResourceCount": 0,
+        "mcpServerName": "io.github.beepboop2025/palimpsest",
+        "mcpEndpoint": "https://api.seiche.info/palimpsest/mcp",
+        "deploymentBoundary": "production-verified",
+        "deploymentNote": "This card describes the exact deployed and independently re-probed MCP 1.9.0 boundary.",
+        "deploymentCommit": "135d8f332d7eaeb48f793ecaa47ee1e13708c1ac",
+        "deploymentReceipt": "https://palimpsest.info/.well-known/receipts/mcp-deployment-1.9.0.json",
+        "deploymentReceiptSha256": "sha256:8570b4fcc138461be34f17c8257f4f6dbef5242336f533411b56d5d747a27154",
+        "deploymentRun": "https://github.com/beepboop2025/palimpsest/actions/runs/32734455304",
+        "registryReceipt": "https://palimpsest.info/.well-known/receipts/mcp-registry-publication-1.9.0.json",
+        "registryReceiptSha256": "sha256:6014b600a2115acb05dc59a60e0595c0de4424907e074fcc08b465dcea09cfa7",
+        "registryRun": "https://github.com/beepboop2025/palimpsest/actions/runs/32735073973",
+        "registrySnapshot": "https://palimpsest.info/.well-known/receipts/mcp-registry-latest-1.9.0.json",
+        "registrySnapshotSha256": "sha256:5af0c21c5818c0ca4983040410b52061026c0261e54bdaab8668fd5592b6c389",
+        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fpalimpsest/versions/1.9.0",
+        "registryPublishedAt": "2026-08-24T13:51:23.905708Z",
+        "liveVersionAuthority": "Initialize the linked MCP remote and compare serverInfo.version before treating a release as deployed.",
+        "quickstart": "https://palimpsest.info/developers.html",
+        "productCard": "https://palimpsest.info/product-card.json"
       }
     },
     {

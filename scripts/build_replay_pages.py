@@ -441,10 +441,10 @@ BASE_SITEMAP = [
     ("/desk/", "2026-08-11", "daily", "0.9"),
     ("/replay/", "2026-08-04", "weekly", "0.8"),
     ("/replay/index.json", "2026-08-09", "weekly", "0.8"),
-    ("/ship-log/", "2026-08-22", "weekly", "0.7"),
+    ("/ship-log/", "2026-08-24", "weekly", "0.7"),
     ("/about/", "2026-08-04", None, None),
     ("/security/", "2026-08-09", None, None),
-    ("/status/", "2026-08-22", None, None),
+    ("/status/", "2026-08-24", None, None),
     ("/privacy/", "2026-08-21", None, None),
     ("/terms/", "2026-08-04", None, None),
 ]
