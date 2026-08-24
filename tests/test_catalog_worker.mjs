@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import worker, { CATALOG_PATH } from "../edge/catalog-worker.mjs";
@@ -9,10 +10,18 @@ test("GET returns the committed ARD catalog with discovery headers", async () =>
     new Request(`https://liquilens.in${CATALOG_PATH}`),
   );
   const catalog = await response.json();
+  const expected = JSON.parse(
+    await readFile(new URL("../.well-known/ai-catalog.json", import.meta.url), "utf8"),
+  );
 
   assert.equal(response.status, 200);
+  assert.deepEqual(catalog, expected);
   assert.equal(catalog.specVersion, "1.0");
-  assert.ok(catalog.entries.length >= 4);
+  assert.equal(catalog.entries.length, 11);
+  const carrier = catalog.entries.find(
+    (entry) => entry.identifier === "urn:air:liquilens.in:protocol:evidence-carrier",
+  );
+  assert.equal(carrier.version, "0.13.6");
   assert.match(response.headers.get("content-type"), /^application\/ai-catalog\+json/);
   assert.equal(response.headers.get("access-control-allow-origin"), "*");
 });
