@@ -1,4 +1,7 @@
 import aiCatalog from "../.well-known/ai-catalog.json" with { type: "json" };
+import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.4.json" with {
+  type: "json",
+};
 import protocolCatalog from "../protocol/catalog.json" with { type: "json" };
 import { McpServer } from "@modelcontextprotocol/server";
 import { createMcpHandler } from "agents/mcp/server";
@@ -15,10 +18,18 @@ export const MAX_MCP_REQUEST_BYTES = 32_768;
 export const MAX_MCP_RESPONSE_BYTES = 2_097_152;
 export const MAX_MCP_HTTP_RESPONSE_BYTES = 4_194_304;
 export const MAX_PACKET_SOURCE_BYTES = 1_572_864;
-export const MAX_SOURCE_BYTES = 786_432;
-export const MAX_FETCH_TOPICS = 2;
+export const MAX_PACKET_TIMEOUT_SECONDS = 30;
+const FETCH_INPUT_PROPERTIES =
+  financialEvidenceMcpContract.tools[2].inputSchema.properties;
+export const DEFAULT_SOURCE_BYTES = FETCH_INPUT_PROPERTIES.max_bytes.default;
+export const MAX_SOURCE_BYTES = FETCH_INPUT_PROPERTIES.max_bytes.maximum;
+export const DEFAULT_TIMEOUT_SECONDS = FETCH_INPUT_PROPERTIES.timeout.default;
+export const MAX_TIMEOUT_SECONDS = FETCH_INPUT_PROPERTIES.timeout.maximum;
+export const MAX_FETCH_TOPICS =
+  FETCH_INPUT_PROPERTIES.topics.items.enum.length;
 
-const FINANCIAL_EVIDENCE_VERSION = "0.1.3";
+const FINANCIAL_EVIDENCE_VERSION =
+  financialEvidenceMcpContract.serverInfo.version;
 const PACKET_SCHEMA = "liquidity-lab.financial-evidence-packet.v1";
 const ABSENCE_POLICY =
   "Missing, failed, restricted, or unavailable evidence is never converted to zero or calm.";
@@ -234,7 +245,10 @@ async function readBoundedResponse(response, maxBytes) {
   return readBoundedStream(response.body, maxBytes, "response");
 }
 
-async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
+async function fetchSource(
+  source,
+  { maxBytes, timeoutSeconds, fetchImpl, signal },
+) {
   const retrievedAt = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
   const base = {
     product: source.product,
@@ -244,6 +258,12 @@ async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
   };
 
   try {
+    const sourceSignal = AbortSignal.any(
+      [signal, AbortSignal.timeout(timeoutSeconds * 1000)].filter(Boolean),
+    );
+    if (sourceSignal.aborted) {
+      throw sourceSignal.reason || new DOMException("aborted", "AbortError");
+    }
     const requested = new URL(source.url);
     if (requested.protocol !== "https:" || !ALLOWED_HOSTS.has(requested.hostname)) {
       throw new Error("source URL is outside the HTTPS allowlist");
@@ -256,7 +276,7 @@ async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
           "financial-evidence-remote/0.1 (+https://github.com/beepboop2025/financial-evidence-skills)",
       },
       redirect: "manual",
-      signal: AbortSignal.timeout(timeoutSeconds * 1000),
+      signal: sourceSignal,
       cf: {
         cacheEverything: true,
         cacheTtlByStatus: {
@@ -323,10 +343,19 @@ async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
   }
 }
 
-async function buildPacket(
+export async function buildPacket(
   topics,
-  { maxBytes = MAX_SOURCE_BYTES, timeoutSeconds = 8, fetchImpl = fetch } = {},
+  {
+    maxBytes = DEFAULT_SOURCE_BYTES,
+    timeoutSeconds = DEFAULT_TIMEOUT_SECONDS,
+    fetchImpl = fetch,
+    signal,
+    packetSignal = AbortSignal.timeout(MAX_PACKET_TIMEOUT_SECONDS * 1000),
+  } = {},
 ) {
+  const combinedSignal = AbortSignal.any(
+    [signal, packetSignal].filter(Boolean),
+  );
   const planned = topics.flatMap((topic) =>
     ROUTES[topic].map((source) => ({ topic, source })),
   );
@@ -342,6 +371,7 @@ async function buildPacket(
       maxBytes: sourceBudget,
       timeoutSeconds,
       fetchImpl,
+      signal: combinedSignal,
     });
     sources.push({ topic, ...result });
     if (result.ok) {
@@ -364,6 +394,7 @@ async function buildPacket(
       max_topics: MAX_FETCH_TOPICS,
       max_source_bytes: maxBytes,
       max_packet_source_bytes: MAX_PACKET_SOURCE_BYTES,
+      max_packet_timeout_seconds: MAX_PACKET_TIMEOUT_SECONDS,
       timeout_seconds: timeoutSeconds,
     },
     topics,
@@ -422,6 +453,13 @@ export function createFinancialEvidenceServer({ fetchImpl = fetch } = {}) {
     version: FINANCIAL_EVIDENCE_VERSION,
   });
   const topicSchema = z.enum(TOPICS);
+  const topicsSchema = z
+    .array(topicSchema)
+    .min(1)
+    .refine((topics) => new Set(topics).size === topics.length, {
+      message: "topics must contain unique items",
+    })
+    .meta({ uniqueItems: true });
 
   server.registerTool(
     "financial_evidence_topics",
@@ -442,7 +480,7 @@ export function createFinancialEvidenceServer({ fetchImpl = fetch } = {}) {
       description:
         "Resolve one or more financial research topics to fixed public evidence sources without fetching them.",
       inputSchema: z
-        .object({ topics: z.array(topicSchema).min(1).max(TOPICS.length) })
+        .object({ topics: topicsSchema })
         .strict(),
       annotations: { ...READ_ONLY_ANNOTATIONS, openWorldHint: false },
     },
@@ -457,31 +495,31 @@ export function createFinancialEvidenceServer({ fetchImpl = fetch } = {}) {
         "Fetch bounded read-only JSON evidence from LiquiLens, Undertow, Seiche, and Palimpsest. Missing evidence remains unavailable, never zero or calm.",
       inputSchema: z
         .object({
-          topics: z.array(topicSchema).min(1).max(TOPICS.length),
-          max_bytes: z.number().int().min(1).max(MAX_SOURCE_BYTES).default(MAX_SOURCE_BYTES),
-          timeout: z.number().gt(0).max(12).default(8),
+          topics: topicsSchema,
+          max_bytes: z
+            .number()
+            .int()
+            .min(1)
+            .max(MAX_SOURCE_BYTES)
+            .default(DEFAULT_SOURCE_BYTES),
+          timeout: z
+            .number()
+            .gt(0)
+            .max(MAX_TIMEOUT_SECONDS)
+            .default(DEFAULT_TIMEOUT_SECONDS),
         })
         .strict(),
       annotations: { ...READ_ONLY_ANNOTATIONS, openWorldHint: true },
     },
-    async ({ topics, max_bytes: maxBytes, timeout: timeoutSeconds }) => {
-      const uniqueTopics = [...new Set(topics)];
-      if (uniqueTopics.length > MAX_FETCH_TOPICS) {
-        return toolResult(
-          {
-            schema: PACKET_SCHEMA,
-            status: "unavailable",
-            error:
-              `remote fetch accepts at most ${MAX_FETCH_TOPICS} unique topics per call; split larger requests`,
-            requested_topics: uniqueTopics,
-          },
-          { isError: true },
-        );
-      }
-      const packet = await buildPacket(uniqueTopics, {
+    async (
+      { topics, max_bytes: maxBytes, timeout: timeoutSeconds },
+      context,
+    ) => {
+      const packet = await buildPacket(topics, {
         maxBytes,
         timeoutSeconds,
         fetchImpl,
+        signal: context.mcpReq.signal,
       });
       return packetToolResult(packet);
     },
