@@ -329,6 +329,8 @@
         "mcpBundleSha256": "e57e3039d7ae53b6feb3638dbc2f7ba413ff437e5c3a1b62172cad6f3b98e6ea",
         "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.14.0",
         "humanLandingPage": "https://liquilens.in/protocol/",
+        "browserVerifier": "https://beepboop2025.github.io/liquilens-evidence-carrier/",
+        "browserVerifierSource": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser",
         "financialAuthority": "none"
       }
     }

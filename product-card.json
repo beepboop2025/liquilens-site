@@ -82,6 +82,7 @@
     "financial_evidence_agent_skill": "https://github.com/beepboop2025/financial-evidence-skills/tree/main/financial-evidence",
     "evidence_carrier": "https://liquilens.in/protocol/",
     "evidence_carrier_catalog": "https://liquilens.in/protocol/catalog.json",
+    "evidence_carrier_browser_verifier": "https://beepboop2025.github.io/liquilens-evidence-carrier/",
     "selection_guide": "https://liquilens.in/use-cases/",
     "early_warning_coverage_check": "https://liquilens.in/tools/ews-coverage-check/",
     "rbi_nbfc_ews_guide": "https://liquilens.in/guides/rbi-nbfc-early-warning-system/",
