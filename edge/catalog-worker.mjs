@@ -18,6 +18,7 @@ export const MAX_MCP_REQUEST_BYTES = 32_768;
 export const MAX_MCP_RESPONSE_BYTES = 2_097_152;
 export const MAX_MCP_HTTP_RESPONSE_BYTES = 4_194_304;
 export const MAX_PACKET_SOURCE_BYTES = 1_572_864;
+export const MAX_PACKET_TIMEOUT_SECONDS = 30;
 const FETCH_INPUT_PROPERTIES =
   financialEvidenceMcpContract.tools[2].inputSchema.properties;
 export const DEFAULT_SOURCE_BYTES = FETCH_INPUT_PROPERTIES.max_bytes.default;
@@ -244,7 +245,10 @@ async function readBoundedResponse(response, maxBytes) {
   return readBoundedStream(response.body, maxBytes, "response");
 }
 
-async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
+async function fetchSource(
+  source,
+  { maxBytes, timeoutSeconds, fetchImpl, signal },
+) {
   const retrievedAt = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
   const base = {
     product: source.product,
@@ -254,6 +258,12 @@ async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
   };
 
   try {
+    const sourceSignal = AbortSignal.any(
+      [signal, AbortSignal.timeout(timeoutSeconds * 1000)].filter(Boolean),
+    );
+    if (sourceSignal.aborted) {
+      throw sourceSignal.reason || new DOMException("aborted", "AbortError");
+    }
     const requested = new URL(source.url);
     if (requested.protocol !== "https:" || !ALLOWED_HOSTS.has(requested.hostname)) {
       throw new Error("source URL is outside the HTTPS allowlist");
@@ -266,7 +276,7 @@ async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
           "financial-evidence-remote/0.1 (+https://github.com/beepboop2025/financial-evidence-skills)",
       },
       redirect: "manual",
-      signal: AbortSignal.timeout(timeoutSeconds * 1000),
+      signal: sourceSignal,
       cf: {
         cacheEverything: true,
         cacheTtlByStatus: {
@@ -333,14 +343,19 @@ async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
   }
 }
 
-async function buildPacket(
+export async function buildPacket(
   topics,
   {
     maxBytes = DEFAULT_SOURCE_BYTES,
     timeoutSeconds = DEFAULT_TIMEOUT_SECONDS,
     fetchImpl = fetch,
+    signal,
+    packetSignal = AbortSignal.timeout(MAX_PACKET_TIMEOUT_SECONDS * 1000),
   } = {},
 ) {
+  const combinedSignal = AbortSignal.any(
+    [signal, packetSignal].filter(Boolean),
+  );
   const planned = topics.flatMap((topic) =>
     ROUTES[topic].map((source) => ({ topic, source })),
   );
@@ -356,6 +371,7 @@ async function buildPacket(
       maxBytes: sourceBudget,
       timeoutSeconds,
       fetchImpl,
+      signal: combinedSignal,
     });
     sources.push({ topic, ...result });
     if (result.ok) {
@@ -378,6 +394,7 @@ async function buildPacket(
       max_topics: MAX_FETCH_TOPICS,
       max_source_bytes: maxBytes,
       max_packet_source_bytes: MAX_PACKET_SOURCE_BYTES,
+      max_packet_timeout_seconds: MAX_PACKET_TIMEOUT_SECONDS,
       timeout_seconds: timeoutSeconds,
     },
     topics,
@@ -494,11 +511,15 @@ export function createFinancialEvidenceServer({ fetchImpl = fetch } = {}) {
         .strict(),
       annotations: { ...READ_ONLY_ANNOTATIONS, openWorldHint: true },
     },
-    async ({ topics, max_bytes: maxBytes, timeout: timeoutSeconds }) => {
+    async (
+      { topics, max_bytes: maxBytes, timeout: timeoutSeconds },
+      context,
+    ) => {
       const packet = await buildPacket(topics, {
         maxBytes,
         timeoutSeconds,
         fetchImpl,
+        signal: context.mcpReq.signal,
       });
       return packetToolResult(packet);
     },

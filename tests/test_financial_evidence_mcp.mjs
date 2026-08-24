@@ -12,8 +12,10 @@ import worker, {
   MAX_MCP_HTTP_RESPONSE_BYTES,
   MAX_MCP_REQUEST_BYTES,
   MAX_PACKET_SOURCE_BYTES,
+  MAX_PACKET_TIMEOUT_SECONDS,
   MAX_SOURCE_BYTES,
   MAX_TIMEOUT_SECONDS,
+  buildPacket,
   createFinancialEvidenceServer,
 } from "../edge/catalog-worker.mjs";
 
@@ -213,6 +215,10 @@ test("fetch calls are allowlisted, bounded, hashed, and kept product-separate", 
       true,
     );
     assert.equal(
+      requested.every(({ options }) => options.signal instanceof AbortSignal),
+      true,
+    );
+    assert.equal(
       requested.every(
         ({ options }) =>
           options.cf.cacheEverything === true &&
@@ -402,6 +408,46 @@ test("duplicate topics fail schema validation before network access", async () =
   }
 });
 
+test("packet cancellation stops additional source fan-out", async () => {
+  const controller = new AbortController();
+  let calls = 0;
+  const packet = await buildPacket(
+    [
+      "money-market",
+      "capital-market",
+      "china-economy",
+      "bank-risk",
+      "market-liquidity",
+    ],
+    {
+      signal: controller.signal,
+      packetSignal: new AbortController().signal,
+      fetchImpl: async (url, options) => {
+        calls += 1;
+        assert.equal(options.signal.aborted, false);
+        controller.abort(new DOMException("client disconnected", "AbortError"));
+        return new Response(JSON.stringify({ fixture: url }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        });
+      },
+    },
+  );
+  assert.equal(calls, 1);
+  assert.equal(packet.status, "partial");
+  assert.equal(packet.sources.length, 6);
+  assert.equal(packet.sources[0].ok, true);
+  assert.equal(packet.sources.slice(1).every((source) => !source.ok), true);
+  assert.equal(
+    packet.sources.slice(1).every((source) => /AbortError/.test(source.error)),
+    true,
+  );
+  assert.equal(
+    packet.limits.max_packet_timeout_seconds,
+    MAX_PACKET_TIMEOUT_SECONDS,
+  );
+});
+
 test("oversized request bodies and JSON-RPC batches are rejected before MCP", async () => {
   const oversized = await worker.fetch(
     new Request(ENDPOINT, {
@@ -552,6 +598,7 @@ test("the server factory is lazy about network access", () => {
   assert.equal(MAX_SOURCE_BYTES, 4_194_304);
   assert.equal(DEFAULT_TIMEOUT_SECONDS, 10);
   assert.equal(MAX_TIMEOUT_SECONDS, 30);
+  assert.equal(MAX_PACKET_TIMEOUT_SECONDS, 30);
 });
 
 test("browser Origins are restricted while server-side clients remain public", async () => {

@@ -36,11 +36,13 @@ source reads. The package-compatible `max_bytes` ceiling is 4 MiB per source and
 the default is 1 MiB, while the remote endpoint additionally enforces a 1.5 MiB
 aggregate source-byte budget, a 2 MiB encoded evidence-packet cap, and a 4 MiB
 fully serialized HTTP-response cap. Fetches run sequentially, accept timeouts up
-to 30 seconds, use a 30-second edge cache, and pass through a coarse
-60-per-minute, per-location Cloudflare rate-limit bucket. Topic discovery and
-offline route resolution remain outside that fetch limiter. Server-side clients
-need no Origin header; browser requests are accepted only from
-<code>https://liquilens.in</code> to preserve MCP's DNS rebinding defense.
+to 30 seconds per source, and share a 30-second aggregate packet deadline. The
+upstream abort signal also follows client cancellation. Fetches use a 30-second
+edge cache and pass through a coarse 60-per-minute, per-location Cloudflare
+rate-limit bucket. Topic discovery and offline route resolution remain outside
+that fetch limiter. Server-side clients need no Origin header; browser requests
+are accepted only from <code>https://liquilens.in</code> to preserve MCP's DNS
+rebinding defense.
 
 The catalog is imported from the repository's canonical
 `.well-known/ai-catalog.json`; do not maintain a second manifest in this
