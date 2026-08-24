@@ -1,0 +1,108 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-08-24-before-the-event-what-new-india-co-operative-bank-s-filings-did-and-did-not",
+  "product": "liquilens",
+  "slug": "2026-08-24-before-the-event-what-new-india-co-operative-bank-s-filings-did-and-did-not",
+  "date": "2026-08-24",
+  "article_type": "historical_replay",
+  "topic": "new-india-co-operative-bank",
+  "headline": "Before the event: what New India Co-operative Bank's filings did and did not reveal",
+  "dek": "A construction-PIT replay of New India Co-operative Bank: the first published regulatory or funding signal, the disclosure clock, the miss, and the boundary that survives into today's screen.",
+  "canonical_url": "https://liquilens.in/articles/2026-08-24-before-the-event-what-new-india-co-operative-bank-s-filings-did-and-did-not/",
+  "published_at": "2026-08-24T11:44:07Z",
+  "evidence_as_of": "2026-08-24",
+  "board_signature": "11b8f7897ecd041af916ebef625d096a850763c28879ac3f256e8179a0d72721",
+  "subject": {
+    "slug": "new-india-co-operative-bank",
+    "name": "New India Co-operative Bank",
+    "inst_type": "ucb",
+    "default_date": "2025-02-13",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "new-india-co-operative-bank",
+      "inst_type": "ucb",
+      "default_date": "2025-02-13",
+      "first_action_zone": {
+        "period_end": "2021-03-31",
+        "q": "FY2021",
+        "status": "saf_triggered",
+        "knowledge_time_proxy": "2021-05-30",
+        "breaches": [
+          "NNPA"
+        ]
+      },
+      "lead_months": 44,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "new-india-co-operative-bank",
+      "inst_type": "ucb",
+      "scoreable": true,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1021,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:fbe16a797caad1962e65e4f9e71676fa60743af4dd5f6e935eacc6c62e6275e7",
+    "memory_fingerprint": "sha256:83bc9dcdef0580f10bd01c029c031e857c0c8fd7e36474d5e9d8a9cfbdbc7c4d",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "deterministic_fallback",
+    "model": null,
+    "passes": 4,
+    "dossier_sha256": "1706a8a2e196dce56e8ac31fce3e2e2670b48023a706a492a64d7c96271d691c",
+    "fallback_reason": "ValueError: placeholder leaked into article",
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:fbe16a797caad1962e65e4f9e71676fa60743af4dd5f6e935eacc6c62e6275e7",
+      "memory_fingerprint": "sha256:83bc9dcdef0580f10bd01c029c031e857c0c8fd7e36474d5e9d8a9cfbdbc7c4d",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
