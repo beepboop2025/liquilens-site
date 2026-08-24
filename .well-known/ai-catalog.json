@@ -305,6 +305,30 @@
       "version": "34549a5bcc2a42c7760c04c95bd449f1d10a18fc",
       "updatedAt": "2026-08-24T08:29:38Z",
       "metadata": {"repository":"https://github.com/beepboop2025/financial-evidence-skills","canonicalDirectory":"https://github.com/beepboop2025/financial-evidence-skills/tree/main/financial-evidence","contentSha256":"sha256:091fc3c3bb4577e2481cfc52e9977e1c83fc114b085544c584b6ae5bf2b302ae","access":"public"}
+    },
+    {
+      "identifier": "urn:air:liquilens.in:protocol:evidence-carrier",
+      "displayName": "LiquiLens Evidence Carrier",
+      "type": "application/json",
+      "url": "https://liquilens.in/protocol/catalog.json",
+      "description": "Apache-2.0 transport-neutral contract for preserving evidence clocks, sources, rights, hashes and an all-false financial authority boundary across financial files, agents, desktops and data infrastructure.",
+      "tags": ["financial evidence", "data provenance", "FDC3", "OpenLineage", "JSON Schema", "AI agents"],
+      "representativeQueries": [
+        "How can an agent return financial evidence without dropping source rights and knowledge time?",
+        "What schema can travel through FDC3, OpenLineage, Parquet and citations?",
+        "How do I verify a LiquiLens evidence carrier?"
+      ],
+      "version": "0.13.5",
+      "updatedAt": "2026-08-24T12:00:38Z",
+      "metadata": {
+        "access": "public",
+        "license": "Apache-2.0",
+        "repository": "https://github.com/beepboop2025/liquilens-evidence-carrier",
+        "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.13.5/liquilens_evidence-0.13.5-py3-none-any.whl",
+        "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.13.5",
+        "humanLandingPage": "https://liquilens.in/protocol/",
+        "financialAuthority": "none"
+      }
     }
   ]
 }
