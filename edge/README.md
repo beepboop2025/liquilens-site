@@ -16,3 +16,10 @@ node --test tests/test_catalog_worker.mjs
 npx wrangler deploy --config wrangler.catalog.jsonc --dry-run
 npx wrangler deploy --config wrangler.catalog.jsonc
 ```
+
+Production deployment is also available through the manual **Deploy AI catalog
+edge Worker** workflow. Its `production` environment requires
+`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`; store them as GitHub
+environment secrets and never paste their values into an issue or workflow
+input. The workflow deploys with Wrangler 4.125.0 and requires the anonymous
+edge response to equal the committed catalog before it succeeds.
