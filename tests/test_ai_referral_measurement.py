@@ -35,6 +35,9 @@ def test_ai_referral_measurement_is_loaded_on_primary_citation_landings():
         "developers/index.html",
         "use-cases/index.html",
         "world-economy/index.html",
+        "money-markets/index.html",
+        "capital-markets/index.html",
+        "china-economy/index.html",
         "replay/index.html",
     ):
         assert '<script src="/ai-referral.js" defer></script>' in read(path), path
@@ -75,6 +78,9 @@ def test_replay_regeneration_preserves_new_discovery_and_article_routes():
     script = read("scripts/build_replay_pages.py")
     for route in (
         "/world-economy/",
+        "/money-markets/",
+        "/capital-markets/",
+        "/china-economy/",
         "/tools/ews-coverage-check/",
         "/guides/rbi-nbfc-early-warning-system/",
         "/access/",

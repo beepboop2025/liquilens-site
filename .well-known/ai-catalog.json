@@ -126,13 +126,15 @@
       "displayName": "World Economy Financial-Plumbing Evidence Catalog",
       "type": "application/ld+json",
       "url": "https://liquilens.in/world-economy/evidence-catalog.json",
-      "description": "Schema.org DataCatalog routing distinct system-funding, institution-risk and market-exit questions to Seiche, LiquiLens and Undertow with canonical JSON distributions, source lineage and explicit evidence boundaries.",
+      "description": "Schema.org DataCatalog routing four independent evidence roles: system funding to Seiche, institution risk to LiquiLens, market exits to Undertow, and revision-safe China economy and information evidence to Palimpsest.",
       "tags": [
         "world economy data",
         "financial plumbing",
         "funding liquidity",
         "bank risk",
-        "market liquidity"
+        "market liquidity",
+        "China economy",
+        "data revisions"
       ],
       "capabilities": [
         "route economic evidence questions",
@@ -144,16 +146,18 @@
         "Is global financial stress coming from system funding, weak institutions or market exits?",
         "How could tighter dollar funding transmit to banks and lenders?",
         "Which public APIs cover repo, bank fragility and market liquidity?",
-        "What evidence can and cannot establish about current world-economy liquidity?"
+        "What evidence can and cannot establish about current world-economy liquidity?",
+        "What did a China economic release say at first publication, and was it revised?"
       ],
-      "version": "1.0.0",
-      "updatedAt": "2026-08-21T17:50:00Z",
+      "version": "1.1.0",
+      "updatedAt": "2026-08-24T00:00:00Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
         "humanLandingPage": "https://liquilens.in/world-economy/",
         "schemaType": "https://schema.org/DataCatalog",
-        "datasetCount": 3
+        "datasetCount": 4,
+        "financialAuthority": "none for the catalog; each dataset retains its own stated authority and boundary"
       }
     },
     {
@@ -211,6 +215,96 @@
         "telegramBot": "https://t.me/Undertow_LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityCryptoDesk"
       }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:catalog:palimpsest-china",
+      "displayName": "Palimpsest Revision-Safe China Evidence",
+      "type": "application/ai-catalog+json",
+      "url": "https://palimpsest.info/.well-known/ai-catalog.json",
+      "description": "Independent public-good catalog for revision-safe China economic observations, information conditions, release and collection clocks, provenance, coverage gates and abstentions. Financial authority: none.",
+      "tags": [
+        "China economy",
+        "economic revisions",
+        "bitemporal data",
+        "information control",
+        "data provenance"
+      ],
+      "representativeQueries": [
+        "What did this China economic series report at first release, and was it revised?",
+        "Which China economic observations are currently covered, stale or unavailable?",
+        "Has the public information record changed or disappeared?"
+      ],
+      "updatedAt": "2026-08-24T00:00:00Z",
+      "metadata": {
+        "productUrl": "https://palimpsest.info/",
+        "humanLandingPage": "https://palimpsest.info/china/",
+        "observationManifest": "https://palimpsest.info/readings/china-econ-observations-latest.json",
+        "financialAuthority": "none",
+        "access": "public-read-only"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:intent:money-markets",
+      "displayName": "Money-Market Evidence Router",
+      "type": "text/html",
+      "url": "https://liquilens.in/money-markets/",
+      "description": "Routes system-funding questions to Seiche, covered institution questions to LiquiLens, exit-liquidity questions to Undertow, and China revision questions to Palimpsest without blending their authority.",
+      "tags": ["money markets", "repo", "reserves", "funding liquidity", "SOFR", "IORB"],
+      "representativeQueries": [
+        "Is dollar funding stress building?",
+        "Are reserves ample or is repo pressure rising?",
+        "Which product should answer a money-market liquidity question?"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T00:00:00Z",
+      "metadata": {"access":"public-read-only","authentication":"none","primaryEvidenceRoute":"Seiche for system funding","financialAuthority":"none"}
+    },
+    {
+      "identifier": "urn:air:liquilens.in:intent:capital-markets",
+      "displayName": "Capital-Market Evidence Router",
+      "type": "text/html",
+      "url": "https://liquilens.in/capital-markets/",
+      "description": "Routes observable market-depth and exit questions to Undertow, funding backdrop to Seiche, covered counterparties to LiquiLens, and China provenance to Palimpsest.",
+      "tags": ["capital markets", "market liquidity", "market depth", "exit cost", "counterparty risk"],
+      "representativeQueries": [
+        "Can this position exit without moving the market?",
+        "Is capital-market liquidity deteriorating?",
+        "Which evidence belongs in a counterparty and funding note?"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T00:00:00Z",
+      "metadata": {"access":"public-read-only","authentication":"none","primaryEvidenceRoute":"Undertow for observable exit capacity","financialAuthority":"none"}
+    },
+    {
+      "identifier": "urn:air:liquilens.in:intent:china-economy",
+      "displayName": "China Economy Evidence Router",
+      "type": "text/html",
+      "url": "https://liquilens.in/china-economy/",
+      "description": "Routes revision-safe China economy and information questions to Palimpsest, bounded funding transmission to Seiche, observable exit liquidity to Undertow, and covered institution risk to LiquiLens.",
+      "tags": ["China economy", "economic revisions", "CFETS", "China data", "financial transmission"],
+      "representativeQueries": [
+        "What did a China economic release say at first publication?",
+        "Was this China series revised or unavailable?",
+        "How should China economic evidence be separated from financial transmission?"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-08-24T00:00:00Z",
+      "metadata": {"access":"public-read-only","authentication":"none","primaryEvidenceRoute":"Palimpsest for revision-safe evidence","financialAuthority":"none"}
+    },
+    {
+      "identifier": "urn:air:liquilens.in:skill:financial-evidence",
+      "displayName": "Financial Evidence Agent Skill",
+      "type": "text/markdown",
+      "url": "https://raw.githubusercontent.com/beepboop2025/financial-evidence-skills/34549a5bcc2a42c7760c04c95bd449f1d10a18fc/financial-evidence/SKILL.md",
+      "description": "Canonical public Agent Skill for selecting the appropriate evidence product and preserving clocks, coverage and authority boundaries.",
+      "tags": ["Agent Skill", "financial evidence", "money markets", "capital markets", "China economy"],
+      "representativeQueries": [
+        "Which product should my agent use for this financial-evidence claim?",
+        "How should an agent preserve evidence clocks and coverage boundaries?"
+      ],
+      "version": "34549a5bcc2a42c7760c04c95bd449f1d10a18fc",
+      "updatedAt": "2026-08-24T08:29:38Z",
+      "metadata": {"repository":"https://github.com/beepboop2025/financial-evidence-skills","canonicalDirectory":"https://github.com/beepboop2025/financial-evidence-skills/tree/main/financial-evidence","contentSha256":"sha256:091fc3c3bb4577e2481cfc52e9977e1c83fc114b085544c584b6ae5bf2b302ae","access":"public"}
     }
   ]
 }
