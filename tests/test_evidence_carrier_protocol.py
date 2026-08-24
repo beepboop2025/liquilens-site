@@ -47,10 +47,10 @@ def test_machine_catalog_routes_every_contract_without_authority_widening():
         "https://github.com/beepboop2025/liquilens-evidence-carrier"
     )
     assert catalog["releaseCommit"] == (
-        "925a67f929c73835f52691308e39a0dc257bd3cb"
+        "50a188492326b6d5605f352038ea9bd786fbb490"
     )
     assert catalog["pythonDistributionSha256"] == (
-        "277317d588daa72de6bf966442a883c94665ae719f6888edbffc28e39018f14c"
+        "71207e705158c6dd1a9bcce75d6758b7f62d34fb3cfc3510b9c7c9022e2ac961"
     )
     assert {
         row["url"]: row["sha256"] for row in catalog["artifacts"]

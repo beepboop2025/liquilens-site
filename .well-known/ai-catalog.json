@@ -318,14 +318,14 @@
         "What schema can travel through FDC3, OpenLineage, Parquet and citations?",
         "How do I verify a LiquiLens evidence carrier?"
       ],
-      "version": "0.13.5",
-      "updatedAt": "2026-08-24T12:00:38Z",
+      "version": "0.13.6",
+      "updatedAt": "2026-08-24T12:16:15Z",
       "metadata": {
         "access": "public",
         "license": "Apache-2.0",
         "repository": "https://github.com/beepboop2025/liquilens-evidence-carrier",
-        "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.13.5/liquilens_evidence-0.13.5-py3-none-any.whl",
-        "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.13.5",
+        "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.13.6/liquilens_evidence-0.13.6-py3-none-any.whl",
+        "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.13.6",
         "humanLandingPage": "https://liquilens.in/protocol/",
         "financialAuthority": "none"
       }
