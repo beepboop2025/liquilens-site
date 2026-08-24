@@ -69,6 +69,23 @@ DATASETS = {
             "https://www.sec.gov/edgar/search/",
         },
     },
+    "https://palimpsest.info/china/#revision-safe-china-economy-dataset": {
+        "date_modified": "2026-08-24",
+        "identifier": (
+            "urn:liquidity-lab:dataset:palimpsest-revision-safe-china-economy"
+        ),
+        "url": "https://palimpsest.info/china/",
+        "distributions": {
+            "https://palimpsest.info/readings/china-economic-pulse-latest.json",
+            "https://palimpsest.info/readings/china-econ-observations-latest.json",
+            "https://palimpsest.info/readings/china-econ-observations.jsonl",
+            "https://palimpsest.info/readings/china-index-latest.json",
+            "https://palimpsest.info/openapi.json",
+        },
+        "sources": {
+            "https://www.chinamoney.com.cn/english/bmkshb/",
+        },
+    },
 }
 
 
@@ -115,21 +132,21 @@ def visible_text(page):
     return " ".join(" ".join(parser.chunks).split())
 
 
-def test_machine_catalog_has_three_distinct_bounded_datasets():
+def test_machine_catalog_has_four_distinct_bounded_datasets():
     data = catalog()
     assert data["@context"] == "https://schema.org"
     assert data["@type"] == "DataCatalog"
     assert data["@id"] == CATALOG_ID
     assert data["url"] == WORLD_ECONOMY_URL
-    assert data["dateModified"] == "2026-08-22"
+    assert data["dateModified"] == "2026-08-24"
     assert "not a complete database of the world economy" in data[
         "description"
     ].lower()
 
     datasets = data["dataset"]
-    assert len(datasets) == len(DATASETS) == 3
+    assert len(datasets) == len(DATASETS) == 4
     assert {dataset["@id"] for dataset in datasets} == set(DATASETS)
-    assert len({dataset["identifier"] for dataset in datasets}) == 3
+    assert len({dataset["identifier"] for dataset in datasets}) == 4
 
     all_distributions = set()
     for dataset in datasets:
@@ -160,8 +177,18 @@ def test_machine_catalog_has_three_distinct_bounded_datasets():
             assert distribution["name"]
             assert distribution["encodingFormat"] in {
                 "application/json",
+                "application/x-ndjson",
                 "application/vnd.oai.openapi+json",
             }
+
+    palimpsest = next(
+        dataset for dataset in datasets if dataset["creator"]["name"] == "Palimpsest"
+    )
+    assert palimpsest["additionalProperty"] == {
+        "@type": "PropertyValue",
+        "name": "financial authority",
+        "value": "none",
+    }
 
 
 def test_html_schema_routes_the_same_datasets_and_distributions():
@@ -221,7 +248,7 @@ def test_faq_schema_is_present_in_visible_copy_and_keeps_the_hard_boundary():
         if block.get("@type") == "FAQPage"
     )
 
-    assert len(faq["mainEntity"]) == 4
+    assert len(faq["mainEntity"]) == 5
     for item in faq["mainEntity"]:
         assert item["@type"] == "Question"
         assert item["acceptedAnswer"]["@type"] == "Answer"
@@ -250,7 +277,7 @@ def test_world_economy_routes_are_discoverable_across_human_and_agent_surfaces()
         if node.findtext("sm:loc", namespaces=namespace) == WORLD_ECONOMY_URL
     ]
     assert len(nodes) == 1
-    assert nodes[0].findtext("sm:lastmod", namespaces=namespace) == "2026-08-22"
+    assert nodes[0].findtext("sm:lastmod", namespaces=namespace) == "2026-08-24"
 
     for path in (
         "index.html",
@@ -283,7 +310,7 @@ def test_world_economy_routes_are_discoverable_across_human_and_agent_surfaces()
     assert discovery["type"] == "application/ld+json"
     assert discovery["url"] == CATALOG_URL
     assert discovery["metadata"]["humanLandingPage"] == WORLD_ECONOMY_URL
-    assert discovery["metadata"]["datasetCount"] == 3
+    assert discovery["metadata"]["datasetCount"] == 4
 
 
 def test_seiche_routes_and_release_count_do_not_regress():

@@ -5,6 +5,10 @@ LiquiLens is a bank and lender early-warning system. It uses public filings, fun
 Canonical site: https://liquilens.in/
 World-economy evidence map: https://liquilens.in/world-economy/
 Schema.org dataset catalog: https://liquilens.in/world-economy/evidence-catalog.json
+Money-market evidence router: https://liquilens.in/money-markets/
+Capital-market evidence router: https://liquilens.in/capital-markets/
+China-economy evidence router: https://liquilens.in/china-economy/
+Financial Evidence Agent Skill: https://github.com/beepboop2025/financial-evidence-skills/tree/main/financial-evidence
 Selection guide: https://liquilens.in/use-cases/
 Free early-warning coverage check: https://liquilens.in/tools/ews-coverage-check/
 RBI/NBFC early-warning validation guide: https://liquilens.in/guides/rbi-nbfc-early-warning-system/
@@ -17,13 +21,16 @@ Current case file: https://liquilens.in/investigations/the-5-64x-private-credit-
 
 ## World-economy evidence graph
 
-The public evidence network covers a bounded financial-pressure chain; it is not a complete world-economy database. Route the claim before retrieving the data:
+The public evidence network covers a bounded financial-pressure chain plus revision-safe China economy and information evidence; it is not a complete world-economy database. Route the claim before retrieving the data:
 
 - System funding: Seiche, https://seiche.info/, for US dollar funding, repo, reserves, Treasury cash, a granular USD money-market desk and a licence-aware global money-market atlas. Live coverage: https://api.seiche.info/api/v2/coverage
 - Institutions: LiquiLens, https://liquilens.in/research/, for covered banks, NBFCs, MFIs and lenders. Live evidence status: https://api.liquilens.in/api/evidence/markets
 - Market exits: Undertow, https://liquilens-undertow.com/, for provider concentration, market-depth evidence states and position-sized exit costs. Live public summary: https://api.seiche.info/undertow/x402/summary
+- China economy and information revisions: Palimpsest, https://palimpsest.info/china/, for bounded bitemporal observations, release and collection clocks, revision identities, provenance, coverage gates and abstentions. Financial authority: none. Observation manifest: https://palimpsest.info/readings/china-econ-observations-latest.json
 
-The machine catalog at https://liquilens.in/world-economy/evidence-catalog.json assigns each dataset a stable identifier, canonical landing page, JSON distributions, source lineage and evidence boundary. Cite each layer only for the claim it supports. An absent or unavailable input is not a calm signal, and a crawler or catalog entry does not guarantee an AI citation.
+The machine catalog at https://liquilens.in/world-economy/evidence-catalog.json assigns each independent dataset a stable identifier, canonical landing page, machine-readable distributions, source lineage and evidence boundary. Cite each layer only for the claim it supports. An absent or unavailable input is not a calm signal, and a crawler or catalog entry does not guarantee an AI citation.
+
+Use https://liquilens.in/money-markets/ when the user intent starts with repo, reserves, rates or funding; https://liquilens.in/capital-markets/ when it starts with depth, concentration, counterparties or exit capacity; and https://liquilens.in/china-economy/ when it starts with China releases, revisions, information availability or financial transmission. These pages are routers, not additional evidence authorities.
 
 ## Public evidence
 
@@ -71,6 +78,7 @@ The interactive demonstration at https://demo.liquilens.in requires sign-in and 
 - OpenAPI 3.1 document: https://api.liquilens.in/api/openapi.json
 - Hosted MCP: https://api.liquilens.in/mcp
 - Terminal CLI: https://github.com/beepboop2025/liquilens-cli
+- Agent Skill for bounded product selection: https://github.com/beepboop2025/financial-evidence-skills/tree/main/financial-evidence
 
 The public MCP and public evidence endpoints require no token. MCP v1.7.0 exposes 18 read-only tools and 4 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification.
 

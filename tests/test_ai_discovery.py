@@ -43,7 +43,7 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["world_economy_dataset_catalog"] == (
         "https://liquilens.in/world-economy/evidence-catalog.json")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
-    assert card["updated"] == "2026-08-21"
+    assert card["updated"] == "2026-08-24"
     assert card["access"]["daily_articles"] == "https://liquilens.in/articles/"
     assert card["access"]["article_json_feed"] == (
         "https://liquilens.in/articles/feed.json")
@@ -227,7 +227,7 @@ def test_catalog_obeys_the_ard_envelope():
     catalog = _catalog()
     assert catalog["specVersion"] == "1.0"
     assert catalog["host"]["displayName"] == "LiquiLens"
-    assert len(catalog["entries"]) == 5
+    assert len(catalog["entries"]) == 10
 
     identifiers = set()
     for entry in catalog["entries"]:
