@@ -2,7 +2,11 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-import worker, { CATALOG_PATH } from "../edge/catalog-worker.mjs";
+import worker, {
+  AI_CATALOG_PATH,
+  CATALOG_PATH,
+  PROTOCOL_CATALOG_PATH,
+} from "../edge/catalog-worker.mjs";
 
 
 test("GET returns the committed ARD catalog with discovery headers", async () => {
@@ -32,21 +36,51 @@ test("GET returns the committed ARD catalog with discovery headers", async () =>
   );
   assert.match(response.headers.get("content-type"), /^application\/ai-catalog\+json/);
   assert.equal(response.headers.get("access-control-allow-origin"), "*");
+  assert.equal(
+    response.headers.get("link"),
+    '<https://liquilens.in/protocol/catalog.json>; rel="alternate"; type="application/json"',
+  );
+});
+
+
+test("GET returns the exact protocol catalog with standards-based discovery", async () => {
+  const response = await worker.fetch(
+    new Request(`https://liquilens.in${PROTOCOL_CATALOG_PATH}`),
+  );
+  const actual = await response.json();
+  const expected = JSON.parse(
+    await readFile(new URL("../protocol/catalog.json", import.meta.url), "utf8"),
+  );
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(actual, expected);
+  assert.equal(response.headers.get("content-type"), "application/json; charset=utf-8");
+  assert.equal(response.headers.get("access-control-allow-origin"), "*");
+  assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+  assert.equal(
+    response.headers.get("link"),
+    [
+      '<https://liquilens.in/protocol/liquilens-evidence-carrier-v1.schema.json>; rel="describedby"; type="application/schema+json"',
+      '<https://liquilens.in/.well-known/ai-catalog.json>; rel="alternate"; type="application/ai-catalog+json"',
+    ].join(", "),
+  );
 });
 
 
 test("HEAD and OPTIONS are bodyless, and mutation methods are rejected", async () => {
-  const url = `https://liquilens.in${CATALOG_PATH}`;
-  const head = await worker.fetch(new Request(url, { method: "HEAD" }));
-  const options = await worker.fetch(new Request(url, { method: "OPTIONS" }));
-  const post = await worker.fetch(new Request(url, { method: "POST" }));
+  for (const path of [AI_CATALOG_PATH, PROTOCOL_CATALOG_PATH]) {
+    const url = `https://liquilens.in${path}`;
+    const head = await worker.fetch(new Request(url, { method: "HEAD" }));
+    const options = await worker.fetch(new Request(url, { method: "OPTIONS" }));
+    const post = await worker.fetch(new Request(url, { method: "POST" }));
 
-  assert.equal(head.status, 200);
-  assert.equal(await head.text(), "");
-  assert.equal(options.status, 204);
-  assert.equal(options.headers.get("access-control-max-age"), "86400");
-  assert.equal(post.status, 405);
-  assert.equal(post.headers.get("allow"), "GET, HEAD, OPTIONS");
+    assert.equal(head.status, 200);
+    assert.equal(await head.text(), "");
+    assert.equal(options.status, 204);
+    assert.equal(options.headers.get("access-control-max-age"), "86400");
+    assert.equal(post.status, 405);
+    assert.equal(post.headers.get("allow"), "GET, HEAD, OPTIONS");
+  }
 });
 
 

@@ -15,6 +15,19 @@ def test_edge_parity_accepts_only_the_exact_committed_catalog():
     assert response_problem(expected, body, "application/ai-catalog+json") is None
 
 
+def test_edge_parity_accepts_the_exact_protocol_catalog():
+    expected = json.loads(
+        (ROOT / "protocol/catalog.json").read_text(encoding="utf-8")
+    )
+    body = json.dumps(expected, separators=(",", ":")).encode()
+    assert response_problem(
+        expected,
+        body,
+        "application/json; charset=utf-8",
+        "application/json",
+    ) is None
+
+
 def test_edge_parity_explains_a_missing_carrier_entry():
     expected = json.loads(
         (ROOT / ".well-known/ai-catalog.json").read_text(encoding="utf-8")
