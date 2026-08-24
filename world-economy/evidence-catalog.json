@@ -82,8 +82,8 @@
       "description": "A free public-data terminal for US dollar funding stress with a live regime, source-specific clocks, forward event odds, historical analogs, a granular USD money-market desk, a licence-aware global money-market atlas and bounded money, FX and macro-capital context. Registered markets, live coverage and validation support are reported as separate claims.",
       "url": "https://seiche.info/",
       "sameAs": "https://seiche.info/",
-      "dateModified": "2026-08-22",
-      "version": "0.10.1",
+      "dateModified": "2026-08-24",
+      "version": "0.11.1",
       "creator": {
         "@type": "Organization",
         "name": "Seiche",
@@ -215,6 +215,7 @@
       "url": "https://palimpsest.info/china/",
       "sameAs": "https://palimpsest.info/china/",
       "dateModified": "2026-08-24",
+      "version": "1.9.0",
       "creator": {
         "@type": "Organization",
         "name": "Palimpsest",

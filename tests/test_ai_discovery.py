@@ -296,7 +296,7 @@ def test_mcp_card_and_nested_product_line_are_current():
     for tool in ("crypto_regime_board", "stablecoin_rails_board",
                  "crypto_exposure_board"):
         assert tool in mcp["capabilities"]
-    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.10.1"
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.11.1"
     assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.9.0"
     assert entries["urn:air:liquilens.in:openapi:failure-radar"]["version"] == (
         "1.0.0")
@@ -316,6 +316,428 @@ def test_mcp_card_and_nested_product_line_are_current():
     ]["url"] == "https://liquilens.in/world-economy/evidence-catalog.json"
     assert entries["urn:air:liquilens.in:catalog:undertow"]["url"] == (
         "https://liquilens-undertow.com/.well-known/ai-catalog.json")
+
+
+def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
+    entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
+    seiche = entries["urn:air:liquilens.in:catalog:seiche"]
+
+    assert seiche["version"] == "0.11.1"
+    assert seiche["updatedAt"] == "2026-08-24T14:52:00Z"
+    assert seiche["capabilities"] == [
+        "latest_article",
+        "funding_stress_now",
+        "historical_analogs",
+        "proof_backtest",
+        "data_health",
+        "crypto_stress_record",
+        "institutional_flows",
+        "oil_funding_context",
+        "fx_materials_passage",
+        "money_market_context",
+        "world_markets_context",
+    ]
+    assert seiche["prompts"] == [
+        "is_now_dangerous",
+        "money_market_deep_dive",
+        "world_markets_briefing",
+        "cross_market_cash_pressure",
+    ]
+    assert seiche["resourceTemplates"] == []
+    assert {
+        key: seiche["metadata"][key]
+        for key in (
+            "publicToolCount",
+            "publicPromptCount",
+            "publicResourceCount",
+            "mcpServerName",
+            "mcpEndpoint",
+            "mcpDiscovery",
+            "apiCatalog",
+            "openapi",
+            "productCard",
+            "pypiProject",
+            "pypiSpec",
+            "releaseCommit",
+            "signedTag",
+            "signedTagObject",
+            "pypiRun",
+            "pypiWheelSha256",
+            "pypiWheelBytes",
+            "pypiSdistSha256",
+            "pypiSdistBytes",
+            "staticRun",
+            "staticDeployment",
+            "catalogSha256",
+            "productCardSha256",
+            "mcpDiscoverySha256",
+            "registryRun",
+            "registryVersion",
+            "registryPublishedAt",
+            "registryServerSha256",
+            "liveVersionAuthority",
+        )
+    } == {
+        "publicToolCount": 11,
+        "publicPromptCount": 4,
+        "publicResourceCount": 0,
+        "mcpServerName": "io.github.beepboop2025/seiche",
+        "mcpEndpoint": "https://api.seiche.info/mcp",
+        "mcpDiscovery": "https://api.seiche.info/.well-known/mcp.json",
+        "apiCatalog": "https://api.seiche.info/api",
+        "openapi": "https://api.seiche.info/api/openapi.json",
+        "productCard": "https://seiche.info/product-card.json",
+        "pypiProject": "https://pypi.org/project/seiche/0.11.1/",
+        "pypiSpec": "seiche==0.11.1",
+        "releaseCommit": "0cd20bfd0a4d274c8bb8173f6fe59e2d2f5259db",
+        "signedTag": "v0.11.1",
+        "signedTagObject": "fc1742880be1be06837c5fc703b4ba5312ff4b2b",
+        "pypiRun": (
+            "https://github.com/beepboop2025/seiche/actions/runs/"
+            "32758138386/attempts/2"
+        ),
+        "pypiWheelSha256": (
+            "sha256:01b5b770d88391d31ba406ca651ab5d6054b2e4c6f6c3cf6138f713f4374e4a1"
+        ),
+        "pypiWheelBytes": 1101154,
+        "pypiSdistSha256": (
+            "sha256:0fa965b00f0c81a5f9ad8a5d66a4140523a90f962f3bdcf196fd884d89057a15"
+        ),
+        "pypiSdistBytes": 980967,
+        "staticRun": (
+            "https://github.com/beepboop2025/seiche/actions/runs/32758837757"
+        ),
+        "staticDeployment": "https://699fdc4e.seiche.pages.dev",
+        "catalogSha256": (
+            "sha256:735516115752afebd3b8a3637a22f806ff8f592826381ce1bbe32ab5b7b5cc74"
+        ),
+        "productCardSha256": (
+            "sha256:1d382ad21d4fa8c35433f9270946d74dca592fb833c454c02cc3613a6c2edf08"
+        ),
+        "mcpDiscoverySha256": (
+            "sha256:1db329dbc3155a0a695a3ddf7e7dcd37d7edaea22d4898b97002cbf172c931fe"
+        ),
+        "registryRun": (
+            "https://github.com/beepboop2025/seiche/actions/runs/32758834990"
+        ),
+        "registryVersion": (
+            "https://registry.modelcontextprotocol.io/v0.1/servers/"
+            "io.github.beepboop2025%2Fseiche/versions/0.11.1"
+        ),
+        "registryPublishedAt": "2026-08-24T17:50:12.865984Z",
+        "registryServerSha256": (
+            "sha256:2a7a82905c2466684fdf61de0862a5dbfb9b1d2703918c88a594d0017dd8b6f1"
+        ),
+        "liveVersionAuthority": (
+            "Initialize the linked MCP remote and compare serverInfo.version "
+            "before treating a release as deployed."
+        ),
+    }
+
+
+def test_undertow_and_palimpsest_discovery_contracts_are_exact():
+    entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
+
+    undertow = entries["urn:air:liquilens.in:catalog:undertow"]
+    assert undertow["version"] == "1.9.0"
+    assert undertow["updatedAt"] == "2026-08-18T00:00:00Z"
+    assert undertow["capabilities"] == [
+        "agent_access_status",
+        "depth_episodes",
+        "exit_cost",
+        "latest_article",
+        "liquidity_tiers",
+        "sealed_record",
+        "unwind_watch",
+        "venue_concentration",
+        "venue_price_reconciliation",
+    ]
+    assert undertow["protocolVersions"] == [
+        "2026-07-28", "2025-11-25", "2025-06-18", "2025-03-26",
+    ]
+    assert undertow["prompts"] == [
+        "can_this_book_exit",
+        "exit_cost_check",
+        "market_liquidity_briefing",
+    ]
+    assert undertow["resourceTemplates"] == []
+    assert {
+        key: undertow["metadata"][key]
+        for key in (
+            "publicToolCount",
+            "subscriberToolCount",
+            "publicPromptCount",
+            "publicResourceCount",
+            "mcpServerName",
+            "mcpEndpoint",
+            "openapi",
+            "productCard",
+        )
+    } == {
+        "publicToolCount": 9,
+        "subscriberToolCount": 8,
+        "publicPromptCount": 3,
+        "publicResourceCount": 0,
+        "mcpServerName": "io.github.beepboop2025/undertow",
+        "mcpEndpoint": "https://api.seiche.info/undertow/mcp",
+        "openapi": "https://api.seiche.info/undertow/x402/openapi.json",
+        "productCard": "https://liquilens-undertow.com/product-card.json",
+    }
+
+    palimpsest = entries["urn:air:liquilens.in:catalog:palimpsest-china"]
+    assert palimpsest["version"] == "1.9.0"
+    assert palimpsest["updatedAt"] == "2026-08-24T13:51:23.905708Z"
+    assert palimpsest["capabilities"] == [
+        "list_signals",
+        "get_signal",
+        "get_newsroom",
+        "query_economic_observations",
+        "whats_happening",
+        "gfw_reading",
+    ]
+    assert palimpsest["protocolVersions"] == ["2025-06-18", "2025-03-26"]
+    assert palimpsest["prompts"] == [
+        "evidence_desk_briefing",
+        "censorship_briefing",
+        "gfw_status_check",
+        "signal_deep_dive",
+    ]
+    assert palimpsest["resourceTemplates"] == []
+    assert {
+        key: palimpsest["metadata"][key]
+        for key in (
+            "publicToolCount",
+            "publicPromptCount",
+            "publicResourceCount",
+            "mcpServerName",
+            "mcpEndpoint",
+            "deploymentBoundary",
+            "deploymentCommit",
+            "deploymentReceipt",
+            "deploymentReceiptSha256",
+            "deploymentRun",
+            "registryReceipt",
+            "registryReceiptSha256",
+            "registryRun",
+            "registrySnapshot",
+            "registrySnapshotSha256",
+            "registryVersion",
+            "registryPublishedAt",
+            "liveVersionAuthority",
+            "quickstart",
+            "productCard",
+        )
+    } == {
+        "publicToolCount": 6,
+        "publicPromptCount": 4,
+        "publicResourceCount": 0,
+        "mcpServerName": "io.github.beepboop2025/palimpsest",
+        "mcpEndpoint": "https://api.seiche.info/palimpsest/mcp",
+        "deploymentBoundary": "production-verified",
+        "deploymentCommit": "135d8f332d7eaeb48f793ecaa47ee1e13708c1ac",
+        "deploymentReceipt": (
+            "https://palimpsest.info/.well-known/receipts/"
+            "mcp-deployment-1.9.0.json"
+        ),
+        "deploymentReceiptSha256": (
+            "sha256:8570b4fcc138461be34f17c8257f4f6dbef5242336f533411b56d5d747a27154"
+        ),
+        "deploymentRun": (
+            "https://github.com/beepboop2025/palimpsest/actions/runs/32734455304"
+        ),
+        "registryReceipt": (
+            "https://palimpsest.info/.well-known/receipts/"
+            "mcp-registry-publication-1.9.0.json"
+        ),
+        "registryReceiptSha256": (
+            "sha256:6014b600a2115acb05dc59a60e0595c0de4424907e074fcc08b465dcea09cfa7"
+        ),
+        "registryRun": (
+            "https://github.com/beepboop2025/palimpsest/actions/runs/32735073973"
+        ),
+        "registrySnapshot": (
+            "https://palimpsest.info/.well-known/receipts/"
+            "mcp-registry-latest-1.9.0.json"
+        ),
+        "registrySnapshotSha256": (
+            "sha256:5af0c21c5818c0ca4983040410b52061026c0261e54bdaab8668fd5592b6c389"
+        ),
+        "registryVersion": (
+            "https://registry.modelcontextprotocol.io/v0.1/servers/"
+            "io.github.beepboop2025%2Fpalimpsest/versions/1.9.0"
+        ),
+        "registryPublishedAt": "2026-08-24T13:51:23.905708Z",
+        "liveVersionAuthority": (
+            "Initialize the linked MCP remote and compare serverInfo.version "
+            "before treating a release as deployed."
+        ),
+        "quickstart": "https://palimpsest.info/developers.html",
+        "productCard": "https://palimpsest.info/product-card.json",
+    }
+
+
+def test_sibling_product_cards_match_the_catalog_contracts():
+    siblings = {
+        sibling["name"]: sibling
+        for sibling in json.loads(read("product-card.json"))["siblings"]
+    }
+    seiche = siblings["Seiche"]
+    assert {
+        key: seiche[key]
+        for key in (
+            "version",
+            "ai_catalog",
+            "ai_catalog_sha256",
+            "product_card",
+            "product_card_sha256",
+            "mcp",
+            "mcp_discovery",
+            "mcp_discovery_sha256",
+            "mcp_server_name",
+            "api_catalog",
+            "openapi",
+            "public_tools",
+            "public_prompts",
+            "public_resources",
+            "pypi",
+            "pypi_spec",
+            "pypi_wheel_sha256",
+            "pypi_wheel_bytes",
+            "pypi_sdist_sha256",
+            "pypi_sdist_bytes",
+            "signed_tag",
+            "signed_tag_object",
+            "release_commit",
+            "static_deployment",
+            "registry_version",
+            "registry_server_sha256",
+            "live_version_authority",
+        )
+    } == {
+        "version": "0.11.1",
+        "ai_catalog": "https://seiche.info/.well-known/ai-catalog.json",
+        "ai_catalog_sha256": (
+            "sha256:735516115752afebd3b8a3637a22f806ff8f592826381ce1bbe32ab5b7b5cc74"
+        ),
+        "product_card": "https://seiche.info/product-card.json",
+        "product_card_sha256": (
+            "sha256:1d382ad21d4fa8c35433f9270946d74dca592fb833c454c02cc3613a6c2edf08"
+        ),
+        "mcp": "https://api.seiche.info/mcp",
+        "mcp_discovery": "https://api.seiche.info/.well-known/mcp.json",
+        "mcp_discovery_sha256": (
+            "sha256:1db329dbc3155a0a695a3ddf7e7dcd37d7edaea22d4898b97002cbf172c931fe"
+        ),
+        "mcp_server_name": "io.github.beepboop2025/seiche",
+        "api_catalog": "https://api.seiche.info/api",
+        "openapi": "https://api.seiche.info/api/openapi.json",
+        "public_tools": 11,
+        "public_prompts": 4,
+        "public_resources": 0,
+        "pypi": "https://pypi.org/project/seiche/0.11.1/",
+        "pypi_spec": "seiche==0.11.1",
+        "pypi_wheel_sha256": (
+            "sha256:01b5b770d88391d31ba406ca651ab5d6054b2e4c6f6c3cf6138f713f4374e4a1"
+        ),
+        "pypi_wheel_bytes": 1101154,
+        "pypi_sdist_sha256": (
+            "sha256:0fa965b00f0c81a5f9ad8a5d66a4140523a90f962f3bdcf196fd884d89057a15"
+        ),
+        "pypi_sdist_bytes": 980967,
+        "signed_tag": "v0.11.1",
+        "signed_tag_object": "fc1742880be1be06837c5fc703b4ba5312ff4b2b",
+        "release_commit": "0cd20bfd0a4d274c8bb8173f6fe59e2d2f5259db",
+        "static_deployment": "https://699fdc4e.seiche.pages.dev",
+        "registry_version": (
+            "https://registry.modelcontextprotocol.io/v0.1/servers/"
+            "io.github.beepboop2025%2Fseiche/versions/0.11.1"
+        ),
+        "registry_server_sha256": (
+            "sha256:2a7a82905c2466684fdf61de0862a5dbfb9b1d2703918c88a594d0017dd8b6f1"
+        ),
+        "live_version_authority": (
+            "Initialize the linked MCP remote and compare serverInfo.version "
+            "before treating a release as deployed."
+        ),
+    }
+
+    undertow = siblings["Undertow"]
+    assert {
+        "version": undertow["version"],
+        "catalog": undertow["ai_catalog"],
+        "mcp": undertow["mcp"],
+        "server": undertow["mcp_server_name"],
+        "protocols": undertow["protocol_versions"],
+        "counts": (
+            undertow["public_tools"],
+            undertow["public_prompts"],
+            undertow["public_resources"],
+        ),
+    } == {
+        "version": "1.9.0",
+        "catalog": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
+        "mcp": "https://api.seiche.info/undertow/mcp",
+        "server": "io.github.beepboop2025/undertow",
+        "protocols": [
+            "2026-07-28", "2025-11-25", "2025-06-18", "2025-03-26",
+        ],
+        "counts": (9, 3, 0),
+    }
+
+    palimpsest = siblings["Palimpsest"]
+    assert palimpsest["version"] == "1.9.0"
+    assert palimpsest["mcp"] == "https://api.seiche.info/palimpsest/mcp"
+    assert palimpsest["protocol_versions"] == ["2025-06-18", "2025-03-26"]
+    assert (
+        palimpsest["public_tools"],
+        palimpsest["public_prompts"],
+        palimpsest["public_resources"],
+    ) == (6, 4, 0)
+    assert palimpsest["deployment_receipt_sha256"] == (
+        "sha256:8570b4fcc138461be34f17c8257f4f6dbef5242336f533411b56d5d747a27154"
+    )
+    assert palimpsest["registry_receipt_sha256"] == (
+        "sha256:6014b600a2115acb05dc59a60e0595c0de4424907e074fcc08b465dcea09cfa7"
+    )
+    assert palimpsest["registry_snapshot_sha256"] == (
+        "sha256:5af0c21c5818c0ca4983040410b52061026c0261e54bdaab8668fd5592b6c389"
+    )
+
+
+def test_sibling_release_status_ship_log_and_sitemap_are_converged():
+    status = read("status/index.html")
+    assert "Release contract · 24 August 2026" in status
+    assert "Seiche 0.11.1" in status
+    assert "11 public read-only MCP tools, 4 prompts and 0 resources" in status
+    assert "runtime, signed tag, exact PyPI artifacts, static catalog" in status
+    assert "Undertow 1.9.0" in status
+    assert "9 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
+    assert "Palimpsest 1.9.0" in status
+    assert "6 public read-only MCP tools, 4 prompts and 0 resources" in status
+    assert "LIVE / RECEIPTED" in status
+
+    ship_log = read("ship-log/index.html")
+    assert "Seiche 0.11.1 closes its public distribution contract" in ship_log
+    assert "https://pypi.org/project/seiche/0.11.1/" in ship_log
+    assert "io.github.beepboop2025%2Fseiche/versions/0.11.1" in ship_log
+    assert "Palimpsest 1.9.0 publishes its exact agent boundary" in ship_log
+    assert "mcp-deployment-1.9.0.json" in ship_log
+    assert "mcp-registry-publication-1.9.0.json" in ship_log
+    for historical_release in ("Seiche 0.10.0", "Seiche 0.10.1"):
+        assert historical_release in ship_log
+
+    sitemap = read("sitemap.xml")
+    assert (
+        "<loc>https://liquilens.in/ship-log/</loc>\n"
+        "    <lastmod>2026-08-24</lastmod>"
+    ) in sitemap
+    assert (
+        "<loc>https://liquilens.in/status/</loc>\n"
+        "    <lastmod>2026-08-24</lastmod>"
+    ) in sitemap
+    generator = read("scripts/build_replay_pages.py")
+    assert '("/ship-log/", "2026-08-24", "weekly", "0.7")' in generator
+    assert '("/status/", "2026-08-24", None, None)' in generator
 
 
 def test_human_claim_surfaces_print_the_same_evidence_boundary():
