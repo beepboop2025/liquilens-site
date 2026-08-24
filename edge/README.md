@@ -35,8 +35,11 @@ All five unique topics may be fetched in one call, producing at most six fixed
 source reads. The package-compatible `max_bytes` ceiling is 4 MiB per source and
 the default is 1 MiB, while the remote endpoint additionally enforces a 1.5 MiB
 aggregate source-byte budget, a 2 MiB encoded evidence-packet cap, and a 4 MiB
-fully serialized HTTP-response cap. Fetches run sequentially, accept timeouts up
-to 30 seconds per source, and share a 30-second aggregate packet deadline. The
+fully serialized HTTP-response cap. The aggregate byte budget is accounted
+sequentially: a source may use the caller's full per-source ceiling while
+packet capacity remains, rather than receiving an undocumented equal share.
+Fetches run sequentially, accept timeouts up to 30 seconds per source, and share
+a 30-second aggregate packet deadline. The
 upstream abort signal also follows client cancellation. Fetches use a 30-second
 edge cache and pass through a coarse 60-per-minute, per-location Cloudflare
 rate-limit bucket. Topic discovery and offline route resolution remain outside
