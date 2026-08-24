@@ -55,6 +55,12 @@ def test_machine_catalog_routes_every_contract_without_authority_widening():
     assert catalog["mcpBundleSha256"] == (
         "e57e3039d7ae53b6feb3638dbc2f7ba413ff437e5c3a1b62172cad6f3b98e6ea"
     )
+    assert catalog["browserVerifier"] == (
+        "https://beepboop2025.github.io/liquilens-evidence-carrier/"
+    )
+    assert catalog["browserVerifierSource"].endswith(
+        "/68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser"
+    )
     assert {
         row["url"]: row["sha256"] for row in catalog["artifacts"]
     } == {canonical_url: digest for canonical_url, digest in EXPECTED.values()}
@@ -66,6 +72,7 @@ def test_human_and_agent_discovery_surfaces_link_the_protocol():
     assert page.count("<h1") == 1
     assert "Financial authority: none" in page
     assert "Apache-2.0" in page
+    assert "https://beepboop2025.github.io/liquilens-evidence-carrier/" in page
     assert "https://liquilens.in/protocol/" in _read("sitemap.xml")
     assert "https://liquilens.in/protocol/catalog.json" in _read("llms.txt")
 
@@ -76,6 +83,9 @@ def test_human_and_agent_discovery_surfaces_link_the_protocol():
     )
     assert entry["url"] == "https://liquilens.in/protocol/catalog.json"
     assert entry["metadata"]["financialAuthority"] == "none"
+    assert entry["metadata"]["browserVerifier"] == (
+        "https://beepboop2025.github.io/liquilens-evidence-carrier/"
+    )
 
     product = json.loads(_read("product-card.json"))
     assert product["access"]["evidence_carrier"] == (
@@ -83,4 +93,7 @@ def test_human_and_agent_discovery_surfaces_link_the_protocol():
     )
     assert product["access"]["evidence_carrier_catalog"] == (
         "https://liquilens.in/protocol/catalog.json"
+    )
+    assert product["access"]["evidence_carrier_browser_verifier"] == (
+        "https://beepboop2025.github.io/liquilens-evidence-carrier/"
     )

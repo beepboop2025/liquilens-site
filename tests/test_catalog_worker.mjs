@@ -26,6 +26,10 @@ test("GET returns the committed ARD catalog with discovery headers", async () =>
     carrier.metadata.mcpBundleSha256,
     "e57e3039d7ae53b6feb3638dbc2f7ba413ff437e5c3a1b62172cad6f3b98e6ea",
   );
+  assert.equal(
+    carrier.metadata.browserVerifier,
+    "https://beepboop2025.github.io/liquilens-evidence-carrier/",
+  );
   assert.match(response.headers.get("content-type"), /^application\/ai-catalog\+json/);
   assert.equal(response.headers.get("access-control-allow-origin"), "*");
 });

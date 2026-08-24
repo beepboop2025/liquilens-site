@@ -46,6 +46,8 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
         "https://liquilens.in/protocol/")
     assert card["access"]["evidence_carrier_catalog"] == (
         "https://liquilens.in/protocol/catalog.json")
+    assert card["access"]["evidence_carrier_browser_verifier"] == (
+        "https://beepboop2025.github.io/liquilens-evidence-carrier/")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
     assert card["updated"] == "2026-08-24"
     assert card["access"]["daily_articles"] == "https://liquilens.in/articles/"
