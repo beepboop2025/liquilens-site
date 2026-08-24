@@ -10,6 +10,10 @@
       "zone_name": "liquilens.in"
     },
     {
+      "pattern": "https://liquilens.in/.well-known/openai-apps-challenge*",
+      "zone_name": "liquilens.in"
+    },
+    {
       "pattern": "https://liquilens.in/protocol/catalog.json*",
       "zone_name": "liquilens.in"
     },

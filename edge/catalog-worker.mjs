@@ -8,6 +8,8 @@ export const AI_CATALOG_PATH = "/.well-known/ai-catalog.json";
 export const PROTOCOL_CATALOG_PATH = "/protocol/catalog.json";
 // Preserve the original export for callers that consume the ARD catalog.
 export const CATALOG_PATH = AI_CATALOG_PATH;
+export const OPENAI_APPS_CHALLENGE_PATH =
+  "/.well-known/openai-apps-challenge";
 export const FINANCIAL_EVIDENCE_MCP_PATH = "/mcp/financial-evidence";
 export const MAX_MCP_REQUEST_BYTES = 32_768;
 export const MAX_MCP_RESPONSE_BYTES = 2_097_152;
@@ -106,6 +108,38 @@ const CATALOGS = new Map([
     },
   }],
 ]);
+
+const OPENAI_APPS_CHALLENGE_HEADERS = {
+  "Cache-Control": "no-store",
+  "Content-Type": "text/plain; charset=utf-8",
+  "X-Content-Type-Options": "nosniff",
+};
+
+export function handleOpenAiAppsChallenge(request, env) {
+  const token = env?.OPENAI_APPS_CHALLENGE_TOKEN;
+  if (typeof token !== "string" || token.length === 0) {
+    return new Response("Not found", { status: 404 });
+  }
+
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    return new Response("Method not allowed", {
+      status: 405,
+      headers: {
+        ...OPENAI_APPS_CHALLENGE_HEADERS,
+        Allow: "GET, HEAD",
+      },
+    });
+  }
+
+  const headers = {
+    ...OPENAI_APPS_CHALLENGE_HEADERS,
+    "Content-Length": String(new TextEncoder().encode(token).byteLength),
+  };
+  return new Response(request.method === "HEAD" ? null : token, {
+    status: 200,
+    headers,
+  });
+}
 
 export function handleCatalogRequest(request) {
   const url = new URL(request.url);
@@ -602,7 +636,9 @@ export default {
   async fetch(request, env, ctx) {
     const pathname = new URL(request.url).pathname;
     let response;
-    if (pathname === AI_CATALOG_PATH || pathname === PROTOCOL_CATALOG_PATH) {
+    if (pathname === OPENAI_APPS_CHALLENGE_PATH) {
+      response = handleOpenAiAppsChallenge(request, env);
+    } else if (pathname === AI_CATALOG_PATH || pathname === PROTOCOL_CATALOG_PATH) {
       response = handleCatalogRequest(request);
     } else if (pathname === FINANCIAL_EVIDENCE_MCP_PATH) {
       response = await handleBoundedFinancialEvidenceMcp(request, env, ctx);
