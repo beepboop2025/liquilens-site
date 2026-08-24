@@ -90,3 +90,47 @@ test("the handler refuses paths outside its exact route", async () => {
   );
   assert.equal(response.status, 404);
 });
+
+
+test("the deployed Worker declares the fail-closed MCP fetch limiter", async () => {
+  const config = JSON.parse(
+    await readFile(new URL("../wrangler.catalog.jsonc", import.meta.url), "utf8"),
+  );
+  assert.deepEqual(config.ratelimits, [
+    {
+      name: "FINANCIAL_EVIDENCE_RATE_LIMITER",
+      namespace_id: "24082401",
+      simple: { limit: 60, period: 60 },
+    },
+  ]);
+  assert.deepEqual(config.version_metadata, { binding: "CF_VERSION_METADATA" });
+  assert.deepEqual(config.limits, { subrequests: 6 });
+  assert.equal(
+    config.routes.some(
+      (route) =>
+        route.pattern === "https://liquilens.in/mcp/financial-evidence*",
+    ),
+    true,
+  );
+});
+
+
+test("runtime responses expose exact Cloudflare version metadata", async () => {
+  const response = await worker.fetch(
+    new Request(`https://liquilens.in${AI_CATALOG_PATH}`),
+    {
+      CF_VERSION_METADATA: {
+        id: "00000000-0000-0000-0000-000000000040",
+        tag: "0123456789abcdef0123456789abcdef01234567",
+      },
+    },
+  );
+  assert.equal(
+    response.headers.get("x-liquilens-worker-version"),
+    "00000000-0000-0000-0000-000000000040",
+  );
+  assert.equal(
+    response.headers.get("x-liquilens-worker-tag"),
+    "0123456789abcdef0123456789abcdef01234567",
+  );
+});
