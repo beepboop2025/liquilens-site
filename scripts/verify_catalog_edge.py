@@ -15,13 +15,18 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / ".well-known/ai-catalog.json"
+PROTOCOL_CATALOG_PATH = ROOT / "protocol/catalog.json"
 DEFAULT_URL = "https://liquilens.in/.well-known/ai-catalog.json"
+DEFAULT_PROTOCOL_URL = "https://liquilens.in/protocol/catalog.json"
 
 
 def response_problem(
-    expected: dict[str, Any], body: bytes, content_type: str
+    expected: dict[str, Any],
+    body: bytes,
+    content_type: str,
+    expected_content_type: str = "application/ai-catalog+json",
 ) -> str | None:
-    if not content_type.lower().startswith("application/ai-catalog+json"):
+    if not content_type.lower().startswith(expected_content_type):
         return f"unexpected content type: {content_type or '<missing>'}"
     try:
         actual = json.loads(body)
@@ -45,21 +50,26 @@ def response_problem(
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", default=DEFAULT_URL)
+    parser.add_argument("--protocol-url", default=DEFAULT_PROTOCOL_URL)
     parser.add_argument("--attempts", type=int, default=12)
     parser.add_argument("--delay", type=float, default=10.0)
     return parser
 
 
-def main() -> int:
-    args = _parser().parse_args()
-    if args.attempts < 1 or args.delay < 0:
-        raise SystemExit("attempts must be positive and delay must be non-negative")
-    expected = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+def _verify_url(
+    *,
+    expected: dict[str, Any],
+    expected_path: Path,
+    expected_content_type: str,
+    url: str,
+    attempts: int,
+    delay: float,
+) -> str:
     problem = "edge catalog was not checked"
-    for attempt in range(1, args.attempts + 1):
-        separator = "&" if urllib.parse.urlsplit(args.url).query else "?"
+    for attempt in range(1, attempts + 1):
+        separator = "&" if urllib.parse.urlsplit(url).query else "?"
         request = urllib.request.Request(
-            f"{args.url}{separator}catalog_check={attempt}-{time.time_ns()}",
+            f"{url}{separator}catalog_check={attempt}-{time.time_ns()}",
             headers={"Cache-Control": "no-cache", "User-Agent": "LiquiLens-edge-check/1"},
         )
         try:
@@ -68,16 +78,48 @@ def main() -> int:
                     expected,
                     response.read(),
                     response.headers.get("Content-Type", ""),
+                    expected_content_type,
                 ) or ""
         except (OSError, urllib.error.URLError) as error:
             problem = f"edge request failed: {error}"
         if not problem:
-            print(f"edge catalog matches {CATALOG_PATH}")
-            return 0
-        if attempt < args.attempts:
-            time.sleep(args.delay)
-    print(problem)
-    return 1
+            return f"edge catalog matches {expected_path}"
+        if attempt < attempts:
+            time.sleep(delay)
+    raise RuntimeError(f"{expected_path}: {problem}")
+
+
+def main() -> int:
+    args = _parser().parse_args()
+    if args.attempts < 1 or args.delay < 0:
+        raise SystemExit("attempts must be positive and delay must be non-negative")
+    checks = (
+        (
+            CATALOG_PATH,
+            args.url,
+            "application/ai-catalog+json",
+        ),
+        (
+            PROTOCOL_CATALOG_PATH,
+            args.protocol_url,
+            "application/json",
+        ),
+    )
+    try:
+        for expected_path, url, expected_content_type in checks:
+            expected = json.loads(expected_path.read_text(encoding="utf-8"))
+            print(_verify_url(
+                expected=expected,
+                expected_path=expected_path,
+                expected_content_type=expected_content_type,
+                url=url,
+                attempts=args.attempts,
+                delay=args.delay,
+            ))
+    except RuntimeError as error:
+        print(error)
+        return 1
+    return 0
 
 
 if __name__ == "__main__":

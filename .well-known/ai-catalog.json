@@ -319,7 +319,7 @@
         "How do I verify a LiquiLens evidence carrier?"
       ],
       "version": "0.14.0",
-      "updatedAt": "2026-08-24T12:46:23Z",
+      "updatedAt": "2026-08-24T13:36:26Z",
       "metadata": {
         "access": "public",
         "license": "Apache-2.0",
@@ -331,6 +331,9 @@
         "humanLandingPage": "https://liquilens.in/protocol/",
         "browserVerifier": "https://beepboop2025.github.io/liquilens-evidence-carrier/",
         "browserVerifierSource": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser",
+        "consumerChannelCatalog": "https://liquilens.in/protocol/catalog.json",
+        "consumerChannelCount": 12,
+        "consumerChannelStatuses": "10 live; 1 live reference consumer; 1 fetched/rendered only",
         "financialAuthority": "none"
       }
     }

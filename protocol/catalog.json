@@ -13,6 +13,130 @@
   "humanLandingPage": "https://liquilens.in/protocol/",
   "browserVerifier": "https://beepboop2025.github.io/liquilens-evidence-carrier/",
   "browserVerifierSource": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser",
+  "consumerChannelPolicy": "Only externally exercised consumer paths are included. A submitted catalog PR is not a live listing, and a fetched notebook is not an executed runtime.",
+  "consumerChannels": [
+    {
+      "id": "official-mcp-registry",
+      "label": "Official MCP Registry",
+      "status": "live",
+      "url": "https://registry.modelcontextprotocol.io/v0/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.14.0",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32729121023",
+      "verifiedResult": "active and latest at version 0.14.0"
+    },
+    {
+      "id": "agent-skill",
+      "label": "LiquiLens Evidence Agent Skill",
+      "status": "live",
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.14.0/skills/liquilens-evidence",
+      "directoryUrl": "https://skills.sh/beepboop2025/liquilens-evidence-carrier/liquilens-evidence",
+      "discoverCommand": "DO_NOT_TRACK=1 npx --yes skills@1.5.23 add beepboop2025/liquilens-evidence-carrier --list",
+      "command": "npx skills add https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.14.0/skills/liquilens-evidence --skill liquilens-evidence",
+      "sourceCommit": "9d17b185a350ad0e3a61ee18c6a8b360c5dc5fdd",
+      "sha256": "50cfa5b4ce3f974fb0af43d9eaa75014c44f97de03dcec30abab1ac2e99fa301",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32733486373",
+      "verifiedResult": "skills 1.5.23 anonymously discovered exactly one skill and installed bytes identical to the immutable public tag"
+    },
+    {
+      "id": "browser-verifier",
+      "label": "Zero-install browser verifier",
+      "status": "live",
+      "url": "https://beepboop2025.github.io/liquilens-evidence-carrier/",
+      "sourceCommit": "68e5eead7ad7a78e3c379820a499cf3c7c34048b",
+      "sha256": "27b30a224d11afb53dec13db214f0ac04d2f2d14a0b2172b623b14453d34a306",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32729327711",
+      "verifiedResult": "served index is byte-identical; local-file verification has no analytics or document upload"
+    },
+    {
+      "id": "exact-sha-cdn-module",
+      "label": "Exact-SHA browser module",
+      "status": "live",
+      "url": "https://cdn.jsdelivr.net/gh/beepboop2025/liquilens-evidence-carrier@68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser/verifier.mjs",
+      "sourceCommit": "68e5eead7ad7a78e3c379820a499cf3c7c34048b",
+      "sha256": "76bcc3a8a0b4378e206fac769265eb631b765bbffbd290cbbfe7f86c72d6e16e",
+      "verifiedResult": "anonymous HTTP 200 with CORS; bytes match the exact Git commit"
+    },
+    {
+      "id": "uvx-immutable-wheel",
+      "label": "Hash-pinned one-shot CLI",
+      "status": "live",
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl#sha256=f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24",
+      "command": "uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl#sha256=f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24' liquilens-evidence --help",
+      "verifiedResult": "uv 0.10.0 installed the immutable wheel and exposed issue, verify, verify-files, and convert"
+    },
+    {
+      "id": "homebrew",
+      "label": "Homebrew tap",
+      "status": "live",
+      "url": "https://github.com/beepboop2025/homebrew-tap/blob/ae2c2ef6f91cd58f821b9e3644f318fb15d26d56/Formula/liquilens-evidence.rb",
+      "command": "brew install beepboop2025/tap/liquilens-evidence",
+      "sourceCommit": "ae2c2ef6f91cd58f821b9e3644f318fb15d26d56",
+      "receipt": "https://github.com/beepboop2025/homebrew-tap/actions/runs/32730019844",
+      "verifiedResult": "formula install and CLI/MCP smoke passed"
+    },
+    {
+      "id": "oci",
+      "label": "Multi-architecture OCI image",
+      "status": "live",
+      "url": "https://ghcr.io/v2/beepboop2025/liquilens-evidence-carrier/manifests/sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1",
+      "image": "ghcr.io/beepboop2025/liquilens-evidence-carrier@sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1",
+      "command": "docker run --rm ghcr.io/beepboop2025/liquilens-evidence-carrier@sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1 --help",
+      "mcpCommand": "docker run --rm -i --network none --read-only -v \"$PWD:/evidence:ro\" --entrypoint liquilens-evidence-mcp ghcr.io/beepboop2025/liquilens-evidence-carrier@sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1 --root /evidence",
+      "sha256": "9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32731826071",
+      "verifiedResult": "anonymous OCI index resolves to linux/amd64 and linux/arm64 images with attestations"
+    },
+    {
+      "id": "research-notebook",
+      "label": "Deterministic research notebook",
+      "status": "live",
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/blob/3d079421c830fcc97ea08da3c54b8429eb5ed542/notebooks/evidence_carrier_research.ipynb",
+      "sourceCommit": "3d079421c830fcc97ea08da3c54b8429eb5ed542",
+      "sha256": "5f4b731f76de0e85c00c373e3849553425d3102c75545183bdb090b66f88768c",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32731552975",
+      "verifiedResult": "five cells produced identical receipts in two isolated clean executions"
+    },
+    {
+      "id": "mybinder",
+      "label": "MyBinder notebook runtime",
+      "status": "live",
+      "url": "https://mybinder.org/v2/gh/beepboop2025/liquilens-evidence-carrier/3d079421c830fcc97ea08da3c54b8429eb5ed542?urlpath=lab/tree/notebooks/evidence_carrier_research.ipynb",
+      "sourceCommit": "3d079421c830fcc97ea08da3c54b8429eb5ed542",
+      "verifiedResult": "anonymous Binder kernel mounted the exact notebook bytes and executed all five cells"
+    },
+    {
+      "id": "colab",
+      "label": "Google Colab notebook view",
+      "status": "fetched_rendered_only",
+      "url": "https://colab.research.google.com/github/beepboop2025/liquilens-evidence-carrier/blob/3d079421c830fcc97ea08da3c54b8429eb5ed542/notebooks/evidence_carrier_research.ipynb",
+      "sourceCommit": "3d079421c830fcc97ea08da3c54b8429eb5ed542",
+      "verifiedResult": "anonymous HTTP fetch and notebook render passed; hosted runtime was not executed because the provider presented sign-in"
+    },
+    {
+      "id": "nix-flake",
+      "label": "Nix flake",
+      "status": "live",
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/blob/3c97b71093f8bca201e74bb5cc7ddbe50d9fa052/NIX.md",
+      "command": "nix run github:beepboop2025/liquilens-evidence-carrier/3c97b71093f8bca201e74bb5cc7ddbe50d9fa052 -- --help",
+      "mcpCommand": "nix run github:beepboop2025/liquilens-evidence-carrier/3c97b71093f8bca201e74bb5cc7ddbe50d9fa052#mcp -- --help",
+      "sourceCommit": "3c97b71093f8bca201e74bb5cc7ddbe50d9fa052",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32732091696",
+      "verifiedResult": "the public exact-ref CLI and MCP invocations passed on x86_64/aarch64 Linux and Darwin"
+    },
+    {
+      "id": "fdc3-evidence-inspector",
+      "label": "FDC3 Evidence Inspector",
+      "status": "live_reference_consumer",
+      "url": "https://beepboop2025.github.io/financial-evidence-skills/integrations/fdc3/evidence-inspector/",
+      "source": "https://github.com/beepboop2025/financial-evidence-skills/tree/be62c608ba1a221fe9f55f8bced26ee84435fc48/docs/integrations/fdc3/evidence-inspector",
+      "sourceCommit": "be62c608ba1a221fe9f55f8bced26ee84435fc48",
+      "receipt": "https://github.com/beepboop2025/financial-evidence-skills/actions/runs/32731937379",
+      "verifiedResult": "self-hosted reference consumer exercised context, intent, and broadcast through a desktop-agent shim",
+      "upstreamDirectory": {
+        "status": "submitted_not_listed",
+        "url": "https://github.com/finos-labs/FDC3-App-Directory/pull/40"
+      }
+    }
+  ],
   "financialAuthority": "none",
   "artifacts": [
     {
