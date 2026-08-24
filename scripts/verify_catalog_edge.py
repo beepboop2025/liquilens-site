@@ -16,15 +16,15 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / ".well-known/ai-catalog.json"
 PROTOCOL_CATALOG_PATH = ROOT / "protocol/catalog.json"
+MCP_CONTRACT_PATH = ROOT / "protocol/financial-evidence-mcp-v0.1.4.json"
 DEFAULT_URL = "https://liquilens.in/.well-known/ai-catalog.json"
 DEFAULT_PROTOCOL_URL = "https://liquilens.in/protocol/catalog.json"
 DEFAULT_MCP_URL = "https://liquilens.in/mcp/financial-evidence"
-EXPECTED_MCP_SERVER = "financial-evidence"
-EXPECTED_MCP_VERSION = "0.1.3"
-EXPECTED_MCP_TOOLS = (
-    "financial_evidence_topics",
-    "financial_evidence_route",
-    "financial_evidence_fetch",
+EXPECTED_MCP_CONTRACT = json.loads(MCP_CONTRACT_PATH.read_text(encoding="utf-8"))
+EXPECTED_MCP_SERVER = EXPECTED_MCP_CONTRACT["serverInfo"]["name"]
+EXPECTED_MCP_VERSION = EXPECTED_MCP_CONTRACT["serverInfo"]["version"]
+EXPECTED_MCP_TOOLS = tuple(
+    tool["name"] for tool in EXPECTED_MCP_CONTRACT["tools"]
 )
 
 
@@ -153,6 +153,25 @@ def _require_result(payload: dict[str, Any], request_id: str) -> dict[str, Any]:
     return result
 
 
+def _normalized_tool_contract(tools: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Remove non-semantic schema decoration emitted by the JS SDK."""
+
+    normalized = json.loads(json.dumps(tools))
+    for tool in normalized:
+        schema = tool.get("inputSchema", {})
+        schema.pop("$schema", None)
+        if schema.get("properties") == {}:
+            schema.pop("properties")
+    return normalized
+
+
+def _require_tool_contract(tools: Any, generation: str) -> None:
+    if not isinstance(tools, list):
+        raise RuntimeError(f"{generation} MCP tools are not a list: {tools!r}")
+    if _normalized_tool_contract(tools) != EXPECTED_MCP_CONTRACT["tools"]:
+        raise RuntimeError(f"{generation} MCP tool contract differs: {tools!r}")
+
+
 def _verify_mcp(url: str, expected_version_tag: str | None) -> str:
     legacy_initialize, headers = _mcp_request(
         url,
@@ -183,8 +202,7 @@ def _verify_mcp(url: str, expected_version_tag: str | None) -> str:
     )
     _require_version_tag(headers, expected_version_tag)
     tools = _require_result(legacy_list, "legacy-list").get("tools")
-    if not isinstance(tools, list) or tuple(tool.get("name") for tool in tools) != EXPECTED_MCP_TOOLS:
-        raise RuntimeError(f"legacy MCP tools differ: {tools!r}")
+    _require_tool_contract(tools, "legacy")
 
     modern_meta = {
         "io.modelcontextprotocol/clientInfo": {
@@ -226,8 +244,7 @@ def _verify_mcp(url: str, expected_version_tag: str | None) -> str:
     )
     _require_version_tag(headers, expected_version_tag)
     tools = _require_result(modern_list, "modern-list").get("tools")
-    if not isinstance(tools, list) or tuple(tool.get("name") for tool in tools) != EXPECTED_MCP_TOOLS:
-        raise RuntimeError(f"modern MCP tools differ: {tools!r}")
+    _require_tool_contract(tools, "modern")
 
     modern_route, headers = _mcp_request(
         url,

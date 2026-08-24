@@ -1,13 +1,19 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.4.json" with {
+  type: "json",
+};
 import worker, {
+  DEFAULT_SOURCE_BYTES,
+  DEFAULT_TIMEOUT_SECONDS,
   FINANCIAL_EVIDENCE_MCP_PATH,
   MAX_FETCH_TOPICS,
   MAX_MCP_HTTP_RESPONSE_BYTES,
   MAX_MCP_REQUEST_BYTES,
   MAX_PACKET_SOURCE_BYTES,
   MAX_SOURCE_BYTES,
+  MAX_TIMEOUT_SECONDS,
   createFinancialEvidenceServer,
 } from "../edge/catalog-worker.mjs";
 
@@ -45,6 +51,19 @@ async function responsePayload(response) {
   return JSON.parse(body);
 }
 
+function normalizeToolContract(tools) {
+  return structuredClone(tools).map((tool) => {
+    delete tool.inputSchema.$schema;
+    if (
+      tool.inputSchema.properties &&
+      Object.keys(tool.inputSchema.properties).length === 0
+    ) {
+      delete tool.inputSchema.properties;
+    }
+    return tool;
+  });
+}
+
 test("legacy initialize and tool listing expose the read-only contract", async () => {
   const initialized = await worker.fetch(
     request({
@@ -61,8 +80,10 @@ test("legacy initialize and tool listing expose the read-only contract", async (
   assert.equal(initialized.status, 200);
   const initialization = await responsePayload(initialized);
   assert.equal(initialization.result.protocolVersion, "2025-11-25");
-  assert.equal(initialization.result.serverInfo.name, "financial-evidence");
-  assert.equal(initialization.result.serverInfo.version, "0.1.3");
+  assert.deepEqual(
+    initialization.result.serverInfo,
+    financialEvidenceMcpContract.serverInfo,
+  );
 
   const listed = await worker.fetch(
     request({ jsonrpc: "2.0", id: 2, method: "tools/list", params: {} }),
@@ -70,12 +91,8 @@ test("legacy initialize and tool listing expose the read-only contract", async (
   assert.equal(listed.status, 200);
   const payload = await responsePayload(listed);
   assert.deepEqual(
-    payload.result.tools.map((tool) => tool.name),
-    [
-      "financial_evidence_topics",
-      "financial_evidence_route",
-      "financial_evidence_fetch",
-    ],
+    normalizeToolContract(payload.result.tools),
+    financialEvidenceMcpContract.tools,
   );
   for (const tool of payload.result.tools) {
     assert.equal(tool.annotations.readOnlyHint, true);
@@ -113,6 +130,10 @@ test("modern discovery is stateless and advertises the same server", async () =>
   assert.equal(
     payload.result._meta["io.modelcontextprotocol/serverInfo"].name,
     "financial-evidence",
+  );
+  assert.equal(
+    payload.result._meta["io.modelcontextprotocol/serverInfo"].version,
+    "0.1.4",
   );
   assert.equal(payload.result.resultType, "complete");
 });
@@ -236,10 +257,10 @@ test("a body over the byte cap is explicit unavailable evidence", async () => {
   }
 });
 
-test("fetch fan-out and encoded responses stay below hard public budgets", async () => {
+test("all five topics fan out within hard public budgets", async () => {
   const originalFetch = globalThis.fetch;
   const requested = [];
-  const fixture = JSON.stringify({ payload: "x".repeat(499_900) });
+  const fixture = JSON.stringify({ payload: "x".repeat(249_900) });
   globalThis.fetch = async (url) => {
     requested.push(url);
     return new Response(fixture, {
@@ -256,7 +277,13 @@ test("fetch fan-out and encoded responses stay below hard public budgets", async
         params: {
           name: "financial_evidence_fetch",
           arguments: {
-            topics: ["china-economy", "money-market"],
+            topics: [
+              "money-market",
+              "capital-market",
+              "china-economy",
+              "bank-risk",
+              "market-liquidity",
+            ],
             max_bytes: MAX_SOURCE_BYTES,
           },
         },
@@ -280,7 +307,10 @@ test("fetch fan-out and encoded responses stay below hard public budgets", async
       : JSON.parse(rawResponse);
     const packet = JSON.parse(payload.result.content[0].text);
     assert.equal(packet.status, "complete");
-    assert.equal(packet.sources.length, 3);
+    assert.equal(packet.sources.length, 6);
+    assert.equal(packet.limits.max_topics, 5);
+    assert.equal(packet.limits.max_source_bytes, MAX_SOURCE_BYTES);
+    assert.equal(packet.limits.max_packet_source_bytes, MAX_PACKET_SOURCE_BYTES);
     assert.ok(
       packet.sources.reduce((total, source) => total + source.bytes, 0) <=
         MAX_PACKET_SOURCE_BYTES,
@@ -291,7 +321,7 @@ test("fetch fan-out and encoded responses stay below hard public budgets", async
       ),
       true,
     );
-    assert.equal(requested.length, 3);
+    assert.equal(requested.length, 6);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -343,7 +373,7 @@ test("the live-sized money-market payload fits with bounded headroom", async () 
   }
 });
 
-test("one call cannot fan out across every topic", async () => {
+test("duplicate topics fail schema validation before network access", async () => {
   const originalFetch = globalThis.fetch;
   let calls = 0;
   globalThis.fetch = async () => {
@@ -351,13 +381,6 @@ test("one call cannot fan out across every topic", async () => {
     throw new Error("must not fetch");
   };
   try {
-    const topics = [
-      "money-market",
-      "capital-market",
-      "china-economy",
-      "bank-risk",
-      "market-liquidity",
-    ];
     const response = await worker.fetch(
       request({
         jsonrpc: "2.0",
@@ -365,17 +388,14 @@ test("one call cannot fan out across every topic", async () => {
         method: "tools/call",
         params: {
           name: "financial_evidence_fetch",
-          arguments: { topics },
+          arguments: { topics: ["money-market", "money-market"] },
         },
       }),
       ALLOW_FETCH_ENV,
     );
     const payload = await responsePayload(response);
     assert.equal(payload.result.isError, true);
-    assert.match(
-      payload.result.content[0].text,
-      new RegExp(`at most ${MAX_FETCH_TOPICS} unique topics`),
-    );
+    assert.match(payload.result.content[0].text, /unique items/);
     assert.equal(calls, 0);
   } finally {
     globalThis.fetch = originalFetch;
@@ -527,6 +547,11 @@ test("the server factory is lazy about network access", () => {
   const server = createFinancialEvidenceServer({ fetchImpl });
   assert.ok(server);
   assert.equal(calls, 0);
+  assert.equal(MAX_FETCH_TOPICS, 5);
+  assert.equal(DEFAULT_SOURCE_BYTES, 1_048_576);
+  assert.equal(MAX_SOURCE_BYTES, 4_194_304);
+  assert.equal(DEFAULT_TIMEOUT_SECONDS, 10);
+  assert.equal(MAX_TIMEOUT_SECONDS, 30);
 });
 
 test("browser Origins are restricted while server-side clients remain public", async () => {

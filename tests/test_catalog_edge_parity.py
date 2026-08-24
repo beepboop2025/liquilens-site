@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 
 from scripts.verify_catalog_edge import (
+    EXPECTED_MCP_CONTRACT,
     EXPECTED_MCP_TOOLS,
     EXPECTED_MCP_VERSION,
     decode_mcp_response,
@@ -65,7 +66,14 @@ def test_mcp_receipt_decoder_accepts_one_json_or_sse_message():
         b"event: message\ndata: " + encoded + b"\n\n",
         "text/event-stream; charset=utf-8",
     ) == payload
-    assert EXPECTED_MCP_VERSION == "0.1.3"
+    assert EXPECTED_MCP_VERSION == "0.1.4"
+    assert EXPECTED_MCP_CONTRACT["serverInfo"] == {
+        "name": "financial-evidence",
+        "version": "0.1.4",
+    }
+    assert [tool["name"] for tool in EXPECTED_MCP_CONTRACT["tools"]] == list(
+        EXPECTED_MCP_TOOLS
+    )
 
 
 def test_mcp_receipt_decoder_rejects_batches_and_multiple_sse_events():

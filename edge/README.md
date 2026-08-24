@@ -24,18 +24,23 @@ Never commit the issued token or pass it through a workflow input.
 
 The MCP endpoint exposes three read-only tools for LiquiLens, Undertow, Seiche,
 and Palimpsest over current Streamable HTTP, with stateless compatibility for
-2025 clients. It has no account or mutation surface and can fetch only the
-fixed public HTTPS evidence routes in the committed worker.
+2025 clients. Its v0.1.4 identity, tool metadata, and accepted input schemas are
+locked to the packaged server by
+[`protocol/financial-evidence-mcp-v0.1.4.json`](../protocol/financial-evidence-mcp-v0.1.4.json).
+It has no account or mutation surface and can fetch only the fixed public HTTPS
+evidence routes in the committed worker.
 
 The public boundary rejects request bodies over 32 KiB and JSON-RPC batches.
-Only two unique topics may be fetched per call, individual upstream documents
-are capped at 768 KiB, the aggregate source-byte budget is 1.5 MiB, the encoded
-evidence packet is capped at 2 MiB, and the fully serialized HTTP response is
-capped at 4 MiB. Fetches run sequentially, use a 30-second edge cache, and pass
-through a coarse 60-per-minute, per-location Cloudflare rate-limit bucket.
-Topic discovery and offline route resolution remain outside that fetch limiter.
-Server-side clients need no Origin header; browser requests are accepted only
-from <code>https://liquilens.in</code> to preserve MCP's DNS rebinding defense.
+All five unique topics may be fetched in one call, producing at most six fixed
+source reads. The package-compatible `max_bytes` ceiling is 4 MiB per source and
+the default is 1 MiB, while the remote endpoint additionally enforces a 1.5 MiB
+aggregate source-byte budget, a 2 MiB encoded evidence-packet cap, and a 4 MiB
+fully serialized HTTP-response cap. Fetches run sequentially, accept timeouts up
+to 30 seconds, use a 30-second edge cache, and pass through a coarse
+60-per-minute, per-location Cloudflare rate-limit bucket. Topic discovery and
+offline route resolution remain outside that fetch limiter. Server-side clients
+need no Origin header; browser requests are accepted only from
+<code>https://liquilens.in</code> to preserve MCP's DNS rebinding defense.
 
 The catalog is imported from the repository's canonical
 `.well-known/ai-catalog.json`; do not maintain a second manifest in this
