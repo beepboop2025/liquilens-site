@@ -3,7 +3,24 @@
 GitHub Pages remains the site host. This Worker owns the ARD catalog at
 `https://liquilens.in/.well-known/ai-catalog.json` and the stateless, read-only
 Financial Evidence MCP endpoint at
-`https://liquilens.in/mcp/financial-evidence`. Every other path returns `404`.
+`https://liquilens.in/mcp/financial-evidence`. It also owns the optional OpenAI
+Apps domain-verification route at
+`https://liquilens.in/.well-known/openai-apps-challenge`. Every other path
+returns `404`.
+
+The OpenAI Apps route is fail-closed. Without the dedicated
+`OPENAI_APPS_CHALLENGE_TOKEN` Worker secret it returns `404`; after OpenAI
+issues a challenge value, store that exact value without quotes or a trailing
+newline:
+
+```bash
+npx --no-install wrangler secret put OPENAI_APPS_CHALLENGE_TOKEN \
+  --config wrangler.catalog.jsonc
+```
+
+Once configured, `GET` returns only the exact token as `text/plain`, `HEAD`
+returns the same metadata without a body, and every other method returns `405`.
+Never commit the issued token or pass it through a workflow input.
 
 The MCP endpoint exposes three read-only tools for LiquiLens, Undertow, Seiche,
 and Palimpsest over current Streamable HTTP, with stateless compatibility for

@@ -5,6 +5,7 @@ import test from "node:test";
 import worker, {
   AI_CATALOG_PATH,
   CATALOG_PATH,
+  OPENAI_APPS_CHALLENGE_PATH,
   PROTOCOL_CATALOG_PATH,
 } from "../edge/catalog-worker.mjs";
 
@@ -92,6 +93,49 @@ test("the handler refuses paths outside its exact route", async () => {
 });
 
 
+test("OpenAI Apps challenge stays absent until its exact token is configured", async () => {
+  const url = `https://liquilens.in${OPENAI_APPS_CHALLENGE_PATH}`;
+  for (const env of [undefined, {}, { OPENAI_APPS_CHALLENGE_TOKEN: "" }]) {
+    const response = await worker.fetch(new Request(url), env);
+    assert.equal(response.status, 404);
+    assert.equal(await response.text(), "Not found");
+  }
+});
+
+
+test("OpenAI Apps challenge returns the configured token byte-for-byte", async () => {
+  const token = "issued-token-Δ";
+  const tokenBytes = new TextEncoder().encode(token).byteLength;
+  const env = { OPENAI_APPS_CHALLENGE_TOKEN: token };
+  const url = `https://liquilens.in${OPENAI_APPS_CHALLENGE_PATH}`;
+
+  const get = await worker.fetch(new Request(url), env);
+  const head = await worker.fetch(new Request(url, { method: "HEAD" }), env);
+
+  assert.equal(get.status, 200);
+  assert.equal(await get.text(), token);
+  assert.equal(get.headers.get("content-type"), "text/plain; charset=utf-8");
+  assert.equal(get.headers.get("cache-control"), "no-store");
+  assert.equal(get.headers.get("x-content-type-options"), "nosniff");
+  assert.equal(get.headers.get("content-length"), String(tokenBytes));
+  assert.equal(head.status, 200);
+  assert.equal(await head.text(), "");
+  assert.equal(head.headers.get("content-length"), String(tokenBytes));
+});
+
+
+test("OpenAI Apps challenge rejects non-read methods when configured", async () => {
+  const env = { OPENAI_APPS_CHALLENGE_TOKEN: "issued-token" };
+  const url = `https://liquilens.in${OPENAI_APPS_CHALLENGE_PATH}`;
+
+  for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"]) {
+    const response = await worker.fetch(new Request(url, { method }), env);
+    assert.equal(response.status, 405);
+    assert.equal(response.headers.get("allow"), "GET, HEAD");
+  }
+});
+
+
 test("the deployed Worker declares the fail-closed MCP fetch limiter", async () => {
   const config = JSON.parse(
     await readFile(new URL("../wrangler.catalog.jsonc", import.meta.url), "utf8"),
@@ -109,6 +153,14 @@ test("the deployed Worker declares the fail-closed MCP fetch limiter", async () 
     config.routes.some(
       (route) =>
         route.pattern === "https://liquilens.in/mcp/financial-evidence*",
+    ),
+    true,
+  );
+  assert.equal(
+    config.routes.some(
+      (route) =>
+        route.pattern ===
+        "https://liquilens.in/.well-known/openai-apps-challenge*",
     ),
     true,
   );
