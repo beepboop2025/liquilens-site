@@ -1,9 +1,14 @@
-# LiquiLens catalog edge route
+# LiquiLens public edge routes
 
-GitHub Pages remains the site host. This Worker owns only
-`https://liquilens.in/.well-known/ai-catalog.json`, so the ARD catalog remains
-available with its preferred media type and CORS headers if a Pages deployment
-is delayed.
+GitHub Pages remains the site host. This Worker owns the ARD catalog at
+`https://liquilens.in/.well-known/ai-catalog.json` and the stateless, read-only
+Financial Evidence MCP endpoint at
+`https://liquilens.in/mcp/financial-evidence`. Every other path returns `404`.
+
+The MCP endpoint exposes three read-only tools for LiquiLens, Undertow, Seiche,
+and Palimpsest over current Streamable HTTP, with stateless compatibility for
+2025 clients. It has no account or mutation surface and can fetch only the
+fixed public HTTPS evidence routes in the committed worker.
 
 The catalog is imported from the repository's canonical
 `.well-known/ai-catalog.json`; do not maintain a second manifest in this
@@ -12,7 +17,8 @@ directory.
 Validate and deploy from the repository root:
 
 ```bash
-node --test tests/test_catalog_worker.mjs
+npm ci --ignore-scripts
+npm run test:edge
 npx wrangler deploy --config wrangler.catalog.jsonc --dry-run
 npx wrangler deploy --config wrangler.catalog.jsonc
 ```

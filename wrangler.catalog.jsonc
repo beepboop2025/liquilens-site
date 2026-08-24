@@ -12,6 +12,10 @@
     {
       "pattern": "https://liquilens.in/protocol/catalog.json*",
       "zone_name": "liquilens.in"
+    },
+    {
+      "pattern": "https://liquilens.in/mcp/financial-evidence*",
+      "zone_name": "liquilens.in"
     }
   ],
   "observability": {

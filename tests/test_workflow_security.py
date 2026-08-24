@@ -11,6 +11,7 @@ ARTICLES = (ROOT / ".github/workflows/articles-daily.yml").read_text(encoding="u
 ACTION_PINS = {
     "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
     "actions/setup-python": "5fda3b95a4ea91299a34e894583c3862153e4b97",
+    "actions/setup-node": "249970729cb0ef3589644e2896645e5dc5ba9c38",
     "actions/configure-pages": "45bfe0192ca1faeb007ade9deae92b16b8254a0d",
     "actions/upload-pages-artifact": "fc324d3547104276b827a68afc52ff2a11cc49c9",
     "actions/deploy-pages": "cd2ce8fcbc39b97be8ca5fce6e763baed58fa128",
@@ -26,6 +27,7 @@ def test_every_external_action_is_pinned_to_the_reviewed_commit():
         assert ACTION_PINS[action] == commit
     assert sum(action == "actions/checkout" for action, _ in uses) == 2
     assert sum(action == "actions/setup-python" for action, _ in uses) == 2
+    assert sum(action == "actions/setup-node" for action, _ in uses) == 1
 
 
 def test_workflows_pin_the_runner_and_scope_checkout_credentials():
