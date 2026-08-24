@@ -75,6 +75,9 @@ def test_intent_pages_have_canonical_schema_faq_and_visible_boundaries():
         assert '<script src="/ai-referral.js" defer></script>' in page
         assert "static.cloudflareinsights.com/beacon.min.js" in page
         assert "43b422e63bb44fb5975c7bb39bd0ba24" in page
+        assert '<meta name="twitter:card" content="summary_large_image">' in page
+        for name in ("title", "description", "image"):
+            assert f'<meta name="twitter:{name}"' in page
 
         blocks = json_ld_blocks(page)
         graph = next(block["@graph"] for block in blocks if "@graph" in block)
@@ -98,6 +101,12 @@ def test_intent_pages_have_canonical_schema_faq_and_visible_boundaries():
         assert page.count('class="citation') == 4
         assert "not investment advice" in visible.lower()
         assert "financial authority" in visible.lower()
+
+
+def test_world_economy_hub_links_every_intent_router():
+    page = read("world-economy/index.html")
+    for slug in ROUTES:
+        assert f'<a href="/{slug}/">' in page
 
 
 def test_each_intent_router_has_distinct_bounded_cta_attribution():
