@@ -104,7 +104,7 @@ test("the deployed Worker declares the fail-closed MCP fetch limiter", async () 
     },
   ]);
   assert.deepEqual(config.version_metadata, { binding: "CF_VERSION_METADATA" });
-  assert.deepEqual(config.limits, { subrequests: 6 });
+  assert.equal(config.limits, undefined);
   assert.equal(
     config.routes.some(
       (route) =>
