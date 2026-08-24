@@ -319,7 +319,7 @@
         "How do I verify a LiquiLens evidence carrier?"
       ],
       "version": "0.14.0",
-      "updatedAt": "2026-08-24T13:36:26Z",
+      "updatedAt": "2026-08-24T14:34:07Z",
       "metadata": {
         "access": "public",
         "license": "Apache-2.0",
@@ -332,8 +332,18 @@
         "browserVerifier": "https://beepboop2025.github.io/liquilens-evidence-carrier/",
         "browserVerifierSource": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser",
         "consumerChannelCatalog": "https://liquilens.in/protocol/catalog.json",
-        "consumerChannelCount": 12,
-        "consumerChannelStatuses": "10 live; 1 live reference consumer; 1 fetched/rendered only",
+        "consumerChannelCount": 18,
+        "consumerChannelStatuses": "16 live; 1 live reference consumer; 1 fetched/rendered only",
+        "airflowProvider": "https://github.com/beepboop2025/liquilens-airflow-provider/releases/download/v0.1.0/liquilens_airflow_provider-0.1.0-py3-none-any.whl#sha256=aa91a2528ebf2e1583c379a08ce60f9aa52fc33d9d89da0bab9876d5720956bf",
+        "airflowInstall": "python -m pip install 'liquilens-airflow-provider @ https://github.com/beepboop2025/liquilens-airflow-provider/releases/download/v0.1.0/liquilens_airflow_provider-0.1.0-py3-none-any.whl#sha256=aa91a2528ebf2e1583c379a08ce60f9aa52fc33d9d89da0bab9876d5720956bf'",
+        "codexPlugin": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/plugin-v0.14.1/.agents/plugins/plugins/liquilens-evidence",
+        "codexPluginInstall": "codex plugin marketplace add beepboop2025/liquilens-evidence-carrier --ref plugin-v0.14.1 && codex plugin add liquilens-evidence@liquilens",
+        "devContainerFeature": "ghcr.io/beepboop2025/liquilens-devcontainer-features/liquilens-evidence@sha256:79ac17d7c3f91dc9360c6aa63cb9e4fa0081d5c81e1a1492b2198a8280f5b22d",
+        "mcpOciImage": "ghcr.io/beepboop2025/liquilens-evidence-carrier-mcp@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7",
+        "openbbExtension": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/05a77927496bf22c8bfdb7cbce2d6f43054911d0/integrations/openbb",
+        "openbbInstall": "python -m pip install 'git+https://github.com/beepboop2025/liquilens-evidence-carrier.git@05a77927496bf22c8bfdb7cbce2d6f43054911d0#subdirectory=integrations/openbb'",
+        "vscodeVsix": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/vscode-v0.1.0/liquilens-evidence-0.1.0.vsix",
+        "vscodeVsixSha256": "ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf",
         "financialAuthority": "none"
       }
     }

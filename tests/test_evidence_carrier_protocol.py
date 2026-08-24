@@ -36,6 +36,16 @@ EXPECTED_CHANNELS = {
         "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/"
         "skill-v0.14.0/skills/liquilens-evidence",
     ),
+    "codex-plugin": (
+        "live",
+        "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/"
+        "plugin-v0.14.1/.agents/plugins/plugins/liquilens-evidence",
+    ),
+    "vscode-vsix": (
+        "live",
+        "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/"
+        "download/vscode-v0.1.0/liquilens-evidence-0.1.0.vsix",
+    ),
     "browser-verifier": (
         "live",
         "https://beepboop2025.github.io/liquilens-evidence-carrier/",
@@ -63,6 +73,18 @@ EXPECTED_CHANNELS = {
         "https://ghcr.io/v2/beepboop2025/liquilens-evidence-carrier/manifests/"
         "sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1",
     ),
+    "mcp-oci": (
+        "live",
+        "https://ghcr.io/v2/beepboop2025/liquilens-evidence-carrier-mcp/"
+        "manifests/sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a"
+        "17729ea7f7e3e2f7",
+    ),
+    "devcontainer-feature": (
+        "live",
+        "https://ghcr.io/v2/beepboop2025/liquilens-devcontainer-features/"
+        "liquilens-evidence/manifests/sha256:79ac17d7c3f91dc9360c6aa63cb9e4fa"
+        "0081d5c81e1a1492b2198a8280f5b22d",
+    ),
     "research-notebook": (
         "live",
         "https://github.com/beepboop2025/liquilens-evidence-carrier/blob/"
@@ -86,6 +108,17 @@ EXPECTED_CHANNELS = {
         "live",
         "https://github.com/beepboop2025/liquilens-evidence-carrier/blob/"
         "3c97b71093f8bca201e74bb5cc7ddbe50d9fa052/NIX.md",
+    ),
+    "openbb-extension": (
+        "live",
+        "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/"
+        "05a77927496bf22c8bfdb7cbce2d6f43054911d0/integrations/openbb",
+    ),
+    "airflow-provider": (
+        "live",
+        "https://github.com/beepboop2025/liquilens-airflow-provider/releases/"
+        "download/v0.1.0/liquilens_airflow_provider-0.1.0-py3-none-any.whl"
+        "#sha256=aa91a2528ebf2e1583c379a08ce60f9aa52fc33d9d89da0bab9876d5720956bf",
     ),
     "fdc3-evidence-inspector": (
         "live_reference_consumer",
@@ -198,9 +231,52 @@ def test_consumer_channel_matrix_preserves_receipts_and_status_boundaries():
         "https://skills.sh/beepboop2025/liquilens-evidence-carrier/"
         "liquilens-evidence"
     )
+    assert by_id["codex-plugin"]["sourceCommit"] == (
+        "1531a60192728253283459287e9afecfa825f3e0"
+    )
+    assert by_id["codex-plugin"]["sha256"] == (
+        "50cfa5b4ce3f974fb0af43d9eaa75014c44f97de03dcec30abab1ac2e99fa301"
+    )
+    assert "--ref plugin-v0.14.1" in by_id["codex-plugin"]["marketplaceCommand"]
+    assert by_id["codex-plugin"]["command"] == (
+        "codex plugin add liquilens-evidence@liquilens"
+    )
+    assert by_id["vscode-vsix"]["sourceCommit"] == (
+        "aa1941b0d14152f7de43eb9acac41c10e68bc70d"
+    )
+    assert by_id["vscode-vsix"]["protectedMainCommit"] == (
+        "f7bf6cd5b20c50e08ae3076ced5dea3456b49b24"
+    )
+    assert by_id["vscode-vsix"]["bytes"] == 16612
+    assert by_id["vscode-vsix"]["sha256"] == (
+        "ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf"
+    )
+    assert by_id["vscode-vsix"]["visualStudioMarketplaceStatus"] == (
+        "publisher_auth_gated_not_listed"
+    )
+    assert by_id["vscode-vsix"]["openVsxStatus"] == (
+        "publisher_auth_gated_not_listed"
+    )
     assert by_id["oci"]["image"].endswith(
         "@sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1"
     )
+    assert by_id["mcp-oci"]["image"].endswith(
+        "@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7"
+    )
+    assert by_id["mcp-oci"]["sourceCommit"] == (
+        "25d2fbcf180c70816d9e60c3590854f887449c79"
+    )
+    assert "--network none --read-only" in by_id["mcp-oci"]["command"]
+    assert by_id["devcontainer-feature"]["feature"].endswith(
+        "@sha256:79ac17d7c3f91dc9360c6aa63cb9e4fa0081d5c81e1a1492b2198a8280f5b22d"
+    )
+    assert by_id["devcontainer-feature"]["sourceCommit"] == (
+        "1c10ab6f88810bc323c75c73a9fe00288dd518a4"
+    )
+    assert by_id["devcontainer-feature"]["upstreamDirectory"] == {
+        "status": "submitted_not_listed",
+        "url": "https://github.com/devcontainers/devcontainers.github.io/pull/729",
+    }
     assert "#sha256=" in by_id["uvx-immutable-wheel"]["command"]
     assert "/3c97b71093f8bca201e74bb5cc7ddbe50d9fa052" in (
         by_id["nix-flake"]["command"]
@@ -209,9 +285,28 @@ def test_consumer_channel_matrix_preserves_receipts_and_status_boundaries():
         "status": "submitted_not_listed",
         "url": "https://github.com/finos-labs/FDC3-App-Directory/pull/40",
     }
+    assert by_id["openbb-extension"]["sourceCommit"] == (
+        "05a77927496bf22c8bfdb7cbce2d6f43054911d0"
+    )
+    assert by_id["openbb-extension"]["interface"] == (
+        "obb.liquilens.verify(data=...)"
+    )
+    assert "#subdirectory=integrations/openbb" in (
+        by_id["openbb-extension"]["command"]
+    )
+    assert by_id["airflow-provider"]["sourceCommit"] == (
+        "03d125b032aaec4a39cc10cc795ef48d4f605c68"
+    )
+    assert by_id["airflow-provider"]["protectedMainCommit"] == (
+        "c4ccff491d48501379a49e6ea71494db27c42da1"
+    )
+    assert by_id["airflow-provider"]["sha256"] == (
+        "aa91a2528ebf2e1583c379a08ce60f9aa52fc33d9d89da0bab9876d5720956bf"
+    )
+    assert "#sha256=" in by_id["airflow-provider"]["command"]
 
     serialized = json.dumps(channels).lower()
-    for unsupported in ("openbb", "conda", "schemastore"):
+    for unsupported in ("conda", "schemastore"):
         assert unsupported not in serialized
 
 
@@ -229,7 +324,7 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
         catalog["consumerChannels"]
     )
     assert entry["metadata"]["consumerChannelStatuses"] == (
-        "10 live; 1 live reference consumer; 1 fetched/rendered only"
+        "16 live; 1 live reference consumer; 1 fetched/rendered only"
     )
 
     product = json.loads(_read("product-card.json"))["access"]
@@ -239,6 +334,12 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
     assert product["evidence_carrier_cdn_module"] == (
         EXPECTED_CHANNELS["exact-sha-cdn-module"][1]
     )
+    assert product["evidence_carrier_mcp_oci_image"].endswith(
+        "@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7"
+    )
+    assert product["evidence_carrier_devcontainer_feature"].endswith(
+        "@sha256:79ac17d7c3f91dc9360c6aa63cb9e4fa0081d5c81e1a1492b2198a8280f5b22d"
+    )
     assert product["evidence_carrier_agent_skill"] == (
         EXPECTED_CHANNELS["agent-skill"][1]
     )
@@ -246,6 +347,16 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
     assert product["evidence_carrier_agent_skill_directory"] == (
         "https://skills.sh/beepboop2025/liquilens-evidence-carrier/"
         "liquilens-evidence"
+    )
+    assert product["evidence_carrier_codex_plugin"] == (
+        EXPECTED_CHANNELS["codex-plugin"][1]
+    )
+    assert "plugin-v0.14.1" in product["evidence_carrier_codex_plugin_install"]
+    assert product["evidence_carrier_vscode_vsix"] == (
+        EXPECTED_CHANNELS["vscode-vsix"][1]
+    )
+    assert product["evidence_carrier_vscode_vsix_sha256"] == (
+        "ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf"
     )
     assert product["evidence_carrier_notebook"] == (
         EXPECTED_CHANNELS["research-notebook"][1]
@@ -256,6 +367,16 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
     assert product["evidence_carrier_fdc3_reference_consumer"] == (
         EXPECTED_CHANNELS["fdc3-evidence-inspector"][1]
     )
+    assert product["evidence_carrier_openbb"] == (
+        EXPECTED_CHANNELS["openbb-extension"][1]
+    )
+    assert "05a77927496bf22c8bfdb7cbce2d6f43054911d0" in (
+        product["evidence_carrier_openbb_install"]
+    )
+    assert product["evidence_carrier_airflow_provider"] == (
+        EXPECTED_CHANNELS["airflow-provider"][1]
+    )
+    assert "#sha256=aa91a252" in product["evidence_carrier_airflow_install"]
 
 
 def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
@@ -268,11 +389,17 @@ def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
     for channel_id in (
         "official-mcp-registry",
         "agent-skill",
+        "codex-plugin",
+        "vscode-vsix",
         "browser-verifier",
         "exact-sha-cdn-module",
+        "mcp-oci",
+        "devcontainer-feature",
         "research-notebook",
         "mybinder",
         "colab",
+        "openbb-extension",
+        "airflow-provider",
         "fdc3-evidence-inspector",
     ):
         assert EXPECTED_CHANNELS[channel_id][1] in page
@@ -298,6 +425,7 @@ def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
         "modern web browsers",
         "OCI on linux/amd64 and linux/arm64",
         "Nix on Linux and Darwin",
+        "VS Code desktop, remote, web and Codespaces",
     ]
     assert "aggregateRating" not in structured
     assert "downloadCount" not in structured
