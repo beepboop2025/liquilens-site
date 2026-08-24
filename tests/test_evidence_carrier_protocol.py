@@ -41,6 +41,11 @@ EXPECTED_CHANNELS = {
         "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/"
         "plugin-v0.14.1/.agents/plugins/plugins/liquilens-evidence",
     ),
+    "vscode-vsix": (
+        "live",
+        "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/"
+        "download/vscode-v0.1.0/liquilens-evidence-0.1.0.vsix",
+    ),
     "browser-verifier": (
         "live",
         "https://beepboop2025.github.io/liquilens-evidence-carrier/",
@@ -236,6 +241,22 @@ def test_consumer_channel_matrix_preserves_receipts_and_status_boundaries():
     assert by_id["codex-plugin"]["command"] == (
         "codex plugin add liquilens-evidence@liquilens"
     )
+    assert by_id["vscode-vsix"]["sourceCommit"] == (
+        "aa1941b0d14152f7de43eb9acac41c10e68bc70d"
+    )
+    assert by_id["vscode-vsix"]["protectedMainCommit"] == (
+        "f7bf6cd5b20c50e08ae3076ced5dea3456b49b24"
+    )
+    assert by_id["vscode-vsix"]["bytes"] == 16612
+    assert by_id["vscode-vsix"]["sha256"] == (
+        "ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf"
+    )
+    assert by_id["vscode-vsix"]["visualStudioMarketplaceStatus"] == (
+        "publisher_auth_gated_not_listed"
+    )
+    assert by_id["vscode-vsix"]["openVsxStatus"] == (
+        "publisher_auth_gated_not_listed"
+    )
     assert by_id["oci"]["image"].endswith(
         "@sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1"
     )
@@ -303,7 +324,7 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
         catalog["consumerChannels"]
     )
     assert entry["metadata"]["consumerChannelStatuses"] == (
-        "15 live; 1 live reference consumer; 1 fetched/rendered only"
+        "16 live; 1 live reference consumer; 1 fetched/rendered only"
     )
 
     product = json.loads(_read("product-card.json"))["access"]
@@ -331,6 +352,12 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
         EXPECTED_CHANNELS["codex-plugin"][1]
     )
     assert "plugin-v0.14.1" in product["evidence_carrier_codex_plugin_install"]
+    assert product["evidence_carrier_vscode_vsix"] == (
+        EXPECTED_CHANNELS["vscode-vsix"][1]
+    )
+    assert product["evidence_carrier_vscode_vsix_sha256"] == (
+        "ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf"
+    )
     assert product["evidence_carrier_notebook"] == (
         EXPECTED_CHANNELS["research-notebook"][1]
     )
@@ -363,6 +390,7 @@ def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
         "official-mcp-registry",
         "agent-skill",
         "codex-plugin",
+        "vscode-vsix",
         "browser-verifier",
         "exact-sha-cdn-module",
         "mcp-oci",
@@ -397,6 +425,7 @@ def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
         "modern web browsers",
         "OCI on linux/amd64 and linux/arm64",
         "Nix on Linux and Darwin",
+        "VS Code desktop, remote, web and Codespaces",
     ]
     assert "aggregateRating" not in structured
     assert "downloadCount" not in structured

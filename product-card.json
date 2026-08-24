@@ -89,6 +89,8 @@
     "evidence_carrier_agent_skill_install": "npx skills add https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.14.0/skills/liquilens-evidence --skill liquilens-evidence",
     "evidence_carrier_codex_plugin": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/plugin-v0.14.1/.agents/plugins/plugins/liquilens-evidence",
     "evidence_carrier_codex_plugin_install": "codex plugin marketplace add beepboop2025/liquilens-evidence-carrier --ref plugin-v0.14.1 && codex plugin add liquilens-evidence@liquilens",
+    "evidence_carrier_vscode_vsix": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/vscode-v0.1.0/liquilens-evidence-0.1.0.vsix",
+    "evidence_carrier_vscode_vsix_sha256": "ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf",
     "evidence_carrier_cdn_module": "https://cdn.jsdelivr.net/gh/beepboop2025/liquilens-evidence-carrier@68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser/verifier.mjs",
     "evidence_carrier_one_shot_command": "uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl#sha256=f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24' liquilens-evidence --help",
     "evidence_carrier_homebrew": "brew install beepboop2025/tap/liquilens-evidence",

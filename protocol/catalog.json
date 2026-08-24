@@ -49,6 +49,23 @@
       "verifiedResult": "the signed plugin-v0.14.1 tag was added as a public Git marketplace, and a real Codex install enabled version 0.14.1 with skill bytes identical to the canonical package"
     },
     {
+      "id": "vscode-vsix",
+      "label": "VS Code and Codespaces VSIX",
+      "status": "live",
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/vscode-v0.1.0/liquilens-evidence-0.1.0.vsix",
+      "releaseUrl": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/vscode-v0.1.0",
+      "installCommand": "code --install-extension liquilens-evidence-0.1.0.vsix",
+      "tagObject": "275d8248b8b68e013d8ffeb4d436a8b8ff28a400",
+      "sourceCommit": "aa1941b0d14152f7de43eb9acac41c10e68bc70d",
+      "protectedMainCommit": "f7bf6cd5b20c50e08ae3076ced5dea3456b49b24",
+      "bytes": 16612,
+      "sha256": "ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32739267049",
+      "verifiedResult": "public attested VSIX from a signed source tag; an anonymous consumer received HTTP 200, matched the checksum, enforced the eight-file allowlist and offline boundary, and verified provenance for the browser-entrypoint extension targeting VS Code desktop, remote, web, and Codespaces",
+      "visualStudioMarketplaceStatus": "publisher_auth_gated_not_listed",
+      "openVsxStatus": "publisher_auth_gated_not_listed"
+    },
+    {
       "id": "browser-verifier",
       "label": "Zero-install browser verifier",
       "status": "live",
