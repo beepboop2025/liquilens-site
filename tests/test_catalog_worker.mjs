@@ -21,7 +21,11 @@ test("GET returns the committed ARD catalog with discovery headers", async () =>
   const carrier = catalog.entries.find(
     (entry) => entry.identifier === "urn:air:liquilens.in:protocol:evidence-carrier",
   );
-  assert.equal(carrier.version, "0.13.6");
+  assert.equal(carrier.version, "0.14.0");
+  assert.equal(
+    carrier.metadata.mcpBundleSha256,
+    "e57e3039d7ae53b6feb3638dbc2f7ba413ff437e5c3a1b62172cad6f3b98e6ea",
+  );
   assert.match(response.headers.get("content-type"), /^application\/ai-catalog\+json/);
   assert.equal(response.headers.get("access-control-allow-origin"), "*");
 });
