@@ -37,6 +37,18 @@
       "verifiedResult": "skills 1.5.23 anonymously discovered exactly one skill and installed bytes identical to the immutable public tag"
     },
     {
+      "id": "codex-plugin",
+      "label": "Codex Git marketplace plugin",
+      "status": "live",
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/plugin-v0.14.1/.agents/plugins/plugins/liquilens-evidence",
+      "marketplaceCommand": "codex plugin marketplace add beepboop2025/liquilens-evidence-carrier --ref plugin-v0.14.1",
+      "command": "codex plugin add liquilens-evidence@liquilens",
+      "sourceCommit": "1531a60192728253283459287e9afecfa825f3e0",
+      "sha256": "50cfa5b4ce3f974fb0af43d9eaa75014c44f97de03dcec30abab1ac2e99fa301",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32736687203",
+      "verifiedResult": "the signed plugin-v0.14.1 tag was added as a public Git marketplace, and a real Codex install enabled version 0.14.1 with skill bytes identical to the canonical package"
+    },
+    {
       "id": "browser-verifier",
       "label": "Zero-install browser verifier",
       "status": "live",
@@ -86,6 +98,37 @@
       "verifiedResult": "anonymous OCI index resolves to linux/amd64 and linux/arm64 images with attestations"
     },
     {
+      "id": "mcp-oci",
+      "label": "Dedicated MCP OCI image",
+      "status": "live",
+      "url": "https://ghcr.io/v2/beepboop2025/liquilens-evidence-carrier-mcp/manifests/sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7",
+      "packageUrl": "https://github.com/beepboop2025/liquilens-evidence-carrier/pkgs/container/liquilens-evidence-carrier-mcp",
+      "image": "ghcr.io/beepboop2025/liquilens-evidence-carrier-mcp@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7",
+      "command": "docker run --rm -i --network none --read-only --mount 'type=bind,src=$PWD,dst=/evidence,readonly' ghcr.io/beepboop2025/liquilens-evidence-carrier-mcp@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7",
+      "sourceCommit": "25d2fbcf180c70816d9e60c3590854f887449c79",
+      "sha256": "d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32734295139",
+      "verifiedResult": "anonymous exact-digest index fetch returned linux/amd64 and linux/arm64 images plus attestations; the no-network, read-only runtime passed MCP initialization, tool discovery, verification, all-false authority, and root-escape rejection"
+    },
+    {
+      "id": "devcontainer-feature",
+      "label": "Dev Container Feature",
+      "status": "live",
+      "url": "https://ghcr.io/v2/beepboop2025/liquilens-devcontainer-features/liquilens-evidence/manifests/sha256:79ac17d7c3f91dc9360c6aa63cb9e4fa0081d5c81e1a1492b2198a8280f5b22d",
+      "repository": "https://github.com/beepboop2025/liquilens-devcontainer-features",
+      "feature": "ghcr.io/beepboop2025/liquilens-devcontainer-features/liquilens-evidence@sha256:79ac17d7c3f91dc9360c6aa63cb9e4fa0081d5c81e1a1492b2198a8280f5b22d",
+      "configurationKey": "ghcr.io/beepboop2025/liquilens-devcontainer-features/liquilens-evidence@sha256:79ac17d7c3f91dc9360c6aa63cb9e4fa0081d5c81e1a1492b2198a8280f5b22d",
+      "sourceCommit": "1c10ab6f88810bc323c75c73a9fe00288dd518a4",
+      "sha256": "79ac17d7c3f91dc9360c6aa63cb9e4fa0081d5c81e1a1492b2198a8280f5b22d",
+      "collectionSha256": "54882f74db5b1a81d1ca68b7bc773a63ddf6e2667e479ab61a79b334243e6a5b",
+      "receipt": "https://github.com/beepboop2025/liquilens-devcontainer-features/actions/runs/32737162315",
+      "verifiedResult": "an anonymous Dev Container CLI 0.88.0 consumer resolved the exact OCI digest, verified the pinned carrier wheel, and exercised CLI, MCP, and boundary behavior as the non-root vscode user",
+      "upstreamDirectory": {
+        "status": "submitted_not_listed",
+        "url": "https://github.com/devcontainers/devcontainers.github.io/pull/729"
+      }
+    },
+    {
       "id": "research-notebook",
       "label": "Deterministic research notebook",
       "status": "live",
@@ -121,6 +164,31 @@
       "sourceCommit": "3c97b71093f8bca201e74bb5cc7ddbe50d9fa052",
       "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32732091696",
       "verifiedResult": "the public exact-ref CLI and MCP invocations passed on x86_64/aarch64 Linux and Darwin"
+    },
+    {
+      "id": "openbb-extension",
+      "label": "OpenBB router extension",
+      "status": "live",
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/05a77927496bf22c8bfdb7cbce2d6f43054911d0/integrations/openbb",
+      "command": "python -m pip install 'git+https://github.com/beepboop2025/liquilens-evidence-carrier.git@05a77927496bf22c8bfdb7cbce2d6f43054911d0#subdirectory=integrations/openbb'",
+      "interface": "obb.liquilens.verify(data=...)",
+      "sourceCommit": "05a77927496bf22c8bfdb7cbce2d6f43054911d0",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32733916772",
+      "verifiedResult": "exact-main public install, openbb-build, and generated verification interface passed on Python 3.11 through 3.14; the router accepts local JSON and is not a market-data provider"
+    },
+    {
+      "id": "airflow-provider",
+      "label": "Apache Airflow provider",
+      "status": "live",
+      "url": "https://github.com/beepboop2025/liquilens-airflow-provider/releases/download/v0.1.0/liquilens_airflow_provider-0.1.0-py3-none-any.whl#sha256=aa91a2528ebf2e1583c379a08ce60f9aa52fc33d9d89da0bab9876d5720956bf",
+      "releaseUrl": "https://github.com/beepboop2025/liquilens-airflow-provider/releases/tag/v0.1.0",
+      "repository": "https://github.com/beepboop2025/liquilens-airflow-provider",
+      "command": "python -m pip install 'liquilens-airflow-provider @ https://github.com/beepboop2025/liquilens-airflow-provider/releases/download/v0.1.0/liquilens_airflow_provider-0.1.0-py3-none-any.whl#sha256=aa91a2528ebf2e1583c379a08ce60f9aa52fc33d9d89da0bab9876d5720956bf'",
+      "sourceCommit": "03d125b032aaec4a39cc10cc795ef48d4f605c68",
+      "protectedMainCommit": "c4ccff491d48501379a49e6ea71494db27c42da1",
+      "sha256": "aa91a2528ebf2e1583c379a08ce60f9aa52fc33d9d89da0bab9876d5720956bf",
+      "receipt": "https://github.com/beepboop2025/liquilens-airflow-provider/actions/runs/32737021414",
+      "verifiedResult": "a credential-free clean consumer checked the hash-pinned wheel, installed it into Airflow 3.3.1, discovered the provider, migrated the database, serialized a DAG, ran the operator task and DAG to success, and verified provenance attestation; no PyPI or ASF listing is claimed"
     },
     {
       "id": "fdc3-evidence-inspector",
