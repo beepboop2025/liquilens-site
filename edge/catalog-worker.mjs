@@ -208,7 +208,13 @@ function errorLabel(error) {
   return `Error: ${String(error)}`;
 }
 
-async function readBoundedStream(stream, maxBytes, label, overflowError) {
+async function readBoundedStream(
+  stream,
+  maxBytes,
+  label,
+  overflowError,
+  onBytes,
+) {
   if (!stream) {
     return new Uint8Array();
   }
@@ -222,8 +228,13 @@ async function readBoundedStream(stream, maxBytes, label, overflowError) {
         break;
       }
       total += value.byteLength;
+      onBytes?.(value.byteLength);
       if (total > maxBytes) {
-        await reader.cancel(`financial evidence ${label} exceeded byte limit`);
+        try {
+          await reader.cancel(`financial evidence ${label} exceeded byte limit`);
+        } catch (_error) {
+          // Preserve the byte-limit failure as the authoritative public error.
+        }
         throw new Error(overflowError || `${label} exceeds ${maxBytes} bytes`);
       }
       chunks.push(value);
@@ -241,14 +252,35 @@ async function readBoundedStream(stream, maxBytes, label, overflowError) {
   return raw;
 }
 
-async function readBoundedResponse(response, maxBytes, overflowError) {
-  return readBoundedStream(response.body, maxBytes, "response", overflowError);
+async function readBoundedResponse(
+  response,
+  maxBytes,
+  overflowError,
+  onBytes,
+) {
+  return readBoundedStream(
+    response.body,
+    maxBytes,
+    "response",
+    overflowError,
+    onBytes,
+  );
+}
+
+async function rejectUnreadResponse(response, message) {
+  try {
+    await response.body?.cancel(`financial evidence rejected: ${message}`);
+  } catch (_error) {
+    // Preserve the validation failure as the authoritative public error.
+  }
+  throw new Error(message);
 }
 
 async function fetchSource(
   source,
   { maxBytes, remainingPacketBytes, timeoutSeconds, fetchImpl, signal },
 ) {
+  let consumedBytes = 0;
   const retrievedAt = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
   const base = {
     product: source.product,
@@ -293,10 +325,16 @@ async function fetchSource(
     });
 
     if (response.status >= 300 && response.status < 400) {
-      throw new Error("redirects are not accepted for fixed evidence routes");
+      await rejectUnreadResponse(
+        response,
+        "redirects are not accepted for fixed evidence routes",
+      );
     }
     if (!response.ok) {
-      throw new Error(`upstream returned HTTP ${response.status}`);
+      await rejectUnreadResponse(
+        response,
+        `upstream returned HTTP ${response.status}`,
+      );
     }
 
     const resolvedUrl = response.url || source.url;
@@ -306,7 +344,10 @@ async function fetchSource(
       !ALLOWED_HOSTS.has(resolved.hostname) ||
       resolvedUrl !== source.url
     ) {
-      throw new Error("resolved URL differs from the fixed HTTPS source route");
+      await rejectUnreadResponse(
+        response,
+        "resolved URL differs from the fixed HTTPS source route",
+      );
     }
 
     const contentType = (response.headers.get("content-type") || "")
@@ -318,18 +359,25 @@ async function fetchSource(
       contentType !== "application/ld+json" &&
       !contentType.endsWith("+json")
     ) {
-      throw new Error(`unexpected content type ${JSON.stringify(contentType)}`);
+      await rejectUnreadResponse(
+        response,
+        `unexpected content type ${JSON.stringify(contentType)}`,
+      );
     }
 
     const contentLength = Number(response.headers.get("content-length"));
     if (Number.isFinite(contentLength) && contentLength > maxBytes) {
-      throw new Error(`response exceeds ${maxBytes} bytes`);
+      await rejectUnreadResponse(
+        response,
+        `response exceeds ${maxBytes} bytes`,
+      );
     }
     if (
       Number.isFinite(contentLength) &&
       contentLength > remainingPacketBytes
     ) {
-      throw new Error(
+      await rejectUnreadResponse(
+        response,
         `response exceeds remaining packet source-byte budget of ${remainingPacketBytes} bytes`,
       );
     }
@@ -338,7 +386,14 @@ async function fetchSource(
       remainingPacketBytes < maxBytes
         ? `response exceeds remaining packet source-byte budget of ${remainingPacketBytes} bytes`
         : `response exceeds ${maxBytes} bytes`;
-    const raw = await readBoundedResponse(response, readLimit, overflowError);
+    const raw = await readBoundedResponse(
+      response,
+      readLimit,
+      overflowError,
+      (chunkBytes) => {
+        consumedBytes += chunkBytes;
+      },
+    );
     const text = new TextDecoder("utf-8", { fatal: true }).decode(raw);
     const document = JSON.parse(text);
     if (document === null || typeof document !== "object") {
@@ -350,15 +405,21 @@ async function fetchSource(
       .map((byte) => byte.toString(16).padStart(2, "0"))
       .join("");
     return {
-      ...base,
-      ok: true,
-      resolved_url: resolvedUrl,
-      bytes: raw.byteLength,
-      content_sha256: `sha256:${sha256}`,
-      document,
+      result: {
+        ...base,
+        ok: true,
+        resolved_url: resolvedUrl,
+        bytes: raw.byteLength,
+        content_sha256: `sha256:${sha256}`,
+        document,
+      },
+      consumedBytes,
     };
   } catch (error) {
-    return { ...base, ok: false, error: errorLabel(error) };
+    return {
+      result: { ...base, ok: false, error: errorLabel(error) },
+      consumedBytes,
+    };
   }
 }
 
@@ -381,7 +442,7 @@ export async function buildPacket(
   const sources = [];
   let remainingBytes = MAX_PACKET_SOURCE_BYTES;
   for (const { topic, source } of planned) {
-    const result = await fetchSource(source, {
+    const { result, consumedBytes } = await fetchSource(source, {
       maxBytes,
       remainingPacketBytes: remainingBytes,
       timeoutSeconds,
@@ -389,9 +450,7 @@ export async function buildPacket(
       signal: combinedSignal,
     });
     sources.push({ topic, ...result });
-    if (result.ok) {
-      remainingBytes -= result.bytes;
-    }
+    remainingBytes = Math.max(0, remainingBytes - consumedBytes);
   }
   const succeeded = sources.filter((source) => source.ok).length;
   const status =

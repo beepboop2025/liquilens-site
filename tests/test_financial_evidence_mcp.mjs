@@ -431,7 +431,7 @@ test("the aggregate source cap fails explicitly without changing max_bytes", asy
     const failed = packet.sources.filter((source) => !source.ok);
     assert.equal(packet.status, "partial");
     assert.equal(packet.limits.max_source_bytes, MAX_SOURCE_BYTES);
-    assert.equal(requestCount, 6);
+    assert.equal(requestCount, 3);
     assert.ok(succeeded.length > 0);
     assert.ok(failed.length > 0);
     assert.ok(
@@ -444,6 +444,141 @@ test("the aggregate source cap fails explicitly without changing max_bytes", asy
       ),
       true,
     );
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("malformed bodies are charged to the aggregate source budget", async () => {
+  const originalFetch = globalThis.fetch;
+  const malformedFixture = `{"payload":"${"x".repeat(599_900)}`;
+  let requestCount = 0;
+  globalThis.fetch = async () => {
+    requestCount += 1;
+    return new Response(malformedFixture, {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  };
+  try {
+    const response = await worker.fetch(
+      request({
+        jsonrpc: "2.0",
+        id: "malformed-aggregate-budget",
+        method: "tools/call",
+        params: {
+          name: "financial_evidence_fetch",
+          arguments: {
+            topics: [
+              "money-market",
+              "capital-market",
+              "china-economy",
+              "bank-risk",
+              "market-liquidity",
+            ],
+            max_bytes: MAX_SOURCE_BYTES,
+          },
+        },
+      }),
+      ALLOW_FETCH_ENV,
+    );
+    const payload = await responsePayload(response);
+    const packet = JSON.parse(payload.result.content[0].text);
+    assert.equal(packet.status, "unavailable");
+    assert.equal(packet.sources.length, 6);
+    assert.equal(requestCount, 3);
+    assert.match(packet.sources[0].error, /JSON|Unterminated string/);
+    assert.match(
+      packet.sources[2].error,
+      /remaining packet source-byte budget/,
+    );
+    assert.match(
+      packet.sources.at(-1).error,
+      /packet aggregate source-byte budget is exhausted/,
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("Content-Length preflight rejection cancels the unread body", async () => {
+  const originalFetch = globalThis.fetch;
+  let cancellations = 0;
+  globalThis.fetch = async () =>
+    new Response(
+      new ReadableStream({
+        cancel() {
+          cancellations += 1;
+        },
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Length": "2",
+          "Content-Type": "application/json",
+        },
+      },
+    );
+  try {
+    const response = await worker.fetch(
+      request({
+        jsonrpc: "2.0",
+        id: "content-length-cancellation",
+        method: "tools/call",
+        params: {
+          name: "financial_evidence_fetch",
+          arguments: { topics: ["money-market"], max_bytes: 1 },
+        },
+      }),
+      ALLOW_FETCH_ENV,
+    );
+    const payload = await responsePayload(response);
+    assert.equal(payload.result.isError, true);
+    assert.equal(payload.result.structuredContent.status, "unavailable");
+    assert.match(
+      payload.result.structuredContent.sources[0].error,
+      /response exceeds 1 bytes/,
+    );
+    assert.equal(cancellations, 1);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("a failed stream cancellation cannot replace the byte-limit error", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () =>
+    new Response(
+      new ReadableStream({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode("{}"));
+        },
+        cancel() {
+          throw new Error("upstream cancel failed");
+        },
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  try {
+    const response = await worker.fetch(
+      request({
+        jsonrpc: "2.0",
+        id: "stream-cancel-error",
+        method: "tools/call",
+        params: {
+          name: "financial_evidence_fetch",
+          arguments: { topics: ["money-market"], max_bytes: 1 },
+        },
+      }),
+      ALLOW_FETCH_ENV,
+    );
+    const payload = await responsePayload(response);
+    const error = payload.result.structuredContent.sources[0].error;
+    assert.match(error, /response exceeds 1 bytes/);
+    assert.doesNotMatch(error, /upstream cancel failed/);
   } finally {
     globalThis.fetch = originalFetch;
   }
