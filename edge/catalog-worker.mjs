@@ -208,7 +208,7 @@ function errorLabel(error) {
   return `Error: ${String(error)}`;
 }
 
-async function readBoundedStream(stream, maxBytes, label) {
+async function readBoundedStream(stream, maxBytes, label, overflowError) {
   if (!stream) {
     return new Uint8Array();
   }
@@ -224,7 +224,7 @@ async function readBoundedStream(stream, maxBytes, label) {
       total += value.byteLength;
       if (total > maxBytes) {
         await reader.cancel(`financial evidence ${label} exceeded byte limit`);
-        throw new Error(`${label} exceeds ${maxBytes} bytes`);
+        throw new Error(overflowError || `${label} exceeds ${maxBytes} bytes`);
       }
       chunks.push(value);
     }
@@ -241,13 +241,13 @@ async function readBoundedStream(stream, maxBytes, label) {
   return raw;
 }
 
-async function readBoundedResponse(response, maxBytes) {
-  return readBoundedStream(response.body, maxBytes, "response");
+async function readBoundedResponse(response, maxBytes, overflowError) {
+  return readBoundedStream(response.body, maxBytes, "response", overflowError);
 }
 
 async function fetchSource(
   source,
-  { maxBytes, timeoutSeconds, fetchImpl, signal },
+  { maxBytes, remainingPacketBytes, timeoutSeconds, fetchImpl, signal },
 ) {
   const retrievedAt = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
   const base = {
@@ -258,6 +258,12 @@ async function fetchSource(
   };
 
   try {
+    if (!Number.isInteger(maxBytes) || maxBytes < 1) {
+      throw new Error("per-source byte limit must be a positive integer");
+    }
+    if (!Number.isInteger(remainingPacketBytes) || remainingPacketBytes < 1) {
+      throw new Error("packet aggregate source-byte budget is exhausted");
+    }
     const sourceSignal = AbortSignal.any(
       [signal, AbortSignal.timeout(timeoutSeconds * 1000)].filter(Boolean),
     );
@@ -319,7 +325,20 @@ async function fetchSource(
     if (Number.isFinite(contentLength) && contentLength > maxBytes) {
       throw new Error(`response exceeds ${maxBytes} bytes`);
     }
-    const raw = await readBoundedResponse(response, maxBytes);
+    if (
+      Number.isFinite(contentLength) &&
+      contentLength > remainingPacketBytes
+    ) {
+      throw new Error(
+        `response exceeds remaining packet source-byte budget of ${remainingPacketBytes} bytes`,
+      );
+    }
+    const readLimit = Math.min(maxBytes, remainingPacketBytes);
+    const overflowError =
+      remainingPacketBytes < maxBytes
+        ? `response exceeds remaining packet source-byte budget of ${remainingPacketBytes} bytes`
+        : `response exceeds ${maxBytes} bytes`;
+    const raw = await readBoundedResponse(response, readLimit, overflowError);
     const text = new TextDecoder("utf-8", { fatal: true }).decode(raw);
     const document = JSON.parse(text);
     if (document === null || typeof document !== "object") {
@@ -361,14 +380,10 @@ export async function buildPacket(
   );
   const sources = [];
   let remainingBytes = MAX_PACKET_SOURCE_BYTES;
-  for (const [index, { topic, source }] of planned.entries()) {
-    const remainingSources = planned.length - index;
-    const sourceBudget = Math.max(
-      1,
-      Math.min(maxBytes, Math.floor(remainingBytes / remainingSources)),
-    );
+  for (const { topic, source } of planned) {
     const result = await fetchSource(source, {
-      maxBytes: sourceBudget,
+      maxBytes,
+      remainingPacketBytes: remainingBytes,
       timeoutSeconds,
       fetchImpl,
       signal: combinedSignal,
@@ -456,6 +471,7 @@ export function createFinancialEvidenceServer({ fetchImpl = fetch } = {}) {
   const topicsSchema = z
     .array(topicSchema)
     .min(1)
+    .max(MAX_FETCH_TOPICS)
     .refine((topics) => new Set(topics).size === topics.length, {
       message: "topics must contain unique items",
     })

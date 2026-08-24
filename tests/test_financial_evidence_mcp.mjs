@@ -333,6 +333,122 @@ test("all five topics fan out within hard public budgets", async () => {
   }
 });
 
+test("multi-topic fetches preserve the caller's per-source byte ceiling", async () => {
+  const originalFetch = globalThis.fetch;
+  const requested = [];
+  const largeFixture = JSON.stringify({ payload: "x".repeat(461_700) });
+  const smallFixture = JSON.stringify({ payload: "x".repeat(99_900) });
+  globalThis.fetch = async (url) => {
+    requested.push(url);
+    return new Response(
+      url === "https://api.seiche.info/api/v2/money-markets"
+        ? largeFixture
+        : smallFixture,
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  };
+  try {
+    const response = await worker.fetch(
+      request({
+        jsonrpc: "2.0",
+        id: "multi-topic-per-source-budget",
+        method: "tools/call",
+        params: {
+          name: "financial_evidence_fetch",
+          arguments: {
+            topics: [
+              "money-market",
+              "capital-market",
+              "china-economy",
+              "bank-risk",
+              "market-liquidity",
+            ],
+            max_bytes: MAX_SOURCE_BYTES,
+          },
+        },
+      }),
+      ALLOW_FETCH_ENV,
+    );
+    const payload = await responsePayload(response);
+    const packet = JSON.parse(payload.result.content[0].text);
+    assert.equal(packet.status, "complete");
+    assert.equal(packet.sources.length, 6);
+    assert.equal(requested.length, 6);
+    assert.ok(
+      packet.sources[0].bytes > Math.floor(MAX_PACKET_SOURCE_BYTES / 6),
+      "the first source must not be constrained to an implicit fair share",
+    );
+    assert.ok(
+      packet.sources.reduce((total, source) => total + source.bytes, 0) <=
+        MAX_PACKET_SOURCE_BYTES,
+    );
+    assert.equal(packet.limits.max_source_bytes, MAX_SOURCE_BYTES);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("the aggregate source cap fails explicitly without changing max_bytes", async () => {
+  const originalFetch = globalThis.fetch;
+  const largeFixture = JSON.stringify({ payload: "x".repeat(1_399_900) });
+  const smallFixture = JSON.stringify({ payload: "x".repeat(99_900) });
+  let requestCount = 0;
+  globalThis.fetch = async () => {
+    requestCount += 1;
+    return new Response(requestCount === 1 ? largeFixture : smallFixture, {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  };
+  try {
+    const response = await worker.fetch(
+      request({
+        jsonrpc: "2.0",
+        id: "aggregate-source-budget",
+        method: "tools/call",
+        params: {
+          name: "financial_evidence_fetch",
+          arguments: {
+            topics: [
+              "money-market",
+              "capital-market",
+              "china-economy",
+              "bank-risk",
+              "market-liquidity",
+            ],
+            max_bytes: MAX_SOURCE_BYTES,
+          },
+        },
+      }),
+      ALLOW_FETCH_ENV,
+    );
+    const payload = await responsePayload(response);
+    const packet = JSON.parse(payload.result.content[0].text);
+    const succeeded = packet.sources.filter((source) => source.ok);
+    const failed = packet.sources.filter((source) => !source.ok);
+    assert.equal(packet.status, "partial");
+    assert.equal(packet.limits.max_source_bytes, MAX_SOURCE_BYTES);
+    assert.equal(requestCount, 6);
+    assert.ok(succeeded.length > 0);
+    assert.ok(failed.length > 0);
+    assert.ok(
+      succeeded.reduce((total, source) => total + source.bytes, 0) <=
+        MAX_PACKET_SOURCE_BYTES,
+    );
+    assert.equal(
+      failed.every((source) =>
+        /packet (?:aggregate )?source-byte budget/.test(source.error),
+      ),
+      true,
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("the live-sized money-market payload fits with bounded headroom", async () => {
   const originalFetch = globalThis.fetch;
   const fixture = JSON.stringify({ payload: "x".repeat(461_700) });
