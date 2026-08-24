@@ -1,13 +1,13 @@
 {
   "schema": "liquilens.evidence-carrier-catalog.v1",
-  "version": "0.13.5",
+  "version": "0.13.6",
   "protocolVersion": "1.0",
   "license": "Apache-2.0",
   "repository": "https://github.com/beepboop2025/liquilens-evidence-carrier",
-  "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.13.5/liquilens_evidence-0.13.5-py3-none-any.whl",
-  "pythonDistributionSha256": "277317d588daa72de6bf966442a883c94665ae719f6888edbffc28e39018f14c",
-  "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.13.5",
-  "releaseCommit": "925a67f929c73835f52691308e39a0dc257bd3cb",
+  "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.13.6/liquilens_evidence-0.13.6-py3-none-any.whl",
+  "pythonDistributionSha256": "71207e705158c6dd1a9bcce75d6758b7f62d34fb3cfc3510b9c7c9022e2ac961",
+  "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.13.6",
+  "releaseCommit": "50a188492326b6d5605f352038ea9bd786fbb490",
   "humanLandingPage": "https://liquilens.in/protocol/",
   "financialAuthority": "none",
   "artifacts": [
