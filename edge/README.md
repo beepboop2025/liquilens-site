@@ -10,6 +10,16 @@ and Palimpsest over current Streamable HTTP, with stateless compatibility for
 2025 clients. It has no account or mutation surface and can fetch only the
 fixed public HTTPS evidence routes in the committed worker.
 
+The public boundary rejects request bodies over 32 KiB and JSON-RPC batches.
+Only two unique topics may be fetched per call, individual upstream documents
+are capped at 768 KiB, the aggregate source-byte budget is 1.5 MiB, the encoded
+evidence packet is capped at 2 MiB, and the fully serialized HTTP response is
+capped at 4 MiB. Fetches run sequentially, use a 30-second edge cache, and pass
+through a coarse 60-per-minute, per-location Cloudflare rate-limit bucket.
+Topic discovery and offline route resolution remain outside that fetch limiter.
+Server-side clients need no Origin header; browser requests are accepted only
+from <code>https://liquilens.in</code> to preserve MCP's DNS rebinding defense.
+
 The catalog is imported from the repository's canonical
 `.well-known/ai-catalog.json`; do not maintain a second manifest in this
 directory.
@@ -19,8 +29,8 @@ Validate and deploy from the repository root:
 ```bash
 npm ci --ignore-scripts
 npm run test:edge
-npx wrangler deploy --config wrangler.catalog.jsonc --dry-run
-npx wrangler deploy --config wrangler.catalog.jsonc
+npx --no-install wrangler deploy --config wrangler.catalog.jsonc --dry-run
+npx --no-install wrangler deploy --config wrangler.catalog.jsonc
 ```
 
 Production deployment is also available through the manual **Deploy AI catalog

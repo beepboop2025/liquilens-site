@@ -1,7 +1,14 @@
 import json
 from pathlib import Path
 
-from scripts.verify_catalog_edge import response_problem
+import pytest
+
+from scripts.verify_catalog_edge import (
+    EXPECTED_MCP_TOOLS,
+    EXPECTED_MCP_VERSION,
+    decode_mcp_response,
+    response_problem,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,3 +51,28 @@ def test_edge_parity_explains_a_missing_carrier_entry():
     )
     assert problem is not None
     assert "urn:air:liquilens.in:protocol:evidence-carrier" in problem
+
+
+def test_mcp_receipt_decoder_accepts_one_json_or_sse_message():
+    payload = {
+        "jsonrpc": "2.0",
+        "id": "tools",
+        "result": {"tools": [{"name": name} for name in EXPECTED_MCP_TOOLS]},
+    }
+    encoded = json.dumps(payload).encode()
+    assert decode_mcp_response(encoded, "application/json; charset=utf-8") == payload
+    assert decode_mcp_response(
+        b"event: message\ndata: " + encoded + b"\n\n",
+        "text/event-stream; charset=utf-8",
+    ) == payload
+    assert EXPECTED_MCP_VERSION == "0.1.3"
+
+
+def test_mcp_receipt_decoder_rejects_batches_and_multiple_sse_events():
+    with pytest.raises(ValueError, match="one JSON-RPC object"):
+        decode_mcp_response(b"[]", "application/json")
+    with pytest.raises(ValueError, match="expected one MCP SSE data event"):
+        decode_mcp_response(
+            b"data: {\"id\":1}\n\ndata: {\"id\":2}\n\n",
+            "text/event-stream",
+        )

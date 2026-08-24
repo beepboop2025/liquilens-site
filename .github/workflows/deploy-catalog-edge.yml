@@ -49,6 +49,11 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: "4.125.0"
-          command: deploy --config wrangler.catalog.jsonc
+          command: >-
+            deploy --config wrangler.catalog.jsonc
+            --tag ${{ github.sha }}
+            --message GitHub-${{ github.sha }}
       - name: Require anonymous served-catalog parity
-        run: python3 scripts/verify_catalog_edge.py
+        run: >-
+          python3 scripts/verify_catalog_edge.py
+          --expected-version-tag "$GITHUB_SHA"

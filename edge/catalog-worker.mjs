@@ -9,8 +9,14 @@ export const PROTOCOL_CATALOG_PATH = "/protocol/catalog.json";
 // Preserve the original export for callers that consume the ARD catalog.
 export const CATALOG_PATH = AI_CATALOG_PATH;
 export const FINANCIAL_EVIDENCE_MCP_PATH = "/mcp/financial-evidence";
+export const MAX_MCP_REQUEST_BYTES = 32_768;
+export const MAX_MCP_RESPONSE_BYTES = 2_097_152;
+export const MAX_MCP_HTTP_RESPONSE_BYTES = 4_194_304;
+export const MAX_PACKET_SOURCE_BYTES = 1_572_864;
+export const MAX_SOURCE_BYTES = 786_432;
+export const MAX_FETCH_TOPICS = 2;
 
-const FINANCIAL_EVIDENCE_VERSION = "0.1.2";
+const FINANCIAL_EVIDENCE_VERSION = "0.1.3";
 const PACKET_SCHEMA = "liquidity-lab.financial-evidence-packet.v1";
 const ABSENCE_POLICY =
   "Missing, failed, restricted, or unavailable evidence is never converted to zero or calm.";
@@ -61,6 +67,7 @@ const ROUTES = Object.freeze({
 });
 
 const TOPICS = Object.freeze(Object.keys(ROUTES));
+const TRUSTED_BROWSER_ORIGINS = new Set(["https://liquilens.in"]);
 const ALLOWED_HOSTS = new Set(
   Object.values(ROUTES)
     .flat()
@@ -138,12 +145,15 @@ function routeManifest(topics = TOPICS) {
   };
 }
 
-function toolResult(value, { isError = false } = {}) {
-  return {
+function toolResult(value, { isError = false, includeStructured = true } = {}) {
+  const result = {
     content: [{ type: "text", text: JSON.stringify(value) }],
-    structuredContent: value,
     isError,
   };
+  if (includeStructured) {
+    result.structuredContent = value;
+  }
+  return result;
 }
 
 function errorLabel(error) {
@@ -153,11 +163,11 @@ function errorLabel(error) {
   return `Error: ${String(error)}`;
 }
 
-async function readBoundedBody(response, maxBytes) {
-  if (!response.body) {
+async function readBoundedStream(stream, maxBytes, label) {
+  if (!stream) {
     return new Uint8Array();
   }
-  const reader = response.body.getReader();
+  const reader = stream.getReader();
   const chunks = [];
   let total = 0;
   try {
@@ -168,8 +178,8 @@ async function readBoundedBody(response, maxBytes) {
       }
       total += value.byteLength;
       if (total > maxBytes) {
-        await reader.cancel("financial evidence response exceeded byte limit");
-        throw new Error(`response exceeds ${maxBytes} bytes`);
+        await reader.cancel(`financial evidence ${label} exceeded byte limit`);
+        throw new Error(`${label} exceeds ${maxBytes} bytes`);
       }
       chunks.push(value);
     }
@@ -184,6 +194,10 @@ async function readBoundedBody(response, maxBytes) {
     offset += chunk.byteLength;
   }
   return raw;
+}
+
+async function readBoundedResponse(response, maxBytes) {
+  return readBoundedStream(response.body, maxBytes, "response");
 }
 
 async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
@@ -209,6 +223,13 @@ async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
       },
       redirect: "manual",
       signal: AbortSignal.timeout(timeoutSeconds * 1000),
+      cf: {
+        cacheEverything: true,
+        cacheTtlByStatus: {
+          "200-299": 30,
+          "300-599": 0,
+        },
+      },
     });
 
     if (response.status >= 300 && response.status < 400) {
@@ -244,7 +265,7 @@ async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
     if (Number.isFinite(contentLength) && contentLength > maxBytes) {
       throw new Error(`response exceeds ${maxBytes} bytes`);
     }
-    const raw = await readBoundedBody(response, maxBytes);
+    const raw = await readBoundedResponse(response, maxBytes);
     const text = new TextDecoder("utf-8", { fatal: true }).decode(raw);
     const document = JSON.parse(text);
     if (document === null || typeof document !== "object") {
@@ -270,17 +291,29 @@ async function fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl }) {
 
 async function buildPacket(
   topics,
-  { maxBytes = 1_048_576, timeoutSeconds = 10, fetchImpl = fetch } = {},
+  { maxBytes = MAX_SOURCE_BYTES, timeoutSeconds = 8, fetchImpl = fetch } = {},
 ) {
   const planned = topics.flatMap((topic) =>
     ROUTES[topic].map((source) => ({ topic, source })),
   );
-  const sources = await Promise.all(
-    planned.map(async ({ topic, source }) => ({
-      topic,
-      ...(await fetchSource(source, { maxBytes, timeoutSeconds, fetchImpl })),
-    })),
-  );
+  const sources = [];
+  let remainingBytes = MAX_PACKET_SOURCE_BYTES;
+  for (const [index, { topic, source }] of planned.entries()) {
+    const remainingSources = planned.length - index;
+    const sourceBudget = Math.max(
+      1,
+      Math.min(maxBytes, Math.floor(remainingBytes / remainingSources)),
+    );
+    const result = await fetchSource(source, {
+      maxBytes: sourceBudget,
+      timeoutSeconds,
+      fetchImpl,
+    });
+    sources.push({ topic, ...result });
+    if (result.ok) {
+      remainingBytes -= result.bytes;
+    }
+  }
   const succeeded = sources.filter((source) => source.ok).length;
   const status =
     succeeded === sources.length
@@ -293,8 +326,59 @@ async function buildPacket(
     status,
     absence_policy: ABSENCE_POLICY,
     data_handling: DATA_HANDLING,
+    limits: {
+      max_topics: MAX_FETCH_TOPICS,
+      max_source_bytes: maxBytes,
+      max_packet_source_bytes: MAX_PACKET_SOURCE_BYTES,
+      timeout_seconds: timeoutSeconds,
+    },
     topics,
     sources,
+  };
+}
+
+function packetToolResult(packet) {
+  let serialized = JSON.stringify(packet);
+  let responseBytes = new TextEncoder().encode(serialized).byteLength;
+  if (responseBytes > MAX_MCP_RESPONSE_BYTES) {
+    const bounded = {
+      ...packet,
+      status: "unavailable",
+      output_error:
+        `encoded MCP result exceeds ${MAX_MCP_RESPONSE_BYTES} bytes; documents were omitted`,
+      sources: packet.sources.map(({ document: _document, ...source }) => ({
+        ...source,
+        ok: false,
+        error:
+          `document omitted because encoded MCP result exceeds ${MAX_MCP_RESPONSE_BYTES} bytes`,
+      })),
+    };
+    serialized = JSON.stringify(bounded);
+    responseBytes = new TextEncoder().encode(serialized).byteLength;
+    return {
+      content: [{ type: "text", text: serialized }],
+      structuredContent: {
+        schema: bounded.schema,
+        status: bounded.status,
+        topics: bounded.topics,
+        sources: bounded.sources,
+        response_bytes: responseBytes,
+      },
+      isError: true,
+    };
+  }
+
+  return {
+    content: [{ type: "text", text: serialized }],
+    structuredContent: {
+      schema: packet.schema,
+      status: packet.status,
+      topics: packet.topics,
+      sources: packet.sources.map(({ document: _document, ...source }) => source),
+      response_bytes: responseBytes,
+      documents: "content[0].text",
+    },
+    isError: packet.status === "unavailable",
   };
 }
 
@@ -340,19 +424,32 @@ export function createFinancialEvidenceServer({ fetchImpl = fetch } = {}) {
       inputSchema: z
         .object({
           topics: z.array(topicSchema).min(1).max(TOPICS.length),
-          max_bytes: z.number().int().min(1).max(4_194_304).default(1_048_576),
-          timeout: z.number().gt(0).max(30).default(10),
+          max_bytes: z.number().int().min(1).max(MAX_SOURCE_BYTES).default(MAX_SOURCE_BYTES),
+          timeout: z.number().gt(0).max(12).default(8),
         })
         .strict(),
       annotations: { ...READ_ONLY_ANNOTATIONS, openWorldHint: true },
     },
     async ({ topics, max_bytes: maxBytes, timeout: timeoutSeconds }) => {
-      const packet = await buildPacket([...new Set(topics)], {
+      const uniqueTopics = [...new Set(topics)];
+      if (uniqueTopics.length > MAX_FETCH_TOPICS) {
+        return toolResult(
+          {
+            schema: PACKET_SCHEMA,
+            status: "unavailable",
+            error:
+              `remote fetch accepts at most ${MAX_FETCH_TOPICS} unique topics per call; split larger requests`,
+            requested_topics: uniqueTopics,
+          },
+          { isError: true },
+        );
+      }
+      const packet = await buildPacket(uniqueTopics, {
         maxBytes,
         timeoutSeconds,
         fetchImpl,
       });
-      return toolResult(packet, { isError: packet.status === "unavailable" });
+      return packetToolResult(packet);
     },
   );
 
@@ -364,27 +461,154 @@ const handleFinancialEvidenceMcp = createMcpHandler(
   {
     route: FINANCIAL_EVIDENCE_MCP_PATH,
     allowedHostnames: ["liquilens.in"],
-    allowedOriginHostnames: "*",
+    allowedOriginHostnames: ["liquilens.in"],
     corsOptions: {
-      origin: "*",
+      origin: "https://liquilens.in",
       methods: "GET, POST, OPTIONS, DELETE",
       headers:
         "Content-Type, MCP-Protocol-Version, Mcp-Method, Mcp-Name, Mcp-Session-Id",
-      exposeHeaders: "MCP-Protocol-Version, Mcp-Session-Id",
+      exposeHeaders:
+        "MCP-Protocol-Version, Mcp-Session-Id, X-LiquiLens-Worker-Version, X-LiquiLens-Worker-Tag",
       maxAge: 86400,
     },
   },
 );
 
+function mcpHttpError(status, message, headers = {}) {
+  return new Response(JSON.stringify({ error: message }), {
+    status,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store",
+      "X-Content-Type-Options": "nosniff",
+      ...headers,
+    },
+  });
+}
+
+function isFetchToolCall(payload) {
+  return (
+    payload &&
+    typeof payload === "object" &&
+    payload.method === "tools/call" &&
+    payload.params?.name === "financial_evidence_fetch"
+  );
+}
+
+async function handleBoundedFinancialEvidenceMcp(request, env, ctx) {
+  const origin = request.headers.get("origin");
+  if (origin) {
+    let parsedOrigin;
+    try {
+      parsedOrigin = new URL(origin).origin;
+    } catch {
+      return mcpHttpError(403, "browser Origin is not allowed");
+    }
+    if (!TRUSTED_BROWSER_ORIGINS.has(parsedOrigin)) {
+      return mcpHttpError(403, "browser Origin is not allowed");
+    }
+  }
+
+  if (request.method !== "POST") {
+    return handleFinancialEvidenceMcp(request, env, ctx);
+  }
+
+  const declaredLength = Number(request.headers.get("content-length"));
+  if (Number.isFinite(declaredLength) && declaredLength > MAX_MCP_REQUEST_BYTES) {
+    return mcpHttpError(413, `request exceeds ${MAX_MCP_REQUEST_BYTES} bytes`);
+  }
+
+  let raw;
+  try {
+    raw = await readBoundedStream(
+      request.body,
+      MAX_MCP_REQUEST_BYTES,
+      "request",
+    );
+  } catch (error) {
+    return mcpHttpError(413, errorLabel(error));
+  }
+
+  let payload;
+  try {
+    payload = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(raw));
+  } catch (error) {
+    return mcpHttpError(400, `invalid JSON request: ${errorLabel(error)}`);
+  }
+  if (Array.isArray(payload)) {
+    return mcpHttpError(400, "JSON-RPC batch requests are not supported");
+  }
+
+  if (isFetchToolCall(payload)) {
+    const limiter = env?.FINANCIAL_EVIDENCE_RATE_LIMITER;
+    if (!limiter || typeof limiter.limit !== "function") {
+      return mcpHttpError(503, "financial evidence rate limiter is unavailable");
+    }
+    const { success } = await limiter.limit({
+      key: FINANCIAL_EVIDENCE_MCP_PATH,
+    });
+    if (!success) {
+      return mcpHttpError(429, "financial evidence fetch rate limit exceeded", {
+        "Retry-After": "60",
+      });
+    }
+  }
+
+  const boundedRequest = new Request(request.url, {
+    method: request.method,
+    headers: request.headers,
+    body: raw,
+    redirect: request.redirect,
+    signal: request.signal,
+  });
+  const response = await handleFinancialEvidenceMcp(boundedRequest, env, ctx);
+  try {
+    const rawResponse = await readBoundedStream(
+      response.body,
+      MAX_MCP_HTTP_RESPONSE_BYTES,
+      "MCP HTTP response",
+    );
+    return new Response(rawResponse, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+    });
+  } catch (error) {
+    return mcpHttpError(502, errorLabel(error));
+  }
+}
+
+function attachVersionHeaders(response, env) {
+  const metadata = env?.CF_VERSION_METADATA;
+  if (!metadata) {
+    return response;
+  }
+  const headers = new Headers(response.headers);
+  if (metadata.id) {
+    headers.set("X-LiquiLens-Worker-Version", metadata.id);
+  }
+  if (metadata.tag) {
+    headers.set("X-LiquiLens-Worker-Tag", metadata.tag);
+  }
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 export default {
-  fetch(request, env, ctx) {
+  async fetch(request, env, ctx) {
     const pathname = new URL(request.url).pathname;
+    let response;
     if (pathname === AI_CATALOG_PATH || pathname === PROTOCOL_CATALOG_PATH) {
-      return handleCatalogRequest(request);
+      response = handleCatalogRequest(request);
+    } else if (pathname === FINANCIAL_EVIDENCE_MCP_PATH) {
+      response = await handleBoundedFinancialEvidenceMcp(request, env, ctx);
+    } else {
+      response = new Response("Not found", { status: 404 });
     }
-    if (pathname === FINANCIAL_EVIDENCE_MCP_PATH) {
-      return handleFinancialEvidenceMcp(request, env, ctx);
-    }
-    return new Response("Not found", { status: 404 });
+    return attachVersionHeaders(response, env);
   },
 };
