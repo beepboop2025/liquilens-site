@@ -86,3 +86,18 @@ def test_public_edge_has_non_deploying_pr_gate_and_exact_release_receipt():
     assert lock["packages"][""]["devDependencies"]["wrangler"] == "4.125.0"
     assert "--tag ${{ github.sha }}" in EDGE_DEPLOY
     assert '--expected-version-tag "$GITHUB_SHA"' in EDGE_DEPLOY
+
+
+def test_daily_publisher_deploys_exact_sha_edge_before_pages():
+    pushed_sha = 'echo "PUSHED_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"'
+    edge_dispatch = "gh workflow run deploy-catalog-edge.yml --ref main"
+    edge_wait = 'gh run watch "$run_id" --exit-status --interval 5'
+    pages_dispatch = "gh workflow run pages.yml --ref main"
+    assert pushed_sha in ARTICLES
+    assert ARTICLES.index(pushed_sha) < ARTICLES.index(edge_dispatch)
+    assert ARTICLES.index(edge_dispatch) < ARTICLES.index(edge_wait)
+    assert ARTICLES.index(edge_wait) < ARTICLES.index(pages_dispatch)
+    assert ARTICLES.count('--commit "$PUSHED_SHA"') == 4
+    assert ARTICLES.count(
+        'test "$(git ls-remote origin refs/heads/main | awk '
+    ) == 1

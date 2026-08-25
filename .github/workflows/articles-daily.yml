@@ -74,11 +74,78 @@ jobs:
           git pull --rebase origin main
           git push origin main
           echo "PUSHED=1" >> "$GITHUB_ENV"
+          echo "PUSHED_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
       # A push made with GITHUB_TOKEN does not start another workflow. Trigger
-      # Pages explicitly so the article URL exists before this job finishes.
-      - name: Trigger Pages deployment
+      # the exact-SHA Worker first because Pages refuses to publish static files
+      # whose public MCP/catalog edge advertises a different repository SHA.
+      - name: Deploy and verify the matching edge Worker
         if: env.PUSHED == '1'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run pages.yml --ref main
+        run: |
+          set -euo pipefail
+          remote_sha=$(git ls-remote origin refs/heads/main | awk '{print $1}')
+          test "$remote_sha" = "$PUSHED_SHA"
+          previous_run_id=$(gh run list \
+            --workflow deploy-catalog-edge.yml \
+            --branch main \
+            --event workflow_dispatch \
+            --commit "$PUSHED_SHA" \
+            --limit 1 \
+            --json databaseId \
+            --jq '.[0].databaseId // empty')
+          gh workflow run deploy-catalog-edge.yml --ref main
+          run_id=""
+          for attempt in $(seq 1 30); do
+            run_id=$(gh run list \
+              --workflow deploy-catalog-edge.yml \
+              --branch main \
+              --event workflow_dispatch \
+              --commit "$PUSHED_SHA" \
+              --limit 1 \
+              --json databaseId \
+              --jq '.[0].databaseId // empty')
+            if [[ -n "$run_id" && "$run_id" != "$previous_run_id" ]]; then
+              break
+            fi
+            sleep 2
+          done
+          test -n "$run_id"
+          test "$run_id" != "$previous_run_id"
+          gh run watch "$run_id" --exit-status --interval 5
+          test "$(git ls-remote origin refs/heads/main | awk '{print $1}')" = "$PUSHED_SHA"
+
+      - name: Deploy and verify the matching Pages artifact
+        if: env.PUSHED == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          previous_run_id=$(gh run list \
+            --workflow pages.yml \
+            --branch main \
+            --event workflow_dispatch \
+            --commit "$PUSHED_SHA" \
+            --limit 1 \
+            --json databaseId \
+            --jq '.[0].databaseId // empty')
+          gh workflow run pages.yml --ref main
+          run_id=""
+          for attempt in $(seq 1 30); do
+            run_id=$(gh run list \
+              --workflow pages.yml \
+              --branch main \
+              --event workflow_dispatch \
+              --commit "$PUSHED_SHA" \
+              --limit 1 \
+              --json databaseId \
+              --jq '.[0].databaseId // empty')
+            if [[ -n "$run_id" && "$run_id" != "$previous_run_id" ]]; then
+              break
+            fi
+            sleep 2
+          done
+          test -n "$run_id"
+          test "$run_id" != "$previous_run_id"
+          gh run watch "$run_id" --exit-status --interval 5
