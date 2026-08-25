@@ -45,10 +45,12 @@ jobs:
         continue-on-error: true
         timeout-minutes: 3
         run: python3 scripts/verify_public_claims.py
-      - name: Report where the catalog edge disagrees with the committed catalog
-        continue-on-error: true
+      - name: Require the live edge to match the committed catalog and MCP contract
         timeout-minutes: 1
-        run: python3 scripts/verify_catalog_edge.py --attempts 1
+        run: >-
+          python3 scripts/verify_catalog_edge.py
+          --attempts 1
+          --expected-version-tag "$GITHUB_SHA"
       - name: Verify the catalog and remote MCP edge routes
         run: npm run test:edge
       - name: Preserve the search notification helper outside the site artifact

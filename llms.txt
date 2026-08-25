@@ -3,6 +3,9 @@
 LiquiLens is a bank and lender early-warning system. It uses public filings, funding structure, regulatory thresholds, and market signals to identify signs of distress. Public outputs are risk screens, not credit ratings or predictions that an institution will fail.
 
 Canonical site: https://liquilens.in/
+Free Financial Evidence Desk: https://liquilens.in/evidence-desk/
+Pricing and access: https://liquilens.in/pricing/ (machine-readable summary: https://liquilens.in/pricing.md)
+Media and directory kit: https://liquilens.in/media-kit/ (machine-readable facts: https://liquilens.in/media-kit/media-kit.json)
 World-economy evidence map: https://liquilens.in/world-economy/
 Schema.org dataset catalog: https://liquilens.in/world-economy/evidence-catalog.json
 Money-market evidence router: https://liquilens.in/money-markets/
@@ -12,6 +15,16 @@ Financial Evidence Agent Skill: https://github.com/beepboop2025/financial-eviden
 Evidence Carrier protocol: https://liquilens.in/protocol/
 Evidence Carrier machine catalog: https://liquilens.in/protocol/catalog.json
 Selection guide: https://liquilens.in/use-cases/
+Bank counterparty screening: https://liquilens.in/use-cases/bank-counterparty-screening/
+Model-risk validation: https://liquilens.in/use-cases/model-risk-validation/
+AI-agent financial evidence: https://liquilens.in/use-cases/ai-agent-financial-evidence/
+Manual-spreadsheet comparison: https://liquilens.in/alternatives/manual-spreadsheets/
+Credit-rating boundary: https://liquilens.in/alternatives/credit-ratings/
+Market-data-terminal comparison: https://liquilens.in/alternatives/market-data-terminals/
+MCP integration: https://liquilens.in/integrations/mcp/
+REST API integration: https://liquilens.in/integrations/rest-api/
+Versioned Postman collection: https://liquilens.in/integrations/postman/liquilens-public-api.postman_collection.json (repository artifact; no Postman directory listing is claimed)
+Evidence Carrier integration: https://liquilens.in/integrations/evidence-carrier/
 Free early-warning coverage check: https://liquilens.in/tools/ews-coverage-check/
 RBI/NBFC early-warning validation guide: https://liquilens.in/guides/rbi-nbfc-early-warning-system/
 Named-list software: https://liquilens.in/access/
@@ -22,6 +35,8 @@ Reviewed investigations: https://liquilens.in/investigations/
 Current case file: https://liquilens.in/investigations/the-5-64x-private-credit-concentration/
 
 ## World-economy evidence graph
+
+For a browser-based first step, use the free Financial Evidence Desk at https://liquilens.in/evidence-desk/. It retrieves the fixed public routes without an account or API key and keeps transport success, evidence evaluation and Evidence Carrier verification as separate states. It does not mint provenance or turn missing evidence into a calm signal.
 
 The public evidence network covers a bounded financial-pressure chain plus revision-safe China economy and information evidence; it is not a complete world-economy database. Route the claim before retrieving the data:
 
@@ -79,6 +94,7 @@ The interactive demonstration at https://demo.liquilens.in requires sign-in and 
 - REST catalog: https://api.liquilens.in/api
 - OpenAPI 3.1 document: https://api.liquilens.in/api/openapi.json
 - Hosted MCP: https://api.liquilens.in/mcp
+- Financial Evidence MCP 0.1.5: https://liquilens.in/mcp/financial-evidence . Its `status` and `transport_status` describe bounded retrieval only; `evidence_status` is `not_evaluated` and `carrier_verification` is `not_performed`.
 - Terminal CLI: https://github.com/beepboop2025/liquilens-cli
 - Agent Skill for bounded product selection: https://github.com/beepboop2025/financial-evidence-skills/tree/main/financial-evidence
 
@@ -92,6 +108,7 @@ LiquiLens Evidence Carrier v1 is the Apache-2.0 interchange contract used to pre
 
 Canonical schemas:
 
+- Fleet Brief v1: https://liquilens.in/protocol/liquilens-fleet-brief-v1.schema.json
 - Full carrier: https://liquilens.in/protocol/liquilens-evidence-carrier-v1.schema.json
 - Policy-redacted reference: https://liquilens.in/protocol/liquilens-evidence-carrier-reference-v1.schema.json
 - FDC3 context: https://liquilens.in/protocol/fdc3/com.liquilens.evidence.schema.json
@@ -99,16 +116,16 @@ Canonical schemas:
 
 Externally exercised Evidence Carrier consumer paths:
 
-- Official MCP Registry, LIVE at version 0.14.0: https://registry.modelcontextprotocol.io/v0/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.14.0
-- LiquiLens Evidence Agent Skill, LIVE from the signed immutable tag: `npx skills add https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.14.0/skills/liquilens-evidence --skill liquilens-evidence`. Anonymous discovery: `DO_NOT_TRACK=1 npx --yes skills@1.5.23 add beepboop2025/liquilens-evidence-carrier --list`. Directory page: https://skills.sh/beepboop2025/liquilens-evidence-carrier/liquilens-evidence (no ranking or install-count claim).
+- Official MCP Registry, LIVE at version 0.15.0: https://registry.modelcontextprotocol.io/v0/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.15.0
+- LiquiLens Evidence Agent Skill, LIVE from signed immutable tag `skill-v0.15.0`: `npx skills add https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.15.0/skills/liquilens-evidence --skill liquilens-evidence`. Anonymous discovery: `DO_NOT_TRACK=1 npx --yes skills@1.5.23 add beepboop2025/liquilens-evidence-carrier --list`. Directory page: https://skills.sh/beepboop2025/liquilens-evidence-carrier/liquilens-evidence (no ranking or install-count claim).
 - Codex Git marketplace plugin, LIVE from signed tag `plugin-v0.14.1`: `codex plugin marketplace add beepboop2025/liquilens-evidence-carrier --ref plugin-v0.14.1`, then `codex plugin add liquilens-evidence@liquilens`. A real public install enabled version 0.14.1; no MCP server is auto-started and no filesystem root is chosen for the user.
 - VS Code and Codespaces, LIVE as a public attested VSIX from a signed source tag: https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/vscode-v0.1.0/liquilens-evidence-0.1.0.vsix (16,612 bytes; SHA-256 `ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf`). The browser-entrypoint extension is offline and targets VS Code desktop, remote, web and Codespaces. Visual Studio Marketplace and Open VSX remain publisher-auth gated and are not live listings.
 - Zero-install browser verifier, LIVE with no analytics or document upload: https://beepboop2025.github.io/liquilens-evidence-carrier/
 - Exact-source browser module, LIVE with SHA-256 `76bcc3a8a0b4378e206fac769265eb631b765bbffbd290cbbfe7f86c72d6e16e`: https://cdn.jsdelivr.net/gh/beepboop2025/liquilens-evidence-carrier@68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser/verifier.mjs
-- Hash-pinned one-shot CLI, LIVE: `uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl#sha256=f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24' liquilens-evidence --help`
+- Hash-pinned one-shot CLI, LIVE: `uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.15.0/liquilens_evidence-0.15.0-py3-none-any.whl#sha256=5c7bddeb7a09668cc45fb81217126ee4a72192fa871c4cfe12fc9b688e0f59a0' liquilens-evidence --help`
 - Homebrew, LIVE: `brew install beepboop2025/tap/liquilens-evidence`
-- Multi-architecture OCI image, LIVE at exact digest: `ghcr.io/beepboop2025/liquilens-evidence-carrier@sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1`
-- Dedicated MCP-default OCI image, LIVE at exact digest: `ghcr.io/beepboop2025/liquilens-evidence-carrier-mcp@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7`. The anonymous multi-architecture index exposes provenance/SBOM attestations; the exact-digest no-network, read-only runtime passed initialization, tool discovery, carrier verification and root-escape rejection.
+- Multi-architecture OCI image, LIVE at exact digest: `ghcr.io/beepboop2025/liquilens-evidence-carrier@sha256:d92d7b31850f1788ae910d56035137e422e331f7e07516cce5b546674dbde00a`
+- Dedicated MCP-default OCI image, LIVE at exact digest: `ghcr.io/beepboop2025/liquilens-evidence-carrier-mcp@sha256:4e4ffb010b52375b3203b2dc43706c7fa508de2bf8368eca465f49d56392dcea`. The anonymous multi-architecture index exposes provenance/SBOM attestations; the exact-digest no-network, read-only runtime passed initialization, tool discovery, carrier and Fleet Brief verification, all-false authority, and root-escape rejection against the exact v0.15.0 base.
 - Dev Container Feature, LIVE at canonical OCI digest: `ghcr.io/beepboop2025/liquilens-devcontainer-features/liquilens-evidence@sha256:79ac17d7c3f91dc9360c6aa63cb9e4fa0081d5c81e1a1492b2198a8280f5b22d`. A no-login Dev Container CLI 0.88.0 consumer installed it as non-root and exercised CLI, MCP and boundary behavior. Its community-index PR is submitted, not listed: https://github.com/devcontainers/devcontainers.github.io/pull/729
 - Exact synthetic-only research notebook, LIVE and clean-room executed: https://github.com/beepboop2025/liquilens-evidence-carrier/blob/3d079421c830fcc97ea08da3c54b8429eb5ed542/notebooks/evidence_carrier_research.ipynb
 - MyBinder, LIVE after an anonymous exact-byte, five-cell kernel execution: https://mybinder.org/v2/gh/beepboop2025/liquilens-evidence-carrier/3d079421c830fcc97ea08da3c54b8429eb5ed542?urlpath=lab/tree/notebooks/evidence_carrier_research.ipynb

@@ -16,7 +16,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / ".well-known/ai-catalog.json"
 PROTOCOL_CATALOG_PATH = ROOT / "protocol/catalog.json"
-MCP_CONTRACT_PATH = ROOT / "protocol/financial-evidence-mcp-v0.1.4.json"
+MCP_CONTRACT_PATH = ROOT / "protocol/financial-evidence-mcp-v0.1.5.json"
 DEFAULT_URL = "https://liquilens.in/.well-known/ai-catalog.json"
 DEFAULT_PROTOCOL_URL = "https://liquilens.in/protocol/catalog.json"
 DEFAULT_MCP_URL = "https://liquilens.in/mcp/financial-evidence"
@@ -172,6 +172,59 @@ def _require_tool_contract(tools: Any, generation: str) -> None:
         raise RuntimeError(f"{generation} MCP tool contract differs: {tools!r}")
 
 
+def require_fetch_semantics(probed: dict[str, Any]) -> dict[str, Any]:
+    """Require the live route to preserve transport, output, and provenance truth."""
+
+    summary = probed.get("structuredContent")
+    if not isinstance(summary, dict):
+        raise RuntimeError(f"MCP fetch has no structured content: {probed!r}")
+    required = {
+        "status": "complete",
+        "transport_status": "complete",
+        "status_semantics": "transport_only",
+        "evidence_status": "not_evaluated",
+        "carrier_verification": "not_performed",
+        "output_status": "complete",
+        "output_error": None,
+    }
+    actual = {name: summary.get(name) for name in required}
+    if actual != required or probed.get("isError") is not False:
+        raise RuntimeError(
+            f"MCP money-market fetch semantic boundary differs: {actual!r}"
+        )
+
+    sources = summary.get("sources")
+    if not isinstance(sources, list) or len(sources) != 1:
+        raise RuntimeError(f"MCP money-market source count differs: {probed!r}")
+    source = sources[0]
+    digest = source.get("content_sha256", "")
+    reported = source.get("source_reported")
+    if (
+        source.get("product") != "Seiche"
+        or source.get("ok") is not True
+        or not isinstance(source.get("bytes"), int)
+        or source["bytes"] <= 0
+        or not digest.startswith("sha256:")
+        or len(digest) != 71
+        or not isinstance(reported, dict)
+        or reported.get("adapter") != "seiche_money_markets_v1"
+        or not isinstance(reported.get("state"), list)
+        or not reported["state"]
+    ):
+        raise RuntimeError(f"MCP money-market receipt is incomplete: {source!r}")
+    for field in reported["state"]:
+        provenance = field.get("provenance") if isinstance(field, dict) else None
+        if not isinstance(provenance, dict) or provenance != {
+            "kind": "source_reported_allowlisted_field",
+            "source_url": source.get("source_url"),
+            "content_sha256": digest,
+        }:
+            raise RuntimeError(
+                f"MCP source-reported provenance is incomplete: {reported!r}"
+            )
+    return source
+
+
 def _verify_mcp(url: str, expected_version_tag: str | None) -> str:
     legacy_initialize, headers = _mcp_request(
         url,
@@ -287,23 +340,7 @@ def _verify_mcp(url: str, expected_version_tag: str | None) -> str:
     )
     _require_version_tag(headers, expected_version_tag)
     probed = _require_result(limiter_probe, "limiter-probe")
-    probe_summary = probed.get("structuredContent", {})
-    if probe_summary.get("status") != "complete" or probed.get("isError") is not False:
-        raise RuntimeError(f"MCP money-market fetch is not complete: {probed!r}")
-    probe_sources = probe_summary.get("sources", [])
-    if len(probe_sources) != 1:
-        raise RuntimeError(f"MCP money-market source count differs: {probed!r}")
-    source = probe_sources[0]
-    digest = source.get("content_sha256", "")
-    if (
-        source.get("product") != "Seiche"
-        or source.get("ok") is not True
-        or not isinstance(source.get("bytes"), int)
-        or source["bytes"] <= 0
-        or not digest.startswith("sha256:")
-        or len(digest) != 71
-    ):
-        raise RuntimeError(f"MCP money-market receipt is incomplete: {source!r}")
+    require_fetch_semantics(probed)
     return (
         f"remote MCP exposes {len(EXPECTED_MCP_TOOLS)} exact tools, both protocol "
         "generations, the China route, and a successful limiter-backed money-market fetch"

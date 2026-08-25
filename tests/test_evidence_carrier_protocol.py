@@ -8,6 +8,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
+    "protocol/liquilens-fleet-brief-v1.schema.json": (
+        "https://liquilens.in/protocol/liquilens-fleet-brief-v1.schema.json",
+        "aaf95337ff973dfbdda97e8ac63975a61b199e43854927404055fbeb52fc6058",
+    ),
     "protocol/liquilens-evidence-carrier-v1.schema.json": (
         "https://liquilens.in/protocol/liquilens-evidence-carrier-v1.schema.json",
         "7f8494d8470853dc88665ea32c1dccb40cc58c55b07e9267aa28c81f83c1ccd3",
@@ -29,12 +33,12 @@ EXPECTED_CHANNELS = {
     "official-mcp-registry": (
         "live",
         "https://registry.modelcontextprotocol.io/v0/servers/"
-        "io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.14.0",
+        "io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.15.0",
     ),
     "agent-skill": (
         "live",
         "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/"
-        "skill-v0.14.0/skills/liquilens-evidence",
+        "skill-v0.15.0/skills/liquilens-evidence",
     ),
     "codex-plugin": (
         "live",
@@ -59,25 +63,25 @@ EXPECTED_CHANNELS = {
     "uvx-immutable-wheel": (
         "live",
         "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/"
-        "download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl"
-        "#sha256=f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24",
+        "download/v0.15.0/liquilens_evidence-0.15.0-py3-none-any.whl"
+        "#sha256=5c7bddeb7a09668cc45fb81217126ee4a72192fa871c4cfe12fc9b688e0f59a0",
     ),
     "homebrew": (
         "live",
         "https://github.com/beepboop2025/homebrew-tap/blob/"
-        "ae2c2ef6f91cd58f821b9e3644f318fb15d26d56/Formula/"
+        "a34f21ac0c81fde1fddbcf2bd97e70241b356d9e/Formula/"
         "liquilens-evidence.rb",
     ),
     "oci": (
         "live",
         "https://ghcr.io/v2/beepboop2025/liquilens-evidence-carrier/manifests/"
-        "sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1",
+        "sha256:d92d7b31850f1788ae910d56035137e422e331f7e07516cce5b546674dbde00a",
     ),
     "mcp-oci": (
         "live",
         "https://ghcr.io/v2/beepboop2025/liquilens-evidence-carrier-mcp/"
-        "manifests/sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a"
-        "17729ea7f7e3e2f7",
+        "manifests/sha256:4e4ffb010b52375b3203b2dc43706c7fa508de2bf8368eca"
+        "465f49d56392dcea",
     ),
     "devcontainer-feature": (
         "live",
@@ -149,13 +153,13 @@ def test_machine_catalog_routes_every_contract_without_authority_widening():
         "https://github.com/beepboop2025/liquilens-evidence-carrier"
     )
     assert catalog["releaseCommit"] == (
-        "8683351bd72c2a4b46d6913cd5e75c5536a410f1"
+        "0d852c06b1a4b0be566c8b4586c9c4c8b8f8f31c"
     )
     assert catalog["pythonDistributionSha256"] == (
-        "f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24"
+        "5c7bddeb7a09668cc45fb81217126ee4a72192fa871c4cfe12fc9b688e0f59a0"
     )
     assert catalog["mcpBundleSha256"] == (
-        "e57e3039d7ae53b6feb3638dbc2f7ba413ff437e5c3a1b62172cad6f3b98e6ea"
+        "c3cad6d894ed0b8b36017f8349188a9854c20d48a50536af8b256e079b92de9d"
     )
     assert catalog["browserVerifier"] == (
         "https://beepboop2025.github.io/liquilens-evidence-carrier/"
@@ -222,7 +226,7 @@ def test_consumer_channel_matrix_preserves_receipts_and_status_boundaries():
         "5f4b731f76de0e85c00c373e3849553425d3102c75545183bdb090b66f88768c"
     )
     assert by_id["agent-skill"]["sha256"] == (
-        "50cfa5b4ce3f974fb0af43d9eaa75014c44f97de03dcec30abab1ac2e99fa301"
+        "adef1a05e047457b752543633536b4e857532b194bf83396175f3f625bc87379"
     )
     assert by_id["agent-skill"]["discoverCommand"].endswith(
         "beepboop2025/liquilens-evidence-carrier --list"
@@ -258,13 +262,13 @@ def test_consumer_channel_matrix_preserves_receipts_and_status_boundaries():
         "publisher_auth_gated_not_listed"
     )
     assert by_id["oci"]["image"].endswith(
-        "@sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1"
+        "@sha256:d92d7b31850f1788ae910d56035137e422e331f7e07516cce5b546674dbde00a"
     )
     assert by_id["mcp-oci"]["image"].endswith(
-        "@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7"
+        "@sha256:4e4ffb010b52375b3203b2dc43706c7fa508de2bf8368eca465f49d56392dcea"
     )
     assert by_id["mcp-oci"]["sourceCommit"] == (
-        "25d2fbcf180c70816d9e60c3590854f887449c79"
+        "d114d63a01778d3b8433534fe540864b32f9b056"
     )
     assert "--network none --read-only" in by_id["mcp-oci"]["command"]
     assert by_id["devcontainer-feature"]["feature"].endswith(
@@ -335,7 +339,7 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
         EXPECTED_CHANNELS["exact-sha-cdn-module"][1]
     )
     assert product["evidence_carrier_mcp_oci_image"].endswith(
-        "@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7"
+        "@sha256:4e4ffb010b52375b3203b2dc43706c7fa508de2bf8368eca465f49d56392dcea"
     )
     assert product["evidence_carrier_devcontainer_feature"].endswith(
         "@sha256:79ac17d7c3f91dc9360c6aa63cb9e4fa0081d5c81e1a1492b2198a8280f5b22d"
@@ -343,7 +347,7 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
     assert product["evidence_carrier_agent_skill"] == (
         EXPECTED_CHANNELS["agent-skill"][1]
     )
-    assert "skill-v0.14.0" in product["evidence_carrier_agent_skill_install"]
+    assert "skill-v0.15.0" in product["evidence_carrier_agent_skill_install"]
     assert product["evidence_carrier_agent_skill_directory"] == (
         "https://skills.sh/beepboop2025/liquilens-evidence-carrier/"
         "liquilens-evidence"
@@ -382,7 +386,7 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
 def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
     page = _read("protocol/index.html")
     assert '<section id="consumer-channels">' in page
-    assert "<caption>Consumer paths verified on 24 August 2026.</caption>" in page
+    assert "<caption>Consumer paths verified on 26 August 2026.</caption>" in page
     assert page.count('scope="col"') == 4
     assert "Fetched / rendered only" in page
     assert "submitted, not listed" in page
@@ -415,7 +419,7 @@ def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
     assert match
     structured = json.loads(match.group(1))
     assert structured["@type"] == "SoftwareSourceCode"
-    assert structured["version"] == "0.14.0"
+    assert structured["version"] == "0.15.0"
     assert structured["codeRepository"] == (
         "https://github.com/beepboop2025/liquilens-evidence-carrier"
     )

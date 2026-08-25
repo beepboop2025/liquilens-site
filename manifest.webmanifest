@@ -1,0 +1,77 @@
+{
+  "id": "/evidence-desk/",
+  "name": "LiquiLens Financial Evidence Desk",
+  "short_name": "Evidence Desk",
+  "description": "Retrieve live public financial evidence with source-reported states, clocks, and claim boundaries preserved.",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "start_url": "/evidence-desk/",
+  "scope": "/evidence-desk/",
+  "display": "standalone",
+  "background_color": "#f4f2e9",
+  "theme_color": "#f4f2e9",
+  "categories": [
+    "finance",
+    "business",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "/brand/liquilens-mark-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/liquilens-mark-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/media-kit/assets/evidence-desk-desktop.png",
+      "sizes": "1440x1200",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Evidence Desk topic selection on a desktop display"
+    },
+    {
+      "src": "/media-kit/assets/evidence-desk-mobile.png",
+      "sizes": "600x1000",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Evidence Desk topic selection on a mobile display"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Build an evidence packet",
+      "short_name": "Build packet",
+      "description": "Choose bounded public evidence routes and retrieve a fresh packet.",
+      "url": "/evidence-desk/#query-heading",
+      "icons": [
+        {
+          "src": "/brand/liquilens-mark-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Review evidence boundaries",
+      "short_name": "Boundaries",
+      "description": "Review transport, evidence, provenance, and authority boundaries before citing.",
+      "url": "/evidence-desk/#model-heading",
+      "icons": [
+        {
+          "src": "/brand/liquilens-mark-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}

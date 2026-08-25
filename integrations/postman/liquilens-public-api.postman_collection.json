@@ -1,0 +1,108 @@
+{
+  "info": {
+    "_postman_id": "c10bb7fc-1ff1-4d42-baf7-14e476bd54d5",
+    "name": "LiquiLens Public Evidence API",
+    "description": "Eight anonymous, read-only public-record routes for bank and lender screening evidence. Screening research only; not a credit rating, investment advice, or execution service. Uncovered institutions remain uncovered.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": {"major": 1, "minor": 0, "patch": 0}
+  },
+  "auth": {"type": "noauth"},
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('public route returns success', () => pm.expect(pm.response.code).to.be.within(200, 299));",
+          "pm.test('response is JSON', () => pm.expect(pm.response.headers.get('Content-Type')).to.match(/^application\\/json/));"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {"key": "baseUrl", "value": "https://api.liquilens.in", "type": "string"},
+    {"key": "institutionSlug", "value": "esaf-sfb", "type": "string"}
+  ],
+  "item": [
+    {
+      "name": "Discovery",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Accept", "value": "application/json"}],
+        "url": {"raw": "{{baseUrl}}/api", "host": ["{{baseUrl}}"], "path": ["api"]},
+        "description": "Discover the public integration surface."
+      }
+    },
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Accept", "value": "application/json"}],
+        "url": {"raw": "{{baseUrl}}/api/health", "host": ["{{baseUrl}}"], "path": ["api", "health"]},
+        "description": "Check public service health."
+      }
+    },
+    {
+      "name": "Failure Radar Board",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Accept", "value": "application/json"}],
+        "url": {"raw": "{{baseUrl}}/api/failure-radar/board", "host": ["{{baseUrl}}"], "path": ["api", "failure-radar", "board"]},
+        "description": "Read the current institution-risk board."
+      }
+    },
+    {
+      "name": "Institution Dossier",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Accept", "value": "application/json"}],
+        "url": {"raw": "{{baseUrl}}/api/failure-radar/institution/{{institutionSlug}}", "host": ["{{baseUrl}}"], "path": ["api", "failure-radar", "institution", "{{institutionSlug}}"]},
+        "description": "Read one currently covered institution dossier. Set institutionSlug from a board result; an uncovered slug returns 404."
+      }
+    },
+    {
+      "name": "Historical Validation",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Accept", "value": "application/json"}],
+        "url": {"raw": "{{baseUrl}}/api/failure-radar/validation", "host": ["{{baseUrl}}"], "path": ["api", "failure-radar", "validation"]},
+        "description": "Read the construction-PIT historical diagnostic and its eligibility boundary."
+      }
+    },
+    {
+      "name": "Model Card",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Accept", "value": "application/json"}],
+        "url": {"raw": "{{baseUrl}}/api/failure-radar/model-card", "host": ["{{baseUrl}}"], "path": ["api", "failure-radar", "model-card"]},
+        "description": "Read model scope, limits, and governance checks."
+      }
+    },
+    {
+      "name": "Market Evidence Status",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Accept", "value": "application/json"}],
+        "url": {"raw": "{{baseUrl}}/api/evidence/markets", "host": ["{{baseUrl}}"], "path": ["api", "evidence", "markets"]},
+        "description": "Read historical-evidence status and eligibility across India, the US, and Europe."
+      }
+    },
+    {
+      "name": "Institution Universe Search",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Accept", "value": "application/json"}],
+        "url": {
+          "raw": "{{baseUrl}}/api/universe/search?q=bank&limit=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "universe", "search"],
+          "query": [
+            {"key": "q", "value": "bank", "description": "Name query, maximum 120 characters."},
+            {"key": "limit", "value": "10", "description": "Result limit from 1 through 200."}
+          ]
+        },
+        "description": "Search the public RBI institution universe by name, classification, or layer."
+      }
+    }
+  ]
+}
