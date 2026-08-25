@@ -149,3 +149,4 @@ jobs:
           test -n "$run_id"
           test "$run_id" != "$previous_run_id"
           gh run watch "$run_id" --exit-status --interval 5
+          test "$(git ls-remote origin refs/heads/main | awk '{print $1}')" = "$PUSHED_SHA"

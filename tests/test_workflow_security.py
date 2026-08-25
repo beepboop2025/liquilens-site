@@ -100,4 +100,4 @@ def test_daily_publisher_deploys_exact_sha_edge_before_pages():
     assert ARTICLES.count('--commit "$PUSHED_SHA"') == 4
     assert ARTICLES.count(
         'test "$(git ls-remote origin refs/heads/main | awk '
-    ) == 1
+    ) == 2
