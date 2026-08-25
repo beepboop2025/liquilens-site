@@ -1,0 +1,125 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-08-25-sambandh-finserve-s-funding-flag-arrived-early-but-did-not-make-failure-know",
+  "product": "liquilens",
+  "slug": "2026-08-25-sambandh-finserve-s-funding-flag-arrived-early-but-did-not-make-failure-know",
+  "date": "2026-08-25",
+  "article_type": "historical_replay",
+  "topic": "sambandh-finserve",
+  "headline": "Sambandh Finserve’s funding flag arrived early—but did not make failure knowable",
+  "dek": "A fragile wholesale-leverage reading preceded Sambandh Finserve’s recorded default. It was a filing-period vulnerability signal, not a market-price verdict, calibrated failure probability, or forecast for institutions on today’s board.",
+  "canonical_url": "https://liquilens.in/articles/2026-08-25-sambandh-finserve-s-funding-flag-arrived-early-but-did-not-make-failure-know/",
+  "published_at": "2026-08-25T11:44:05Z",
+  "evidence_as_of": "2026-08-24",
+  "board_signature": "11b8f7897ecd041af916ebef625d096a850763c28879ac3f256e8179a0d72721",
+  "subject": {
+    "slug": "sambandh-finserve",
+    "name": "Sambandh Finserve",
+    "inst_type": "mfi",
+    "default_date": "2020-10-13",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "sambandh-finserve",
+      "inst_type": "mfi",
+      "default_date": "2020-10-13",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "sambandh-finserve",
+      "inst_type": "mfi",
+      "scoreable": true,
+      "first_signal": {
+        "period_end": "2016-03-31",
+        "index": 78.7,
+        "knowledge_time_proxy": "2016-05-30",
+        "band": "fragile",
+        "flags": [
+          "wholesale leverage 8.51x >= 7x"
+        ]
+      },
+      "lead_months": 52
+    }
+  },
+  "word_count": 1435,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:5b77e2bfd874adff4f42b4cbb2490fd4690764d5ad2e3bca6f1b069c396fd3e0",
+    "memory_fingerprint": "sha256:232ff2083030b3164a33377841ced3f6e8b5ec01200688b0da41bc17f11f3e2d",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 4,
+    "dossier_sha256": "dce4475f6b8098546e4c3d7d90b53cf5fcbb4b160a4f0a627c55317e2edc25e6",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "historical_news_and_forecast_boundary",
+      "not_a_credit_rating",
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Reframed the Sambandh finding as a filing-period vulnerability signal rather than a forecast or causal proof.",
+      "Separated filing, market-price, and model-derived evidence; retained construction-PIT, fraud-mask, freshness, and missing-data limits.",
+      "Removed unsupported event-chain claims and added a counter-case that rejects timing precision.",
+      "Removed the unsupported 95% figure and all placeholder-style null-field language from the article.",
+      "Condensed the replay while retaining required headings, eligibility limits, fraud masking, freshness limits, and missing-disclosure constraints.",
+      "Kept filing-period signals, market-price signals, and model derivations analytically separate.",
+      "Removed the leaked placeholder-style wording and retained only dossier-supported missing-data descriptions.",
+      "Kept filing-period signals, market-price signals, and model derivations separate throughout.",
+      "Preserved fraud masking, construction-PIT, eligibility, filing-lag, freshness, and missing-disclosure limits.",
+      "Strengthened the counter-case against any timing or causal-prediction claim."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:5b77e2bfd874adff4f42b4cbb2490fd4690764d5ad2e3bca6f1b069c396fd3e0",
+      "memory_fingerprint": "sha256:232ff2083030b3164a33377841ced3f6e8b5ec01200688b0da41bc17f11f3e2d",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
