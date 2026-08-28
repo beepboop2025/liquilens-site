@@ -33,6 +33,7 @@ The release gate checks that claims remain consistent across visible pages, meta
 ```bash
 LIQUILENS_OFFLINE=1 python3 scripts/verify_public_claims.py
 python3 -m pytest tests -q
+node --test tests/*.mjs
 ```
 
 Run the verifier without `LIQUILENS_OFFLINE=1` to compare public copy with the live API. Live-service differences are reported separately because that deployment is maintained outside this repository.
@@ -51,6 +52,29 @@ Run the verifier without `LIQUILENS_OFFLINE=1` to compare public copy with the l
 - [`.well-known/security.txt`](.well-known/security.txt) gives the vulnerability-reporting route.
 
 These files describe the same product from different interfaces. When changing a product claim or endpoint, update every affected surface and run the verification suite.
+
+## Telegram-to-X handoff
+
+[`go/x/index.html`](go/x/index.html) is a noindex, first-party handoff used by
+reviewed Telegram buttons. It requires exactly one allowed `from`, `topic`, and
+`action` value before emitting a property-free `community_growth` event. The
+`follow` action opens X's official follow intent, while `share` opens a
+topic-matched draft with fixed, reviewed copy; neither action follows or posts
+automatically. The analytics request is a CORS-safelisted, keepalive delivery
+and navigation does not wait for it.
+
+Shared drafts link to [`go/telegram/index.html`](go/telegram/index.html), a
+noindex Open Graph fallback that returns readers to the matching useful bot
+view. Its compact `x26_crypto_<source>_<intent>` references remain within
+Telegram's 64-byte start-parameter limit. Missing, invalid, duplicate, and
+`operator_rehearsal` inputs still navigate safely through the non-counting
+`qa` route but emit no growth event. An explicitly valid `organic` source is
+countable; malformed attribution is never silently relabeled organic.
+
+Release the API event allowlist first, this static route second, and bot/channel
+buttons last. A bridge redirect measures an attempted X profile or composer
+handoff or an attempted return to Telegram. It is not evidence of a follow, a
+published post, a bot activation, or a retained member.
 
 ## Deployment
 
