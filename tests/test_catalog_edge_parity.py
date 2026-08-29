@@ -907,13 +907,23 @@ def test_modern_discovery_may_report_a_verified_subset_of_advertised_versions():
     result = {
         "supportedVersions": ["2026-07-28"],
         "capabilities": {"tools": {}},
-        "ttlMs": 300_000,
-        "cacheScope": "public",
+        "ttlMs": 0,
+        "cacheScope": "private",
     }
     _validate_modern_sibling_discovery("NarcoScope", card, result)
 
     result["supportedVersions"] = ["2026-07-28", "2099-01-01"]
     with pytest.raises(RuntimeError, match="supported versions are invalid"):
+        _validate_modern_sibling_discovery("NarcoScope", card, result)
+
+    result["supportedVersions"] = ["2026-07-28"]
+    result["ttlMs"] = -1
+    with pytest.raises(RuntimeError, match="invalid ttlMs"):
+        _validate_modern_sibling_discovery("NarcoScope", card, result)
+
+    result["ttlMs"] = 0
+    result["cacheScope"] = "shared"
+    with pytest.raises(RuntimeError, match="invalid cacheScope"):
         _validate_modern_sibling_discovery("NarcoScope", card, result)
 
 
