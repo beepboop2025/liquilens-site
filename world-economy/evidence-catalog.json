@@ -5,7 +5,7 @@
   "name": "Liquidity Lab World Economy Evidence Catalog",
   "description": "A public catalog that routes questions to four independent evidence layers: Seiche for system-wide dollar funding and global money-market context, LiquiLens for bank and lender failure-risk screening, Undertow for market-liquidity and position-sized exit evidence, and Palimpsest for revision-safe China economy and information evidence. It is not a complete database of the world economy.",
   "url": "https://liquilens.in/world-economy/",
-  "dateModified": "2026-08-24",
+  "dateModified": "2026-08-29",
   "publisher": {
     "@type": "Organization",
     "@id": "https://liquilens.in/#org",
@@ -214,8 +214,8 @@
       "description": "A free public-good record of bounded China economic observations and information conditions with separate reference, release, collection and revision clocks, provenance hashes, coverage gates and explicit abstentions. The observation ledger is narrow and mostly CFETS-derived; it is not a complete national activity index or an estimate of true GDP. Financial authority: none.",
       "url": "https://palimpsest.info/china/",
       "sameAs": "https://palimpsest.info/china/",
-      "dateModified": "2026-08-24",
-      "version": "1.9.0",
+      "dateModified": "2026-08-29",
+      "version": "1.9.3",
       "creator": {
         "@type": "Organization",
         "name": "Palimpsest",
@@ -270,12 +270,6 @@
           "name": "China Observatory machine index",
           "encodingFormat": "application/json",
           "contentUrl": "https://palimpsest.info/readings/china-index-latest.json"
-        },
-        {
-          "@type": "DataDownload",
-          "name": "Public OpenAPI contract",
-          "encodingFormat": "application/vnd.oai.openapi+json",
-          "contentUrl": "https://palimpsest.info/openapi.json"
         }
       ]
     }

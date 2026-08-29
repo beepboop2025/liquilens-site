@@ -280,7 +280,7 @@
       ],
       "resourceTemplates": [],
       "version": "1.9.0",
-      "updatedAt": "2026-08-18T00:00:00Z",
+      "updatedAt": "2026-08-29T15:24:41Z",
       "metadata": {
         "productUrl": "https://liquilens-undertow.com",
         "publicToolCount": 9,
@@ -291,6 +291,14 @@
         "mcpEndpoint": "https://api.seiche.info/undertow/mcp",
         "openapi": "https://api.seiche.info/undertow/x402/openapi.json",
         "productCard": "https://liquilens-undertow.com/product-card.json",
+        "apiCatalog": "https://liquilens-undertow.com/.well-known/api-catalog",
+        "apiCatalogSourceCommit": "b22faf5bd6bcfff42eb532efa87ef47bb5e0b14c",
+        "apiCatalogCoreProofCommit": "295abe7a6194518b1eafcd14e9d3f171777283eb",
+        "apiCatalogSiteCommit": "f32799cf672ca694924ac4261344b303e9afe34d",
+        "apiCatalogWorkerVersion": "403eef54-1c52-40ba-a503-a8ddc6a4769f",
+        "apiCatalogSha256": "sha256:11819229f11a80bb1dd280a76feeaef4929e9caf28bde2a0bc78eb48e0cb6b7e",
+        "apiCatalogUpgradeState": "live-externally-verified",
+        "apiCatalogVerifiedAt": "2026-08-29T15:24:41Z",
         "telegramBot": "https://t.me/Undertow_LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityCryptoDesk"
       }
@@ -332,8 +340,11 @@
         "signal_deep_dive"
       ],
       "resourceTemplates": [],
-      "version": "1.9.0",
-      "updatedAt": "2026-08-24T13:51:23.905708Z",
+      "resources": [
+        "palimpsest://china-economic/publication-rights"
+      ],
+      "version": "1.9.3",
+      "updatedAt": "2026-08-29T14:47:02.39659Z",
       "metadata": {
         "productUrl": "https://palimpsest.info/",
         "humanLandingPage": "https://palimpsest.info/china/",
@@ -342,22 +353,22 @@
         "access": "public-read-only",
         "publicToolCount": 6,
         "publicPromptCount": 4,
-        "publicResourceCount": 0,
+        "publicResourceCount": 1,
         "mcpServerName": "io.github.beepboop2025/palimpsest",
         "mcpEndpoint": "https://api.seiche.info/palimpsest/mcp",
         "deploymentBoundary": "production-verified",
-        "deploymentNote": "This card describes the exact deployed and independently re-probed MCP 1.9.0 boundary.",
-        "deploymentCommit": "135d8f332d7eaeb48f793ecaa47ee1e13708c1ac",
-        "deploymentReceipt": "https://palimpsest.info/.well-known/receipts/mcp-deployment-1.9.0.json",
-        "deploymentReceiptSha256": "sha256:8570b4fcc138461be34f17c8257f4f6dbef5242336f533411b56d5d747a27154",
-        "deploymentRun": "https://github.com/beepboop2025/palimpsest/actions/runs/32734455304",
-        "registryReceipt": "https://palimpsest.info/.well-known/receipts/mcp-registry-publication-1.9.0.json",
-        "registryReceiptSha256": "sha256:6014b600a2115acb05dc59a60e0595c0de4424907e074fcc08b465dcea09cfa7",
-        "registryRun": "https://github.com/beepboop2025/palimpsest/actions/runs/32735073973",
-        "registrySnapshot": "https://palimpsest.info/.well-known/receipts/mcp-registry-latest-1.9.0.json",
-        "registrySnapshotSha256": "sha256:5af0c21c5818c0ca4983040410b52061026c0261e54bdaab8668fd5592b6c389",
-        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fpalimpsest/versions/1.9.0",
-        "registryPublishedAt": "2026-08-24T13:51:23.905708Z",
+        "deploymentNote": "This card describes the exact deployed and independently re-probed MCP 1.9.3 boundary, including native fail-closed publication-rights handling.",
+        "deploymentCommit": "1b71dd2bb2dcdec0b99691f7d4caaa13c4857574",
+        "deploymentReceipt": "https://palimpsest.info/.well-known/receipts/mcp-deployment-1.9.3.json",
+        "deploymentReceiptSha256": "sha256:db370a46897b58d32e31561f1e664d68ea053ac38454caa58b52dd4c9ba5e834",
+        "deploymentRun": "https://github.com/beepboop2025/palimpsest/actions/runs/33258332928",
+        "registryReceipt": "https://palimpsest.info/.well-known/receipts/mcp-registry-publication-1.9.3.json",
+        "registryReceiptSha256": "sha256:d9f153a99b52b686995e22e378fcd1383335d0f74c175932d4dfd6d70147b4f5",
+        "registryRun": "https://github.com/beepboop2025/palimpsest/actions/runs/33258465637",
+        "registrySnapshot": "https://palimpsest.info/.well-known/receipts/mcp-registry-latest-1.9.3.json",
+        "registrySnapshotSha256": "sha256:b242bf50ef87441222ac2b3b9103b99d4fad44d52dd5b119a500ee13d4508287",
+        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fpalimpsest/versions/1.9.3",
+        "registryPublishedAt": "2026-08-29T14:47:02.39659Z",
         "liveVersionAuthority": "Initialize the linked MCP remote and compare serverInfo.version before treating a release as deployed.",
         "quickstart": "https://palimpsest.info/developers.html",
         "productCard": "https://palimpsest.info/product-card.json"
@@ -436,27 +447,38 @@
       "representativeQueries": [
         "How can an agent return financial evidence without dropping source rights and knowledge time?",
         "What schema can travel through FDC3, OpenLineage, Parquet and citations?",
-        "How do I verify a LiquiLens evidence carrier?"
+        "How do I verify a LiquiLens evidence carrier?",
+        "How can a coordinating agent return a Fleet Brief without flattening product states or evidence clocks?"
       ],
-      "version": "0.14.0",
-      "updatedAt": "2026-08-24T14:34:07Z",
+      "version": "0.16.0",
+      "updatedAt": "2026-08-29T15:46:49.069496Z",
       "metadata": {
         "access": "public",
         "license": "Apache-2.0",
         "repository": "https://github.com/beepboop2025/liquilens-evidence-carrier",
-        "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl",
-        "mcpBundle": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens-evidence-carrier-mcp-0.14.0.mcpb",
-        "mcpBundleSha256": "e57e3039d7ae53b6feb3638dbc2f7ba413ff437e5c3a1b62172cad6f3b98e6ea",
-        "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.14.0",
+        "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl",
+        "pythonDistributionSha256": "317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11",
+        "mcpBundle": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens-evidence-carrier-mcp-0.16.0.mcpb",
+        "mcpBundleSha256": "c44b13b2efc4622a8ecfc06848f32358982dd2a9458a271e1ed77d646791961a",
+        "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.16.0",
+        "releaseCommit": "410f7d91114fba715e9a9ae830faa775064a4502",
+        "releaseWorkflow": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/33261143612",
+        "mcpRegistry": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.16.0",
+        "registryStatus": "active-latest",
+        "mcpRegistryPublishedAt": "2026-08-29T15:46:49.069496Z",
         "humanLandingPage": "https://liquilens.in/protocol/",
+        "fleetBriefSchema": "https://liquilens.in/protocol/liquilens-fleet-brief-v1.schema.json",
         "browserVerifier": "https://beepboop2025.github.io/liquilens-evidence-carrier/",
         "browserVerifierSource": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser",
         "consumerChannelCatalog": "https://liquilens.in/protocol/catalog.json",
+        "consumerChannelSnapshotVersion": "0.16.0",
         "consumerChannelCount": 18,
         "consumerChannelStatuses": "16 live; 1 live reference consumer; 1 fetched/rendered only",
         "airflowProvider": "https://github.com/beepboop2025/liquilens-airflow-provider/releases/download/v0.1.0/liquilens_airflow_provider-0.1.0-py3-none-any.whl#sha256=aa91a2528ebf2e1583c379a08ce60f9aa52fc33d9d89da0bab9876d5720956bf",
         "airflowInstall": "python -m pip install 'liquilens-airflow-provider @ https://github.com/beepboop2025/liquilens-airflow-provider/releases/download/v0.1.0/liquilens_airflow_provider-0.1.0-py3-none-any.whl#sha256=aa91a2528ebf2e1583c379a08ce60f9aa52fc33d9d89da0bab9876d5720956bf'",
-        "codexPlugin": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/plugin-v0.14.1/.agents/plugins/plugins/liquilens-evidence",
+        "agentSkill": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.15.0/skills/liquilens-evidence",
+        "agentSkillSha256": "adef1a05e047457b752543633536b4e857532b194bf83396175f3f625bc87379",
+        "codexPlugin": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/plugin-v0.14.1/plugins/liquilens-evidence",
         "codexPluginInstall": "codex plugin marketplace add beepboop2025/liquilens-evidence-carrier --ref plugin-v0.14.1 && codex plugin add liquilens-evidence@liquilens",
         "devContainerFeature": "ghcr.io/beepboop2025/liquilens-devcontainer-features/liquilens-evidence@sha256:79ac17d7c3f91dc9360c6aa63cb9e4fa0081d5c81e1a1492b2198a8280f5b22d",
         "mcpOciImage": "ghcr.io/beepboop2025/liquilens-evidence-carrier-mcp@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7",
@@ -465,6 +487,279 @@
         "vscodeVsix": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/vscode-v0.1.0/liquilens-evidence-0.1.0.vsix",
         "vscodeVsixSha256": "ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf",
         "financialAuthority": "none"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:catalog:riptide",
+      "displayName": "Riptide Public Risk and Event Research",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+        "name": "io.github.beepboop2025/riptide",
+        "title": "Riptide — public risk and event research",
+        "description": "Read-only paper risk evidence and policy-gated committed event research. No real orders.",
+        "version": "1.3.0",
+        "websiteUrl": "https://api.seiche.info/riptide/",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://api.seiche.info/riptide/mcp"
+          }
+        ]
+      },
+      "description": "Seven anonymous, read-only tools for committed paper allocation, performance, defensive coverage, methodology, and rights-gated event-market research. No brokerage connection or real orders.",
+      "tags": [
+        "paper risk",
+        "event intelligence",
+        "policy gates",
+        "read-only MCP"
+      ],
+      "capabilities": [
+        "riptide_overview",
+        "riptide_allocation",
+        "riptide_paper_record",
+        "riptide_crypto_record",
+        "riptide_risk_evidence",
+        "riptide_event_markets",
+        "riptide_methodology"
+      ],
+      "protocolVersions": [
+        "2026-07-28",
+        "2025-11-25",
+        "2025-06-18"
+      ],
+      "representativeQueries": [
+        "What risk allocation did Riptide commit in its paper record?",
+        "Which event-market evidence is eligible, quarantined, stale, or unavailable?"
+      ],
+      "version": "1.3.0",
+      "updatedAt": "2026-08-29T15:27:46.397184Z",
+      "metadata": {
+        "authentication": "none",
+        "access": "public-read-only",
+        "executionMode": "paper-only",
+        "publicToolCount": 7,
+        "mcpEndpoint": "https://api.seiche.info/riptide/mcp",
+        "openapi": "https://api.seiche.info/riptide/openapi.json",
+        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Friptide/versions/1.2.0",
+        "apiCatalog": "https://api.seiche.info/riptide/.well-known/api-catalog",
+        "apiCatalogSha256": "sha256:b7075bdbe11883f875ebb0102b6d82e84578b62ce66d4a05e4b8b800074ee1b8",
+        "sourceUpgradeVersion": "1.3.0",
+        "sourceUpgradeCommit": "00b50adaea41bebe1ceb54867f47e0070ed5eec6",
+        "sourceUpgradeMergeCommit": "e9da16a9f1ed02cdae543bef26719b3d97f57da0",
+        "sourceUpgradeImplementationCommit": "d4c965e86a4820965b0b071129a76572faa8aec1",
+        "sourceUpgradeProofRun": "https://github.com/beepboop2025/riptide/actions/runs/33259877818",
+        "sourceUpgradeProofCommit": "00b50adaea41bebe1ceb54867f47e0070ed5eec6",
+        "sourceUpgradeProofVisibility": "owner-private",
+        "sourceUpgradeProofState": "owner-verified-success",
+        "sourceUpgradeProofPubliclyFetchable": false,
+        "registryPublicationProofRun": "https://github.com/beepboop2025/riptide/actions/runs/32929046333",
+        "registryPublicationProofCommit": "350169e471d10085c2381c459486b9c263de7985",
+        "registryPublicationProofVisibility": "owner-private",
+        "registryPublicationProofState": "owner-verified-success",
+        "registryPublicationProofPubliclyFetchable": false,
+        "sourceUpgradeState": "live-registry-publication-gated",
+        "deploymentReceiptRecordedAt": "2026-08-29T15:27:46.397184Z",
+        "registryUpgradeState": "held-until-origin-catalog-live",
+        "originCatalogReleaseGate": "https://api.seiche.info/.well-known/api-catalog",
+        "financialAuthority": "none"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:catalog:myquant-editorial",
+      "displayName": "MyQuant Editorial Evidence Catalog",
+      "type": "application/ai-catalog+json",
+      "url": "https://myquantdoesntspeakenglish.com/.well-known/ai-catalog.json",
+      "description": "A finite public editorial archive with five read-only tools that preserve stable story IDs, source receipts, release state, evidence clocks, and limitations.",
+      "tags": [
+        "market editorial",
+        "evidence-bounded stories",
+        "public archive",
+        "read-only MCP"
+      ],
+      "capabilities": [
+        "list_capabilities",
+        "get_health",
+        "latest_stories",
+        "get_story",
+        "search_stories"
+      ],
+      "protocolVersions": [
+        "2026-07-28",
+        "2025-11-25",
+        "2025-06-18",
+        "2025-03-26"
+      ],
+      "representativeQueries": [
+        "Show the latest evidence-bounded MyQuant stories.",
+        "Retrieve one story with its sources, evidence clock, and release ID."
+      ],
+      "version": "2.1.0",
+      "updatedAt": "2026-08-26T04:18:29.499666Z",
+      "metadata": {
+        "authentication": "none",
+        "access": "public-read-only",
+        "publicToolCount": 5,
+        "mcpEndpoint": "https://myquantdoesntspeakenglish.com/mcp",
+        "openapi": "https://myquantdoesntspeakenglish.com/openapi.json",
+        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fmyquant-editorial/versions/2.1.0",
+        "registryPublishedAt": "2026-08-26T04:18:29.499666Z",
+        "contentAuthority": "PUBLIC_EDITORIAL_ARCHIVE"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:catalog:myquant-app",
+      "displayName": "MyQuant App Discovery Catalog",
+      "type": "application/ai-catalog+json",
+      "url": "https://myquant-app.vercel.app/.well-known/ai-catalog.json",
+      "description": "Read-only product discovery and compatibility health for the finite, offline-capable MyQuant briefing app; on-device settings, caches, and saved stories remain local.",
+      "tags": [
+        "mobile briefing",
+        "offline reading",
+        "product discovery",
+        "read-only MCP"
+      ],
+      "capabilities": [
+        "list_capabilities",
+        "get_health"
+      ],
+      "protocolVersions": [
+        "2026-07-28",
+        "2025-11-25",
+        "2025-06-18",
+        "2025-03-26"
+      ],
+      "representativeQueries": [
+        "What can the MyQuant app do without reading on-device state?",
+        "Are the public MyQuant app API and MCP surfaces compatible?"
+      ],
+      "version": "2.0.0",
+      "updatedAt": "2026-08-22T13:57:43.565039Z",
+      "metadata": {
+        "authentication": "none",
+        "access": "public-read-only-metadata",
+        "publicToolCount": 2,
+        "mcpEndpoint": "https://myquant-app.vercel.app/mcp",
+        "openapi": "https://myquant-app.vercel.app/openapi.json",
+        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fmyquant-app/versions/2.0.0",
+        "onDeviceStateAccess": "none"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:catalog:narcoscope",
+      "displayName": "NarcoScope Official Drug-Market Evidence",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+        "name": "io.github.beepboop2025/narcoscope",
+        "title": "NarcoScope — official drug-market evidence explorer",
+        "description": "Aggregate official drug-market evidence, cited analyses, and explicit claim boundaries.",
+        "version": "1.3.0",
+        "repository": {
+          "url": "https://github.com/beepboop2025/narcoscope",
+          "source": "github"
+        },
+        "websiteUrl": "https://narcoscope.com",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://narcoscope.com/mcp"
+          }
+        ]
+      },
+      "description": "Seven read-only tools for aggregate official drug-market observations, citation-gated newsroom artifacts, and separately bounded Palimpsest context. No tactical, navigable, guilt, route, actor, or causal inference.",
+      "tags": [
+        "official drug-market evidence",
+        "citations",
+        "claim boundaries",
+        "public-interest research"
+      ],
+      "capabilities": [
+        "list_capabilities",
+        "get_overview",
+        "get_newsroom",
+        "get_story",
+        "get_palimpsest_bridge",
+        "get_palimpsest_corridors",
+        "get_palimpsest_bri_context"
+      ],
+      "protocolVersions": [
+        "2026-07-28",
+        "2025-06-18",
+        "2025-03-26"
+      ],
+      "representativeQueries": [
+        "What does NarcoScope's official-data overview establish and not establish?",
+        "Retrieve a cited newsroom artifact while preserving its disclosure and causal limits."
+      ],
+      "version": "1.3.0",
+      "updatedAt": "2026-08-29T15:37:45.168739Z",
+      "metadata": {
+        "authentication": "none",
+        "access": "public-read-only",
+        "publicToolCount": 7,
+        "mcpEndpoint": "https://narcoscope.com/mcp",
+        "openapi": "https://narcoscope.com/openapi.json",
+        "liveDeployment": "verified",
+        "customDomainStatus": "configured-live",
+        "apiCatalog": "https://narcoscope.com/.well-known/api-catalog",
+        "apiCatalogSha256": "sha256:62e006de96351351fbd8ffd8911d8adf25cb7189aa000ac7e4765bd495fc062c",
+        "registryStatus": "active-latest",
+        "registryAdvertisedVersion": "1.3.0",
+        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fnarcoscope/versions/1.3.0",
+        "registryPublishedAt": "2026-08-29T15:37:45.168739Z",
+        "registryPublicationWorkflow": "https://github.com/beepboop2025/narcoscope/actions/runs/33260765822",
+        "sourceUpgradeVersion": "1.3.0",
+        "sourceUpgradeCommit": "31beee7ce6e0b0f17d66a01890cb82b4bcd9d4b4",
+        "sourceUpgradeImplementationCommit": "d18528dc6aeb9d725ce2c85d3f22caaa152f5cb6",
+        "sourceUpgradeDiscoveryCommit": "ddacf2c56ed403aebeb62ef07d09004432072b1e",
+        "sourceUpgradeState": "live-externally-verified",
+        "productionDeploymentId": "6157277241",
+        "financialAuthority": "none"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:local:scamshield",
+      "displayName": "ScamShield Local Privacy-Safe Triage MCP",
+      "type": "text/markdown",
+      "url": "https://github.com/beepboop2025/scamshield/blob/master/docs/API-MCP.md",
+      "description": "Four local read-only tools for privacy-conscious suspicious-message triage, evidence typologies, and reporting guidance. Submitted text is processed in memory and is not returned or stored by the public developer surface.",
+      "tags": [
+        "scam triage",
+        "privacy",
+        "local MCP",
+        "human review"
+      ],
+      "capabilities": [
+        "list_capabilities",
+        "assess_message",
+        "list_typologies",
+        "get_reporting_steps"
+      ],
+      "protocolVersions": [
+        "2026-07-28",
+        "2025-11-25",
+        "2025-06-18",
+        "2025-03-26"
+      ],
+      "representativeQueries": [
+        "Assess this suspicious message locally without retaining it.",
+        "What evidence-preservation and reporting steps apply in India?"
+      ],
+      "version": "1.1.0",
+      "updatedAt": "2026-08-29T00:00:00Z",
+      "metadata": {
+        "authentication": "local-process-boundary",
+        "access": "local-only",
+        "transport": "stdio",
+        "releaseState": "merged-local-only-contract",
+        "sourceCommit": "e05138c92bc485658c1c3f95f883f2f334dc4b08",
+        "productionCodeDeployment": "https://github.com/beepboop2025/scamshield/actions/runs/33259379805",
+        "publicRemoteEndpoint": "none",
+        "registryStatus": "not-published-by-design",
+        "assessmentStorage": "none",
+        "rawTextReturned": false,
+        "humanReviewRequired": true
       }
     }
   ]

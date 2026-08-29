@@ -1,15 +1,16 @@
 {
   "schema": "liquilens.evidence-carrier-catalog.v1",
-  "version": "0.14.0",
+  "version": "0.16.0",
   "protocolVersion": "1.0",
   "license": "Apache-2.0",
   "repository": "https://github.com/beepboop2025/liquilens-evidence-carrier",
-  "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl",
-  "pythonDistributionSha256": "f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24",
-  "mcpBundle": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens-evidence-carrier-mcp-0.14.0.mcpb",
-  "mcpBundleSha256": "e57e3039d7ae53b6feb3638dbc2f7ba413ff437e5c3a1b62172cad6f3b98e6ea",
-  "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.14.0",
-  "releaseCommit": "8683351bd72c2a4b46d6913cd5e75c5536a410f1",
+  "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl",
+  "pythonDistributionSha256": "317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11",
+  "mcpBundle": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens-evidence-carrier-mcp-0.16.0.mcpb",
+  "mcpBundleSha256": "c44b13b2efc4622a8ecfc06848f32358982dd2a9458a271e1ed77d646791961a",
+  "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.16.0",
+  "releaseCommit": "410f7d91114fba715e9a9ae830faa775064a4502",
+  "releaseWorkflow": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/33261143612",
   "humanLandingPage": "https://liquilens.in/protocol/",
   "browserVerifier": "https://beepboop2025.github.io/liquilens-evidence-carrier/",
   "browserVerifierSource": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser",
@@ -19,28 +20,28 @@
       "id": "official-mcp-registry",
       "label": "Official MCP Registry",
       "status": "live",
-      "url": "https://registry.modelcontextprotocol.io/v0/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.14.0",
-      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32729121023",
-      "verifiedResult": "active and latest at version 0.14.0"
+      "url": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.16.0",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/33261143612",
+      "verifiedResult": "active and latest at version 0.16.0"
     },
     {
       "id": "agent-skill",
       "label": "LiquiLens Evidence Agent Skill",
       "status": "live",
-      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.14.0/skills/liquilens-evidence",
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.15.0/skills/liquilens-evidence",
       "directoryUrl": "https://skills.sh/beepboop2025/liquilens-evidence-carrier/liquilens-evidence",
       "discoverCommand": "DO_NOT_TRACK=1 npx --yes skills@1.5.23 add beepboop2025/liquilens-evidence-carrier --list",
-      "command": "npx skills add https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.14.0/skills/liquilens-evidence --skill liquilens-evidence",
-      "sourceCommit": "9d17b185a350ad0e3a61ee18c6a8b360c5dc5fdd",
-      "sha256": "50cfa5b4ce3f974fb0af43d9eaa75014c44f97de03dcec30abab1ac2e99fa301",
-      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32733486373",
+      "command": "npx --yes skills@1.5.23 add https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.15.0/skills/liquilens-evidence --skill liquilens-evidence --agent codex --copy --yes",
+      "sourceCommit": "afeb5ad9f7ab795a23882a9e714156c6aafd59c0",
+      "sha256": "adef1a05e047457b752543633536b4e857532b194bf83396175f3f625bc87379",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/32896092859",
       "verifiedResult": "skills 1.5.23 anonymously discovered exactly one skill and installed bytes identical to the immutable public tag"
     },
     {
       "id": "codex-plugin",
       "label": "Codex Git marketplace plugin",
       "status": "live",
-      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/plugin-v0.14.1/.agents/plugins/plugins/liquilens-evidence",
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/plugin-v0.14.1/plugins/liquilens-evidence",
       "marketplaceCommand": "codex plugin marketplace add beepboop2025/liquilens-evidence-carrier --ref plugin-v0.14.1",
       "command": "codex plugin add liquilens-evidence@liquilens",
       "sourceCommit": "1531a60192728253283459287e9afecfa825f3e0",
@@ -88,9 +89,9 @@
       "id": "uvx-immutable-wheel",
       "label": "Hash-pinned one-shot CLI",
       "status": "live",
-      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl#sha256=f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24",
-      "command": "uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl#sha256=f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24' liquilens-evidence --help",
-      "verifiedResult": "uv 0.10.0 installed the immutable wheel and exposed issue, verify, verify-files, and convert"
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl#sha256=317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11",
+      "command": "uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl#sha256=317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11' liquilens-evidence --help",
+      "verifiedResult": "the immutable 0.16.0 wheel exposes carrier and four-product Fleet Brief issue and verification commands"
     },
     {
       "id": "homebrew",
@@ -235,6 +236,12 @@
       "mediaType": "application/schema+json",
       "url": "https://liquilens.in/protocol/liquilens-evidence-carrier-reference-v1.schema.json",
       "sha256": "d54043bf11359749597bff7495b0fffe6ff8453a35144cee4a2bd69711fec7e8"
+    },
+    {
+      "name": "LiquiLens Fleet Brief v1",
+      "mediaType": "application/schema+json",
+      "url": "https://liquilens.in/protocol/liquilens-fleet-brief-v1.schema.json",
+      "sha256": "aaf95337ff973dfbdda97e8ac63975a61b199e43854927404055fbeb52fc6058"
     },
     {
       "name": "LiquiLens FDC3 Evidence Context",

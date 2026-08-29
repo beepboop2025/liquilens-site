@@ -13,7 +13,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 18
     environment: production
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -33,27 +33,117 @@ jobs:
       - name: Install exact edge dependencies
         run: npm ci --ignore-scripts
       - name: Validate the bundled catalog, MCP server and parity checker
+        timeout-minutes: 3
         run: |
           npm run test:edge
           python3 -m pytest tests/test_catalog_edge_parity.py -q
+      - name: Require external proof before publishing catalog claims
+        timeout-minutes: 3
+        run: >-
+          python3 scripts/verify_catalog_edge.py --external-proof-only
+          --attempts 2 --delay 2 --budget-seconds 150
       - name: Require Cloudflare deployment credentials
+        timeout-minutes: 1
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           test -n "$CLOUDFLARE_API_TOKEN" || { echo 'CLOUDFLARE_API_TOKEN is not configured in the production environment' >&2; exit 1; }
           test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo 'CLOUDFLARE_ACCOUNT_ID is not configured in the production environment' >&2; exit 1; }
-      - name: Deploy the exact committed catalog Worker
+      - name: Snapshot the exact active Worker version
+        id: stable
+        timeout-minutes: 1
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx --no-install wrangler deployments status --config wrangler.catalog.jsonc --json > "$RUNNER_TEMP/catalog-deployment-before.json"
+          node --input-type=module <<'NODE'
+          import { appendFileSync, readFileSync } from "node:fs";
+          const deployment = JSON.parse(readFileSync(process.env.RUNNER_TEMP + "/catalog-deployment-before.json", "utf8"));
+          if (!Array.isArray(deployment.versions) || deployment.versions.length !== 1 || deployment.versions[0].percentage !== 100) {
+            throw new Error("refusing to replace a non-stable or split deployment");
+          }
+          appendFileSync(process.env.GITHUB_OUTPUT, `previous_version_id=${deployment.versions[0].version_id}\n`);
+          NODE
+      - name: Require current protected main immediately before candidate upload
+        timeout-minutes: 1
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="$(gh api "repos/$GITHUB_REPOSITORY/branches/main")"
+          node --input-type=module - "$GITHUB_SHA" "$branch" <<'NODE'
+          const [expected, raw] = process.argv.slice(2);
+          const branch = JSON.parse(raw);
+          if (branch.protected !== true) throw new Error("main is not protected");
+          if (branch.commit?.sha !== expected) throw new Error(`workflow SHA ${expected} is not current main ${branch.commit?.sha}`);
+          NODE
+      - name: Upload the exact committed candidate without production traffic
+        id: upload
+        timeout-minutes: 2
         uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
+        env:
+          WRANGLER_OUTPUT_FILE_PATH: ${{ runner.temp }}/catalog-version-upload.jsonl
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: "4.125.0"
           command: >-
-            deploy --config wrangler.catalog.jsonc
+            versions upload --config wrangler.catalog.jsonc --strict
             --tag ${{ github.sha }}
             --message GitHub-${{ github.sha }}
-      - name: Require anonymous served-catalog parity
-        run: >-
-          python3 scripts/verify_catalog_edge.py
-          --expected-version-tag "$GITHUB_SHA"
+      - name: Bind the uploaded candidate to its immutable version ID
+        id: candidate
+        timeout-minutes: 1
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFileSync, readFileSync } from "node:fs";
+          const rows = readFileSync(process.env.RUNNER_TEMP + "/catalog-version-upload.jsonl", "utf8").trim().split("\n").map(JSON.parse);
+          const uploads = rows.filter((row) => row.type === "version-upload");
+          if (uploads.length !== 1 || uploads[0].worker_tag !== process.env.GITHUB_SHA || !uploads[0].version_id) {
+            throw new Error("Wrangler did not emit one exact candidate version receipt");
+          }
+          appendFileSync(process.env.GITHUB_OUTPUT, `version_id=${uploads[0].version_id}\n`);
+          NODE
+      - name: Stage at zero percent, verify, promote, and rollback on any failure
+        timeout-minutes: 6
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          GH_TOKEN: ${{ github.token }}
+          PREVIOUS_VERSION_ID: ${{ steps.stable.outputs.previous_version_id }}
+          CANDIDATE_VERSION_ID: ${{ steps.candidate.outputs.version_id }}
+        run: |
+          set -Eeuo pipefail
+          require_current_main() {
+            branch="$(gh api "repos/$GITHUB_REPOSITORY/branches/main")"
+            node --input-type=module - "$GITHUB_SHA" "$branch" <<'NODE'
+          const [expected, raw] = process.argv.slice(2);
+          const branch = JSON.parse(raw);
+          if (branch.protected !== true) throw new Error("main is not protected");
+          if (branch.commit?.sha !== expected) throw new Error(`workflow SHA ${expected} is not current main ${branch.commit?.sha}`);
+          NODE
+          }
+          rollback() {
+            failure=$?
+            trap - ERR
+            npx --no-install wrangler rollback "$PREVIOUS_VERSION_ID" --config wrangler.catalog.jsonc --message "Automatic rollback after failed GitHub-$GITHUB_SHA"
+            npx --no-install wrangler deployments status --config wrangler.catalog.jsonc --json > "$RUNNER_TEMP/catalog-deployment-rollback.json"
+            node --input-type=module - "$PREVIOUS_VERSION_ID" "$RUNNER_TEMP/catalog-deployment-rollback.json" <<'NODE'
+          import { readFileSync } from "node:fs";
+          const [expected, path] = process.argv.slice(2);
+          const deployment = JSON.parse(readFileSync(path, "utf8"));
+          if (deployment.versions?.length !== 1 || deployment.versions[0].version_id !== expected || deployment.versions[0].percentage !== 100) {
+            throw new Error("automatic rollback did not restore the prior version at 100 percent");
+          }
+          NODE
+            exit "$failure"
+          }
+          trap rollback ERR
+          require_current_main
+          npx --no-install wrangler versions deploy "$PREVIOUS_VERSION_ID@100%" "$CANDIDATE_VERSION_ID@0%" --config wrangler.catalog.jsonc --message "Zero-traffic smoke GitHub-$GITHUB_SHA" --yes
+          python3 scripts/verify_catalog_edge.py --worker-version-id "$CANDIDATE_VERSION_ID" --expected-version-tag "$GITHUB_SHA" --attempts 3 --delay 2 --budget-seconds 75 --no-palimpsest-proof --no-sibling-proof
+          require_current_main
+          npx --no-install wrangler versions deploy "$CANDIDATE_VERSION_ID@100%" --config wrangler.catalog.jsonc --message "Promote verified GitHub-$GITHUB_SHA" --yes
+          python3 scripts/verify_catalog_edge.py --expected-version-tag "$GITHUB_SHA" --attempts 3 --delay 2 --budget-seconds 150
+          trap - ERR

@@ -16,6 +16,10 @@ EXPECTED = {
         "https://liquilens.in/protocol/liquilens-evidence-carrier-reference-v1.schema.json",
         "d54043bf11359749597bff7495b0fffe6ff8453a35144cee4a2bd69711fec7e8",
     ),
+    "protocol/liquilens-fleet-brief-v1.schema.json": (
+        "https://liquilens.in/protocol/liquilens-fleet-brief-v1.schema.json",
+        "aaf95337ff973dfbdda97e8ac63975a61b199e43854927404055fbeb52fc6058",
+    ),
     "protocol/fdc3/com.liquilens.evidence.schema.json": (
         "https://liquilens.in/protocol/fdc3/com.liquilens.evidence.schema.json",
         "9519474a4d0bf3a77834320d9aa43a88d5df96d49f691110154050212c7511b7",
@@ -28,18 +32,18 @@ EXPECTED = {
 EXPECTED_CHANNELS = {
     "official-mcp-registry": (
         "live",
-        "https://registry.modelcontextprotocol.io/v0/servers/"
-        "io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.14.0",
+        "https://registry.modelcontextprotocol.io/v0.1/servers/"
+        "io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.16.0",
     ),
     "agent-skill": (
         "live",
         "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/"
-        "skill-v0.14.0/skills/liquilens-evidence",
+        "skill-v0.15.0/skills/liquilens-evidence",
     ),
     "codex-plugin": (
         "live",
         "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/"
-        "plugin-v0.14.1/.agents/plugins/plugins/liquilens-evidence",
+        "plugin-v0.14.1/plugins/liquilens-evidence",
     ),
     "vscode-vsix": (
         "live",
@@ -59,8 +63,8 @@ EXPECTED_CHANNELS = {
     "uvx-immutable-wheel": (
         "live",
         "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/"
-        "download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl"
-        "#sha256=f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24",
+        "download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl"
+        "#sha256=317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11",
     ),
     "homebrew": (
         "live",
@@ -149,13 +153,13 @@ def test_machine_catalog_routes_every_contract_without_authority_widening():
         "https://github.com/beepboop2025/liquilens-evidence-carrier"
     )
     assert catalog["releaseCommit"] == (
-        "8683351bd72c2a4b46d6913cd5e75c5536a410f1"
+        "410f7d91114fba715e9a9ae830faa775064a4502"
     )
     assert catalog["pythonDistributionSha256"] == (
-        "f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24"
+        "317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11"
     )
     assert catalog["mcpBundleSha256"] == (
-        "e57e3039d7ae53b6feb3638dbc2f7ba413ff437e5c3a1b62172cad6f3b98e6ea"
+        "c44b13b2efc4622a8ecfc06848f32358982dd2a9458a271e1ed77d646791961a"
     )
     assert catalog["browserVerifier"] == (
         "https://beepboop2025.github.io/liquilens-evidence-carrier/"
@@ -222,7 +226,7 @@ def test_consumer_channel_matrix_preserves_receipts_and_status_boundaries():
         "5f4b731f76de0e85c00c373e3849553425d3102c75545183bdb090b66f88768c"
     )
     assert by_id["agent-skill"]["sha256"] == (
-        "50cfa5b4ce3f974fb0af43d9eaa75014c44f97de03dcec30abab1ac2e99fa301"
+        "adef1a05e047457b752543633536b4e857532b194bf83396175f3f625bc87379"
     )
     assert by_id["agent-skill"]["discoverCommand"].endswith(
         "beepboop2025/liquilens-evidence-carrier --list"
@@ -343,7 +347,7 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
     assert product["evidence_carrier_agent_skill"] == (
         EXPECTED_CHANNELS["agent-skill"][1]
     )
-    assert "skill-v0.14.0" in product["evidence_carrier_agent_skill_install"]
+    assert "skill-v0.15.0" in product["evidence_carrier_agent_skill_install"]
     assert product["evidence_carrier_agent_skill_directory"] == (
         "https://skills.sh/beepboop2025/liquilens-evidence-carrier/"
         "liquilens-evidence"
@@ -382,7 +386,7 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
 def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
     page = _read("protocol/index.html")
     assert '<section id="consumer-channels">' in page
-    assert "<caption>Consumer paths verified on 24 August 2026.</caption>" in page
+    assert "<caption>Consumer paths verified through 29 August 2026.</caption>" in page
     assert page.count('scope="col"') == 4
     assert "Fetched / rendered only" in page
     assert "submitted, not listed" in page
@@ -415,7 +419,7 @@ def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
     assert match
     structured = json.loads(match.group(1))
     assert structured["@type"] == "SoftwareSourceCode"
-    assert structured["version"] == "0.14.0"
+    assert structured["version"] == "0.16.0"
     assert structured["codeRepository"] == (
         "https://github.com/beepboop2025/liquilens-evidence-carrier"
     )

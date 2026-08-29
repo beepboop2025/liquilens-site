@@ -16,7 +16,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -36,11 +36,18 @@ jobs:
       - name: Install exact edge dependencies
         run: npm ci --ignore-scripts
       - name: Verify the published files agree with each other
+        timeout-minutes: 2
         env:
           LIQUILENS_OFFLINE: '1'
         run: python3 scripts/verify_public_claims.py
       - name: Run the public-surface test suite
+        timeout-minutes: 5
         run: python3 -m pytest tests -q
+      - name: Require external proof before publishing catalog claims
+        timeout-minutes: 3
+        run: >-
+          python3 scripts/verify_catalog_edge.py --external-proof-only
+          --attempts 2 --delay 2 --budget-seconds 150
       - name: Report where the live API disagrees with the published copy
         continue-on-error: true
         timeout-minutes: 3
@@ -50,19 +57,50 @@ jobs:
         timeout-minutes: 1
         run: python3 scripts/verify_catalog_edge.py --attempts 1
       - name: Verify the catalog and remote MCP edge routes
+        timeout-minutes: 2
         run: npm run test:edge
       - name: Verify the community handoffs
+        timeout-minutes: 1
         run: node --test tests/test_x_bridge.mjs
-      - name: Preserve the search notification helper outside the site artifact
-        run: cp scripts/submit_indexnow.py "$RUNNER_TEMP/submit_indexnow.py"
+      - name: Preserve postdeployment verifiers outside the site artifact
+        run: |
+          cp scripts/submit_indexnow.py "$RUNNER_TEMP/submit_indexnow.py"
+          mkdir -p "$RUNNER_TEMP/pages-proof/scripts" "$RUNNER_TEMP/pages-proof/.well-known" "$RUNNER_TEMP/pages-proof/protocol"
+          cp scripts/verify_catalog_edge.py "$RUNNER_TEMP/pages-proof/scripts/verify_catalog_edge.py"
+          cp .well-known/ai-catalog.json "$RUNNER_TEMP/pages-proof/.well-known/ai-catalog.json"
+          cp .well-known/api-catalog.json "$RUNNER_TEMP/pages-proof/.well-known/api-catalog.json"
+          cp protocol/catalog.json "$RUNNER_TEMP/pages-proof/protocol/catalog.json"
+          cp protocol/financial-evidence-mcp-v0.1.4.json "$RUNNER_TEMP/pages-proof/protocol/financial-evidence-mcp-v0.1.4.json"
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - name: Keep the unscanned directories out of the artifact
         run: rm -rf scripts tests edge wrangler.catalog.jsonc requirements-ci.txt package.json package-lock.json node_modules
+      - name: Require current protected main immediately before Pages publication
+        timeout-minutes: 1
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="$(gh api "repos/$GITHUB_REPOSITORY/branches/main")"
+          node --input-type=module - "$GITHUB_SHA" "$branch" <<'NODE'
+          const [expected, raw] = process.argv.slice(2);
+          const branch = JSON.parse(raw);
+          if (branch.protected !== true) throw new Error("main is not protected");
+          if (branch.commit?.sha !== expected) throw new Error(`workflow SHA ${expected} is not current main ${branch.commit?.sha}`);
+          NODE
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        timeout-minutes: 2
         with:
           path: '.'
       - id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+        timeout-minutes: 5
+      - name: Require deployed Pages bytes to match the protected-main artifact
+        timeout-minutes: 3
+        env:
+          PAGE_BASE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: >-
+          python3 "$RUNNER_TEMP/pages-proof/scripts/verify_catalog_edge.py"
+          --pages-proof-only --pages-base-url "$PAGE_BASE_URL"
+          --attempts 12 --delay 5 --budget-seconds 150
       - name: Notify IndexNow about changed public routes
         continue-on-error: true
         env:
