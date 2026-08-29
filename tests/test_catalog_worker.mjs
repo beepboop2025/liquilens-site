@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import worker, {
+  API_CATALOG_JSON_PATH,
   API_CATALOG_PATH,
   AI_CATALOG_PATH,
   CATALOG_PATH,
@@ -32,6 +33,21 @@ test("GET returns the RFC 9727 API Catalog with its profile and link relation", 
     '<https://liquilens.in/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
   );
   assert.equal(response.headers.get("access-control-allow-origin"), "*");
+});
+
+
+test("the static JSON alias is byte-identical to the RFC 9727 endpoint", async () => {
+  const canonical = await worker.fetch(
+    new Request(`https://liquilens.in${API_CATALOG_PATH}`),
+  );
+  const alias = await worker.fetch(
+    new Request(`https://liquilens.in${API_CATALOG_JSON_PATH}`),
+  );
+
+  assert.equal(alias.status, 200);
+  assert.equal(await alias.text(), await canonical.text());
+  assert.equal(alias.headers.get("content-type"), canonical.headers.get("content-type"));
+  assert.equal(alias.headers.get("link"), canonical.headers.get("link"));
 });
 
 
@@ -94,7 +110,7 @@ test("GET returns the exact protocol catalog with standards-based discovery", as
 
 
 test("HEAD and OPTIONS are bodyless, and mutation methods are rejected", async () => {
-  for (const path of [API_CATALOG_PATH, AI_CATALOG_PATH, PROTOCOL_CATALOG_PATH]) {
+  for (const path of [API_CATALOG_PATH, API_CATALOG_JSON_PATH, AI_CATALOG_PATH, PROTOCOL_CATALOG_PATH]) {
     const url = `https://liquilens.in${path}`;
     const head = await worker.fetch(new Request(url, { method: "HEAD" }));
     const options = await worker.fetch(new Request(url, { method: "OPTIONS" }));
