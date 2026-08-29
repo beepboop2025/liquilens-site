@@ -71,6 +71,8 @@ jobs:
           cp .well-known/api-catalog.json "$RUNNER_TEMP/pages-proof/.well-known/api-catalog.json"
           cp protocol/catalog.json "$RUNNER_TEMP/pages-proof/protocol/catalog.json"
           cp protocol/financial-evidence-mcp-v0.1.4.json "$RUNNER_TEMP/pages-proof/protocol/financial-evidence-mcp-v0.1.4.json"
+          cp llms.txt "$RUNNER_TEMP/pages-proof/llms.txt"
+          cp sitemap.xml "$RUNNER_TEMP/pages-proof/sitemap.xml"
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - name: Keep the unscanned directories out of the artifact
         run: rm -rf scripts tests edge wrangler.catalog.jsonc requirements-ci.txt package.json package-lock.json node_modules
