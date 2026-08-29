@@ -372,6 +372,39 @@ def test_publish_workflows_block_on_external_proof_before_mutation():
     assert post["timeout-minutes"] * 60 >= 150
 
 
+def test_pages_proof_checks_compact_edge_catalogs_and_raw_static_files(monkeypatch):
+    expected_by_path = {
+        "/.well-known/ai-catalog.json": compact_json_bytes(
+            json.loads((ROOT / ".well-known/ai-catalog.json").read_text())
+        ),
+        "/.well-known/api-catalog.json": compact_json_bytes(
+            json.loads((ROOT / ".well-known/api-catalog.json").read_text())
+        ),
+        "/protocol/catalog.json": compact_json_bytes(
+            json.loads((ROOT / "protocol/catalog.json").read_text())
+        ),
+        "/llms.txt": (ROOT / "llms.txt").read_bytes(),
+        "/sitemap.xml": (ROOT / "sitemap.xml").read_bytes(),
+    }
+    seen = []
+
+    monkeypatch.setattr(verifier, "_validate_public_https_url", lambda url: url)
+
+    def fetch(url, **_kwargs):
+        path = verifier.urllib.parse.urlsplit(url).path
+        seen.append(path)
+        return expected_by_path[path], {}, url
+
+    monkeypatch.setattr(verifier, "_fetch_bytes", fetch)
+    results = verifier._verify_pages_bytes(
+        base_url="https://liquilens.in/",
+        attempts=1,
+        delay=0,
+    )
+    assert seen == list(expected_by_path)
+    assert len(results) == 5
+
+
 def test_edge_parity_explains_a_missing_carrier_entry():
     expected = json.loads(
         (ROOT / ".well-known/ai-catalog.json").read_text(encoding="utf-8")

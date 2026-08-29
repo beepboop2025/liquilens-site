@@ -2288,10 +2288,25 @@ def _verify_pages_bytes(
         base_url += "/"
     _validate_public_https_url(base_url)
     results = []
+    targets: list[tuple[Path, bytes, str]] = []
     for path in (CATALOG_PATH, API_CATALOG_PATH, PROTOCOL_CATALOG_PATH):
+        expected_json = json.loads(path.read_text(encoding="utf-8"))
+        targets.append(
+            (
+                path,
+                compact_json_bytes(expected_json),
+                "application/json, application/*+json",
+            )
+        )
+    for path, accept in (
+        (ROOT / "llms.txt", "text/plain"),
+        (ROOT / "sitemap.xml", "application/xml, text/xml"),
+    ):
+        targets.append((path, path.read_bytes(), accept))
+
+    for path, expected, accept in targets:
         relative = path.relative_to(ROOT).as_posix()
         url = urllib.parse.urljoin(base_url, relative)
-        expected = path.read_bytes()
         problem = "Pages bytes were not checked"
         for attempt in range(1, attempts + 1):
             separator = "&" if urllib.parse.urlsplit(url).query else "?"
@@ -2299,7 +2314,7 @@ def _verify_pages_bytes(
             try:
                 body, _, _ = _fetch_bytes(
                     request_url,
-                    accept="application/json, application/*+json",
+                    accept=accept,
                     timeout=20,
                     max_bytes=MAX_CATALOG_BODY_BYTES,
                 )
