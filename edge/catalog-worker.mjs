@@ -10,6 +10,7 @@ import { z } from "zod";
 
 export const AI_CATALOG_PATH = "/.well-known/ai-catalog.json";
 export const API_CATALOG_PATH = "/.well-known/api-catalog";
+export const API_CATALOG_JSON_PATH = "/.well-known/api-catalog.json";
 export const PROTOCOL_CATALOG_PATH = "/protocol/catalog.json";
 // Preserve the original export for callers that consume the ARD catalog.
 export const CATALOG_PATH = AI_CATALOG_PATH;
@@ -100,15 +101,17 @@ const SHARED_HEADERS = {
   "Cache-Control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400",
   "X-Content-Type-Options": "nosniff",
 };
+const API_CATALOG_RESPONSE = {
+  body: JSON.stringify(apiCatalog),
+  headers: {
+    ...SHARED_HEADERS,
+    "Content-Type": 'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"; charset=utf-8',
+    Link: '<https://liquilens.in/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+  },
+};
 const CATALOGS = new Map([
-  [API_CATALOG_PATH, {
-    body: JSON.stringify(apiCatalog),
-    headers: {
-      ...SHARED_HEADERS,
-      "Content-Type": 'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"; charset=utf-8',
-      Link: '<https://liquilens.in/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
-    },
-  }],
+  [API_CATALOG_PATH, API_CATALOG_RESPONSE],
+  [API_CATALOG_JSON_PATH, API_CATALOG_RESPONSE],
   [AI_CATALOG_PATH, {
     body: JSON.stringify(aiCatalog),
     headers: {
@@ -763,6 +766,7 @@ export default {
       response = handleOpenAiAppsChallenge(request, env);
     } else if (
       pathname === API_CATALOG_PATH ||
+      pathname === API_CATALOG_JSON_PATH ||
       pathname === AI_CATALOG_PATH ||
       pathname === PROTOCOL_CATALOG_PATH
     ) {
