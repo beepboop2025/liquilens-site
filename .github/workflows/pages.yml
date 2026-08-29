@@ -97,10 +97,11 @@ jobs:
         timeout-minutes: 3
         env:
           PAGE_BASE_URL: ${{ steps.deployment.outputs.page_url }}
-        run: >-
-          python3 "$RUNNER_TEMP/pages-proof/scripts/verify_catalog_edge.py"
-          --pages-proof-only --pages-base-url "$PAGE_BASE_URL"
-          --attempts 12 --delay 5 --budget-seconds 150
+        run: |
+          page_base_url="${PAGE_BASE_URL/#http:\/\//https:\/\/}"
+          python3 "$RUNNER_TEMP/pages-proof/scripts/verify_catalog_edge.py" \
+            --pages-proof-only --pages-base-url "$page_base_url" \
+            --attempts 12 --delay 5 --budget-seconds 150
       - name: Notify IndexNow about changed public routes
         continue-on-error: true
         env:
