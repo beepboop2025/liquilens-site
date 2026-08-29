@@ -370,6 +370,11 @@ def test_publish_workflows_block_on_external_proof_before_mutation():
     assert "--budget-seconds 150" in post["run"]
     assert "continue-on-error" not in post
     assert post["timeout-minutes"] * 60 >= 150
+    preserve = pages_steps[
+        pages_names.index("Preserve postdeployment verifiers outside the site artifact")
+    ]["run"]
+    assert 'cp llms.txt "$RUNNER_TEMP/pages-proof/llms.txt"' in preserve
+    assert 'cp sitemap.xml "$RUNNER_TEMP/pages-proof/sitemap.xml"' in preserve
 
 
 def test_pages_proof_checks_compact_edge_catalogs_and_raw_static_files(monkeypatch):
