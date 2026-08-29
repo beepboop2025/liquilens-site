@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data: https:; connect-src 'self' https://cloudflareinsights.com; worker-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
+  <title>Free Financial Evidence Desk | LiquiLens</title>
+  <meta name="description" content="Retrieve public bank-risk, funding, market-liquidity and China-economy evidence from LiquiLens, Seiche, Undertow and Palimpsest in one no-login desk.">
+  <meta name="theme-color" content="#f4f2e9">
+  <link rel="canonical" href="https://liquilens.in/evidence-desk/">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="/brand/liquilens-mark-192.png">
+  <link rel="alternate" type="application/json" href="https://liquilens.in/.well-known/ai-catalog.json" title="LiquiLens AI catalog">
+  <link rel="stylesheet" href="/evidence-desk/styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LiquiLens">
+  <meta property="og:title" content="A public evidence desk for financial plumbing">
+  <meta property="og:description" content="One bounded workflow across bank risk, funding, market exits and revision-safe China evidence—with retrieval and evidence status kept separate.">
+  <meta property="og:url" content="https://liquilens.in/evidence-desk/">
+  <meta property="og:image" content="https://liquilens.in/og-network.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Financial Evidence Desk">
+  <meta name="twitter:description" content="Query the LiquiLens evidence family without an account or API key.">
+  <meta name="twitter:image" content="https://liquilens.in/og-network.png">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"WebPage","@id":"https://liquilens.in/evidence-desk/#page","url":"https://liquilens.in/evidence-desk/","name":"Free Financial Evidence Desk","dateModified":"2026-08-26","isPartOf":{"@id":"https://liquilens.in/#site"},"mainEntity":{"@id":"https://liquilens.in/evidence-desk/#app"}},
+      {"@type":"WebApplication","@id":"https://liquilens.in/evidence-desk/#app","name":"LiquiLens Financial Evidence Desk","applicationCategory":"FinanceApplication","operatingSystem":"Any modern web browser","url":"https://liquilens.in/evidence-desk/","description":"An installable, live-only, no-login reader for fixed public evidence routes from LiquiLens, Seiche, Undertow and Palimpsest.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"provider":{"@id":"https://liquilens.in/#org"}}
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"Is the Financial Evidence Desk free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The public desk and its fixed public evidence routes require no account or API key."}},
+    {"@type":"Question","name":"Does complete retrieval mean the evidence is complete?","acceptedAnswer":{"@type":"Answer","text":"No. Retrieval status reports whether the fixed endpoints responded. Evidence readiness remains a separate source-reported question, and the desk never converts missing or unavailable evidence into a calm signal."}},
+    {"@type":"Question","name":"Does the desk verify an Evidence Carrier?","acceptedAnswer":{"@type":"Answer","text":"No. Carrier verification is shown as not performed unless a future packet explicitly supplies and verifies native carriers. The desk does not mint provenance on behalf of source products."}},
+    {"@type":"Question","name":"Can the output be used as investment advice or a credit rating?","acceptedAnswer":{"@type":"Answer","text":"No. The desk is a research and evidence-routing tool. It grants no execution, recommendation, credit-rating or financial authority."}},
+    {"@type":"Question","name":"Does the installed desk cache evidence for offline use?","acceptedAnswer":{"@type":"Answer","text":"No. The installable desk deliberately registers no service worker and keeps no offline evidence cache. Each retrieval requests the live public routes again."}}
+  ]}
+  </script>
+  <script type="module" src="/evidence-desk/app.mjs"></script>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"43b422e63bb44fb5975c7bb39bd0ba24"}'></script>
+</head>
+<body>
+  <header>
+    <nav aria-label="Primary"><a class="brand" href="/">LIQUILENS</a><a href="/use-cases/">Use cases</a><a href="/world-economy/">Evidence map</a><a href="/developers/">API + MCP</a><a href="/pricing/">Pricing</a></nav>
+    <p class="kicker">One desk · four evidence products · zero login</p>
+    <h1>Financial evidence without the false green light.</h1>
+    <p class="lede">Retrieve fixed public routes from LiquiLens, Seiche, Undertow and Palimpsest in one place. The desk tells you whether transport worked, while preserving each source’s own evidence state, clocks and limitations. Successful retrieval is not treated as complete or decision-ready evidence.</p>
+    <p class="boundary"><strong>Authority boundary:</strong> research only. The desk is not investment advice, a credit rating, a trade signal or a substitute for primary-source review. Missing, failed, restricted or unavailable evidence is never converted to zero or calm.</p>
+  </header>
+  <main>
+    <section aria-labelledby="query-heading">
+      <h2 id="query-heading">Build a bounded evidence packet</h2>
+      <p class="answer">Choose the claim domains you need. Requests go only to a public, allowlisted MCP endpoint and its fixed source routes. Bank risk is selected initially so the first run stays small.</p>
+      <p class="boundary"><strong>Installable, live-only:</strong> add the desk to your home screen if your browser offers it. It deliberately registers no service worker and keeps no offline evidence cache; every retrieval requests the live public routes again.</p>
+      <form data-evidence-form>
+        <fieldset>
+          <legend class="visually-hidden">Evidence topics</legend>
+          <div class="topic-grid">
+            <label class="topic"><input type="checkbox" name="topic" value="money-market"><span>Money markets<small>Repo, reserves, rates and funding</small></span></label>
+            <label class="topic"><input type="checkbox" name="topic" value="capital-market"><span>Capital markets<small>Transmission and market plumbing</small></span></label>
+            <label class="topic"><input type="checkbox" name="topic" value="china-economy"><span>China economy<small>Releases, revisions and coverage</small></span></label>
+            <label class="topic"><input type="checkbox" name="topic" value="bank-risk" checked><span>Bank risk<small>Institutions, filings and screens</small></span></label>
+            <label class="topic"><input type="checkbox" name="topic" value="market-liquidity"><span>Market liquidity<small>Depth, concentration and exits</small></span></label>
+          </div>
+        </fieldset>
+        <div class="controls">
+          <button type="submit">Retrieve public evidence</button>
+          <button type="button" class="secondary" data-select-all>Select all routes</button>
+          <button type="button" class="secondary" data-download hidden>Download raw packet</button>
+        </div>
+      </form>
+      <p class="live-status" data-live-status role="status" aria-live="polite">No evidence has been retrieved yet.</p>
+    </section>
+
+    <section data-summary hidden aria-labelledby="summary-heading">
+      <h2 id="summary-heading">Packet boundary</h2>
+      <div class="status-grid">
+        <article class="status-card"><span>Transport status</span><strong data-status="transport">not run</strong><p>Did the fixed HTTP routes return valid bounded JSON?</p></article>
+        <article class="status-card"><span>Evidence evaluation</span><strong data-status="evidence">not evaluated</strong><p>Was the material judged complete, fresh and eligible for a claim?</p></article>
+        <article class="status-card"><span>Carrier verification</span><strong data-status="carrier">not performed</strong><p>Were native product-issued Evidence Carriers verified?</p></article>
+      </div>
+      <div class="source-grid" data-sources></div>
+    </section>
+
+    <section aria-labelledby="model-heading">
+      <h2 id="model-heading">Why the states stay separate</h2>
+      <div class="principles">
+        <article><h3>Transport is mechanical</h3><p>An HTTP 200 proves bytes arrived from an allowlisted route. It does not prove the source is complete, current or fit for your claim.</p></article>
+        <article><h3>Evidence is source-specific</h3><p>A source can report partial, structural, warming-up or unavailable coverage. The desk surfaces that state; it does not reinterpret it as healthy.</p></article>
+        <article><h3>Provenance cannot be invented</h3><p>An Evidence Carrier must be issued with source identity, clocks, rights and boundaries. This reader will not mint one after the fact.</p></article>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Questions before you cite</h2>
+      <h3>Is the Financial Evidence Desk free?</h3><p>Yes. The public desk and its fixed public evidence routes require no account or API key.</p>
+      <h3>Does complete retrieval mean the evidence is complete?</h3><p>No. Retrieval status reports whether the fixed endpoints responded. Evidence readiness remains a separate source-reported question, and the desk never converts missing or unavailable evidence into a calm signal.</p>
+      <h3>Does the desk verify an Evidence Carrier?</h3><p>No. Carrier verification is shown as not performed unless a future packet explicitly supplies and verifies native carriers. The desk does not mint provenance on behalf of source products.</p>
+      <h3>Can the output be used as investment advice or a credit rating?</h3><p>No. The desk is a research and evidence-routing tool. It grants no execution, recommendation, credit-rating or financial authority.</p>
+      <h3>Does the installed desk cache evidence for offline use?</h3><p>No. The installable desk deliberately registers no service worker and keeps no offline evidence cache. Each retrieval requests the live public routes again.</p>
+    </section>
+  </main>
+  <footer>Updated 26 August 2026 · <a href="/pricing/">Free and paid access boundary</a> · <a href="/llms.txt">llms.txt</a> · <a href="/.well-known/ai-catalog.json">AI catalog</a></footer>
+</body>
+</html>

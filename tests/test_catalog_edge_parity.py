@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 
@@ -8,6 +9,7 @@ from scripts.verify_catalog_edge import (
     EXPECTED_MCP_TOOLS,
     EXPECTED_MCP_VERSION,
     decode_mcp_response,
+    require_fetch_semantics,
     response_problem,
 )
 
@@ -66,13 +68,19 @@ def test_mcp_receipt_decoder_accepts_one_json_or_sse_message():
         b"event: message\ndata: " + encoded + b"\n\n",
         "text/event-stream; charset=utf-8",
     ) == payload
-    assert EXPECTED_MCP_VERSION == "0.1.4"
+    assert EXPECTED_MCP_VERSION == "0.1.5"
     assert EXPECTED_MCP_CONTRACT["serverInfo"] == {
         "name": "financial-evidence",
-        "version": "0.1.4",
+        "version": "0.1.5",
     }
     assert [tool["name"] for tool in EXPECTED_MCP_CONTRACT["tools"]] == list(
         EXPECTED_MCP_TOOLS
+    )
+    tools_bytes = json.dumps(
+        EXPECTED_MCP_CONTRACT["tools"], sort_keys=True, separators=(",", ":")
+    ).encode()
+    assert hashlib.sha256(tools_bytes).hexdigest() == (
+        EXPECTED_MCP_CONTRACT["toolsSha256"]
     )
 
 
@@ -84,3 +92,54 @@ def test_mcp_receipt_decoder_rejects_batches_and_multiple_sse_events():
             b"data: {\"id\":1}\n\ndata: {\"id\":2}\n\n",
             "text/event-stream",
         )
+
+
+def test_live_fetch_receipt_requires_output_semantics_and_bound_provenance():
+    digest = "sha256:" + "a" * 64
+    source_url = "https://api.seiche.info/api/v2/money-markets"
+    result = {
+        "isError": False,
+        "structuredContent": {
+            "status": "complete",
+            "transport_status": "complete",
+            "status_semantics": "transport_only",
+            "evidence_status": "not_evaluated",
+            "carrier_verification": "not_performed",
+            "output_status": "complete",
+            "output_error": None,
+            "sources": [{
+                "product": "Seiche",
+                "ok": True,
+                "bytes": 123,
+                "source_url": source_url,
+                "content_sha256": digest,
+                "source_reported": {
+                    "adapter": "seiche_money_markets_v1",
+                    "state": [{
+                        "name": "response_status",
+                        "value": "PARTIAL",
+                        "path": "/status",
+                        "provenance": {
+                            "kind": "source_reported_allowlisted_field",
+                            "source_url": source_url,
+                            "content_sha256": digest,
+                        },
+                    }],
+                    "clocks": "not_reported",
+                },
+            }],
+        },
+    }
+    assert require_fetch_semantics(result)["product"] == "Seiche"
+
+    drifted = json.loads(json.dumps(result))
+    drifted["structuredContent"]["output_status"] = "unavailable"
+    with pytest.raises(RuntimeError, match="semantic boundary differs"):
+        require_fetch_semantics(drifted)
+
+    spoofed = json.loads(json.dumps(result))
+    spoofed["structuredContent"]["sources"][0]["source_reported"]["state"][0][
+        "provenance"
+    ]["content_sha256"] = "sha256:" + "b" * 64
+    with pytest.raises(RuntimeError, match="provenance is incomplete"):
+        require_fetch_semantics(spoofed)

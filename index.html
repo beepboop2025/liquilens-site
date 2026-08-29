@@ -11,6 +11,8 @@
 
 <link rel="canonical" href="https://liquilens.in/" />
 <link rel="alternate" type="application/json" href="/product-card.json" title="LiquiLens product card" />
+<link rel="alternate" type="application/feed+json" href="/articles/feed.json" title="LiquiLens articles JSON Feed" />
+<link rel="alternate" type="application/atom+xml" href="/articles/feed.xml" title="LiquiLens articles" />
 <link rel="ai-catalog" type="application/ai-catalog+json" href="/.well-known/ai-catalog.json" />
 <link rel="stylesheet" href="/authority-actions.css" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -116,7 +118,7 @@
       "isPartOf": { "@id": "https://liquilens.in/#site" },
       "about": { "@id": "https://liquilens.in/#org" },
       "datePublished": "2026-07-02",
-      "dateModified": "2026-08-09"
+      "dateModified": "2026-08-26"
     }
   ]
 }
@@ -591,6 +593,7 @@
       <a class="nav-link" href="#lab-reviewed-status">Latest replay</a>
       <a class="nav-link" href="#board">The live board</a>
       <a class="nav-link" href="/developers/">API + MCP</a>
+      <a class="nav-link" href="/evidence-desk/">Evidence Desk</a>
       <a class="nav-link" href="/use-cases/">Use cases</a>
       <a class="nav-link" href="/world-economy/">World economy evidence</a>
       <a class="nav-link" href="/us/">US bank risk</a>
@@ -607,7 +610,7 @@
     </span>
   </nav>
   <div class="mobile-nav" id="mobileNav" hidden>
-    <a href="/articles/">Articles</a><a href="/replay/">Historical case files</a><a href="/desk/">Intelligence desk</a><a href="https://myquantdoesntspeakenglish.com/">Plain-English edition</a><a href="#lab-reviewed-status">Latest replay</a><a href="#evidence-status">Evidence records</a><a href="#board">Live board</a><a href="https://liquilens-undertow.com/app/?ref=liquilens_mobile_nav">Undertow desk</a><a href="/developers/">API + MCP</a><a href="/use-cases/">Use cases</a><a href="/research/">Research</a><a href="/tools/ews-coverage-check/">Free EWS check</a><a href="/access/">Named list</a><a href="/pilot/">Proof pilot</a>
+    <a href="/articles/">Articles</a><a href="/replay/">Historical case files</a><a href="/desk/">Intelligence desk</a><a href="https://myquantdoesntspeakenglish.com/">Plain-English edition</a><a href="#lab-reviewed-status">Latest replay</a><a href="#evidence-status">Evidence records</a><a href="#board">Live board</a><a href="https://liquilens-undertow.com/app/?ref=liquilens_mobile_nav">Undertow desk</a><a href="/developers/">API + MCP</a><a href="/evidence-desk/">Evidence Desk</a><a href="/use-cases/">Use cases</a><a href="/research/">Research</a><a href="/pricing/">Pricing</a><a href="/tools/ews-coverage-check/">Free EWS check</a><a href="/access/">Named list</a><a href="/pilot/">Proof pilot</a>
   </div>
 </div>
 </div>
@@ -640,6 +643,7 @@
         <a class="btn btn-ghost" href="/replay/">Read the historical case files</a>
         <a class="btn btn-text" href="https://myquantdoesntspeakenglish.com/">Get the plain-English edition <span>↗</span></a>
         <a class="btn btn-ghost" href="/desk/">Read short desk analysis</a>
+        <a class="btn btn-ghost" href="/evidence-desk/"><span>Use the Financial Evidence Desk</span><small>four products · fixed public routes · no login</small></a>
         <a class="btn btn-ghost" href="/use-cases/">Find your use case</a>
         <a class="btn btn-ghost" data-funnel="coverage_check_clicked" href="/tools/ews-coverage-check/"><span>Check your EWS coverage</span><small>12 controls · 5 minutes · browser-only</small></a>
         <a class="btn btn-text" data-funnel="investor_demo_clicked" href="https://demo.liquilens.in/?demo=1&amp;ref=liquilens_hero&amp;tab=overview" target="_blank" rel="noopener">Enter investor demo · sign in required · same password <span>↗</span></a>
@@ -1551,7 +1555,7 @@
 </main>
 <footer>
   <div class="wrap">
-    <span>© 2026 LiquiLens · Updated 21 August 2026 · <a href="/articles/">Articles</a> · <a href="/investigations/">Investigations</a> · <a href="/desk/">Intelligence desk</a> · <a href="/tools/ews-coverage-check/">Free EWS coverage check</a> · <a href="/developers/">API + MCP</a> · <a href="/use-cases/">When to use LiquiLens</a> · <a href="/world-economy/">World economy evidence</a> · <a href="/us/">The US bank layer</a> · <a href="/replay/">Historical case files</a> · <a href="/research/">Research</a> · <a href="/ship-log/">Ship log</a> · <a href="/about/">About</a> · <a href="/security/">Security</a> · <a href="/status/">Status</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a> · <a href="https://t.me/LiquiLens_bot" target="_blank" rel="noopener">@LiquiLens_bot on Telegram</a> · <a href="https://t.me/LiquidityLabDesk" target="_blank" rel="noopener">the lab's free daily read on Telegram</a> · <a href="https://seiche.info/">Seiche, the systemic stress layer</a> · <a href="https://liquilens-undertow.com/">Undertow, the market-exit layer</a> · <a href="https://myquantdoesntspeakenglish.com/">Every article in plain English on My Quant Doesn’t Speak English</a></span>
+    <span>© 2026 LiquiLens · Updated 26 August 2026 · <a href="/articles/">Articles</a> · <a href="/investigations/">Investigations</a> · <a href="/desk/">Intelligence desk</a> · <a href="/evidence-desk/">Financial Evidence Desk</a> · <a href="/pricing/">Pricing</a> · <a href="/tools/ews-coverage-check/">Free EWS coverage check</a> · <a href="/developers/">API + MCP</a> · <a href="/use-cases/">When to use LiquiLens</a> · <a href="/world-economy/">World economy evidence</a> · <a href="/us/">The US bank layer</a> · <a href="/replay/">Historical case files</a> · <a href="/research/">Research</a> · <a href="/ship-log/">Ship log</a> · <a href="/about/">About</a> · <a href="/security/">Security</a> · <a href="/status/">Status</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a> · <a href="https://t.me/LiquiLens_bot" target="_blank" rel="noopener">@LiquiLens_bot on Telegram</a> · <a href="https://t.me/LiquidityLabDesk" target="_blank" rel="noopener">the lab's free daily read on Telegram</a> · <a href="https://seiche.info/">Seiche, the systemic stress layer</a> · <a href="https://liquilens-undertow.com/">Undertow, the market-exit layer</a> · <a href="https://myquantdoesntspeakenglish.com/">Every article in plain English on My Quant Doesn’t Speak English</a></span>
     <span>Rates shown are indicative of the Indian money market and for illustration only.</span>
   </div>
   <div class="wrap" style="margin-top:10px">

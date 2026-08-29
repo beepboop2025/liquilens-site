@@ -1,0 +1,41 @@
+{
+  "schema": "liquilens.media-kit.v1",
+  "updated": "2026-08-26",
+  "product": {
+    "name": "LiquiLens",
+    "canonical_url": "https://liquilens.in/",
+    "category": "Bank and lender early warning",
+    "one_line": "LiquiLens is a public-evidence early-warning system for banks and lenders, with explicit misses, coverage and claim boundaries.",
+    "description": "LiquiLens helps risk, treasury and research teams investigate covered banks, NBFCs, MFIs and lenders using public filings, funding structure, regulatory thresholds and market signals. Its free Financial Evidence Desk also routes bounded public evidence across LiquiLens, Seiche, Undertow and Palimpsest. Outputs are research screens, not credit ratings, investment advice or predictions that an institution will fail.",
+    "operating_entity": "ai.de, a Udyam registered sole proprietorship, Jaipur, India",
+    "financial_authority": "none"
+  },
+  "activation": {
+    "evidence_desk": "https://liquilens.in/evidence-desk/",
+    "price": "0 USD",
+    "authentication": "none",
+    "pricing": "https://liquilens.in/pricing/"
+  },
+  "developer": {
+    "guide": "https://liquilens.in/developers/",
+    "openapi": "https://api.liquilens.in/api/openapi.json",
+    "mcp": "https://api.liquilens.in/mcp",
+    "financial_evidence_mcp": "https://liquilens.in/mcp/financial-evidence"
+  },
+  "assets": {
+    "logo_light": "https://liquilens.in/brand/liquilens-lockup-forlight.png",
+    "square_mark": "https://liquilens.in/brand/liquilens-mark-512.png",
+    "screenshot_desktop": "https://liquilens.in/media-kit/assets/evidence-desk-desktop.png",
+    "screenshot_mobile": "https://liquilens.in/media-kit/assets/evidence-desk-mobile.png",
+    "screenshot_pricing": "https://liquilens.in/media-kit/assets/pricing-desktop.png"
+  },
+  "claims_not_authorized_without_a_public_receipt": [
+    "customer or user counts",
+    "adoption or install counts",
+    "ratings or awards",
+    "partnerships or endorsements",
+    "investment performance",
+    "credit-rating or financial authority"
+  ],
+  "contact": "mrinal@liquilens.in"
+}

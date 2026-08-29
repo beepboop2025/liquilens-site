@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.4.json" with {
+import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.5.json" with {
   type: "json",
 };
 import worker, {
@@ -11,12 +11,14 @@ import worker, {
   MAX_FETCH_TOPICS,
   MAX_MCP_HTTP_RESPONSE_BYTES,
   MAX_MCP_REQUEST_BYTES,
+  MAX_MCP_RESPONSE_BYTES,
   MAX_PACKET_SOURCE_BYTES,
   MAX_PACKET_TIMEOUT_SECONDS,
   MAX_SOURCE_BYTES,
   MAX_TIMEOUT_SECONDS,
   buildPacket,
   createFinancialEvidenceServer,
+  packetToolResult,
 } from "../edge/catalog-worker.mjs";
 
 const ENDPOINT = `https://liquilens.in${FINANCIAL_EVIDENCE_MCP_PATH}`;
@@ -65,6 +67,33 @@ function normalizeToolContract(tools) {
     return tool;
   });
 }
+
+test("an oversized encoded result reports output failure without rewriting source transport", () => {
+  const packet = {
+    schema: "liquidity-lab.financial-evidence-packet.v1",
+    status: "complete",
+    transport_status: "complete",
+    status_semantics: "transport_only",
+    evidence_status: "not_evaluated",
+    carrier_verification: "not_performed",
+    topics: ["money-market"],
+    sources: [{
+      product: "Seiche",
+      ok: true,
+      document: { payload: "x".repeat(MAX_MCP_RESPONSE_BYTES) },
+    }],
+  };
+  const result = packetToolResult(packet);
+  const bounded = JSON.parse(result.content[0].text);
+  assert.equal(result.isError, true);
+  assert.equal(bounded.status, "complete");
+  assert.equal(bounded.transport_status, "complete");
+  assert.equal(bounded.output_status, "unavailable");
+  assert.equal(bounded.sources[0].ok, true);
+  assert.equal(bounded.sources[0].document_disclosed, false);
+  assert.equal("document" in bounded.sources[0], false);
+  assert.equal(result.structuredContent.output_status, "unavailable");
+});
 
 test("legacy initialize and tool listing expose the read-only contract", async () => {
   const initialized = await worker.fetch(
@@ -135,7 +164,7 @@ test("modern discovery is stateless and advertises the same server", async () =>
   );
   assert.equal(
     payload.result._meta["io.modelcontextprotocol/serverInfo"].version,
-    "0.1.4",
+    "0.1.5",
   );
   assert.equal(payload.result.resultType, "complete");
 });
@@ -165,6 +194,12 @@ test("route calls preserve separate products and never fetch", async () => {
     ),
     ["Palimpsest", "Seiche"],
   );
+  for (const source of Object.values(payload.result.structuredContent.topics).flat()) {
+    assert.match(source.human_scope_url, /^https:\/\//);
+    assert.equal(source.financial_authority, "none");
+    assert.equal(source.carrier_state, "not_published");
+    assert.equal("carrier_url" in source, false);
+  }
 });
 
 test("fetch calls are allowlisted, bounded, hashed, and kept product-separate", async () => {
@@ -194,6 +229,10 @@ test("fetch calls are allowlisted, bounded, hashed, and kept product-separate", 
     const payload = await responsePayload(response);
     const packet = payload.result.structuredContent;
     assert.equal(packet.status, "complete");
+    assert.equal(packet.transport_status, "complete");
+    assert.equal(packet.status_semantics, "transport_only");
+    assert.equal(packet.evidence_status, "not_evaluated");
+    assert.equal(packet.carrier_verification, "not_performed");
     assert.deepEqual(
       packet.sources.map((source) => source.product),
       ["Palimpsest", "Seiche"],
@@ -205,6 +244,8 @@ test("fetch calls are allowlisted, bounded, hashed, and kept product-separate", 
       ),
       true,
     );
+    assert.equal(packet.sources.every((source) => source.carrier_state === "not_published"), true);
+    assert.equal(packet.sources.every((source) => !("carrier_url" in source)), true);
     assert.equal(requested.length, 2);
     assert.equal(
       requested.every(({ url }) => new URL(url).protocol === "https:"),
@@ -226,6 +267,73 @@ test("fetch calls are allowlisted, bounded, hashed, and kept product-separate", 
       ),
       true,
     );
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("HTTP success preserves partial and warming-up source reports without evaluating evidence", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    const document = url.includes("money-markets")
+      ? { status: "PARTIAL", generated_at: "2026-08-26T00:00:00Z" }
+      : url.includes("palimpsest.info")
+        ? { readiness: { status: "warming_up" } }
+        : {
+            status: "complete",
+            china_macro: { status: "structural", evidence_status: "unavailable" },
+          };
+    return new Response(JSON.stringify(document), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  };
+  try {
+    const response = await worker.fetch(
+      request({
+        jsonrpc: "2.0",
+        id: 51,
+        method: "tools/call",
+        params: {
+          name: "financial_evidence_fetch",
+          arguments: { topics: ["money-market", "china-economy"] },
+        },
+      }),
+      ALLOW_FETCH_ENV,
+    );
+    const payload = await responsePayload(response);
+    const packet = JSON.parse(payload.result.content[0].text);
+    assert.equal(packet.status, "complete");
+    assert.equal(packet.transport_status, "complete");
+    assert.equal(packet.evidence_status, "not_evaluated");
+    assert.equal(packet.carrier_verification, "not_performed");
+
+    const money = packet.sources.find((source) => source.topic === "money-market");
+    assert.deepEqual(
+      money.source_reported.state.map(({ name, value }) => ({ name, value })),
+      [{ name: "response_status", value: "PARTIAL" }],
+    );
+    assert.equal(
+      money.source_reported.state[0].provenance.content_sha256,
+      money.content_sha256,
+    );
+    const palimpsest = packet.sources.find((source) => source.product === "Palimpsest");
+    assert.deepEqual(
+      palimpsest.source_reported.state.map(({ name, value }) => ({ name, value })),
+      [{ name: "readiness", value: "warming_up" }],
+    );
+    const seicheChina = packet.sources.find(
+      (source) => source.product === "Seiche" && source.topic === "china-economy",
+    );
+    assert.deepEqual(
+      seicheChina.source_reported.state.map(({ name, value }) => ({ name, value })),
+      [
+        { name: "response_status", value: "complete" },
+        { name: "section_status", value: "structural" },
+        { name: "section_evidence_status", value: "unavailable" },
+      ],
+    );
+    assert.equal(seicheChina.source_reported.clocks, "not_reported");
   } finally {
     globalThis.fetch = originalFetch;
   }

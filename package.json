@@ -7,7 +7,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "test:edge": "node --test tests/test_catalog_worker.mjs tests/test_financial_evidence_mcp.mjs"
+    "test:edge": "node --test tests/test_catalog_worker.mjs tests/test_financial_evidence_mcp.mjs tests/test_evidence_desk.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "2.0.0",
