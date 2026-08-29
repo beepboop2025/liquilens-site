@@ -517,6 +517,15 @@ def _require_modern_result(
     return result
 
 
+def _validate_modern_cache_metadata(result: dict[str, Any], label: str) -> None:
+    ttl_ms = result.get("ttlMs")
+    if type(ttl_ms) is not int or ttl_ms < 0:
+        raise RuntimeError(f"{label} has invalid ttlMs: {result!r}")
+    cache_scope = result.get("cacheScope")
+    if cache_scope not in {"private", "public"}:
+        raise RuntimeError(f"{label} has invalid cacheScope: {result!r}")
+
+
 def _normalized_tool_contract(tools: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Remove non-semantic schema decoration emitted by the JS SDK."""
 
@@ -619,10 +628,7 @@ def _verify_mcp(
         raise RuntimeError(
             f"modern MCP discovery has no tools capability: {discovered!r}"
         )
-    ttl_ms = discovered.get("ttlMs")
-    if type(ttl_ms) is not int or ttl_ms <= 0:
-        raise RuntimeError(f"modern MCP discovery has invalid ttlMs: {discovered!r}")
-    _require_equal(discovered.get("cacheScope"), "public", "modern cache scope")
+    _validate_modern_cache_metadata(discovered, "modern MCP discovery")
 
     modern_list, headers = _mcp_request(
         url,
@@ -1547,10 +1553,7 @@ def _validate_modern_sibling_discovery(
         )
     if not isinstance(result.get("capabilities", {}).get("tools"), dict):
         raise RuntimeError(f"{label} modern discovery has no tools capability")
-    ttl_ms = result.get("ttlMs")
-    if type(ttl_ms) is not int or ttl_ms <= 0:
-        raise RuntimeError(f"{label} modern discovery has invalid ttlMs")
-    _require_equal(result.get("cacheScope"), "public", f"{label} cache scope")
+    _validate_modern_cache_metadata(result, f"{label} modern discovery")
 
 
 def _validate_modern_tool_call(label: str, result: dict[str, Any]) -> None:
