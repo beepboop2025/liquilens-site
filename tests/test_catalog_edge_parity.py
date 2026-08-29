@@ -366,6 +366,7 @@ def test_publish_workflows_block_on_external_proof_before_mutation():
     assert deploy_index < post_index
     post = pages_steps[post_index]
     assert "--pages-proof-only" in post["run"]
+    assert '${PAGE_BASE_URL/#http:\\/\\//https:\\/\\/}' in post["run"]
     assert "--budget-seconds 150" in post["run"]
     assert "continue-on-error" not in post
     assert post["timeout-minutes"] * 60 >= 150
