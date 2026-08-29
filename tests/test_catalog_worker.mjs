@@ -3,11 +3,36 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import worker, {
+  API_CATALOG_PATH,
   AI_CATALOG_PATH,
   CATALOG_PATH,
   OPENAI_APPS_CHALLENGE_PATH,
   PROTOCOL_CATALOG_PATH,
 } from "../edge/catalog-worker.mjs";
+
+
+test("GET returns the RFC 9727 API Catalog with its profile and link relation", async () => {
+  const response = await worker.fetch(
+    new Request(`https://liquilens.in${API_CATALOG_PATH}`),
+  );
+  const actual = await response.json();
+  const expected = JSON.parse(
+    await readFile(new URL("../.well-known/api-catalog.json", import.meta.url), "utf8"),
+  );
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(actual, expected);
+  assert.equal(actual.linkset.length, 17);
+  assert.equal(
+    response.headers.get("content-type"),
+    'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"; charset=utf-8',
+  );
+  assert.equal(
+    response.headers.get("link"),
+    '<https://liquilens.in/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+  );
+  assert.equal(response.headers.get("access-control-allow-origin"), "*");
+});
 
 
 test("GET returns the committed ARD catalog with discovery headers", async () => {
@@ -22,14 +47,14 @@ test("GET returns the committed ARD catalog with discovery headers", async () =>
   assert.equal(response.status, 200);
   assert.deepEqual(catalog, expected);
   assert.equal(catalog.specVersion, "1.0");
-  assert.equal(catalog.entries.length, 11);
+  assert.equal(catalog.entries.length, 16);
   const carrier = catalog.entries.find(
     (entry) => entry.identifier === "urn:air:liquilens.in:protocol:evidence-carrier",
   );
-  assert.equal(carrier.version, "0.14.0");
+  assert.equal(carrier.version, "0.16.0");
   assert.equal(
     carrier.metadata.mcpBundleSha256,
-    "e57e3039d7ae53b6feb3638dbc2f7ba413ff437e5c3a1b62172cad6f3b98e6ea",
+    "c44b13b2efc4622a8ecfc06848f32358982dd2a9458a271e1ed77d646791961a",
   );
   assert.equal(
     carrier.metadata.browserVerifier,
@@ -69,7 +94,7 @@ test("GET returns the exact protocol catalog with standards-based discovery", as
 
 
 test("HEAD and OPTIONS are bodyless, and mutation methods are rejected", async () => {
-  for (const path of [AI_CATALOG_PATH, PROTOCOL_CATALOG_PATH]) {
+  for (const path of [API_CATALOG_PATH, AI_CATALOG_PATH, PROTOCOL_CATALOG_PATH]) {
     const url = `https://liquilens.in${path}`;
     const head = await worker.fetch(new Request(url, { method: "HEAD" }));
     const options = await worker.fetch(new Request(url, { method: "OPTIONS" }));
@@ -77,6 +102,16 @@ test("HEAD and OPTIONS are bodyless, and mutation methods are rejected", async (
 
     assert.equal(head.status, 200);
     assert.equal(await head.text(), "");
+    if (path === API_CATALOG_PATH) {
+      assert.equal(
+        head.headers.get("content-type"),
+        'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"; charset=utf-8',
+      );
+      assert.equal(
+        head.headers.get("link"),
+        '<https://liquilens.in/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+      );
+    }
     assert.equal(options.status, 204);
     assert.equal(options.headers.get("access-control-max-age"), "86400");
     assert.equal(post.status, 405);
@@ -149,6 +184,14 @@ test("the deployed Worker declares the fail-closed MCP fetch limiter", async () 
   ]);
   assert.deepEqual(config.version_metadata, { binding: "CF_VERSION_METADATA" });
   assert.equal(config.limits, undefined);
+  assert.equal(
+    config.routes.some(
+      (route) =>
+        route.pattern ===
+        "https://liquilens.in/.well-known/api-catalog*",
+    ),
+    true,
+  );
   assert.equal(
     config.routes.some(
       (route) =>

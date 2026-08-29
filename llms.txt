@@ -18,6 +18,7 @@ Named-list software: https://liquilens.in/access/
 Paid proof pilot: https://liquilens.in/pilot/
 Product card: https://liquilens.in/product-card.json
 Discovery catalog: https://liquilens.in/.well-known/ai-catalog.json
+RFC 9727 API catalog: https://liquilens.in/.well-known/api-catalog
 Reviewed investigations: https://liquilens.in/investigations/
 Current case file: https://liquilens.in/investigations/the-5-64x-private-credit-concentration/
 
@@ -94,18 +95,19 @@ Canonical schemas:
 
 - Full carrier: https://liquilens.in/protocol/liquilens-evidence-carrier-v1.schema.json
 - Policy-redacted reference: https://liquilens.in/protocol/liquilens-evidence-carrier-reference-v1.schema.json
+- Fleet Brief coordination envelope: https://liquilens.in/protocol/liquilens-fleet-brief-v1.schema.json
 - FDC3 context: https://liquilens.in/protocol/fdc3/com.liquilens.evidence.schema.json
 - OpenLineage facet: https://liquilens.in/protocol/openlineage/liquilens-evidence-facet.schema.json
 
 Externally exercised Evidence Carrier consumer paths:
 
-- Official MCP Registry, LIVE at version 0.14.0: https://registry.modelcontextprotocol.io/v0/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.14.0
-- LiquiLens Evidence Agent Skill, LIVE from the signed immutable tag: `npx skills add https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.14.0/skills/liquilens-evidence --skill liquilens-evidence`. Anonymous discovery: `DO_NOT_TRACK=1 npx --yes skills@1.5.23 add beepboop2025/liquilens-evidence-carrier --list`. Directory page: https://skills.sh/beepboop2025/liquilens-evidence-carrier/liquilens-evidence (no ranking or install-count claim).
+- Official MCP Registry, LIVE at version 0.16.0: https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.16.0
+- Fleet-Brief-aware LiquiLens Evidence Agent Skill, LIVE from the signed immutable tag: `npx --yes skills@1.5.23 add https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.15.0/skills/liquilens-evidence --skill liquilens-evidence --agent codex --copy --yes`. Anonymous discovery: `DO_NOT_TRACK=1 npx --yes skills@1.5.23 add beepboop2025/liquilens-evidence-carrier --list`. Directory page: https://skills.sh/beepboop2025/liquilens-evidence-carrier/liquilens-evidence (no ranking or install-count claim).
 - Codex Git marketplace plugin, LIVE from signed tag `plugin-v0.14.1`: `codex plugin marketplace add beepboop2025/liquilens-evidence-carrier --ref plugin-v0.14.1`, then `codex plugin add liquilens-evidence@liquilens`. A real public install enabled version 0.14.1; no MCP server is auto-started and no filesystem root is chosen for the user.
 - VS Code and Codespaces, LIVE as a public attested VSIX from a signed source tag: https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/vscode-v0.1.0/liquilens-evidence-0.1.0.vsix (16,612 bytes; SHA-256 `ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf`). The browser-entrypoint extension is offline and targets VS Code desktop, remote, web and Codespaces. Visual Studio Marketplace and Open VSX remain publisher-auth gated and are not live listings.
 - Zero-install browser verifier, LIVE with no analytics or document upload: https://beepboop2025.github.io/liquilens-evidence-carrier/
 - Exact-source browser module, LIVE with SHA-256 `76bcc3a8a0b4378e206fac769265eb631b765bbffbd290cbbfe7f86c72d6e16e`: https://cdn.jsdelivr.net/gh/beepboop2025/liquilens-evidence-carrier@68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser/verifier.mjs
-- Hash-pinned one-shot CLI, LIVE: `uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.14.0/liquilens_evidence-0.14.0-py3-none-any.whl#sha256=f0162affab57307c8e20acf91dcefc33840f91e8cf9969a8d5ec8d8df860cd24' liquilens-evidence --help`
+- Hash-pinned one-shot CLI, LIVE: `uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl#sha256=317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11' liquilens-evidence --help`
 - Homebrew, LIVE: `brew install beepboop2025/tap/liquilens-evidence`
 - Multi-architecture OCI image, LIVE at exact digest: `ghcr.io/beepboop2025/liquilens-evidence-carrier@sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1`
 - Dedicated MCP-default OCI image, LIVE at exact digest: `ghcr.io/beepboop2025/liquilens-evidence-carrier-mcp@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7`. The anonymous multi-architecture index exposes provenance/SBOM attestations; the exact-digest no-network, read-only runtime passed initialization, tool discovery, carrier verification and root-escape rejection.
@@ -148,7 +150,7 @@ Palimpsest, Evidence Signal, and NarcoScope are free public goods. They observe 
 
 - Funding page: https://palimpsest.info/fund.html
 - Evidence Signal: https://t.me/EvidenceSignalDesk
-- Palimpsest 1.9.0: https://palimpsest.info/ — six anonymous public read-only MCP tools, four visible prompts and zero resources at https://api.seiche.info/palimpsest/mcp. The catalog publishes exact deployment and official MCP Registry receipt URLs and hashes; initialize the remote and compare serverInfo.version for live authority: https://palimpsest.info/.well-known/ai-catalog.json
+- Palimpsest 1.9.3: https://palimpsest.info/ — six anonymous public read-only MCP tools, four visible prompts and one metadata-only publication-rights resource at https://api.seiche.info/palimpsest/mcp. The catalog publishes exact deployment and official MCP Registry receipt URLs and hashes; initialize the remote and compare serverInfo.version for live authority: https://palimpsest.info/.well-known/ai-catalog.json. Rights-denied economic evidence stays explicitly unavailable and cannot become a zero, neutral, healthy or directional result.
 - NarcoScope: https://narcoscope.com/
 
 ## Citation

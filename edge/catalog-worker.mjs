@@ -1,4 +1,5 @@
 import aiCatalog from "../.well-known/ai-catalog.json" with { type: "json" };
+import apiCatalog from "../.well-known/api-catalog.json" with { type: "json" };
 import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.4.json" with {
   type: "json",
 };
@@ -8,6 +9,7 @@ import { createMcpHandler } from "agents/mcp/server";
 import { z } from "zod";
 
 export const AI_CATALOG_PATH = "/.well-known/ai-catalog.json";
+export const API_CATALOG_PATH = "/.well-known/api-catalog";
 export const PROTOCOL_CATALOG_PATH = "/protocol/catalog.json";
 // Preserve the original export for callers that consume the ARD catalog.
 export const CATALOG_PATH = AI_CATALOG_PATH;
@@ -99,6 +101,14 @@ const SHARED_HEADERS = {
   "X-Content-Type-Options": "nosniff",
 };
 const CATALOGS = new Map([
+  [API_CATALOG_PATH, {
+    body: JSON.stringify(apiCatalog),
+    headers: {
+      ...SHARED_HEADERS,
+      "Content-Type": 'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"; charset=utf-8',
+      Link: '<https://liquilens.in/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+    },
+  }],
   [AI_CATALOG_PATH, {
     body: JSON.stringify(aiCatalog),
     headers: {
@@ -751,7 +761,11 @@ export default {
     let response;
     if (pathname === OPENAI_APPS_CHALLENGE_PATH) {
       response = handleOpenAiAppsChallenge(request, env);
-    } else if (pathname === AI_CATALOG_PATH || pathname === PROTOCOL_CATALOG_PATH) {
+    } else if (
+      pathname === API_CATALOG_PATH ||
+      pathname === AI_CATALOG_PATH ||
+      pathname === PROTOCOL_CATALOG_PATH
+    ) {
       response = handleCatalogRequest(request);
     } else if (pathname === FINANCIAL_EVIDENCE_MCP_PATH) {
       response = await handleBoundedFinancialEvidenceMcp(request, env, ctx);

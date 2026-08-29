@@ -419,16 +419,17 @@ def case_file_index(
 
 
 BASE_SITEMAP = [
-    ("/", "2026-08-21", "weekly", "1.0"),
+    ("/", "2026-08-29", "weekly", "1.0"),
     ("/investigations/", "2026-08-12", "weekly", "0.9"),
     ("/investigations/the-5-64x-private-credit-concentration/",
      "2026-08-12", "monthly", "0.8"),
     ("/developers/", "2026-08-21", "monthly", "0.9"),
     ("/use-cases/", "2026-08-21", "monthly", "0.9"),
-    ("/world-economy/", "2026-08-24", "weekly", "0.95"),
+    ("/world-economy/", "2026-08-29", "weekly", "0.95"),
     ("/money-markets/", "2026-08-24", "weekly", "0.95"),
     ("/capital-markets/", "2026-08-24", "weekly", "0.95"),
-    ("/china-economy/", "2026-08-24", "weekly", "0.95"),
+    ("/china-economy/", "2026-08-29", "weekly", "0.95"),
+    ("/protocol/", "2026-08-29", "monthly", "0.9"),
     ("/tools/ews-coverage-check/", "2026-08-21", "monthly", "0.9"),
     ("/guides/rbi-nbfc-early-warning-system/", "2026-08-21", "monthly", "0.9"),
     ("/access/", "2026-08-18", "monthly", "0.95"),
@@ -441,10 +442,10 @@ BASE_SITEMAP = [
     ("/desk/", "2026-08-11", "daily", "0.9"),
     ("/replay/", "2026-08-04", "weekly", "0.8"),
     ("/replay/index.json", "2026-08-09", "weekly", "0.8"),
-    ("/ship-log/", "2026-08-24", "weekly", "0.7"),
+    ("/ship-log/", "2026-08-29", "weekly", "0.7"),
     ("/about/", "2026-08-04", None, None),
     ("/security/", "2026-08-09", None, None),
-    ("/status/", "2026-08-24", None, None),
+    ("/status/", "2026-08-29", None, None),
     ("/privacy/", "2026-08-21", None, None),
     ("/terms/", "2026-08-04", None, None),
 ]

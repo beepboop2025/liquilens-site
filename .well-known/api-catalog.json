@@ -1,0 +1,347 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://liquilens.in/.well-known/api-catalog",
+      "api-catalog": [
+        {
+          "href": "https://liquilens-undertow.com/.well-known/api-catalog",
+          "type": "application/linkset+json"
+        },
+        {
+          "href": "https://api.seiche.info/riptide/.well-known/api-catalog",
+          "type": "application/linkset+json"
+        },
+        {
+          "href": "https://narcoscope.com/.well-known/api-catalog",
+          "type": "application/linkset+json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.liquilens.in/api",
+      "service-desc": [
+        {
+          "href": "https://api.liquilens.in/api/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://liquilens.in/developers/",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://liquilens.in/product-card.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://liquilens.in/.well-known/ai-catalog.json",
+          "type": "application/ai-catalog+json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.liquilens.in/mcp",
+      "service-doc": [
+        {
+          "href": "https://liquilens.in/developers/",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens/versions/latest",
+          "type": "application/json"
+        },
+        {
+          "href": "https://liquilens.in/.well-known/ai-catalog.json",
+          "type": "application/ai-catalog+json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://liquilens.in/mcp/financial-evidence",
+      "service-doc": [
+        {
+          "href": "https://liquilens.in/llms.txt",
+          "type": "text/plain"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://liquilens.in/protocol/financial-evidence-mcp-v0.1.4.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://liquilens.in/.well-known/ai-catalog.json",
+          "type": "application/ai-catalog+json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.seiche.info/api",
+      "service-desc": [
+        {
+          "href": "https://api.seiche.info/api/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://seiche.info/developers/",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://seiche.info/.well-known/ai-catalog.json",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.seiche.info/mcp",
+      "service-doc": [
+        {
+          "href": "https://seiche.info/developers/",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/latest",
+          "type": "application/json"
+        },
+        {
+          "href": "https://seiche.info/.well-known/ai-catalog.json",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.seiche.info/undertow/x402/",
+      "service-desc": [
+        {
+          "href": "https://api.seiche.info/undertow/x402/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://liquilens-undertow.com/developers/",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://api.seiche.info/undertow/x402/.well-known/x402",
+          "type": "application/json"
+        },
+        {
+          "href": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
+          "type": "application/ai-catalog+json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.seiche.info/undertow/mcp",
+      "service-doc": [
+        {
+          "href": "https://liquilens-undertow.com/developers/",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fundertow/versions/latest",
+          "type": "application/json"
+        },
+        {
+          "href": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
+          "type": "application/ai-catalog+json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.seiche.info/riptide/",
+      "service-desc": [
+        {
+          "href": "https://api.seiche.info/riptide/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Friptide/versions/latest",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.seiche.info/riptide/mcp",
+      "service-meta": [
+        {
+          "href": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Friptide/versions/latest",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.seiche.info/palimpsest/mcp",
+      "service-doc": [
+        {
+          "href": "https://palimpsest.info/developers.html",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fpalimpsest/versions/latest",
+          "type": "application/json"
+        },
+        {
+          "href": "https://palimpsest.info/.well-known/ai-catalog.json",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://myquantdoesntspeakenglish.com/api/v1",
+      "service-desc": [
+        {
+          "href": "https://myquantdoesntspeakenglish.com/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://myquantdoesntspeakenglish.com/llms.txt",
+          "type": "text/plain"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://myquantdoesntspeakenglish.com/.well-known/ai-catalog.json",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://myquantdoesntspeakenglish.com/mcp",
+      "service-doc": [
+        {
+          "href": "https://myquantdoesntspeakenglish.com/llms.txt",
+          "type": "text/plain"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fmyquant-editorial/versions/latest",
+          "type": "application/json"
+        },
+        {
+          "href": "https://myquantdoesntspeakenglish.com/.well-known/ai-catalog.json",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://myquant-app.vercel.app/api/v1",
+      "service-desc": [
+        {
+          "href": "https://myquant-app.vercel.app/openapi.json",
+          "type": "application/vnd.oai.openapi+json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://myquant-app.vercel.app/llms.txt",
+          "type": "text/plain"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://myquant-app.vercel.app/.well-known/ai-catalog.json",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://myquant-app.vercel.app/mcp",
+      "service-doc": [
+        {
+          "href": "https://myquant-app.vercel.app/llms.txt",
+          "type": "text/plain"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fmyquant-app/versions/latest",
+          "type": "application/json"
+        },
+        {
+          "href": "https://myquant-app.vercel.app/.well-known/ai-catalog.json",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://narcoscope.com/api/v1",
+      "service-desc": [
+        {
+          "href": "https://narcoscope.com/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://narcoscope.com/llms.txt",
+          "type": "text/plain"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://narcoscope.com/.well-known/ai-catalog.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://narcoscope.com/server.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://liquilens.in/.well-known/ai-catalog.json",
+          "type": "application/ai-catalog+json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://narcoscope.com/mcp",
+      "service-doc": [
+        {
+          "href": "https://narcoscope.com/llms.txt",
+          "type": "text/plain"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://narcoscope.com/.well-known/ai-catalog.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://narcoscope.com/server.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fnarcoscope/versions/latest",
+          "type": "application/json"
+        },
+        {
+          "href": "https://liquilens.in/.well-known/ai-catalog.json",
+          "type": "application/ai-catalog+json"
+        }
+      ]
+    }
+  ]
+}

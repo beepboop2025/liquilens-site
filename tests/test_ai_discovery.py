@@ -49,7 +49,9 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["evidence_carrier_browser_verifier"] == (
         "https://beepboop2025.github.io/liquilens-evidence-carrier/")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
-    assert card["updated"] == "2026-08-24"
+    assert card["updated"] == "2026-08-29"
+    assert card["access"]["api_catalog_discovery"] == (
+        "https://liquilens.in/.well-known/api-catalog")
     assert card["access"]["daily_articles"] == "https://liquilens.in/articles/"
     assert card["access"]["article_json_feed"] == (
         "https://liquilens.in/articles/feed.json")
@@ -233,7 +235,7 @@ def test_catalog_obeys_the_ard_envelope():
     catalog = _catalog()
     assert catalog["specVersion"] == "1.0"
     assert catalog["host"]["displayName"] == "LiquiLens"
-    assert len(catalog["entries"]) == 11
+    assert len(catalog["entries"]) == 16
 
     identifiers = set()
     for entry in catalog["entries"]:
@@ -440,7 +442,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
 
     undertow = entries["urn:air:liquilens.in:catalog:undertow"]
     assert undertow["version"] == "1.9.0"
-    assert undertow["updatedAt"] == "2026-08-18T00:00:00Z"
+    assert undertow["updatedAt"] == "2026-08-29T15:24:41Z"
     assert undertow["capabilities"] == [
         "agent_access_status",
         "depth_episodes",
@@ -485,8 +487,8 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
     }
 
     palimpsest = entries["urn:air:liquilens.in:catalog:palimpsest-china"]
-    assert palimpsest["version"] == "1.9.0"
-    assert palimpsest["updatedAt"] == "2026-08-24T13:51:23.905708Z"
+    assert palimpsest["version"] == "1.9.3"
+    assert palimpsest["updatedAt"] == "2026-08-29T14:47:02.39659Z"
     assert palimpsest["capabilities"] == [
         "list_signals",
         "get_signal",
@@ -503,6 +505,9 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
         "signal_deep_dive",
     ]
     assert palimpsest["resourceTemplates"] == []
+    assert palimpsest["resources"] == [
+        "palimpsest://china-economic/publication-rights"
+    ]
     assert {
         key: palimpsest["metadata"][key]
         for key in (
@@ -530,43 +535,43 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
     } == {
         "publicToolCount": 6,
         "publicPromptCount": 4,
-        "publicResourceCount": 0,
+        "publicResourceCount": 1,
         "mcpServerName": "io.github.beepboop2025/palimpsest",
         "mcpEndpoint": "https://api.seiche.info/palimpsest/mcp",
         "deploymentBoundary": "production-verified",
-        "deploymentCommit": "135d8f332d7eaeb48f793ecaa47ee1e13708c1ac",
+        "deploymentCommit": "1b71dd2bb2dcdec0b99691f7d4caaa13c4857574",
         "deploymentReceipt": (
-            "https://palimpsest.info/.well-known/receipts/"
-            "mcp-deployment-1.9.0.json"
+                "https://palimpsest.info/.well-known/receipts/"
+            "mcp-deployment-1.9.3.json"
         ),
         "deploymentReceiptSha256": (
-            "sha256:8570b4fcc138461be34f17c8257f4f6dbef5242336f533411b56d5d747a27154"
+            "sha256:db370a46897b58d32e31561f1e664d68ea053ac38454caa58b52dd4c9ba5e834"
         ),
         "deploymentRun": (
-            "https://github.com/beepboop2025/palimpsest/actions/runs/32734455304"
+            "https://github.com/beepboop2025/palimpsest/actions/runs/33258332928"
         ),
         "registryReceipt": (
-            "https://palimpsest.info/.well-known/receipts/"
-            "mcp-registry-publication-1.9.0.json"
+                "https://palimpsest.info/.well-known/receipts/"
+            "mcp-registry-publication-1.9.3.json"
         ),
         "registryReceiptSha256": (
-            "sha256:6014b600a2115acb05dc59a60e0595c0de4424907e074fcc08b465dcea09cfa7"
+            "sha256:d9f153a99b52b686995e22e378fcd1383335d0f74c175932d4dfd6d70147b4f5"
         ),
         "registryRun": (
-            "https://github.com/beepboop2025/palimpsest/actions/runs/32735073973"
+            "https://github.com/beepboop2025/palimpsest/actions/runs/33258465637"
         ),
         "registrySnapshot": (
-            "https://palimpsest.info/.well-known/receipts/"
-            "mcp-registry-latest-1.9.0.json"
+                "https://palimpsest.info/.well-known/receipts/"
+            "mcp-registry-latest-1.9.3.json"
         ),
         "registrySnapshotSha256": (
-            "sha256:5af0c21c5818c0ca4983040410b52061026c0261e54bdaab8668fd5592b6c389"
+            "sha256:b242bf50ef87441222ac2b3b9103b99d4fad44d52dd5b119a500ee13d4508287"
         ),
         "registryVersion": (
             "https://registry.modelcontextprotocol.io/v0.1/servers/"
-            "io.github.beepboop2025%2Fpalimpsest/versions/1.9.0"
+            "io.github.beepboop2025%2Fpalimpsest/versions/1.9.3"
         ),
-        "registryPublishedAt": "2026-08-24T13:51:23.905708Z",
+        "registryPublishedAt": "2026-08-29T14:47:02.39659Z",
         "liveVersionAuthority": (
             "Initialize the linked MCP remote and compare serverInfo.version "
             "before treating a release as deployed."
@@ -685,59 +690,61 @@ def test_sibling_product_cards_match_the_catalog_contracts():
     }
 
     palimpsest = siblings["Palimpsest"]
-    assert palimpsest["version"] == "1.9.0"
+    assert palimpsest["version"] == "1.9.3"
     assert palimpsest["mcp"] == "https://api.seiche.info/palimpsest/mcp"
     assert palimpsest["protocol_versions"] == ["2025-06-18", "2025-03-26"]
     assert (
         palimpsest["public_tools"],
         palimpsest["public_prompts"],
         palimpsest["public_resources"],
-    ) == (6, 4, 0)
+    ) == (6, 4, 1)
     assert palimpsest["deployment_receipt_sha256"] == (
-        "sha256:8570b4fcc138461be34f17c8257f4f6dbef5242336f533411b56d5d747a27154"
+        "sha256:db370a46897b58d32e31561f1e664d68ea053ac38454caa58b52dd4c9ba5e834"
     )
     assert palimpsest["registry_receipt_sha256"] == (
-        "sha256:6014b600a2115acb05dc59a60e0595c0de4424907e074fcc08b465dcea09cfa7"
+        "sha256:d9f153a99b52b686995e22e378fcd1383335d0f74c175932d4dfd6d70147b4f5"
     )
     assert palimpsest["registry_snapshot_sha256"] == (
-        "sha256:5af0c21c5818c0ca4983040410b52061026c0261e54bdaab8668fd5592b6c389"
+        "sha256:b242bf50ef87441222ac2b3b9103b99d4fad44d52dd5b119a500ee13d4508287"
     )
 
 
 def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     status = read("status/index.html")
-    assert "Release contract · 24 August 2026" in status
+    assert "Release contract · 29 August 2026" in status
     assert "Seiche 0.11.1" in status
     assert "11 public read-only MCP tools, 4 prompts and 0 resources" in status
     assert "runtime, signed tag, exact PyPI artifacts, static catalog" in status
     assert "Undertow 1.9.0" in status
     assert "9 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
-    assert "Palimpsest 1.9.0" in status
-    assert "6 public read-only MCP tools, 4 prompts and 0 resources" in status
+    assert "Palimpsest 1.9.3" in status
+    assert "6 public read-only MCP tools, 4 prompts and 1 metadata-only" in status
     assert "LIVE / RECEIPTED" in status
 
     ship_log = read("ship-log/index.html")
     assert "Seiche 0.11.1 closes its public distribution contract" in ship_log
     assert "https://pypi.org/project/seiche/0.11.1/" in ship_log
     assert "io.github.beepboop2025%2Fseiche/versions/0.11.1" in ship_log
-    assert "Palimpsest 1.9.0 publishes its exact agent boundary" in ship_log
-    assert "mcp-deployment-1.9.0.json" in ship_log
-    assert "mcp-registry-publication-1.9.0.json" in ship_log
+    assert "Palimpsest 1.9.3 makes publication rights native" in ship_log
+    assert "mcp-deployment-1.9.3.json" in ship_log
+    assert "mcp-registry-publication-1.9.3.json" in ship_log
+    assert "Palimpsest 1.9.1 refreshes its exact agent boundary" in ship_log
     for historical_release in ("Seiche 0.10.0", "Seiche 0.10.1"):
         assert historical_release in ship_log
 
     sitemap = read("sitemap.xml")
     assert (
         "<loc>https://liquilens.in/ship-log/</loc>\n"
-        "    <lastmod>2026-08-24</lastmod>"
+        "    <lastmod>2026-08-29</lastmod>"
     ) in sitemap
     assert (
         "<loc>https://liquilens.in/status/</loc>\n"
-        "    <lastmod>2026-08-24</lastmod>"
+        "    <lastmod>2026-08-29</lastmod>"
     ) in sitemap
     generator = read("scripts/build_replay_pages.py")
-    assert '("/ship-log/", "2026-08-24", "weekly", "0.7")' in generator
-    assert '("/status/", "2026-08-24", None, None)' in generator
+    assert '("/protocol/", "2026-08-29", "monthly", "0.9")' in generator
+    assert '("/ship-log/", "2026-08-29", "weekly", "0.7")' in generator
+    assert '("/status/", "2026-08-29", None, None)' in generator
 
 
 def test_human_claim_surfaces_print_the_same_evidence_boundary():
@@ -920,3 +927,6 @@ def test_every_discovery_pointer_uses_the_well_known_catalog():
     assert f"Agentmap: {canonical}" in read("robots.txt")
     assert 'rel="ai-catalog"' in read("index.html")
     assert canonical in read("llms.txt")
+    api_catalog = "https://liquilens.in/.well-known/api-catalog"
+    assert 'rel="api-catalog"' in read("index.html")
+    assert api_catalog in read("llms.txt")
