@@ -31,12 +31,40 @@ Open `http://localhost:8000`.
 The release gate checks that claims remain consistent across visible pages, metadata, structured data, and machine-readable discovery files:
 
 ```bash
+python3 -m pip install --only-binary=:all: --require-hashes -r requirements-ci.txt
 LIQUILENS_OFFLINE=1 python3 scripts/verify_public_claims.py
 python3 -m pytest tests -q
 node --test tests/*.mjs
 ```
 
 Run the verifier without `LIQUILENS_OFFLINE=1` to compare public copy with the live API. Live-service differences are reported separately because that deployment is maintained outside this repository.
+
+Every shareable public HTML route owns a contextual deterministic 1200x630
+social card. Daily articles and historical case files are regenerated from
+their reviewed structured records at `articles/<slug>/share.png` and
+`replay/<slug>/share.png`; their archive publishers also own the collection
+cards. Static product, guide, policy and evidence-routing pages use explicit
+non-metric cards unless the route has a supported public datum. The home card's
+public-board counts are pinned with source identity in
+`research/share-card-board.json`. Image bytes bind a digest revision to the
+Open Graph, Twitter and JSON-LD image URL.
+
+For an offline detail-card refresh without fetching evidence, run:
+
+```bash
+python3 scripts/social_cards.py --articles articles --replay-index replay/index.json
+```
+
+For static route generation, or to fail when a static image or metadata block
+is stale, run:
+
+```bash
+python3 scripts/static_social_cards.py
+python3 scripts/static_social_cards.py --check
+```
+
+The renderer uses Pillow's pinned embedded font rather than host fonts, so the
+same evidence produces the same PNG bytes on CI and developer machines.
 
 ## Public discovery surfaces
 

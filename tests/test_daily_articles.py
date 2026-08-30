@@ -5,6 +5,7 @@ import json
 from html import unescape
 from pathlib import Path
 import re
+import struct
 import sys
 
 import pytest
@@ -329,6 +330,13 @@ def test_write_builds_page_archive_feed_and_discovery(tmp_path):
     assert len(unescape(title)) <= 63
     assert len(unescape(description)) <= 155
     assert '<meta name="twitter:card" content="summary_large_image">' in article_page
+    share = article_dir / article["slug"] / "share.png"
+    assert share.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
+    assert struct.unpack(">II", share.read_bytes()[16:24]) == (1200, 630)
+    assert f"/{article['slug']}/share.png?v=" in article_page
+    assert '<meta property="og:image:secure_url"' in article_page
+    assert '<meta property="og:image:alt"' in article_page
+    assert '<meta name="twitter:image:alt"' in article_page
     assert article["headline"] in (article_dir / "index.html").read_text()
     assert "<feed xmlns=" in (article_dir / "feed.xml").read_text()
     json_feed = json.loads((article_dir / "feed.json").read_text())

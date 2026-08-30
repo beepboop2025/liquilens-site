@@ -32,6 +32,21 @@ from urllib.error import HTTPError
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
+try:
+    from scripts.social_cards import (
+        RenderedCard,
+        article_archive_card,
+        render_article_card,
+        write_card,
+    )
+except ModuleNotFoundError:  # direct execution: python3 scripts/daily_article.py
+    from social_cards import (
+        RenderedCard,
+        article_archive_card,
+        render_article_card,
+        write_card,
+    )
+
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SITE = "https://liquilens.in"
@@ -1343,27 +1358,40 @@ ARTICLE_CSS = """
 
 
 def page_shell(*, title: str, description: str, canonical: str, jsonld: dict,
-               body: str, feed: bool = True) -> str:
+               body: str, feed: bool = True,
+               social_card: RenderedCard | None = None,
+               og_type: str = "article") -> str:
+    if og_type not in {"article", "website"}:
+        raise ValueError(f"unsupported Open Graph page type: {og_type!r}")
     feed_link = (
         '<link rel="alternate" type="application/feed+json" href="/articles/feed.json" title="LiquiLens articles JSON Feed">'
         '<link rel="alternate" type="application/atom+xml" href="/articles/feed.xml" title="LiquiLens articles">'
         if feed else ""
     )
+    image_url = social_card.url if social_card else f"{SITE}/og-radar.png"
+    image_alt = (social_card.alt if social_card else
+                 "LiquiLens public institution-risk evidence radar")
+    # JSON does not HTML-escape closing tags.  Keep structured data semantic
+    # while preventing a hostile public title from terminating the script tag.
+    jsonld_text = json.dumps(jsonld, ensure_ascii=True).replace(
+        "<", "\\u003c"
+    ).replace(">", "\\u003e").replace("&", "\\u0026")
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://cloudflareinsights.com https://api.liquilens.in; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <title>{esc(title)}</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="{esc(canonical)}">{feed_link}
 <meta name="robots" content="index, follow, max-image-preview:large"><meta name="theme-color" content="#080d18">
-<meta property="og:type" content="article"><meta property="og:site_name" content="LiquiLens"><meta property="og:url" content="{esc(canonical)}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:image" content="{SITE}/og-radar.png">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(description)}"><meta name="twitter:image" content="{SITE}/og-radar.png">
+<meta property="og:type" content="{esc(og_type)}"><meta property="og:site_name" content="LiquiLens"><meta property="og:url" content="{esc(canonical)}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:image" content="{esc(image_url)}"><meta property="og:image:secure_url" content="{esc(image_url)}"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="{esc(image_alt)}">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(description)}"><meta name="twitter:image" content="{esc(image_url)}"><meta name="twitter:image:alt" content="{esc(image_alt)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500&amp;display=swap">
-<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script><style>{ARTICLE_CSS}</style>
+<script type="application/ld+json">{jsonld_text}</script><style>{ARTICLE_CSS}</style>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{{"token":"43b422e63bb44fb5975c7bb39bd0ba24"}}'></script><!-- End Cloudflare Web Analytics -->
 </head><body><header class="mast"><div class="wrap"><a class="brand" href="/"><b>L</b>LiquiLens</a><nav class="nav"><a href="/articles/">Daily articles</a><a href="/investigations/">Investigations</a><a href="/replay/">Case files</a><a href="/research/">Research</a></nav></div></header>{body}<footer><div class="wrap">Every article separates observed filings, market inputs and LiquiLens derivations. Screens are not credit ratings or predictions of failure. <a href="/research/">Evidence record</a> · <a href="/pilot/">Proof pilot</a> · not investment advice.</div></footer><script src="/ai-referral.js" defer></script></body></html>"""
 
 
-def render_article(article: dict) -> str:
+def render_article(article: dict, *, social_card: RenderedCard | None = None) -> str:
     url = article["canonical_url"]
+    card = social_card or render_article_card(article)
     jsonld = {
         "@context": "https://schema.org", "@type": "AnalysisNewsArticle",
         "headline": article["headline"], "description": article["dek"],
@@ -1372,7 +1400,7 @@ def render_article(article: dict) -> str:
         "wordCount": article["word_count"], "mainEntityOfPage": url,
         "author": {"@type": "Organization", "name": "LiquiLens", "url": f"{SITE}/"},
         "publisher": {"@type": "Organization", "name": "LiquiLens", "url": f"{SITE}/"},
-        "image": f"{SITE}/og-radar.png",
+        "image": card.url,
     }
     mode = str(article["article_type"]).replace("_", " ")
     generation = article.get("generation") or {}
@@ -1395,10 +1423,13 @@ def render_article(article: dict) -> str:
     seo_title = f"{meta_excerpt(article['headline'], 50)} | LiquiLens"
     seo_description = meta_excerpt(article["dek"], 155)
     return page_shell(title=seo_title, description=seo_description,
-                      canonical=url, jsonld=jsonld, body=body)
+                      canonical=url, jsonld=jsonld, body=body,
+                      social_card=card)
 
 
-def render_archive(index: list[dict]) -> str:
+def render_archive(
+        index: list[dict], *, social_card: RenderedCard | None = None) -> str:
+    card = social_card or article_archive_card(index)
     cards = "".join(
         f'<a class="card" href="/articles/{esc(row["slug"])}/"><small>{esc(row["date"])} · {esc(str(row["article_type"]).replace("_", " "))}</small><h2>{esc(row["headline"])}</h2><p>{esc(row["dek"])}</p></a>'
         for row in index
@@ -1406,6 +1437,7 @@ def render_archive(index: list[dict]) -> str:
     jsonld = {
         "@context": "https://schema.org", "@type": "CollectionPage",
         "name": "LiquiLens daily institution-risk articles", "url": f"{SITE}/articles/",
+        "image": card.url,
         "hasPart": [{"@type": "AnalysisNewsArticle", "headline": row["headline"],
                      "url": row["canonical_url"], "datePublished": row["published_at"]} for row in index],
     }
@@ -1417,7 +1449,8 @@ def render_archive(index: list[dict]) -> str:
     )
     return page_shell(title="Daily institution-risk articles | LiquiLens",
                       description="Daily evidence-led analysis of bank and lender balance sheets, with historical failure replays when the current board is quiet.",
-                      canonical=f"{SITE}/articles/", jsonld=jsonld, body=body)
+                      canonical=f"{SITE}/articles/", jsonld=jsonld, body=body,
+                      social_card=card, og_type="website")
 
 
 def render_feed(index: list[dict], bodies: dict[str, str]) -> str:
@@ -1556,10 +1589,13 @@ def write_article(article: dict, *, root: pathlib.Path = ROOT) -> list[str]:
     page_dir = article_dir / slug
     page_dir.mkdir(parents=True, exist_ok=True)
     page_path = page_dir / "index.html"
+    share_path = page_dir / "share.png"
+    social_card = render_article_card(article)
     md_path.write_text(article["body_md"])
     sidecar = {key: value for key, value in article.items() if key != "body_md"}
     json_path.write_text(json.dumps(sidecar, indent=2, ensure_ascii=False) + "\n")
-    page_path.write_text(render_article(article))
+    write_card(share_path, social_card)
+    page_path.write_text(render_article(article, social_card=social_card))
     index_path.write_text(json.dumps(index, indent=2, ensure_ascii=False) + "\n")
 
     # A forced same-day rewrite replaces exactly the generated artifacts named
@@ -1573,6 +1609,7 @@ def write_article(article: dict, *, root: pathlib.Path = ROOT) -> list[str]:
             article_dir / f"{old_slug}.md",
             article_dir / f"{old_slug}.json",
             article_dir / old_slug / "index.html",
+            article_dir / old_slug / "share.png",
         ):
             if old_path.exists():
                 old_path.unlink()
@@ -1582,7 +1619,7 @@ def write_article(article: dict, *, root: pathlib.Path = ROOT) -> list[str]:
 
     derived = refresh_article_surfaces(root=root)
     return [
-        str(md_path), str(json_path), str(index_path), *derived,
+        str(md_path), str(json_path), str(share_path), str(index_path), *derived,
     ]
 
 
@@ -1600,6 +1637,7 @@ def refresh_article_surfaces(*, root: pathlib.Path = ROOT) -> list[str]:
     bodies = {}
     metadata = {}
     pages = []
+    share_cards = []
     for row in index:
         slug = str(row.get("slug") or "")
         if not re.fullmatch(r"[a-z0-9-]+", slug):
@@ -1618,19 +1656,28 @@ def refresh_article_surfaces(*, root: pathlib.Path = ROOT) -> list[str]:
         metadata[slug] = meta
         page_path = article_dir / slug / "index.html"
         page_path.parent.mkdir(parents=True, exist_ok=True)
-        page_path.write_text(render_article({**meta, "body_md": body}))
+        article = {**meta, "body_md": body}
+        social_card = render_article_card(article)
+        share_path = page_path.parent / "share.png"
+        write_card(share_path, social_card)
+        page_path.write_text(render_article(article, social_card=social_card))
         pages.append(str(page_path))
+        share_cards.append(str(share_path))
 
     learning_path = write_learning_feed(article_dir, index, bodies)
     archive_path = article_dir / "index.html"
+    archive_share_path = article_dir / "share.png"
     feed_path = article_dir / "feed.xml"
     json_feed_path = article_dir / "feed.json"
-    archive_path.write_text(render_archive(index))
+    archive_card = article_archive_card(index)
+    write_card(archive_share_path, archive_card)
+    archive_path.write_text(render_archive(index, social_card=archive_card))
     feed_path.write_text(render_feed(index, bodies))
     json_feed_path.write_text(render_json_feed(index, bodies, metadata))
     update_discovery_files(index, root)
     return [
-        *pages, str(learning_path), str(archive_path), str(feed_path),
+        *pages, *share_cards, str(learning_path), str(archive_path),
+        str(archive_share_path), str(feed_path),
         str(json_feed_path), str(root / "sitemap.xml"), str(root / "llms.txt"),
     ]
 

@@ -25,6 +25,21 @@ import sys
 import urllib.request
 import xml.etree.ElementTree as ET
 
+try:
+    from scripts.social_cards import (
+        RenderedCard,
+        render_replay_card,
+        replay_archive_card,
+        write_card,
+    )
+except ModuleNotFoundError:  # direct execution: python3 scripts/build_replay_pages.py
+    from social_cards import (
+        RenderedCard,
+        render_replay_card,
+        replay_archive_card,
+        write_card,
+    )
+
 API = "https://api.liquilens.in/api/failure-radar/validation"
 SITE = "https://liquilens.in"
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -117,8 +132,20 @@ HEAD = """<!doctype html>
 <link rel="canonical" href="{canonical}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
-<meta property="og:image" content="https://liquilens.in/og-radar.png">
+<meta property="og:type" content="{og_type}">
+<meta property="og:site_name" content="LiquiLens">
+<meta property="og:image" content="{og_image}">
+<meta property="og:image:secure_url" content="{og_image}">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{og_alt}">
 <meta property="og:url" content="{canonical}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="{og_image}">
+<meta name="twitter:image:alt" content="{og_alt}">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E3B778'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%231A1206' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">{jsonld}</script>
 <style>
@@ -187,8 +214,9 @@ real-money evidence, a credit rating or investment advice.
 """
 
 
-def jsonld_page(name: str, desc: str, url: str) -> str:
-    return json.dumps({
+def jsonld_page(name: str, desc: str, url: str,
+                image_url: str | None = None) -> str:
+    payload = {
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": name,
@@ -196,10 +224,16 @@ def jsonld_page(name: str, desc: str, url: str) -> str:
         "url": url,
         "isPartOf": {"@type": "WebSite", "name": "LiquiLens", "url": SITE + "/"},
         "isBasedOn": API,
-    })
+    }
+    if image_url:
+        payload["image"] = image_url
+    return json.dumps(payload, ensure_ascii=True).replace(
+        "<", "\\u003c"
+    ).replace(">", "\\u003e").replace("&", "\\u0026")
 
 
-def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> str:
+def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool,
+              social_card: RenderedCard | None = None) -> str:
     name = name_from_slug(slug)
     itype = (pca or fund or {}).get("inst_type", "")
     gloss = TYPE_GLOSS.get(itype, itype)
@@ -210,6 +244,9 @@ def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> st
             + (f" on {default_date}" if default_date else "")
             + ": action-zone replay, funding-fragility replay, and what was missed, from the published construction-PIT diagnostic.")
     url = f"{SITE}/replay/{slug}/"
+    card = social_card or render_replay_card(
+        case_file_record(slug, pca, fund, fraud, "2026-08-09T20:27:48+05:30")
+    )
 
     rows = []
     rows.append(f'<div class="factrow"><span class="k">Institution type</span><span class="v">{esc(gloss)}</span></div>')
@@ -271,16 +308,25 @@ def inst_page(slug: str, pca: dict | None, fund: dict | None, fraud: bool) -> st
   <a href="/research/">research page</a>.</p>
 </div></section>
 """
-    return HEAD.format(title=esc(title), desc=esc(desc), canonical=url,
-                       jsonld=jsonld_page(title, desc, url)) + body + FOOT
+    return HEAD.format(
+        title=esc(title), desc=esc(desc), canonical=url,
+        og_type="article",
+        og_image=esc(card.url), og_alt=esc(card.alt),
+        jsonld=jsonld_page(title, desc, url, card.url),
+    ) + body + FOOT
 
 
-def index_page(d: dict, slugs: list[str], pca_by: dict, fund_by: dict, fraud_set: set) -> str:
+def index_page(
+        d: dict, slugs: list[str], pca_by: dict, fund_by: dict,
+        fraud_set: set, *, social_card: RenderedCard | None = None) -> str:
     title = "Failure replays: every institution on the published record | LiquiLens"
     desc = ("Per-institution construction-PIT historical replays of two decades of Indian lender failures "
             "through the LiquiLens lenses: action-zone distance, funding fragility, leads in months, "
             "and the misses, from the published construction-PIT diagnostic.")
     url = f"{SITE}/replay/"
+    card = social_card or replay_archive_card(
+        case_file_index(slugs, pca_by, fund_by, fraud_set)
+    )
     hz = d["hazard"]
 
     trs = []
@@ -316,8 +362,13 @@ def index_page(d: dict, slugs: list[str], pca_by: dict, fund_by: dict, fraud_set
   <p class="body mono">Hazard method, as served by the payload: {esc(hz.get("method", ""))}</p>
 </div></section>
 """
-    return HEAD.format(title=esc(title), desc=esc(desc), canonical=url,
-                       jsonld=jsonld_page(title, desc, url)) + body + FOOT
+    return HEAD.format(
+        title=esc(title), desc=esc(desc), canonical=url,
+        og_type="website",
+        og_image=esc(card.url),
+        og_alt=esc(card.alt),
+        jsonld=jsonld_page(title, desc, url, card.url),
+    ) + body + FOOT
 
 
 def replay_verdict(row: dict | None, field: str, *, scoreable: bool = True) -> str:
@@ -368,6 +419,8 @@ def case_file_record(
     return {
         "id": f"liquilens:case-file:{slug}",
         "slug": slug,
+        "subject": {"slug": slug, "name": name,
+                    "institution_type": (pca or fund or {}).get("inst_type")},
         "article_type": "case_file",
         "headline": headline,
         "dek": " ".join(outcomes),
@@ -547,24 +600,47 @@ def main() -> int:
     outdir = ROOT / "replay"
     outdir.mkdir(exist_ok=True)
     changed_slugs = set()
+    records = {
+        slug: case_file_record(
+            slug, pca_by.get(slug), fund_by.get(slug), slug in fraud_set,
+            "2026-08-09T20:27:48+05:30",
+        )
+        for slug in slugs
+    }
     for slug in slugs:
         page_dir = outdir / slug
         page_dir.mkdir(exist_ok=True)
         page_path = page_dir / "index.html"
+        card = render_replay_card(records[slug])
+        share_path = page_dir / "share.png"
+        card_changed = write_card(share_path, card)
         changed = write_if_changed(
             page_path,
-            inst_page(slug, pca_by.get(slug), fund_by.get(slug), slug in fraud_set),
+            inst_page(
+                slug, pca_by.get(slug), fund_by.get(slug),
+                slug in fraud_set, social_card=card,
+            ),
         )
-        if changed or differs_from_head(page_path):
+        if changed or card_changed or differs_from_head(page_path) \
+                or differs_from_head(share_path):
             changed_slugs.add(slug)
+    case_index = case_file_index(slugs, pca_by, fund_by, fraud_set)
+    archive_card = replay_archive_card(case_index)
+    archive_share_path = outdir / "share.png"
+    archive_card_changed = write_card(archive_share_path, archive_card)
     index_path = outdir / "index.html"
     index_changed = write_if_changed(
-        index_path, index_page(d, slugs, pca_by, fund_by, fraud_set))
-    index_changed = index_changed or differs_from_head(index_path)
+        index_path, index_page(
+            d, slugs, pca_by, fund_by, fraud_set,
+            social_card=archive_card,
+        ))
+    index_changed = (
+        index_changed or archive_card_changed or differs_from_head(index_path)
+        or differs_from_head(archive_share_path)
+    )
     write_if_changed(
         outdir / "index.json",
-        json.dumps(case_file_index(slugs, pca_by, fund_by, fraud_set), indent=2)
-        + "\n",
+        json.dumps(case_index, indent=2) + "\n",
     )
     write_sitemap(slugs, changed_slugs, index_changed)
     print(f"wrote {len(slugs)} institution pages + index + sitemap ({len(BASE_SITEMAP) + len(slugs)} urls)")

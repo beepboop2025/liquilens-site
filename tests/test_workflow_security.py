@@ -53,7 +53,16 @@ def test_workflows_pin_the_runner_and_scope_checkout_credentials():
 
 def test_ci_dependencies_are_binary_only_and_hash_locked():
     requirements = (ROOT / "requirements-ci.txt").read_text(encoding="utf-8")
-    assert requirements.count("--hash=sha256:") == 5
+    assert "pillow==12.2.0" in requirements
+    # Ubuntu 24.04 + CPython 3.12 resolves this exact manylinux wheel.  Keep its
+    # hash explicit so the post-merge Pages job cannot be the first place a
+    # developer-only lock failure is discovered.
+    assert (
+        "--hash=sha256:62f5409336adb0663b7caa0da5c7d9e7bdbaae9ce761d34669420c2a801b2780"
+        in requirements
+    )
+    # Five original pure-Python locks plus six reviewed Pillow platform wheels.
+    assert requirements.count("--hash=sha256:") == 11
     assert re.search(r"^[^#\n]*[<>=]=?[^\n]*$", requirements, re.MULTILINE) is not None
     for workflow in (PAGES, ARTICLES, EDGE_DEPLOY, EDGE_PR):
         assert "--only-binary=:all:" in workflow
