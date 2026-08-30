@@ -5,6 +5,11 @@
     {
       "id": "liquilens:case-file:abhyudaya-co-operative-bank",
       "slug": "abhyudaya-co-operative-bank",
+      "subject": {
+        "slug": "abhyudaya-co-operative-bank",
+        "name": "Abhyudaya Co-operative Bank",
+        "institution_type": "ucb"
+      },
       "article_type": "case_file",
       "headline": "The action-zone lens flagged Abhyudaya Co-operative Bank; the funding lens did not",
       "dek": "Action-zone lens: HIT, first flag 29 months before the recorded failure. Funding-fragility lens: MISS, with no pre-failure signal in this record.",
@@ -44,6 +49,11 @@
     {
       "id": "liquilens:case-file:altico",
       "slug": "altico",
+      "subject": {
+        "slug": "altico",
+        "name": "Altico",
+        "institution_type": "nbfc"
+      },
       "article_type": "case_file",
       "headline": "The funding lens flagged Altico; the action-zone lens missed it",
       "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: HIT, first flag 27 months before the recorded failure.",
@@ -83,6 +93,11 @@
     {
       "id": "liquilens:case-file:ckp-co-operative-bank",
       "slug": "ckp-co-operative-bank",
+      "subject": {
+        "slug": "ckp-co-operative-bank",
+        "name": "CKP Co-operative Bank",
+        "institution_type": "ucb"
+      },
       "article_type": "case_file",
       "headline": "The action-zone lens missed CKP Co-operative Bank; the funding lens was not scoreable",
       "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: VOID because the record was not scoreable on that lens.",
@@ -122,6 +137,11 @@
     {
       "id": "liquilens:case-file:first-leasing-company-of-india",
       "slug": "first-leasing-company-of-india",
+      "subject": {
+        "slug": "first-leasing-company-of-india",
+        "name": "First Leasing Company of India",
+        "institution_type": "nbfc"
+      },
       "article_type": "case_file",
       "headline": "Both published LiquiLens lenses missed First Leasing Company of India",
       "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: MISS, with no pre-failure signal in this record. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
@@ -161,6 +181,11 @@
     {
       "id": "liquilens:case-file:global-trust-bank",
       "slug": "global-trust-bank",
+      "subject": {
+        "slug": "global-trust-bank",
+        "name": "Global Trust Bank",
+        "institution_type": "bank"
+      },
       "article_type": "case_file",
       "headline": "The action-zone lens flagged Global Trust Bank; the funding lens did not",
       "dek": "Action-zone lens: HIT, first flag 25 months before the recorded failure. Funding-fragility lens: VOID because the record was not scoreable on that lens. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
@@ -200,6 +225,11 @@
     {
       "id": "liquilens:case-file:ilfs",
       "slug": "ilfs",
+      "subject": {
+        "slug": "ilfs",
+        "name": "IL&FS",
+        "institution_type": "nbfc"
+      },
       "article_type": "case_file",
       "headline": "The funding lens flagged IL&FS; the action-zone lens missed it",
       "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: HIT, first flag 38 months before the recorded failure. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
@@ -239,6 +269,11 @@
     {
       "id": "liquilens:case-file:madhavpura-mercantile-co-operative-bank",
       "slug": "madhavpura-mercantile-co-operative-bank",
+      "subject": {
+        "slug": "madhavpura-mercantile-co-operative-bank",
+        "name": "Madhavpura Mercantile Co-operative Bank",
+        "institution_type": "ucb"
+      },
       "article_type": "case_file",
       "headline": "The action-zone lens missed Madhavpura Mercantile Co-operative Bank; the funding lens was not scoreable",
       "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: VOID because the record was not scoreable on that lens. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
@@ -278,6 +313,11 @@
     {
       "id": "liquilens:case-file:nedungadi-bank",
       "slug": "nedungadi-bank",
+      "subject": {
+        "slug": "nedungadi-bank",
+        "name": "Nedungadi Bank",
+        "institution_type": "bank"
+      },
       "article_type": "case_file",
       "headline": "The action-zone lens flagged Nedungadi Bank; the funding lens did not",
       "dek": "Action-zone lens: HIT, first flag 41 months before the recorded failure. Funding-fragility lens: VOID because the record was not scoreable on that lens.",
@@ -317,6 +357,11 @@
     {
       "id": "liquilens:case-file:new-india-co-operative-bank",
       "slug": "new-india-co-operative-bank",
+      "subject": {
+        "slug": "new-india-co-operative-bank",
+        "name": "New India Co-operative Bank",
+        "institution_type": "ucb"
+      },
       "article_type": "case_file",
       "headline": "The action-zone lens flagged New India Co-operative Bank; the funding lens did not",
       "dek": "Action-zone lens: HIT, first flag 44 months before the recorded failure. Funding-fragility lens: MISS, with no pre-failure signal in this record. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
@@ -356,6 +401,11 @@
     {
       "id": "liquilens:case-file:pmc-bank",
       "slug": "pmc-bank",
+      "subject": {
+        "slug": "pmc-bank",
+        "name": "PMC Bank",
+        "institution_type": "ucb"
+      },
       "article_type": "case_file",
       "headline": "Both published LiquiLens lenses missed PMC Bank",
       "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: MISS, with no pre-failure signal in this record. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
@@ -395,6 +445,11 @@
     {
       "id": "liquilens:case-file:religare-finvest",
       "slug": "religare-finvest",
+      "subject": {
+        "slug": "religare-finvest",
+        "name": "Religare Finvest",
+        "institution_type": "nbfc"
+      },
       "article_type": "case_file",
       "headline": "The funding lens flagged Religare Finvest; the action-zone lens missed it",
       "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: HIT, first flag 19 months before the recorded failure. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
@@ -434,6 +489,11 @@
     {
       "id": "liquilens:case-file:rupee-co-operative-bank",
       "slug": "rupee-co-operative-bank",
+      "subject": {
+        "slug": "rupee-co-operative-bank",
+        "name": "Rupee Co-operative Bank",
+        "institution_type": "ucb"
+      },
       "article_type": "case_file",
       "headline": "The action-zone lens missed Rupee Co-operative Bank; the funding lens was not scoreable",
       "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: VOID because the record was not scoreable on that lens.",
@@ -473,6 +533,11 @@
     {
       "id": "liquilens:case-file:sambandh-finserve",
       "slug": "sambandh-finserve",
+      "subject": {
+        "slug": "sambandh-finserve",
+        "name": "Sambandh Finserve",
+        "institution_type": "mfi"
+      },
       "article_type": "case_file",
       "headline": "The funding lens flagged Sambandh Finserve; the action-zone lens missed it",
       "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: HIT, first flag 52 months before the recorded failure. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
@@ -512,6 +577,11 @@
     {
       "id": "liquilens:case-file:sri-guru-raghavendra-sahakara-bank",
       "slug": "sri-guru-raghavendra-sahakara-bank",
+      "subject": {
+        "slug": "sri-guru-raghavendra-sahakara-bank",
+        "name": "Sri Guru Raghavendra Sahakara Bank",
+        "institution_type": "ucb"
+      },
       "article_type": "case_file",
       "headline": "Both published LiquiLens lenses missed Sri Guru Raghavendra Sahakara Bank",
       "dek": "Action-zone lens: MISS, with no pre-failure action-zone entry in this record. Funding-fragility lens: MISS, with no pre-failure signal in this record. The source marks the case fraud-masked; reported books may not carry the hidden distress, so misses remain visible and are not reclassified.",
@@ -551,6 +621,11 @@
     {
       "id": "liquilens:case-file:united-western-bank",
       "slug": "united-western-bank",
+      "subject": {
+        "slug": "united-western-bank",
+        "name": "United Western Bank",
+        "institution_type": "bank"
+      },
       "article_type": "case_file",
       "headline": "The action-zone lens flagged United Western Bank; the funding lens did not",
       "dek": "Action-zone lens: HIT, first flag 63 months before the recorded failure. Funding-fragility lens: MISS, with no pre-failure signal in this record.",

@@ -58,7 +58,8 @@ jobs:
       - name: Run editorial and public-surface tests
         run: >-
           python3 -m pytest tests/test_daily_articles.py
-          tests/test_investigations.py tests/test_ai_discovery.py -q
+          tests/test_social_cards.py tests/test_investigations.py
+          tests/test_ai_discovery.py -q
 
       - name: Commit the edition
         run: |
