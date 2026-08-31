@@ -1,0 +1,100 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-08-31-before-the-event-what-sri-guru-raghavendra-sahakara-bank-s-filings-did-and-d",
+  "product": "liquilens",
+  "slug": "2026-08-31-before-the-event-what-sri-guru-raghavendra-sahakara-bank-s-filings-did-and-d",
+  "date": "2026-08-31",
+  "article_type": "historical_replay",
+  "topic": "sri-guru-raghavendra-sahakara-bank",
+  "headline": "Before the event: what Sri Guru Raghavendra Sahakara Bank's filings did and did not reveal",
+  "dek": "A construction-PIT replay of Sri Guru Raghavendra Sahakara Bank: the first published regulatory or funding signal, the disclosure clock, the miss, and the boundary that survives into today's screen.",
+  "canonical_url": "https://liquilens.in/articles/2026-08-31-before-the-event-what-sri-guru-raghavendra-sahakara-bank-s-filings-did-and-d/",
+  "published_at": "2026-08-31T18:00:23Z",
+  "evidence_as_of": "2026-08-31",
+  "board_signature": "11b8f7897ecd041af916ebef625d096a850763c28879ac3f256e8179a0d72721",
+  "subject": {
+    "slug": "sri-guru-raghavendra-sahakara-bank",
+    "name": "Sri Guru Raghavendra Sahakara Bank",
+    "inst_type": "ucb",
+    "default_date": "2020-01-10",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "sri-guru-raghavendra-sahakara-bank",
+      "inst_type": "ucb",
+      "default_date": "2020-01-10",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "sri-guru-raghavendra-sahakara-bank",
+      "inst_type": "ucb",
+      "scoreable": true,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1033,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:c69e080b54817510bbd8fb0f4ee626bdf978d51c5388e04bb26a65fb525af46e",
+    "memory_fingerprint": "sha256:f5da1f6b466f2456a7128f159b24e01e0bfa58a0159b1633b2d9ca2d45eeabc7",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "deterministic_fallback",
+    "model": null,
+    "passes": 4,
+    "dossier_sha256": "0ddc502d8c31578a83f2dffba182d1e81d9e92e92c1bbe4ccc0c85efc72538ad",
+    "fallback_reason": "ValueError: placeholder leaked into article",
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:c69e080b54817510bbd8fb0f4ee626bdf978d51c5388e04bb26a65fb525af46e",
+      "memory_fingerprint": "sha256:f5da1f6b466f2456a7128f159b24e01e0bfa58a0159b1633b2d9ca2d45eeabc7",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
