@@ -1,0 +1,107 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-09-01-rupee-co-operative-bank-replay-the-signal-was-an-evidence-boundary-not-a-cle",
+  "product": "liquilens",
+  "slug": "2026-09-01-rupee-co-operative-bank-replay-the-signal-was-an-evidence-boundary-not-a-cle",
+  "date": "2026-09-01",
+  "article_type": "historical_replay",
+  "topic": "rupee-co-operative-bank",
+  "headline": "Rupee Co-operative Bank replay: the signal was an evidence boundary, not a clean warning",
+  "dek": "This is a historical replay, not current news and not a forecast. Rupee Co-operative Bank’s record shows why a balance-sheet screen must separate a filing-period signal, a market-price signal, and an absence of scoreable evidence.",
+  "canonical_url": "https://liquilens.in/articles/2026-09-01-rupee-co-operative-bank-replay-the-signal-was-an-evidence-boundary-not-a-cle/",
+  "published_at": "2026-09-01T15:28:11Z",
+  "evidence_as_of": "2026-09-01",
+  "board_signature": "11b8f7897ecd041af916ebef625d096a850763c28879ac3f256e8179a0d72721",
+  "subject": {
+    "slug": "rupee-co-operative-bank",
+    "name": "Rupee Co-operative Bank",
+    "inst_type": "ucb",
+    "default_date": "2022-09-22",
+    "fraud_masked": false,
+    "pca": {
+      "slug": "rupee-co-operative-bank",
+      "inst_type": "ucb",
+      "default_date": "2022-09-22",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": false
+    },
+    "funding": {
+      "slug": "rupee-co-operative-bank",
+      "inst_type": "ucb",
+      "scoreable": false,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1413,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:3b1bb8b903f61835cfc4d62fb3086f216570eb9c6afc53b1a94718d7c26888ae",
+    "memory_fingerprint": "sha256:b7d58fa7c7130067e800cf046490a554697c06b1ff5f0a636df73e9db9c6b0e1",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 2,
+    "dossier_sha256": "95de7137046861450ae900fdc72afdded871d32aab5906a7483d91f2dd907c3f",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [],
+    "review_notes": [
+      "Deleted unsupported causal assertions about Rupee Co-operative Bank’s pre-event balance-sheet path.",
+      "Separated filing-period evidence, market-price evidence, and model outputs throughout.",
+      "Retained all institution-specific missing-data, eligibility, construction-PIT, and validation disclosures.",
+      "Added explicit product-boundary language and source links."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:3b1bb8b903f61835cfc4d62fb3086f216570eb9c6afc53b1a94718d7c26888ae",
+      "memory_fingerprint": "sha256:b7d58fa7c7130067e800cf046490a554697c06b1ff5f0a636df73e9db9c6b0e1",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
