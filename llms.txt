@@ -62,7 +62,9 @@ This status validates the sealed execution pass, not the incomplete research def
 
 ## Public products and boundaries
 
-- Failure Radar reports failure-probability screens, regulatory action-zone distance, funding fragility, and market-implied distance to default where inputs are available.
+- Failure Radar reports failure-probability screens, regulatory action-zone distance, funding fragility, and market-implied distance to default where eligible inputs are available.
+- Treat every market-distance value as API-dated evidence: `observation_at` (also served as `as_of` for compatibility) is the per-name observation date used by the freshness policy; `retrieved_at` is the separate capture clock; `liability_available_at` is the filing-availability clock used in the join—an explicit publication clock when present, otherwise the documented period-end-plus-60-day proxy; and `tier_authority` states whether all clock, admission, rights, and product gates permit the value to affect the tier. A daily-capable source is not proof that the served value refreshed today; absent fields leave freshness or authority unstated.
+- Dated gate correction, 2026-08-10: the conformal alarm remains diagnostic/display only, its historical tier wiring is suspended, and `tier_authority` is false pending prospective revalidation. The gate at that correction was `CLOSED_REVALIDATION_REQUIRED`; https://api.liquilens.in/api/evidence/gates is the current machine authority.
 - The MFI Risk Board reports disclosure-based readings for institutions with current vetted dossiers.
 - Exposure Watch joins an organization's recorded counterparties to the existing public screens. It does not create a new institution score.
 - Environment and market-context layers are displayed beside institution scores. They do not affect a score unless a pre-registered gate study passes.

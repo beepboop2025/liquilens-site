@@ -101,8 +101,10 @@ def complementarity_note(d: dict) -> str:
         f"Abhyudaya {lead(pca, 'abhyudaya-co-operative-bank')}); the funding lens catches "
         f"rollover/run failures the ratios miss (Altico {lead(funding, 'altico')} on CP reliance, "
         f"IL&FS {lead(funding, 'ilfs')}, Sambandh {lead(funding, 'sambandh-finserve')}); "
-        "the forensic screen owns fabricated reporting; the market layer reprices daily "
-        "between filings for listed names."
+        "the forensic screen owns fabricated reporting; for listed names, the market layer "
+        "can reprice between filings only when eligible inputs are available. Its API as_of "
+        "and stale fields, not source cadence, determine freshness; tier_authority states "
+        "whether the reading may affect the tier."
     )
 
 
@@ -472,7 +474,7 @@ def case_file_index(
 
 
 BASE_SITEMAP = [
-    ("/", "2026-08-29", "weekly", "1.0"),
+    ("/", "2026-09-01", "weekly", "1.0"),
     ("/investigations/", "2026-08-12", "weekly", "0.9"),
     ("/investigations/the-5-64x-private-credit-concentration/",
      "2026-08-12", "monthly", "0.8"),
