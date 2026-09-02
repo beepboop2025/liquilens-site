@@ -117,7 +117,7 @@
       "isPartOf": { "@id": "https://liquilens.in/#site" },
       "about": { "@id": "https://liquilens.in/#org" },
       "datePublished": "2026-07-02",
-      "dateModified": "2026-08-09"
+      "dateModified": "2026-09-01"
     }
   ]
 }
@@ -1001,9 +1001,9 @@
       <div class="engine"><div class="no">07</div><h3>Failure Probability</h3><p>A probability of failure for every institution with a vetted filing, fitted on the real collapses in the record and served with its confidence intervals, not just a point.</p></div>
       <div class="engine"><div class="no">08</div><h3>Regulator Tripwires</h3><p>Distance to the regulator's own action zones, the RBI's PCA and SAF thresholds in India, in plain percentage points. In the construction-PIT diagnostic, those public tripwires fired a median of 41 months before the regulator moved.</p></div>
       <div class="engine"><div class="no">09</div><h3>Funding Fragility</h3><p>Reads the liability side for deposit runs and rollover freezes. In the same diagnostic it flagged Altico 27 months out while reported bad loans sat near zero.</p></div>
-      <div class="engine"><div class="no">10</div><h3>Market Distance</h3><p>A daily market implied distance to default for 25 listed lenders, so the board reprices between filings instead of waiting for the next quarter.</p></div>
+      <div class="engine"><div class="no">10</div><h3>Market Distance</h3><p>A market-implied distance to default for listed lenders when eligible inputs are available. It can reprice between filings, but the API's per-name <code>observation_at</code>, <code>retrieved_at</code> and <code>stale</code> fields state its clocks and freshness, while <code>tier_authority</code> states whether it may affect the tier.</p></div>
     </div>
-    <p class="engines-note reveal">And the bench keeps refilling. A July 2026 research pipeline implemented thirteen recent papers as deterministic engines and research surfaces: survival based PD term structures, conformal alarms with finite sample guarantees, solvency and liquidity run decomposition, multilayer contagion analytics and a depositor run simulator among them. Each one stays display and research only until it passes a pre registered product gate study, the same bar that keeps monsoon data out of the scores today. <b>The first has now crossed that product gate.</b> The conformal alarm joined the watchlist tier in July 2026, wired deliberately narrow: it can lift a name off green, never demote one, never escalate past what the other signals justify, and the sign off that admitted it is published at <a href="https://api.liquilens.in/api/evidence/gates" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">api.liquilens.in/api/evidence/gates</a>. A product gate controls scoring behavior; it does not change the separately served historical-evidence eligibility flags.</p>
+    <p class="engines-note reveal">And the bench keeps refilling. A July 2026 research pipeline implemented thirteen recent papers as deterministic engines and research surfaces: survival based PD term structures, conformal alarm research, solvency and liquidity run decomposition, multilayer contagion analytics and a depositor run simulator among them. Each one stays display and research only until it passes a pre registered product gate study, the same bar that keeps monsoon data out of the scores today. The conformal alarm historically entered the watchlist tier in July 2026, but that wiring was suspended on 10 August after review found its false alarm bar non falsifiable at the available sample size. It remains diagnostic and display only, with no score or tier authority pending prospective revalidation. At that correction the gate was <code>CLOSED_REVALIDATION_REQUIRED</code>; the linked machine gate is the current authority: <a href="https://api.liquilens.in/api/evidence/gates" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">api.liquilens.in/api/evidence/gates</a>. A product gate controls scoring behavior; it does not change the separately served historical-evidence eligibility flags.</p>
     <p class="engines-note reveal">Research grounded · calibrated per market · built to survive a real risk review.<br>The regulatory frame the engines compute against: <a href="https://www.bis.org/publ/bcbs238.htm" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">Basel III LCR standard (BIS, 2013)</a> · <a href="https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=11719&amp;Mode=0" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">RBI liquidity risk framework for NBFCs (2019)</a> · RBI Scale Based Regulation (2021).</p>
   </div>
 </section>
@@ -1254,12 +1254,12 @@
   </div>
 </section>
 
-<!-- the failure radar : every licence type, one live board -->
+<!-- the failure radar: every licence type, one API-dated board -->
 <section class="band" id="radar">
   <div class="wrap">
     <span class="eyebrow reveal">The failure radar</span>
     <h2 class="reveal">One risk board across lender types</h2>
-    <p class="body reveal">Below is the <b>Failure Radar</b> from the same public screening API: every institution with a fresh vetted dossier, whatever its licence type, read four ways at once. A failure probability fitted on the real collapses in the record. Distance to the RBI's own action zones. Funding fragility from the liability side. A market implied default distance for listed names, repriced daily from live equity prices. The watchlist tier is a published rule over published components, so <b>"why is this name orange" always has an answer.</b></p>
+    <p class="body reveal">Below is the <b>Failure Radar</b> from the same public screening API: every institution with a fresh vetted dossier, whatever its licence type, read four ways at once. A failure probability fitted on the real collapses in the record. Distance to the RBI's own action zones. Funding fragility from the liability side. For a listed name, a market-implied default distance appears only when eligible inputs are available. A daily-capable price source is not proof of a daily refresh: the response's <code>as_of</code> and <code>stale</code> fields govern freshness, while <code>tier_authority</code> states whether that reading may affect the published tier. The watchlist tier is a published rule over published components, so <b>"why is this name orange" always has an answer.</b></p>
 
     <style>
       .tier{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;padding:3px 10px;border-radius:999px;border:1px solid var(--line-2);white-space:nowrap}
@@ -1285,7 +1285,7 @@
       </div>
       <div class="board__fallback" id="radarFallback">The radar answers from the same servers that run the product. If nothing renders here, the honest reading is that the API did not answer from your network, and the full board with every component is in the <a href="https://demo.liquilens.in" target="_blank" rel="noopener" style="color:var(--gold)">demo</a>, which is granted on request.</div>
     </div>
-    <p class="stats-note reveal">Failure probabilities are fitted on the vetted record and corrected to a stated population base rate; they are screens, not ratings. The market column is a Merton distance to default from live equity prices, shown only for listed names, and the board says why any lens is dark for a given row. Method, the construction-PIT diagnostic and the model card are public: <a href="https://api.liquilens.in/api/failure-radar/validation" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">historical diagnostic</a> · <a href="https://api.liquilens.in/api/failure-radar/model-card" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">model card</a>.</p>
+    <p class="stats-note reveal">Failure probabilities are fitted on the vetted record and corrected to a stated population base rate; they are screens, not ratings. The market column is a Merton distance to default for listed names with eligible inputs. Each value is printed with the API's observation date used by its freshness policy; <code>retrieved_at</code> separately states when the snapshot was captured. <code>liability_available_at</code> is the filing-availability clock used in the join: an explicit publication clock when present, otherwise the documented period-end-plus-60-day proxy. Stale, future-dated or unstated evidence is labelled rather than called live. <code>tier_authority</code> and <code>authority_reason</code> state whether and why the market lens may affect the tier. The board also says why a lens is dark. Method, the construction-PIT diagnostic and the model card are public: <a href="https://api.liquilens.in/api/failure-radar/validation" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">historical diagnostic</a> · <a href="https://api.liquilens.in/api/failure-radar/model-card" target="_blank" rel="noopener" style="color:var(--muted);border-bottom:1px dotted var(--line-2)">model card</a>.</p>
   </div>
 </section>
 
@@ -1571,7 +1571,7 @@
 </main>
 <footer>
   <div class="wrap">
-    <span>© 2026 LiquiLens · Updated 21 August 2026 · <a href="/articles/">Articles</a> · <a href="/investigations/">Investigations</a> · <a href="/desk/">Intelligence desk</a> · <a href="/tools/ews-coverage-check/">Free EWS coverage check</a> · <a href="/developers/">API + MCP</a> · <a href="/use-cases/">When to use LiquiLens</a> · <a href="/world-economy/">World economy evidence</a> · <a href="/us/">The US bank layer</a> · <a href="/replay/">Historical case files</a> · <a href="/research/">Research</a> · <a href="/ship-log/">Ship log</a> · <a href="/about/">About</a> · <a href="/security/">Security</a> · <a href="/status/">Status</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a> · <a href="https://t.me/LiquiLens_bot" target="_blank" rel="noopener">@LiquiLens_bot on Telegram</a> · <a href="https://t.me/LiquidityLabDesk" target="_blank" rel="noopener">the lab's free daily read on Telegram</a> · <a href="https://seiche.info/">Seiche, the systemic stress layer</a> · <a href="https://liquilens-undertow.com/">Undertow, the market-exit layer</a> · <a href="https://myquantdoesntspeakenglish.com/">Every article in plain English on My Quant Doesn’t Speak English</a></span>
+    <span>© 2026 LiquiLens · Updated 1 September 2026 · <a href="/articles/">Articles</a> · <a href="/investigations/">Investigations</a> · <a href="/desk/">Intelligence desk</a> · <a href="/tools/ews-coverage-check/">Free EWS coverage check</a> · <a href="/developers/">API + MCP</a> · <a href="/use-cases/">When to use LiquiLens</a> · <a href="/world-economy/">World economy evidence</a> · <a href="/us/">The US bank layer</a> · <a href="/replay/">Historical case files</a> · <a href="/research/">Research</a> · <a href="/ship-log/">Ship log</a> · <a href="/about/">About</a> · <a href="/security/">Security</a> · <a href="/status/">Status</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="https://x.com/LiquiLens" target="_blank" rel="noopener">@LiquiLens on X</a> · <a href="https://t.me/LiquiLens_bot" target="_blank" rel="noopener">@LiquiLens_bot on Telegram</a> · <a href="https://t.me/LiquidityLabDesk" target="_blank" rel="noopener">the lab's free daily read on Telegram</a> · <a href="https://seiche.info/">Seiche, the systemic stress layer</a> · <a href="https://liquilens-undertow.com/">Undertow, the market-exit layer</a> · <a href="https://myquantdoesntspeakenglish.com/">Every article in plain English on My Quant Doesn’t Speak English</a></span>
     <span>Rates shown are indicative of the Indian money market and for illustration only.</span>
   </div>
   <div class="wrap" style="margin-top:10px">
@@ -1817,7 +1817,7 @@
     }).catch(function(){ /* the tape stays hidden rather than empty */ });
   })();
 
-  // the failure radar: every licence type on one live board, from the public API
+  // the failure radar: every licence type on one API-dated board
   (function(){
     const table = document.getElementById('radarTable');
     if(!table) return;
@@ -1840,14 +1840,56 @@
       return '<span class="mv ' + cls + '">' + sign + bp + 'bp</span>';
     }
 
+    function marketState(m){
+      m = m || {};
+      const state = [];
+      const observed = m.observation_at || m.as_of;
+      const clock = observed ? 'observed ' + fmtDate(observed) : 'observation date unstated';
+      if(m.future_dated === true) state.push('future-dated');
+      else if(m.stale === true) state.push('stale');
+      else if(m.stale === false) state.push('within API freshness policy');
+      else state.push('freshness unstated');
+      if(m.clock_authority === false) state.push('clock authority false');
+      if(m.knowledge_authority === false) state.push('retrieval authority false');
+      if(m.admission_authority === false) state.push('admission pending');
+      if(m.tier_authority === false) state.push('context only');
+      else if(m.tier_authority !== true) state.push('tier authority unstated');
+      const reason = m.authority_reason ? ' · ' + m.authority_reason : '';
+      const unavailable = typeof m.dd !== 'number' ? (m.not_computed || 'not computed') : '';
+      const retrieval = m.retrieved_at ? ' · retrieved ' + m.retrieved_at : '';
+      const liability = m.liability_available_at ? ' · liability available ' + m.liability_available_at : '';
+      const title = clock + ' · ' + state.join(' · ') + retrieval + liability + reason;
+      const visible = [clock].concat(state).concat(unavailable ? [unavailable] : []).join(' · ');
+      const value = typeof m.dd === 'number' ? m.dd.toFixed(2) : 'n/a';
+      return value + '<span class="asof" title="' + esc(title) + '"> · ' + esc(visible) + '</span>';
+    }
+
+    function marketLayerState(m){
+      const parts = [];
+      if(m.as_of) parts.push('latest market observation ' + fmtDate(m.as_of));
+      else parts.push('market observation date unstated');
+      if(m.retrieved_at) parts.push('retrieved ' + m.retrieved_at);
+      if(typeof m.fresh_names === 'number') parts.push(m.fresh_names + ' fresh names');
+      if(typeof m.unclocked_names === 'number') parts.push(m.unclocked_names + ' unclocked names');
+      if(typeof m.age_days === 'number') parts.push(Math.round(m.age_days) + 'd old');
+      if(m.future_dated === true) parts.push('future-dated');
+      else if(m.stale === true) parts.push('stale');
+      else if(m.stale === false) parts.push('within API freshness policy');
+      else parts.push('freshness unstated');
+      if(m.tier_authority === true) parts.push('pack gates passed; authority evaluated per name');
+      else if(m.tier_authority === false) parts.push('context only');
+      else parts.push('tier authority unstated');
+      if(typeof m.tier_authorized_names === 'number') parts.push(m.tier_authorized_names + ' tier-authorized names');
+      if(m.authority_reason) parts.push(m.authority_reason);
+      return parts.join(' · ');
+    }
+
     liveJSON('https://api.liquilens.in/api/failure-radar/board').then(function(b){
       const rows = (b.rows || []);
       if(!rows.length) throw new Error('empty');
       const tb = table.querySelector('tbody');
       tb.innerHTML = rows.slice(0, 12).map(function(r){
-        const dd = (r.market && typeof r.market.dd === 'number')
-          ? r.market.dd.toFixed(2)
-          : '<span class="asof" title="' + esc((r.market && r.market.not_computed) || 'not computed') + '">n/a</span>';
+        const dd = marketState(r.market);
         const why = (r.signals_fired && r.signals_fired.length) ? r.signals_fired.join(', ') : 'no signals fired';
         const tier = TIERS.indexOf(r.tier) >= 0 ? r.tier : 'green';
         return '<tr>' +
@@ -1864,9 +1906,10 @@
       const t = b.tiers || {};
       const parts = ['red','orange','yellow','green'].filter(k=>t[k]).map(k=>t[k] + ' ' + k);
       let c = rows.length + ' institutions scored · ' + parts.join(' · ');
-      if(b.market_layer && b.market_layer.as_of){ c += ' · market layer ' + fmtDate(b.market_layer.as_of); }
+      if(b.as_of){ c += ' · board as of ' + fmtDate(b.as_of); }
+      c += ' · ' + marketLayerState(b.market_layer || {});
       census.textContent = c;
-      stamp.textContent = 'live from api.liquilens.in · four engines, one published tier rule';
+      stamp.textContent = 'public API response · clocks, freshness and tier authority printed from the payload';
     }).catch(function(){
       stamp.textContent = 'the public radar did not answer from here';
     });

@@ -652,9 +652,9 @@
       "data": {
         "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
         "name": "io.github.beepboop2025/narcoscope",
-        "title": "NarcoScope — official drug-market evidence explorer",
-        "description": "Aggregate official drug-market evidence, cited analyses, and explicit claim boundaries.",
-        "version": "1.3.0",
+        "title": "NarcoScope — illicit-economy evidence atlas",
+        "description": "Read bounded illicit-economy evidence with provenance, privacy, availability, and federation intact.",
+        "version": "1.4.0",
         "repository": {
           "url": "https://github.com/beepboop2025/narcoscope",
           "source": "github"
@@ -667,7 +667,7 @@
           }
         ]
       },
-      "description": "Seven read-only tools for aggregate official drug-market observations, citation-gated newsroom artifacts, and separately bounded Palimpsest context. No tactical, navigable, guilt, route, actor, or causal inference.",
+      "description": "Ten read-only tools for aggregate official drug-market observations, country-year illicit-economy evidence, citation-gated newsroom artifacts, and separately bounded Palimpsest context. No tactical, navigable, guilt, route, actor, composite-score, or causal inference.",
       "tags": [
         "official drug-market evidence",
         "citations",
@@ -677,6 +677,9 @@
       "capabilities": [
         "list_capabilities",
         "get_overview",
+        "get_atlas",
+        "get_entities",
+        "get_federation",
         "get_newsroom",
         "get_story",
         "get_palimpsest_bridge",
@@ -692,12 +695,12 @@
         "What does NarcoScope's official-data overview establish and not establish?",
         "Retrieve a cited newsroom artifact while preserving its disclosure and causal limits."
       ],
-      "version": "1.3.0",
-      "updatedAt": "2026-08-29T15:37:45.168739Z",
+      "version": "1.4.0",
+      "updatedAt": "2026-09-02T01:09:28.287851Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
-        "publicToolCount": 7,
+        "publicToolCount": 10,
         "mcpEndpoint": "https://narcoscope.com/mcp",
         "openapi": "https://narcoscope.com/openapi.json",
         "liveDeployment": "verified",
@@ -705,16 +708,16 @@
         "apiCatalog": "https://narcoscope.com/.well-known/api-catalog",
         "apiCatalogSha256": "sha256:62e006de96351351fbd8ffd8911d8adf25cb7189aa000ac7e4765bd495fc062c",
         "registryStatus": "active-latest",
-        "registryAdvertisedVersion": "1.3.0",
-        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fnarcoscope/versions/1.3.0",
-        "registryPublishedAt": "2026-08-29T15:37:45.168739Z",
-        "registryPublicationWorkflow": "https://github.com/beepboop2025/narcoscope/actions/runs/33260765822",
-        "sourceUpgradeVersion": "1.3.0",
-        "sourceUpgradeCommit": "31beee7ce6e0b0f17d66a01890cb82b4bcd9d4b4",
-        "sourceUpgradeImplementationCommit": "d18528dc6aeb9d725ce2c85d3f22caaa152f5cb6",
+        "registryAdvertisedVersion": "1.4.0",
+        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fnarcoscope/versions/1.4.0",
+        "registryPublishedAt": "2026-09-02T01:09:28.287851Z",
+        "registryPublicationWorkflow": "https://github.com/beepboop2025/narcoscope/actions/runs/33578233679",
+        "sourceUpgradeVersion": "1.4.0",
+        "sourceUpgradeCommit": "7ae91b08fea1430b44eea8205fc1898d8c3dbc2c",
+        "sourceUpgradeImplementationCommit": "f52f63ebc1bcbbb8b4e5e41863b778774b2bcd17",
         "sourceUpgradeDiscoveryCommit": "ddacf2c56ed403aebeb62ef07d09004432072b1e",
         "sourceUpgradeState": "live-externally-verified",
-        "productionDeploymentId": "6157277241",
+        "productionDeploymentId": "6213389867",
         "financialAuthority": "none"
       }
     },
