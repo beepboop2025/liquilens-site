@@ -167,7 +167,7 @@ ROUTES = (
         "One exact order, one short-lived pre-trade check.",
         "REQUIRED CONTEXT", "SEICHE / UNDERTOW",
         "LIQUILENS CONDITIONAL / OPERATOR POLICY", "PROTOCOL CUT", "2026-09-02",
-        "NO EXECUTION AUTHORITY", "SIGNED V0.17.1 CONTRACT", "RECEIPT",
+        "NO EXECUTION AUTHORITY", "SIGNED V0.18.0 CONTRACT", "RECEIPT",
         signature_file="protocol/liquilens-trade-safety-receipt-v1.schema.json",
     ),
     RouteDefinition(

@@ -96,13 +96,13 @@ def test_scamshield_remains_local_even_with_a_modern_mcp_contract():
 def test_carrier_and_palimpsest_versions_match_verified_release_receipts():
     carrier = ENTRIES["urn:air:liquilens.in:protocol:evidence-carrier"]
     palimpsest = ENTRIES["urn:air:liquilens.in:catalog:palimpsest-china"]
-    assert carrier["version"] == "0.17.1"
+    assert carrier["version"] == "0.18.0"
     assert carrier["metadata"]["mcpBundleSha256"] == (
-        "4d6c409f2c69588fad6fe13bf2f78ed1b72d3555d81082d5da638d037b0307a1"
+        "f57ce3fb488b693e633d8bc66f980b616af09a8080722a11c50507496f39a2bb"
     )
-    assert carrier["metadata"]["consumerChannelSnapshotVersion"] == "0.17.1"
+    assert carrier["metadata"]["consumerChannelSnapshotVersion"] == "0.18.0"
     assert carrier["metadata"]["releaseCommit"] == (
-        "a74274236e177404c2d254541e6a4110a4ce8a0d"
+        "906ca033a96ea862ab813c64db2a6b01c5ce8c4f"
     )
     assert carrier["metadata"]["registryStatus"] == "active-latest"
     assert palimpsest["version"] == "1.9.3"

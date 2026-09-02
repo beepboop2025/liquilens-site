@@ -110,10 +110,23 @@ def test_agent_catalog_has_a_dedicated_non_executing_trade_safety_entry():
 
     assert entry["url"] == "https://liquilens.in/protocol/trade-safety/"
     assert entry["version"] == "1.0.0"
+    assert entry["metadata"]["implementationRelease"] == "0.18.0"
+    assert entry["metadata"]["sourceTag"] == "v0.18.0"
+    assert entry["metadata"]["releaseCommit"] == (
+        "906ca033a96ea862ab813c64db2a6b01c5ce8c4f"
+    )
+    assert entry["metadata"]["releaseTagObject"] == (
+        "42dd412ef27b470841b71b8bc73c0ed63a5e4a6b"
+    )
+    assert entry["metadata"]["offlineVerifierRegistry"].endswith(
+        "/versions/0.18.0"
+    )
     assert entry["metadata"]["requiredProducts"] == "Seiche, Undertow"
     assert entry["metadata"]["conditionalProduct"] == "LiquiLens"
     assert entry["metadata"]["hostedApi"] == "none"
     assert "no public hosted gateway" in entry["metadata"]["gatewayStatus"]
+    assert "paper-only" in entry["metadata"]["orderGuardStatus"]
+    assert "live mode fails closed" in entry["metadata"]["orderGuardStatus"]
     authority = entry["metadata"]["financialAuthority"]
     for forbidden_authority in ("cannot execute", "recommend", "allocate capital"):
         assert forbidden_authority in authority
@@ -174,14 +187,14 @@ def test_rfc9727_catalog_does_not_claim_the_unhosted_gateway():
     assert "trade_safety" not in api_catalog
 
 
-def test_protocol_catalog_binds_v0171_release_and_trade_safety_hashes():
+def test_protocol_catalog_binds_v0180_release_and_stable_trade_safety_hashes():
     catalog = json.loads(_read("protocol/catalog.json"))
-    assert catalog["version"] == "0.17.1"
+    assert catalog["version"] == "0.18.0"
     assert catalog["releaseCommit"] == (
-        "a74274236e177404c2d254541e6a4110a4ce8a0d"
+        "906ca033a96ea862ab813c64db2a6b01c5ce8c4f"
     )
     assert catalog["releaseTagObject"] == (
-        "8844ee4556d59472a587cb9ceb412112c23543db"
+        "42dd412ef27b470841b71b8bc73c0ed63a5e4a6b"
     )
     artifacts = {row["url"]: row["sha256"] for row in catalog["artifacts"]}
     for relative, expected_sha256 in TAGGED_BYTES.items():

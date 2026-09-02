@@ -33,8 +33,8 @@
 <meta property="og:url" content="https://liquilens.in/protocol/trade-safety/">
 <meta property="og:title" content="One exact order. One short-lived safety receipt.">
 <meta property="og:description" content="Trade Safety Receipt v1 is an open, deterministic pre-trade control for AI trading agents and copilots, built on Seiche, Undertow and conditional LiquiLens evidence.">
-<meta property="og:image" content="https://liquilens.in/protocol/trade-safety/share.png?v=7b983a39cf4901c8">
-<meta property="og:image:secure_url" content="https://liquilens.in/protocol/trade-safety/share.png?v=7b983a39cf4901c8">
+<meta property="og:image" content="https://liquilens.in/protocol/trade-safety/share.png?v=850a9ed79eaec238">
+<meta property="og:image:secure_url" content="https://liquilens.in/protocol/trade-safety/share.png?v=850a9ed79eaec238">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -42,15 +42,15 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="One exact order. One short-lived safety receipt.">
 <meta name="twitter:description" content="Trade Safety Receipt v1 is an open, deterministic pre-trade control for AI trading agents and copilots, built on Seiche, Undertow and conditional LiquiLens evidence.">
-<meta name="twitter:image" content="https://liquilens.in/protocol/trade-safety/share.png?v=7b983a39cf4901c8">
+<meta name="twitter:image" content="https://liquilens.in/protocol/trade-safety/share.png?v=850a9ed79eaec238">
 <meta name="twitter:image:alt" content="LiquiLens route card for ORDER-BOUND RECEIPT: One exact order, one short-lived pre-trade check. REQUIRED CONTEXT: SEICHE / UNDERTOW. LIQUILENS CONDITIONAL / OPERATOR POLICY. PROTOCOL CUT 2026-09-02; status NO EXECUTION AUTHORITY.">
-<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/protocol/trade-safety/#social-card","url":"https://liquilens.in/protocol/trade-safety/","image":"https://liquilens.in/protocol/trade-safety/share.png?v=7b983a39cf4901c8","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/protocol/trade-safety/share.png?v=7b983a39cf4901c8","width":1200,"height":630,"caption":"LiquiLens route card for ORDER-BOUND RECEIPT: One exact order, one short-lived pre-trade check. REQUIRED CONTEXT: SEICHE / UNDERTOW. LIQUILENS CONDITIONAL / OPERATOR POLICY. PROTOCOL CUT 2026-09-02; status NO EXECUTION AUTHORITY."}}</script>
+<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/protocol/trade-safety/#social-card","url":"https://liquilens.in/protocol/trade-safety/","image":"https://liquilens.in/protocol/trade-safety/share.png?v=850a9ed79eaec238","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/protocol/trade-safety/share.png?v=850a9ed79eaec238","width":1200,"height":630,"caption":"LiquiLens route card for ORDER-BOUND RECEIPT: One exact order, one short-lived pre-trade check. REQUIRED CONTEXT: SEICHE / UNDERTOW. LIQUILENS CONDITIONAL / OPERATOR POLICY. PROTOCOL CUT 2026-09-02; status NO EXECUTION AUTHORITY."}}</script>
 <!-- SOCIAL-CARD:END -->
 </head>
 <body>
   <header>
     <a href="/">LIQUILENS</a>
-    <nav aria-label="Trade Safety navigation"><a href="/protocol/">Evidence Carrier</a><a href="/developers/">Developers</a><a href="https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.17.1">v0.17.1 release</a></nav>
+    <nav aria-label="Trade Safety navigation"><a href="/protocol/">Evidence Carrier</a><a href="/developers/">Developers</a><a href="https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.18.0">v0.18.0 release</a></nav>
   </header>
   <main>
     <section class="hero">
@@ -127,10 +127,10 @@
       <div class="eyebrow">Start with observation and paper</div>
       <h2>Install the released verifier, then put it in the order path.</h2>
       <pre class="code"><code>uvx --no-cache \
-  --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.17.1/liquilens_evidence-0.17.1-py3-none-any.whl#sha256=dec2751fa2f20d09a1a77b5f25ae99f28fa49484ea1bf5ede7ca2bcdd86610ea' \
+  --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.18.0/liquilens_evidence-0.18.0-py3-none-any.whl#sha256=9fbc7ee50f658e2a8d1d880f8f76d73dca8b07ef6f0747df33a7b9fc346495ef' \
   liquilens-evidence verify-trade-safety receipt.json --as-of 2026-09-02T06:01:00Z</code></pre>
-      <p class="lede">The official MCP Registry also publishes the checksum-pinned offline verifier bundle for Evidence Carrier 0.17.1. It verifies local hash-only Trade Safety receipts without network access. Live receipts require a tenant-local authenticated verifier, eligible real-money evidence, an executable Undertow quote and an exact-account broker preview; the public sandbox deliberately fails those gates closed.</p>
-      <div class="actions"><a class="btn primary" href="https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.17.1">Official MCP Registry</a><a class="btn" href="https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.17.1">Signed release</a></div>
+      <p class="lede">The official MCP Registry publishes the checksum-pinned offline verifier bundle for Evidence Carrier 0.18.0. The Python package also ships an operator-side paper-order guard: only a fresh, exact, HMAC-authenticated <code>pass</code> receipt can reach its protected callback. Live receipts still require a tenant-local verifier, eligible real-money evidence, an executable Undertow quote and an exact-account broker preview; the reference gateway deliberately rejects live routing until durable broker idempotency and reconciliation are implemented.</p>
+      <div class="actions"><a class="btn primary" href="https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.18.0">Official MCP Registry</a><a class="btn" href="https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.18.0">Signed release</a></div>
     </section>
   </main>
   <footer>Trade Safety Receipt v1 is Apache-2.0 open infrastructure. Adoption is opt-in; participating operators can make it mandatory within systems they control. It is not investment advice, a credit rating, an execution service, or a guarantee of universal adoption. <a href="/terms/">Terms</a> · <a href="/security/">Security</a></footer>
