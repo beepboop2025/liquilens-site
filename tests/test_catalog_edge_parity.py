@@ -986,6 +986,18 @@ def test_network_boundary_rejects_private_resolution_and_oversized_bodies(monkey
         _read_bounded(Response(), 4, "receipt")
 
 
+def test_reviewed_canonical_hosts_are_resolved_without_redirects():
+    assert verifier._canonical_verification_url(
+        "https://narcoscope.com/.well-known/api-catalog?proof=1"
+    ) == "https://www.narcoscope.com/.well-known/api-catalog?proof=1"
+    assert verifier._canonical_verification_url(
+        "https://palimpsest.info/.well-known/api-catalog"
+    ) == "https://www.palimpsest.info/.well-known/api-catalog"
+    assert verifier._canonical_verification_url(
+        "https://api.seiche.info/.well-known/api-catalog"
+    ) == "https://api.seiche.info/.well-known/api-catalog"
+
+
 def test_github_deployment_proof_requires_exact_sha_and_success(monkeypatch):
     monkeypatch.setattr(
         socket,

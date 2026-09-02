@@ -60,6 +60,7 @@ ALLOWED_FETCH_HOSTS = frozenset(
         "liquilens.in",
         "liquilens-undertow.com",
         "narcoscope.com",
+        "www.narcoscope.com",
         "palimpsest.info",
         "www.palimpsest.info",
         "registry.modelcontextprotocol.io",
@@ -81,7 +82,7 @@ SIBLING_ACTION_PROOFS: dict[str, tuple[dict[str, str], ...]] = {
     "NarcoScope": (
         {
             "kind": "source CI",
-            "url": "https://github.com/beepboop2025/narcoscope/actions/runs/33260623945",
+            "url": "https://github.com/beepboop2025/narcoscope/actions/runs/33578150155",
             "sha_field": "sourceUpgradeCommit",
             "workflow": ".github/workflows/tests.yml",
             "event": "push",
@@ -213,12 +214,18 @@ def _validate_public_https_url(url: str) -> str:
 
 
 def _canonical_verification_url(url: str) -> str:
-    """Resolve the one declared legacy hostname without accepting redirects."""
+    """Resolve reviewed canonical hosts without accepting arbitrary redirects."""
     parsed = urllib.parse.urlsplit(url)
-    if (parsed.hostname or "").rstrip(".").lower() != "palimpsest.info":
+    canonical_hosts = {
+        "narcoscope.com": "www.narcoscope.com",
+        "palimpsest.info": "www.palimpsest.info",
+    }
+    hostname = (parsed.hostname or "").rstrip(".").lower()
+    canonical_host = canonical_hosts.get(hostname)
+    if canonical_host is None:
         return url
     return urllib.parse.urlunsplit(
-        (parsed.scheme, "www.palimpsest.info", parsed.path, parsed.query, parsed.fragment)
+        (parsed.scheme, canonical_host, parsed.path, parsed.query, parsed.fragment)
     )
 
 
@@ -417,6 +424,7 @@ def _mcp_request(
     timeout: float = 20,
     extra_headers: dict[str, str] | None = None,
 ) -> tuple[dict[str, Any], dict[str, str]]:
+    url = _canonical_verification_url(url)
     _validate_public_https_url(url)
     headers = {
         "Accept": "application/json, text/event-stream",
