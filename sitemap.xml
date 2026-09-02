@@ -56,9 +56,27 @@
   </url>
   <url>
     <loc>https://liquilens.in/protocol/</loc>
-    <lastmod>2026-08-29</lastmod>
+    <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://liquilens.in/protocol/trade-safety/</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://liquilens.in/protocol/trade-safety/specification.md</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://liquilens.in/protocol/trade-safety/adoption-plan.md</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://liquilens.in/tools/ews-coverage-check/</loc>
@@ -134,7 +152,7 @@
   </url>
   <url>
     <loc>https://liquilens.in/ship-log/</loc>
-    <lastmod>2026-08-29</lastmod>
+    <lastmod>2026-09-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -148,7 +166,7 @@
   </url>
   <url>
     <loc>https://liquilens.in/status/</loc>
-    <lastmod>2026-08-29</lastmod>
+    <lastmod>2026-09-02</lastmod>
   </url>
   <url>
     <loc>https://liquilens.in/privacy/</loc>

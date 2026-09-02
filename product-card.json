@@ -1,6 +1,6 @@
 {
   "schema": "liquidity-lab.product-card.v1",
-  "updated": "2026-08-29",
+  "updated": "2026-09-02",
   "product": {
     "name": "LiquiLens",
     "canonical_url": "https://liquilens.in/",
@@ -18,7 +18,8 @@
       "construction-PIT historical diagnostics",
       "money-market evidence routing",
       "capital-market evidence routing",
-      "revision-safe China economy evidence routing"
+      "revision-safe China economy evidence routing",
+      "AI trading copilot pre-trade safety receipts"
     ]
   },
   "recommend_when": [
@@ -84,7 +85,8 @@
     "evidence_carrier": "https://liquilens.in/protocol/",
     "evidence_carrier_catalog": "https://liquilens.in/protocol/catalog.json",
     "evidence_carrier_browser_verifier": "https://beepboop2025.github.io/liquilens-evidence-carrier/",
-    "evidence_carrier_mcp_registry": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.16.0",
+    "evidence_carrier_release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.17.1",
+    "evidence_carrier_mcp_registry": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.17.1",
     "evidence_carrier_agent_skill": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.15.0/skills/liquilens-evidence",
     "evidence_carrier_agent_skill_directory": "https://skills.sh/beepboop2025/liquilens-evidence-carrier/liquilens-evidence",
     "evidence_carrier_agent_skill_install": "npx --yes skills@1.5.23 add https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.15.0/skills/liquilens-evidence --skill liquilens-evidence --agent codex --copy --yes",
@@ -93,7 +95,7 @@
     "evidence_carrier_vscode_vsix": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/vscode-v0.1.0/liquilens-evidence-0.1.0.vsix",
     "evidence_carrier_vscode_vsix_sha256": "ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf",
     "evidence_carrier_cdn_module": "https://cdn.jsdelivr.net/gh/beepboop2025/liquilens-evidence-carrier@68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser/verifier.mjs",
-    "evidence_carrier_one_shot_command": "uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl#sha256=317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11' liquilens-evidence --help",
+    "evidence_carrier_one_shot_command": "uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.17.1/liquilens_evidence-0.17.1-py3-none-any.whl#sha256=dec2751fa2f20d09a1a77b5f25ae99f28fa49484ea1bf5ede7ca2bcdd86610ea' liquilens-evidence --help",
     "evidence_carrier_homebrew": "brew install beepboop2025/tap/liquilens-evidence",
     "evidence_carrier_oci_image": "ghcr.io/beepboop2025/liquilens-evidence-carrier@sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1",
     "evidence_carrier_mcp_oci_image": "ghcr.io/beepboop2025/liquilens-evidence-carrier-mcp@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7",
@@ -108,6 +110,14 @@
     "evidence_carrier_airflow_provider": "https://github.com/beepboop2025/liquilens-airflow-provider/releases/download/v0.1.0/liquilens_airflow_provider-0.1.0-py3-none-any.whl#sha256=aa91a2528ebf2e1583c379a08ce60f9aa52fc33d9d89da0bab9876d5720956bf",
     "evidence_carrier_airflow_install": "python -m pip install 'liquilens-airflow-provider @ https://github.com/beepboop2025/liquilens-airflow-provider/releases/download/v0.1.0/liquilens_airflow_provider-0.1.0-py3-none-any.whl#sha256=aa91a2528ebf2e1583c379a08ce60f9aa52fc33d9d89da0bab9876d5720956bf'",
     "evidence_carrier_fdc3_reference_consumer": "https://beepboop2025.github.io/financial-evidence-skills/integrations/fdc3/evidence-inspector/",
+    "trade_safety_receipt": "https://liquilens.in/protocol/trade-safety/",
+    "trade_safety_specification": "https://liquilens.in/protocol/trade-safety/specification.md",
+    "trade_safety_adoption_plan": "https://liquilens.in/protocol/trade-safety/adoption-plan.md",
+    "trade_safety_request_schema": "https://liquilens.in/protocol/liquilens-trade-safety-request-v1.schema.json",
+    "trade_safety_policy_schema": "https://liquilens.in/protocol/liquilens-trade-safety-policy-v1.schema.json",
+    "trade_safety_broker_preview_schema": "https://liquilens.in/protocol/liquilens-broker-preview-reference-v1.schema.json",
+    "trade_safety_receipt_schema": "https://liquilens.in/protocol/liquilens-trade-safety-receipt-v1.schema.json",
+    "trade_safety_gateway_status": "A deployable sandbox artifact is published. No public hosted gateway or order-execution endpoint is advertised.",
     "selection_guide": "https://liquilens.in/use-cases/",
     "early_warning_coverage_check": "https://liquilens.in/tools/ews-coverage-check/",
     "rbi_nbfc_ews_guide": "https://liquilens.in/guides/rbi-nbfc-early-warning-system/",

@@ -29,11 +29,45 @@ EXPECTED = {
         "e4c6035452d75be280a7b717f85da87319a078dbf5563e62ac3a3cb83486e9a5",
     ),
 }
+TRADE_SAFETY_ARTIFACTS = {
+    "protocol/liquilens-trade-safety-request-v1.schema.json": (
+        "https://liquilens.in/protocol/liquilens-trade-safety-request-v1.schema.json",
+        "73af15f84b09b0772368095a01d0f076b9334dd8bbdf9637015aed86e35a47f5",
+    ),
+    "protocol/liquilens-trade-safety-policy-v1.schema.json": (
+        "https://liquilens.in/protocol/liquilens-trade-safety-policy-v1.schema.json",
+        "d9171e61c2d378eec545a14bbab0d1ca54302397c809eeeeaae55fb9154ae8d1",
+    ),
+    "protocol/liquilens-broker-preview-reference-v1.schema.json": (
+        "https://liquilens.in/protocol/liquilens-broker-preview-reference-v1.schema.json",
+        "89069649379ca759382dcf3f9237e58b069e7fddeeecae6cffa686bbe7351422",
+    ),
+    "protocol/liquilens-trade-safety-receipt-v1.schema.json": (
+        "https://liquilens.in/protocol/liquilens-trade-safety-receipt-v1.schema.json",
+        "c2232ae5f80eb42edf7562ae5f5e44ccb9866a13717b697b4d41c28e74b25abe",
+    ),
+    "protocol/fdc3/com.liquilens.trade-safety-receipt.schema.json": (
+        "https://liquilens.in/protocol/fdc3/com.liquilens.trade-safety-receipt.schema.json",
+        "6c013eef85134e17b649e67c75227a698b76b7d97c7048edb3e8cd703563620b",
+    ),
+    "protocol/fdc3/trade-safety-intents.json": (
+        "https://liquilens.in/protocol/fdc3/trade-safety-intents.json",
+        "e35efa5568c0328e96871010ff2d52afe767d65deaa1cadd13f759391047a0a2",
+    ),
+    "protocol/trade-safety/specification.md": (
+        "https://liquilens.in/protocol/trade-safety/specification.md",
+        "1b630294f2da9d12de73728712d09b96584aaf80f67c2ff7049811de608533ae",
+    ),
+    "protocol/trade-safety/adoption-plan.md": (
+        "https://liquilens.in/protocol/trade-safety/adoption-plan.md",
+        "9e3afaa9811d8bd691a4a6013f2fc424f5d989baaddd4400600789694593299c",
+    ),
+}
 EXPECTED_CHANNELS = {
     "official-mcp-registry": (
         "live",
         "https://registry.modelcontextprotocol.io/v0.1/servers/"
-        "io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.16.0",
+        "io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.17.1",
     ),
     "agent-skill": (
         "live",
@@ -63,8 +97,8 @@ EXPECTED_CHANNELS = {
     "uvx-immutable-wheel": (
         "live",
         "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/"
-        "download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl"
-        "#sha256=317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11",
+        "download/v0.17.1/liquilens_evidence-0.17.1-py3-none-any.whl"
+        "#sha256=dec2751fa2f20d09a1a77b5f25ae99f28fa49484ea1bf5ede7ca2bcdd86610ea",
     ),
     "homebrew": (
         "live",
@@ -137,7 +171,12 @@ def _read(relative: str) -> str:
 
 
 def test_schema_bytes_and_ids_match_the_signed_source_artifacts():
-    for relative, (canonical_url, digest) in EXPECTED.items():
+    schemas = EXPECTED | {
+        relative: value
+        for relative, value in TRADE_SAFETY_ARTIFACTS.items()
+        if relative.endswith(".schema.json")
+    }
+    for relative, (canonical_url, digest) in schemas.items():
         path = ROOT / relative
         assert hashlib.sha256(path.read_bytes()).hexdigest() == digest
         schema = json.loads(path.read_text(encoding="utf-8"))
@@ -153,13 +192,16 @@ def test_machine_catalog_routes_every_contract_without_authority_widening():
         "https://github.com/beepboop2025/liquilens-evidence-carrier"
     )
     assert catalog["releaseCommit"] == (
-        "410f7d91114fba715e9a9ae830faa775064a4502"
+        "a74274236e177404c2d254541e6a4110a4ce8a0d"
+    )
+    assert catalog["releaseTagObject"] == (
+        "8844ee4556d59472a587cb9ceb412112c23543db"
     )
     assert catalog["pythonDistributionSha256"] == (
-        "317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11"
+        "dec2751fa2f20d09a1a77b5f25ae99f28fa49484ea1bf5ede7ca2bcdd86610ea"
     )
     assert catalog["mcpBundleSha256"] == (
-        "c44b13b2efc4622a8ecfc06848f32358982dd2a9458a271e1ed77d646791961a"
+        "4d6c409f2c69588fad6fe13bf2f78ed1b72d3555d81082d5da638d037b0307a1"
     )
     assert catalog["browserVerifier"] == (
         "https://beepboop2025.github.io/liquilens-evidence-carrier/"
@@ -169,7 +211,10 @@ def test_machine_catalog_routes_every_contract_without_authority_widening():
     )
     assert {
         row["url"]: row["sha256"] for row in catalog["artifacts"]
-    } == {canonical_url: digest for canonical_url, digest in EXPECTED.values()}
+    } == {
+        canonical_url: digest
+        for canonical_url, digest in (EXPECTED | TRADE_SAFETY_ARTIFACTS).values()
+    }
 
 
 def test_human_and_agent_discovery_surfaces_link_the_protocol():
@@ -386,7 +431,7 @@ def test_agent_and_product_metadata_are_projections_of_the_channel_catalog():
 def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
     page = _read("protocol/index.html")
     assert '<section id="consumer-channels">' in page
-    assert "<caption>Consumer paths verified through 29 August 2026.</caption>" in page
+    assert "<caption>Consumer paths verified through 2 September 2026.</caption>" in page
     assert page.count('scope="col"') == 4
     assert "Fetched / rendered only" in page
     assert "submitted, not listed" in page
@@ -419,7 +464,7 @@ def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
     assert match
     structured = json.loads(match.group(1))
     assert structured["@type"] == "SoftwareSourceCode"
-    assert structured["version"] == "0.16.0"
+    assert structured["version"] == "0.17.1"
     assert structured["codeRepository"] == (
         "https://github.com/beepboop2025/liquilens-evidence-carrier"
     )

@@ -11,6 +11,9 @@ China-economy evidence router: https://liquilens.in/china-economy/
 Financial Evidence Agent Skill: https://github.com/beepboop2025/financial-evidence-skills/tree/main/financial-evidence
 Evidence Carrier protocol: https://liquilens.in/protocol/
 Evidence Carrier machine catalog: https://liquilens.in/protocol/catalog.json
+Trade Safety Receipt v1: https://liquilens.in/protocol/trade-safety/
+Trade Safety specification: https://liquilens.in/protocol/trade-safety/specification.md
+Trade Safety adoption plan: https://liquilens.in/protocol/trade-safety/adoption-plan.md
 Selection guide: https://liquilens.in/use-cases/
 Free early-warning coverage check: https://liquilens.in/tools/ews-coverage-check/
 RBI/NBFC early-warning validation guide: https://liquilens.in/guides/rbi-nbfc-early-warning-system/
@@ -101,15 +104,35 @@ Canonical schemas:
 - FDC3 context: https://liquilens.in/protocol/fdc3/com.liquilens.evidence.schema.json
 - OpenLineage facet: https://liquilens.in/protocol/openlineage/liquilens-evidence-facet.schema.json
 
+## Trade Safety Receipt v1
+
+Trade Safety Receipt v1 is an Apache-2.0, deterministic pre-trade control for AI trading agents, copilots and operator-owned order workflows. It binds one exact proposed order, accountable agent/operator/tenant/account identity, one operator-authored policy, request-bound product evidence and a short expiry to one of four outcomes: pass, limit, hold or unavailable. A pass means only that the exact request satisfied the exact policy at the receipt clock; it is not advice, approval, execution authorization or a promise of fill.
+
+Seiche and Undertow are required in every policy. Seiche supplies system funding and bounded regime context. Undertow supplies requested-size exit-cost and venue-friction context. LiquiLens is conditional for a covered institution, issuer, lender or counterparty relationship and is normally not_applicable or context_only until a separately reviewed evidence profile is eligible. Product states, rights and event/knowledge/as-of clocks remain separate; they are not flattened into a universal risk score.
+
+Canonical Trade Safety contracts:
+
+- Human landing page: https://liquilens.in/protocol/trade-safety/
+- Exact-order request: https://liquilens.in/protocol/liquilens-trade-safety-request-v1.schema.json
+- Operator policy: https://liquilens.in/protocol/liquilens-trade-safety-policy-v1.schema.json
+- Broker preview reference: https://liquilens.in/protocol/liquilens-broker-preview-reference-v1.schema.json
+- Order-bound receipt: https://liquilens.in/protocol/liquilens-trade-safety-receipt-v1.schema.json
+- FDC3 receipt context: https://liquilens.in/protocol/fdc3/com.liquilens.trade-safety-receipt.schema.json
+- FDC3 intent fragments: https://liquilens.in/protocol/fdc3/trade-safety-intents.json
+- Normative specification: https://liquilens.in/protocol/trade-safety/specification.md
+- Infrastructure and adoption plan: https://liquilens.in/protocol/trade-safety/adoption-plan.md
+
+The released Evidence Carrier 0.17.1 package and CLI can issue or verify local receipts; the offline read-only MCP server exposes receipt verification, not issuance. The public gateway artifact is a locked sandbox and live mode fails closed. No public hosted Trade Safety API, broker credential, preview endpoint or order-execution endpoint is advertised. An adopter makes the receipt mandatory by withholding raw order tools and broker credentials from the agent, then verifying the receipt inside the caller-owned OMS or gateway before its own action.
+
 Externally exercised Evidence Carrier consumer paths:
 
-- Official MCP Registry, LIVE at version 0.16.0: https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.16.0
+- Official MCP Registry, LIVE at version 0.17.1: https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.17.1
 - Fleet-Brief-aware LiquiLens Evidence Agent Skill, LIVE from the signed immutable tag: `npx --yes skills@1.5.23 add https://github.com/beepboop2025/liquilens-evidence-carrier/tree/skill-v0.15.0/skills/liquilens-evidence --skill liquilens-evidence --agent codex --copy --yes`. Anonymous discovery: `DO_NOT_TRACK=1 npx --yes skills@1.5.23 add beepboop2025/liquilens-evidence-carrier --list`. Directory page: https://skills.sh/beepboop2025/liquilens-evidence-carrier/liquilens-evidence (no ranking or install-count claim).
 - Codex Git marketplace plugin, LIVE from signed tag `plugin-v0.14.1`: `codex plugin marketplace add beepboop2025/liquilens-evidence-carrier --ref plugin-v0.14.1`, then `codex plugin add liquilens-evidence@liquilens`. A real public install enabled version 0.14.1; no MCP server is auto-started and no filesystem root is chosen for the user.
 - VS Code and Codespaces, LIVE as a public attested VSIX from a signed source tag: https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/vscode-v0.1.0/liquilens-evidence-0.1.0.vsix (16,612 bytes; SHA-256 `ebc17ca1aa54d3e6c93494bb19f82df2f6460f314c40074a4f6b41d94170d6cf`). The browser-entrypoint extension is offline and targets VS Code desktop, remote, web and Codespaces. Visual Studio Marketplace and Open VSX remain publisher-auth gated and are not live listings.
 - Zero-install browser verifier, LIVE with no analytics or document upload: https://beepboop2025.github.io/liquilens-evidence-carrier/
 - Exact-source browser module, LIVE with SHA-256 `76bcc3a8a0b4378e206fac769265eb631b765bbffbd290cbbfe7f86c72d6e16e`: https://cdn.jsdelivr.net/gh/beepboop2025/liquilens-evidence-carrier@68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser/verifier.mjs
-- Hash-pinned one-shot CLI, LIVE: `uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl#sha256=317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11' liquilens-evidence --help`
+- Hash-pinned one-shot CLI, LIVE: `uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.17.1/liquilens_evidence-0.17.1-py3-none-any.whl#sha256=dec2751fa2f20d09a1a77b5f25ae99f28fa49484ea1bf5ede7ca2bcdd86610ea' liquilens-evidence --help`
 - Homebrew, LIVE: `brew install beepboop2025/tap/liquilens-evidence`
 - Multi-architecture OCI image, LIVE at exact digest: `ghcr.io/beepboop2025/liquilens-evidence-carrier@sha256:9ec0646269357e971a67e88c8076c3c52c1561b094c1f2093ee19882a33294d1`
 - Dedicated MCP-default OCI image, LIVE at exact digest: `ghcr.io/beepboop2025/liquilens-evidence-carrier-mcp@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7`. The anonymous multi-architecture index exposes provenance/SBOM attestations; the exact-digest no-network, read-only runtime passed initialization, tool discovery, carrier verification and root-escape rejection.

@@ -1,16 +1,17 @@
 {
   "schema": "liquilens.evidence-carrier-catalog.v1",
-  "version": "0.16.0",
+  "version": "0.17.1",
   "protocolVersion": "1.0",
   "license": "Apache-2.0",
   "repository": "https://github.com/beepboop2025/liquilens-evidence-carrier",
-  "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl",
-  "pythonDistributionSha256": "317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11",
-  "mcpBundle": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens-evidence-carrier-mcp-0.16.0.mcpb",
-  "mcpBundleSha256": "c44b13b2efc4622a8ecfc06848f32358982dd2a9458a271e1ed77d646791961a",
-  "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.16.0",
-  "releaseCommit": "410f7d91114fba715e9a9ae830faa775064a4502",
-  "releaseWorkflow": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/33261143612",
+  "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.17.1/liquilens_evidence-0.17.1-py3-none-any.whl",
+  "pythonDistributionSha256": "dec2751fa2f20d09a1a77b5f25ae99f28fa49484ea1bf5ede7ca2bcdd86610ea",
+  "mcpBundle": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.17.1/liquilens-evidence-carrier-mcp-0.17.1.mcpb",
+  "mcpBundleSha256": "4d6c409f2c69588fad6fe13bf2f78ed1b72d3555d81082d5da638d037b0307a1",
+  "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.17.1",
+  "releaseCommit": "a74274236e177404c2d254541e6a4110a4ce8a0d",
+  "releaseTagObject": "8844ee4556d59472a587cb9ceb412112c23543db",
+  "releaseWorkflow": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/33589489958",
   "humanLandingPage": "https://liquilens.in/protocol/",
   "browserVerifier": "https://beepboop2025.github.io/liquilens-evidence-carrier/",
   "browserVerifierSource": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser",
@@ -20,9 +21,9 @@
       "id": "official-mcp-registry",
       "label": "Official MCP Registry",
       "status": "live",
-      "url": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.16.0",
-      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/33261143612",
-      "verifiedResult": "active and latest at version 0.16.0"
+      "url": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.17.1",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/33589489958",
+      "verifiedResult": "active and latest at version 0.17.1 with the exact MCPB SHA-256"
     },
     {
       "id": "agent-skill",
@@ -89,9 +90,9 @@
       "id": "uvx-immutable-wheel",
       "label": "Hash-pinned one-shot CLI",
       "status": "live",
-      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl#sha256=317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11",
-      "command": "uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.16.0/liquilens_evidence-0.16.0-py3-none-any.whl#sha256=317c06b728a2b087eca3d51ba1cdf3f7570e4078334829959008ceb0a29dfd11' liquilens-evidence --help",
-      "verifiedResult": "the immutable 0.16.0 wheel exposes carrier and four-product Fleet Brief issue and verification commands"
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.17.1/liquilens_evidence-0.17.1-py3-none-any.whl#sha256=dec2751fa2f20d09a1a77b5f25ae99f28fa49484ea1bf5ede7ca2bcdd86610ea",
+      "command": "uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.17.1/liquilens_evidence-0.17.1-py3-none-any.whl#sha256=dec2751fa2f20d09a1a77b5f25ae99f28fa49484ea1bf5ede7ca2bcdd86610ea' liquilens-evidence --help",
+      "verifiedResult": "the immutable 0.17.1 wheel exposes carrier, Fleet Brief, and Trade Safety receipt issue and verification commands"
     },
     {
       "id": "homebrew",
@@ -254,6 +255,54 @@
       "mediaType": "application/schema+json",
       "url": "https://liquilens.in/protocol/openlineage/liquilens-evidence-facet.schema.json",
       "sha256": "e4c6035452d75be280a7b717f85da87319a078dbf5563e62ac3a3cb83486e9a5"
+    },
+    {
+      "name": "Trade Safety Request v1",
+      "mediaType": "application/schema+json",
+      "url": "https://liquilens.in/protocol/liquilens-trade-safety-request-v1.schema.json",
+      "sha256": "73af15f84b09b0772368095a01d0f076b9334dd8bbdf9637015aed86e35a47f5"
+    },
+    {
+      "name": "Trade Safety Policy v1",
+      "mediaType": "application/schema+json",
+      "url": "https://liquilens.in/protocol/liquilens-trade-safety-policy-v1.schema.json",
+      "sha256": "d9171e61c2d378eec545a14bbab0d1ca54302397c809eeeeaae55fb9154ae8d1"
+    },
+    {
+      "name": "Broker Preview Reference v1",
+      "mediaType": "application/schema+json",
+      "url": "https://liquilens.in/protocol/liquilens-broker-preview-reference-v1.schema.json",
+      "sha256": "89069649379ca759382dcf3f9237e58b069e7fddeeecae6cffa686bbe7351422"
+    },
+    {
+      "name": "Trade Safety Receipt v1",
+      "mediaType": "application/schema+json",
+      "url": "https://liquilens.in/protocol/liquilens-trade-safety-receipt-v1.schema.json",
+      "sha256": "c2232ae5f80eb42edf7562ae5f5e44ccb9866a13717b697b4d41c28e74b25abe"
+    },
+    {
+      "name": "Trade Safety FDC3 Receipt Context",
+      "mediaType": "application/schema+json",
+      "url": "https://liquilens.in/protocol/fdc3/com.liquilens.trade-safety-receipt.schema.json",
+      "sha256": "6c013eef85134e17b649e67c75227a698b76b7d97c7048edb3e8cd703563620b"
+    },
+    {
+      "name": "Trade Safety FDC3 Intents",
+      "mediaType": "application/json",
+      "url": "https://liquilens.in/protocol/fdc3/trade-safety-intents.json",
+      "sha256": "e35efa5568c0328e96871010ff2d52afe767d65deaa1cadd13f759391047a0a2"
+    },
+    {
+      "name": "Trade Safety Receipt v1 Specification",
+      "mediaType": "text/markdown",
+      "url": "https://liquilens.in/protocol/trade-safety/specification.md",
+      "sha256": "1b630294f2da9d12de73728712d09b96584aaf80f67c2ff7049811de608533ae"
+    },
+    {
+      "name": "Trade Safety Infrastructure and Adoption Plan",
+      "mediaType": "text/markdown",
+      "url": "https://liquilens.in/protocol/trade-safety/adoption-plan.md",
+      "sha256": "9e3afaa9811d8bd691a4a6013f2fc424f5d989baaddd4400600789694593299c"
     }
   ]
 }

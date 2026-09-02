@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Trade Safety Receipt v1 is an open, deterministic pre-trade control for AI trading agents and copilots, built on Seiche, Undertow and conditional LiquiLens evidence.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <link rel="canonical" href="https://liquilens.in/protocol/trade-safety/">
+  <link rel="alternate" type="application/schema+json" href="/protocol/liquilens-trade-safety-request-v1.schema.json" title="Trade Safety Request v1">
+  <link rel="alternate" type="application/schema+json" href="/protocol/liquilens-trade-safety-receipt-v1.schema.json" title="Trade Safety Receipt v1">
+  <link rel="alternate" type="text/markdown" href="/protocol/trade-safety/specification.md" title="Trade Safety Receipt v1 specification">
+  <title>Trade Safety Receipt v1 — an order-bound control for trading agents</title>
+  <style>
+    :root{--ink:#101828;--muted:#475467;--line:#d0d5dd;--paper:#fff;--soft:#f8fafc;--deep:#0b1220;--blue:#075985;--green:#067647;--amber:#a15c00;--red:#b42318}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--blue)}header,main,footer{width:min(1120px,calc(100% - 32px));margin:auto}header{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}header a{text-decoration:none;font-weight:750}nav{display:flex;gap:16px;flex-wrap:wrap}.hero{padding:72px 0 50px;display:grid;grid-template-columns:1.3fr .7fr;gap:40px}.eyebrow{color:var(--blue);font-size:.76rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}.hero h1{font-size:clamp(2.55rem,6.5vw,5.8rem);line-height:.96;letter-spacing:-.055em;margin:.25em 0}.hero p{font-size:1.18rem;color:var(--muted);max-width:720px}.boundary{border:1px solid var(--line);background:var(--soft);padding:24px;align-self:start}.boundary b{display:block;color:var(--red);margin-bottom:8px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}.btn{display:inline-block;padding:11px 15px;border:1px solid var(--ink);text-decoration:none;font-weight:750}.btn.primary{background:var(--ink);color:#fff}.facts{display:grid;grid-template-columns:repeat(4,1fr);border-block:1px solid var(--line)}.facts div{padding:22px;border-right:1px solid var(--line)}.facts div:last-child{border-right:0}.facts b{display:block;font-size:1.35rem}.facts span{display:block;color:var(--muted);font-size:.9rem}section{padding:52px 0;border-bottom:1px solid var(--line)}h2{font-size:clamp(1.75rem,3.5vw,3rem);line-height:1.08;letter-spacing:-.038em;margin:0 0 18px}h3{margin:.1em 0 .4em}.lede{color:var(--muted);max-width:800px;font-size:1.08rem}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{border:1px solid var(--line);padding:21px}.card p{color:var(--muted);margin-bottom:0}.outcome{border-top:4px solid var(--green)}.outcome.limit{border-color:var(--amber)}.outcome.hold,.outcome.unavailable{border-color:var(--red)}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:28px}.step{position:relative;border:1px solid var(--line);padding:18px;background:var(--soft)}.step b{display:block;margin-bottom:6px}.step:not(:last-child)::after{content:"→";position:absolute;right:-10px;top:40%;z-index:2;background:#fff;padding:2px;color:var(--blue)}table{border-collapse:collapse;width:100%;font-size:.95rem}th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:14px 10px}th{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}.code{background:var(--deep);color:#e6edf7;padding:20px;overflow:auto}.code code{background:transparent;padding:0}.note{border-left:4px solid var(--blue);padding:4px 0 4px 18px;color:var(--muted)}code{background:var(--soft);padding:.12em .34em;overflow-wrap:anywhere}.contracts{display:grid;grid-template-columns:1fr 1fr;gap:12px}.contract{border:1px solid var(--line);padding:16px}.contract a{font-weight:750}.contract small{display:block;color:var(--muted);margin-top:5px}footer{padding:34px 0 54px;color:var(--muted);font-size:.9rem}@media(max-width:840px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr}.step:not(:last-child)::after{content:"↓";right:50%;top:auto;bottom:-17px}.contracts{grid-template-columns:1fr}}@media(max-width:520px){.grid,.facts{grid-template-columns:1fr}.facts div{border-right:0;border-bottom:1px solid var(--line)}.facts div:last-child{border-bottom:0}}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"TechArticle",
+    "headline":"Trade Safety Receipt v1",
+    "description":"An open, deterministic, order-bound pre-trade safety contract for AI trading agents and copilots.",
+    "datePublished":"2026-09-02",
+    "dateModified":"2026-09-02",
+    "license":"https://www.apache.org/licenses/LICENSE-2.0",
+    "url":"https://liquilens.in/protocol/trade-safety/",
+    "isPartOf":{"@id":"https://liquilens.in/protocol/"},
+    "codeRepository":"https://github.com/beepboop2025/liquilens-evidence-carrier"
+  }
+  </script>
+<!-- SOCIAL-CARD:START -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LiquiLens">
+<meta property="og:url" content="https://liquilens.in/protocol/trade-safety/">
+<meta property="og:title" content="One exact order. One short-lived safety receipt.">
+<meta property="og:description" content="Trade Safety Receipt v1 is an open, deterministic pre-trade control for AI trading agents and copilots, built on Seiche, Undertow and conditional LiquiLens evidence.">
+<meta property="og:image" content="https://liquilens.in/protocol/trade-safety/share.png?v=7b983a39cf4901c8">
+<meta property="og:image:secure_url" content="https://liquilens.in/protocol/trade-safety/share.png?v=7b983a39cf4901c8">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LiquiLens route card for ORDER-BOUND RECEIPT: One exact order, one short-lived pre-trade check. REQUIRED CONTEXT: SEICHE / UNDERTOW. LIQUILENS CONDITIONAL / OPERATOR POLICY. PROTOCOL CUT 2026-09-02; status NO EXECUTION AUTHORITY.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="One exact order. One short-lived safety receipt.">
+<meta name="twitter:description" content="Trade Safety Receipt v1 is an open, deterministic pre-trade control for AI trading agents and copilots, built on Seiche, Undertow and conditional LiquiLens evidence.">
+<meta name="twitter:image" content="https://liquilens.in/protocol/trade-safety/share.png?v=7b983a39cf4901c8">
+<meta name="twitter:image:alt" content="LiquiLens route card for ORDER-BOUND RECEIPT: One exact order, one short-lived pre-trade check. REQUIRED CONTEXT: SEICHE / UNDERTOW. LIQUILENS CONDITIONAL / OPERATOR POLICY. PROTOCOL CUT 2026-09-02; status NO EXECUTION AUTHORITY.">
+<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/protocol/trade-safety/#social-card","url":"https://liquilens.in/protocol/trade-safety/","image":"https://liquilens.in/protocol/trade-safety/share.png?v=7b983a39cf4901c8","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/protocol/trade-safety/share.png?v=7b983a39cf4901c8","width":1200,"height":630,"caption":"LiquiLens route card for ORDER-BOUND RECEIPT: One exact order, one short-lived pre-trade check. REQUIRED CONTEXT: SEICHE / UNDERTOW. LIQUILENS CONDITIONAL / OPERATOR POLICY. PROTOCOL CUT 2026-09-02; status NO EXECUTION AUTHORITY."}}</script>
+<!-- SOCIAL-CARD:END -->
+</head>
+<body>
+  <header>
+    <a href="/">LIQUILENS</a>
+    <nav aria-label="Trade Safety navigation"><a href="/protocol/">Evidence Carrier</a><a href="/developers/">Developers</a><a href="https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.17.1">v0.17.1 release</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Open protocol · Trade Safety Receipt v1</div>
+        <h1>One exact order. One short-lived safety receipt.</h1>
+        <p>Put a deterministic control between an AI trading agent and its order tool. Every receipt binds the proposed order, accountable operator, policy, evidence clocks and product states—so a changed order must be checked again.</p>
+        <div class="actions"><a class="btn primary" href="/protocol/trade-safety/specification.md">Read the specification</a><a class="btn" href="/protocol/trade-safety/adoption-plan.md">Adoption plan</a><a class="btn" href="/protocol/catalog.json">Machine catalog</a></div>
+      </div>
+      <aside class="boundary"><b>No execution authority</b>A receipt cannot execute, recommend, allocate capital, rate credit, promise a fill, or silently resize an order. The operator owns policy; the broker keeps final market-access controls. The published gateway artifact is a sandbox. No public hosted Trade Safety API or order endpoint is advertised.</aside>
+    </section>
+
+    <div class="facts" aria-label="Trade Safety protocol facts">
+      <div><b>Seiche</b><span>required funding and regime context</span></div>
+      <div><b>Undertow</b><span>required requested-size exit context</span></div>
+      <div><b>LiquiLens</b><span>conditional institution context</span></div>
+      <div><b>4 outcomes</b><span>pass · limit · hold · unavailable</span></div>
+    </div>
+
+    <section>
+      <div class="eyebrow">Control path</div>
+      <h2>Discover with agents. Enforce at the order boundary.</h2>
+      <p class="lede">MCP, FDC3 and natural-language explanations make the control easy to discover. The hard guarantee comes from architecture: the agent receives only a wrapped order action, while raw broker credentials and direct submit tools remain outside its inventory.</p>
+      <div class="flow" aria-label="Trade Safety evaluation flow">
+        <div class="step"><b>1 · Proposed order</b>Bind agent, operator, tenant, account, instrument, side, size, prices and policy.</div>
+        <div class="step"><b>2 · Product evidence</b>Fetch request-bound Seiche and Undertow sections; attach eligible LiquiLens context when applicable, otherwise emit the required <code>not_applicable</code> section.</div>
+        <div class="step"><b>3 · Policy check</b>Validate clocks, rights, source identity and operator-authored thresholds deterministically.</div>
+        <div class="step"><b>4 · Receipt</b>Issue a short-lived identity with all-false financial authority and an explicit outcome.</div>
+        <div class="step"><b>5 · Verify</b>The caller or OMS verifies the exact bytes before its own reject, review, resubmit or submit action.</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="eyebrow">Outcomes</div>
+      <h2>No hidden score, no silent downgrade.</h2>
+      <div class="grid">
+        <article class="card outcome"><h3>Pass</h3><p>This exact request satisfied this exact operator policy at the receipt clock. It is not trade approval or advice.</p></article>
+        <article class="card outcome limit"><h3>Limit</h3><p>An explicit size, exit-cost or spread constraint was exceeded. Build and re-evaluate a new order; never mutate the old one.</p></article>
+        <article class="card outcome hold"><h3>Hold</h3><p>A valid observed condition matched an operator hold rule. It is not a market prediction.</p></article>
+        <article class="card outcome unavailable"><h3>Unavailable</h3><p>Required evidence, rights, freshness, authentication or live prerequisites failed. It is not zero, calm, neutral or bearish.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="eyebrow">Evidence roles</div>
+      <h2>Keep each product native.</h2>
+      <table>
+        <thead><tr><th>Product</th><th>Role</th><th>Baseline</th><th>Boundary</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://seiche.info/">Seiche</a></td><td>System funding and bounded capital-market regime context.</td><td>Required by every policy.</td><td>Preserves its own source, rights, observation and knowledge clocks.</td></tr>
+          <tr><td><a href="https://liquilens-undertow.com/">Undertow</a></td><td>Requested-size exit cost and venue-friction context.</td><td>Required by every policy.</td><td>A public estimate is not an executable quote; live mode requires an eligible executable quote.</td></tr>
+          <tr><td><a href="https://liquilens.in/">LiquiLens</a></td><td>Covered institution, issuer, lender or counterparty context.</td><td>Conditional, normally <code>not_applicable</code> or <code>context_only</code>.</td><td>Current construction-PIT diagnostics are not relabelled as real-money eligible.</td></tr>
+        </tbody>
+      </table>
+      <p class="note">The protocol never averages product states or clocks into a universal risk score. Missing, stale, restricted, unsupported and unavailable evidence remain explicit and fail closed when required.</p>
+    </section>
+
+    <section>
+      <div class="eyebrow">Canonical contracts</div>
+      <h2>Pin the exact v1 machine contracts.</h2>
+      <div class="contracts">
+        <div class="contract"><a href="/protocol/liquilens-trade-safety-request-v1.schema.json">Trade Safety Request v1</a><small>SHA-256 73af15f84b09…e35a47f5</small></div>
+        <div class="contract"><a href="/protocol/liquilens-trade-safety-policy-v1.schema.json">Trade Safety Policy v1</a><small>SHA-256 d9171e61c2d3…54ae8d1</small></div>
+        <div class="contract"><a href="/protocol/liquilens-broker-preview-reference-v1.schema.json">Broker Preview Reference v1</a><small>SHA-256 89069649379c…7351422</small></div>
+        <div class="contract"><a href="/protocol/liquilens-trade-safety-receipt-v1.schema.json">Trade Safety Receipt v1</a><small>SHA-256 c2232ae5f80e…4b25abe</small></div>
+        <div class="contract"><a href="/protocol/fdc3/com.liquilens.trade-safety-receipt.schema.json">FDC3 receipt context</a><small>Workflow transport; receipt verification is still mandatory.</small></div>
+        <div class="contract"><a href="/protocol/fdc3/trade-safety-intents.json">FDC3 intent fragments</a><small>Evaluate and inspect intents; no OMS or execution authority.</small></div>
+        <div class="contract"><a href="/protocol/trade-safety/specification.md">Normative specification</a><small>Exact binding, clock, integrity, decision and verification semantics.</small></div>
+        <div class="contract"><a href="/protocol/trade-safety/adoption-plan.md">Infrastructure and adoption plan</a><small>Adapters, conformance, distribution and staged commercialization.</small></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="eyebrow">Start with observation and paper</div>
+      <h2>Install the released verifier, then put it in the order path.</h2>
+      <pre class="code"><code>uvx --no-cache \
+  --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.17.1/liquilens_evidence-0.17.1-py3-none-any.whl#sha256=dec2751fa2f20d09a1a77b5f25ae99f28fa49484ea1bf5ede7ca2bcdd86610ea' \
+  liquilens-evidence verify-trade-safety receipt.json --as-of 2026-09-02T06:01:00Z</code></pre>
+      <p class="lede">The official MCP Registry also publishes the checksum-pinned offline verifier bundle for Evidence Carrier 0.17.1. It verifies local hash-only Trade Safety receipts without network access. Live receipts require a tenant-local authenticated verifier, eligible real-money evidence, an executable Undertow quote and an exact-account broker preview; the public sandbox deliberately fails those gates closed.</p>
+      <div class="actions"><a class="btn primary" href="https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.17.1">Official MCP Registry</a><a class="btn" href="https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.17.1">Signed release</a></div>
+    </section>
+  </main>
+  <footer>Trade Safety Receipt v1 is Apache-2.0 open infrastructure. Adoption is opt-in; participating operators can make it mandatory within systems they control. It is not investment advice, a credit rating, an execution service, or a guarantee of universal adoption. <a href="/terms/">Terms</a> · <a href="/security/">Security</a></footer>
+</body>
+</html>
