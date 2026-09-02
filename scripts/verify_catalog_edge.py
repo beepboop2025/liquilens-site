@@ -25,6 +25,25 @@ CATALOG_PATH = ROOT / ".well-known/ai-catalog.json"
 API_CATALOG_PATH = ROOT / ".well-known/api-catalog.json"
 PROTOCOL_CATALOG_PATH = ROOT / "protocol/catalog.json"
 MCP_CONTRACT_PATH = ROOT / "protocol/financial-evidence-mcp-v0.1.4.json"
+PAGES_TRADE_SAFETY_PATHS = (
+    "protocol/liquilens-trade-safety-request-v1.schema.json",
+    "protocol/liquilens-trade-safety-policy-v1.schema.json",
+    "protocol/liquilens-broker-preview-reference-v1.schema.json",
+    "protocol/liquilens-trade-safety-receipt-v1.schema.json",
+    "protocol/fdc3/com.liquilens.evidence.schema.json",
+    "protocol/fdc3/com.liquilens.trade-safety-receipt.schema.json",
+    "protocol/fdc3/trade-safety-intents.json",
+    "protocol/trade-safety/index.html",
+    "protocol/trade-safety/share.png",
+    "protocol/trade-safety/specification.md",
+    "protocol/trade-safety/adoption-plan.md",
+    "protocol/protocol/liquilens-trade-safety-request-v1.schema.json",
+    "protocol/protocol/liquilens-trade-safety-policy-v1.schema.json",
+    "protocol/protocol/liquilens-broker-preview-reference-v1.schema.json",
+    "protocol/protocol/liquilens-trade-safety-receipt-v1.schema.json",
+    "protocol/integrations/fdc3/com.liquilens.trade-safety-receipt.schema.json",
+    "protocol/integrations/fdc3/trade-safety-intents.json",
+)
 DEFAULT_URL = "https://liquilens.in/.well-known/ai-catalog.json"
 DEFAULT_API_CATALOG_URL = "https://liquilens.in/.well-known/api-catalog"
 DEFAULT_PROTOCOL_URL = "https://liquilens.in/protocol/catalog.json"
@@ -33,6 +52,22 @@ RFC_9727_PROFILE = "https://www.rfc-editor.org/info/rfc9727"
 API_CATALOG_LINK = (
     '<https://liquilens.in/.well-known/api-catalog>; rel="api-catalog"; '
     'type="application/linkset+json"'
+)
+AI_CATALOG_LINK = (
+    '<https://liquilens.in/protocol/catalog.json>; rel="alternate"; '
+    'type="application/json", '
+    '<https://liquilens.in/protocol/trade-safety/>; rel="item"; '
+    'type="text/html"'
+)
+PROTOCOL_CATALOG_LINK = (
+    '<https://liquilens.in/protocol/liquilens-evidence-carrier-v1.schema.json>; '
+    'rel="describedby"; type="application/schema+json", '
+    '<https://liquilens.in/protocol/liquilens-trade-safety-request-v1.schema.json>; '
+    'rel="describedby"; type="application/schema+json", '
+    '<https://liquilens.in/protocol/liquilens-trade-safety-receipt-v1.schema.json>; '
+    'rel="describedby"; type="application/schema+json", '
+    '<https://liquilens.in/.well-known/ai-catalog.json>; rel="alternate"; '
+    'type="application/ai-catalog+json"'
 )
 PALIMPSEST_CARD_ID = "urn:air:liquilens.in:catalog:palimpsest-china"
 PALIMPSEST_RIGHTS_URI = "palimpsest://china-economic/publication-rights"
@@ -2454,6 +2489,14 @@ def _verify_pages_bytes(
         (ROOT / "sitemap.xml", "application/xml, text/xml"),
     ):
         targets.append((path, path.read_bytes(), accept))
+    for relative in PAGES_TRADE_SAFETY_PATHS:
+        path = ROOT / relative
+        accept = (
+            "application/json, application/*+json"
+            if path.suffix == ".json"
+            else "text/html, text/markdown, text/plain"
+        )
+        targets.append((path, path.read_bytes(), accept))
 
     for path, expected, accept in targets:
         relative = path.relative_to(ROOT).as_posix()
@@ -2531,12 +2574,16 @@ def _run(args: argparse.Namespace) -> int:
             "expected": ai_catalog,
             "expected_path": CATALOG_PATH,
             "expected_content_type": "application/ai-catalog+json",
+            "expected_link": AI_CATALOG_LINK,
+            "expected_cors_origin": "*",
             "url": args.url,
         },
         {
             "expected": protocol_catalog,
             "expected_path": PROTOCOL_CATALOG_PATH,
             "expected_content_type": "application/json",
+            "expected_link": PROTOCOL_CATALOG_LINK,
+            "expected_cors_origin": "*",
             "url": args.protocol_url,
         },
     )

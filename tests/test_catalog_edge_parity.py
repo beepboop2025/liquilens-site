@@ -9,6 +9,7 @@ import pytest
 import scripts.verify_catalog_edge as verifier
 
 from scripts.verify_catalog_edge import (
+    AI_CATALOG_LINK,
     API_CATALOG_LINK,
     DEFAULT_API_CATALOG_URL,
     EXPECTED_MCP_CONTRACT,
@@ -16,6 +17,7 @@ from scripts.verify_catalog_edge import (
     EXPECTED_MCP_VERSION,
     PALIMPSEST_CARD_ID,
     PALIMPSEST_RIGHTS_URI,
+    PROTOCOL_CATALOG_LINK,
     RFC_9727_PROFILE,
     _mime_matches_declared,
     _read_bounded,
@@ -176,6 +178,25 @@ def test_edge_parity_requires_the_rfc_9727_profile_link_and_cors():
         expected_link=API_CATALOG_LINK,
         expected_cors_origin="*",
     )
+
+
+@pytest.mark.parametrize("expected_link", [AI_CATALOG_LINK, PROTOCOL_CATALOG_LINK])
+def test_edge_parity_requires_discovery_links_on_non_rfc_catalogs(expected_link):
+    assert (
+        response_headers_problem(
+            {"Link": expected_link, "Access-Control-Allow-Origin": "*"},
+            expected_link=expected_link,
+            expected_cors_origin="*",
+        )
+        is None
+    )
+    problem = response_headers_problem(
+        {"Access-Control-Allow-Origin": "*"},
+        expected_link=expected_link,
+        expected_cors_origin="*",
+    )
+    assert problem is not None
+    assert "unexpected Link header" in problem
 
 
 def test_edge_parity_names_a_missing_api_catalog_anchor():
@@ -391,6 +412,12 @@ def test_pages_proof_checks_compact_edge_catalogs_and_raw_static_files(monkeypat
         "/llms.txt": (ROOT / "llms.txt").read_bytes(),
         "/sitemap.xml": (ROOT / "sitemap.xml").read_bytes(),
     }
+    expected_by_path.update(
+        {
+            f"/{relative}": (ROOT / relative).read_bytes()
+            for relative in verifier.PAGES_TRADE_SAFETY_PATHS
+        }
+    )
     seen = []
 
     monkeypatch.setattr(verifier, "_validate_public_https_url", lambda url: url)
@@ -407,7 +434,7 @@ def test_pages_proof_checks_compact_edge_catalogs_and_raw_static_files(monkeypat
         delay=0,
     )
     assert seen == list(expected_by_path)
-    assert len(results) == 5
+    assert len(results) == 5 + len(verifier.PAGES_TRADE_SAFETY_PATHS)
 
 
 def test_edge_parity_explains_a_missing_carrier_entry():

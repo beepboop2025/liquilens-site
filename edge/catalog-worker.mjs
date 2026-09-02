@@ -117,7 +117,10 @@ const CATALOGS = new Map([
     headers: {
       ...SHARED_HEADERS,
       "Content-Type": "application/ai-catalog+json; charset=utf-8",
-      Link: '<https://liquilens.in/protocol/catalog.json>; rel="alternate"; type="application/json"',
+      Link: [
+        '<https://liquilens.in/protocol/catalog.json>; rel="alternate"; type="application/json"',
+        '<https://liquilens.in/protocol/trade-safety/>; rel="item"; type="text/html"',
+      ].join(", "),
     },
   }],
   [PROTOCOL_CATALOG_PATH, {
@@ -127,6 +130,8 @@ const CATALOGS = new Map([
       "Content-Type": "application/json; charset=utf-8",
       Link: [
         '<https://liquilens.in/protocol/liquilens-evidence-carrier-v1.schema.json>; rel="describedby"; type="application/schema+json"',
+        '<https://liquilens.in/protocol/liquilens-trade-safety-request-v1.schema.json>; rel="describedby"; type="application/schema+json"',
+        '<https://liquilens.in/protocol/liquilens-trade-safety-receipt-v1.schema.json>; rel="describedby"; type="application/schema+json"',
         '<https://liquilens.in/.well-known/ai-catalog.json>; rel="alternate"; type="application/ai-catalog+json"',
       ].join(", "),
     },

@@ -63,14 +63,14 @@ test("GET returns the committed ARD catalog with discovery headers", async () =>
   assert.equal(response.status, 200);
   assert.deepEqual(catalog, expected);
   assert.equal(catalog.specVersion, "1.0");
-  assert.equal(catalog.entries.length, 16);
+  assert.equal(catalog.entries.length, 17);
   const carrier = catalog.entries.find(
     (entry) => entry.identifier === "urn:air:liquilens.in:protocol:evidence-carrier",
   );
-  assert.equal(carrier.version, "0.16.0");
+  assert.equal(carrier.version, "0.17.1");
   assert.equal(
     carrier.metadata.mcpBundleSha256,
-    "c44b13b2efc4622a8ecfc06848f32358982dd2a9458a271e1ed77d646791961a",
+    "4d6c409f2c69588fad6fe13bf2f78ed1b72d3555d81082d5da638d037b0307a1",
   );
   assert.equal(
     carrier.metadata.browserVerifier,
@@ -80,7 +80,10 @@ test("GET returns the committed ARD catalog with discovery headers", async () =>
   assert.equal(response.headers.get("access-control-allow-origin"), "*");
   assert.equal(
     response.headers.get("link"),
-    '<https://liquilens.in/protocol/catalog.json>; rel="alternate"; type="application/json"',
+    [
+      '<https://liquilens.in/protocol/catalog.json>; rel="alternate"; type="application/json"',
+      '<https://liquilens.in/protocol/trade-safety/>; rel="item"; type="text/html"',
+    ].join(", "),
   );
 });
 
@@ -103,6 +106,8 @@ test("GET returns the exact protocol catalog with standards-based discovery", as
     response.headers.get("link"),
     [
       '<https://liquilens.in/protocol/liquilens-evidence-carrier-v1.schema.json>; rel="describedby"; type="application/schema+json"',
+      '<https://liquilens.in/protocol/liquilens-trade-safety-request-v1.schema.json>; rel="describedby"; type="application/schema+json"',
+      '<https://liquilens.in/protocol/liquilens-trade-safety-receipt-v1.schema.json>; rel="describedby"; type="application/schema+json"',
       '<https://liquilens.in/.well-known/ai-catalog.json>; rel="alternate"; type="application/ai-catalog+json"',
     ].join(", "),
   );

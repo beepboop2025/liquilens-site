@@ -49,7 +49,7 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["evidence_carrier_browser_verifier"] == (
         "https://beepboop2025.github.io/liquilens-evidence-carrier/")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
-    assert card["updated"] == "2026-08-29"
+    assert card["updated"] == "2026-09-02"
     assert card["access"]["api_catalog_discovery"] == (
         "https://liquilens.in/.well-known/api-catalog")
     assert card["access"]["daily_articles"] == "https://liquilens.in/articles/"
@@ -235,7 +235,7 @@ def test_catalog_obeys_the_ard_envelope():
     catalog = _catalog()
     assert catalog["specVersion"] == "1.0"
     assert catalog["host"]["displayName"] == "LiquiLens"
-    assert len(catalog["entries"]) == 16
+    assert len(catalog["entries"]) == 17
 
     identifiers = set()
     for entry in catalog["entries"]:
@@ -711,7 +711,7 @@ def test_sibling_product_cards_match_the_catalog_contracts():
 
 def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     status = read("status/index.html")
-    assert "Release contract · 29 August 2026" in status
+    assert "Release contract · 2 September 2026" in status
     assert "Seiche 0.11.1" in status
     assert "11 public read-only MCP tools, 4 prompts and 0 resources" in status
     assert "runtime, signed tag, exact PyPI artifacts, static catalog" in status
@@ -720,6 +720,7 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     assert "Palimpsest 1.9.3" in status
     assert "6 public read-only MCP tools, 4 prompts and 1 metadata-only" in status
     assert "LIVE / RECEIPTED" in status
+    assert "Evidence Carrier 0.17.1 + Trade Safety Receipt v1" in status
 
     ship_log = read("ship-log/index.html")
     assert "Seiche 0.11.1 closes its public distribution contract" in ship_log
@@ -729,22 +730,24 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     assert "mcp-deployment-1.9.3.json" in ship_log
     assert "mcp-registry-publication-1.9.3.json" in ship_log
     assert "Palimpsest 1.9.1 refreshes its exact agent boundary" in ship_log
+    assert "Trade Safety Receipt v1 ships as open, order-bound infrastructure" in ship_log
     for historical_release in ("Seiche 0.10.0", "Seiche 0.10.1"):
         assert historical_release in ship_log
 
     sitemap = read("sitemap.xml")
     assert (
         "<loc>https://liquilens.in/ship-log/</loc>\n"
-        "    <lastmod>2026-08-29</lastmod>"
+        "    <lastmod>2026-09-02</lastmod>"
     ) in sitemap
     assert (
         "<loc>https://liquilens.in/status/</loc>\n"
-        "    <lastmod>2026-08-29</lastmod>"
+        "    <lastmod>2026-09-02</lastmod>"
     ) in sitemap
     generator = read("scripts/build_replay_pages.py")
-    assert '("/protocol/", "2026-08-29", "monthly", "0.9")' in generator
-    assert '("/ship-log/", "2026-08-29", "weekly", "0.7")' in generator
-    assert '("/status/", "2026-08-29", None, None)' in generator
+    assert '("/protocol/", "2026-09-02", "monthly", "0.9")' in generator
+    assert '("/protocol/trade-safety/", "2026-09-02", "monthly", "0.95")' in generator
+    assert '("/ship-log/", "2026-09-02", "weekly", "0.7")' in generator
+    assert '("/status/", "2026-09-02", None, None)' in generator
 
 
 def test_human_claim_surfaces_print_the_same_evidence_boundary():
