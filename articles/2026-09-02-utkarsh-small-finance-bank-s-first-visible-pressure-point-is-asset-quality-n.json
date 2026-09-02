@@ -1,0 +1,234 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-09-02-utkarsh-small-finance-bank-s-first-visible-pressure-point-is-asset-quality-n",
+  "product": "liquilens",
+  "slug": "2026-09-02-utkarsh-small-finance-bank-s-first-visible-pressure-point-is-asset-quality-n",
+  "date": "2026-09-02",
+  "article_type": "current_analysis",
+  "topic": "utkarsh-sfb-2025",
+  "headline": "Utkarsh Small Finance Bank’s first visible pressure point is asset quality, not a confirmed funding event",
+  "dek": "Utkarsh Small Finance Bank is the sole orange institution in the current monitored set, but the designation rests on an aged filing-period signal: GNPA of 9.4%. Market confirmation is unavailable for publication, and key funding lenses are dark.",
+  "canonical_url": "https://liquilens.in/articles/2026-09-02-utkarsh-small-finance-bank-s-first-visible-pressure-point-is-asset-quality-n/",
+  "published_at": "2026-09-02T15:06:40Z",
+  "evidence_as_of": "2026-09-02",
+  "board_signature": "611dab169b21f3df4d3bb97f1fb2642ee799eef63c2ad141345d3737bfe35c79",
+  "subject": {
+    "slug": "utkarsh-sfb-2025",
+    "name": "Utkarsh Small Finance Bank",
+    "inst_type": "sfb",
+    "label": "stressed_survivor",
+    "as_of": "2025-03-31",
+    "quarter": "FY2025",
+    "knowledge_time_proxy": "2025-05-30",
+    "age_months": 18,
+    "score": 74.9,
+    "grade": "A",
+    "hazard": {
+      "pd_12m": 0.0031,
+      "pd_24m": 0.0061,
+      "pd_36m": 0.0092,
+      "grade": "A",
+      "drivers": {
+        "distress": 1.0083,
+        "aq_delta": 0.045,
+        "aq_delta_unobserved": 0.0,
+        "funding_x_distress": 0.0
+      },
+      "basis": [
+        "GNPA 9.4%"
+      ],
+      "score_scope": "corpus_monitoring_probability_not_credit_rating",
+      "historical_evidence": {
+        "status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+        "validated_backtest_eligible": false,
+        "real_money_eligible": false,
+        "bitemporal_input_contract": false,
+        "filing_lag_days": 60,
+        "availability_time_basis": "explicit publication clock when present; otherwise period_end + 60 days",
+        "lead_times_optimistic": true,
+        "reason": "the committed crisis dossiers do not preserve a complete public-availability/revision archive; a conservative filing lag prevents quarter-end lookahead but cannot reconstruct overwritten amendments"
+      },
+      "validated_backtest": false,
+      "real_money_eligible": false
+    },
+    "movement": {
+      "delta_pd_12m": 0.0015,
+      "reference": {
+        "from_q": "FY2024",
+        "from_period": "2024-03-31",
+        "pd_12m_then": 0.0016
+      }
+    },
+    "pca": {
+      "framework": null,
+      "applicable": false,
+      "status": "not_applicable",
+      "risk_level": 0,
+      "breaches": [],
+      "headroom": [
+        {
+          "indicator": "CRAR",
+          "value": 20.93,
+          "entry_at": 15.0,
+          "headroom_pp": 5.93
+        }
+      ],
+      "not_assessed": [],
+      "note": "SFBs are outside the 2021 bank-PCA framework; headroom shown against the 15% licensing CRAR floor"
+    },
+    "funding": {
+      "index": null,
+      "band": "not_scored",
+      "components": {},
+      "flags": [],
+      "dark_lenses": [
+        "deposit_run (no consecutive deposit disclosures)",
+        "wholesale_reliance",
+        "cd_strain",
+        "lcr_headroom"
+      ],
+      "basis": []
+    },
+    "forensics": {
+      "eligible": false,
+      "fired": false,
+      "indicators": []
+    },
+    "evidence_exclusions": [],
+    "market": {
+      "as_of": "2026-09-02",
+      "observation_at": "2026-09-02",
+      "retrieved_at": "2026-09-02T07:12:44+00:00",
+      "identity_join": {
+        "dossier_slug": "utkarsh-sfb-2025",
+        "market_slug": "utkarsh-sfb",
+        "ticker": "UTKARSHBNK.NS",
+        "method": "explicit_alias"
+      },
+      "rights_state": "pending_review",
+      "publication_authority": false,
+      "publication_checks": {
+        "display_use_approved": false,
+        "display_rights_approved": false,
+        "schema_validated": true,
+        "identity_map_reviewed": true,
+        "canonical_record_key": true,
+        "ticker_identity_match": true
+      },
+      "publication_reason": "market-derived display restricted: display_use_approved, display_rights_approved",
+      "age_days": 0,
+      "stale": false,
+      "future_dated": false,
+      "clock_authority": true,
+      "authority_reason": "market value retrieval precedes the asserted exchange-session close; market tier admission incomplete: rights_approved, display_use_approved, model_gate_approved, tier_use_approved, same_session_market_cap_clock; market value retrieval precedes the asserted exchange-session close",
+      "knowledge_authority": false,
+      "future_retrieval": false,
+      "retrieval_before_observation": true,
+      "knowledge_reason": "market value retrieval precedes the asserted exchange-session close",
+      "admission_authority": false,
+      "admission_checks": {
+        "schema_validated": true,
+        "identity_map_reviewed": true,
+        "rights_approved": false,
+        "display_use_approved": false,
+        "model_gate_approved": false,
+        "tier_use_approved": false,
+        "market_input_schema_valid": true,
+        "same_session_market_cap_clock": false,
+        "canonical_record_key": true,
+        "ticker_identity_match": true
+      },
+      "admission_reason": "market tier admission incomplete: rights_approved, display_use_approved, model_gate_approved, tier_use_approved, same_session_market_cap_clock",
+      "tier_authority": false,
+      "coverage_authority": true,
+      "coverage_reason": null,
+      "not_computed": "market value retrieval precedes the asserted exchange-session close",
+      "component_authority": false
+    },
+    "conformal": {
+      "alarm": false,
+      "threshold_distress": 26.799999999999997,
+      "distress": 25.1,
+      "gate": "CLOSED_REVALIDATION_REQUIRED",
+      "wiring_status": "SUSPENDED_REVALIDATION_REQUIRED",
+      "tier_authority": false
+    },
+    "signals_fired": [],
+    "tier": "orange",
+    "peer_percentile": {
+      "cohort": 75,
+      "cohort_n": 4,
+      "universe": 95
+    }
+  },
+  "word_count": 1389,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:64af23626f1dadeda7565a2fccf90342b1b61d2d524c7dc602fa177ed0253a3b",
+    "memory_fingerprint": "sha256:2939b5bf659522cd5b99569e0e9311ddf70d41d446960981476c20af3ea5cc93",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 2,
+    "dossier_sha256": "b4d3254b56ff4ab1bf87ef31b9734a69f6151721f006adb97769d882634cd3a0",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [],
+    "review_notes": [
+      "Reframed the thesis as a filing-period vulnerability rather than a current market-confirmed stress call.",
+      "Removed unsupported implications about creditor or share-price behaviour and preserved all market-admission restrictions.",
+      "Retained funding, forensic, historical-validation, eligibility, and stale-coverage disclosures.",
+      "Added explicit separation of filing evidence, market evidence, and model derivations."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:64af23626f1dadeda7565a2fccf90342b1b61d2d524c7dc602fa177ed0253a3b",
+      "memory_fingerprint": "sha256:2939b5bf659522cd5b99569e0e9311ddf70d41d446960981476c20af3ea5cc93",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
