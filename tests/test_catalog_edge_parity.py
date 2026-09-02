@@ -675,15 +675,29 @@ def test_palimpsest_live_inventory_rejects_extra_or_paginated_surfaces():
 
 def _rights_resource_result():
     rights = {
+        "schema_version": "palimpsest.mcp-china-economic-rights.v1",
         "status": "restricted",
         "availability": "unavailable",
         "evidence_class": "restricted",
         "publication_allowed": False,
+        "publication_sha": "a" * 40,
+        "rights_evaluated_at": "2026-09-01T00:00:00Z",
+        "status_artifact": {
+            "integrity": "verified",
+            "sha256": "b" * 64,
+            "url": (
+                "https://www.palimpsest.info/readings/"
+                "china-publication-rights-latest.json"
+            ),
+        },
         "counts": {
+            "input_records": 2259,
             "allowed_records": 0,
             "published_records": 0,
             "restricted_records": 2259,
+            "quarantined_artifacts": 153,
         },
+        "quarantined_paths": ["readings/china"],
         "no_partial_rows": True,
     }
     return {
@@ -695,6 +709,25 @@ def _rights_resource_result():
             }
         ]
     }
+
+
+def _unavailable_rights_resource_result():
+    result = _rights_resource_result()
+    rights = json.loads(result["contents"][0]["text"])
+    rights["publication_sha"] = None
+    rights["rights_evaluated_at"] = None
+    rights["status_artifact"]["integrity"] = "unavailable"
+    rights["status_artifact"]["sha256"] = None
+    rights["counts"] = {
+        "input_records": None,
+        "allowed_records": None,
+        "restricted_records": None,
+        "published_records": 0,
+        "quarantined_artifacts": None,
+    }
+    rights["quarantined_paths"] = []
+    result["contents"][0]["text"] = json.dumps(rights)
+    return result
 
 
 def test_palimpsest_reads_and_validates_fail_closed_publication_rights(monkeypatch):
@@ -729,12 +762,104 @@ def test_palimpsest_rights_resource_rejects_publication_or_value_like_state():
     rights = json.loads(result["contents"][0]["text"])
     rights["counts"]["published_records"] = 1
     result["contents"][0]["text"] = json.dumps(rights)
-    with pytest.raises(RuntimeError, match="published records must be integer zero"):
+    with pytest.raises(RuntimeError, match="allowed and published records must be zero"):
         _validate_palimpsest_rights_resource(result, PALIMPSEST_RIGHTS_URI)
 
     result = _rights_resource_result()
     result["contents"].append(dict(result["contents"][0]))
     with pytest.raises(RuntimeError, match="exactly one content"):
+        _validate_palimpsest_rights_resource(result, PALIMPSEST_RIGHTS_URI)
+
+
+def test_palimpsest_rights_resource_accepts_exact_unavailable_fallback():
+    result = _unavailable_rights_resource_result()
+    _validate_palimpsest_rights_resource(result, PALIMPSEST_RIGHTS_URI)
+
+
+def test_palimpsest_rights_resource_rejects_false_precision_in_fallback():
+    result = _unavailable_rights_resource_result()
+    rights = json.loads(result["contents"][0]["text"])
+    rights["counts"]["allowed_records"] = 0
+    result["contents"][0]["text"] = json.dumps(rights)
+
+    with pytest.raises(RuntimeError, match="must remain unknown"):
+        _validate_palimpsest_rights_resource(result, PALIMPSEST_RIGHTS_URI)
+
+
+def test_palimpsest_rights_resource_rejects_null_counts_when_verified():
+    result = _rights_resource_result()
+    rights = json.loads(result["contents"][0]["text"])
+    rights["counts"]["restricted_records"] = None
+    result["contents"][0]["text"] = json.dumps(rights)
+
+    with pytest.raises(RuntimeError, match="non-negative integers"):
+        _validate_palimpsest_rights_resource(result, PALIMPSEST_RIGHTS_URI)
+
+
+def test_palimpsest_rights_resource_rejects_published_fallback_records():
+    result = _unavailable_rights_resource_result()
+    rights = json.loads(result["contents"][0]["text"])
+    rights["counts"]["published_records"] = 1
+    result["contents"][0]["text"] = json.dumps(rights)
+
+    with pytest.raises(RuntimeError, match="zero publication"):
+        _validate_palimpsest_rights_resource(result, PALIMPSEST_RIGHTS_URI)
+
+
+@pytest.mark.parametrize("published_records", [False, 0.0, -0.0])
+def test_palimpsest_rights_resource_requires_integer_fallback_zero(
+    published_records,
+):
+    result = _unavailable_rights_resource_result()
+    rights = json.loads(result["contents"][0]["text"])
+    rights["counts"]["published_records"] = published_records
+    result["contents"][0]["text"] = json.dumps(rights)
+
+    with pytest.raises(RuntimeError, match="zero publication"):
+        _validate_palimpsest_rights_resource(result, PALIMPSEST_RIGHTS_URI)
+
+
+@pytest.mark.parametrize(
+    "clock",
+    [
+        "9999-12-31T23:59:59Z",
+        "20260901T000000+00:00",
+        "2026-9-1T0:0:0Z",
+    ],
+)
+def test_palimpsest_rights_resource_rejects_future_or_noncanonical_clock(clock):
+    result = _rights_resource_result()
+    rights = json.loads(result["contents"][0]["text"])
+    rights["rights_evaluated_at"] = clock
+    result["contents"][0]["text"] = json.dumps(rights)
+
+    with pytest.raises(RuntimeError, match="clock"):
+        _validate_palimpsest_rights_resource(result, PALIMPSEST_RIGHTS_URI)
+
+
+def test_palimpsest_rights_resource_rejects_unsafe_or_unreconciled_counts():
+    result = _rights_resource_result()
+    rights = json.loads(result["contents"][0]["text"])
+    rights["counts"]["quarantined_artifacts"] = 9_007_199_254_740_992
+    result["contents"][0]["text"] = json.dumps(rights)
+    with pytest.raises(RuntimeError, match="non-negative integers"):
+        _validate_palimpsest_rights_resource(result, PALIMPSEST_RIGHTS_URI)
+
+    result = _rights_resource_result()
+    rights = json.loads(result["contents"][0]["text"])
+    rights["counts"]["quarantined_artifacts"] = 0
+    result["contents"][0]["text"] = json.dumps(rights)
+    with pytest.raises(RuntimeError, match="quarantine counts do not reconcile"):
+        _validate_palimpsest_rights_resource(result, PALIMPSEST_RIGHTS_URI)
+
+
+def test_palimpsest_rights_resource_rejects_nested_value_payloads():
+    result = _rights_resource_result()
+    rights = json.loads(result["contents"][0]["text"])
+    rights["unexpected"] = {"observations": [{"value": 9.876}]}
+    result["contents"][0]["text"] = json.dumps(rights)
+
+    with pytest.raises(RuntimeError, match="value-bearing keys"):
         _validate_palimpsest_rights_resource(result, PALIMPSEST_RIGHTS_URI)
 
 

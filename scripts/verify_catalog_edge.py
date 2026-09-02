@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+from datetime import datetime, timezone
 import hashlib
 import ipaddress
 import json
@@ -35,6 +36,25 @@ API_CATALOG_LINK = (
 )
 PALIMPSEST_CARD_ID = "urn:air:liquilens.in:catalog:palimpsest-china"
 PALIMPSEST_RIGHTS_URI = "palimpsest://china-economic/publication-rights"
+PALIMPSEST_RIGHTS_SCHEMA = "palimpsest.mcp-china-economic-rights.v1"
+PALIMPSEST_RIGHTS_STATUS_URL = (
+    "https://www.palimpsest.info/readings/china-publication-rights-latest.json"
+)
+PALIMPSEST_FORBIDDEN_RIGHTS_KEYS = frozenset(
+    {
+        "observations",
+        "selection",
+        "value",
+        "forecast",
+        "direction",
+        "score",
+        "health",
+        "calm",
+        "evidence_carrier",
+        "carrier",
+    }
+)
+MAX_SAFE_JSON_INTEGER = 9_007_199_254_740_991
 PALIMPSEST_RECEIPTS = (
     ("deployment", "deploymentReceipt", "deploymentReceiptSha256"),
     ("registry publication", "registryReceipt", "registryReceiptSha256"),
@@ -1190,6 +1210,24 @@ def _validate_palimpsest_rights_resource(
         ) from error
     if not isinstance(rights, dict):
         raise RuntimeError("Palimpsest publication-rights text is not an object")
+    pending: list[Any] = [rights]
+    while pending:
+        value = pending.pop()
+        if isinstance(value, dict):
+            forbidden = PALIMPSEST_FORBIDDEN_RIGHTS_KEYS.intersection(value)
+            if forbidden:
+                rendered = ",".join(sorted(forbidden))
+                raise RuntimeError(
+                    f"publication-rights payload contains value-bearing keys: {rendered}"
+                )
+            pending.extend(value.values())
+        elif isinstance(value, list):
+            pending.extend(value)
+    _require_equal(
+        rights.get("schema_version"),
+        PALIMPSEST_RIGHTS_SCHEMA,
+        "publication-rights schema",
+    )
     for field, expected in (
         ("status", "restricted"),
         ("availability", "unavailable"),
@@ -1205,14 +1243,119 @@ def _validate_palimpsest_rights_resource(
     counts = rights.get("counts")
     if not isinstance(counts, dict):
         raise RuntimeError("Palimpsest publication-rights counts are missing")
-    for field in ("allowed_records", "published_records"):
-        value = counts.get(field)
-        if type(value) is not int or value != 0:
-            raise RuntimeError(f"rights {field.replace('_', ' ')} must be integer zero")
-    restricted_records = counts.get("restricted_records")
-    if type(restricted_records) is not int or restricted_records <= 0:
+    count_fields = {
+        "input_records",
+        "allowed_records",
+        "restricted_records",
+        "published_records",
+        "quarantined_artifacts",
+    }
+    if set(counts) != count_fields:
         raise RuntimeError(
-            "Palimpsest publication-rights restricted records must be positive"
+            "Palimpsest publication-rights counts do not match the v1 schema"
+        )
+    artifact = rights.get("status_artifact")
+    if not isinstance(artifact, dict):
+        raise RuntimeError("Palimpsest publication-rights artifact is missing")
+    _require_equal(
+        artifact.get("url"),
+        PALIMPSEST_RIGHTS_STATUS_URL,
+        "publication-rights artifact URL",
+    )
+    quarantined_paths = rights.get("quarantined_paths")
+    if (
+        not isinstance(quarantined_paths, list)
+        or any(
+            type(path) is not str
+            or not path
+            or path.startswith("/")
+            or "\x00" in path
+            or ".." in path.split("/")
+            for path in quarantined_paths
+        )
+        or quarantined_paths != sorted(quarantined_paths)
+        or len(quarantined_paths) != len(set(quarantined_paths))
+    ):
+        raise RuntimeError("publication-rights quarantine paths are invalid")
+    integrity = artifact.get("integrity")
+    if integrity == "verified":
+        if any(
+            type(counts[field]) is not int
+            or not 0 <= counts[field] <= MAX_SAFE_JSON_INTEGER
+            for field in count_fields
+        ):
+            raise RuntimeError("verified rights counts must be non-negative integers")
+        if counts["allowed_records"] != 0 or counts["published_records"] != 0:
+            raise RuntimeError("verified rights allowed and published records must be zero")
+        if counts["restricted_records"] <= 0:
+            raise RuntimeError("verified rights restricted records must be positive")
+        if counts["input_records"] != (
+            counts["allowed_records"] + counts["restricted_records"]
+        ):
+            raise RuntimeError("verified rights counts do not reconcile")
+        if counts["quarantined_artifacts"] < len(quarantined_paths):
+            raise RuntimeError("verified rights quarantine counts do not reconcile")
+        publication_sha = rights.get("publication_sha")
+        artifact_sha = artifact.get("sha256")
+        if (
+            not isinstance(publication_sha, str)
+            or len(publication_sha) != 40
+            or any(character not in "0123456789abcdef" for character in publication_sha)
+        ):
+            raise RuntimeError("verified rights publication SHA is invalid")
+        if (
+            not isinstance(artifact_sha, str)
+            or len(artifact_sha) != 64
+            or any(character not in "0123456789abcdef" for character in artifact_sha)
+        ):
+            raise RuntimeError("verified rights artifact SHA-256 is invalid")
+        evaluated_at = rights.get("rights_evaluated_at")
+        try:
+            if type(evaluated_at) is not str:
+                raise TypeError
+            evaluated_clock = datetime.strptime(
+                evaluated_at,
+                "%Y-%m-%dT%H:%M:%SZ",
+            ).replace(tzinfo=timezone.utc)
+        except (TypeError, ValueError) as error:
+            raise RuntimeError(
+                "verified rights evaluation clock must be whole-second UTC Z"
+            ) from error
+        if evaluated_clock.strftime("%Y-%m-%dT%H:%M:%SZ") != evaluated_at:
+            raise RuntimeError(
+                "verified rights evaluation clock must be whole-second UTC Z"
+            )
+        if evaluated_clock > datetime.now(timezone.utc):
+            raise RuntimeError("verified rights evaluation clock is in the future")
+    elif integrity == "unavailable":
+        unknown_fields = {
+            "input_records",
+            "allowed_records",
+            "restricted_records",
+            "quarantined_artifacts",
+        }
+        if (
+            any(counts[field] is not None for field in unknown_fields)
+            or type(counts["published_records"]) is not int
+            or counts["published_records"] != 0
+        ):
+            raise RuntimeError(
+                "unavailable rights counts must remain unknown with zero publication"
+            )
+        if any(
+            value is not None
+            for value in (
+                rights.get("publication_sha"),
+                rights.get("rights_evaluated_at"),
+                artifact.get("sha256"),
+            )
+        ):
+            raise RuntimeError("unavailable rights artifact cannot claim verified identity")
+        if quarantined_paths != []:
+            raise RuntimeError("unavailable rights artifact cannot claim quarantine coverage")
+    else:
+        raise RuntimeError(
+            "publication-rights artifact integrity must be verified or unavailable"
         )
 
 
