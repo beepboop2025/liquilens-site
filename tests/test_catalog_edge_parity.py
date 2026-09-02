@@ -352,6 +352,20 @@ def test_publish_workflows_block_on_external_proof_before_mutation():
     upload = edge_steps[edge_names.index(upload_name)]
     assert "versions upload" in upload["with"]["command"]
     assert "--strict" in upload["with"]["command"]
+    binding = edge_steps[
+        edge_names.index("Bind the uploaded candidate to its immutable version ID")
+    ]
+    assert binding["env"]["CLOUDFLARE_API_TOKEN"] == (
+        "${{ secrets.CLOUDFLARE_API_TOKEN }}"
+    )
+    assert binding["env"]["CLOUDFLARE_ACCOUNT_ID"] == (
+        "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
+    )
+    binding_script = binding["run"]
+    assert "versions view" in binding_script
+    assert "scripts/bind_catalog_candidate.mjs extract" in binding_script
+    assert "scripts/bind_catalog_candidate.mjs bind" in binding_script
+    assert "uploads[0].worker_tag !==" not in binding_script
     rollout = next(
         step for step in edge_steps if step.get("name", "").startswith("Stage at zero")
     )
@@ -361,6 +375,10 @@ def test_publish_workflows_block_on_external_proof_before_mutation():
     assert '"$CANDIDATE_VERSION_ID@100%"' in script
     assert 'wrangler rollback "$PREVIOUS_VERSION_ID"' in script
     assert script.count("require_current_main") >= 3
+    first_main_check = script.index("require_current_main", script.index("rollback()"))
+    rollback_trap = script.index("trap rollback ERR")
+    first_rollout = script.index("wrangler versions deploy")
+    assert first_main_check < rollback_trap < first_rollout
     assert edge["timeout-minutes"] >= sum(
         step.get("timeout-minutes", 0) for step in edge_steps
     )

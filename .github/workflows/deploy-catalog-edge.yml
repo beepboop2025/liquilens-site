@@ -95,16 +95,14 @@ jobs:
       - name: Bind the uploaded candidate to its immutable version ID
         id: candidate
         timeout-minutes: 1
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          node --input-type=module <<'NODE'
-          import { appendFileSync, readFileSync } from "node:fs";
-          const rows = readFileSync(process.env.RUNNER_TEMP + "/catalog-version-upload.jsonl", "utf8").trim().split("\n").map(JSON.parse);
-          const uploads = rows.filter((row) => row.type === "version-upload");
-          if (uploads.length !== 1 || uploads[0].worker_tag !== process.env.GITHUB_SHA || !uploads[0].version_id) {
-            throw new Error("Wrangler did not emit one exact candidate version receipt");
-          }
-          appendFileSync(process.env.GITHUB_OUTPUT, `version_id=${uploads[0].version_id}\n`);
-          NODE
+          node scripts/bind_catalog_candidate.mjs extract "$RUNNER_TEMP/catalog-version-upload.jsonl" "$RUNNER_TEMP/catalog-candidate-id"
+          candidate_id="$(cat "$RUNNER_TEMP/catalog-candidate-id")"
+          npx --no-install wrangler versions view "$candidate_id" --config wrangler.catalog.jsonc --json > "$RUNNER_TEMP/catalog-candidate-version.json"
+          node scripts/bind_catalog_candidate.mjs bind "$RUNNER_TEMP/catalog-version-upload.jsonl" "$RUNNER_TEMP/catalog-candidate-version.json" "$GITHUB_SHA" "$GITHUB_OUTPUT"
       - name: Stage at zero percent, verify, promote, and rollback on any failure
         timeout-minutes: 6
         env:
@@ -139,8 +137,8 @@ jobs:
           NODE
             exit "$failure"
           }
-          trap rollback ERR
           require_current_main
+          trap rollback ERR
           npx --no-install wrangler versions deploy "$PREVIOUS_VERSION_ID@100%" "$CANDIDATE_VERSION_ID@0%" --config wrangler.catalog.jsonc --message "Zero-traffic smoke GitHub-$GITHUB_SHA" --yes
           python3 scripts/verify_catalog_edge.py --worker-version-id "$CANDIDATE_VERSION_ID" --expected-version-tag "$GITHUB_SHA" --attempts 3 --delay 2 --budget-seconds 75 --no-palimpsest-proof --no-sibling-proof
           require_current_main
