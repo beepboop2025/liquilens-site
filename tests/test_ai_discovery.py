@@ -720,7 +720,7 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     assert "Palimpsest 1.9.3" in status
     assert "6 public read-only MCP tools, 4 prompts and 1 metadata-only" in status
     assert "LIVE / RECEIPTED" in status
-    assert "Evidence Carrier 0.17.1 + Trade Safety Receipt v1" in status
+    assert "Evidence Carrier 0.18.0 + Trade Safety Receipt v1" in status
 
     ship_log = read("ship-log/index.html")
     assert "Seiche 0.11.1 closes its public distribution contract" in ship_log
@@ -731,6 +731,8 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     assert "mcp-registry-publication-1.9.3.json" in ship_log
     assert "Palimpsest 1.9.1 refreshes its exact agent boundary" in ship_log
     assert "Trade Safety Receipt v1 ships as open, order-bound infrastructure" in ship_log
+    assert "Evidence Carrier 0.18.0 puts Trade Safety Receipt v1 on the paper-order path" in ship_log
+    assert "906ca033a96ea862ab813c64db2a6b01c5ce8c4f" in ship_log
     for historical_release in ("Seiche 0.10.0", "Seiche 0.10.1"):
         assert historical_release in ship_log
 
