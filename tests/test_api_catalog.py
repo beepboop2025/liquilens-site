@@ -14,7 +14,7 @@ CATALOG = json.loads(
 def test_api_catalog_uses_linkset_json_and_unique_https_anchors():
     assert set(CATALOG) == {"linkset"}
     linkset = CATALOG["linkset"]
-    assert len(linkset) == 17
+    assert len(linkset) == 19
     anchors = [item["anchor"] for item in linkset]
     assert len(anchors) == len(set(anchors))
     assert all(urlparse(anchor).scheme == "https" for anchor in anchors)
@@ -48,6 +48,7 @@ def test_catalog_covers_every_verified_remote_mcp_boundary():
     assert {
         "https://api.liquilens.in/mcp",
         "https://liquilens.in/mcp/financial-evidence",
+        "https://trade-safety.liquilens.in/mcp",
         "https://api.seiche.info/mcp",
         "https://api.seiche.info/undertow/mcp",
         "https://api.seiche.info/riptide/mcp",
@@ -112,6 +113,10 @@ def test_openapi_is_only_advertised_for_real_rest_descriptions():
         ),
         "https://narcoscope.com/api/v1": (
             "https://narcoscope.com/openapi.json",
+            "application/json",
+        ),
+        "https://trade-safety.liquilens.in/v1/check": (
+            "https://trade-safety.liquilens.in/openapi.json",
             "application/json",
         ),
     }

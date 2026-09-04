@@ -49,7 +49,7 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["evidence_carrier_browser_verifier"] == (
         "https://beepboop2025.github.io/liquilens-evidence-carrier/")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
-    assert card["updated"] == "2026-09-02"
+    assert card["updated"] == "2026-09-05"
     assert card["access"]["api_catalog_discovery"] == (
         "https://liquilens.in/.well-known/api-catalog")
     assert card["access"]["daily_articles"] == "https://liquilens.in/articles/"
@@ -235,7 +235,7 @@ def test_catalog_obeys_the_ard_envelope():
     catalog = _catalog()
     assert catalog["specVersion"] == "1.0"
     assert catalog["host"]["displayName"] == "LiquiLens"
-    assert len(catalog["entries"]) == 17
+    assert len(catalog["entries"]) == 18
 
     identifiers = set()
     for entry in catalog["entries"]:
@@ -299,7 +299,7 @@ def test_mcp_card_and_nested_product_line_are_current():
                  "crypto_exposure_board"):
         assert tool in mcp["capabilities"]
     assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.11.1"
-    assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.9.0"
+    assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.10.0"
     assert entries["urn:air:liquilens.in:openapi:failure-radar"]["version"] == (
         "1.0.0")
     assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
@@ -441,8 +441,8 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
     entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
 
     undertow = entries["urn:air:liquilens.in:catalog:undertow"]
-    assert undertow["version"] == "1.9.0"
-    assert undertow["updatedAt"] == "2026-08-29T15:24:41Z"
+    assert undertow["version"] == "1.10.0"
+    assert undertow["updatedAt"] == "2026-09-02T00:00:00Z"
     assert undertow["capabilities"] == [
         "agent_access_status",
         "depth_episodes",
@@ -450,6 +450,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
         "latest_article",
         "liquidity_tiers",
         "sealed_record",
+        "trade_safety_exit_context",
         "unwind_watch",
         "venue_concentration",
         "venue_price_reconciliation",
@@ -476,7 +477,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
             "productCard",
         )
     } == {
-        "publicToolCount": 9,
+        "publicToolCount": 10,
         "subscriberToolCount": 8,
         "publicPromptCount": 3,
         "publicResourceCount": 0,
@@ -679,15 +680,16 @@ def test_sibling_product_cards_match_the_catalog_contracts():
             undertow["public_resources"],
         ),
     } == {
-        "version": "1.9.0",
+        "version": "1.10.0",
         "catalog": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
         "mcp": "https://api.seiche.info/undertow/mcp",
         "server": "io.github.beepboop2025/undertow",
         "protocols": [
             "2026-07-28", "2025-11-25", "2025-06-18", "2025-03-26",
         ],
-        "counts": (9, 3, 0),
+        "counts": (10, 3, 0),
     }
+    assert undertow["trade_safety_tool"] == "trade_safety_exit_context"
 
     palimpsest = siblings["Palimpsest"]
     assert palimpsest["version"] == "1.9.3"

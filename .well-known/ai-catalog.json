@@ -245,7 +245,7 @@
       "displayName": "Undertow Market-Liquidity Catalog",
       "type": "application/ai-catalog+json",
       "url": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
-      "description": "Sibling catalog with nine public read-only tools and three prompt templates for cross-market liquidity tiers, live crypto exit costs, venue concentration, depth collapses, and the sealed calls record.",
+      "description": "Sibling catalog with ten public read-only tools and three prompt templates for cross-market liquidity tiers, live crypto exit costs, venue concentration, depth collapses, Trade Safety exit context, and the sealed calls record.",
       "tags": [
         "market liquidity",
         "exit cost",
@@ -263,6 +263,7 @@
         "latest_article",
         "liquidity_tiers",
         "sealed_record",
+        "trade_safety_exit_context",
         "unwind_watch",
         "venue_concentration",
         "venue_price_reconciliation"
@@ -279,11 +280,11 @@
         "market_liquidity_briefing"
       ],
       "resourceTemplates": [],
-      "version": "1.9.0",
-      "updatedAt": "2026-08-29T15:24:41Z",
+      "version": "1.10.0",
+      "updatedAt": "2026-09-02T00:00:00Z",
       "metadata": {
         "productUrl": "https://liquilens-undertow.com",
-        "publicToolCount": 9,
+        "publicToolCount": 10,
         "subscriberToolCount": 8,
         "publicPromptCount": 3,
         "publicResourceCount": 0,
@@ -292,13 +293,13 @@
         "openapi": "https://api.seiche.info/undertow/x402/openapi.json",
         "productCard": "https://liquilens-undertow.com/product-card.json",
         "apiCatalog": "https://liquilens-undertow.com/.well-known/api-catalog",
-        "apiCatalogSourceCommit": "b22faf5bd6bcfff42eb532efa87ef47bb5e0b14c",
-        "apiCatalogCoreProofCommit": "295abe7a6194518b1eafcd14e9d3f171777283eb",
-        "apiCatalogSiteCommit": "f32799cf672ca694924ac4261344b303e9afe34d",
-        "apiCatalogWorkerVersion": "403eef54-1c52-40ba-a503-a8ddc6a4769f",
-        "apiCatalogSha256": "sha256:11819229f11a80bb1dd280a76feeaef4929e9caf28bde2a0bc78eb48e0cb6b7e",
+        "apiCatalogSourceCommit": "0efb594c7f824478deec74da9e6ebda622434d21",
+        "apiCatalogCoreProofCommit": "724b445ca57b8f48793d29cda45d95f62088082a",
+        "apiCatalogSiteCommit": "9d32a5d7b1eac390b5da643b5151c15ce54ad9a5",
+        "apiCatalogSha256": "sha256:bffb6a7626d066cdb5293cc28eca465baaae99974ef951eb3280c67501cc5e84",
+        "aiCatalogSha256": "sha256:536ef933e5ec70799263b0a66b5c90e5f4ab84a27b4df793b4ae86b74e533491",
         "apiCatalogUpgradeState": "live-externally-verified",
-        "apiCatalogVerifiedAt": "2026-08-29T15:24:41Z",
+        "apiCatalogVerifiedAt": "2026-09-04T19:37:30Z",
         "telegramBot": "https://t.me/Undertow_LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityCryptoDesk"
       }
@@ -504,7 +505,7 @@
         "When should LiquiLens institution context participate in a pre-trade policy?"
       ],
       "version": "1.0.0",
-      "updatedAt": "2026-09-02T05:14:26.182966Z",
+      "updatedAt": "2026-09-04T22:10:51Z",
       "metadata": {
         "access": "public-open-contract",
         "license": "Apache-2.0",
@@ -521,9 +522,86 @@
         "specification": "https://liquilens.in/protocol/trade-safety/specification.md",
         "adoptionPlan": "https://liquilens.in/protocol/trade-safety/adoption-plan.md",
         "offlineVerifierRegistry": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.18.0",
-        "gatewayStatus": "deployable sandbox artifact and operator-side paper guard published; no public hosted gateway",
+        "gatewayStatus": "public read-only sandbox gateway 0.2.0; x402 disabled; no broker credentials, order submission, routing, custody, settlement, or execution surface",
         "orderGuardStatus": "paper-only; a fresh exact HMAC-authenticated pass receipt is required; live mode fails closed",
-        "hostedApi": "none"
+        "hostedApi": "https://trade-safety.liquilens.in/v1/check",
+        "hostedCapabilities": "https://trade-safety.liquilens.in/v1/capabilities",
+        "hostedOpenApi": "https://trade-safety.liquilens.in/openapi.json",
+        "hostedMcp": "https://trade-safety.liquilens.in/mcp",
+        "hostedHealth": "https://trade-safety.liquilens.in/healthz",
+        "gatewayVersion": "0.2.0",
+        "gatewaySourceRevision": "5f46ff09288a8ee1024715db75615ab5882465fa",
+        "gatewayOciImage": "ghcr.io/beepboop2025/liquilens-trade-safety-gateway@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762",
+        "x402Access": "disabled",
+        "alpacaPaperAdapter": "source-only paper reference; not deployed in the public gateway"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:mcp:trade-safety",
+      "displayName": "LiquiLens Trade Safety Gateway",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+        "name": "liquilens-trade-safety-gateway",
+        "title": "LiquiLens Trade Safety — read-only sandbox",
+        "description": "Assess one exact proposed order against server-owned evidence and policy limits. The gateway cannot recommend, route, submit, custody, settle, or execute an order.",
+        "version": "0.2.0",
+        "repository": {
+          "url": "https://github.com/beepboop2025/liquilens-evidence-carrier",
+          "source": "github"
+        },
+        "websiteUrl": "https://liquilens.in/protocol/trade-safety/",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://trade-safety.liquilens.in/mcp"
+          }
+        ]
+      },
+      "description": "Two public read-only tools expose the sandbox authority contract and produce short-lived assessment receipts from mandatory Seiche and Undertow context plus conditional LiquiLens context. x402 and every execution capability remain disabled.",
+      "tags": [
+        "AI trading agents",
+        "pre-trade controls",
+        "Trade Safety",
+        "read-only MCP",
+        "sandbox"
+      ],
+      "capabilities": [
+        "assess_trade_safety",
+        "trade_safety_capabilities"
+      ],
+      "protocolVersions": [
+        "2026-07-28",
+        "2025-11-25"
+      ],
+      "prompts": [],
+      "resourceTemplates": [],
+      "representativeQueries": [
+        "Assess this exact proposed order against the public Trade Safety sandbox policy.",
+        "What authority, evidence sources, limits, and execution restrictions does the Trade Safety gateway expose?"
+      ],
+      "version": "0.2.0",
+      "updatedAt": "2026-09-04T22:10:51Z",
+      "metadata": {
+        "authentication": "none",
+        "access": "public-read-only-sandbox",
+        "publicToolCount": 2,
+        "executionToolCount": 0,
+        "x402Access": "disabled",
+        "sourceRevision": "5f46ff09288a8ee1024715db75615ab5882465fa",
+        "ociImage": "ghcr.io/beepboop2025/liquilens-trade-safety-gateway@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762",
+        "openapi": "https://trade-safety.liquilens.in/openapi.json",
+        "capabilitiesEndpoint": "https://trade-safety.liquilens.in/v1/capabilities",
+        "healthEndpoint": "https://trade-safety.liquilens.in/healthz",
+        "canExecute": false,
+        "canRecommend": false,
+        "canAllocateCapital": false,
+        "canRouteOrder": false,
+        "canCustody": false,
+        "canSettle": false,
+        "hasBrokerCredentials": false,
+        "hasOrderSubmission": false,
+        "alpacaPaperAdapter": "source-only paper reference; not deployed in this gateway"
       }
     },
     {

@@ -41,14 +41,29 @@ def test_adjacent_products_are_individually_discoverable():
 
 
 def test_undertow_rfc9727_catalog_is_bound_to_live_deployment_proof():
-    metadata = ENTRIES["urn:air:liquilens.in:catalog:undertow"]["metadata"]
+    entry = ENTRIES["urn:air:liquilens.in:catalog:undertow"]
+    metadata = entry["metadata"]
+    assert entry["version"] == "1.10.0"
+    assert "trade_safety_exit_context" in entry["capabilities"]
+    assert metadata["publicToolCount"] == 10
     assert metadata["apiCatalogUpgradeState"] == "live-externally-verified"
+    assert metadata["apiCatalogSourceCommit"] == (
+        "0efb594c7f824478deec74da9e6ebda622434d21"
+    )
+    assert metadata["apiCatalogCoreProofCommit"] == (
+        "724b445ca57b8f48793d29cda45d95f62088082a"
+    )
     assert metadata["apiCatalogSiteCommit"] == (
-        "f32799cf672ca694924ac4261344b303e9afe34d")
-    assert metadata["apiCatalogWorkerVersion"] == (
-        "403eef54-1c52-40ba-a503-a8ddc6a4769f")
+        "9d32a5d7b1eac390b5da643b5151c15ce54ad9a5"
+    )
+    assert "apiCatalogWorkerVersion" not in metadata
     assert metadata["apiCatalogSha256"] == (
-        "sha256:11819229f11a80bb1dd280a76feeaef4929e9caf28bde2a0bc78eb48e0cb6b7e")
+        "sha256:bffb6a7626d066cdb5293cc28eca465baaae99974ef951eb3280c67501cc5e84"
+    )
+    assert metadata["aiCatalogSha256"] == (
+        "sha256:536ef933e5ec70799263b0a66b5c90e5f4ab84a27b4df793b4ae86b74e533491"
+    )
+    assert metadata["apiCatalogVerifiedAt"] == "2026-09-04T19:37:30Z"
 
 
 def test_narcoscope_exposes_the_live_host_and_active_registry_release():

@@ -122,7 +122,17 @@ Canonical Trade Safety contracts:
 - Normative specification: https://liquilens.in/protocol/trade-safety/specification.md
 - Infrastructure and adoption plan: https://liquilens.in/protocol/trade-safety/adoption-plan.md
 
-The released Evidence Carrier 0.18.0 package and CLI can issue or verify local receipts; its Python package also exposes synchronous and asynchronous operator-side paper-order guards. Only a fresh, exact, HMAC-authenticated `pass` receipt can reach the protected paper callback. The offline read-only MCP server exposes receipt verification, not issuance, and the public gateway artifact remains a locked sandbox. Live mode fails closed until durable broker idempotency and uncertain-outcome reconciliation exist. No public hosted Trade Safety API, broker credential, preview endpoint or order-execution endpoint is advertised. An adopter makes the receipt mandatory by withholding raw order tools and broker credentials from the agent, then verifying the receipt inside the caller-owned OMS or gateway before its own action.
+The released Evidence Carrier 0.18.0 package and CLI can issue or verify local receipts; its Python package also exposes synchronous and asynchronous operator-side paper-order guards. Only a fresh, exact, HMAC-authenticated `pass` receipt can reach the protected paper callback. The offline read-only MCP server exposes receipt verification, not issuance. Live mode fails closed until durable broker idempotency and uncertain-outcome reconciliation exist. An adopter makes the receipt mandatory by withholding raw order tools and broker credentials from the agent, then verifying the receipt inside the caller-owned OMS or gateway before its own action.
+
+The public Trade Safety Gateway 0.2.0 is a read-only sandbox at https://trade-safety.liquilens.in/. Its MCP endpoint exposes only `assess_trade_safety` and `trade_safety_capabilities`; the REST check and capability endpoints are public. x402 is disabled. The gateway has no broker credentials, preview endpoint, order-submission endpoint, routing, custody, settlement or execution authority, and cannot recommend or allocate capital. It runs exact source revision `5f46ff09288a8ee1024715db75615ab5882465fa` from OCI image `ghcr.io/beepboop2025/liquilens-trade-safety-gateway@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762`. The Alpaca adapter in that source is a paper-only reference package; it is not installed in the public gateway, no broker credentials are present, and no paper or live orders are submitted.
+
+Public Trade Safety Gateway endpoints:
+
+- MCP: https://trade-safety.liquilens.in/mcp
+- REST assessment: https://trade-safety.liquilens.in/v1/check
+- Capabilities and authority boundary: https://trade-safety.liquilens.in/v1/capabilities
+- OpenAPI: https://trade-safety.liquilens.in/openapi.json
+- Health: https://trade-safety.liquilens.in/healthz
 
 Externally exercised Evidence Carrier consumer paths:
 
@@ -165,7 +175,7 @@ The scoring boundary is fixed: generative features may explain served evidence, 
 ## Related products
 
 - Seiche 0.11.1, https://seiche.info/: US dollar funding stress, a granular USD money-market desk, a licence-aware global atlas and bounded money/FX/macro-capital context built from public sources. Its hosted MCP at https://api.seiche.info/mcp exposes exactly eleven anonymous read-only tools, four visible prompts and zero resources, including money_market_context and world_markets_context. Discovery: https://api.seiche.info/.well-known/mcp.json. Install: seiche==0.11.1 from https://pypi.org/project/seiche/0.11.1/. Official Registry: https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.11.1. World-markets evidence: https://seiche.info/markets/ and https://api.seiche.info/api/v2/world-markets
-- Undertow 1.9.0, https://liquilens-undertow.com/: market-liquidity tiers, depth concentration, and estimated exit cost by venue and position size. Its hosted MCP at https://api.seiche.info/undertow/mcp exposes exactly nine anonymous public read-only tools, three visible prompts and zero resources; eight additional tools require a subscriber token.
+- Undertow 1.10.0, https://liquilens-undertow.com/: market-liquidity tiers, depth concentration, estimated exit cost by venue and position size, and request-bound Trade Safety exit context. Its hosted MCP at https://api.seiche.info/undertow/mcp exposes exactly ten anonymous public read-only tools, three visible prompts and zero resources; eight additional tools require a subscriber token.
 - My Quant Doesn't Speak English, https://myquantdoesntspeakenglish.com/: every Seiche, LiquiLens, and Undertow dispatch in one editorial wire, plus original investigations.
 - Groundcheck, https://groundcheck.seiche.info/: live-source claim and citation verification.
 

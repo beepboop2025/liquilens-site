@@ -1,4 +1,4 @@
-"""Trade Safety v1 stays byte-exact, discoverable, and honest about hosting."""
+"""Trade Safety v1 and its read-only gateway stay exact and honest."""
 
 from __future__ import annotations
 
@@ -123,13 +123,74 @@ def test_agent_catalog_has_a_dedicated_non_executing_trade_safety_entry():
     )
     assert entry["metadata"]["requiredProducts"] == "Seiche, Undertow"
     assert entry["metadata"]["conditionalProduct"] == "LiquiLens"
-    assert entry["metadata"]["hostedApi"] == "none"
-    assert "no public hosted gateway" in entry["metadata"]["gatewayStatus"]
+    assert entry["metadata"]["hostedApi"] == (
+        "https://trade-safety.liquilens.in/v1/check"
+    )
+    assert entry["metadata"]["hostedMcp"] == (
+        "https://trade-safety.liquilens.in/mcp"
+    )
+    assert entry["metadata"]["gatewayVersion"] == "0.2.0"
+    assert entry["metadata"]["gatewaySourceRevision"] == (
+        "5f46ff09288a8ee1024715db75615ab5882465fa"
+    )
+    assert entry["metadata"]["gatewayOciImage"].endswith(
+        "@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762"
+    )
+    assert entry["metadata"]["x402Access"] == "disabled"
+    assert "public read-only sandbox" in entry["metadata"]["gatewayStatus"]
     assert "paper-only" in entry["metadata"]["orderGuardStatus"]
     assert "live mode fails closed" in entry["metadata"]["orderGuardStatus"]
+    assert "not deployed" in entry["metadata"]["alpacaPaperAdapter"]
     authority = entry["metadata"]["financialAuthority"]
     for forbidden_authority in ("cannot execute", "recommend", "allocate capital"):
         assert forbidden_authority in authority
+
+
+def test_agent_catalog_exposes_only_the_read_only_trade_safety_mcp_boundary():
+    catalog = json.loads(_read(".well-known/ai-catalog.json"))
+    entry = next(
+        row
+        for row in catalog["entries"]
+        if row["identifier"] == "urn:air:liquilens.in:mcp:trade-safety"
+    )
+
+    assert entry["version"] == "0.2.0"
+    assert entry["data"]["name"] == "liquilens-trade-safety-gateway"
+    assert entry["data"]["remotes"] == [
+        {
+            "type": "streamable-http",
+            "url": "https://trade-safety.liquilens.in/mcp",
+        }
+    ]
+    assert entry["capabilities"] == [
+        "assess_trade_safety",
+        "trade_safety_capabilities",
+    ]
+    assert entry["protocolVersions"] == ["2026-07-28", "2025-11-25"]
+    assert entry["prompts"] == []
+    assert entry["resourceTemplates"] == []
+    metadata = entry["metadata"]
+    assert metadata["publicToolCount"] == 2
+    assert metadata["executionToolCount"] == 0
+    assert metadata["x402Access"] == "disabled"
+    assert metadata["sourceRevision"] == (
+        "5f46ff09288a8ee1024715db75615ab5882465fa"
+    )
+    assert metadata["ociImage"].endswith(
+        "@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762"
+    )
+    for key in (
+        "canExecute",
+        "canRecommend",
+        "canAllocateCapital",
+        "canRouteOrder",
+        "canCustody",
+        "canSettle",
+        "hasBrokerCredentials",
+        "hasOrderSubmission",
+    ):
+        assert metadata[key] is False
+    assert "not deployed" in metadata["alpacaPaperAdapter"]
 
 
 def test_human_and_machine_surfaces_link_every_trade_safety_contract():
@@ -148,7 +209,11 @@ def test_human_and_machine_surfaces_link_every_trade_safety_contract():
         "hold",
         "unavailable",
         "No execution authority",
-        "No public hosted Trade Safety API",
+        "public gateway is a read-only sandbox",
+        "x402 is disabled",
+        "5f46ff09288a8ee1024715db75615ab5882465fa",
+        "2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762",
+        "paper-only reference adapter",
         "required <code>not_applicable</code> section",
     ):
         assert phrase in page
@@ -162,11 +227,28 @@ def test_human_and_machine_surfaces_link_every_trade_safety_contract():
     sitemap = _read("sitemap.xml")
     assert "https://liquilens.in/protocol/trade-safety/" in llms
     assert "https://liquilens.in/protocol/trade-safety/" in sitemap
-    assert "No public hosted Trade Safety API" in llms
+    assert "https://trade-safety.liquilens.in/v1/check" in llms
+    assert "x402 is disabled" in llms
     assert "offline read-only MCP server exposes receipt verification, not issuance" in llms
 
+    developers = _read("developers/index.html")
+    assert "https://trade-safety.liquilens.in/mcp" in developers
+    assert "The Alpaca paper adapter is source-only" in developers
+    assert 'data-event="mcp_endpoint_copied"' in developers
+    assert 'data-event="openapi_opened"' in developers
+    trade_safety_cards = developers[
+        developers.index("Trade Safety 0.2.0") : developers.index("Private book")
+    ]
+    assert trade_safety_cards.count('data-event="') == 2
+    assert trade_safety_cards.count('data-event="mcp_endpoint_copied"') == 1
+    assert trade_safety_cards.count('data-event="openapi_opened"') == 1
+    capabilities_link = trade_safety_cards[
+        trade_safety_cards.index('href="https://trade-safety.liquilens.in/v1/capabilities"') :
+    ]
+    assert capabilities_link.split(">", 1)[0].count("data-event") == 0
 
-def test_product_card_exposes_contracts_without_inventing_a_hosted_api():
+
+def test_product_card_exposes_the_read_only_gateway_without_execution_authority():
     access = json.loads(_read("product-card.json"))["access"]
     assert access["trade_safety_receipt"] == (
         "https://liquilens.in/protocol/trade-safety/"
@@ -174,17 +256,53 @@ def test_product_card_exposes_contracts_without_inventing_a_hosted_api():
     assert access["trade_safety_receipt_schema"].endswith(
         "/protocol/liquilens-trade-safety-receipt-v1.schema.json"
     )
-    assert "No public hosted gateway" in access["trade_safety_gateway_status"]
-    assert not any(
-        key in access
-        for key in ("trade_safety_api", "trade_safety_openapi", "trade_safety_mcp")
+    assert access["trade_safety_api"] == (
+        "https://trade-safety.liquilens.in/v1/check"
     )
+    assert access["trade_safety_openapi"] == (
+        "https://trade-safety.liquilens.in/openapi.json"
+    )
+    assert access["trade_safety_mcp"] == (
+        "https://trade-safety.liquilens.in/mcp"
+    )
+    assert access["trade_safety_gateway_version"] == "0.2.0"
+    assert access["trade_safety_gateway_source_revision"] == (
+        "5f46ff09288a8ee1024715db75615ab5882465fa"
+    )
+    assert access["trade_safety_x402_status"] == "disabled"
+    assert "read-only sandbox" in access["trade_safety_gateway_status"].lower()
+    assert all(
+        value is False
+        for value in access["trade_safety_financial_authority"].values()
+    )
+    assert "not deployed" in access["trade_safety_alpaca_adapter_status"]
 
 
-def test_rfc9727_catalog_does_not_claim_the_unhosted_gateway():
-    api_catalog = _read(".well-known/api-catalog.json").lower()
-    assert "trade-safety" not in api_catalog
-    assert "trade_safety" not in api_catalog
+def test_rfc9727_catalog_exposes_only_the_real_gateway_surfaces():
+    catalog = json.loads(_read(".well-known/api-catalog.json"))
+    by_anchor = {row["anchor"]: row for row in catalog["linkset"]}
+    assert by_anchor["https://trade-safety.liquilens.in/v1/check"][
+        "service-desc"
+    ] == [
+        {
+            "href": "https://trade-safety.liquilens.in/openapi.json",
+            "type": "application/json",
+        }
+    ]
+    assert by_anchor["https://trade-safety.liquilens.in/mcp"]["status"] == [
+        {
+            "href": "https://trade-safety.liquilens.in/healthz",
+            "type": "application/json",
+        }
+    ]
+    serialized = json.dumps(
+        [
+            by_anchor["https://trade-safety.liquilens.in/v1/check"],
+            by_anchor["https://trade-safety.liquilens.in/mcp"],
+        ]
+    ).lower()
+    assert "x402" not in serialized
+    assert "order" not in serialized
 
 
 def test_protocol_catalog_binds_v0180_release_and_stable_trade_safety_hashes():

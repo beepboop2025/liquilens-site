@@ -81,6 +81,70 @@
       ]
     },
     {
+      "anchor": "https://trade-safety.liquilens.in/v1/check",
+      "service-desc": [
+        {
+          "href": "https://trade-safety.liquilens.in/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://liquilens.in/protocol/trade-safety/",
+          "type": "text/html"
+        },
+        {
+          "href": "https://trade-safety.liquilens.in/docs",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://liquilens.in/.well-known/ai-catalog.json",
+          "type": "application/ai-catalog+json"
+        },
+        {
+          "href": "https://liquilens.in/product-card.json",
+          "type": "application/json"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://trade-safety.liquilens.in/healthz",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://trade-safety.liquilens.in/mcp",
+      "service-doc": [
+        {
+          "href": "https://liquilens.in/protocol/trade-safety/",
+          "type": "text/html"
+        },
+        {
+          "href": "https://liquilens.in/developers/",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://liquilens.in/.well-known/ai-catalog.json",
+          "type": "application/ai-catalog+json"
+        },
+        {
+          "href": "https://trade-safety.liquilens.in/v1/capabilities",
+          "type": "application/json"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://trade-safety.liquilens.in/healthz",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
       "anchor": "https://api.seiche.info/api",
       "service-desc": [
         {

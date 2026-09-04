@@ -115,7 +115,7 @@ def test_api_catalog_self_anchor_registers_the_three_product_catalogs():
         for linkset in api_catalog["linkset"]
         if linkset.get("anchor") == DEFAULT_API_CATALOG_URL
     ]
-    assert len(api_catalog["linkset"]) == 17
+    assert len(api_catalog["linkset"]) == 19
     assert len(self_links) == 1
     assert self_links[0]["api-catalog"] == [
         {
