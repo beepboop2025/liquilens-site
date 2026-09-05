@@ -1,7 +1,9 @@
 export const API = "https://api.liquilens.in/api/experimental/v1/banking";
 const STATUSES = new Set(["observed", "stale", "historical", "unavailable"]);
 const LABELS = {observed: "Accepted filing evidence", stale: "Stale evidence", historical: "Historical evidence", unavailable: "Evidence unavailable"};
-const METRICS = ["gnpa_pct", "nnpa_pct", "crar_pct", "pcr_reported_pct", "pcr_including_technical_writeoffs_pct", "pcr_excluding_technical_writeoffs_pct"];
+const CORE_METRICS = ["gnpa_pct", "nnpa_pct", "crar_pct"];
+const METRICS = [...CORE_METRICS, "cet1_pct", "tier1_pct", "pcr_reported_pct", "pcr_including_technical_writeoffs_pct", "pcr_excluding_technical_writeoffs_pct", "casa_pct", "lcr_pct", "top20_depositors_pct", "top20_npa_pct", "deposits", "advances", "gross_loan_portfolio"];
+const sourceLinks = values => (Array.isArray(values) ? values : []).filter(url => {try {const u = new URL(url); return u.protocol === "https:" && !u.username && !u.password;} catch {return false;}});
 
 export function amount(value, unit) {
   if (typeof value !== "number" || !Number.isFinite(value)) return "Not disclosed";
@@ -16,14 +18,18 @@ export function reviewModel(data) {
     name: data.name,
     status: LABELS[data.status],
     clock: `Reporting period: ${data.period_end || "unavailable"}. Evidence cutoff: ${data.as_of || "unavailable"}. Captured: ${data.retrieved_at || data.available_at || "not recorded"}.`,
-    metrics: METRICS.filter(key => !key.startsWith("pcr_") || data.metrics?.[key]?.value != null).map(key => {
+    metrics: METRICS.filter(key => CORE_METRICS.includes(key) || data.metrics?.[key]?.value != null).map(key => {
       const metric = data.metrics?.[key];
       return {label: metric?.label || key.replaceAll("_", " "), value: metric?.status === "observed" ? amount(metric.value, metric.unit) : "Not disclosed", basis: metric?.basis || ""};
     }),
     movement: data.npa_movement || {status: "unavailable", reason: "No complete movement table in this record."},
     regulatory: `Regulatory comparison: ${String(data.regulatory_comparison?.status || "unavailable").replaceAll("_", " ")}. ${data.regulatory_comparison?.note || "This review does not establish an RBI supervisory decision."}`,
     limits: [...(data.interpretation_limits || []), ...(data.comparability_notes || []), ...(data.next_disclosures || []).map(item => `Next disclosure to check: ${item}`)],
-    sources: (data.sources || []).filter(url => {try {const u = new URL(url); return u.protocol === "https:" && !u.username && !u.password;} catch {return false;}}),
+    sources: sourceLinks(data.sources),
+    history: (Array.isArray(data.history) ? data.history : []).slice(-8).map(row => ({
+      period: row.period_end || "Not recorded", available: row.available_at || "Not recorded", source: sourceLinks(row.sources)[0],
+      values: CORE_METRICS.map(key => row.metrics?.[key]?.status === "observed" ? amount(row.metrics[key].value, row.metrics[key].unit) : "Not disclosed"),
+    })),
   };
 }
 

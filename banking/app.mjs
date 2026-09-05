@@ -42,6 +42,15 @@ function render(data, url) {
     ["Closing gross NPAs", movement.closing_gnpa], ["Residual", movement.residual], ["Rounding tolerance", movement.rounding_tolerance],
   ];
   byId("movement").replaceChildren(...rows.flatMap(([label, value]) => [node("dt", label), node("dd", amount(value, movement.amount_unit))]));
+  byId("history-summary").textContent = `Disclosed history (${model.history.length} periods)`;
+  byId("history-table").replaceChildren(...model.history.map(row => {
+    const tr = node("tr", ""); const date = node("th", ""); date.scope = "row";
+    if (row.source) {const link = node("a", row.period); link.href = row.source; link.target = "_blank"; link.rel = "noopener noreferrer"; date.append(link);}
+    else date.append(node("span", row.period));
+    date.append(node("small", `Known from ${row.available}`));
+    tr.append(date, ...row.values.map(value => node("td", value))); return tr;
+  }));
+  byId("history").hidden = !model.history.length;
   byId("regulatory-status").textContent = model.regulatory;
   byId("limits").replaceChildren(...model.limits.map(item => node("li", item)));
   byId("sources").replaceChildren(...model.sources.map((url, i) => {
@@ -56,7 +65,7 @@ byId("bank-form").addEventListener("submit", async event => {
   setBusy(true); result.hidden = true; status.textContent = "Reading the latest accepted filing record…";
   const url = `${API}/institutions/${encodeURIComponent(byId("bank").value)}?include_history=true`;
   try {render(await request(url), url); status.textContent = "Review loaded. Check the reporting date and evidence state below."; track("live_tool_run");}
-  catch (error) {status.textContent = error.name === "AbortError" ? "The evidence request timed out. Try again shortly." : error.message;}
+  catch (error) {status.textContent = error.name === "AbortError" ? "The evidence request timed out. Try again shortly." : error.message === "Failed to fetch" ? "The evidence service could not be reached. Try again shortly." : error.message;}
   finally {setBusy(false);}
 });
 byId("bank").addEventListener("change", () => {result.hidden = true; status.textContent = "Choose Read evidence to load this bank.";});
