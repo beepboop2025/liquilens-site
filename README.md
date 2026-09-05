@@ -12,6 +12,13 @@ LiquiLens monitors public signs of financial stress at banks, NBFCs, co-operativ
 - Search, social, and machine-readable discovery files
 - Links to the public API and MCP interface
 
+The [developer guide](https://liquilens.in/developers/#research-recipes) includes
+downloadable Python bank-review and funding-context recipes, named client
+configurations, and a manual n8n bank-review workflow. The Python file uses the
+standard library and needs no API key or LLM. The n8n guide records its tested
+contract and any native execution gap. Recipes preserve the returned evidence,
+source dates and limitations; none grants credit or execution authority.
+
 The private scoring engine, customer data connectors, and production underwriting workflows do not live in this repository. The interactive demonstration is available by request at [demo.liquilens.in](https://demo.liquilens.in), and sign-in is required.
 
 ## Preview locally

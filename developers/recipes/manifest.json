@@ -1,0 +1,17 @@
+{
+  "schema": "liquilens.research-recipes.v1",
+  "version": "1.0.0",
+  "clientInfo": {"name": "liquilens-research-recipes", "version": "1.0.0"},
+  "python": ">=3.11",
+  "authentication": "none",
+  "model_required": false,
+  "script": "financial_research.py",
+  "recipes": [
+    {"id": "bank-review", "endpoint": "https://api.liquilens.in/mcp", "tools": ["banking_specialisation_coverage", "bank_asset_quality_review"], "example": "python3 financial_research.py bank-review --slug cosmos-ucb"},
+    {"id": "funding-brief", "endpoint": "https://api.seiche.info/mcp", "tools": ["money_market_context"], "example": "python3 financial_research.py funding-brief"}
+  ],
+  "clients": {"cursor": "cursor-mcp.json", "codex": "codex-mcp.toml"},
+  "limits": {"timeout_seconds_per_request": 20, "maximum_response_bytes": 2097152, "automatic_retries": 0},
+  "verification": {"flag": "--verification", "traffic_class": "synthetic", "user_agent": "LiquiLens-Operator-Growth-Audit/1.0"},
+  "authority": {"execution": false, "credit_rating": false, "recommendation": false}
+}

@@ -1,0 +1,6 @@
+{
+  "mcpServers": {
+    "liquilens": {"url": "https://api.liquilens.in/mcp"},
+    "seiche": {"url": "https://api.seiche.info/mcp"}
+  }
+}

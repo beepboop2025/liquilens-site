@@ -1,0 +1,85 @@
+{
+  "name": "LiquiLens: read one bank's asset-quality evidence",
+  "active": false,
+  "nodes": [
+    {
+      "id": "manual-start",
+      "name": "Run a bank review",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 240],
+      "parameters": {}
+    },
+    {
+      "id": "bank-review",
+      "name": "Read bank asset-quality evidence",
+      "type": "@n8n/n8n-nodes-langchain.mcpClient",
+      "typeVersion": 1.1,
+      "position": [260, 240],
+      "parameters": {
+        "serverTransport": "httpStreamable",
+        "endpointUrl": "https://api.liquilens.in/mcp",
+        "authentication": "none",
+        "tool": {
+          "__rl": true,
+          "mode": "id",
+          "value": "bank_asset_quality_review"
+        },
+        "inputMode": "json",
+        "jsonInput": "{\n  \"slug\": \"cosmos-ucb\",\n  \"include_history\": false\n}",
+        "options": {
+          "timeout": 20000,
+          "convertToBinary": false
+        }
+      }
+    },
+    {
+      "id": "preserve-evidence",
+      "name": "Keep the complete research record",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 240],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const items = $input.all();\nif (items.length !== 1) throw new Error('Expected one manually requested bank review');\nconst response = items[0].json;\nif (response.error !== undefined || response.isError === true) {\n  throw new Error('The MCP request failed; no completed review is available');\n}\nlet evidence = response.structuredContent;\nif (evidence === undefined) {\n  const block = response.content?.find(item => item.type === 'text');\n  evidence = typeof block?.text === 'string' ? JSON.parse(block.text) : block?.text;\n}\nif (!evidence || Array.isArray(evidence) || evidence.schema !== 'liquilens.bank-specialisation.v1') {\n  throw new Error('Expected the bank-specialisation evidence contract');\n}\nif (typeof evidence.slug !== 'string' || !evidence.slug ||\n    !['observed', 'stale', 'historical', 'unavailable'].includes(evidence.status)) {\n  throw new Error('Bank identity or evidence status is missing');\n}\nif (evidence.scope !== 'research' || evidence.score_authority !== false ||\n    evidence.can_authorize_credit !== false) {\n  throw new Error('Expected research evidence without score or credit authority');\n}\n// Keep dates, nulls, sources, eligibility flags and interpretation limits unchanged.\nreturn [{ json: evidence }];"
+      }
+    },
+    {
+      "id": "setup-note",
+      "name": "Choose a covered bank",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-20, -80],
+      "parameters": {
+        "width": 390,
+        "height": 260,
+        "content": "## Read one bank's public evidence\nRun manually. No schedule, model, account or API key is needed for the LiquiLens request.\n\nThe example is Cosmos Co-operative Bank (`cosmos-ucb`), verified in the coverage tool on 2026-09-05. Edit the MCP node's JSON input to choose another covered slug. `banking_specialisation_coverage` lists covered banks.\n\nGuide: https://liquilens.in/developers/recipes/n8n-bank-review.md"
+      }
+    },
+    {
+      "id": "evidence-note",
+      "name": "Read the limits with the figures",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [410, -80],
+      "parameters": {
+        "width": 390,
+        "height": 260,
+        "content": "## Keep the evidence in context\nThe final node keeps the full record: reporting period, availability and retrieval dates, source documents, missing figures, interpretation limits and historical-evidence eligibility.\n\nObserved is a source status. It does not establish deposit safety, predict failure, or authorize credit. Historical, stale and unavailable states remain explicit.\n\nMCP Client 1.1 stops on tool errors. This workflow produces research output and sends no messages or orders."
+      }
+    }
+  ],
+  "connections": {
+    "Run a bank review": {
+      "main": [[{"node": "Read bank asset-quality evidence", "type": "main", "index": 0}]]
+    },
+    "Read bank asset-quality evidence": {
+      "main": [[{"node": "Keep the complete research record", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "tags": []
+}
