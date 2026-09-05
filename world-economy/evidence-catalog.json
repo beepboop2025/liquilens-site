@@ -5,7 +5,7 @@
   "name": "Liquidity Lab World Economy Evidence Catalog",
   "description": "A public catalog that routes questions to four independent evidence layers: Seiche for system-wide dollar funding and global money-market context, LiquiLens for bank and lender failure-risk screening, Undertow for market-liquidity and position-sized exit evidence, and Palimpsest for revision-safe China economy and information evidence. It is not a complete database of the world economy.",
   "url": "https://liquilens.in/world-economy/",
-  "dateModified": "2026-08-29",
+  "dateModified": "2026-09-05",
   "publisher": {
     "@type": "Organization",
     "@id": "https://liquilens.in/#org",
@@ -82,8 +82,8 @@
       "description": "A free public-data terminal for US dollar funding stress with a live regime, source-specific clocks, forward event odds, historical analogs, a granular USD money-market desk, a licence-aware global money-market atlas and bounded money, FX and macro-capital context. Registered markets, live coverage and validation support are reported as separate claims.",
       "url": "https://seiche.info/",
       "sameAs": "https://seiche.info/",
-      "dateModified": "2026-08-24",
-      "version": "0.11.1",
+      "dateModified": "2026-09-05",
+      "version": "0.12.3",
       "creator": {
         "@type": "Organization",
         "name": "Seiche",

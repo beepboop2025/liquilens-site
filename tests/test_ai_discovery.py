@@ -304,14 +304,14 @@ def test_mcp_card_and_nested_product_line_are_current():
     for tool in ("crypto_regime_board", "stablecoin_rails_board",
                  "crypto_exposure_board"):
         assert tool in mcp["capabilities"]
-    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.11.1"
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.12.3"
     assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.10.0"
     assert entries["urn:air:liquilens.in:openapi:failure-radar"]["version"] == (
         "1.0.0")
     assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
         "https://seiche.info/.well-known/ai-catalog.json")
     assert entries["urn:air:liquilens.in:catalog:seiche"]["metadata"][
-        "publicToolCount"] == 11
+        "publicToolCount"] == 12
     assert entries["urn:air:liquilens.in:catalog:seiche"]["metadata"][
         "globalMoneyMarketAtlas"] == (
             "https://api.seiche.info/api/v2/money-markets")
@@ -330,11 +330,12 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
     entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
     seiche = entries["urn:air:liquilens.in:catalog:seiche"]
 
-    assert seiche["version"] == "0.11.1"
-    assert seiche["updatedAt"] == "2026-08-24T14:52:00Z"
+    assert seiche["version"] == "0.12.3"
+    assert seiche["updatedAt"] == "2026-09-05T00:00:00Z"
     assert seiche["capabilities"] == [
         "latest_article",
         "funding_stress_now",
+        "trade_safety_risk_context",
         "historical_analogs",
         "proof_backtest",
         "data_health",
@@ -386,7 +387,7 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
             "liveVersionAuthority",
         )
     } == {
-        "publicToolCount": 11,
+        "publicToolCount": 12,
         "publicPromptCount": 4,
         "publicResourceCount": 0,
         "mcpServerName": "io.github.beepboop2025/seiche",
@@ -395,46 +396,44 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
         "apiCatalog": "https://api.seiche.info/api",
         "openapi": "https://api.seiche.info/api/openapi.json",
         "productCard": "https://seiche.info/product-card.json",
-        "pypiProject": "https://pypi.org/project/seiche/0.11.1/",
-        "pypiSpec": "seiche==0.11.1",
-        "releaseCommit": "0cd20bfd0a4d274c8bb8173f6fe59e2d2f5259db",
-        "signedTag": "v0.11.1",
-        "signedTagObject": "fc1742880be1be06837c5fc703b4ba5312ff4b2b",
+        "pypiProject": "https://pypi.org/project/seiche/0.12.3/",
+        "pypiSpec": "seiche==0.12.3",
+        "releaseCommit": "c12d746e5771dd68f8b8f0091211a922bf40b9d4",
+        "signedTag": "v0.12.3",
+        "signedTagObject": "b1f83e77b3fd72edc4f589c24f8921a3af4d1342",
         "pypiRun": (
-            "https://github.com/beepboop2025/seiche/actions/runs/"
-            "32758138386/attempts/2"
+            "https://github.com/beepboop2025/seiche/actions/runs/33989477712/attempts/1"
         ),
         "pypiWheelSha256": (
-            "sha256:01b5b770d88391d31ba406ca651ab5d6054b2e4c6f6c3cf6138f713f4374e4a1"
+            "sha256:385cebf7fb8ed79f543c900d883af77ca37ad91b8a4fd3bfad0220ebb0b3249f"
         ),
-        "pypiWheelBytes": 1101154,
+        "pypiWheelBytes": 1263498,
         "pypiSdistSha256": (
-            "sha256:0fa965b00f0c81a5f9ad8a5d66a4140523a90f962f3bdcf196fd884d89057a15"
+            "sha256:4b2ec737f173b5339b42aa1f85892b0c9683f7d3643524063cc8dcd797272974"
         ),
-        "pypiSdistBytes": 980967,
+        "pypiSdistBytes": 1137023,
         "staticRun": (
-            "https://github.com/beepboop2025/seiche/actions/runs/32758837757"
+            "https://github.com/beepboop2025/seiche/actions/runs/33989707597/attempts/1"
         ),
-        "staticDeployment": "https://699fdc4e.seiche.pages.dev",
+        "staticDeployment": "https://690dd420.seiche.pages.dev",
         "catalogSha256": (
-            "sha256:735516115752afebd3b8a3637a22f806ff8f592826381ce1bbe32ab5b7b5cc74"
+            "sha256:6a95b5eeceffb4ac3e269110f771256df20799d3df1e59c264cb29705c31423f"
         ),
         "productCardSha256": (
-            "sha256:1d382ad21d4fa8c35433f9270946d74dca592fb833c454c02cc3613a6c2edf08"
+            "sha256:fc66283d0967c114f454fd118c7ee3318d1f6dfded49d1653152e5285ded8591"
         ),
         "mcpDiscoverySha256": (
-            "sha256:1db329dbc3155a0a695a3ddf7e7dcd37d7edaea22d4898b97002cbf172c931fe"
+            "sha256:70041ae561bdc1b55af6ca40759f47c167ec9a4bfba0f202034bdb965482a262"
         ),
         "registryRun": (
-            "https://github.com/beepboop2025/seiche/actions/runs/32758834990"
+            "https://github.com/beepboop2025/seiche/actions/runs/33989678932/attempts/1"
         ),
         "registryVersion": (
-            "https://registry.modelcontextprotocol.io/v0.1/servers/"
-            "io.github.beepboop2025%2Fseiche/versions/0.11.1"
+            "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.12.3"
         ),
-        "registryPublishedAt": "2026-08-24T17:50:12.865984Z",
+        "registryPublishedAt": "2026-09-05T20:18:20.780312Z",
         "registryServerSha256": (
-            "sha256:2a7a82905c2466684fdf61de0862a5dbfb9b1d2703918c88a594d0017dd8b6f1"
+            "sha256:b882f3bd2ca7d2d08290c897a91c12ca7442e021c634279070d386008a7280db"
         ),
         "liveVersionAuthority": (
             "Initialize the linked MCP remote and compare serverInfo.version "
@@ -626,46 +625,45 @@ def test_sibling_product_cards_match_the_catalog_contracts():
             "live_version_authority",
         )
     } == {
-        "version": "0.11.1",
+        "version": "0.12.3",
         "ai_catalog": "https://seiche.info/.well-known/ai-catalog.json",
         "ai_catalog_sha256": (
-            "sha256:735516115752afebd3b8a3637a22f806ff8f592826381ce1bbe32ab5b7b5cc74"
+            "sha256:6a95b5eeceffb4ac3e269110f771256df20799d3df1e59c264cb29705c31423f"
         ),
         "product_card": "https://seiche.info/product-card.json",
         "product_card_sha256": (
-            "sha256:1d382ad21d4fa8c35433f9270946d74dca592fb833c454c02cc3613a6c2edf08"
+            "sha256:fc66283d0967c114f454fd118c7ee3318d1f6dfded49d1653152e5285ded8591"
         ),
         "mcp": "https://api.seiche.info/mcp",
         "mcp_discovery": "https://api.seiche.info/.well-known/mcp.json",
         "mcp_discovery_sha256": (
-            "sha256:1db329dbc3155a0a695a3ddf7e7dcd37d7edaea22d4898b97002cbf172c931fe"
+            "sha256:70041ae561bdc1b55af6ca40759f47c167ec9a4bfba0f202034bdb965482a262"
         ),
         "mcp_server_name": "io.github.beepboop2025/seiche",
         "api_catalog": "https://api.seiche.info/api",
         "openapi": "https://api.seiche.info/api/openapi.json",
-        "public_tools": 11,
+        "public_tools": 12,
         "public_prompts": 4,
         "public_resources": 0,
-        "pypi": "https://pypi.org/project/seiche/0.11.1/",
-        "pypi_spec": "seiche==0.11.1",
+        "pypi": "https://pypi.org/project/seiche/0.12.3/",
+        "pypi_spec": "seiche==0.12.3",
         "pypi_wheel_sha256": (
-            "sha256:01b5b770d88391d31ba406ca651ab5d6054b2e4c6f6c3cf6138f713f4374e4a1"
+            "sha256:385cebf7fb8ed79f543c900d883af77ca37ad91b8a4fd3bfad0220ebb0b3249f"
         ),
-        "pypi_wheel_bytes": 1101154,
+        "pypi_wheel_bytes": 1263498,
         "pypi_sdist_sha256": (
-            "sha256:0fa965b00f0c81a5f9ad8a5d66a4140523a90f962f3bdcf196fd884d89057a15"
+            "sha256:4b2ec737f173b5339b42aa1f85892b0c9683f7d3643524063cc8dcd797272974"
         ),
-        "pypi_sdist_bytes": 980967,
-        "signed_tag": "v0.11.1",
-        "signed_tag_object": "fc1742880be1be06837c5fc703b4ba5312ff4b2b",
-        "release_commit": "0cd20bfd0a4d274c8bb8173f6fe59e2d2f5259db",
-        "static_deployment": "https://699fdc4e.seiche.pages.dev",
+        "pypi_sdist_bytes": 1137023,
+        "signed_tag": "v0.12.3",
+        "signed_tag_object": "b1f83e77b3fd72edc4f589c24f8921a3af4d1342",
+        "release_commit": "c12d746e5771dd68f8b8f0091211a922bf40b9d4",
+        "static_deployment": "https://690dd420.seiche.pages.dev",
         "registry_version": (
-            "https://registry.modelcontextprotocol.io/v0.1/servers/"
-            "io.github.beepboop2025%2Fseiche/versions/0.11.1"
+            "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.12.3"
         ),
         "registry_server_sha256": (
-            "sha256:2a7a82905c2466684fdf61de0862a5dbfb9b1d2703918c88a594d0017dd8b6f1"
+            "sha256:b882f3bd2ca7d2d08290c897a91c12ca7442e021c634279070d386008a7280db"
         ),
         "live_version_authority": (
             "Initialize the linked MCP remote and compare serverInfo.version "
@@ -719,12 +717,12 @@ def test_sibling_product_cards_match_the_catalog_contracts():
 
 def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     status = read("status/index.html")
-    assert "Release contract · 2 September 2026" in status
-    assert "Seiche 0.11.1" in status
-    assert "11 public read-only MCP tools, 4 prompts and 0 resources" in status
+    assert "Release contract · 5 September 2026" in status
+    assert "Seiche 0.12.3" in status
+    assert "12 public read-only MCP tools, 4 prompts and 0 resources" in status
     assert "runtime, signed tag, exact PyPI artifacts, static catalog" in status
-    assert "Undertow 1.9.0" in status
-    assert "9 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
+    assert "Undertow 1.10.0" in status
+    assert "10 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
     assert "Palimpsest 1.9.3" in status
     assert "6 public read-only MCP tools, 4 prompts and 1 metadata-only" in status
     assert "LIVE / RECEIPTED" in status
@@ -751,13 +749,13 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     ) in sitemap
     assert (
         "<loc>https://liquilens.in/status/</loc>\n"
-        "    <lastmod>2026-09-02</lastmod>"
+        "    <lastmod>2026-09-05</lastmod>"
     ) in sitemap
     generator = read("scripts/build_replay_pages.py")
     assert '("/protocol/", "2026-09-02", "monthly", "0.9")' in generator
     assert '("/protocol/trade-safety/", "2026-09-02", "monthly", "0.95")' in generator
     assert '("/ship-log/", "2026-09-02", "weekly", "0.7")' in generator
-    assert '("/status/", "2026-09-02", None, None)' in generator
+    assert '("/status/", "2026-09-05", None, None)' in generator
 
 
 def test_human_claim_surfaces_print_the_same_evidence_boundary():
