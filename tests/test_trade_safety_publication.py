@@ -124,12 +124,12 @@ def test_agent_catalog_has_a_dedicated_non_executing_trade_safety_entry():
         "https://trade-safety.liquilens.in/v1/check"
     )
     assert entry["metadata"]["hostedMcp"] == ("https://trade-safety.liquilens.in/mcp")
-    assert entry["metadata"]["gatewayVersion"] == "0.2.0"
+    assert entry["metadata"]["gatewayVersion"] == "0.2.2"
     assert entry["metadata"]["gatewaySourceRevision"] == (
-        "5f46ff09288a8ee1024715db75615ab5882465fa"
+        "747ea0ba50cea1d311d74e7ce0289aaa16af356a"
     )
     assert entry["metadata"]["gatewayOciImage"].endswith(
-        "@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762"
+        "@sha256:4b4b86c81dd57044145705bd42afd452560ec10015771ff1897311d483e7db11"
     )
     assert entry["metadata"]["x402Access"] == "disabled"
     assert "public read-only sandbox" in entry["metadata"]["gatewayStatus"]
@@ -149,7 +149,7 @@ def test_agent_catalog_exposes_only_the_read_only_trade_safety_mcp_boundary():
         if row["identifier"] == "urn:air:liquilens.in:mcp:trade-safety"
     )
 
-    assert entry["version"] == "0.2.0"
+    assert entry["version"] == "0.2.2"
     assert entry["data"]["name"] == "liquilens-trade-safety-gateway"
     assert entry["data"]["remotes"] == [
         {
@@ -173,9 +173,9 @@ def test_agent_catalog_exposes_only_the_read_only_trade_safety_mcp_boundary():
         "generic site discovery events do not prove MCP activation"
         in (metadata["telemetry"])
     )
-    assert metadata["sourceRevision"] == ("5f46ff09288a8ee1024715db75615ab5882465fa")
+    assert metadata["sourceRevision"] == ("747ea0ba50cea1d311d74e7ce0289aaa16af356a")
     assert metadata["ociImage"].endswith(
-        "@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762"
+        "@sha256:4b4b86c81dd57044145705bd42afd452560ec10015771ff1897311d483e7db11"
     )
     for key in (
         "canExecute",
@@ -208,8 +208,8 @@ def test_human_and_machine_surfaces_link_every_trade_safety_contract():
         "No execution authority",
         "public gateway is a read-only sandbox",
         "x402 is disabled",
-        "5f46ff09288a8ee1024715db75615ab5882465fa",
-        "2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762",
+        "747ea0ba50cea1d311d74e7ce0289aaa16af356a",
+        "4b4b86c81dd57044145705bd42afd452560ec10015771ff1897311d483e7db11",
         "paper-only reference adapter",
         "required <code>not_applicable</code> section",
     ):
@@ -237,7 +237,7 @@ def test_human_and_machine_surfaces_link_every_trade_safety_contract():
     assert 'data-event="mcp_endpoint_copied"' in developers
     assert 'data-event="openapi_opened"' in developers
     trade_safety_cards = developers[
-        developers.index("Trade Safety 0.2.0") : developers.index("Private book")
+        developers.index("Trade Safety 0.2.2") : developers.index("Private book")
     ]
     assert trade_safety_cards.count('data-event="') == 3
     assert trade_safety_cards.count('data-event="mcp_endpoint_copied"') == 1
@@ -303,7 +303,7 @@ def test_free_sandbox_is_primary_and_enterprise_pilot_is_optional():
     assert page.count('data-free-event="mcp_endpoint_copied"') == 2
     assert page.count('data-free-event="openapi_opened"') == 2
     assert page.count('data-pilot-event="email_clicked"') == 1
-    assert "Gateway activation telemetry is disabled at launch" in page
+    assert "Gateway telemetry is enabled with optional pseudonymous installation identities" in page
     assert "actual MCP use must not be inferred from site reach" in page
     assert "LiquiLens%20Protected%20Route%20Pilot" in page
     for qualification_field in (
@@ -414,9 +414,9 @@ def test_product_card_exposes_the_read_only_gateway_without_execution_authority(
         "https://trade-safety.liquilens.in/openapi.json"
     )
     assert access["trade_safety_mcp"] == ("https://trade-safety.liquilens.in/mcp")
-    assert access["trade_safety_gateway_version"] == "0.2.0"
+    assert access["trade_safety_gateway_version"] == "0.2.2"
     assert access["trade_safety_gateway_source_revision"] == (
-        "5f46ff09288a8ee1024715db75615ab5882465fa"
+        "747ea0ba50cea1d311d74e7ce0289aaa16af356a"
     )
     assert access["trade_safety_x402_status"] == "disabled"
     assert "read-only sandbox" in access["trade_safety_gateway_status"].lower()
