@@ -115,7 +115,7 @@
             "io.modelcontextprotocol/protocolVersion": MCP_PROTOCOL_VERSION,
             "io.modelcontextprotocol/clientInfo": {
               name: "liquilens-developer-page",
-              version: "1.7.0"
+              version: "1.8.0"
             },
             "io.modelcontextprotocol/clientCapabilities": {}
           }

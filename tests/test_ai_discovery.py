@@ -92,7 +92,9 @@ def test_discovery_indexes_and_home_link_the_selection_surface():
     assert "https://liquilens.in/product-card.json" in read("llms.txt")
     home = read("index.html")
     assert '<a class="nav-link" href="/use-cases/">Use cases</a>' in home
-    assert '<a class="btn btn-ghost" href="/use-cases/">Find your use case</a>' in home
+    assert '<a class="btn btn-ghost" href="/banking/">Research a bank for free</a>' in home
+    assert 'https://liquilens.in/banking/' in read("sitemap.xml")
+    assert 'https://liquilens.in/banking/' in read("llms.txt")
 
 
 def test_home_exposes_an_attributed_daily_brief_above_the_mobile_fold():
@@ -255,13 +257,16 @@ def test_catalog_obeys_the_ard_envelope():
 def test_mcp_card_and_nested_product_line_are_current():
     entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
     mcp = entries["urn:air:liquilens.in:mcp:failure-radar"]
-    assert mcp["version"] == "1.7.0"
+    assert mcp["version"] == "1.8.0"
     assert mcp["data"]["name"] == "io.github.beepboop2025/liquilens"
     assert mcp["data"]["version"] == mcp["version"]
     assert mcp["data"]["remotes"] == [
         {"type": "streamable-http", "url": "https://api.liquilens.in/mcp"}
     ]
     assert mcp["capabilities"] == [
+        "bank_asset_quality_review",
+        "bank_npa_reconciliation",
+        "banking_specialisation_coverage",
         "corporate_transmission_board",
         "crypto_exposure_board",
         "crypto_regime_board",
@@ -285,13 +290,14 @@ def test_mcp_card_and_nested_product_line_are_current():
         "2026-07-28", "2025-11-25", "2025-06-18", "2025-03-26",
     ]
     assert mcp["prompts"] == [
+        "bank_asset_quality_brief",
         "crypto_liquidity_briefing",
         "failure_radar_briefing",
         "institution_health_check",
         "stress_evidence_pack",
     ]
     assert mcp["resourceTemplates"] == []
-    assert mcp["metadata"]["publicToolCount"] == 18
+    assert mcp["metadata"]["publicToolCount"] == 21
     assert mcp["metadata"]["articleJsonFeed"] == (
         "https://liquilens.in/articles/feed.json")
     assert "latest_article" in mcp["capabilities"]

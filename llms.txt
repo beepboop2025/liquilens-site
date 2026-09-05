@@ -90,7 +90,7 @@ The interactive demonstration at https://demo.liquilens.in requires sign-in and 
 - Terminal CLI: https://github.com/beepboop2025/liquilens-cli
 - Agent Skill for bounded product selection: https://github.com/beepboop2025/financial-evidence-skills/tree/main/financial-evidence
 
-The public MCP and public evidence endpoints require no token. MCP v1.7.0 exposes 18 read-only tools and 4 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification.
+The public MCP and public evidence endpoints require no token. MCP v1.8.0 exposes 21 read-only tools and 5 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification.
 
 The hosted endpoint accepts the current MCP 2026-07-28 method-discovery contract and its declared legacy protocol versions. It publishes empty resource and resource-template catalogs explicitly rather than implying unavailable resources.
 
@@ -227,3 +227,15 @@ Archive and full-text feeds: https://liquilens.in/articles/, https://liquilens.i
 - [Global Trust Bank replay: disclosed capital and asset-quality stress arrived first](https://liquilens.in/articles/2026-08-16-global-trust-bank-replay-disclosed-capital-and-asset-quality-stress-arrived.md): 2026-08-16, historical replay. The replay places Global Trust Bank in an RBI action zone before its default date, but fraud-masking, an unscoreable funding lens, and period-end timing proxies sharply limit what that sequence can prove.
 - [ESAF’s warning is a dated filing signal meeting a live market-price signal—not evidence of a funding run](https://liquilens.in/articles/2026-08-15-esaf-s-warning-is-a-dated-filing-signal-meeting-a-live-market-price-signal-n.md): 2026-08-15, current analysis. ESAF Small Finance Bank is a yellow-tier monitoring case because an elevated GNPA reading sits beside a market distance-to-default below the screen threshold. The filing, price and model signals should not be treated as the same thing.
 <!-- DAILY-ARTICLES:END -->
+
+
+## Free NPA, small finance bank and urban cooperative bank research
+
+Guide and browser review: https://liquilens.in/banking/
+MCP: https://api.liquilens.in/mcp (free public research; no key or payment, rate limits apply).
+Coverage: https://api.liquilens.in/api/experimental/v1/banking/coverage
+Example: https://api.liquilens.in/api/experimental/v1/banking/institutions/cosmos-ucb?include_history=true
+
+Use banking_specialisation_coverage for exact slugs and observed, stale or historical evidence states. bank_asset_quality_review returns cited GNPA/NNPA, capital, distinct PCR definitions, comparable-period changes and disclosed NPA movements. bank_npa_reconciliation checks a complete caller-supplied movement in one explicit INR unit; write-offs and sales are not cash recoveries. bank_asset_quality_brief is the guided prompt.
+
+The selected FY2026 supplements for AU, Cosmos and Slice are review-only, outside model fitting. No universal bank coverage, new score, credit approval or deposit-safety guarantee is implied. Current UCB regulatory scope requires dated tier and supervisory evidence. Latest accepted does not guarantee latest available. Private tenant records and operational controls remain outside public access. For system money-market context use https://seiche.info/use-cases/money-market-research/.

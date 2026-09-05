@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.liquilens.in https://cloudflareinsights.com; object-src 'none'; base-uri 'self'">
+  <title>NPA, small finance bank and cooperative bank research | LiquiLens</title>
+  <meta name="description" content="Free Indian bank research with cited NPA movements, capital and funding disclosures. Review small finance banks and urban cooperative banks in your browser or through MCP.">
+  <link rel="canonical" href="https://liquilens.in/banking/">
+  <link rel="stylesheet" href="/banking/style.css">
+  <link rel="icon" href="data:,">
+
+
+
+
+
+
+
+<!-- SOCIAL-CARD:START -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LiquiLens">
+<meta property="og:url" content="https://liquilens.in/banking/">
+<meta property="og:title" content="What actually changed in a bank&#x27;s NPAs?">
+<meta property="og:description" content="Free Indian bank research with cited NPA movements, capital and funding disclosures. Review small finance banks and urban cooperative banks in your browser or through MCP.">
+<meta property="og:image" content="https://liquilens.in/banking/share.png?v=ca30eb32d0cc2165">
+<meta property="og:image:secure_url" content="https://liquilens.in/banking/share.png?v=ca30eb32d0cc2165">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LiquiLens route card for NPA / SFB / UCB: A smaller NPA balance is not the same as cash recovered. EVIDENCE CONTRACT: CITED FILINGS / EXPLICIT GAPS. CASH RECOVERIES / UPGRADES / WRITE-OFFS. PAGE CUT 2026-09-05; status RESEARCH / NOT A RATING.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What actually changed in a bank&#x27;s NPAs?">
+<meta name="twitter:description" content="Free Indian bank research with cited NPA movements, capital and funding disclosures. Review small finance banks and urban cooperative banks in your browser or through MCP.">
+<meta name="twitter:image" content="https://liquilens.in/banking/share.png?v=ca30eb32d0cc2165">
+<meta name="twitter:image:alt" content="LiquiLens route card for NPA / SFB / UCB: A smaller NPA balance is not the same as cash recovered. EVIDENCE CONTRACT: CITED FILINGS / EXPLICIT GAPS. CASH RECOVERIES / UPGRADES / WRITE-OFFS. PAGE CUT 2026-09-05; status RESEARCH / NOT A RATING.">
+<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/banking/#social-card","url":"https://liquilens.in/banking/","image":"https://liquilens.in/banking/share.png?v=ca30eb32d0cc2165","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/banking/share.png?v=ca30eb32d0cc2165","width":1200,"height":630,"caption":"LiquiLens route card for NPA / SFB / UCB: A smaller NPA balance is not the same as cash recovered. EVIDENCE CONTRACT: CITED FILINGS / EXPLICIT GAPS. CASH RECOVERIES / UPGRADES / WRITE-OFFS. PAGE CUT 2026-09-05; status RESEARCH / NOT A RATING."}}</script>
+<!-- SOCIAL-CARD:END -->
+</head>
+<body>
+  <a class="skip" href="#main">Skip to bank research</a>
+  <header class="shell top"><a class="brand" href="/">LiquiLens</a><nav aria-label="Main"><a href="/banking/" aria-current="page">Bank research</a><a href="/developers/">API + MCP</a><a href="/protocol/trade-safety/">Trade Safety</a></nav></header>
+  <main id="main" class="shell">
+    <section class="hero">
+      <p class="eyebrow">Indian banking research · free early access</p>
+      <h1>What actually changed <br>in a bank's NPAs?</h1>
+      <p class="lede">A falling ratio is only the start of the question. Read the source filing, separate cash recoveries from write-offs, and keep the reporting date beside every number.</p>
+      <div class="actions"><a class="button" href="#review">Open a bank review</a><a class="button secondary" href="#connect">Connect your agent</a></div>
+      <p class="quiet">No account, API key or payment. All public LiquiLens research MCP tools are free during early access, with rate limits.</p>
+    </section>
+
+    <section class="three" aria-label="Research specialisations">
+      <article class="card"><span class="number">01 / asset quality</span><h2>NPA movements</h2><p>Opening stock + additions − reductions = closing stock. Cash recoveries, upgrades, write-offs and sales remain distinct. Missing movement tables stay missing.</p></article>
+      <article class="card"><span class="number">02 / small finance banks</span><h2>Funding and concentration</h2><p>Read reported capital, deposits, liquidity and NPA history. Keep microfinance concentration and collection-efficiency gaps visible instead of filling them with an average.</p></article>
+      <article class="card"><span class="number">03 / urban cooperative banks</span><h2>Capital in context</h2><p>Check the reporting period and disclosed capital. A regulatory comparison requires dated tier and supervisory-scope evidence. A ratio cannot prove RBI has intervened.</p></article>
+    </section>
+
+    <section id="review" class="section">
+      <p class="eyebrow">Try the public evidence</p><h2>Start with a filing-backed review.</h2>
+      <p>These examples include reviewed FY2026 disclosures. The wider coverage list also contains older and historical dossiers; it is not a census of Indian banks.</p>
+      <form id="bank-form" class="controls"><label for="bank">Bank</label><select id="bank" name="bank"><option value="cosmos-ucb">Cosmos Co-operative Bank</option><option value="au-sfb">AU Small Finance Bank</option><option value="slice-sfb">slice Small Finance Bank</option></select><button type="submit" id="review-button">Read evidence</button><button type="button" class="secondary" id="coverage-button">Browse all covered banks</button></form>
+      <p id="request-status" role="status" aria-live="polite">Choose a bank to fetch its latest accepted record.</p>
+      <article id="review-result" class="result" hidden>
+        <div class="result-heading"><div><span id="evidence-state" class="eyebrow"></span><h3 id="bank-name"></h3></div><a id="raw-link" href="https://api.liquilens.in/api/experimental/v1/banking/coverage">Open source JSON</a></div>
+        <p id="evidence-clock" class="quiet"></p>
+        <div id="metric-cards" class="metrics"></div>
+        <h3>NPA stock movement</h3><p id="movement-status"></p><dl id="movement" class="movement"></dl>
+        <h3>What the evidence does not establish</h3><p id="regulatory-status"></p><ul id="limits"></ul>
+        <h3>Read the sources</h3><ul id="sources"></ul>
+      </article>
+      <noscript><p>The evidence also works without JavaScript: <a href="https://api.liquilens.in/api/experimental/v1/banking/coverage">browse bank coverage</a> or <a href="https://api.liquilens.in/api/experimental/v1/banking/institutions/cosmos-ucb?include_history=true">open the Cosmos review JSON</a>.</p></noscript>
+    </section>
+
+    <section id="connect" class="section">
+      <p class="eyebrow">The same evidence for your agent</p><h2>Ask a better banking question.</h2>
+      <p>Add the Streamable HTTP endpoint to an MCP client, then ask it to review a bank's disclosed asset quality. The public server offers 21 read-only tools and 5 prompts.</p>
+      <div class="endpoint"><code id="mcp-url">https://api.liquilens.in/mcp</code><button type="button" id="copy-mcp">Copy endpoint</button></div><p id="copy-status" role="status"></p>
+      <div class="two"><div class="card"><h3>A useful first prompt</h3><blockquote>Review Cosmos Co-operative Bank's disclosed NPAs. Show the reporting date, cash recoveries, upgrades and write-offs. Cite the filing and explain any missing evidence or unverified regulatory scope.</blockquote><p>Use the <code>bank_asset_quality_brief</code> prompt template, or ask in your own words.</p></div><div class="card"><h3>Three specialised tools</h3><dl><dt><code>banking_specialisation_coverage</code></dt><dd>Find exact names, sectors and evidence states.</dd><dt><code>bank_asset_quality_review</code></dt><dd>Read cited asset-quality, capital and funding disclosures.</dd><dt><code>bank_npa_reconciliation</code></dt><dd>Check a complete NPA movement table in one stated unit.</dd></dl></div></div>
+      <p><a href="/developers/">Client setup and API examples</a> · <a href="https://github.com/beepboop2025/LiquiLens/blob/main/docs/product/BANK_SPECIALISATION.md">Calculation and evidence methods</a> · <a href="https://api.liquilens.in/api/experimental/v1/banking/coverage">Live coverage JSON</a></p>
+    </section>
+
+    <section class="section two">
+      <div><p class="eyebrow">Keep the wider picture</p><h2>Bank evidence meets funding context.</h2><p>Use <a href="https://seiche.info/use-cases/money-market-research/">Seiche's money-market desk</a> for repo, overnight rates, reserves and Treasury cash. Then return to the named bank's filings. System funding pressure does not establish a bank's solvency.</p></div>
+      <div class="card"><h3>Keep following the record</h3><p>Read the lab's public banking and funding coverage as new evidence arrives.</p><a class="button secondary" href="https://t.me/LiquidityLabDesk">Follow the free daily read</a><p><a href="/articles/feed.json">Subscribe to the article JSON feed</a></p></div>
+    </section>
+    <p class="boundary">Research evidence, not a credit rating, deposit-safety guarantee or investment advice. “Latest accepted” means the newest eligible record in this corpus, not a guarantee that no newer filing exists. Current licences and RBI orders require separate verification. Private tenant records and operational controls are not part of public access.</p>
+  </main>
+  <footer class="shell"><a href="/">LiquiLens</a><span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/llms.txt">For agents</a></span></footer>
+  <script type="module" src="/banking/app.mjs"></script>
+  <script src="/ai-referral.js" defer></script>
+</body>
+</html>

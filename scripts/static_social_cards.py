@@ -66,6 +66,13 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/banking/", "banking", "LIQUILENS / FREE BANK RESEARCH", "NPA / SFB / UCB",
+        "A smaller NPA balance is not the same as cash recovered.",
+        "EVIDENCE CONTRACT", "CITED FILINGS / EXPLICIT GAPS",
+        "CASH RECOVERIES / UPGRADES / WRITE-OFFS", "PAGE CUT", "2026-09-05",
+        "RESEARCH / NOT A RATING", "ACCEPTED BANK FILINGS",
+    ),
+    RouteDefinition(
         "/about/", "about", "LIQUILENS / PUBLIC IDENTITY", "ABOUT LIQUILENS",
         "A failure radar built for readers who ask what the evidence cannot prove.",
         "PRODUCT IDENTITY", "LIQUILENS / AI.DE",

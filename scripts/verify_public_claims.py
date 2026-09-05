@@ -121,7 +121,7 @@ EVIDENCE_SURFACES = (
     os.path.join("developers", "index.html"),
     "llms.txt",
 )
-MCP_VERSION = "1.7.0"
+MCP_VERSION = "1.8.0"
 OPENAPI_VERSION = "1.0.0"
 MCP_PROTOCOL_VERSIONS = (
     "2026-07-28",
@@ -130,6 +130,9 @@ MCP_PROTOCOL_VERSIONS = (
     "2025-03-26",
 )
 MCP_TOOLS = (
+    "bank_asset_quality_review",
+    "bank_npa_reconciliation",
+    "banking_specialisation_coverage",
     "corporate_transmission_board",
     "crypto_exposure_board",
     "crypto_regime_board",
@@ -150,6 +153,7 @@ MCP_TOOLS = (
     "verify_published_record",
 )
 MCP_PROMPTS = (
+    "bank_asset_quality_brief",
     "crypto_liquidity_briefing",
     "failure_radar_briefing",
     "institution_health_check",

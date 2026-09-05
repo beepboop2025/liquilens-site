@@ -478,6 +478,7 @@ BASE_SITEMAP = [
     ("/investigations/", "2026-08-12", "weekly", "0.9"),
     ("/investigations/the-5-64x-private-credit-concentration/",
      "2026-08-12", "monthly", "0.8"),
+    ("/banking/", "2026-09-05", "weekly", "0.9"),
     ("/developers/", "2026-08-21", "monthly", "0.9"),
     ("/use-cases/", "2026-08-21", "monthly", "0.9"),
     ("/world-economy/", "2026-08-29", "weekly", "0.95"),
