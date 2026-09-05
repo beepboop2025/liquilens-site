@@ -304,7 +304,7 @@ def test_mcp_card_and_nested_product_line_are_current():
     for tool in ("crypto_regime_board", "stablecoin_rails_board",
                  "crypto_exposure_board"):
         assert tool in mcp["capabilities"]
-    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.12.3"
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.12.4"
     assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.10.0"
     assert entries["urn:air:liquilens.in:openapi:failure-radar"]["version"] == (
         "1.0.0")
@@ -330,7 +330,7 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
     entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
     seiche = entries["urn:air:liquilens.in:catalog:seiche"]
 
-    assert seiche["version"] == "0.12.3"
+    assert seiche["version"] == "0.12.4"
     assert seiche["updatedAt"] == "2026-09-05T00:00:00Z"
     assert seiche["capabilities"] == [
         "latest_article",
@@ -353,6 +353,10 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
         "cross_market_cash_pressure",
     ]
     assert seiche["resourceTemplates"] == []
+    assert seiche["metadata"]["distributionState"] == "verified-recovery-deferred"
+    assert seiche["metadata"]["recoveryState"] == "deferred"
+    assert seiche["metadata"]["recoveryAccepted"] is False
+    assert seiche["metadata"]["fullReleaseAccepted"] is False
     assert {
         key: seiche["metadata"][key]
         for key in (
@@ -396,44 +400,44 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
         "apiCatalog": "https://api.seiche.info/api",
         "openapi": "https://api.seiche.info/api/openapi.json",
         "productCard": "https://seiche.info/product-card.json",
-        "pypiProject": "https://pypi.org/project/seiche/0.12.3/",
-        "pypiSpec": "seiche==0.12.3",
-        "releaseCommit": "c12d746e5771dd68f8b8f0091211a922bf40b9d4",
-        "signedTag": "v0.12.3",
-        "signedTagObject": "b1f83e77b3fd72edc4f589c24f8921a3af4d1342",
+        "pypiProject": "https://pypi.org/project/seiche/0.12.4/",
+        "pypiSpec": "seiche==0.12.4",
+        "releaseCommit": "d6d1dc1ce7f02d1155615ba1236f479d983d03b1",
+        "signedTag": "v0.12.4",
+        "signedTagObject": "9e72d473aa69579a0daa279e2ebe66a1d986a285",
         "pypiRun": (
-            "https://github.com/beepboop2025/seiche/actions/runs/33989477712/attempts/1"
+            "https://github.com/beepboop2025/seiche/actions/runs/33998139045/attempts/1"
         ),
         "pypiWheelSha256": (
-            "sha256:385cebf7fb8ed79f543c900d883af77ca37ad91b8a4fd3bfad0220ebb0b3249f"
+            "sha256:724ba92bf8cfa05d2fd327f4cf44b4b48cd2e12d37c6cbe4f8e1ea832e19ae16"
         ),
-        "pypiWheelBytes": 1263498,
+        "pypiWheelBytes": 1264356,
         "pypiSdistSha256": (
-            "sha256:4b2ec737f173b5339b42aa1f85892b0c9683f7d3643524063cc8dcd797272974"
+            "sha256:40c6242ee33eee1d028bdc8496a74fcb59b9c05d2a36f2f7a6beb1e4ecddd1da"
         ),
-        "pypiSdistBytes": 1137023,
+        "pypiSdistBytes": 1137843,
         "staticRun": (
-            "https://github.com/beepboop2025/seiche/actions/runs/33989707597/attempts/1"
+            "https://github.com/beepboop2025/seiche/actions/runs/33998436326/attempts/1"
         ),
-        "staticDeployment": "https://690dd420.seiche.pages.dev",
+        "staticDeployment": "https://2a1a18b2.seiche.pages.dev",
         "catalogSha256": (
-            "sha256:6a95b5eeceffb4ac3e269110f771256df20799d3df1e59c264cb29705c31423f"
+            "sha256:c77a8b509b6b056de92c6e3359b0ca067156bfa14ee9ec43d6e724b8d8ff80ae"
         ),
         "productCardSha256": (
             "sha256:fc66283d0967c114f454fd118c7ee3318d1f6dfded49d1653152e5285ded8591"
         ),
         "mcpDiscoverySha256": (
-            "sha256:70041ae561bdc1b55af6ca40759f47c167ec9a4bfba0f202034bdb965482a262"
+            "sha256:f849a3812f82cab302220e5729c7d47ee937fc83b1a8dfbf5f0482f85d7d3fa4"
         ),
         "registryRun": (
-            "https://github.com/beepboop2025/seiche/actions/runs/33989678932/attempts/1"
+            "https://github.com/beepboop2025/seiche/actions/runs/33998325936/attempts/1"
         ),
         "registryVersion": (
-            "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.12.3"
+            "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.12.4"
         ),
-        "registryPublishedAt": "2026-09-05T20:18:20.780312Z",
+        "registryPublishedAt": "2026-09-05T23:19:07.960215Z",
         "registryServerSha256": (
-            "sha256:b882f3bd2ca7d2d08290c897a91c12ca7442e021c634279070d386008a7280db"
+            "sha256:6a1bcf723ce109dc948079ac92b59538d16f963f1b6229cb42d7ecd7511720b1"
         ),
         "liveVersionAuthority": (
             "Initialize the linked MCP remote and compare serverInfo.version "
@@ -593,6 +597,10 @@ def test_sibling_product_cards_match_the_catalog_contracts():
         for sibling in json.loads(read("product-card.json"))["siblings"]
     }
     seiche = siblings["Seiche"]
+    assert seiche["distribution_state"] == "verified-recovery-deferred"
+    assert seiche["recovery_state"] == "deferred"
+    assert seiche["recovery_accepted"] is False
+    assert seiche["full_release_accepted"] is False
     assert {
         key: seiche[key]
         for key in (
@@ -625,10 +633,10 @@ def test_sibling_product_cards_match_the_catalog_contracts():
             "live_version_authority",
         )
     } == {
-        "version": "0.12.3",
+        "version": "0.12.4",
         "ai_catalog": "https://seiche.info/.well-known/ai-catalog.json",
         "ai_catalog_sha256": (
-            "sha256:6a95b5eeceffb4ac3e269110f771256df20799d3df1e59c264cb29705c31423f"
+            "sha256:c77a8b509b6b056de92c6e3359b0ca067156bfa14ee9ec43d6e724b8d8ff80ae"
         ),
         "product_card": "https://seiche.info/product-card.json",
         "product_card_sha256": (
@@ -637,7 +645,7 @@ def test_sibling_product_cards_match_the_catalog_contracts():
         "mcp": "https://api.seiche.info/mcp",
         "mcp_discovery": "https://api.seiche.info/.well-known/mcp.json",
         "mcp_discovery_sha256": (
-            "sha256:70041ae561bdc1b55af6ca40759f47c167ec9a4bfba0f202034bdb965482a262"
+            "sha256:f849a3812f82cab302220e5729c7d47ee937fc83b1a8dfbf5f0482f85d7d3fa4"
         ),
         "mcp_server_name": "io.github.beepboop2025/seiche",
         "api_catalog": "https://api.seiche.info/api",
@@ -645,25 +653,25 @@ def test_sibling_product_cards_match_the_catalog_contracts():
         "public_tools": 12,
         "public_prompts": 4,
         "public_resources": 0,
-        "pypi": "https://pypi.org/project/seiche/0.12.3/",
-        "pypi_spec": "seiche==0.12.3",
+        "pypi": "https://pypi.org/project/seiche/0.12.4/",
+        "pypi_spec": "seiche==0.12.4",
         "pypi_wheel_sha256": (
-            "sha256:385cebf7fb8ed79f543c900d883af77ca37ad91b8a4fd3bfad0220ebb0b3249f"
+            "sha256:724ba92bf8cfa05d2fd327f4cf44b4b48cd2e12d37c6cbe4f8e1ea832e19ae16"
         ),
-        "pypi_wheel_bytes": 1263498,
+        "pypi_wheel_bytes": 1264356,
         "pypi_sdist_sha256": (
-            "sha256:4b2ec737f173b5339b42aa1f85892b0c9683f7d3643524063cc8dcd797272974"
+            "sha256:40c6242ee33eee1d028bdc8496a74fcb59b9c05d2a36f2f7a6beb1e4ecddd1da"
         ),
-        "pypi_sdist_bytes": 1137023,
-        "signed_tag": "v0.12.3",
-        "signed_tag_object": "b1f83e77b3fd72edc4f589c24f8921a3af4d1342",
-        "release_commit": "c12d746e5771dd68f8b8f0091211a922bf40b9d4",
-        "static_deployment": "https://690dd420.seiche.pages.dev",
+        "pypi_sdist_bytes": 1137843,
+        "signed_tag": "v0.12.4",
+        "signed_tag_object": "9e72d473aa69579a0daa279e2ebe66a1d986a285",
+        "release_commit": "d6d1dc1ce7f02d1155615ba1236f479d983d03b1",
+        "static_deployment": "https://2a1a18b2.seiche.pages.dev",
         "registry_version": (
-            "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.12.3"
+            "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.12.4"
         ),
         "registry_server_sha256": (
-            "sha256:b882f3bd2ca7d2d08290c897a91c12ca7442e021c634279070d386008a7280db"
+            "sha256:6a1bcf723ce109dc948079ac92b59538d16f963f1b6229cb42d7ecd7511720b1"
         ),
         "live_version_authority": (
             "Initialize the linked MCP remote and compare serverInfo.version "
@@ -717,8 +725,10 @@ def test_sibling_product_cards_match_the_catalog_contracts():
 
 def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     status = read("status/index.html")
-    assert "Release contract · 5 September 2026" in status
-    assert "Seiche 0.12.3" in status
+    assert "Release contract · 6 September 2026" in status
+    assert "Seiche 0.12.4" in status
+    assert "LIVE / RECOVERY PENDING" in status
+    assert "0.12.4 recovery proof is deferred; full release acceptance remains incomplete" in status
     assert "12 public read-only MCP tools, 4 prompts and 0 resources" in status
     assert "runtime, signed tag, exact PyPI artifacts, static catalog" in status
     assert "Undertow 1.10.0" in status
@@ -749,7 +759,7 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     ) in sitemap
     assert (
         "<loc>https://liquilens.in/status/</loc>\n"
-        "    <lastmod>2026-09-05</lastmod>"
+        "    <lastmod>2026-09-06</lastmod>"
     ) in sitemap
     generator = read("scripts/build_replay_pages.py")
     assert '("/protocol/", "2026-09-02", "monthly", "0.9")' in generator
