@@ -84,6 +84,10 @@ The interactive demonstration at https://demo.liquilens.in requires sign-in and 
 ## API and MCP access
 
 - Developer guide: https://liquilens.in/developers/
+- Runnable bank-review and funding-context recipes: https://liquilens.in/developers/#research-recipes
+- Python standard-library recipe: https://liquilens.in/developers/recipes/financial_research.py
+- Recipe manifest and fixed endpoints: https://liquilens.in/developers/recipes/manifest.json
+- Manual n8n bank-review workflow and validation limits: https://liquilens.in/developers/recipes/n8n-bank-review.md
 - REST catalog: https://api.liquilens.in/api
 - OpenAPI 3.1 document: https://api.liquilens.in/api/openapi.json
 - Hosted MCP: https://api.liquilens.in/mcp

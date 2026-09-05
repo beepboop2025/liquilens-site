@@ -62,9 +62,13 @@
   document.querySelectorAll("[data-copy]").forEach(function (button) {
     button.addEventListener("click", function () {
       var eventName = button.getAttribute("data-event");
-      if (eventName) track(eventName);
-      navigator.clipboard.writeText(button.getAttribute("data-copy") || "")
-        .then(function () { pulse(button, "copied"); })
+      Promise.resolve().then(function () {
+        return navigator.clipboard.writeText(button.getAttribute("data-copy") || "");
+      })
+        .then(function () {
+          if (eventName) track(eventName);
+          pulse(button, "copied");
+        })
         .catch(function () { pulse(button, "select + copy"); });
     });
   });
@@ -95,7 +99,9 @@
     var controller = new AbortController();
     var timeout = window.setTimeout(function () { controller.abort(); }, 12000);
     button.disabled = true;
+    // This existing event records an attempt, never a completed agent call.
     track("live_tool_run");
+    output.dataset.state = "loading";
     output.textContent = "Calling failure_radar_board…";
     fetch(MCP_URL, {
       method: "POST",
@@ -126,12 +132,33 @@
         return boundedJson(response);
       })
       .then(function (message) {
-        var result = message.result || {};
-        var value = result.structuredContent ||
-          ((result.content || [])[0] || {}).text || message;
-        output.textContent = typeof value === "string" ? value : JSON.stringify(value, null, 2);
+        if (!message || message.jsonrpc !== "2.0" || message.id !== 1 || message.error) {
+          throw new Error("MCP rejected the request or returned an invalid response");
+        }
+        var result = message.result;
+        if (!result || (result.isError !== undefined && result.isError !== false)) {
+          throw new Error("the MCP tool returned an error");
+        }
+        var value = result.structuredContent;
+        if (!value) {
+          var content = result.content || [];
+          if (content.length !== 1 || content[0].type !== "text") {
+            throw new Error("the MCP tool returned no evidence object");
+          }
+          value = JSON.parse(content[0].text);
+        }
+        if (!value || typeof value !== "object" || Array.isArray(value) ||
+            value.status === "FAILED" || value.status === "error") {
+          throw new Error("the MCP tool returned no valid evidence object");
+        }
+        var unavailable = value.ok === false || value.status === "unavailable";
+        output.dataset.state = unavailable ? "unavailable" : "received";
+        output.textContent = (unavailable ? "Evidence unavailable — read the returned reason.\n\n" :
+          "Evidence received — check its dates, coverage and limitations.\n\n") +
+          JSON.stringify(value, null, 2);
       })
       .catch(function (error) {
+        output.dataset.state = "error";
         output.textContent = error.name === "AbortError"
           ? "Live call timed out after 12 seconds"
           : "Live call failed: " + error.message;

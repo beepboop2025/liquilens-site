@@ -1,0 +1,6 @@
+# Merge these entries into ~/.codex/config.toml; preserve your existing servers.
+[mcp_servers.liquilens]
+url = "https://api.liquilens.in/mcp"
+
+[mcp_servers.seiche]
+url = "https://api.seiche.info/mcp"
