@@ -7,7 +7,7 @@
     "category": "Bank and lender failure early warning",
     "description": "A disclosure-based early warning system that reads public filings, funding structure, regulatory thresholds and market signals to identify banks and lenders drifting toward distress. Historical diagnostics publish misses plus explicit claim-eligibility flags.",
     "operating_entity": "ai.de, a Udyam registered sole proprietorship, Jaipur, India",
-    "access_model": "Public research, historical diagnostics, API, hosted MCP and CLI are open. Paid named-list software watches public India Failure Radar names and served US FDIC-board names without a customer book. Europe remains named case files. Fixed-scope proof pilots remain available for private-book validation.",
+    "access_model": "Public research, historical diagnostics, API, hosted MCP and CLI are open. Paid named-list software watches public India Failure Radar names and served US FDIC-board names without a customer book. Europe remains named case files. Fixed-scope proof pilots remain available for private-book validation, and a separate 30-day Trade Safety pilot covers one customer-owned paper or shadow order route.",
     "geographies": ["India", "United States", "European case studies"],
     "topics": [
       "bank failure early warning",
@@ -127,6 +127,9 @@
     "trade_safety_gateway_oci_image": "ghcr.io/beepboop2025/liquilens-trade-safety-gateway@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762",
     "trade_safety_gateway_status": "Public read-only sandbox. x402 is disabled; no broker credentials, preview, order submission, routing, custody, settlement or execution authority.",
     "trade_safety_x402_status": "disabled",
+    "trade_safety_protected_route_pilot": "https://liquilens.in/protocol/trade-safety/#protected-route-pilot",
+    "trade_safety_protected_route_pilot_scope": "Paid fixed-scope 30-day proof; one customer-owned agent, one broker paper-sandbox or OMS shadow route, one account, one strategy family, one written operator policy, up to 25,000 assessment attempts, hard cap, no automatic overage, no live-money execution; fee quoted by the founder with no public list price.",
+    "trade_safety_protected_route_pilot_contact": "mailto:mrinal@liquilens.in?subject=LiquiLens%20Protected%20Route%20Pilot",
     "trade_safety_financial_authority": {
       "can_execute": false,
       "can_recommend": false,

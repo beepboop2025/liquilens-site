@@ -19,6 +19,7 @@ Free early-warning coverage check: https://liquilens.in/tools/ews-coverage-check
 RBI/NBFC early-warning validation guide: https://liquilens.in/guides/rbi-nbfc-early-warning-system/
 Named-list software: https://liquilens.in/access/
 Paid proof pilot: https://liquilens.in/pilot/
+Paid Trade Safety protected-route pilot: https://liquilens.in/protocol/trade-safety/#protected-route-pilot
 Product card: https://liquilens.in/product-card.json
 Discovery catalog: https://liquilens.in/.well-known/ai-catalog.json
 RFC 9727 API catalog: https://liquilens.in/.well-known/api-catalog
@@ -133,6 +134,8 @@ Public Trade Safety Gateway endpoints:
 - Capabilities and authority boundary: https://trade-safety.liquilens.in/v1/capabilities
 - OpenAPI: https://trade-safety.liquilens.in/openapi.json
 - Health: https://trade-safety.liquilens.in/healthz
+
+The paid Protected Route Pilot is a fixed-scope 30-day proof for one customer-owned agent, one broker paper-sandbox or OMS shadow route, one account, one strategy family and one written operator policy. It includes order-path and bypass mapping, policy mapping, up to 25,000 assessment attempts with a hard cap and no automatic overage, four weekly calibration reviews, verifiable receipt replay and local audit export, and a final evidence report. Buyers use it to decide whether receipt coverage, unavailable causes, false holds, latency and uncertain-submission reconciliation are acceptable for that one route. The route remains paper-only or non-executing throughout; the pilot does not provide investment advice, validate trading performance, enable x402, use live broker credentials or submit a live-money order. This is paid work, but there is no public list price. The founder's scoped reply names the fee and deployment boundary, and the pilot fee is creditable toward the first annual agreement if both sides proceed under those terms. Contact mrinal@liquilens.in with the accountable route owner, agent/runtime, paper broker or OMS shadow route, account and strategy family, existing control path, success threshold, customer-owned environment and target window. Do not send a broker secret or customer data in the first brief.
 
 Externally exercised Evidence Carrier consumer paths:
 

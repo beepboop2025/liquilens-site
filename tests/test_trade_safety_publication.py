@@ -104,8 +104,7 @@ def test_agent_catalog_has_a_dedicated_non_executing_trade_safety_entry():
     entry = next(
         row
         for row in catalog["entries"]
-        if row["identifier"]
-        == "urn:air:liquilens.in:protocol:trade-safety-receipt"
+        if row["identifier"] == "urn:air:liquilens.in:protocol:trade-safety-receipt"
     )
 
     assert entry["url"] == "https://liquilens.in/protocol/trade-safety/"
@@ -118,17 +117,13 @@ def test_agent_catalog_has_a_dedicated_non_executing_trade_safety_entry():
     assert entry["metadata"]["releaseTagObject"] == (
         "42dd412ef27b470841b71b8bc73c0ed63a5e4a6b"
     )
-    assert entry["metadata"]["offlineVerifierRegistry"].endswith(
-        "/versions/0.18.0"
-    )
+    assert entry["metadata"]["offlineVerifierRegistry"].endswith("/versions/0.18.0")
     assert entry["metadata"]["requiredProducts"] == "Seiche, Undertow"
     assert entry["metadata"]["conditionalProduct"] == "LiquiLens"
     assert entry["metadata"]["hostedApi"] == (
         "https://trade-safety.liquilens.in/v1/check"
     )
-    assert entry["metadata"]["hostedMcp"] == (
-        "https://trade-safety.liquilens.in/mcp"
-    )
+    assert entry["metadata"]["hostedMcp"] == ("https://trade-safety.liquilens.in/mcp")
     assert entry["metadata"]["gatewayVersion"] == "0.2.0"
     assert entry["metadata"]["gatewaySourceRevision"] == (
         "5f46ff09288a8ee1024715db75615ab5882465fa"
@@ -173,9 +168,7 @@ def test_agent_catalog_exposes_only_the_read_only_trade_safety_mcp_boundary():
     assert metadata["publicToolCount"] == 2
     assert metadata["executionToolCount"] == 0
     assert metadata["x402Access"] == "disabled"
-    assert metadata["sourceRevision"] == (
-        "5f46ff09288a8ee1024715db75615ab5882465fa"
-    )
+    assert metadata["sourceRevision"] == ("5f46ff09288a8ee1024715db75615ab5882465fa")
     assert metadata["ociImage"].endswith(
         "@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762"
     )
@@ -196,8 +189,7 @@ def test_agent_catalog_exposes_only_the_read_only_trade_safety_mcp_boundary():
 def test_human_and_machine_surfaces_link_every_trade_safety_contract():
     page = _read("protocol/trade-safety/index.html")
     assert (
-        '<link rel="canonical" '
-        'href="https://liquilens.in/protocol/trade-safety/">'
+        '<link rel="canonical" href="https://liquilens.in/protocol/trade-safety/">'
     ) in page
     assert page.count("<h1") == 1
     for phrase in (
@@ -229,7 +221,10 @@ def test_human_and_machine_surfaces_link_every_trade_safety_contract():
     assert "https://liquilens.in/protocol/trade-safety/" in sitemap
     assert "https://trade-safety.liquilens.in/v1/check" in llms
     assert "x402 is disabled" in llms
-    assert "offline read-only MCP server exposes receipt verification, not issuance" in llms
+    assert (
+        "offline read-only MCP server exposes receipt verification, not issuance"
+        in llms
+    )
 
     developers = _read("developers/index.html")
     assert "https://trade-safety.liquilens.in/mcp" in developers
@@ -239,13 +234,103 @@ def test_human_and_machine_surfaces_link_every_trade_safety_contract():
     trade_safety_cards = developers[
         developers.index("Trade Safety 0.2.0") : developers.index("Private book")
     ]
-    assert trade_safety_cards.count('data-event="') == 2
+    assert trade_safety_cards.count('data-event="') == 3
     assert trade_safety_cards.count('data-event="mcp_endpoint_copied"') == 1
     assert trade_safety_cards.count('data-event="openapi_opened"') == 1
+    assert trade_safety_cards.count('data-event="pilot_cta_clicked"') == 1
+    assert 'href="/protocol/trade-safety/#protected-route-pilot"' in (
+        trade_safety_cards
+    )
     capabilities_link = trade_safety_cards[
-        trade_safety_cards.index('href="https://trade-safety.liquilens.in/v1/capabilities"') :
+        trade_safety_cards.index(
+            'href="https://trade-safety.liquilens.in/v1/capabilities"'
+        ) :
     ]
     assert capabilities_link.split(">", 1)[0].count("data-event") == 0
+
+
+def test_protected_route_pilot_is_bounded_commercial_and_measurable():
+    page = _read("protocol/trade-safety/index.html")
+    for required in (
+        'id="protected-route-pilot"',
+        "Paid protected-route pilot",
+        "30 days",
+        "one broker paper-sandbox or OMS shadow route",
+        "one account",
+        "one strategy family",
+        "one written operator policy",
+        "25,000 max",
+        "hard cap and no automatic overage",
+        "four weekly calibration",
+        "Order-path and bypass map",
+        "Verifiable receipt, replay and local audit export",
+        "Final evidence report with go, revise or stop decision",
+        "there is no public list price",
+        "No broker secret, order history or customer row",
+        "A click is not counted as a qualified lead, customer, pilot, revenue",
+        "no live broker credentials, routing or real-money execution",
+    ):
+        assert required.lower() in page.lower()
+
+    assert page.count('data-pilot-event="email_clicked"') == 2
+    assert "LiquiLens%20Protected%20Route%20Pilot" in page
+    for qualification_field in (
+        "Role%20and%20route%20owner",
+        "Agent%20or%20runtime",
+        "Paper%20broker%20or%20OMS%20shadow%20route",
+        "Current%20order-control%20path",
+        "Success%20threshold",
+        "Preferred%20customer-owned%20environment",
+    ):
+        assert qualification_field in page
+
+    for unsupported_claim in (
+        "$2,500",
+        "$7,500",
+        "live trading protection",
+        "customers use",
+        "revenue generated",
+    ):
+        assert unsupported_claim.lower() not in page.lower()
+
+    app = _read("protocol/trade-safety/app.js")
+    assert "ALLOWED_EVENTS = {offer_viewed: true, email_clicked: true}" in app
+    assert 'JSON.stringify({surface: "pilot", event: eventName})' in app
+    assert 'track("offer_viewed")' in app
+    assert "keepalive: true" in app
+    for forbidden_payload in ("location.href", "document.referrer", "FormData"):
+        assert forbidden_payload not in app
+
+    llms = _read("llms.txt")
+    assert "Paid Trade Safety protected-route pilot:" in llms
+    assert "up to 25,000 assessment attempts" in llms
+    assert "there is no public list price" in llms
+    assert "does not provide investment advice" in llms
+
+    access = json.loads(_read("product-card.json"))["access"]
+    assert access["trade_safety_protected_route_pilot"].endswith(
+        "#protected-route-pilot"
+    )
+    assert "30-day proof" in access["trade_safety_protected_route_pilot_scope"]
+    assert (
+        "no live-money execution"
+        in (access["trade_safety_protected_route_pilot_scope"])
+    )
+    assert access["trade_safety_protected_route_pilot_contact"].startswith(
+        "mailto:mrinal@liquilens.in"
+    )
+
+    catalog = json.loads(_read(".well-known/ai-catalog.json"))
+    entry = next(
+        row
+        for row in catalog["entries"]
+        if row["identifier"] == "urn:air:liquilens.in:protocol:trade-safety-receipt"
+    )
+    assert entry["metadata"]["protectedRoutePilot"].endswith("#protected-route-pilot")
+    assert "no live-money execution" in (entry["metadata"]["protectedRoutePilotScope"])
+    assert (
+        "no public list price" in (entry["metadata"]["protectedRoutePilotCommercials"])
+    )
 
 
 def test_product_card_exposes_the_read_only_gateway_without_execution_authority():
@@ -256,15 +341,11 @@ def test_product_card_exposes_the_read_only_gateway_without_execution_authority(
     assert access["trade_safety_receipt_schema"].endswith(
         "/protocol/liquilens-trade-safety-receipt-v1.schema.json"
     )
-    assert access["trade_safety_api"] == (
-        "https://trade-safety.liquilens.in/v1/check"
-    )
+    assert access["trade_safety_api"] == ("https://trade-safety.liquilens.in/v1/check")
     assert access["trade_safety_openapi"] == (
         "https://trade-safety.liquilens.in/openapi.json"
     )
-    assert access["trade_safety_mcp"] == (
-        "https://trade-safety.liquilens.in/mcp"
-    )
+    assert access["trade_safety_mcp"] == ("https://trade-safety.liquilens.in/mcp")
     assert access["trade_safety_gateway_version"] == "0.2.0"
     assert access["trade_safety_gateway_source_revision"] == (
         "5f46ff09288a8ee1024715db75615ab5882465fa"
@@ -272,8 +353,7 @@ def test_product_card_exposes_the_read_only_gateway_without_execution_authority(
     assert access["trade_safety_x402_status"] == "disabled"
     assert "read-only sandbox" in access["trade_safety_gateway_status"].lower()
     assert all(
-        value is False
-        for value in access["trade_safety_financial_authority"].values()
+        value is False for value in access["trade_safety_financial_authority"].values()
     )
     assert "not deployed" in access["trade_safety_alpaca_adapter_status"]
 
@@ -281,9 +361,7 @@ def test_product_card_exposes_the_read_only_gateway_without_execution_authority(
 def test_rfc9727_catalog_exposes_only_the_real_gateway_surfaces():
     catalog = json.loads(_read(".well-known/api-catalog.json"))
     by_anchor = {row["anchor"]: row for row in catalog["linkset"]}
-    assert by_anchor["https://trade-safety.liquilens.in/v1/check"][
-        "service-desc"
-    ] == [
+    assert by_anchor["https://trade-safety.liquilens.in/v1/check"]["service-desc"] == [
         {
             "href": "https://trade-safety.liquilens.in/openapi.json",
             "type": "application/json",
@@ -308,12 +386,8 @@ def test_rfc9727_catalog_exposes_only_the_real_gateway_surfaces():
 def test_protocol_catalog_binds_v0180_release_and_stable_trade_safety_hashes():
     catalog = json.loads(_read("protocol/catalog.json"))
     assert catalog["version"] == "0.18.0"
-    assert catalog["releaseCommit"] == (
-        "906ca033a96ea862ab813c64db2a6b01c5ce8c4f"
-    )
-    assert catalog["releaseTagObject"] == (
-        "42dd412ef27b470841b71b8bc73c0ed63a5e4a6b"
-    )
+    assert catalog["releaseCommit"] == ("906ca033a96ea862ab813c64db2a6b01c5ce8c4f")
+    assert catalog["releaseTagObject"] == ("42dd412ef27b470841b71b8bc73c0ed63a5e4a6b")
     artifacts = {row["url"]: row["sha256"] for row in catalog["artifacts"]}
     for relative, expected_sha256 in TAGGED_BYTES.items():
         if relative == "protocol/fdc3/com.liquilens.evidence.schema.json":

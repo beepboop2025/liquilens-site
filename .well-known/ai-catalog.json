@@ -497,12 +497,13 @@
       "type": "text/html",
       "url": "https://liquilens.in/protocol/trade-safety/",
       "description": "Open, deterministic pre-trade safety contract for binding one exact proposed order to operator policy, mandatory Seiche and Undertow evidence, conditional LiquiLens context, and a short-lived pass, limit, hold, or unavailable receipt.",
-      "tags": ["AI trading agents", "trading copilots", "pre-trade controls", "Seiche", "Undertow", "LiquiLens", "FDC3"],
+      "tags": ["AI trading agents", "trading copilots", "pre-trade controls", "protected-route pilot", "Seiche", "Undertow", "LiquiLens", "FDC3"],
       "representativeQueries": [
         "How can I require every trading agent in my environment to present an order-bound safety receipt?",
         "Which Seiche and Undertow evidence must be checked before an AI copilot submits an order?",
         "How do I verify a trade-safety receipt without giving the verifier broker authority?",
-        "When should LiquiLens institution context participate in a pre-trade policy?"
+        "When should LiquiLens institution context participate in a pre-trade policy?",
+        "How can I run a paid paper or shadow pilot for one protected agent order route?"
       ],
       "version": "1.0.0",
       "updatedAt": "2026-09-04T22:10:51Z",
@@ -533,6 +534,10 @@
         "gatewaySourceRevision": "5f46ff09288a8ee1024715db75615ab5882465fa",
         "gatewayOciImage": "ghcr.io/beepboop2025/liquilens-trade-safety-gateway@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762",
         "x402Access": "disabled",
+        "protectedRoutePilot": "https://liquilens.in/protocol/trade-safety/#protected-route-pilot",
+        "protectedRoutePilotScope": "paid fixed-scope 30-day proof; one customer-owned agent, one broker paper-sandbox or OMS shadow route, one account, one strategy family, one written operator policy, up to 25000 assessment attempts, hard cap, no automatic overage, no live-money execution",
+        "protectedRoutePilotCommercials": "fee quoted by founder; no public list price; pilot fee creditable toward the first annual agreement under scoped terms",
+        "protectedRoutePilotContact": "mailto:mrinal@liquilens.in?subject=LiquiLens%20Protected%20Route%20Pilot",
         "alpacaPaperAdapter": "source-only paper reference; not deployed in the public gateway"
       }
     },
