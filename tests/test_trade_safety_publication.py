@@ -168,6 +168,11 @@ def test_agent_catalog_exposes_only_the_read_only_trade_safety_mcp_boundary():
     assert metadata["publicToolCount"] == 2
     assert metadata["executionToolCount"] == 0
     assert metadata["x402Access"] == "disabled"
+    assert "no account, API key or payment" in metadata["freeAccess"]
+    assert (
+        "generic site discovery events do not prove MCP activation"
+        in (metadata["telemetry"])
+    )
     assert metadata["sourceRevision"] == ("5f46ff09288a8ee1024715db75615ab5882465fa")
     assert metadata["ociImage"].endswith(
         "@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762"
@@ -249,11 +254,22 @@ def test_human_and_machine_surfaces_link_every_trade_safety_contract():
     assert capabilities_link.split(">", 1)[0].count("data-event") == 0
 
 
-def test_protected_route_pilot_is_bounded_commercial_and_measurable():
+def test_free_sandbox_is_primary_and_enterprise_pilot_is_optional():
     page = _read("protocol/trade-safety/index.html")
     for required in (
+        'id="free-sandbox"',
+        "Free public sandbox",
+        "without an account, API key, payment",
+        "Copy free MCP endpoint",
+        "Import OpenAPI",
+        "specification",
+        "source examples",
+        "conformance suite",
+        "Copy-paste MCP configuration",
+        '"mcpServers"',
+        "not dedicated production capacity or an uptime promise",
         'id="protected-route-pilot"',
-        "Paid protected-route pilot",
+        "Optional enterprise pilot",
         "30 days",
         "one broker paper-sandbox or OMS shadow route",
         "one account",
@@ -269,10 +285,26 @@ def test_protected_route_pilot_is_bounded_commercial_and_measurable():
         "No broker secret, order history or customer row",
         "A click is not counted as a qualified lead, customer, pilot, revenue",
         "no live broker credentials, routing or real-money execution",
+        "approved private evidence",
+        "higher quotas",
+        "replay and audit export",
+        "team policy",
+        "broker or OMS paper/shadow integration",
+        "agreed SLO and support boundary",
+        "not enabled in the free public gateway",
     ):
         assert required.lower() in page.lower()
 
-    assert page.count('data-pilot-event="email_clicked"') == 2
+    hero = page[page.index('<section class="hero">') : page.index("</section>")]
+    assert "Free public sandbox" in hero
+    assert "Copy free MCP endpoint" in hero
+    assert "Scope the 30-day pilot" not in hero
+    assert page.count('data-free-copy="https://trade-safety.liquilens.in/mcp"') == 2
+    assert page.count('data-free-event="mcp_endpoint_copied"') == 2
+    assert page.count('data-free-event="openapi_opened"') == 2
+    assert page.count('data-pilot-event="email_clicked"') == 1
+    assert "Gateway activation telemetry is disabled at launch" in page
+    assert "actual MCP use must not be inferred from site reach" in page
     assert "LiquiLens%20Protected%20Route%20Pilot" in page
     for qualification_field in (
         "Role%20and%20route%20owner",
@@ -294,22 +326,52 @@ def test_protected_route_pilot_is_bounded_commercial_and_measurable():
         assert unsupported_claim.lower() not in page.lower()
 
     app = _read("protocol/trade-safety/app.js")
-    assert "ALLOWED_EVENTS = {offer_viewed: true, email_clicked: true}" in app
-    assert 'JSON.stringify({surface: "pilot", event: eventName})' in app
+    assert 'mcp_endpoint_copied: "developers"' in app
+    assert 'openapi_opened: "developers"' in app
+    assert 'offer_viewed: "pilot"' in app
+    assert 'email_clicked: "pilot"' in app
+    assert "navigator.clipboard.writeText" in app
+    assert "IntersectionObserver" in app
+    assert "observer.disconnect()" in app
+    assert "JSON.stringify({surface: surface, event: eventName})" in app
     assert 'track("offer_viewed")' in app
     assert "keepalive: true" in app
-    for forbidden_payload in ("location.href", "document.referrer", "FormData"):
+    for forbidden_payload in (
+        "location.href",
+        "document.referrer",
+        "FormData",
+        "user_id",
+        "email_address",
+    ):
         assert forbidden_payload not in app
 
     llms = _read("llms.txt")
-    assert "Paid Trade Safety protected-route pilot:" in llms
+    assert "Free Trade Safety MCP and REST sandbox:" in llms
+    assert "requires no account, API key or payment" in llms
+    assert "optional enterprise Protected Route Pilot" in llms
+    assert "not a gate to the public MCP, REST, schemas, examples" in llms
+    assert "not proof of a gateway call or MCP activation" in llms
     assert "up to 25,000 assessment attempts" in llms
-    assert "there is no public list price" in llms
+    assert "there is no public list price" in llms.lower()
     assert "does not provide investment advice" in llms
 
     access = json.loads(_read("product-card.json"))["access"]
+    assert "No account, API key or payment" in access["trade_safety_free_access"]
+    assert (
+        "no dedicated-capacity or uptime promise"
+        in (access["trade_safety_free_access"])
+    )
+    assert (
+        "discovery only, not gateway calls or MCP activations"
+        in (access["trade_safety_measurement_boundary"])
+    )
     assert access["trade_safety_protected_route_pilot"].endswith(
         "#protected-route-pilot"
+    )
+    assert "Optional paid" in access["trade_safety_protected_route_pilot_scope"]
+    assert (
+        "approved private evidence"
+        in (access["trade_safety_protected_route_pilot_scope"])
     )
     assert "30-day proof" in access["trade_safety_protected_route_pilot_scope"]
     assert (
@@ -326,10 +388,16 @@ def test_protected_route_pilot_is_bounded_commercial_and_measurable():
         for row in catalog["entries"]
         if row["identifier"] == "urn:air:liquilens.in:protocol:trade-safety-receipt"
     )
+    assert "no account, API key or payment" in entry["metadata"]["freeAccess"]
+    assert (
+        "generic discovery only, not gateway calls or MCP activations"
+        in (entry["metadata"]["measurementBoundary"])
+    )
     assert entry["metadata"]["protectedRoutePilot"].endswith("#protected-route-pilot")
     assert "no live-money execution" in (entry["metadata"]["protectedRoutePilotScope"])
     assert (
-        "no public list price" in (entry["metadata"]["protectedRoutePilotCommercials"])
+        "not a gate to the public MCP"
+        in (entry["metadata"]["protectedRoutePilotCommercials"])
     )
 
 

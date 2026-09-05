@@ -7,7 +7,7 @@
     "category": "Bank and lender failure early warning",
     "description": "A disclosure-based early warning system that reads public filings, funding structure, regulatory thresholds and market signals to identify banks and lenders drifting toward distress. Historical diagnostics publish misses plus explicit claim-eligibility flags.",
     "operating_entity": "ai.de, a Udyam registered sole proprietorship, Jaipur, India",
-    "access_model": "Public research, historical diagnostics, API, hosted MCP and CLI are open. Paid named-list software watches public India Failure Radar names and served US FDIC-board names without a customer book. Europe remains named case files. Fixed-scope proof pilots remain available for private-book validation, and a separate 30-day Trade Safety pilot covers one customer-owned paper or shadow order route.",
+    "access_model": "Public research, historical diagnostics, API, hosted MCP and CLI are open. The Trade Safety MCP and REST sandbox, schemas, examples and conformance suite are free for bounded evaluation without an account, API key or payment. Paid named-list software watches public India Failure Radar names and served US FDIC-board names without a customer book. Europe remains named case files. Optional fixed-scope pilots remain available for private-book validation or one customer-owned paper or shadow order route.",
     "geographies": ["India", "United States", "European case studies"],
     "topics": [
       "bank failure early warning",
@@ -127,8 +127,10 @@
     "trade_safety_gateway_oci_image": "ghcr.io/beepboop2025/liquilens-trade-safety-gateway@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762",
     "trade_safety_gateway_status": "Public read-only sandbox. x402 is disabled; no broker credentials, preview, order submission, routing, custody, settlement or execution authority.",
     "trade_safety_x402_status": "disabled",
+    "trade_safety_free_access": "No account, API key or payment; shared bounded evaluation through MCP and REST, with live byte/time limits declared by the capabilities endpoint and no dedicated-capacity or uptime promise.",
+    "trade_safety_measurement_boundary": "Property-free site endpoint-copy and OpenAPI-open events measure generic discovery only, not gateway calls or MCP activations. Gateway activation telemetry is disabled at launch; site reach is not an active user, lead, customer, protected order or revenue.",
     "trade_safety_protected_route_pilot": "https://liquilens.in/protocol/trade-safety/#protected-route-pilot",
-    "trade_safety_protected_route_pilot_scope": "Paid fixed-scope 30-day proof; one customer-owned agent, one broker paper-sandbox or OMS shadow route, one account, one strategy family, one written operator policy, up to 25,000 assessment attempts, hard cap, no automatic overage, no live-money execution; fee quoted by the founder with no public list price.",
+    "trade_safety_protected_route_pilot_scope": "Optional paid fixed-scope 30-day proof after free evaluation; one customer-owned agent, one broker paper-sandbox or OMS shadow route, one account, one strategy family, one written operator policy, up to 25,000 assessment attempts, hard cap, no automatic overage and no live-money execution. A reviewed scope can add approved private evidence, higher quotas, replay and audit export, team policy, broker or OMS integration, and an agreed SLO and support boundary; fee quoted by the founder with no public list price.",
     "trade_safety_protected_route_pilot_contact": "mailto:mrinal@liquilens.in?subject=LiquiLens%20Protected%20Route%20Pilot",
     "trade_safety_financial_authority": {
       "can_execute": false,

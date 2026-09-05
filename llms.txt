@@ -12,6 +12,7 @@ Financial Evidence Agent Skill: https://github.com/beepboop2025/financial-eviden
 Evidence Carrier protocol: https://liquilens.in/protocol/
 Evidence Carrier machine catalog: https://liquilens.in/protocol/catalog.json
 Trade Safety Receipt v1: https://liquilens.in/protocol/trade-safety/
+Free Trade Safety MCP and REST sandbox: https://trade-safety.liquilens.in/
 Trade Safety specification: https://liquilens.in/protocol/trade-safety/specification.md
 Trade Safety adoption plan: https://liquilens.in/protocol/trade-safety/adoption-plan.md
 Selection guide: https://liquilens.in/use-cases/
@@ -19,7 +20,7 @@ Free early-warning coverage check: https://liquilens.in/tools/ews-coverage-check
 RBI/NBFC early-warning validation guide: https://liquilens.in/guides/rbi-nbfc-early-warning-system/
 Named-list software: https://liquilens.in/access/
 Paid proof pilot: https://liquilens.in/pilot/
-Paid Trade Safety protected-route pilot: https://liquilens.in/protocol/trade-safety/#protected-route-pilot
+Optional enterprise Trade Safety protected-route pilot: https://liquilens.in/protocol/trade-safety/#protected-route-pilot
 Product card: https://liquilens.in/product-card.json
 Discovery catalog: https://liquilens.in/.well-known/ai-catalog.json
 RFC 9727 API catalog: https://liquilens.in/.well-known/api-catalog
@@ -125,7 +126,9 @@ Canonical Trade Safety contracts:
 
 The released Evidence Carrier 0.18.0 package and CLI can issue or verify local receipts; its Python package also exposes synchronous and asynchronous operator-side paper-order guards. Only a fresh, exact, HMAC-authenticated `pass` receipt can reach the protected paper callback. The offline read-only MCP server exposes receipt verification, not issuance. Live mode fails closed until durable broker idempotency and uncertain-outcome reconciliation exist. An adopter makes the receipt mandatory by withholding raw order tools and broker credentials from the agent, then verifying the receipt inside the caller-owned OMS or gateway before its own action.
 
-The public Trade Safety Gateway 0.2.0 is a read-only sandbox at https://trade-safety.liquilens.in/. Its MCP endpoint exposes only `assess_trade_safety` and `trade_safety_capabilities`; the REST check and capability endpoints are public. x402 is disabled. The gateway has no broker credentials, preview endpoint, order-submission endpoint, routing, custody, settlement or execution authority, and cannot recommend or allocate capital. It runs exact source revision `5f46ff09288a8ee1024715db75615ab5882465fa` from OCI image `ghcr.io/beepboop2025/liquilens-trade-safety-gateway@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762`. The Alpaca adapter in that source is a paper-only reference package; it is not installed in the public gateway, no broker credentials are present, and no paper or live orders are submitted.
+The public Trade Safety Gateway 0.2.0 is a free read-only sandbox at https://trade-safety.liquilens.in/. It requires no account, API key or payment. Its MCP endpoint exposes only `assess_trade_safety` and `trade_safety_capabilities`; the REST check and capability endpoints are public. Request, upstream and response byte/time limits are declared by the live capabilities endpoint, and the shared service makes no dedicated-capacity or uptime promise. x402 is disabled. The gateway has no broker credentials, preview endpoint, order-submission endpoint, routing, custody, settlement or execution authority, and cannot recommend or allocate capital. It runs exact source revision `5f46ff09288a8ee1024715db75615ab5882465fa` from OCI image `ghcr.io/beepboop2025/liquilens-trade-safety-gateway@sha256:2d741addefa972e25d65f2617ce75f639321345ffe74dd02d5f3b4f668154762`. The Alpaca adapter in that source is a paper-only reference package; it is not installed in the public gateway, no broker credentials are present, and no paper or live orders are submitted.
+
+The site records only aggregate, property-free generic MCP-endpoint-copy and OpenAPI-open actions. Those are discovery signals, not proof of a gateway call or MCP activation. Gateway activation telemetry is disabled at launch, so no active-user, lead, customer, protected-order or revenue count may be inferred from site reach.
 
 Public Trade Safety Gateway endpoints:
 
@@ -135,7 +138,7 @@ Public Trade Safety Gateway endpoints:
 - OpenAPI: https://trade-safety.liquilens.in/openapi.json
 - Health: https://trade-safety.liquilens.in/healthz
 
-The paid Protected Route Pilot is a fixed-scope 30-day proof for one customer-owned agent, one broker paper-sandbox or OMS shadow route, one account, one strategy family and one written operator policy. It includes order-path and bypass mapping, policy mapping, up to 25,000 assessment attempts with a hard cap and no automatic overage, four weekly calibration reviews, verifiable receipt replay and local audit export, and a final evidence report. Buyers use it to decide whether receipt coverage, unavailable causes, false holds, latency and uncertain-submission reconciliation are acceptable for that one route. The route remains paper-only or non-executing throughout; the pilot does not provide investment advice, validate trading performance, enable x402, use live broker credentials or submit a live-money order. This is paid work, but there is no public list price. The founder's scoped reply names the fee and deployment boundary, and the pilot fee is creditable toward the first annual agreement if both sides proceed under those terms. Contact mrinal@liquilens.in with the accountable route owner, agent/runtime, paper broker or OMS shadow route, account and strategy family, existing control path, success threshold, customer-owned environment and target window. Do not send a broker secret or customer data in the first brief.
+The optional enterprise Protected Route Pilot is a fixed-scope 30-day proof for teams that first evaluate the free public sandbox and then need one private, customer-owned paper-sandbox or OMS shadow route. A reviewed scope can add approved private evidence, higher quotas, replay and local audit export, team policy, a broker or OMS integration, and an agreed SLO and support boundary. The baseline binds one agent, one route, one account, one strategy family and one written operator policy; it includes order-path and bypass mapping, policy mapping, up to 25,000 assessment attempts with a hard cap and no automatic overage, four weekly calibration reviews, and a final evidence report. The route remains paper-only or non-executing throughout; the pilot does not provide investment advice, validate trading performance, enable x402, use live broker credentials or submit a live-money order. This is optional paid work, not a gate to the public MCP, REST, schemas, examples or conformance suite. There is no public list price. The founder's scoped reply names the fee and deployment boundary, and the pilot fee is creditable toward the first annual agreement if both sides proceed under those terms. Contact mrinal@liquilens.in with the accountable route owner, agent/runtime, paper broker or OMS shadow route, account and strategy family, existing control path, success threshold, customer-owned environment and target window. Do not send a broker secret or customer data in the first brief.
 
 Externally exercised Evidence Carrier consumer paths:
 
