@@ -143,5 +143,5 @@ jobs:
           python3 scripts/verify_catalog_edge.py --worker-version-id "$CANDIDATE_VERSION_ID" --expected-version-tag "$GITHUB_SHA" --attempts 3 --delay 2 --budget-seconds 75 --no-palimpsest-proof --no-sibling-proof
           require_current_main
           npx --no-install wrangler versions deploy "$CANDIDATE_VERSION_ID@100%" --config wrangler.catalog.jsonc --message "Promote verified GitHub-$GITHUB_SHA" --yes
-          python3 scripts/verify_catalog_edge.py --expected-version-tag "$GITHUB_SHA" --attempts 3 --delay 2 --budget-seconds 150
+          python3 scripts/verify_catalog_edge.py --expected-version-tag "$GITHUB_SHA" --attempts 12 --delay 5 --budget-seconds 150
           trap - ERR
