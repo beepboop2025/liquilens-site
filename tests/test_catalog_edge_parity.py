@@ -1272,3 +1272,16 @@ def test_financial_evidence_release_gate_rejects_missing_semantics_and_wrong_pro
     broken["structuredContent"]["sources"][0]["source_reported"]["state"][0]["provenance"]["kind"] = "source_reported_allowlisted_field"
     with pytest.raises(RuntimeError, match="source-reported provenance differs"):
         require_fetch_semantics(broken)
+
+
+def test_pages_postdeployment_verifier_copies_its_current_dependencies(tmp_path):
+    import os
+    workflow = _workflow(".github/workflows/pages.yml")
+    step = next(row for row in workflow["jobs"]["deploy"]["steps"] if row.get("name") == "Preserve postdeployment verifiers outside the site artifact")
+    subprocess.run(["bash", "-eu", "-c", step["run"]], cwd=ROOT,
+                   env={**os.environ, "RUNNER_TEMP": str(tmp_path)}, check=True,
+                   capture_output=True, text=True)
+    verifier_copy = tmp_path / "pages-proof/scripts/verify_catalog_edge.py"
+    result = subprocess.run([sys.executable, str(verifier_copy), "--help"],
+                            cwd=tmp_path, check=True, capture_output=True, text=True)
+    assert "--pages-proof-only" in result.stdout

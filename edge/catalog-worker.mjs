@@ -21,6 +21,8 @@ export const FINANCIAL_EVIDENCE_MCP_PATH = "/mcp/financial-evidence";
 export const MAX_MCP_REQUEST_BYTES = 32_768;
 export const MAX_MCP_RESPONSE_BYTES = 2_097_152;
 export const MAX_MCP_HTTP_RESPONSE_BYTES = 4_194_304;
+// Leave room for a bounded request ID and the SDK JSON-RPC/SSE envelope.
+const MAX_MCP_RESULT_BYTES = MAX_MCP_HTTP_RESPONSE_BYTES - MAX_MCP_REQUEST_BYTES - 8192;
 export const MAX_PACKET_SOURCE_BYTES = 1_572_864;
 export const MAX_PACKET_TIMEOUT_SECONDS = 30;
 const FETCH_INPUT_PROPERTIES =
@@ -506,24 +508,68 @@ function packetToolResult(packet) {
       ...packet,
       output_status: "unavailable",
       output_error: `encoded MCP result exceeds ${MAX_MCP_RESPONSE_BYTES} bytes; documents were omitted`,
-      sources: packet.sources.map(({ document: _document, ...source }) => ({
+      sources: packet.sources.map(({ document, ...source }) => ({
         ...source,
-        document_omitted: true,
+        ...(document === undefined ? {} : { document_omitted: true }),
       })),
     };
     serialized = JSON.stringify(delivered);
   }
-  const { sources, ...summary } = delivered;
-  return {
-    content: [{ type: "text", text: serialized }],
-    structuredContent: {
-      ...summary,
-      sources: sources.map(({ document: _document, ...source }) => source),
-      response_bytes: new TextEncoder().encode(serialized).byteLength,
-      documents: delivered.output_status === "complete" ? "content[0].text" : "omitted",
-    },
-    isError: packet.transport_status === "unavailable" || delivered.output_status === "unavailable",
-  };
+  if (new TextEncoder().encode(serialized).byteLength > MAX_MCP_RESPONSE_BYTES) {
+    delivered = {
+      ...delivered,
+      output_error: `encoded MCP result exceeds ${MAX_MCP_RESPONSE_BYTES} bytes; documents and source-reported metadata were omitted`,
+      sources: delivered.sources.map(({ source_reported, ...source }) => ({
+        ...source,
+        ...(source_reported === undefined ? {} : {
+          source_reported_omitted: true,
+          source_reported_omission_reason: "encoded_output_limit",
+        }),
+      })),
+    };
+    serialized = JSON.stringify(delivered);
+  }
+  if (new TextEncoder().encode(serialized).byteLength > MAX_MCP_RESPONSE_BYTES) {
+    throw new Error("bounded MCP output receipt exceeds the encoded packet limit");
+  }
+  function resultValue() {
+    const { sources, ...summary } = delivered;
+    return {
+      content: [{ type: "text", text: serialized }],
+      structuredContent: {
+        ...summary,
+        sources: sources.map(({ document: _document, ...source }) => source),
+        response_bytes: new TextEncoder().encode(serialized).byteLength,
+        documents: delivered.output_status === "complete" ? "content[0].text" : "omitted",
+      },
+      isError: packet.transport_status === "unavailable" || delivered.output_status === "unavailable",
+    };
+  }
+  let result = resultValue();
+  // The text mirror is escaped again inside JSON-RPC, and structuredContent
+  // repeats metadata. Measure the complete result, not only its inner packet.
+  if (new TextEncoder().encode(JSON.stringify(result)).byteLength > MAX_MCP_RESULT_BYTES) {
+    delivered = {
+      ...delivered,
+      output_status: "unavailable",
+      output_error: "serialized MCP result exceeds the HTTP response budget; documents and source-reported metadata were omitted",
+      sources: delivered.sources.map(({ document, source_reported, ...source }) => ({
+        ...source,
+        ...(document === undefined ? {} : { document_omitted: true }),
+        ...(source_reported === undefined ? {} : {
+          source_reported_omitted: true,
+          source_reported_omission_reason: "serialized_result_limit",
+        }),
+      })),
+    };
+    serialized = JSON.stringify(delivered);
+    result = resultValue();
+  }
+  if (new TextEncoder().encode(serialized).byteLength > MAX_MCP_RESPONSE_BYTES ||
+      new TextEncoder().encode(JSON.stringify(result)).byteLength > MAX_MCP_RESULT_BYTES) {
+    throw new Error("bounded MCP receipt exceeds the final packet or result limit");
+  }
+  return result;
 }
 
 export function createFinancialEvidenceServer({ fetchImpl = fetch } = {}) {

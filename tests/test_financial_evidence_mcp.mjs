@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { createHash } from "node:crypto";
 
 import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.5.json" with {
   type: "json",
@@ -13,6 +14,7 @@ import worker, {
   MAX_FETCH_TOPICS,
   MAX_MCP_HTTP_RESPONSE_BYTES,
   MAX_MCP_REQUEST_BYTES,
+  MAX_MCP_RESPONSE_BYTES,
   MAX_PACKET_SOURCE_BYTES,
   MAX_PACKET_TIMEOUT_SECONDS,
   MAX_SOURCE_BYTES,
@@ -948,6 +950,41 @@ test("truncated output preserves successful transport and marks delivery unavail
       assert.match(value.output_error, /documents were omitted/);
       assert.equal(value.sources[0].ok, true);
       assert.equal(value.sources[0].document_omitted, true);
+      assert.equal("document" in value.sources[0], false);
+    }
+    assert.equal(result.isError, true);
+  } finally { globalThis.fetch = originalFetch; }
+});
+
+
+
+test("quote-heavy metadata retains a typed receipt within the serialized HTTP cap", async () => {
+  const originalFetch = globalThis.fetch;
+  const body = JSON.stringify({status: '"'.repeat(750_000)});
+  assert.ok(new TextEncoder().encode(body).byteLength < MAX_PACKET_SOURCE_BYTES);
+  const digest = "sha256:" + createHash("sha256").update(body).digest("hex");
+  globalThis.fetch = async () => new Response(body, {headers: {"Content-Type": "application/json"}});
+  try {
+    const response = await worker.fetch(request({jsonrpc: "2.0", id: "quote-heavy", method: "tools/call", params: {name: "financial_evidence_fetch", arguments: {topics: ["money-market"], max_bytes: MAX_SOURCE_BYTES}}}), ALLOW_FETCH_ENV);
+    assert.equal(response.status, 200);
+    const raw = await response.text();
+    assert.ok(new TextEncoder().encode(raw).byteLength <= MAX_MCP_HTTP_RESPONSE_BYTES);
+    const payload = response.headers.get("content-type")?.startsWith("text/event-stream")
+      ? JSON.parse(raw.split("\n").find((line) => line.startsWith("data: ")).slice(6)) : JSON.parse(raw);
+    const result = payload.result;
+    const packet = JSON.parse(result.content[0].text);
+    assert.ok(new TextEncoder().encode(result.content[0].text).byteLength <= MAX_MCP_RESPONSE_BYTES);
+    for (const value of [packet, result.structuredContent]) {
+      assert.equal(value.status, "complete");
+      assert.equal(value.transport_status, "complete");
+      assert.equal(value.output_status, "unavailable");
+      assert.equal(value.status_semantics, "transport_only");
+      assert.equal(value.sources[0].ok, true);
+      assert.equal(value.sources[0].content_sha256, digest);
+      assert.equal(value.sources[0].bytes, body.length);
+      assert.equal(value.sources[0].source_reported_omitted, true);
+      assert.equal(value.sources[0].source_reported_omission_reason, "serialized_result_limit");
+      assert.equal("source_reported" in value.sources[0], false);
       assert.equal("document" in value.sources[0], false);
     }
     assert.equal(result.isError, true);
