@@ -24,11 +24,27 @@ Never commit the issued token or pass it through a workflow input.
 
 The MCP endpoint exposes three read-only tools for LiquiLens, Undertow, Seiche,
 and Palimpsest over current Streamable HTTP, with stateless compatibility for
-2025 clients. Its v0.1.4 identity, tool metadata, and accepted input schemas are
+2025 clients. Its v0.1.5 identity, tool metadata, and accepted input schemas are
 locked to the packaged server by
-[`protocol/financial-evidence-mcp-v0.1.4.json`](../protocol/financial-evidence-mcp-v0.1.4.json).
+[`protocol/financial-evidence-mcp-v0.1.5.json`](../protocol/financial-evidence-mcp-v0.1.5.json).
 It has no account or mutation surface and can fetch only the fixed public HTTPS
 evidence routes in the committed worker.
+
+The v0.1.5 packet keeps transport success separate from evidence evaluation and
+Carrier verification. Its fixed routes and six source adapters are copied from
+the signed package core in `protocol/financial-evidence-routing-v0.1.5.json`;
+only declared scalar paths are reported, with exact source-byte provenance.
+Missing fields remain `not_reported`. An output cap preserves transport results
+and marks `output_status` unavailable when documents must be omitted. If the
+projected metadata itself still exceeds the 2 MiB packet cap, it is explicitly
+marked `source_reported_omitted` with reason `encoded_output_limit`; it is never
+relabeled `not_reported`. Original source byte counts, hashes and transport
+results remain in the bounded receipt. The separately serialized JSON-RPC HTTP
+response still has its own 4 MiB cap. The complete MCP result is measured
+separately because the text mirror escapes JSON again and structured content
+repeats metadata. It reserves 40 KiB for the bounded request ID and protocol
+envelope; if necessary, metadata is explicitly omitted with reason
+`serialized_result_limit` while the typed transport receipt is retained.
 
 The public boundary rejects request bodies over 32 KiB and JSON-RPC batches.
 All five unique topics may be fetched in one call, producing at most six fixed

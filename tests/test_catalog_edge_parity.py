@@ -489,10 +489,10 @@ def test_mcp_receipt_decoder_accepts_one_json_or_sse_message():
         )
         == payload
     )
-    assert EXPECTED_MCP_VERSION == "0.1.4"
+    assert EXPECTED_MCP_VERSION == "0.1.5"
     assert EXPECTED_MCP_CONTRACT["serverInfo"] == {
         "name": "financial-evidence",
-        "version": "0.1.4",
+        "version": "0.1.5",
     }
     assert [tool["name"] for tool in EXPECTED_MCP_CONTRACT["tools"]] == list(
         EXPECTED_MCP_TOOLS
@@ -1246,3 +1246,42 @@ def test_linkset_json_mime_accepts_static_json_compatibility_only():
         "application/ai-catalog+json",
     )
     assert not _mime_matches_declared("text/html", "application/ai-catalog+json")
+
+
+def test_financial_evidence_release_gate_rejects_missing_semantics_and_wrong_provenance():
+    from scripts.verify_financial_evidence_semantics import require_fetch_semantics
+    fixture = json.loads((ROOT / "tests/fixtures/financial-evidence-v0.1.5-semantics.json").read_text())
+    case = fixture["cases"][0]
+    result = {"isError": False, "structuredContent": {
+        "status": "complete", "transport_status": "complete",
+        "status_semantics": "transport_only", "evidence_status": "not_evaluated",
+        "carrier_verification": "not_performed", "output_status": "complete",
+        "output_error": None, "sources": [{
+            "product": "Seiche", "ok": True, "bytes": len(case["raw_document"].encode()),
+            "source_url": case["source_url"], "content_sha256": case["content_sha256"],
+            "source_reported": case["expected_reported"],
+        }],
+    }}
+    require_fetch_semantics(result)
+    for field, wrong in [("status_semantics", "evidence_validated"), ("evidence_status", "eligible"), ("carrier_verification", "verified"), ("output_status", "unavailable")]:
+        broken = json.loads(json.dumps(result))
+        broken["structuredContent"][field] = wrong
+        with pytest.raises(RuntimeError, match="semantic boundary differs"):
+            require_fetch_semantics(broken)
+    broken = json.loads(json.dumps(result))
+    broken["structuredContent"]["sources"][0]["source_reported"]["state"][0]["provenance"]["kind"] = "source_reported_allowlisted_field"
+    with pytest.raises(RuntimeError, match="source-reported provenance differs"):
+        require_fetch_semantics(broken)
+
+
+def test_pages_postdeployment_verifier_copies_its_current_dependencies(tmp_path):
+    import os
+    workflow = _workflow(".github/workflows/pages.yml")
+    step = next(row for row in workflow["jobs"]["deploy"]["steps"] if row.get("name") == "Preserve postdeployment verifiers outside the site artifact")
+    subprocess.run(["bash", "-eu", "-c", step["run"]], cwd=ROOT,
+                   env={**os.environ, "RUNNER_TEMP": str(tmp_path)}, check=True,
+                   capture_output=True, text=True)
+    verifier_copy = tmp_path / "pages-proof/scripts/verify_catalog_edge.py"
+    result = subprocess.run([sys.executable, str(verifier_copy), "--help"],
+                            cwd=tmp_path, check=True, capture_output=True, text=True)
+    assert "--pages-proof-only" in result.stdout

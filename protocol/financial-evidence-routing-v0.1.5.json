@@ -1,0 +1,336 @@
+{
+  "schema": "liquidity-lab.financial-evidence-routing.v1",
+  "source_commit": "cf297b5652df826b505c0c86c9003c3b845f9dc4",
+  "source_file_sha256": "24947148f7c3a325e4bed45e9a453fe8165260c2257fb392c7bd85d3b7f2b937",
+  "source_reported_provenance": "source_document",
+  "routes": {
+    "money-market": [
+      {
+        "product": "Seiche",
+        "url": "https://api.seiche.info/api/v2/money-markets",
+        "evidence_class": "observed_or_unavailable",
+        "human_scope_url": "https://seiche.info/use-cases/money-market-research/",
+        "financial_authority": "none",
+        "carrier_state": "not_published"
+      }
+    ],
+    "capital-market": [
+      {
+        "product": "Seiche",
+        "url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+        "evidence_class": "observed_derived_or_unavailable",
+        "human_scope_url": "https://seiche.info/use-cases/capital-market-transmission/",
+        "financial_authority": "none",
+        "carrier_state": "not_published"
+      }
+    ],
+    "china-economy": [
+      {
+        "product": "Palimpsest",
+        "url": "https://palimpsest.info/readings/china-index-latest.json",
+        "evidence_class": "observed_structural_or_unavailable",
+        "human_scope_url": "https://palimpsest.info/china/",
+        "financial_authority": "none",
+        "carrier_state": "not_published"
+      },
+      {
+        "product": "Seiche",
+        "url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+        "evidence_class": "structural_or_restricted",
+        "human_scope_url": "https://seiche.info/markets/china-macro/",
+        "financial_authority": "none",
+        "carrier_state": "not_published"
+      }
+    ],
+    "bank-risk": [
+      {
+        "product": "LiquiLens",
+        "url": "https://api.liquilens.in/api/failure-radar/board",
+        "evidence_class": "observed_derived_or_unavailable",
+        "human_scope_url": "https://liquilens.in/use-cases/",
+        "financial_authority": "none",
+        "carrier_state": "not_published"
+      }
+    ],
+    "market-liquidity": [
+      {
+        "product": "Undertow",
+        "url": "https://api.seiche.info/undertow/x402/summary",
+        "evidence_class": "observed_derived_or_unavailable",
+        "human_scope_url": "https://liquilens-undertow.com/use-cases/",
+        "financial_authority": "none",
+        "carrier_state": "not_published"
+      }
+    ]
+  },
+  "adapters": {
+    "https://api.seiche.info/api/v2/money-markets": {
+      "name": "seiche_money_markets_v1",
+      "states": [
+        {
+          "name": "response_status",
+          "path": [
+            "status"
+          ]
+        }
+      ],
+      "clocks": [
+        {
+          "name": "generated_at",
+          "path": [
+            "generated_at"
+          ]
+        }
+      ]
+    },
+    "https://api.seiche.info/api/v2/world-markets?section=capital_markets": {
+      "name": "seiche_capital_markets_v1",
+      "states": [
+        {
+          "name": "response_status",
+          "path": [
+            "status"
+          ]
+        },
+        {
+          "name": "section_status",
+          "path": [
+            "capital_markets",
+            "status"
+          ]
+        }
+      ],
+      "clocks": [
+        {
+          "name": "generated_at",
+          "path": [
+            "generated_at"
+          ]
+        },
+        {
+          "name": "as_of",
+          "path": [
+            "as_of"
+          ]
+        },
+        {
+          "name": "snapshot_generated_at",
+          "path": [
+            "clocks",
+            "snapshot_generated_at"
+          ]
+        },
+        {
+          "name": "evaluation_at",
+          "path": [
+            "clocks",
+            "evaluation_at"
+          ]
+        },
+        {
+          "name": "latest_domain_as_of",
+          "path": [
+            "clocks",
+            "latest_domain_as_of"
+          ]
+        },
+        {
+          "name": "selected_evidence_as_of",
+          "path": [
+            "clocks",
+            "selected_evidence_as_of"
+          ]
+        },
+        {
+          "name": "capital_markets_domain_as_of",
+          "path": [
+            "clocks",
+            "domains",
+            "capital_markets"
+          ]
+        }
+      ]
+    },
+    "https://palimpsest.info/readings/china-index-latest.json": {
+      "name": "palimpsest_china_index_v1",
+      "states": [
+        {
+          "name": "economic_state",
+          "path": [
+            "economic_state",
+            "status"
+          ]
+        },
+        {
+          "name": "readiness",
+          "path": [
+            "readiness",
+            "status"
+          ]
+        }
+      ],
+      "clocks": [
+        {
+          "name": "generated_at",
+          "path": [
+            "generated_at"
+          ]
+        },
+        {
+          "name": "head_as_of",
+          "path": [
+            "head",
+            "as_of"
+          ]
+        },
+        {
+          "name": "head_generated_at",
+          "path": [
+            "head",
+            "generated_at"
+          ]
+        },
+        {
+          "name": "collection_first",
+          "path": [
+            "observation_ledger",
+            "collection_clock",
+            "first"
+          ]
+        },
+        {
+          "name": "collection_last",
+          "path": [
+            "observation_ledger",
+            "collection_clock",
+            "last"
+          ]
+        },
+        {
+          "name": "release_first",
+          "path": [
+            "observation_ledger",
+            "release_clock",
+            "first"
+          ]
+        },
+        {
+          "name": "release_last",
+          "path": [
+            "observation_ledger",
+            "release_clock",
+            "last"
+          ]
+        },
+        {
+          "name": "period_first",
+          "path": [
+            "observation_ledger",
+            "period_coverage",
+            "first"
+          ]
+        },
+        {
+          "name": "period_last",
+          "path": [
+            "observation_ledger",
+            "period_coverage",
+            "last"
+          ]
+        }
+      ]
+    },
+    "https://api.seiche.info/api/v2/world-markets?section=china_macro": {
+      "name": "seiche_china_macro_v1",
+      "states": [
+        {
+          "name": "response_status",
+          "path": [
+            "status"
+          ]
+        },
+        {
+          "name": "section_status",
+          "path": [
+            "china_macro",
+            "status"
+          ]
+        },
+        {
+          "name": "section_evidence_status",
+          "path": [
+            "china_macro",
+            "evidence_status"
+          ]
+        }
+      ],
+      "clocks": [
+        {
+          "name": "generated_at",
+          "path": [
+            "generated_at"
+          ]
+        },
+        {
+          "name": "as_of",
+          "path": [
+            "as_of"
+          ]
+        },
+        {
+          "name": "section_as_of",
+          "path": [
+            "china_macro",
+            "as_of"
+          ]
+        }
+      ]
+    },
+    "https://api.liquilens.in/api/failure-radar/board": {
+      "name": "liquilens_failure_radar_v1",
+      "states": [
+        {
+          "name": "historical_evidence_status",
+          "path": [
+            "historical_evidence",
+            "status"
+          ]
+        }
+      ],
+      "clocks": [
+        {
+          "name": "as_of",
+          "path": [
+            "as_of"
+          ]
+        },
+        {
+          "name": "market_layer_as_of",
+          "path": [
+            "market_layer",
+            "as_of"
+          ]
+        }
+      ]
+    },
+    "https://api.seiche.info/undertow/x402/summary": {
+      "name": "undertow_summary_v1",
+      "states": [
+        {
+          "name": "funding_regime",
+          "path": [
+            "funding_regime"
+          ]
+        }
+      ],
+      "clocks": [
+        {
+          "name": "asof",
+          "path": [
+            "asof"
+          ]
+        }
+      ]
+    }
+  }
+}
