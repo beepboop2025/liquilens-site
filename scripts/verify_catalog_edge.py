@@ -20,11 +20,16 @@ from pathlib import Path
 from typing import Any
 
 
+try:
+    from .verify_financial_evidence_semantics import require_fetch_semantics
+except ImportError:
+    from verify_financial_evidence_semantics import require_fetch_semantics
+
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / ".well-known/ai-catalog.json"
 API_CATALOG_PATH = ROOT / ".well-known/api-catalog.json"
 PROTOCOL_CATALOG_PATH = ROOT / "protocol/catalog.json"
-MCP_CONTRACT_PATH = ROOT / "protocol/financial-evidence-mcp-v0.1.4.json"
+MCP_CONTRACT_PATH = ROOT / "protocol/financial-evidence-mcp-v0.1.5.json"
 PAGES_TRADE_SAFETY_PATHS = (
     "protocol/liquilens-trade-safety-request-v1.schema.json",
     "protocol/liquilens-trade-safety-policy-v1.schema.json",
@@ -765,6 +770,7 @@ def _verify_mcp(
     )
     _require_version_tag(headers, expected_version_tag)
     probed = _require_result(limiter_probe, "limiter-probe")
+    require_fetch_semantics(probed)
     probe_summary = probed.get("structuredContent", {})
     if probe_summary.get("status") != "complete" or probed.get("isError") is not False:
         raise RuntimeError(f"MCP money-market fetch is not complete: {probed!r}")
@@ -784,7 +790,7 @@ def _verify_mcp(
         raise RuntimeError(f"MCP money-market receipt is incomplete: {source!r}")
     return (
         f"remote MCP exposes {len(EXPECTED_MCP_TOOLS)} exact tools, both protocol "
-        "generations, the China route, and a successful limiter-backed money-market fetch"
+        "generations, the China route, and a successful limiter-backed money-market fetch with transport-only semantics and source-document provenance"
     )
 
 

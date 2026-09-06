@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.4.json" with {
+import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.5.json" with {
   type: "json",
 };
+import semanticFixture from "./fixtures/financial-evidence-v0.1.5-semantics.json" with { type: "json" };
+
 import worker, {
   DEFAULT_SOURCE_BYTES,
   DEFAULT_TIMEOUT_SECONDS,
@@ -135,7 +137,7 @@ test("modern discovery is stateless and advertises the same server", async () =>
   );
   assert.equal(
     payload.result._meta["io.modelcontextprotocol/serverInfo"].version,
-    "0.1.4",
+    "0.1.5",
   );
   assert.equal(payload.result.resultType, "complete");
 });
@@ -893,4 +895,61 @@ test("browser Origins are restricted while server-side clients remain public", a
     new Request("https://liquilens.in/mcp/not-financial-evidence"),
   );
   assert.equal(unknown.status, 404);
+});
+
+
+test("v0.1.5 fixed routes and all six adapters match signed stdio fixtures", async () => {
+  const response = await worker.fetch(request({ jsonrpc: "2.0", id: "all-routes", method: "tools/call", params: { name: "financial_evidence_topics", arguments: {} } }));
+  assert.deepEqual((await responsePayload(response)).result.structuredContent, semanticFixture.routes);
+  const byUrl = new Map(semanticFixture.cases.map((row) => [row.source_url, row]));
+  const packet = await buildPacket(Object.keys(semanticFixture.routes.topics), {
+    fetchImpl: async (url) => new Response(byUrl.get(url).raw_document, { headers: { "Content-Type": "application/json" } }),
+  });
+  assert.equal(packet.status, "complete");
+  assert.equal(packet.transport_status, packet.status);
+  assert.equal(packet.status_semantics, "transport_only");
+  assert.equal(packet.evidence_status, "not_evaluated");
+  assert.equal(packet.carrier_verification, "not_performed");
+  assert.equal(packet.sources.length, 6);
+  for (const source of packet.sources) {
+    const expected = byUrl.get(source.source_url);
+    assert.deepEqual(source.source_reported, expected.expected_reported);
+    assert.equal(source.content_sha256, expected.content_sha256);
+    assert.deepEqual(source.document, JSON.parse(expected.raw_document));
+    assert.equal(source.financial_authority, "none");
+    assert.equal(source.carrier_state, "not_published");
+    assert.equal("carrier_url" in source, false);
+  }
+});
+
+test("unreported or nonscalar metadata is never recursively inferred", async () => {
+  for (const document of [{}, [], {status: null, generated_at: []}, {status: {status: "calm"}, generated_at: {clock: "now"}}, {untrusted: {status: "complete", generated_at: "now"}}]) {
+    const packet = await buildPacket(["money-market"], { fetchImpl: async () => new Response(JSON.stringify(document), { headers: { "Content-Type": "application/json" } }) });
+    assert.equal(packet.status, "complete");
+    assert.deepEqual(packet.sources[0].source_reported, {adapter: "seiche_money_markets_v1", state: "not_reported", clocks: "not_reported"});
+    assert.equal(packet.evidence_status, "not_evaluated");
+  }
+});
+
+test("truncated output preserves successful transport and marks delivery unavailable", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response(JSON.stringify({ status: "x".repeat(1_100_000) }), { headers: { "Content-Type": "application/json" } });
+  try {
+    const response = await worker.fetch(request({jsonrpc: "2.0", id: "output-cap", method: "tools/call", params: {name: "financial_evidence_fetch", arguments: {topics: ["money-market"], max_bytes: MAX_SOURCE_BYTES}}}), ALLOW_FETCH_ENV);
+    const result = (await responsePayload(response)).result;
+    const packet = JSON.parse(result.content[0].text);
+    for (const value of [packet, result.structuredContent]) {
+      assert.equal(value.status, "complete");
+      assert.equal(value.transport_status, "complete");
+      assert.equal(value.status_semantics, "transport_only");
+      assert.equal(value.evidence_status, "not_evaluated");
+      assert.equal(value.carrier_verification, "not_performed");
+      assert.equal(value.output_status, "unavailable");
+      assert.match(value.output_error, /documents were omitted/);
+      assert.equal(value.sources[0].ok, true);
+      assert.equal(value.sources[0].document_omitted, true);
+      assert.equal("document" in value.sources[0], false);
+    }
+    assert.equal(result.isError, true);
+  } finally { globalThis.fetch = originalFetch; }
 });

@@ -1,0 +1,368 @@
+{
+  "canonical_source_commit": "cf297b5652df826b505c0c86c9003c3b845f9dc4",
+  "canonical_core_sha256": "24947148f7c3a325e4bed45e9a453fe8165260c2257fb392c7bd85d3b7f2b937",
+  "routes": {
+    "schema": "liquidity-lab.financial-evidence-routes.v1",
+    "absence_policy": "Missing, failed, restricted, or unavailable evidence is never converted to zero or calm.",
+    "topics": {
+      "money-market": [
+        {
+          "product": "Seiche",
+          "url": "https://api.seiche.info/api/v2/money-markets",
+          "evidence_class": "observed_or_unavailable",
+          "human_scope_url": "https://seiche.info/use-cases/money-market-research/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ],
+      "capital-market": [
+        {
+          "product": "Seiche",
+          "url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+          "evidence_class": "observed_derived_or_unavailable",
+          "human_scope_url": "https://seiche.info/use-cases/capital-market-transmission/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ],
+      "china-economy": [
+        {
+          "product": "Palimpsest",
+          "url": "https://palimpsest.info/readings/china-index-latest.json",
+          "evidence_class": "observed_structural_or_unavailable",
+          "human_scope_url": "https://palimpsest.info/china/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        },
+        {
+          "product": "Seiche",
+          "url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+          "evidence_class": "structural_or_restricted",
+          "human_scope_url": "https://seiche.info/markets/china-macro/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ],
+      "bank-risk": [
+        {
+          "product": "LiquiLens",
+          "url": "https://api.liquilens.in/api/failure-radar/board",
+          "evidence_class": "observed_derived_or_unavailable",
+          "human_scope_url": "https://liquilens.in/use-cases/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ],
+      "market-liquidity": [
+        {
+          "product": "Undertow",
+          "url": "https://api.seiche.info/undertow/x402/summary",
+          "evidence_class": "observed_derived_or_unavailable",
+          "human_scope_url": "https://liquilens-undertow.com/use-cases/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ]
+    }
+  },
+  "cases": [
+    {
+      "topic": "money-market",
+      "source_url": "https://api.seiche.info/api/v2/money-markets",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\"}},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"}}",
+      "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a",
+      "expected_reported": {
+        "adapter": "seiche_money_markets_v1",
+        "state": [
+          {
+            "name": "response_status",
+            "value": "DATA HOLD",
+            "path": "/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/money-markets",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "generated_at",
+            "value": "2026-08-25T19:35:45Z",
+            "path": "/generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/money-markets",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "capital-market",
+      "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\"}},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"}}",
+      "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a",
+      "expected_reported": {
+        "adapter": "seiche_capital_markets_v1",
+        "state": [
+          {
+            "name": "response_status",
+            "value": "DATA HOLD",
+            "path": "/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          },
+          {
+            "name": "section_status",
+            "value": "restricted",
+            "path": "/capital_markets/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "generated_at",
+            "value": "2026-08-25T19:35:45Z",
+            "path": "/generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          },
+          {
+            "name": "as_of",
+            "value": 0,
+            "path": "/as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          },
+          {
+            "name": "snapshot_generated_at",
+            "value": "old-clock",
+            "path": "/clocks/snapshot_generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          },
+          {
+            "name": "evaluation_at",
+            "value": false,
+            "path": "/clocks/evaluation_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          },
+          {
+            "name": "capital_markets_domain_as_of",
+            "value": "domain-clock",
+            "path": "/clocks/domains/capital_markets",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "china-economy",
+      "source_url": "https://palimpsest.info/readings/china-index-latest.json",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\"}},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"}}",
+      "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a",
+      "expected_reported": {
+        "adapter": "palimpsest_china_index_v1",
+        "state": [
+          {
+            "name": "economic_state",
+            "value": "structural",
+            "path": "/economic_state/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://palimpsest.info/readings/china-index-latest.json",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          },
+          {
+            "name": "readiness",
+            "value": "hold",
+            "path": "/readiness/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://palimpsest.info/readings/china-index-latest.json",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "generated_at",
+            "value": "2026-08-25T19:35:45Z",
+            "path": "/generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://palimpsest.info/readings/china-index-latest.json",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          },
+          {
+            "name": "head_as_of",
+            "value": "old-head",
+            "path": "/head/as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://palimpsest.info/readings/china-index-latest.json",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "china-economy",
+      "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\"}},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"}}",
+      "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a",
+      "expected_reported": {
+        "adapter": "seiche_china_macro_v1",
+        "state": [
+          {
+            "name": "response_status",
+            "value": "DATA HOLD",
+            "path": "/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          },
+          {
+            "name": "section_status",
+            "value": "unavailable",
+            "path": "/china_macro/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          },
+          {
+            "name": "section_evidence_status",
+            "value": "restricted",
+            "path": "/china_macro/evidence_status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "generated_at",
+            "value": "2026-08-25T19:35:45Z",
+            "path": "/generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          },
+          {
+            "name": "as_of",
+            "value": 0,
+            "path": "/as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "bank-risk",
+      "source_url": "https://api.liquilens.in/api/failure-radar/board",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\"}},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"}}",
+      "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a",
+      "expected_reported": {
+        "adapter": "liquilens_failure_radar_v1",
+        "state": [
+          {
+            "name": "historical_evidence_status",
+            "value": "unavailable",
+            "path": "/historical_evidence/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.liquilens.in/api/failure-radar/board",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "as_of",
+            "value": 0,
+            "path": "/as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.liquilens.in/api/failure-radar/board",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "market-liquidity",
+      "source_url": "https://api.seiche.info/undertow/x402/summary",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\"}},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"}}",
+      "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a",
+      "expected_reported": {
+        "adapter": "undertow_summary_v1",
+        "state": [
+          {
+            "name": "funding_regime",
+            "value": "unknown",
+            "path": "/funding_regime",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/undertow/x402/summary",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "asof",
+            "value": "old-source",
+            "path": "/asof",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/undertow/x402/summary",
+              "content_sha256": "sha256:ca97d4fd4ea281dacc0b33b1d9094705adf20da54d3e3344209dc2cb2b60220a"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
