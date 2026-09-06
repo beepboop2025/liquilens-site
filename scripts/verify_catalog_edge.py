@@ -1998,19 +1998,38 @@ def _validate_sibling_registry(
         for remote in server.get("remotes", [])
     ):
         raise RuntimeError(f"{label} Registry card does not expose {endpoint}")
-    if isinstance(central_server, dict) and isinstance(
-        central_server.get("repository"), dict
-    ):
-        expected_repository = central_server.get("repository")
-    if expected_repository is None:
-        expected_repository = SIBLING_REGISTRY_REPOSITORIES.get(label)
-    if not isinstance(expected_repository, dict):
-        raise RuntimeError(f"{label} has no independent Registry repository contract")
-    _require_equal(
-        server.get("repository"),
-        expected_repository,
-        f"{label} Registry source repository",
-    )
+    if label == "Riptide" and expected_version == "1.3.0":
+        # The receipted 1.3.0 publication intentionally omits its private repository.
+        # Bind the complete published card; do not relax repository checks generally.
+        _require_equal(
+            server,
+            {
+                "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+                "name": "io.github.beepboop2025/riptide",
+                "description": "Read-only paper risk evidence and policy-gated committed event research. No real orders.",
+                "title": "Riptide — public risk and event research",
+                "version": "1.3.0",
+                "websiteUrl": "https://api.seiche.info/riptide/",
+                "remotes": [
+                    {"type": "streamable-http", "url": "https://api.seiche.info/riptide/mcp"}
+                ],
+            },
+            "Riptide exact private-source Registry card",
+        )
+    else:
+        if isinstance(central_server, dict) and isinstance(
+            central_server.get("repository"), dict
+        ):
+            expected_repository = central_server.get("repository")
+        if expected_repository is None:
+            expected_repository = SIBLING_REGISTRY_REPOSITORIES.get(label)
+        if not isinstance(expected_repository, dict):
+            raise RuntimeError(f"{label} has no independent Registry repository contract")
+        _require_equal(
+            server.get("repository"),
+            expected_repository,
+            f"{label} Registry source repository",
+        )
     official = payload.get("_meta", {}).get(
         "io.modelcontextprotocol.registry/official", {}
     )
@@ -2092,8 +2111,8 @@ def _verify_sibling_action_proofs(label: str, card: dict[str, Any]) -> str:
             ),
             (
                 "registryPublication",
-                "https://github.com/beepboop2025/riptide/actions/runs/32929046333",
-                "350169e471d10085c2381c459486b9c263de7985",
+                "https://github.com/beepboop2025/riptide/actions/runs/34000144596",
+                "afa543ee77c396fcc2d77b4f6f84ca0de3aac362",
             ),
         )
         for prefix, expected_run, expected_sha in private_proofs:

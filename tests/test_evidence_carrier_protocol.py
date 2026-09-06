@@ -67,7 +67,7 @@ EXPECTED_CHANNELS = {
     "official-mcp-registry": (
         "live",
         "https://registry.modelcontextprotocol.io/v0.1/servers/"
-        "io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.18.0",
+        "io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.19.0",
     ),
     "agent-skill": (
         "live",
@@ -97,8 +97,8 @@ EXPECTED_CHANNELS = {
     "uvx-immutable-wheel": (
         "live",
         "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/"
-        "download/v0.18.0/liquilens_evidence-0.18.0-py3-none-any.whl"
-        "#sha256=9fbc7ee50f658e2a8d1d880f8f76d73dca8b07ef6f0747df33a7b9fc346495ef",
+        "download/v0.19.0/liquilens_evidence-0.19.0-py3-none-any.whl"
+        "#sha256=1adccb72376f50456fd16a979e372f802ae73ba35b766633bc3d8bd4ab5abcc8",
     ),
     "homebrew": (
         "live",
@@ -109,7 +109,7 @@ EXPECTED_CHANNELS = {
     "oci": (
         "live",
         "https://ghcr.io/v2/beepboop2025/liquilens-evidence-carrier/manifests/"
-        "sha256:293a9ec61ad43f9bac22775936271b19651b486115ab53acbe7928cb177f8c4e",
+        "sha256:bdbfed2afa87f25e8ef88dffeb4ba7ab198854705528c0de5abe31552a170b9a",
     ),
     "mcp-oci": (
         "live",
@@ -192,16 +192,16 @@ def test_machine_catalog_routes_every_contract_without_authority_widening():
         "https://github.com/beepboop2025/liquilens-evidence-carrier"
     )
     assert catalog["releaseCommit"] == (
-        "906ca033a96ea862ab813c64db2a6b01c5ce8c4f"
+        "8f5738c9e77cc95b9a68543d478b9521f5595d61"
     )
     assert catalog["releaseTagObject"] == (
-        "42dd412ef27b470841b71b8bc73c0ed63a5e4a6b"
+        "c3239bfc7c4d3c4b7fc5ce26e0f602962e7d4337"
     )
     assert catalog["pythonDistributionSha256"] == (
-        "9fbc7ee50f658e2a8d1d880f8f76d73dca8b07ef6f0747df33a7b9fc346495ef"
+        "1adccb72376f50456fd16a979e372f802ae73ba35b766633bc3d8bd4ab5abcc8"
     )
     assert catalog["mcpBundleSha256"] == (
-        "f57ce3fb488b693e633d8bc66f980b616af09a8080722a11c50507496f39a2bb"
+        "11db11aefafcc6c4ba558877d1f9892fc708150b3afbaa28a741e74435b9a91a"
     )
     assert catalog["browserVerifier"] == (
         "https://beepboop2025.github.io/liquilens-evidence-carrier/"
@@ -307,7 +307,7 @@ def test_consumer_channel_matrix_preserves_receipts_and_status_boundaries():
         "publisher_auth_gated_not_listed"
     )
     assert by_id["oci"]["image"].endswith(
-        "@sha256:293a9ec61ad43f9bac22775936271b19651b486115ab53acbe7928cb177f8c4e"
+        "@sha256:bdbfed2afa87f25e8ef88dffeb4ba7ab198854705528c0de5abe31552a170b9a"
     )
     assert by_id["mcp-oci"]["image"].endswith(
         "@sha256:d55f69e55e579603ae8b510de76b1191047427a92569424a17729ea7f7e3e2f7"
@@ -464,7 +464,7 @@ def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
     assert match
     structured = json.loads(match.group(1))
     assert structured["@type"] == "SoftwareSourceCode"
-    assert structured["version"] == "0.18.0"
+    assert structured["version"] == "0.19.0"
     assert structured["codeRepository"] == (
         "https://github.com/beepboop2025/liquilens-evidence-carrier"
     )

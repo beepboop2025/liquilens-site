@@ -67,10 +67,10 @@ test("GET returns the committed ARD catalog with discovery headers", async () =>
   const carrier = catalog.entries.find(
     (entry) => entry.identifier === "urn:air:liquilens.in:protocol:evidence-carrier",
   );
-  assert.equal(carrier.version, "0.18.0");
+  assert.equal(carrier.version, "0.19.0");
   assert.equal(
     carrier.metadata.mcpBundleSha256,
-    "f57ce3fb488b693e633d8bc66f980b616af09a8080722a11c50507496f39a2bb",
+    "11db11aefafcc6c4ba558877d1f9892fc708150b3afbaa28a741e74435b9a91a",
   );
   assert.equal(
     carrier.metadata.browserVerifier,

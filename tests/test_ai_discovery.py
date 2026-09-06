@@ -736,7 +736,7 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     assert "Palimpsest 1.9.3" in status
     assert "6 public read-only MCP tools, 4 prompts and 1 metadata-only" in status
     assert "LIVE / RECEIPTED" in status
-    assert "Evidence Carrier 0.18.0 + Trade Safety Receipt v1" in status
+    assert "Evidence Carrier 0.19.0 + Trade Safety Receipt v1" in status
 
     ship_log = read("ship-log/index.html")
     assert "Seiche 0.11.1 closes its public distribution contract" in ship_log
