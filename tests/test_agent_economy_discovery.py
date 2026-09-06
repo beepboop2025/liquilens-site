@@ -30,10 +30,15 @@ def test_adjacent_products_are_individually_discoverable():
     assert riptide["metadata"]["sourceUpgradeVersion"] == "1.3.0"
     assert (
         riptide["metadata"]["sourceUpgradeState"]
-        == "live-registry-publication-gated"
+        == "live-registry-published"
     )
     assert riptide["metadata"]["sourceUpgradeCommit"] == (
         "00b50adaea41bebe1ceb54867f47e0070ed5eec6"
+    )
+    assert riptide["metadata"]["registryVersion"].endswith("/versions/1.3.0")
+    assert riptide["metadata"]["registryUpgradeState"] == "published-active-latest"
+    assert riptide["metadata"]["registryPublicationProofCommit"] == (
+        "afa543ee77c396fcc2d77b4f6f84ca0de3aac362"
     )
     assert riptide["metadata"]["apiCatalogSha256"] == (
         "sha256:b7075bdbe11883f875ebb0102b6d82e84578b62ce66d4a05e4b8b800074ee1b8"
@@ -111,13 +116,13 @@ def test_scamshield_remains_local_even_with_a_modern_mcp_contract():
 def test_carrier_and_palimpsest_versions_match_verified_release_receipts():
     carrier = ENTRIES["urn:air:liquilens.in:protocol:evidence-carrier"]
     palimpsest = ENTRIES["urn:air:liquilens.in:catalog:palimpsest-china"]
-    assert carrier["version"] == "0.18.0"
+    assert carrier["version"] == "0.19.0"
     assert carrier["metadata"]["mcpBundleSha256"] == (
-        "f57ce3fb488b693e633d8bc66f980b616af09a8080722a11c50507496f39a2bb"
+        "11db11aefafcc6c4ba558877d1f9892fc708150b3afbaa28a741e74435b9a91a"
     )
-    assert carrier["metadata"]["consumerChannelSnapshotVersion"] == "0.18.0"
+    assert carrier["metadata"]["consumerChannelSnapshotVersion"] == "0.19.0"
     assert carrier["metadata"]["releaseCommit"] == (
-        "906ca033a96ea862ab813c64db2a6b01c5ce8c4f"
+        "8f5738c9e77cc95b9a68543d478b9521f5595d61"
     )
     assert carrier["metadata"]["registryStatus"] == "active-latest"
     assert palimpsest["version"] == "1.9.3"

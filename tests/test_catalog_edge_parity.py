@@ -976,6 +976,35 @@ def test_sibling_mcp_inventory_must_match_the_central_card_exactly():
 
 def test_riptide_registry_split_requires_every_explicit_gate():
     card = _sibling_card("urn:air:liquilens.in:catalog:riptide")
+    assert _sibling_registry_version("Riptide", card) == "1.3.0"
+    current_payload = {
+        "server": card["data"],
+        "_meta": {
+            "io.modelcontextprotocol.registry/official": {
+                "status": "active", "isLatest": True,
+            },
+        },
+    }
+    _validate_sibling_registry(
+        "Riptide", card, current_payload,
+        expected_version="1.3.0", require_latest=True,
+    )
+    unproven_repository = json.loads(json.dumps(current_payload))
+    unproven_repository["server"]["repository"] = {
+        "url": "https://github.com/beepboop2025/riptide", "source": "github",
+    }
+    with pytest.raises(RuntimeError, match="exact private-source Registry card differs"):
+        _validate_sibling_registry(
+            "Riptide", card, unproven_repository,
+            expected_version="1.3.0", require_latest=True,
+        )
+    # Retain coverage of the explicit historical split without treating it as current.
+    card = json.loads(json.dumps(card))
+    card["metadata"]["registryVersion"] = card["metadata"]["registryVersion"].replace(
+        "/versions/1.3.0", "/versions/1.2.0"
+    )
+    card["metadata"]["sourceUpgradeState"] = "live-registry-publication-gated"
+    card["metadata"]["registryUpgradeState"] = "held-until-origin-catalog-live"
     assert _sibling_registry_version("Riptide", card) == "1.2.0"
     assert {
         key: card["metadata"][key]
