@@ -477,7 +477,7 @@
       "identifier": "urn:air:liquilens.in:skill:financial-evidence",
       "displayName": "Financial Evidence Agent Skill",
       "type": "text/markdown",
-      "url": "https://raw.githubusercontent.com/beepboop2025/financial-evidence-skills/34549a5bcc2a42c7760c04c95bd449f1d10a18fc/financial-evidence/SKILL.md",
+      "url": "https://raw.githubusercontent.com/beepboop2025/financial-evidence-skills/8a218dbf006b9e16cf0a2068dd0b580cb7321aaf/financial-evidence/SKILL.md",
       "description": "Canonical public Agent Skill for selecting the appropriate evidence product and preserving clocks, coverage and authority boundaries.",
       "tags": [
         "Agent Skill",
@@ -490,12 +490,12 @@
         "Which product should my agent use for this financial-evidence claim?",
         "How should an agent preserve evidence clocks and coverage boundaries?"
       ],
-      "version": "34549a5bcc2a42c7760c04c95bd449f1d10a18fc",
-      "updatedAt": "2026-08-24T08:29:38Z",
+      "version": "8a218dbf006b9e16cf0a2068dd0b580cb7321aaf",
+      "updatedAt": "2026-09-06T00:48:22Z",
       "metadata": {
         "repository": "https://github.com/beepboop2025/financial-evidence-skills",
         "canonicalDirectory": "https://github.com/beepboop2025/financial-evidence-skills/tree/main/financial-evidence",
-        "contentSha256": "sha256:091fc3c3bb4577e2481cfc52e9977e1c83fc114b085544c584b6ae5bf2b302ae",
+        "contentSha256": "sha256:1812e60e181afc21d08964e8cd28c3e09f2cd169d3432b5207c210ac0a2ba73e",
         "access": "public"
       }
     },

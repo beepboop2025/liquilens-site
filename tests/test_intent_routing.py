@@ -8,7 +8,7 @@ from xml.etree import ElementTree
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_REVISION = "34549a5bcc2a42c7760c04c95bd449f1d10a18fc"
+SKILL_REVISION = "8a218dbf006b9e16cf0a2068dd0b580cb7321aaf"
 SKILL_DIRECTORY = (
     "https://github.com/beepboop2025/financial-evidence-skills/"
     "tree/main/financial-evidence"
@@ -166,7 +166,7 @@ def test_existing_access_surface_and_pinned_agent_skill_are_discoverable():
     assert skill["url"] == SKILL_RAW_URL
     assert skill["version"] == SKILL_REVISION
     assert skill["metadata"]["canonicalDirectory"] == SKILL_DIRECTORY
-    assert skill["metadata"]["contentSha256"].startswith("sha256:")
+    assert skill["metadata"]["contentSha256"] == "sha256:1812e60e181afc21d08964e8cd28c3e09f2cd169d3432b5207c210ac0a2ba73e"
 
     card = json.loads(read("product-card.json"))
     assert "Paid named-list software" in card["product"]["access_model"]

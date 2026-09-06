@@ -1,6 +1,7 @@
 """RFC 9727 discovery stays exact, useful, and honest about live surfaces."""
 
 import json
+import re
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -82,6 +83,25 @@ def test_live_product_catalogs_use_the_registered_federation_relation():
         assert expected.isdisjoint(
             {link["href"] for link in by_anchor[anchor].get("service-meta", [])}
         )
+
+
+def test_financial_evidence_discovery_describes_the_served_mcp_contract():
+    worker = (ROOT / "edge/catalog-worker.mjs").read_text(encoding="utf-8")
+    imported = re.search(
+        r'import financialEvidenceMcpContract from "\.\./([^\"]+)"', worker
+    )
+    assert imported is not None
+    contract_path = imported.group(1)
+    contract = json.loads((ROOT / contract_path).read_text(encoding="utf-8"))
+    assert contract["serverInfo"]["version"] in contract_path
+    entry = next(
+        item for item in CATALOG["linkset"]
+        if item["anchor"] == "https://liquilens.in/mcp/financial-evidence"
+    )
+    assert entry["service-meta"][0] == {
+        "href": f"https://liquilens.in/{contract_path}",
+        "type": "application/json",
+    }
 
 
 def test_openapi_is_only_advertised_for_real_rest_descriptions():
