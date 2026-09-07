@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://api.liquilens.in https://api.seiche.info; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Try financial research in your browser | LiquiLens, Seiche & Undertow MCP</title>
+  <meta name="description" content="Read a bank filing, understand dollar funding or compare BTC exit estimates. Try a real question without a key or installation, then connect the MCPs to your agent.">
+  <link rel="canonical" href="https://liquilens.in/start/">
+
+
+
+
+
+
+
+
+
+  <link rel="icon" href="/og.png">
+  <link rel="stylesheet" href="/start/styles.css">
+<!-- SOCIAL-CARD:START -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LiquiLens">
+<meta property="og:url" content="https://liquilens.in/start/">
+<meta property="og:title" content="Start with a question.See the evidence.">
+<meta property="og:description" content="Read a bank filing, understand dollar funding or compare BTC exit estimates. Try a real question without a key or installation, then connect the MCPs to your agent.">
+<meta property="og:image" content="https://liquilens.in/start/share.png?v=4e6409a06200403e">
+<meta property="og:image:secure_url" content="https://liquilens.in/start/share.png?v=4e6409a06200403e">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LiquiLens route card for TRY THE RESEARCH: A bank filing. A funding brief. A BTC exit estimate. FIRST RESULT: THREE QUESTIONS / NINE MCPS. NO KEY / SOURCE DATES / EXPLICIT LIMITS. PAGE CUT 2026-09-07; status PUBLIC READ-ONLY RESEARCH.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Start with a question.See the evidence.">
+<meta name="twitter:description" content="Read a bank filing, understand dollar funding or compare BTC exit estimates. Try a real question without a key or installation, then connect the MCPs to your agent.">
+<meta name="twitter:image" content="https://liquilens.in/start/share.png?v=4e6409a06200403e">
+<meta name="twitter:image:alt" content="LiquiLens route card for TRY THE RESEARCH: A bank filing. A funding brief. A BTC exit estimate. FIRST RESULT: THREE QUESTIONS / NINE MCPS. NO KEY / SOURCE DATES / EXPLICIT LIMITS. PAGE CUT 2026-09-07; status PUBLIC READ-ONLY RESEARCH.">
+<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/start/#social-card","url":"https://liquilens.in/start/","image":"https://liquilens.in/start/share.png?v=4e6409a06200403e","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/start/share.png?v=4e6409a06200403e","width":1200,"height":630,"caption":"LiquiLens route card for TRY THE RESEARCH: A bank filing. A funding brief. A BTC exit estimate. FIRST RESULT: THREE QUESTIONS / NINE MCPS. NO KEY / SOURCE DATES / EXPLICIT LIMITS. PAGE CUT 2026-09-07; status PUBLIC READ-ONLY RESEARCH."}}</script>
+<!-- SOCIAL-CARD:END -->
+</head>
+<body>
+  <a class="skip" href="#questions">Skip to the questions</a>
+  <header class="top"><a class="brand" href="/">LiquiLens</a><nav aria-label="Main"><a href="#connect">Connect your agent</a><a href="#family">Explore the MCPs</a><a href="/developers/">Documentation</a></nav></header>
+  <main>
+    <div class="intro"><h1>Start with a question.<br>See the evidence.</h1><p>Read a bank filing, check the funding backdrop or compare market depth. Try it here, then bring the same tools into your agent.</p><p class="terms">No account, API key or installation for these examples. Public read-only research; usage limits apply.</p></div>
+    <section id="questions" aria-labelledby="question-heading">
+      <h2 id="question-heading">What are you working on?</h2>
+      <div class="tasks" role="group" aria-label="Choose a research question">
+        <button type="button" data-task="bank" aria-pressed="true">Bank and credit research</button>
+        <button type="button" data-task="funding" aria-pressed="false">Agent and macro research</button>
+        <button type="button" data-task="exit" aria-pressed="false">Crypto market research</button>
+      </div>
+      <div class="workbench">
+        <section class="question" aria-labelledby="task-title">
+          <p class="product" id="task-product">LiquiLens</p><h3 id="task-title">What changed in Cosmos Bank’s NPAs?</h3>
+          <p id="task-description">Read the disclosed movement in bad loans, with cash recoveries and write-offs kept separate.</p>
+          <div id="size-field" hidden><label for="size">BTC position size in USD</label><select id="size"><option value="1000">$1,000</option><option value="10000">$10,000</option><option value="100000" selected>$100,000</option><option value="1000000">$1,000,000</option></select></div>
+          <div class="actions"><button type="button" class="primary" id="run">Get the evidence</button><button type="button" id="share">Copy question link</button></div>
+          <p class="small" id="run-note">Nothing is fetched until you click. Each run makes one research-tool call. The bank example names Cosmos Co-operative Bank.</p>
+          <p id="notice" class="notice" role="status" aria-live="polite">Choose a question to begin.</p>
+          <section id="result" hidden aria-labelledby="result-title">
+            <p class="result-state" id="result-state"></p><h3 id="result-title"></h3><p id="result-note"></p>
+            <dl class="facts" id="facts"></dl>
+            <h4>What the source reports</h4><dl class="detail-list" id="details"></dl>
+            <h4>Read with these limits</h4><ul id="limits"></ul>
+            <h4>Sources and further reading</h4><ul id="sources"></ul>
+            <div class="actions"><button type="button" id="download">Download the source response</button><button type="button" id="useful">This helped my research</button></div>
+            <p class="small" id="feedback-note">Optional feedback records a button click, not a verified research outcome.</p>
+            <details><summary>Inspect the complete returned JSON</summary><pre id="raw"></pre></details>
+            <a id="next" href="/banking/">Choose another covered bank</a>
+          </section>
+        </section>
+        <aside class="connect" id="connect" aria-labelledby="connect-heading">
+          <h2 id="connect-heading">Use it in your agent</h2><p>The example and your agent use the same public endpoint.</p>
+          <label for="server">MCP server</label><select id="server"></select>
+          <label for="client">Your client</label><select id="client"><option value="codex">Codex</option><option value="claude">Claude Code</option><option value="cursor">Cursor</option><option value="vscode">VS Code</option></select>
+          <pre id="config" tabindex="0"></pre><button type="button" id="copy-config">Copy setup</button>
+          <p class="small" id="config-help"></p>
+          <label for="prompt">Then ask this</label><textarea id="prompt" rows="6" readonly></textarea><button type="button" id="copy-prompt">Copy starter question</button>
+          <div class="bundle"><h3>Working across all three?</h3><p>Connect LiquiLens, Seiche and Undertow together. Your agent can combine the evidence while keeping each source’s scope separate.</p><button type="button" id="bundle">Show the three-MCP setup</button><button type="button" id="download-config">Download selected setup</button></div>
+          <p class="small">MCP clients may require their own subscription. Adding a server does not grant it authority to execute trades or approve credit.</p>
+        </aside>
+      </div>
+    </section>
+    <section class="family" id="family" aria-labelledby="family-heading"><h2 id="family-heading">Pick the tool for your next question</h2><p>Start with the evidence you need. These products answer different questions.</p><div id="server-list"></div>
+      <div class="local"><h3>Local tools and adjacent research</h3><p><a href="https://github.com/beepboop2025/liquilens-evidence-carrier">Evidence Carrier</a> verifies and transports evidence packets locally. <a href="https://github.com/beepboop2025/scamshield">ScamShield</a> provides local scam-triage tooling. Their installation and privacy requirements are documented in their repositories.</p><p><a href="https://groundcheck.seiche.info/">Groundcheck</a> checks claims, <a href="https://github.com/beepboop2025/noisefloor">Noisefloor</a> examines statistical changes, and <a href="https://github.com/beepboop2025/data-breach-detector">Breach</a> covers breach evidence. These adjacent tools have their own access and evidence boundaries. <a href="https://myquant-app.vercel.app/">MyQuant app discovery</a> describes app capabilities; an app listing does not establish an active news feed.</p></div>
+    </section>
+    <section class="recipes"><h2>Prefer a script or an automation tool?</h2><p>The downloadable Python recipes use the standard library and run without an LLM. Choose a single task, inspect its source and keep the full JSON response.</p><p><a href="/developers/recipes/financial_research.py" download>Download the Python recipes</a> · <a href="/developers/recipes/n8n-bank-review.md">n8n bank-review workflow</a> · <a href="/developers/recipes/bank-watchlist.md">Review a named bank watchlist</a></p><pre>python3 financial_research.py bank-review --slug cosmos-ucb
+python3 financial_research.py funding-brief
+python3 financial_research.py exit-brief --size-usd 100000</pre></section>
+    <footer><p>Source dates, unavailable evidence and research limits remain visible. Public data is not a credit rating, investment recommendation or execution instruction.</p><p><a href="/privacy/">Privacy</a> · <a href="/security/">Security</a> · <a href="mailto:mrinal@liquilens.in?subject=MCP%20integration%20help">Integration help</a> · <a href="/start/measurement.md">How these interactions are measured</a></p></footer>
+    <noscript><p>The interactive examples need JavaScript. <a href="/developers/">Use the documented MCP endpoints and downloadable scripts</a>; they work independently of this page.</p></noscript>
+  </main><script type="module" src="/start/app.mjs"></script>
+</body>
+</html>
