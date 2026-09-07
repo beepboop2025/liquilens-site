@@ -6,7 +6,7 @@ export const SOURCES = Object.freeze([
 const tasks = ["bank", "funding", "exit"];
 export const TELEGRAM_DESKS = Object.freeze({
   bank: {bot: "LiquiLens_bot", label: "Follow LiquiLens on Telegram", note: "Press Start to subscribe to the daily institution briefing and occasional sourced news. /stop ends both."},
-  funding: {bot: "seiche_desk_bot", label: "Follow Seiche on Telegram", note: "Press Start to subscribe to the daily funding letter and state-change alerts. /stop ends both."},
+  funding: {bot: "seiche_desk_bot", label: "Follow Seiche on Telegram", note: "Press Start to subscribe to the daily funding letter, state-change and cross-desk alerts, and occasional sourced news. /stop ends these updates."},
   exit: {bot: "undertow_LiquiLens_bot", label: "Open Undertow on Telegram", note: "Start opens the desk. Choose /watch separately for recurring updates; /stop ends that watcher stream."},
 });
 
