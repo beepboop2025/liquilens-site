@@ -1,8 +1,10 @@
 import {TASKS, SERVERS, configuration, runTask, safeUrl} from "./core.mjs";
+import {acquisitionSource, questionLink, telegramLink, TELEGRAM_DESKS} from "./acquisition.mjs";
 
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(location.search);
 const verification = params.get("verification") === "1";
+const source = acquisitionSource(location.search);
 let task = Object.hasOwn(TASKS, params.get("task")) ? params.get("task") : "bank";
 let selectedIds = [task === "bank" ? "liquilens" : task === "funding" ? "seiche" : "undertow"];
 let activeRequest = null, activeResult = null, resultTask = null;
@@ -14,7 +16,7 @@ function track(action, product = task) {
   if (verification) return Promise.resolve(false);
   // Closed enums only: never send queries, prompts, identities or source data.
   return fetch("https://api.liquilens.in/api/events", {method: "POST", headers: {"Content-Type": "application/json"}, credentials: "omit", keepalive: true,
-    body: JSON.stringify({surface: "mcp_start", event: `${product}_${action}`})}).then(response => response.status === 202).catch(() => false);
+    body: JSON.stringify({surface: "mcp_start", event: `${product}_${action}`, source})}).then(response => response.status === 202).catch(() => false);
 }
 async function copy(value, button, event) {
   try {await navigator.clipboard.writeText(value); const old = button.textContent; button.textContent = "Copied"; setTimeout(() => {button.textContent = old;}, 1500); if (event) track(event);}
@@ -37,6 +39,9 @@ function renderResult(result) {
   $("result").hidden = false; $("useful").disabled = ["unavailable", "not_covered", "restricted", "failed", "error"].includes(v.state);
   $("useful").textContent = "This helped my research";
   $("next").href = TASKS[task].next; $("next").textContent = TASKS[task].nextLabel;
+  $("telegram-next").href = telegramLink(task, source);
+  $("telegram-next").textContent = TELEGRAM_DESKS[task].label;
+  $("telegram-note").textContent = TELEGRAM_DESKS[task].note;
 }
 function setup() {
   $("config").textContent = configuration($("client").value, selectedIds);
@@ -72,7 +77,7 @@ $("bundle").addEventListener("click", () => {selectedIds = ["liquilens", "seiche
 $("copy-config").addEventListener("click", function () {copy($("config").textContent, this, "setup_copied");});
 $("copy-prompt").addEventListener("click", function () {copy($("prompt").value, this, "prompt_copied");});
 $("download-config").addEventListener("click", () => {const cli = ["codex", "claude"].includes($("client").value); download($("config").textContent + "\n", `${$("client").value}-financial-mcp.${cli ? "txt" : "json"}`, cli ? "text/plain" : "application/json"); track("setup_downloaded");});
-$("share").addEventListener("click", function () {const u = new URL("https://liquilens.in/start/"); u.searchParams.set("task", task); if (task === "exit") u.searchParams.set("size", $("size").value); copy(u.href, this, "question_shared");});
+$("share").addEventListener("click", function () {copy(questionLink(task, "shared", $("size").value), this, "question_shared");});
 $("run").addEventListener("click", async () => {
   if (activeRequest) return;
   const controller = new AbortController(), requestedTask = task; activeRequest = controller; activeResult = null; $("result").hidden = true; $("run").disabled = true;
