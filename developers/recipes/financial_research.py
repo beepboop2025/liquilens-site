@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run a public bank review or funding brief with Python 3.11+, without an LLM.
+"""Run a public bank review, funding brief or BTC exit-cost read with Python 3.11+, without an LLM.
 
 One run performs one bounded research task. No account, key, package, scheduler,
 automatic retry or filesystem write is required. JSON goes to stdout.
@@ -14,12 +14,13 @@ from threading import Thread
 from urllib.error import HTTPError, URLError
 from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_opener
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 PROTOCOL = "2025-11-25"
 CLIENT_INFO = {"name": "liquilens-research-recipes", "version": VERSION}
 ENDPOINTS = {
     "bank-review": "https://api.liquilens.in/mcp",
     "funding-brief": "https://api.seiche.info/mcp",
+    "exit-brief": "https://api.seiche.info/undertow/mcp",
 }
 TIMEOUT = 20
 MAX_BYTES = 2 * 1024 * 1024
@@ -157,11 +158,13 @@ class Client:
         return evidence
 
 
-def research(recipe, slug=None, *, verification=False, transport=exchange):
+def research(recipe, slug=None, *, verification=False, transport=exchange, size_usd=100000):
     if recipe not in ENDPOINTS:
         raise ResearchError("unknown recipe")
     if recipe == "bank-review" and slug is not None and not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug):
         raise ResearchError("use an exact slug from bank-review coverage")
+    if recipe == "exit-brief" and (type(size_usd) not in (int, float) or size_usd not in (1000, 10000, 100000, 1000000)):
+        raise ResearchError("choose an example size: 1000, 10000, 100000 or 1000000 USD")
     client = Client(ENDPOINTS[recipe], verification=verification, transport=transport)
     client.initialize()
     out = {"schema": "liquilens.research-recipe.v1", "recipe": recipe,
@@ -185,6 +188,14 @@ def research(recipe, slug=None, *, verification=False, transport=exchange):
             out["evidence"]["review"] = review
             if review.get("status") in ("unavailable", "not_covered"):
                 out["outcome"] = review["status"]
+    elif recipe == "exit-brief":
+        exit_cost = client.call("exit_cost", {"size_usd": size_usd})
+        unavailable = exit_cost.get("available") is False or exit_cost.get("status") in ("unavailable", "not_covered", "restricted")
+        if unavailable:
+            out["outcome"] = "unavailable"
+        elif exit_cost.get("asset") != "BTC" or not isinstance(exit_cost.get("sell_cost_bp_by_venue"), dict) or exit_cost.get("requested_size_usd") != size_usd:
+            raise ResearchError("exit response does not contain the expected BTC venue estimates")
+        out["evidence"]["exit_cost"] = exit_cost
     else:
         desk = client.call("money_market_context", {"section": "all"})
         if desk.get("schema") != "seiche.money-market-desk.v1" or type(desk.get("ok")) is not bool:
@@ -200,13 +211,16 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("recipe", choices=ENDPOINTS)
     parser.add_argument("--slug", help="exact bank slug; omit to discover coverage")
+    parser.add_argument("--size-usd", type=int, choices=(1000, 10000, 100000, 1000000), help="BTC example position size; exit-brief only")
     parser.add_argument("--verification", action="store_true",
                         help="mark operator/testing calls so they are not counted as adoption")
     args = parser.parse_args(argv)
     if args.slug and args.recipe != "bank-review":
         parser.error("--slug applies only to bank-review")
+    if args.size_usd is not None and args.recipe != "exit-brief":
+        parser.error("--size-usd applies only to exit-brief")
     try:
-        result = research(args.recipe, args.slug, verification=args.verification)
+        result = research(args.recipe, args.slug, verification=args.verification, size_usd=args.size_usd or 100000)
         print(json.dumps(result, indent=2, allow_nan=False))
         return 0 if result["outcome"] == "evidence_returned" else 2
     except (ResearchError, ValueError, TypeError) as exc:

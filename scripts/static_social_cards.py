@@ -66,6 +66,13 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/start/", "start", "LIQUILENS / SEICHE / UNDERTOW", "TRY THE RESEARCH",
+        "A bank filing. A funding brief. A BTC exit estimate.",
+        "FIRST RESULT", "THREE QUESTIONS / NINE MCPS",
+        "NO KEY / SOURCE DATES / EXPLICIT LIMITS", "PAGE CUT", "2026-09-07",
+        "PUBLIC READ-ONLY RESEARCH", "LIVE MCP RESPONSES",
+    ),
+    RouteDefinition(
         "/banking/", "banking", "LIQUILENS / FREE BANK RESEARCH", "NPA / SFB / UCB",
         "A smaller NPA balance is not the same as cash recovered.",
         "EVIDENCE CONTRACT", "CITED FILINGS / EXPLICIT GAPS",

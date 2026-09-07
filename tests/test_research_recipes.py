@@ -96,6 +96,30 @@ def test_operator_verification_is_explicit_and_distinct_from_normal_readers():
         assert headers["User-Agent"] == "LiquiLens-Operator-Growth-Audit/1.0"
 
 
+@pytest.mark.parametrize("size", [1000, 10000, 100000, 1000000])
+def test_exit_brief_preserves_size_missingness_and_estimate_limits(size):
+    evidence = {"asset": "BTC", "requested_size_usd": size, "published_rung_used_usd": size,
+                "sell_cost_bp_by_venue": {"a": 0, "b": None}, "disclaimer": "Not an executable quote"}
+    transport = Transport({"exit_cost": evidence})
+    result = recipe.research("exit-brief", size_usd=size, transport=transport)
+    assert result["evidence"]["exit_cost"] == evidence
+    assert result["outcome"] == "evidence_returned"
+    assert len(transport.calls) == 3
+    assert transport.calls[-1][1]["params"]["arguments"] == {"size_usd": size}
+
+
+def test_exit_rejects_wrong_sizes_and_preserves_unavailability():
+    transport = Transport({"exit_cost": {"status": "unavailable", "reason": "No depth"}})
+    result = recipe.research("exit-brief", transport=transport)
+    assert result["outcome"] == "unavailable"
+    with pytest.raises(recipe.ResearchError):
+        recipe.research("exit-brief", size_usd=-1, transport=transport)
+    assert len(transport.calls) == 3
+    wrong = Transport({"exit_cost": {"asset": "BTC", "requested_size_usd": 1, "sell_cost_bp_by_venue": {}}})
+    with pytest.raises(recipe.ResearchError, match="expected BTC"):
+        recipe.research("exit-brief", transport=wrong)
+
+
 @pytest.mark.parametrize("message", [
     {"jsonrpc": "2.0", "id": 1, "error": {"code": -32000, "message": "quota"}},
     {"jsonrpc": "2.0", "id": 1, "result": {"isError": True, "structuredContent": {"looks": "useful"}}},

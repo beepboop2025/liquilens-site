@@ -245,3 +245,11 @@ Example: https://api.liquilens.in/api/experimental/v1/banking/institutions/cosmo
 Use banking_specialisation_coverage for exact slugs and observed, stale or historical evidence states. bank_asset_quality_review returns cited GNPA/NNPA, capital, distinct PCR definitions, comparable-period changes and disclosed NPA movements. bank_npa_reconciliation checks a complete caller-supplied movement in one explicit INR unit; write-offs and sales are not cash recoveries. bank_asset_quality_brief is the guided prompt.
 
 The selected FY2026 supplements for AU, Cosmos and Slice are review-only, outside model fitting. No universal bank coverage, new score, credit approval or deposit-safety guarantee is implied. Current UCB regulatory scope requires dated tier and supervisory evidence. Latest accepted does not guarantee latest available. Private tenant records and operational controls remain outside public access. For system money-market context use https://seiche.info/use-cases/money-market-research/.
+
+## First research result
+
+- [Browser research examples](https://liquilens.in/start/): User-triggered bank NPA review, dollar-funding brief and BTC exit-cost estimates, with exact source responses and client setup for nine hosted MCPs.
+- [Bank and credit example](https://liquilens.in/start/?task=bank)
+- [Agent and macro example](https://liquilens.in/start/?task=funding)
+- [Crypto market example](https://liquilens.in/start/?task=exit)
+- The browser performs no research calls until the visitor asks. Returned evidence, copied setup and helpful-button clicks are different measurements; none establishes a verified user or execution authority.
