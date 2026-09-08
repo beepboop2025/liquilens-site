@@ -267,7 +267,7 @@
       "displayName": "Undertow Market-Liquidity Catalog",
       "type": "application/ai-catalog+json",
       "url": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
-      "description": "Sibling catalog with ten public read-only tools and three prompt templates for cross-market liquidity tiers, live crypto exit costs, venue concentration, depth collapses, Trade Safety exit context, and the sealed calls record.",
+      "description": "Sibling catalog with eleven public read-only tools and three prompt templates for cross-market liquidity tiers, crypto exit costs, venue concentration, depth collapses, Trade Safety exit context, the sealed calls record and connected Palimpsest/Seiche research.",
       "tags": [
         "market liquidity",
         "exit cost",
@@ -320,13 +320,15 @@
         "apiCatalogCoreProofCommit": "724b445ca57b8f48793d29cda45d95f62088082a",
         "apiCatalogSiteCommit": "9d32a5d7b1eac390b5da643b5151c15ce54ad9a5",
         "apiCatalogSha256": "sha256:bffb6a7626d066cdb5293cc28eca465baaae99974ef951eb3280c67501cc5e84",
-        "aiCatalogSha256": "sha256:536ef933e5ec70799263b0a66b5c90e5f4ab84a27b4df793b4ae86b74e533491",
+        "aiCatalogSha256": "sha256:9b9184730f19e16f128477fcaa09cf99d1df46475051821ebd42af78d9014fba",
+        "aiCatalogSiteCommit": "8dffca265e0c78f88031ecfa436486aba3e7660d",
+        "aiCatalogVerifiedAt": "2026-09-08T23:19:11Z",
         "apiCatalogUpgradeState": "live-externally-verified",
         "apiCatalogVerifiedAt": "2026-09-04T19:37:30Z",
         "telegramBot": "https://t.me/Undertow_LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityCryptoDesk",
         "deploymentPublicToolCount": 10,
-        "inventoryScope": "Hosted source contract; dated deployment receipts below retain their original inventory."
+        "inventoryScope": "Hosted MCP 1.10.0 independently verified with eleven public tools; dated deployment receipts retain their original ten-tool inventory."
       }
     },
     {

@@ -707,7 +707,7 @@ def test_sibling_product_cards_match_the_catalog_contracts():
         "protocols": [
             "2026-07-28", "2025-11-25", "2025-06-18", "2025-03-26",
         ],
-        "counts": (10, 3, 0),
+        "counts": (11, 3, 0),
     }
     assert undertow["trade_safety_tool"] == "trade_safety_exit_context"
 
@@ -740,7 +740,7 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     assert "12 public read-only MCP tools, 4 prompts and 0 resources" in status
     assert "runtime, signed tag, exact PyPI artifacts, static catalog" in status
     assert "Undertow 1.10.0" in status
-    assert "10 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
+    assert "11 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
     assert "Palimpsest 1.9.3" in status
     assert "6 public read-only MCP tools, 4 prompts and 1 metadata-only" in status
     assert "LIVE / RECEIPTED" in status

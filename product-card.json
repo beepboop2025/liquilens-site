@@ -211,7 +211,7 @@
       "mcp": "https://api.seiche.info/undertow/mcp",
       "mcp_server_name": "io.github.beepboop2025/undertow",
       "protocol_versions": ["2026-07-28", "2025-11-25", "2025-06-18", "2025-03-26"],
-      "public_tools": 10,
+      "public_tools": 11,
       "trade_safety_tool": "trade_safety_exit_context",
       "public_prompts": 3,
       "public_resources": 0
