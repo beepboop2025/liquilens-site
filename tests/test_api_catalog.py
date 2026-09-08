@@ -56,7 +56,7 @@ def test_catalog_covers_every_verified_remote_mcp_boundary():
         "https://api.seiche.info/palimpsest/mcp",
         "https://myquantdoesntspeakenglish.com/mcp",
         "https://myquant-app.vercel.app/mcp",
-        "https://narcoscope.com/mcp",
+        "https://www.narcoscope.com/mcp",
     } <= anchors
 
 
@@ -78,7 +78,7 @@ def test_live_product_catalogs_use_the_registered_federation_relation():
         "https://api.seiche.info/riptide/",
         "https://api.seiche.info/riptide/mcp",
         "https://narcoscope.com/api/v1",
-        "https://narcoscope.com/mcp",
+        "https://www.narcoscope.com/mcp",
     ):
         assert expected.isdisjoint(
             {link["href"] for link in by_anchor[anchor].get("service-meta", [])}

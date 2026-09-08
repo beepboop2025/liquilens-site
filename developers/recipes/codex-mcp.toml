@@ -7,3 +7,9 @@ url = "https://api.seiche.info/mcp"
 
 [mcp_servers.undertow]
 url = "https://api.seiche.info/undertow/mcp"
+
+[mcp_servers.palimpsest]
+url = "https://api.seiche.info/palimpsest/mcp"
+
+[mcp_servers.narcoscope]
+url = "https://www.narcoscope.com/mcp"
