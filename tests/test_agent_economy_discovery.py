@@ -24,7 +24,7 @@ def test_adjacent_products_are_individually_discoverable():
         "urn:air:liquilens.in:catalog:myquant-editorial"
     ]["version"] == "2.1.0"
     assert ENTRIES["urn:air:liquilens.in:catalog:myquant-app"]["version"] == "2.0.0"
-    assert ENTRIES["urn:air:liquilens.in:catalog:narcoscope"]["version"] == "1.4.0"
+    assert ENTRIES["urn:air:liquilens.in:catalog:narcoscope"]["version"] == "1.5.0"
 
     riptide = ENTRIES["urn:air:liquilens.in:catalog:riptide"]
     assert riptide["metadata"]["sourceUpgradeVersion"] == "1.3.0"
@@ -86,16 +86,12 @@ def test_narcoscope_exposes_the_live_host_and_active_registry_release():
         "sha256:62e006de96351351fbd8ffd8911d8adf25cb7189aa000ac7e4765bd495fc062c"
     )
     assert entry["metadata"]["sourceUpgradeCommit"] == (
-        "7ae91b08fea1430b44eea8205fc1898d8c3dbc2c"
+        "0f3887d456fbb985a1dd3532ec689cda259e1aa4"
     )
-    assert entry["metadata"]["sourceUpgradeImplementationCommit"] == (
-        "f52f63ebc1bcbbb8b4e5e41863b778774b2bcd17"
-    )
-    assert entry["metadata"]["sourceUpgradeDiscoveryCommit"] == (
-        "ddacf2c56ed403aebeb62ef07d09004432072b1e"
-    )
+    assert entry["metadata"]["productionDeploymentProvider"] == "railway-fleet"
+    assert entry["metadata"]["productionReleaseReceipt"].endswith("/" + entry["metadata"]["sourceUpgradeCommit"] + "/receipt.json")
     assert entry["metadata"]["registryPublicationWorkflow"].endswith(
-        "/actions/runs/33578233679"
+        "/actions/runs/34234138683"
     )
 
 
