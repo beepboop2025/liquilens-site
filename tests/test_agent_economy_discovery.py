@@ -50,7 +50,8 @@ def test_undertow_rfc9727_catalog_is_bound_to_live_deployment_proof():
     metadata = entry["metadata"]
     assert entry["version"] == "1.10.0"
     assert "trade_safety_exit_context" in entry["capabilities"]
-    assert metadata["publicToolCount"] == 10
+    assert metadata["publicToolCount"] == 11
+    assert metadata["deploymentPublicToolCount"] == 10
     assert metadata["apiCatalogUpgradeState"] == "live-externally-verified"
     assert metadata["apiCatalogSourceCommit"] == (
         "0efb594c7f824478deec74da9e6ebda622434d21"

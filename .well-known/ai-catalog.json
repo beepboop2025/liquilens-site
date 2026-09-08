@@ -28,7 +28,7 @@
           }
         ]
       },
-      "description": "Twenty-one free public read-only tools for NPA reconciliation, small finance and urban cooperative bank research, cited institution dossiers, RBI evidence, historical diagnostics, editorial and display-only market context.",
+      "description": "Twenty-two free public read-only tools for NPA reconciliation, small finance and urban cooperative bank research, cited institution dossiers, RBI evidence, historical diagnostics, editorial and display-only market context, and connected source discovery.",
       "tags": [
         "bank failure early warning",
         "NBFC risk",
@@ -59,6 +59,7 @@
         "institution_review_packet",
         "latest_article",
         "rbi_supervisory_tape",
+        "research_network",
         "stablecoin_rails_board",
         "universe_search",
         "verify_published_record"
@@ -85,17 +86,18 @@
         "Find recent RBI supervisory actions."
       ],
       "version": "1.8.0",
-      "updatedAt": "2026-09-05T07:05:33Z",
+      "updatedAt": "2026-09-09T00:00:00Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
-        "publicToolCount": 21,
+        "publicToolCount": 22,
         "articleJsonFeed": "https://liquilens.in/articles/feed.json",
         "telegramBot": "https://t.me/LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityLabDesk",
         "price": 0,
         "bankResearchGuide": "https://liquilens.in/banking/",
-        "bankCoverage": "https://api.liquilens.in/api/experimental/v1/banking/coverage"
+        "bankCoverage": "https://api.liquilens.in/api/experimental/v1/banking/coverage",
+        "researchNetworkApi": "https://api.liquilens.in/api/experimental/v1/research-network"
       }
     },
     {
@@ -202,7 +204,8 @@
         "oil_funding_context",
         "fx_materials_passage",
         "money_market_context",
-        "world_markets_context"
+        "world_markets_context",
+        "research_network"
       ],
       "prompts": [
         "is_now_dangerous",
@@ -212,10 +215,10 @@
       ],
       "resourceTemplates": [],
       "version": "0.12.4",
-      "updatedAt": "2026-09-05T00:00:00Z",
+      "updatedAt": "2026-09-09T00:00:00Z",
       "metadata": {
         "productUrl": "https://seiche.info",
-        "publicToolCount": 12,
+        "publicToolCount": 13,
         "publicPromptCount": 4,
         "publicResourceCount": 0,
         "mcpServerName": "io.github.beepboop2025/seiche",
@@ -253,7 +256,10 @@
         "recoveryState": "deferred",
         "recoveryAccepted": false,
         "fullReleaseAccepted": false,
-        "releaseAcceptanceScope": "Verified distribution and observed runtime; 0.12.4 export, restore and strict recovery-monitor proof remain pending."
+        "releaseAcceptanceScope": "Verified distribution and observed runtime; 0.12.4 export, restore and strict recovery-monitor proof remain pending.",
+        "releasePublicToolCount": 12,
+        "inventoryScope": "Hosted source contract; dated package and release receipts below retain their original inventory.",
+        "researchNetworkApi": "https://api.seiche.info/api/v2/research-network"
       }
     },
     {
@@ -278,6 +284,7 @@
         "exit_cost",
         "latest_article",
         "liquidity_tiers",
+        "research_network",
         "sealed_record",
         "trade_safety_exit_context",
         "unwind_watch",
@@ -297,10 +304,10 @@
       ],
       "resourceTemplates": [],
       "version": "1.10.0",
-      "updatedAt": "2026-09-02T00:00:00Z",
+      "updatedAt": "2026-09-09T00:00:00Z",
       "metadata": {
         "productUrl": "https://liquilens-undertow.com",
-        "publicToolCount": 10,
+        "publicToolCount": 11,
         "subscriberToolCount": 8,
         "publicPromptCount": 3,
         "publicResourceCount": 0,
@@ -317,7 +324,9 @@
         "apiCatalogUpgradeState": "live-externally-verified",
         "apiCatalogVerifiedAt": "2026-09-04T19:37:30Z",
         "telegramBot": "https://t.me/Undertow_LiquiLens_bot",
-        "telegramChannel": "https://t.me/LiquidityCryptoDesk"
+        "telegramChannel": "https://t.me/LiquidityCryptoDesk",
+        "deploymentPublicToolCount": 10,
+        "inventoryScope": "Hosted source contract; dated deployment receipts below retain their original inventory."
       }
     },
     {
@@ -325,7 +334,7 @@
       "displayName": "Palimpsest Revision-Safe China Evidence",
       "type": "application/ai-catalog+json",
       "url": "https://palimpsest.info/.well-known/ai-catalog.json",
-      "description": "Independent public-good catalog with six public read-only tools and four prompts for revision-safe China economic observations, information conditions, release and collection clocks, provenance, coverage gates and abstentions. Financial authority: none.",
+      "description": "Independent public-good catalog with seven public read-only tools and four prompts for the complete source registry, revision-safe China economic observations, information conditions, release and collection clocks, provenance, coverage gates and abstentions. Financial authority: none.",
       "tags": [
         "China economy",
         "economic revisions",
@@ -344,7 +353,8 @@
         "get_newsroom",
         "query_economic_observations",
         "whats_happening",
-        "gfw_reading"
+        "gfw_reading",
+        "research_catalog"
       ],
       "protocolVersions": [
         "2025-06-18",
@@ -361,14 +371,14 @@
         "palimpsest://china-economic/publication-rights"
       ],
       "version": "1.9.3",
-      "updatedAt": "2026-08-29T14:47:02.39659Z",
+      "updatedAt": "2026-09-09T00:00:00Z",
       "metadata": {
         "productUrl": "https://palimpsest.info/",
         "humanLandingPage": "https://palimpsest.info/china/",
         "observationManifest": "https://palimpsest.info/readings/china-econ-observations-latest.json",
         "financialAuthority": "none",
         "access": "public-read-only",
-        "publicToolCount": 6,
+        "publicToolCount": 7,
         "publicPromptCount": 4,
         "publicResourceCount": 1,
         "mcpServerName": "io.github.beepboop2025/palimpsest",
@@ -388,7 +398,10 @@
         "registryPublishedAt": "2026-08-29T14:47:02.39659Z",
         "liveVersionAuthority": "Initialize the linked MCP remote and compare serverInfo.version before treating a release as deployed.",
         "quickstart": "https://palimpsest.info/developers.html",
-        "productCard": "https://palimpsest.info/product-card.json"
+        "productCard": "https://palimpsest.info/product-card.json",
+        "deploymentPublicToolCount": 6,
+        "inventoryScope": "Hosted source contract; dated deployment receipts below retain their original inventory.",
+        "sourceRegistry": "https://www.palimpsest.info/readings/research-catalog-latest.json"
       }
     },
     {
@@ -891,7 +904,10 @@
         "get_palimpsest_bridge",
         "get_palimpsest_corridors",
         "get_palimpsest_bri_context",
-        "get_connected_research"
+        "get_connected_research",
+        "get_market_catalog",
+        "query_market_observations",
+        "research_network"
       ],
       "protocolVersions": [
         "2026-07-28",
@@ -903,11 +919,11 @@
         "Retrieve a cited newsroom artifact while preserving its disclosure and causal limits."
       ],
       "version": "1.5.0",
-      "updatedAt": "2026-09-08T13:47:29.894418Z",
+      "updatedAt": "2026-09-09T00:00:00Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
-        "publicToolCount": 11,
+        "publicToolCount": 14,
         "mcpEndpoint": "https://narcoscope.com/mcp",
         "openapi": "https://narcoscope.com/openapi.json",
         "liveDeployment": "verified",

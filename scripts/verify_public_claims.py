@@ -148,6 +148,7 @@ MCP_TOOLS = (
     "institution_review_packet",
     "latest_article",
     "rbi_supervisory_tape",
+    "research_network",
     "stablecoin_rails_board",
     "universe_search",
     "verify_published_record",

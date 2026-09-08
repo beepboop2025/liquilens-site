@@ -94,7 +94,7 @@ The interactive demonstration at https://demo.liquilens.in requires sign-in and 
 - Terminal CLI: https://github.com/beepboop2025/liquilens-cli
 - Agent Skill for bounded product selection: https://github.com/beepboop2025/financial-evidence-skills/tree/main/financial-evidence
 
-The public MCP and public evidence endpoints require no token. MCP v1.8.0 exposes 21 read-only tools and 5 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification.
+The public MCP and public evidence endpoints require no token. MCP v1.8.0 exposes 22 read-only tools and 5 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification.
 
 The hosted endpoint accepts the current MCP 2026-07-28 method-discovery contract and its declared legacy protocol versions. It publishes empty resource and resource-template catalogs explicitly rather than implying unavailable resources.
 

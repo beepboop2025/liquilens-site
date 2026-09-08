@@ -282,6 +282,7 @@ def test_mcp_card_and_nested_product_line_are_current():
         "institution_review_packet",
         "latest_article",
         "rbi_supervisory_tape",
+        "research_network",
         "stablecoin_rails_board",
         "universe_search",
         "verify_published_record",
@@ -297,7 +298,7 @@ def test_mcp_card_and_nested_product_line_are_current():
         "stress_evidence_pack",
     ]
     assert mcp["resourceTemplates"] == []
-    assert mcp["metadata"]["publicToolCount"] == 21
+    assert mcp["metadata"]["publicToolCount"] == 22
     assert mcp["metadata"]["articleJsonFeed"] == (
         "https://liquilens.in/articles/feed.json")
     assert "latest_article" in mcp["capabilities"]
@@ -311,7 +312,7 @@ def test_mcp_card_and_nested_product_line_are_current():
     assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
         "https://seiche.info/.well-known/ai-catalog.json")
     assert entries["urn:air:liquilens.in:catalog:seiche"]["metadata"][
-        "publicToolCount"] == 12
+        "publicToolCount"] == 13
     assert entries["urn:air:liquilens.in:catalog:seiche"]["metadata"][
         "globalMoneyMarketAtlas"] == (
             "https://api.seiche.info/api/v2/money-markets")
@@ -331,7 +332,7 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
     seiche = entries["urn:air:liquilens.in:catalog:seiche"]
 
     assert seiche["version"] == "0.12.4"
-    assert seiche["updatedAt"] == "2026-09-05T00:00:00Z"
+    assert seiche["updatedAt"] == "2026-09-09T00:00:00Z"
     assert seiche["capabilities"] == [
         "latest_article",
         "funding_stress_now",
@@ -345,6 +346,7 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
         "fx_materials_passage",
         "money_market_context",
         "world_markets_context",
+        "research_network",
     ]
     assert seiche["prompts"] == [
         "is_now_dangerous",
@@ -353,6 +355,8 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
         "cross_market_cash_pressure",
     ]
     assert seiche["resourceTemplates"] == []
+    assert seiche["metadata"]["releasePublicToolCount"] == 12
+    assert "dated package" in seiche["metadata"]["inventoryScope"]
     assert seiche["metadata"]["distributionState"] == "verified-recovery-deferred"
     assert seiche["metadata"]["recoveryState"] == "deferred"
     assert seiche["metadata"]["recoveryAccepted"] is False
@@ -391,7 +395,7 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
             "liveVersionAuthority",
         )
     } == {
-        "publicToolCount": 12,
+        "publicToolCount": 13,
         "publicPromptCount": 4,
         "publicResourceCount": 0,
         "mcpServerName": "io.github.beepboop2025/seiche",
@@ -451,13 +455,14 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
 
     undertow = entries["urn:air:liquilens.in:catalog:undertow"]
     assert undertow["version"] == "1.10.0"
-    assert undertow["updatedAt"] == "2026-09-02T00:00:00Z"
+    assert undertow["updatedAt"] == "2026-09-09T00:00:00Z"
     assert undertow["capabilities"] == [
         "agent_access_status",
         "depth_episodes",
         "exit_cost",
         "latest_article",
         "liquidity_tiers",
+        "research_network",
         "sealed_record",
         "trade_safety_exit_context",
         "unwind_watch",
@@ -486,7 +491,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
             "productCard",
         )
     } == {
-        "publicToolCount": 10,
+        "publicToolCount": 11,
         "subscriberToolCount": 8,
         "publicPromptCount": 3,
         "publicResourceCount": 0,
@@ -497,8 +502,10 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
     }
 
     palimpsest = entries["urn:air:liquilens.in:catalog:palimpsest-china"]
+    assert palimpsest["metadata"]["deploymentPublicToolCount"] == 6
+    assert "dated deployment" in palimpsest["metadata"]["inventoryScope"]
     assert palimpsest["version"] == "1.9.3"
-    assert palimpsest["updatedAt"] == "2026-08-29T14:47:02.39659Z"
+    assert palimpsest["updatedAt"] == "2026-09-09T00:00:00Z"
     assert palimpsest["capabilities"] == [
         "list_signals",
         "get_signal",
@@ -506,6 +513,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
         "query_economic_observations",
         "whats_happening",
         "gfw_reading",
+        "research_catalog",
     ]
     assert palimpsest["protocolVersions"] == ["2025-06-18", "2025-03-26"]
     assert palimpsest["prompts"] == [
@@ -543,7 +551,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
             "productCard",
         )
     } == {
-        "publicToolCount": 6,
+        "publicToolCount": 7,
         "publicPromptCount": 4,
         "publicResourceCount": 1,
         "mcpServerName": "io.github.beepboop2025/palimpsest",
