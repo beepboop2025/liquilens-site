@@ -919,7 +919,7 @@
         "Retrieve a cited newsroom artifact while preserving its disclosure and causal limits."
       ],
       "version": "1.6.0",
-      "updatedAt": "2026-09-08T20:59:01.603479Z",
+      "updatedAt": "2026-09-08T21:31:06Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
@@ -930,19 +930,22 @@
         "customDomainStatus": "configured-live",
         "apiCatalog": "https://narcoscope.com/.well-known/api-catalog",
         "apiCatalogSha256": "sha256:08da9a3bd68c6bc99d235d76c3439327f106421bc49cd88e6e128560c64a6291",
-        "registryStatus": "active-latest-at-1.5.0",
-        "registryAdvertisedVersion": "1.5.0",
-        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fnarcoscope/versions/1.5.0",
-        "registryPublishedAt": "2026-09-08T13:47:29.894418Z",
-        "registryPublicationWorkflow": "https://github.com/beepboop2025/narcoscope/actions/runs/34234138683",
-        "sourceUpgradeVersion": "1.5.0",
-        "sourceUpgradeCommit": "0f3887d456fbb985a1dd3532ec689cda259e1aa4",
+        "registryStatus": "active-latest",
+        "registryAdvertisedVersion": "1.6.0",
+        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fnarcoscope/versions/1.6.0",
+        "registryPublishedAt": "2026-09-08T21:31:04.961858Z",
+        "sourceUpgradeVersion": "1.6.0",
+        "sourceUpgradeCommit": "e818c33feaf5f8081cbfc5807aced0cd50d8952f",
         "sourceUpgradeState": "live-externally-verified",
-        "productionDeploymentId": "95ff9569-ef42-400c-814b-41befc447659",
+        "productionDeploymentId": "9473d643-87e0-4924-872d-98ae6d5bb176",
         "financialAuthority": "none",
         "productionDeploymentProvider": "railway-fleet",
-        "productionReleaseReceipt": "https://liquilens.in/protocol/release-evidence/narcoscope/0f3887d456fbb985a1dd3532ec689cda259e1aa4/receipt.json",
-        "inventoryScope": "Hosted 1.6.0 source contract; dated Registry and deployment receipts describe 1.5.0."
+        "productionReleaseReceipt": "https://liquilens.in/protocol/release-evidence/narcoscope/e818c33feaf5f8081cbfc5807aced0cd50d8952f/receipt.json",
+        "inventoryScope": "Hosted 1.6.0 tools, active Registry record and signed native deployment receipt verified independently.",
+        "registryPublicationMethod": "official-maintainer-client",
+        "registryPublisherVersion": "1.8.0",
+        "sourceValidationProvider": "railway-native",
+        "sourceValidationUrl": "https://railway.com/project/9c094747-8662-4ba7-8d6b-5a4fa7ca27eb/service/96649d78-59e0-4702-aa1e-20e4deabef91?id=85ed03dd-9958-47de-b1cb-5493c66fc2c8&environmentId=61489b68-9216-48b2-a755-d43e89368acd"
       }
     },
     {

@@ -9,6 +9,7 @@ import pytest
 from scripts import verify_narcoscope_release as release
 from scripts.verify_catalog_edge import _verify_sibling_deployment_proof
 from scripts.verify_catalog_edge import _require_modern_result
+from scripts.verify_catalog_edge import _validate_narcoscope_native_ci
 
 
 SOURCE = "0f3887d456fbb985a1dd3532ec689cda259e1aa4"
@@ -97,3 +98,51 @@ def test_current_origins_must_agree_on_a_complete_ready_identity(mutation):
         second["status"] = "unready"
     with pytest.raises(RuntimeError):
         release.validate_current_origins([first, second])
+
+
+def native_card_and_status():
+    catalog = json.loads((DIRECTORY.parents[3] / ".well-known/ai-catalog.json").read_text())
+    card = next(row for row in catalog["entries"]
+                if row["identifier"] == "urn:air:liquilens.in:catalog:narcoscope")
+    metadata = card["metadata"]
+    return card, {"sha": metadata["sourceUpgradeCommit"], "statuses": [{
+        "context": "railway-automation - narcoscope-pr-ci", "state": "success",
+        "target_url": metadata["sourceValidationUrl"],
+    }]}
+
+
+def test_current_native_release_retains_a_valid_owner_signed_receipt():
+    card, payload = native_card_and_status()
+    _validate_narcoscope_native_ci(card, payload)
+    sha = card["metadata"]["sourceUpgradeCommit"]
+    directory = DIRECTORY.parent / sha
+    receipt = (directory / "receipt.json").read_bytes()
+    release.verify_signature(receipt, (directory / "receipt.json.sig").read_bytes())
+    release.validate_receipt(json.loads(receipt), (directory / "release-manifest.json").read_bytes(),
+                             sha, card["metadata"]["productionDeploymentId"])
+
+
+@pytest.mark.parametrize("mutation", ["source", "failure", "missing", "duplicate",
+                                    "context", "deployment", "lane", "publication"])
+def test_native_ci_cannot_be_replaced_by_an_unrelated_success(mutation):
+    card, payload = native_card_and_status()
+    if mutation == "source":
+        payload["sha"] = "a" * 40
+    elif mutation == "failure":
+        payload["statuses"][0]["state"] = "failure"
+    elif mutation == "missing":
+        payload["statuses"] = []
+    elif mutation == "duplicate":
+        payload["statuses"] *= 2
+    elif mutation == "context":
+        payload["statuses"][0]["context"] = "unrelated-check"
+    elif mutation == "deployment":
+        payload["statuses"][0]["target_url"] += "&extra=1"
+    elif mutation == "lane":
+        wrong = card["metadata"]["sourceValidationUrl"].replace("96649d78", "aaaaaaaa")
+        card["metadata"]["sourceValidationUrl"] = wrong
+        payload["statuses"][0]["target_url"] = wrong
+    else:
+        card["metadata"]["registryPublicationMethod"] = "unverified"
+    with pytest.raises(RuntimeError):
+        _validate_narcoscope_native_ci(card, payload)
