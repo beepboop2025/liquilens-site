@@ -34,6 +34,14 @@
         "exit_cost"
       ],
       "example": "python3 financial_research.py exit-brief --size-usd 100000"
+    },
+    {
+      "id": "connected-research",
+      "endpoint": "https://api.seiche.info/mcp",
+      "tools": [
+        "research_network"
+      ],
+      "example": "python3 financial_research.py connected-research"
     }
   ],
   "clients": {

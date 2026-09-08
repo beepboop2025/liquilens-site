@@ -1,7 +1,19 @@
 {
   "mcpServers": {
-    "liquilens": {"url": "https://api.liquilens.in/mcp"},
-    "seiche": {"url": "https://api.seiche.info/mcp"},
-    "undertow": {"url": "https://api.seiche.info/undertow/mcp"}
+    "liquilens": {
+      "url": "https://api.liquilens.in/mcp"
+    },
+    "seiche": {
+      "url": "https://api.seiche.info/mcp"
+    },
+    "undertow": {
+      "url": "https://api.seiche.info/undertow/mcp"
+    },
+    "palimpsest": {
+      "url": "https://api.seiche.info/palimpsest/mcp"
+    },
+    "narcoscope": {
+      "url": "https://narcoscope.com/mcp"
+    }
   }
 }

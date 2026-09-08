@@ -20,6 +20,7 @@ CLIENT_INFO = {"name": "liquilens-research-recipes", "version": VERSION}
 ENDPOINTS = {
     "bank-review": "https://api.liquilens.in/mcp",
     "funding-brief": "https://api.seiche.info/mcp",
+    "connected-research": "https://api.seiche.info/mcp",
     "exit-brief": "https://api.seiche.info/undertow/mcp",
 }
 TIMEOUT = 20
@@ -188,6 +189,13 @@ def research(recipe, slug=None, *, verification=False, transport=exchange, size_
             out["evidence"]["review"] = review
             if review.get("status") in ("unavailable", "not_covered"):
                 out["outcome"] = review["status"]
+    elif recipe == "connected-research":
+        network = client.call("research_network", {"topic": "all", "limit": 12})
+        if network.get("schema") != "seiche.research-network.v1" or network.get("context_only") is not True:
+            raise ResearchError("connected research returned an incompatible contract")
+        out["evidence"]["research_network"] = network
+        if network.get("status") != "available":
+            out["outcome"] = network.get("status", "unavailable")
     elif recipe == "exit-brief":
         exit_cost = client.call("exit_cost", {"size_usd": size_usd})
         unavailable = exit_cost.get("available") is False or exit_cost.get("status") in ("unavailable", "not_covered", "restricted")
