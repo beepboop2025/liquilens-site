@@ -168,57 +168,67 @@ def test_unprotected_main_revokes_otherwise_valid_native_result(tmp_path, monkey
         gate.main()
 
 
-def deployment(identifier, source=SOURCE):
+def publication(identifier, source=SOURCE, event="status"):
     return {
         "id": identifier,
-        "sha": source,
-        "ref": "main",
-        "task": "deploy",
-        "environment": "github-pages",
-        "performed_via_github_app": {"id": 15368},
+        "head_sha": source,
+        "head_branch": "main",
+        "workflow_id": 307232463,
+        "path": ".github/workflows/pages.yml",
+        "repository": {"full_name": gate.REPOSITORY},
+        "head_repository": {"full_name": gate.REPOSITORY},
+        "status": "completed",
+        "conclusion": "success",
+        "event": event,
     }
 
 
-def history(rows, statuses):
+def history(rows, total=None):
     def request(path):
-        if path == "/deployments?environment=github-pages&per_page=100":
-            return rows
-        identifier = int(path.split("/")[2])
-        return statuses[identifier]
+        assert (
+            path
+            == "/actions/workflows/307232463/runs?branch=main&status=success&per_page=100"
+        )
+        return {
+            "workflow_runs": rows,
+            "total_count": len(rows) if total is None else total,
+        }
 
     return request
 
 
-def test_indexnow_skips_pending_failed_and_unrelated_deployments():
-    rows = [
-        deployment(5),
-        deployment(4),
-        {**deployment(3), "environment": "preview"},
-        {**deployment(2), "performed_via_github_app": {"id": 99}},
-        deployment(1),
-    ]
-    assert (
-        gate.previous_pages_source(
-            history(
-                rows,
-                {
-                    5: [{"state": "in_progress"}],
-                    4: [{"state": "failure"}],
-                    1: [{"state": "inactive"}, {"state": "success"}],
-                },
-            )
-        )
-        == SOURCE
-    )
+@pytest.mark.parametrize("event", ["status", "push", "workflow_dispatch"])
+def test_indexnow_accepts_real_pages_event_shapes_without_deployment_app_assumption(
+    event,
+):
+    assert gate.previous_pages_source(history([publication(1, event=event)])) == SOURCE
 
 
-def test_bounded_history_does_not_claim_first_publication_on_truncation():
-    with pytest.raises(ValueError, match="lookup bound"):
+@pytest.mark.parametrize(
+    "key,value",
+    [
+        ("workflow_id", 123),
+        ("path", ".github/workflows/other.yml"),
+        ("head_branch", "feature"),
+        ("repository", {"full_name": "someone/site"}),
+        ("head_repository", {"full_name": "someone/site"}),
+        ("event", "pull_request"),
+        ("status", "in_progress"),
+        ("conclusion", "failure"),
+        ("head_sha", "main"),
+        ("id", "123"),
+    ],
+)
+def test_indexnow_rejects_unexpected_run_even_before_an_older_good_run(key, value):
+    with pytest.raises(ValueError):
         gate.previous_pages_source(
-            history(
-                [deployment(i + 1) for i in range(100)], {i + 1: [] for i in range(100)}
-            )
+            history([{**publication(2), key: value}, publication(1)])
         )
+
+
+def test_incomplete_history_does_not_claim_first_publication():
+    with pytest.raises(ValueError, match="incomplete"):
+        gate.previous_pages_source(history([], total=1))
 
 
 def git(repo, *args, input=None):
@@ -254,9 +264,7 @@ def test_indexnow_keeps_all_routes_in_a_batch_since_last_publication(
     commit_route(tmp_path, "articles/first/index.html")
     final = commit_route(tmp_path, "articles/second/index.html")
     monkeypatch.chdir(tmp_path)
-    before = gate.indexnow_before(
-        history([deployment(1, first)], {1: [{"state": "success"}]}), source=final
-    )
+    before = gate.indexnow_before(history([publication(1, first)]), source=final)
     assert changed_paths(tmp_path, before, final) == [
         "articles/first/index.html",
         "articles/second/index.html",
@@ -271,14 +279,12 @@ def test_first_publication_includes_all_routes_and_repeat_includes_none(
     repository(tmp_path)
     final = commit_route(tmp_path, "articles/first/index.html")
     monkeypatch.chdir(tmp_path)
-    before = gate.indexnow_before(history([], {}), source=final)
+    before = gate.indexnow_before(history([]), source=final)
     assert changed_paths(tmp_path, before, final) == [
         "articles/first/index.html",
         "index.html",
     ]
-    repeat = gate.indexnow_before(
-        history([deployment(1, final)], {1: [{"state": "success"}]}), source=final
-    )
+    repeat = gate.indexnow_before(history([publication(1, final)]), source=final)
     assert changed_paths(tmp_path, repeat, final) == []
 
 
@@ -291,6 +297,6 @@ def test_diverged_previous_publication_is_not_silently_narrowed(tmp_path, monkey
     monkeypatch.chdir(tmp_path)
     with pytest.raises(subprocess.CalledProcessError):
         gate.indexnow_before(
-            history([deployment(1, previous)], {1: [{"state": "success"}]}),
+            history([publication(1, previous)]),
             source=final,
         )
