@@ -68,6 +68,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/pages-proof/scripts" "$RUNNER_TEMP/pages-proof/.well-known" "$RUNNER_TEMP/pages-proof/protocol/fdc3" "$RUNNER_TEMP/pages-proof/protocol/trade-safety" "$RUNNER_TEMP/pages-proof/protocol/protocol" "$RUNNER_TEMP/pages-proof/protocol/integrations/fdc3"
           cp scripts/verify_catalog_edge.py "$RUNNER_TEMP/pages-proof/scripts/verify_catalog_edge.py"
           cp scripts/verify_financial_evidence_semantics.py "$RUNNER_TEMP/pages-proof/scripts/verify_financial_evidence_semantics.py"
+          cp -R protocol/release-evidence "$RUNNER_TEMP/pages-proof/protocol/release-evidence"
           cp .well-known/ai-catalog.json "$RUNNER_TEMP/pages-proof/.well-known/ai-catalog.json"
           cp .well-known/api-catalog.json "$RUNNER_TEMP/pages-proof/.well-known/api-catalog.json"
           cp protocol/catalog.json "$RUNNER_TEMP/pages-proof/protocol/catalog.json"

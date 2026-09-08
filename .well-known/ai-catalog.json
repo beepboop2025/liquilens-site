@@ -858,13 +858,13 @@
       "data": {
         "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
         "name": "io.github.beepboop2025/narcoscope",
-        "title": "NarcoScope — illicit-economy evidence atlas",
         "description": "Read bounded illicit-economy evidence with provenance, privacy, availability, and federation intact.",
-        "version": "1.4.0",
+        "title": "NarcoScope — illicit-economy evidence atlas",
         "repository": {
           "url": "https://github.com/beepboop2025/narcoscope",
           "source": "github"
         },
+        "version": "1.5.0",
         "websiteUrl": "https://narcoscope.com",
         "remotes": [
           {
@@ -873,7 +873,7 @@
           }
         ]
       },
-      "description": "Ten read-only tools for aggregate official drug-market observations, country-year illicit-economy evidence, citation-gated newsroom artifacts, and separately bounded Palimpsest context. No tactical, navigable, guilt, route, actor, composite-score, or causal inference.",
+      "description": "Eleven read-only tools for aggregate official drug-market observations, country-year illicit-economy evidence, citation-gated newsroom artifacts, separately bounded Palimpsest context, and source-linked connected research. No tactical, navigable, guilt, route, actor, composite-score, or causal inference.",
       "tags": [
         "official drug-market evidence",
         "citations",
@@ -890,7 +890,8 @@
         "get_story",
         "get_palimpsest_bridge",
         "get_palimpsest_corridors",
-        "get_palimpsest_bri_context"
+        "get_palimpsest_bri_context",
+        "get_connected_research"
       ],
       "protocolVersions": [
         "2026-07-28",
@@ -901,12 +902,12 @@
         "What does NarcoScope's official-data overview establish and not establish?",
         "Retrieve a cited newsroom artifact while preserving its disclosure and causal limits."
       ],
-      "version": "1.4.0",
-      "updatedAt": "2026-09-02T01:09:28.287851Z",
+      "version": "1.5.0",
+      "updatedAt": "2026-09-08T13:47:29.894418Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
-        "publicToolCount": 10,
+        "publicToolCount": 11,
         "mcpEndpoint": "https://narcoscope.com/mcp",
         "openapi": "https://narcoscope.com/openapi.json",
         "liveDeployment": "verified",
@@ -914,17 +915,17 @@
         "apiCatalog": "https://narcoscope.com/.well-known/api-catalog",
         "apiCatalogSha256": "sha256:62e006de96351351fbd8ffd8911d8adf25cb7189aa000ac7e4765bd495fc062c",
         "registryStatus": "active-latest",
-        "registryAdvertisedVersion": "1.4.0",
-        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fnarcoscope/versions/1.4.0",
-        "registryPublishedAt": "2026-09-02T01:09:28.287851Z",
-        "registryPublicationWorkflow": "https://github.com/beepboop2025/narcoscope/actions/runs/33578233679",
-        "sourceUpgradeVersion": "1.4.0",
-        "sourceUpgradeCommit": "7ae91b08fea1430b44eea8205fc1898d8c3dbc2c",
-        "sourceUpgradeImplementationCommit": "f52f63ebc1bcbbb8b4e5e41863b778774b2bcd17",
-        "sourceUpgradeDiscoveryCommit": "ddacf2c56ed403aebeb62ef07d09004432072b1e",
+        "registryAdvertisedVersion": "1.5.0",
+        "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fnarcoscope/versions/1.5.0",
+        "registryPublishedAt": "2026-09-08T13:47:29.894418Z",
+        "registryPublicationWorkflow": "https://github.com/beepboop2025/narcoscope/actions/runs/34234138683",
+        "sourceUpgradeVersion": "1.5.0",
+        "sourceUpgradeCommit": "0f3887d456fbb985a1dd3532ec689cda259e1aa4",
         "sourceUpgradeState": "live-externally-verified",
-        "productionDeploymentId": "6213389867",
-        "financialAuthority": "none"
+        "productionDeploymentId": "95ff9569-ef42-400c-814b-41befc447659",
+        "financialAuthority": "none",
+        "productionDeploymentProvider": "railway-fleet",
+        "productionReleaseReceipt": "https://liquilens.in/protocol/release-evidence/narcoscope/0f3887d456fbb985a1dd3532ec689cda259e1aa4/receipt.json"
       }
     },
     {

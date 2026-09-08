@@ -433,7 +433,7 @@ def test_pages_proof_checks_compact_edge_catalogs_and_raw_static_files(monkeypat
     expected_by_path.update(
         {
             f"/{relative}": (ROOT / relative).read_bytes()
-            for relative in verifier.PAGES_TRADE_SAFETY_PATHS
+            for relative in verifier.PAGES_TRADE_SAFETY_PATHS + verifier.PAGES_RELEASE_EVIDENCE_PATHS
         }
     )
     seen = []
@@ -452,7 +452,7 @@ def test_pages_proof_checks_compact_edge_catalogs_and_raw_static_files(monkeypat
         delay=0,
     )
     assert seen == list(expected_by_path)
-    assert len(results) == 5 + len(verifier.PAGES_TRADE_SAFETY_PATHS)
+    assert len(results) == 5 + len(verifier.PAGES_TRADE_SAFETY_PATHS) + len(verifier.PAGES_RELEASE_EVIDENCE_PATHS)
 
 
 def test_edge_parity_explains_a_missing_carrier_entry():

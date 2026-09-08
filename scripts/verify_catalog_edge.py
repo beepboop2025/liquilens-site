@@ -49,6 +49,10 @@ PAGES_TRADE_SAFETY_PATHS = (
     "protocol/integrations/fdc3/com.liquilens.trade-safety-receipt.schema.json",
     "protocol/integrations/fdc3/trade-safety-intents.json",
 )
+PAGES_RELEASE_EVIDENCE_PATHS = tuple(
+    "protocol/release-evidence/narcoscope/0f3887d456fbb985a1dd3532ec689cda259e1aa4/" + name
+    for name in ("receipt.json", "receipt.json.sig", "release-manifest.json")
+)
 DEFAULT_URL = "https://liquilens.in/.well-known/ai-catalog.json"
 DEFAULT_API_CATALOG_URL = "https://liquilens.in/.well-known/api-catalog"
 DEFAULT_PROTOCOL_URL = "https://liquilens.in/protocol/catalog.json"
@@ -121,6 +125,7 @@ ALLOWED_FETCH_HOSTS = frozenset(
         "liquilens-undertow.com",
         "narcoscope.com",
         "www.narcoscope.com",
+        "narcoscope-web-production.up.railway.app",
         "palimpsest.info",
         "www.palimpsest.info",
         "registry.modelcontextprotocol.io",
@@ -142,10 +147,11 @@ SIBLING_ACTION_PROOFS: dict[str, tuple[dict[str, str], ...]] = {
     "NarcoScope": (
         {
             "kind": "source CI",
-            "url": "https://github.com/beepboop2025/narcoscope/actions/runs/33578150155",
+            "url": "https://github.com/beepboop2025/narcoscope/actions/runs/34233905413",
             "sha_field": "sourceUpgradeCommit",
             "workflow": ".github/workflows/tests.yml",
             "event": "push",
+            "branch": "proof/registry-1.5.0-0f3887d-20260908",
         },
         {
             "kind": "Registry publication",
@@ -2201,8 +2207,18 @@ def _validate_github_deployment(
 
 def _verify_sibling_deployment_proof(label: str, card: dict[str, Any]) -> str:
     metadata = card.get("metadata", {})
+    if metadata.get("productionDeploymentProvider") == "railway-fleet":
+        if label != "NarcoScope":
+            raise RuntimeError("Fleet deployment proof is only reviewed for NarcoScope")
+        try:
+            from .verify_narcoscope_release import verify_release
+        except ImportError:
+            from verify_narcoscope_release import verify_release
+        return verify_release(card, ROOT, _fetch_bytes)
     deployment_id = metadata.get("productionDeploymentId")
     if deployment_id is None:
+        if label == "NarcoScope":
+            raise RuntimeError("NarcoScope requires its production deployment proof")
         return ""
     try:
         expected_id = int(deployment_id)
@@ -2514,7 +2530,7 @@ def _verify_pages_bytes(
         (ROOT / "sitemap.xml", "application/xml, text/xml"),
     ):
         targets.append((path, path.read_bytes(), accept))
-    for relative in PAGES_TRADE_SAFETY_PATHS:
+    for relative in PAGES_TRADE_SAFETY_PATHS + PAGES_RELEASE_EVIDENCE_PATHS:
         path = ROOT / relative
         accept = (
             "application/json, application/*+json"

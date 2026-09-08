@@ -1,0 +1,37 @@
+{
+  "bundle": {
+    "bundle_path": "/var/lib/fleet-publisher/products/narcoscope/last-good/bundles/ac1479ab19653e32cb915a86f6ff86cd0aa78dbbcb6d0fc977eb18c288516668",
+    "byte_count": 6290723,
+    "file_count": 264,
+    "manifest_sha256": "ac1479ab19653e32cb915a86f6ff86cd0aa78dbbcb6d0fc977eb18c288516668",
+    "product_id": "narcoscope",
+    "release_id": "ac1479ab19653e32cb915a86f6ff86cd0aa78dbbcb6d0fc977eb18c288516668",
+    "source_commit": "0f3887d456fbb985a1dd3532ec689cda259e1aa4",
+    "tree_sha256": "efb2428a3aa3784aa69e33d025e35bde3cf99f523a76b4f1dfc956cafdc28290"
+  },
+  "deployment_id": "95ff9569-ef42-400c-814b-41befc447659",
+  "finished_at": "2026-09-08T13:35:43Z",
+  "format": "fleet-publisher-receipt/v1",
+  "health": [
+    {
+      "body_sha256": "12b947bd90b5cf948051d5e4249412c5066ece0600688324d4f6d11b7cabcca4",
+      "identity_verified": true,
+      "status": 200,
+      "url": "https://narcoscope-web-production.up.railway.app/healthz"
+    },
+    {
+      "body_sha256": "12b947bd90b5cf948051d5e4249412c5066ece0600688324d4f6d11b7cabcca4",
+      "identity_verified": true,
+      "status": 200,
+      "url": "https://www.narcoscope.com/healthz"
+    }
+  ],
+  "outcome": "succeeded",
+  "product_id": "narcoscope",
+  "railway": {
+    "environment_id": "e18d163f-7bac-48bf-a266-6c3d48f7b24f",
+    "project_id": "d4da4135-1f9f-44f2-b66c-89c76f54b15d",
+    "service_id": "21d80a60-b268-46f0-a581-4cfc48598268"
+  },
+  "rollback": null
+}
