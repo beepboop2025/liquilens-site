@@ -13,5 +13,10 @@ RUN python3 -m pip install --disable-pip-version-check --no-cache-dir \
     && npm ci --ignore-scripts
 COPY . /app
 ENV LIQUILENS_OFFLINE=1
+# Fail the native Railway PR check when verification fails during the build.
+ARG RAILWAY_GIT_COMMIT_SHA
+ARG RAILWAY_DEPLOYMENT_ID
+RUN timeout --signal=TERM --kill-after=15 600 sh deploy/railway-ci/run.sh \
+    && printf 'RAILWAY_CI_BUILD_PASS source=%s\n' "$RAILWAY_GIT_COMMIT_SHA"
 ENTRYPOINT ["/usr/bin/tini", "-s", "--"]
 CMD ["timeout", "--signal=TERM", "--kill-after=15", "600", "sh", "deploy/railway-ci/run.sh"]
