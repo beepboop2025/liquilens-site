@@ -1,17 +1,17 @@
 {
   "schema": "liquilens.evidence-carrier-catalog.v1",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "protocolVersion": "1.0",
   "license": "Apache-2.0",
   "repository": "https://github.com/beepboop2025/liquilens-evidence-carrier",
-  "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.19.0/liquilens_evidence-0.19.0-py3-none-any.whl",
-  "pythonDistributionSha256": "1adccb72376f50456fd16a979e372f802ae73ba35b766633bc3d8bd4ab5abcc8",
-  "mcpBundle": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.19.0/liquilens-evidence-carrier-mcp-0.19.0.mcpb",
-  "mcpBundleSha256": "11db11aefafcc6c4ba558877d1f9892fc708150b3afbaa28a741e74435b9a91a",
-  "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.19.0",
-  "releaseCommit": "8f5738c9e77cc95b9a68543d478b9521f5595d61",
-  "releaseTagObject": "c3239bfc7c4d3c4b7fc5ce26e0f602962e7d4337",
-  "releaseWorkflow": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/33630790150",
+  "pythonDistribution": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.20.0/liquilens_evidence-0.20.0-py3-none-any.whl",
+  "pythonDistributionSha256": "d864af722153f66a5cad5855ce00fb70809a4a078d7d972a75ce714ebbdf57cc",
+  "mcpBundle": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.20.0/liquilens-evidence-carrier-mcp-0.20.0.mcpb",
+  "mcpBundleSha256": "1c740167183cba7ad39862ee749f497930f43cfd27b1362d703c81e71d5b2d6f",
+  "release": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/tag/v0.20.0",
+  "releaseCommit": "bfe665431c0c2203e71d1a5e9c7ba57095320585",
+  "releaseTagObject": "51cbb4645bbd603f38be65f23d8c03a4b9d30272",
+  "releaseWorkflow": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/34276508204",
   "humanLandingPage": "https://liquilens.in/protocol/",
   "browserVerifier": "https://beepboop2025.github.io/liquilens-evidence-carrier/",
   "browserVerifierSource": "https://github.com/beepboop2025/liquilens-evidence-carrier/tree/68e5eead7ad7a78e3c379820a499cf3c7c34048b/browser",
@@ -21,9 +21,9 @@
       "id": "official-mcp-registry",
       "label": "Official MCP Registry",
       "status": "live",
-      "url": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.19.0",
-      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/33630790150",
-      "verifiedResult": "active and latest at version 0.19.0 with the exact MCPB SHA-256"
+      "url": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.20.0",
+      "receipt": "https://github.com/beepboop2025/liquilens-evidence-carrier/actions/runs/34276508204",
+      "verifiedResult": "active and latest at version 0.20.0 with the exact MCPB SHA-256"
     },
     {
       "id": "agent-skill",
@@ -90,9 +90,9 @@
       "id": "uvx-immutable-wheel",
       "label": "Hash-pinned one-shot CLI",
       "status": "live",
-      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.19.0/liquilens_evidence-0.19.0-py3-none-any.whl#sha256=1adccb72376f50456fd16a979e372f802ae73ba35b766633bc3d8bd4ab5abcc8",
-      "command": "uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.19.0/liquilens_evidence-0.19.0-py3-none-any.whl#sha256=1adccb72376f50456fd16a979e372f802ae73ba35b766633bc3d8bd4ab5abcc8' liquilens-evidence --help",
-      "verifiedResult": "the checksum-pinned 0.19.0 wheel exposes carrier, Fleet Brief, Trade Safety receipt operations, and a fail-closed paper-order guard"
+      "url": "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.20.0/liquilens_evidence-0.20.0-py3-none-any.whl#sha256=d864af722153f66a5cad5855ce00fb70809a4a078d7d972a75ce714ebbdf57cc",
+      "command": "uvx --no-cache --from 'https://github.com/beepboop2025/liquilens-evidence-carrier/releases/download/v0.20.0/liquilens_evidence-0.20.0-py3-none-any.whl#sha256=d864af722153f66a5cad5855ce00fb70809a4a078d7d972a75ce714ebbdf57cc' liquilens-evidence --help",
+      "verifiedResult": "the checksum-pinned 0.20.0 wheel exposes carrier, Fleet Brief, Trade Safety receipt operations, and a fail-closed paper-order guard"
     },
     {
       "id": "homebrew",

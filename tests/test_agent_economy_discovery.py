@@ -84,7 +84,7 @@ def test_narcoscope_exposes_the_live_host_and_active_registry_release():
     assert entry["metadata"]["customDomainStatus"] == "configured-live"
     assert entry["metadata"]["registryStatus"] == "active-latest-at-1.5.0"
     assert entry["metadata"]["apiCatalogSha256"] == (
-        "sha256:62e006de96351351fbd8ffd8911d8adf25cb7189aa000ac7e4765bd495fc062c"
+        "sha256:08da9a3bd68c6bc99d235d76c3439327f106421bc49cd88e6e128560c64a6291"
     )
     assert entry["metadata"]["sourceUpgradeCommit"] == (
         "0f3887d456fbb985a1dd3532ec689cda259e1aa4"
@@ -113,13 +113,13 @@ def test_scamshield_remains_local_even_with_a_modern_mcp_contract():
 def test_carrier_and_palimpsest_versions_match_verified_release_receipts():
     carrier = ENTRIES["urn:air:liquilens.in:protocol:evidence-carrier"]
     palimpsest = ENTRIES["urn:air:liquilens.in:catalog:palimpsest-china"]
-    assert carrier["version"] == "0.19.0"
+    assert carrier["version"] == "0.20.0"
     assert carrier["metadata"]["mcpBundleSha256"] == (
-        "11db11aefafcc6c4ba558877d1f9892fc708150b3afbaa28a741e74435b9a91a"
+        "1c740167183cba7ad39862ee749f497930f43cfd27b1362d703c81e71d5b2d6f"
     )
-    assert carrier["metadata"]["consumerChannelSnapshotVersion"] == "0.19.0"
+    assert carrier["metadata"]["consumerChannelSnapshotVersion"] == "0.20.0"
     assert carrier["metadata"]["releaseCommit"] == (
-        "8f5738c9e77cc95b9a68543d478b9521f5595d61"
+        "bfe665431c0c2203e71d1a5e9c7ba57095320585"
     )
     assert carrier["metadata"]["registryStatus"] == "active-latest"
     assert palimpsest["version"] == "1.9.3"
