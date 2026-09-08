@@ -1285,3 +1285,13 @@ def test_pages_postdeployment_verifier_copies_its_current_dependencies(tmp_path)
     result = subprocess.run([sys.executable, str(verifier_copy), "--help"],
                             cwd=tmp_path, check=True, capture_output=True, text=True)
     assert "--pages-proof-only" in result.stdout
+
+
+def test_pages_retry_selects_its_own_unique_uploaded_artifact():
+    steps = _workflow(".github/workflows/pages.yml")["jobs"]["deploy"]["steps"]
+    upload = next(step for step in steps if str(step.get("uses", "")).startswith("actions/upload-pages-artifact@"))
+    deploy = next(step for step in steps if str(step.get("uses", "")).startswith("actions/deploy-pages@"))
+    name = upload["with"]["name"]
+    assert name == deploy["with"]["artifact_name"]
+    assert "${{ github.run_id }}" in name
+    assert "${{ github.run_attempt }}" in name
