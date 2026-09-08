@@ -33,7 +33,7 @@ def test_every_external_action_is_pinned_to_the_reviewed_commit():
         assert ACTION_PINS[action] == commit
     assert sum(action == "actions/checkout" for action, _ in uses) == 4
     assert sum(action == "actions/setup-python" for action, _ in uses) == 4
-    assert sum(action == "actions/setup-node" for action, _ in uses) == 3
+    assert sum(action == "actions/setup-node" for action, _ in uses) == 2
     assert sum(action == "cloudflare/wrangler-action" for action, _ in uses) == 1
 
 
@@ -64,7 +64,8 @@ def test_ci_dependencies_are_binary_only_and_hash_locked():
     # Five original pure-Python locks plus five reviewed Pillow platform wheels.
     assert requirements.count("--hash=sha256:") == 10
     assert re.search(r"^[^#\n]*[<>=]=?[^\n]*$", requirements, re.MULTILINE) is not None
-    for workflow in (PAGES, ARTICLES, EDGE_DEPLOY, EDGE_PR):
+    for workflow in (ARTICLES, EDGE_DEPLOY, EDGE_PR,
+                     (ROOT / "deploy/railway-ci/Dockerfile").read_text()):
         assert "--only-binary=:all:" in workflow
         assert "--require-hashes" in workflow
         assert "pytest>=" not in workflow

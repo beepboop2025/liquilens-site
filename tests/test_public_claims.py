@@ -592,17 +592,21 @@ def test_neither_a_dead_network_nor_an_offline_run_can_redden_the_deploy(
     assert vpc.main() == 0
 
 
-def test_the_publish_step_never_reads_the_network_and_the_live_step_cannot_fail(
-        ):
+def test_offline_native_claims_gate_and_advisory_live_pages_check_remain_separate():
     raw = open(os.path.join(ROOT, ".github", "workflows", "pages.yml"),
                encoding="utf-8").read()
+    docker = open(os.path.join(ROOT, "deploy", "railway-ci", "Dockerfile"),
+                  encoding="utf-8").read()
+    runner = open(os.path.join(ROOT, "deploy", "railway-ci", "run.sh"),
+                  encoding="utf-8").read()
+    assert "ENV LIQUILENS_OFFLINE=1" in docker
+    assert "python3 scripts/verify_public_claims.py" in runner
     steps = raw.split("- name: ")
-    blocking = [s for s in steps
-                if s.startswith("Verify the published files")]
+    admission = [s for s in steps if s.startswith("Require authenticated native CI")]
     live = [s for s in steps if s.startswith("Report where the live API")]
-    assert len(blocking) == 1 and len(live) == 1
-    assert "LIQUILENS_OFFLINE" in blocking[0]
-    assert "continue-on-error: true" not in blocking[0]
+    assert len(admission) == 1 and len(live) == 1
+    assert "verify_pages_ci.py" in admission[0]
+    assert "continue-on-error: true" not in admission[0]
     assert "continue-on-error: true" in live[0]
 
 
