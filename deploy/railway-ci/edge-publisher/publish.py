@@ -173,9 +173,9 @@ def prepare(source, work):
         os.chown(path, 10001, 10001)
     env = {"HOME": "/home/builder", "LIQUILENS_OFFLINE": "1",
            "RAILWAY_GIT_COMMIT_SHA": source,
-           "PATH": "/app/.venv/bin:/usr/local/bin:/usr/bin:/bin"}
-    run(["python", "-m", "venv", "/app/.venv"], app, builder=True, extra=env)
-    run(["/app/.venv/bin/python", "-m", "pip", "install", "--only-binary=:all:",
+           "PATH": "/home/builder/venv/bin:/usr/local/bin:/usr/bin:/bin"}
+    run(["python", "-m", "venv", "/home/builder/venv"], app, builder=True, extra=env)
+    run(["/home/builder/venv/bin/python", "-m", "pip", "install", "--only-binary=:all:",
          "--require-hashes", "-r", "requirements-ci.txt"], app, builder=True, extra=env)
     run(["npm", "ci", "--ignore-scripts"], app, builder=True, extra=env)
     run(["sh", "deploy/railway-ci/run.sh"], app, builder=True, extra=env)
