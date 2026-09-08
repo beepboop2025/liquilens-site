@@ -208,9 +208,20 @@ def assert_active(api, deployment_id, versions):
             "Active Worker deployment changed; refusing to overwrite a concurrent release")
 
 
-def rollback(api, previous, candidate):
-    held = {item.get("version_id") for item in api.latest().get("versions", [])}
+def rollback(api, previous, candidate, transaction=None):
+    current = api.latest()
+    held = {item.get("version_id") for item in current.get("versions", [])}
     require(held and held <= {previous, candidate}, "Refusing to overwrite a concurrent Worker release")
+    if transaction is not None:
+        if current.get("id") == transaction["previous_deployment_id"]:
+            require(stable_version(current) == previous, "Previous traffic identity changed")
+            return  # No stage occurred, or the exact original deployment is still active.
+        owned = {transaction.get("staged_deployment_id"), transaction.get("promoted_deployment_id")}
+        messages = {"Railway stage " + transaction["operation_id"],
+                    "Railway promote " + transaction["operation_id"]}
+        require(current.get("id") in (owned - {None}) or
+                current.get("annotations", {}).get("workers/message") in messages,
+                "Active deployment is not owned by this publication transaction")
     api.deploy([(previous, 100)], "Railway rollback after failed exact-main publication")
     require(stable_version(api.latest()) == previous, "Rollback did not restore the exact prior version")
 
@@ -243,7 +254,7 @@ def execute(source, apply, evidence):
             prior = json.loads(read_regular(pending, 65536))
             require(prior.get("account") == ACCOUNT and prior.get("script") == SCRIPT,
                     "Pending transaction belongs to another publisher")
-            rollback(api, prior["previous"], prior["candidate"])
+            rollback(api, prior["previous"], prior["candidate"], prior)
             pending.unlink()
         prior_deployment = api.latest()
         previous = stable_version(prior_deployment)
@@ -259,6 +270,7 @@ def execute(source, apply, evidence):
                 and annotations.get("workers/message") == "Railway-" + source,
                 "Uploaded candidate is not bound to the requested source")
         transaction = {"account": ACCOUNT, "script": SCRIPT, "source": source,
+                       "operation_id": uuid.uuid4().hex,
                        "previous": previous, "previous_deployment_id": previous_deployment_id,
                        "candidate": candidate, "module_sha256": digest,
                        "controller": json.loads((CONTROLLER / "controller-source.json").read_text()),
@@ -268,7 +280,7 @@ def execute(source, apply, evidence):
         try:
             current_main(source)
             assert_active(api, previous_deployment_id, [(previous, 100)])
-            staged = api.deploy([(previous, 100), (candidate, 0)], "Railway zero-traffic smoke " + source)
+            staged = api.deploy([(previous, 100), (candidate, 0)], "Railway stage " + transaction["operation_id"])
             require(re.fullmatch(UUID, staged.get("id", "")), "Invalid staged deployment identity")
             transaction["staged_deployment_id"] = staged["id"]
             durable_json(pending, transaction)
@@ -278,7 +290,7 @@ def execute(source, apply, evidence):
                    "--no-palimpsest-proof", "--no-sibling-proof")
             current_main(source)
             assert_active(api, staged["id"], [(previous, 100), (candidate, 0)])
-            promoted = api.deploy([(candidate, 100)], "Railway promote verified " + source)
+            promoted = api.deploy([(candidate, 100)], "Railway promote " + transaction["operation_id"])
             transaction["promoted_deployment_id"] = promoted["id"]
             verify("--expected-version-tag", source, "--attempts", "12", "--delay", "5",
                    "--budget-seconds", "150")
@@ -289,7 +301,7 @@ def execute(source, apply, evidence):
             durable_json(evidence / (source + "-" + candidate + ".json"), transaction)
             pending.unlink()
         except BaseException:
-            rollback(api, previous, candidate)
+            rollback(api, previous, candidate, transaction)
             pending.unlink()
             raise
         print(f"RAILWAY_CATALOG_PUBLISH_PASS source={source} version={candidate} previous={previous}", flush=True)

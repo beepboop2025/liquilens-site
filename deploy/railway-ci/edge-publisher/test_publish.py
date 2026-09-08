@@ -103,6 +103,16 @@ class BoundaryTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             publish.assert_active(API(), "concurrent", [("same-version", 100), ("candidate", 0)])
 
+    def test_rollback_refuses_concurrent_redeployment_of_the_same_version(self):
+        class API:
+            def latest(self):
+                return {"id": "concurrent", "versions": [{"version_id": "previous", "percentage": 100}]}
+            def deploy(self, *args):
+                raise AssertionError("must preserve concurrent deployment even for same bytes")
+        with self.assertRaises(RuntimeError):
+            publish.rollback(API(), "previous", "candidate",
+                             {"previous_deployment_id": "original", "operation_id": "ours"})
+
     def test_second_manual_invocation_cannot_acquire_publication_lock(self):
         with tempfile.TemporaryDirectory() as directory:
             with publish.publication_lock(Path(directory)):
