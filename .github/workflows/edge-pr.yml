@@ -2,7 +2,6 @@ name: Public edge contract
 
 on:
   pull_request:
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,6 +12,9 @@ concurrency:
 
 jobs:
   contract:
+    # Owner PRs use the credential-free native Railway PR environment.
+    # External contributors retain coverage because Railway requires membership.
+    if: github.event.pull_request.user.login != 'beepboop2025'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
