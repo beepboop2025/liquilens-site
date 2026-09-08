@@ -28,3 +28,27 @@ until an equivalent external-fork executor is available.
 Native verification requires current main to be an ancestor of the exact tested
 head. A stale pull request fails admission and must merge/rebase main before
 rerunning. Build logs record both head and base revisions.
+
+## Pages publication
+
+The Pages workflow follows this service's successful status for exact protected
+main, or an explicit main dispatch. It checks the authenticated Railway bot,
+fixed service and credential-free main environment, and newest result for that
+commit before using the native offline claims/Python/Node proof. It checks again
+immediately before artifact upload and before deployment. A newer pending or
+failed result, malformed target, changed main or preview environment revokes the
+admission. Only admitted deploy jobs enter the Pages concurrency group.
+
+Pages retains its fresh external release checks, advisory live API/Worker checks,
+original GitHub environment/OIDC origin, artifact sanitization and mandatory
+public-byte comparison. It does not reinstall test dependencies or repeat tests.
+The existing external-contributor PR fallback is unchanged.
+
+IndexNow remains advisory and follows successful deployment and public proof. Its
+exact diff begins at the most recent successful GitHub Pages source, so a batched
+push or delayed native build retains all changed routes. The bounded lookup skips
+incomplete/failed deployments, accepts only the fixed Pages environment/main and
+GitHub Actions application, and checks source ancestry. Initial publication uses
+Git's empty tree; a repeat of the same source has no changed routes. A lookup
+failure is visible and skips the advisory notification, never silently narrows
+its range. No new publishing or notification credential is introduced.

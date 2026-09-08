@@ -402,6 +402,13 @@ def test_publish_workflows_block_on_external_proof_before_mutation():
     )
     assert pages_proof_index < main_index
     assert main_index + 1 == artifact_index
+    recheck_index = pages_names.index(
+        "Recheck native result and current protected main before deployment"
+    )
+    assert artifact_index < recheck_index
+    assert recheck_index + 1 == deploy_index
+    assert "verify_pages_ci.py" in pages_steps[recheck_index]["run"]
+    assert "continue-on-error" not in pages_steps[recheck_index]
     assert deploy_index < post_index
     post = pages_steps[post_index]
     assert "--pages-proof-only" in post["run"]
@@ -1295,3 +1302,25 @@ def test_pages_retry_selects_its_own_unique_uploaded_artifact():
     assert name == deploy["with"]["artifact_name"]
     assert "${{ github.run_id }}" in name
     assert "${{ github.run_attempt }}" in name
+
+
+def test_pages_waits_for_native_status_without_queuing_irrelevant_events():
+    workflow = _workflow(".github/workflows/pages.yml")
+    assert set(workflow["on"]) == {"status", "workflow_dispatch"}
+    assert "concurrency" not in workflow
+    deploy = workflow["jobs"]["deploy"]
+    assert deploy["concurrency"] == {"group": "pages-main", "cancel-in-progress": False}
+    assert "github.event.sha == github.sha" in deploy["if"]
+    assert "railway-automation - liquilens-site-pr-ci" in deploy["if"]
+    assert deploy["permissions"]["statuses"] == "read"
+    assert deploy["permissions"]["deployments"] == "read"
+    steps = deploy["steps"]
+    admission = next(step for step in steps if step.get("name", "").startswith("Require authenticated native"))
+    assert "verify_pages_ci.py" in admission["run"]
+    assert "continue-on-error" not in admission
+    capture = next(step for step in steps if step.get("id") == "indexnow-range")
+    notify = next(step for step in steps if step.get("name", "").startswith("Notify IndexNow"))
+    assert "--indexnow-before" in capture["run"]
+    assert capture["continue-on-error"] is True
+    assert notify["if"] == "steps.indexnow-range.outcome == 'success'"
+    assert notify["env"]["BEFORE_SHA"] == "${{ steps.indexnow-range.outputs.before }}"
