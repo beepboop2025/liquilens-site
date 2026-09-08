@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 import hashlib
 import ipaddress
 import json
+import re
 import socket
 import time
 import urllib.error
@@ -50,7 +51,11 @@ PAGES_TRADE_SAFETY_PATHS = (
     "protocol/integrations/fdc3/trade-safety-intents.json",
 )
 PAGES_RELEASE_EVIDENCE_PATHS = tuple(
-    "protocol/release-evidence/narcoscope/0f3887d456fbb985a1dd3532ec689cda259e1aa4/" + name
+    "protocol/release-evidence/narcoscope/" + source + "/" + name
+    for source in (
+        "0f3887d456fbb985a1dd3532ec689cda259e1aa4",
+        "e818c33feaf5f8081cbfc5807aced0cd50d8952f",
+    )
     for name in ("receipt.json", "receipt.json.sig", "release-manifest.json")
 )
 DEFAULT_URL = "https://liquilens.in/.well-known/ai-catalog.json"
@@ -144,23 +149,7 @@ SIBLING_ACTION_PROOFS: dict[str, tuple[dict[str, str], ...]] = {
         },
     ),
     "Riptide": (),
-    "NarcoScope": (
-        {
-            "kind": "source CI",
-            "url": "https://github.com/beepboop2025/narcoscope/actions/runs/34233905413",
-            "sha_field": "sourceUpgradeCommit",
-            "workflow": ".github/workflows/tests.yml",
-            "event": "push",
-            "branch": "proof/registry-1.5.0-0f3887d-20260908",
-        },
-        {
-            "kind": "Registry publication",
-            "url_field": "registryPublicationWorkflow",
-            "sha_field": "sourceUpgradeCommit",
-            "workflow": ".github/workflows/registry-publish.yml",
-            "event": "workflow_dispatch",
-        },
-    ),
+    "NarcoScope": (),
 }
 SIBLING_PROBE_TOOL = {
     "Undertow": "agent_access_status",
@@ -2111,9 +2100,64 @@ def _validate_sibling_source_workflow(
     )
 
 
+def _validate_narcoscope_native_ci(card: dict[str, Any], payload: dict[str, Any]) -> None:
+    """Bind native CI to the released source and the established Railway lane."""
+    metadata = card.get("metadata", {})
+    sha = metadata.get("sourceUpgradeCommit", "")
+    if not isinstance(sha, str) or re.fullmatch(r"[0-9a-f]{40}", sha) is None:
+        raise RuntimeError("NarcoScope native CI has no exact source SHA")
+    _require_equal(payload.get("sha"), sha, "NarcoScope native CI source")
+    expected_url = metadata.get("sourceValidationUrl", "")
+    if not isinstance(expected_url, str):
+        raise RuntimeError("NarcoScope native CI URL is missing")
+    try:
+        url = urllib.parse.urlsplit(expected_url)
+        query = urllib.parse.parse_qs(url.query, strict_parsing=True)
+    except ValueError as error:
+        raise RuntimeError("NarcoScope native CI URL is malformed") from error
+    if (
+        url.scheme != "https"
+        or url.netloc != "railway.com"
+        or url.path != "/project/9c094747-8662-4ba7-8d6b-5a4fa7ca27eb/service/96649d78-59e0-4702-aa1e-20e4deabef91"
+        or url.fragment
+        or set(query) != {"id", "environmentId"}
+        or any(len(values) != 1 or re.fullmatch(
+            r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", values[0]
+        ) is None for values in query.values())
+    ):
+        raise RuntimeError("NarcoScope native CI target differs from the reviewed lane")
+    statuses = payload.get("statuses")
+    if not isinstance(statuses, list):
+        raise RuntimeError("NarcoScope native CI statuses are missing")
+    checks = [row for row in statuses if isinstance(row, dict) and
+              row.get("context") == "railway-automation - narcoscope-pr-ci"]
+    if len(checks) != 1:
+        raise RuntimeError("NarcoScope native CI has no unique current status")
+    _require_equal(checks[0].get("state"), "success", "NarcoScope native CI result")
+    _require_equal(checks[0].get("target_url"), expected_url, "NarcoScope native CI deployment")
+    _require_equal(metadata.get("sourceValidationProvider"), "railway-native",
+                   "NarcoScope source validation provider")
+    _require_equal(metadata.get("registryPublicationMethod"), "official-maintainer-client",
+                   "NarcoScope Registry publication method")
+
+
 def _verify_sibling_action_proofs(label: str, card: dict[str, Any]) -> str:
     metadata = card.get("metadata", {})
     proofs = SIBLING_ACTION_PROOFS.get(label, ())
+    if label == "NarcoScope":
+        sha = metadata.get("sourceUpgradeCommit", "")
+        if not isinstance(sha, str) or re.fullmatch(r"[0-9a-f]{40}", sha) is None:
+            raise RuntimeError("NarcoScope native CI has no exact source SHA")
+        body, headers, _ = _fetch_bytes(
+            "https://api.github.com/repos/beepboop2025/narcoscope/commits/" + sha + "/status",
+            accept="application/vnd.github+json", timeout=SIBLING_REQUEST_TIMEOUT,
+            max_bytes=MAX_JSON_BODY_BYTES,
+        )
+        _validate_narcoscope_native_ci(card, _json_object(
+            body, headers.get("content-type", ""), "NarcoScope native CI"))
+        # Registry exact/latest and the separately signed Fleet deployment remain
+        # required by the caller; a maintainer publication is not an OIDC claim.
+        return "successful exact-source Railway CI; official maintainer Registry publication"
     if label == "Riptide":
         private_proofs = (
             (

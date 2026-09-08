@@ -82,18 +82,17 @@ def test_narcoscope_exposes_the_live_host_and_active_registry_release():
         }
     ]
     assert entry["metadata"]["customDomainStatus"] == "configured-live"
-    assert entry["metadata"]["registryStatus"] == "active-latest-at-1.5.0"
+    assert entry["metadata"]["registryStatus"] == "active-latest"
     assert entry["metadata"]["apiCatalogSha256"] == (
         "sha256:08da9a3bd68c6bc99d235d76c3439327f106421bc49cd88e6e128560c64a6291"
     )
     assert entry["metadata"]["sourceUpgradeCommit"] == (
-        "0f3887d456fbb985a1dd3532ec689cda259e1aa4"
+        "e818c33feaf5f8081cbfc5807aced0cd50d8952f"
     )
     assert entry["metadata"]["productionDeploymentProvider"] == "railway-fleet"
     assert entry["metadata"]["productionReleaseReceipt"].endswith("/" + entry["metadata"]["sourceUpgradeCommit"] + "/receipt.json")
-    assert entry["metadata"]["registryPublicationWorkflow"].endswith(
-        "/actions/runs/34234138683"
-    )
+    assert entry["metadata"]["registryPublicationMethod"] == "official-maintainer-client"
+    assert entry["metadata"]["sourceValidationProvider"] == "railway-native"
 
 
 def test_scamshield_remains_local_even_with_a_modern_mcp_contract():
