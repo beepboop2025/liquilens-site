@@ -86,7 +86,7 @@
         "Find recent RBI supervisory actions."
       ],
       "version": "1.8.0",
-      "updatedAt": "2026-09-09T00:00:00Z",
+      "updatedAt": "2026-09-08T20:31:23Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
@@ -215,7 +215,7 @@
       ],
       "resourceTemplates": [],
       "version": "0.12.4",
-      "updatedAt": "2026-09-09T00:00:00Z",
+      "updatedAt": "2026-09-08T20:31:23Z",
       "metadata": {
         "productUrl": "https://seiche.info",
         "publicToolCount": 13,
@@ -304,7 +304,7 @@
       ],
       "resourceTemplates": [],
       "version": "1.10.0",
-      "updatedAt": "2026-09-09T00:00:00Z",
+      "updatedAt": "2026-09-08T20:31:23Z",
       "metadata": {
         "productUrl": "https://liquilens-undertow.com",
         "publicToolCount": 11,
@@ -371,7 +371,7 @@
         "palimpsest://china-economic/publication-rights"
       ],
       "version": "1.9.3",
-      "updatedAt": "2026-09-09T00:00:00Z",
+      "updatedAt": "2026-09-08T20:31:23Z",
       "metadata": {
         "productUrl": "https://palimpsest.info/",
         "humanLandingPage": "https://palimpsest.info/china/",
@@ -919,7 +919,7 @@
         "Retrieve a cited newsroom artifact while preserving its disclosure and causal limits."
       ],
       "version": "1.6.0",
-      "updatedAt": "2026-09-09T00:00:00Z",
+      "updatedAt": "2026-09-08T20:31:23Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",

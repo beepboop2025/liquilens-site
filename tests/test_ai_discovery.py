@@ -332,7 +332,7 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
     seiche = entries["urn:air:liquilens.in:catalog:seiche"]
 
     assert seiche["version"] == "0.12.4"
-    assert seiche["updatedAt"] == "2026-09-09T00:00:00Z"
+    assert seiche["updatedAt"] == "2026-09-08T20:31:23Z"
     assert seiche["capabilities"] == [
         "latest_article",
         "funding_stress_now",
@@ -455,7 +455,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
 
     undertow = entries["urn:air:liquilens.in:catalog:undertow"]
     assert undertow["version"] == "1.10.0"
-    assert undertow["updatedAt"] == "2026-09-09T00:00:00Z"
+    assert undertow["updatedAt"] == "2026-09-08T20:31:23Z"
     assert undertow["capabilities"] == [
         "agent_access_status",
         "depth_episodes",
@@ -505,7 +505,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
     assert palimpsest["metadata"]["deploymentPublicToolCount"] == 6
     assert "dated deployment" in palimpsest["metadata"]["inventoryScope"]
     assert palimpsest["version"] == "1.9.3"
-    assert palimpsest["updatedAt"] == "2026-09-09T00:00:00Z"
+    assert palimpsest["updatedAt"] == "2026-09-08T20:31:23Z"
     assert palimpsest["capabilities"] == [
         "list_signals",
         "get_signal",
