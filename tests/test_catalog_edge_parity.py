@@ -1313,7 +1313,7 @@ def test_pages_waits_for_native_status_without_queuing_irrelevant_events():
     assert "github.event.sha == github.sha" in deploy["if"]
     assert "railway-automation - liquilens-site-pr-ci" in deploy["if"]
     assert deploy["permissions"]["statuses"] == "read"
-    assert deploy["permissions"]["deployments"] == "read"
+    assert deploy["permissions"]["actions"] == "read"
     steps = deploy["steps"]
     admission = next(step for step in steps if step.get("name", "").startswith("Require authenticated native"))
     assert "verify_pages_ci.py" in admission["run"]

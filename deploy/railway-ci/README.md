@@ -46,9 +46,11 @@ The existing external-contributor PR fallback is unchanged.
 
 IndexNow remains advisory and follows successful deployment and public proof. Its
 exact diff begins at the most recent successful GitHub Pages source, so a batched
-push or delayed native build retains all changed routes. The bounded lookup skips
-incomplete/failed deployments, accepts only the fixed Pages environment/main and
-GitHub Actions application, and checks source ancestry. Initial publication uses
+push or delayed native build retains all changed routes. The bounded lookup reads
+only successful runs of the fixed Pages workflow ID/path on canonical-repository
+main, including push, status and explicit dispatch events. It validates exact run
+identity and source ancestry; a completed workflow also proves its retained live
+byte gate passed. Initial publication uses
 Git's empty tree; a repeat of the same source has no changed routes. A lookup
 failure is visible and skips the advisory notification, never silently narrows
 its range. No new publishing or notification credential is introduced.

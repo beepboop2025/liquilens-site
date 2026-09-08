@@ -105,31 +105,37 @@ def verify_context(environ: dict, event: dict) -> str:
 
 
 def previous_pages_source(request) -> str | None:
-    """Find the most recently completed Pages source, including inactive history."""
-    deployments = request("/deployments?environment=github-pages&per_page=100")
-    for deployment in deployments:
+    """Use the exact Pages workflow's completed publication and live-proof run."""
+    # A status-triggered Pages deployment can have no performed_via_github_app.
+    # The fixed workflow run binds publication to its actual protected source
+    # without assuming deployment metadata uses the push event's issuer shape.
+    response = request(
+        "/actions/workflows/307232463/runs?branch=main&status=success&per_page=100"
+    )
+    runs = response["workflow_runs"]
+    for run in runs:
         if (
-            deployment.get("environment") != "github-pages"
-            or deployment.get("ref") != "main"
-            or deployment.get("task") != "deploy"
-            or (deployment.get("performed_via_github_app") or {}).get("id") != 15368
+            run.get("workflow_id") != 307232463
+            or run.get("path") != ".github/workflows/pages.yml"
+            or run.get("head_branch") != "main"
+            or (run.get("repository") or {}).get("full_name") != REPOSITORY
+            or (run.get("head_repository") or {}).get("full_name") != REPOSITORY
+            or run.get("event") not in {"status", "push", "workflow_dispatch"}
+            or run.get("status") != "completed"
+            or run.get("conclusion") != "success"
         ):
-            continue
-        identifier = deployment.get("id")
-        source = deployment.get("sha", "")
+            raise ValueError("Prior Pages run has an unexpected source or workflow")
+        identifier = run.get("id")
+        source = run.get("head_sha", "")
         if (
             type(identifier) is not int
             or identifier <= 0
             or re.fullmatch(r"[0-9a-f]{40}", source) is None
         ):
-            raise ValueError("Malformed prior Pages deployment identity")
-        statuses = request(f"/deployments/{identifier}/statuses?per_page=100")
-        if any(status.get("state") == "success" for status in statuses):
-            return source
-        if len(statuses) == 100:
-            raise ValueError("Prior Pages status history exceeded the lookup bound")
-    if len(deployments) == 100:
-        raise ValueError("Prior Pages deployment history exceeded the lookup bound")
+            raise ValueError("Malformed prior Pages run identity")
+        return source
+    if response.get("total_count", 0) != 0:
+        raise ValueError("Prior Pages run history is incomplete")
     return None
 
 
