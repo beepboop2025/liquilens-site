@@ -91,8 +91,12 @@ def test_public_edge_has_non_deploying_pr_gate_and_exact_release_receipt():
         in EDGE_PR
     )
     package = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
-    assert package["devDependencies"]["wrangler"] == "4.125.0"
+    assert package["devDependencies"]["wrangler"] == "4.130.0"
+    assert package["overrides"]["miniflare"]["sharp"] == "0.35.4"
     lock = json.loads((ROOT / "package-lock.json").read_text(encoding="utf-8"))
-    assert lock["packages"][""]["devDependencies"]["wrangler"] == "4.125.0"
+    assert lock["packages"][""]["devDependencies"]["wrangler"] == "4.130.0"
+    assert lock["packages"]["node_modules/sharp"]["version"] == "0.35.4"
+    assert lock["packages"]["node_modules/hono"]["version"] == "4.13.7"
+    assert 'wranglerVersion: "4.130.0"' in EDGE_DEPLOY
     assert "--tag ${{ github.sha }}" in EDGE_DEPLOY
     assert '--expected-version-tag "$GITHUB_SHA"' in EDGE_DEPLOY
