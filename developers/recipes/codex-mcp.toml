@@ -12,4 +12,4 @@ url = "https://api.seiche.info/undertow/mcp"
 url = "https://api.seiche.info/palimpsest/mcp"
 
 [mcp_servers.narcoscope]
-url = "https://narcoscope.com/mcp"
+url = "https://www.narcoscope.com/mcp"

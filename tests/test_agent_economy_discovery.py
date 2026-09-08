@@ -24,7 +24,7 @@ def test_adjacent_products_are_individually_discoverable():
         "urn:air:liquilens.in:catalog:myquant-editorial"
     ]["version"] == "2.1.0"
     assert ENTRIES["urn:air:liquilens.in:catalog:myquant-app"]["version"] == "2.0.0"
-    assert ENTRIES["urn:air:liquilens.in:catalog:narcoscope"]["version"] == "1.5.0"
+    assert ENTRIES["urn:air:liquilens.in:catalog:narcoscope"]["version"] == "1.6.0"
 
     riptide = ENTRIES["urn:air:liquilens.in:catalog:riptide"]
     assert riptide["metadata"]["sourceUpgradeVersion"] == "1.3.0"
@@ -78,11 +78,11 @@ def test_narcoscope_exposes_the_live_host_and_active_registry_release():
     assert entry["data"]["remotes"] == [
         {
             "type": "streamable-http",
-            "url": "https://narcoscope.com/mcp",
+            "url": "https://www.narcoscope.com/mcp",
         }
     ]
     assert entry["metadata"]["customDomainStatus"] == "configured-live"
-    assert entry["metadata"]["registryStatus"] == "active-latest"
+    assert entry["metadata"]["registryStatus"] == "active-latest-at-1.5.0"
     assert entry["metadata"]["apiCatalogSha256"] == (
         "sha256:62e006de96351351fbd8ffd8911d8adf25cb7189aa000ac7e4765bd495fc062c"
     )

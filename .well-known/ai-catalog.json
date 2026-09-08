@@ -877,12 +877,12 @@
           "url": "https://github.com/beepboop2025/narcoscope",
           "source": "github"
         },
-        "version": "1.5.0",
+        "version": "1.6.0",
         "websiteUrl": "https://narcoscope.com",
         "remotes": [
           {
             "type": "streamable-http",
-            "url": "https://narcoscope.com/mcp"
+            "url": "https://www.narcoscope.com/mcp"
           }
         ]
       },
@@ -918,19 +918,19 @@
         "What does NarcoScope's official-data overview establish and not establish?",
         "Retrieve a cited newsroom artifact while preserving its disclosure and causal limits."
       ],
-      "version": "1.5.0",
+      "version": "1.6.0",
       "updatedAt": "2026-09-09T00:00:00Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
         "publicToolCount": 14,
-        "mcpEndpoint": "https://narcoscope.com/mcp",
+        "mcpEndpoint": "https://www.narcoscope.com/mcp",
         "openapi": "https://narcoscope.com/openapi.json",
         "liveDeployment": "verified",
         "customDomainStatus": "configured-live",
         "apiCatalog": "https://narcoscope.com/.well-known/api-catalog",
         "apiCatalogSha256": "sha256:62e006de96351351fbd8ffd8911d8adf25cb7189aa000ac7e4765bd495fc062c",
-        "registryStatus": "active-latest",
+        "registryStatus": "active-latest-at-1.5.0",
         "registryAdvertisedVersion": "1.5.0",
         "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fnarcoscope/versions/1.5.0",
         "registryPublishedAt": "2026-09-08T13:47:29.894418Z",
@@ -941,7 +941,8 @@
         "productionDeploymentId": "95ff9569-ef42-400c-814b-41befc447659",
         "financialAuthority": "none",
         "productionDeploymentProvider": "railway-fleet",
-        "productionReleaseReceipt": "https://liquilens.in/protocol/release-evidence/narcoscope/0f3887d456fbb985a1dd3532ec689cda259e1aa4/receipt.json"
+        "productionReleaseReceipt": "https://liquilens.in/protocol/release-evidence/narcoscope/0f3887d456fbb985a1dd3532ec689cda259e1aa4/receipt.json",
+        "inventoryScope": "Hosted 1.6.0 source contract; dated Registry and deployment receipts describe 1.5.0."
       }
     },
     {
