@@ -336,7 +336,7 @@
       "displayName": "Palimpsest Revision-Safe China Evidence",
       "type": "application/ai-catalog+json",
       "url": "https://palimpsest.info/.well-known/ai-catalog.json",
-      "description": "Independent public-good catalog with seven public read-only tools and four prompts for the complete source registry, revision-safe China economic observations, information conditions, release and collection clocks, provenance, coverage gates and abstentions. Financial authority: none.",
+      "description": "Independent public-good catalog with six hosted read-only tools and four prompts for revision-safe China economic observations, information conditions, release and collection clocks, provenance, coverage gates and abstentions. The complete source registry is available through the linked research API; the additional research_catalog MCP tool awaits deployment approval. Financial authority: none.",
       "tags": [
         "China economy",
         "economic revisions",
@@ -355,8 +355,7 @@
         "get_newsroom",
         "query_economic_observations",
         "whats_happening",
-        "gfw_reading",
-        "research_catalog"
+        "gfw_reading"
       ],
       "protocolVersions": [
         "2025-06-18",
@@ -380,7 +379,10 @@
         "observationManifest": "https://palimpsest.info/readings/china-econ-observations-latest.json",
         "financialAuthority": "none",
         "access": "public-read-only",
-        "publicToolCount": 7,
+        "publicToolCount": 6,
+        "pendingTool": "research_catalog",
+        "pendingToolsState": "owner-approval-required",
+        "pendingToolsSourceCommit": "b488092a45bf831fc2b2a4111eacc9e562c7f574",
         "publicPromptCount": 4,
         "publicResourceCount": 1,
         "mcpServerName": "io.github.beepboop2025/palimpsest",
@@ -402,7 +404,7 @@
         "quickstart": "https://palimpsest.info/developers.html",
         "productCard": "https://palimpsest.info/product-card.json",
         "deploymentPublicToolCount": 6,
-        "inventoryScope": "Hosted source contract; dated deployment receipts below retain their original inventory.",
+        "inventoryScope": "Hosted six-tool inventory and dated deployment receipts agree; research_catalog is prepared and awaits owner approval.",
         "sourceRegistry": "https://www.palimpsest.info/readings/research-catalog-latest.json"
       }
     },

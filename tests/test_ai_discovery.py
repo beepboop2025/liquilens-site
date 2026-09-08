@@ -513,7 +513,6 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
         "query_economic_observations",
         "whats_happening",
         "gfw_reading",
-        "research_catalog",
     ]
     assert palimpsest["protocolVersions"] == ["2025-06-18", "2025-03-26"]
     assert palimpsest["prompts"] == [
@@ -551,7 +550,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
             "productCard",
         )
     } == {
-        "publicToolCount": 7,
+        "publicToolCount": 6,
         "publicPromptCount": 4,
         "publicResourceCount": 1,
         "mcpServerName": "io.github.beepboop2025/palimpsest",
