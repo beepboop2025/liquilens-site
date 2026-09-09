@@ -329,7 +329,7 @@ def test_seiche_routes_and_release_count_do_not_regress():
     developers = read("developers/index.html")
     status = read("status/index.html")
     seiche_row = next(
-        line for line in status.splitlines() if "Seiche 0.12.4" in line
+        line for line in status.splitlines() if "hosted MCP 0.12.5" in line
     )
 
     assert "https://seiche.info/use-cases" in use_cases

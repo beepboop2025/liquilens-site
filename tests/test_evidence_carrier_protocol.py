@@ -67,7 +67,7 @@ EXPECTED_CHANNELS = {
     "official-mcp-registry": (
         "live",
         "https://registry.modelcontextprotocol.io/v0.1/servers/"
-        "io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.20.0",
+        "io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.20.1",
     ),
     "agent-skill": (
         "live",
@@ -97,8 +97,8 @@ EXPECTED_CHANNELS = {
     "uvx-immutable-wheel": (
         "live",
         "https://github.com/beepboop2025/liquilens-evidence-carrier/releases/"
-        "download/v0.20.0/liquilens_evidence-0.20.0-py3-none-any.whl"
-        "#sha256=d864af722153f66a5cad5855ce00fb70809a4a078d7d972a75ce714ebbdf57cc",
+        "download/v0.20.1/liquilens_evidence-0.20.1-py3-none-any.whl"
+        "#sha256=fcf11829842de317abf42be9cbfe19bdd138dad99e5ac60476f87048da1f9768",
     ),
     "homebrew": (
         "live",
@@ -192,16 +192,16 @@ def test_machine_catalog_routes_every_contract_without_authority_widening():
         "https://github.com/beepboop2025/liquilens-evidence-carrier"
     )
     assert catalog["releaseCommit"] == (
-        "bfe665431c0c2203e71d1a5e9c7ba57095320585"
+        "6f9077bf0879a76db7b9bf98fb37839f7755dd9f"
     )
     assert catalog["releaseTagObject"] == (
-        "51cbb4645bbd603f38be65f23d8c03a4b9d30272"
+        "6e00524ab201c87dd87273c8c205f82912c1b80f"
     )
     assert catalog["pythonDistributionSha256"] == (
-        "d864af722153f66a5cad5855ce00fb70809a4a078d7d972a75ce714ebbdf57cc"
+        "fcf11829842de317abf42be9cbfe19bdd138dad99e5ac60476f87048da1f9768"
     )
     assert catalog["mcpBundleSha256"] == (
-        "1c740167183cba7ad39862ee749f497930f43cfd27b1362d703c81e71d5b2d6f"
+        "09b25571f61f4ba2bd5e1c367a580355a6e08eccf0d1c34bdde0bbd460be0ed6"
     )
     assert catalog["browserVerifier"] == (
         "https://beepboop2025.github.io/liquilens-evidence-carrier/"
@@ -464,7 +464,7 @@ def test_protocol_page_has_accessible_matrix_and_conservative_json_ld():
     assert match
     structured = json.loads(match.group(1))
     assert structured["@type"] == "SoftwareSourceCode"
-    assert structured["version"] == "0.20.0"
+    assert structured["version"] == "0.20.1"
     assert structured["codeRepository"] == (
         "https://github.com/beepboop2025/liquilens-evidence-carrier"
     )
