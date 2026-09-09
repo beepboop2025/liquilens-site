@@ -11,6 +11,45 @@ import publish
 
 
 class BoundaryTests(unittest.TestCase):
+    def test_uploaded_version_retries_only_metadata_visibility(self):
+        from unittest.mock import Mock
+        api = Mock()
+        api.request.side_effect = [publish.CloudflareAPIError("GET", "/versions/id", 404),
+                                   {"id": "candidate"}]
+        with patch.object(publish.time, "sleep") as sleep:
+            self.assertEqual(publish.uploaded_version(api, "candidate"), {"id": "candidate"})
+        self.assertEqual(api.request.call_count, 2)
+        self.assertEqual(sleep.call_count, 1)
+        self.assertTrue(all(call.args == ("/versions/candidate",) for call in api.request.call_args_list))
+
+    def test_uploaded_version_authorization_error_is_not_retried(self):
+        from unittest.mock import Mock
+        api = Mock()
+        api.request.side_effect = publish.CloudflareAPIError("GET", "/versions/id", 403)
+        with patch.object(publish.time, "sleep") as sleep:
+            with self.assertRaises(publish.CloudflareAPIError):
+                publish.uploaded_version(api, "candidate")
+        self.assertEqual(api.request.call_count, 1)
+        sleep.assert_not_called()
+
+    def test_uploaded_version_missing_forever_has_bounded_attempts(self):
+        from unittest.mock import Mock
+        api = Mock()
+        api.request.side_effect = publish.CloudflareAPIError("GET", "/versions/id", 404)
+        with patch.object(publish.time, "sleep"):
+            with self.assertRaises(publish.CloudflareAPIError):
+                publish.uploaded_version(api, "candidate")
+        self.assertEqual(api.request.call_count, 18)
+
+    def test_uploaded_version_read_obeys_total_deadline(self):
+        from unittest.mock import Mock
+        api = Mock()
+        api.request.side_effect = publish.CloudflareAPIError("GET", "/versions/id", 404)
+        with patch.object(publish.time, "monotonic", side_effect=[0, 1, 91]):
+            with self.assertRaisesRegex(RuntimeError, "visibility deadline exceeded"):
+                publish.uploaded_version(api, "candidate")
+        self.assertEqual(api.request.call_count, 1)
+
     def test_builder_environment_drops_publishing_credentials(self):
         with patch.dict(os.environ, {"CLOUDFLARE_API_TOKEN": "private-sentinel",
                                      "GITHUB_TOKEN": "private-sentinel"}):

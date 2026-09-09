@@ -41,6 +41,9 @@ including when an unchanged catalog would otherwise pass. Zero-traffic staging
 allows up to 24 attempts at five-second intervals within a 150-second total
 network budget for deployment propagation. Post-promotion checks require the
 candidate ID without an override, proving that ordinary traffic reached it.
+An uploaded version's metadata read retries only HTTP 404, with at most 18 reads
+inside 90 seconds. The upload is never retried by this check; authorization
+errors and invalid metadata remain immediate failures before traffic changes.
 
 Service credential updates do not authorize source changes. Keep the API token
 only on this validation service; application and PR CI must have no copy.

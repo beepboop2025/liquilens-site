@@ -78,12 +78,18 @@ def multipart(module, source):
     return body, "multipart/form-data; boundary=" + boundary
 
 
+class CloudflareAPIError(RuntimeError):
+    def __init__(self, method, path, status):
+        self.status = status
+        super().__init__(f"Cloudflare {method} {path}: HTTP {status}")
+
+
 class Cloudflare:
     def __init__(self, token):
         require(bool(token), "CLOUDFLARE_API_TOKEN is required for apply")
         self.token = token
 
-    def request(self, path, method="GET", body=None, content_type="application/json"):
+    def request(self, path, method="GET", body=None, content_type="application/json", timeout=90):
         require(re.fullmatch(r"/(?:versions(?:/" + UUID + r"|\?bindings_inherit=strict)?|deployments)", path),
                 "Unsupported Cloudflare operation")
         request = urllib.request.Request(
@@ -93,10 +99,10 @@ class Cloudflare:
                      "User-Agent": "railway-liquilens-catalog-publisher/1"},
         )
         try:
-            with urllib.request.build_opener(NoRedirect()).open(request, timeout=90) as response:
+            with urllib.request.build_opener(NoRedirect()).open(request, timeout=timeout) as response:
                 data = response.read(4 * 1024 * 1024 + 1)
         except urllib.error.HTTPError as error:
-            raise RuntimeError(f"Cloudflare {method} {path}: HTTP {error.code}") from None
+            raise CloudflareAPIError(method, path, error.code) from None
         require(len(data) <= 4 * 1024 * 1024, "Cloudflare response exceeds bound")
         result = json.loads(data)
         require(result.get("success") is True, "Cloudflare operation did not succeed")
@@ -116,6 +122,23 @@ class Cloudflare:
                 {"version_id": version, "percentage": percentage} for version, percentage in versions],
             "annotations": {"workers/message": message},
         }).encode())
+
+
+def uploaded_version(api, candidate):
+    """Allow read-after-upload propagation without repeating the upload."""
+    deadline = time.monotonic() + 90
+    for attempt in range(1, 19):
+        remaining = deadline - time.monotonic()
+        require(remaining > 0, "Uploaded version metadata visibility deadline exceeded")
+        try:
+            return api.request("/versions/" + candidate, timeout=min(20, remaining))
+        except CloudflareAPIError as error:
+            if error.status != 404 or attempt == 18:
+                raise
+        remaining = deadline - time.monotonic()
+        require(remaining > 0, "Uploaded version metadata visibility deadline exceeded")
+        print(f"Uploaded version {candidate} not visible yet; read attempt {attempt}/18", flush=True)
+        time.sleep(min(5, remaining))
 
 
 def stable_version(deployment):
@@ -264,7 +287,7 @@ def execute(source, apply, evidence):
         body, content_type = multipart(module, source)
         candidate = api.request("/versions?bindings_inherit=strict", "POST", body, content_type)["id"]
         require(re.fullmatch(UUID, candidate), "Invalid uploaded version ID")
-        version = api.request("/versions/" + candidate)
+        version = uploaded_version(api, candidate)
         annotations = version.get("annotations", {})
         require(version.get("id") == candidate and annotations.get("workers/tag") == source
                 and annotations.get("workers/message") == "Railway-" + source,
