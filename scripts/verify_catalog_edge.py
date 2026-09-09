@@ -57,6 +57,9 @@ PAGES_RELEASE_EVIDENCE_PATHS = tuple(
         "e818c33feaf5f8081cbfc5807aced0cd50d8952f",
     )
     for name in ("receipt.json", "receipt.json.sig", "release-manifest.json")
+) + tuple(
+    "protocol/release-evidence/palimpsest/8288940062498d5e3fd60cb232cb589b3cb3b97e/" + name
+    for name in ("host-receipt.json", "host-receipt.json.sig")
 )
 DEFAULT_URL = "https://liquilens.in/.well-known/ai-catalog.json"
 DEFAULT_API_CATALOG_URL = "https://liquilens.in/.well-known/api-catalog"
@@ -1117,6 +1120,16 @@ def _validate_palimpsest_live_agreement(
             metadata.get(field),
             f"live catalog {field}",
         )
+    if "research_catalog" in card.get("capabilities", []):
+        for field in (
+            "nativeDeploymentCommit", "nativeDeploymentReceipt",
+            "nativeDeploymentReceiptSha256", "nativeDeploymentSignature",
+            "nativeDeploymentSignatureSha256", "nativeRuntimeSha256",
+            "nativeManifestSha256",
+        ):
+            if not isinstance(metadata.get(field), str) or not metadata[field]:
+                raise RuntimeError(f"Palimpsest seven-tool inventory has no {field}")
+            _require_equal(live_metadata.get(field), metadata[field], f"live catalog {field}")
 
     registry_server = live_registry.get("server", {})
     _require_equal(registry_server.get("name"), server_name, "live Registry name")
@@ -1395,6 +1408,101 @@ def _validate_palimpsest_rights_resource(
         )
 
 
+def _validate_palimpsest_research_catalog(result: dict[str, Any]) -> None:
+    if result.get("isError") is not False:
+        raise RuntimeError("Palimpsest research_catalog did not succeed")
+    body = result.get("structuredContent")
+    if not isinstance(body, dict):
+        raise RuntimeError("Palimpsest research_catalog has no structured metadata")
+    if set(body) != {
+        "schema", "generated_at", "source_url", "metadata_only", "offset", "total",
+        "returned", "next_offset", "datasets", "truncated", "seiche", "boundary",
+    }:
+        raise RuntimeError("Palimpsest research catalog exceeds metadata-only fields")
+    if not isinstance(body.get("generated_at"), str) or not body["generated_at"]:
+        raise RuntimeError("Palimpsest research catalog has no generation clock")
+    if body.get("truncated") != {}:
+        raise RuntimeError("Palimpsest research probe metadata was truncated")
+    contents = result.get("content")
+    if not isinstance(contents, list) or len(contents) != 1 or not isinstance(contents[0], dict):
+        raise RuntimeError("Palimpsest research_catalog has no singular text result")
+    content = contents[0]
+    if content.get("type") != "text" or not isinstance(content.get("text"), str):
+        raise RuntimeError("Palimpsest research_catalog has invalid text content")
+    _require_equal(json.loads(content["text"]), body, "Palimpsest research_catalog text/structured data")
+    _require_equal(body.get("schema"), "palimpsest.research-catalog.v1", "Palimpsest research schema")
+    if body.get("metadata_only") is not True:
+        raise RuntimeError("Palimpsest research metadata-only boundary differs")
+    _require_equal(body.get("source_url"),
+                   "https://www.palimpsest.info/readings/research-catalog-latest.json",
+                   "Palimpsest research source")
+    for field in ("offset", "returned", "total"):
+        if type(body.get(field)) is not int:
+            raise RuntimeError(f"Palimpsest research {field} is not an integer")
+    if body["offset"] != 0 or not 1 <= body["total"] <= 1000:
+        raise RuntimeError("Palimpsest research first page has invalid bounds")
+    rows = body.get("datasets")
+    if not isinstance(rows, list) or body["returned"] != len(rows) or len(rows) != min(3, body["total"]):
+        raise RuntimeError("Palimpsest research returned count differs")
+    _require_equal(body.get("next_offset"), 3 if body["total"] > 3 else None,
+                   "Palimpsest research next page")
+    expected_fields = {
+        "id", "name", "description", "layer", "cadence", "geography", "sources",
+        "artifacts", "license", "urls", "values_included",
+    }
+    identities = []
+    for row in rows:
+        if not isinstance(row, dict) or set(row) != expected_fields or row.get("values_included") is not False:
+            raise RuntimeError("Palimpsest research dataset exceeds metadata-only fields")
+        if not isinstance(row.get("id"), str) or not row["id"]:
+            raise RuntimeError("Palimpsest research dataset has no identity")
+        identities.append(row["id"])
+        for field in ("name", "description", "layer", "cadence"):
+            if row[field] is not None and not isinstance(row[field], str):
+                raise RuntimeError("Palimpsest research dataset " + field + " is not text metadata")
+        for field in ("geography", "sources"):
+            value = row[field]
+            if value is not None and (not isinstance(value, list) or
+                                      not all(isinstance(item, str) for item in value)):
+                raise RuntimeError("Palimpsest research dataset " + field + " is not a string list")
+        for field, keys in (
+            ("artifacts", {"evidence_state", "observed_at"}),
+            ("license", {"name", "url"}),
+            ("urls", {"latest", "landing_page", "method"}),
+        ):
+            if not isinstance(row.get(field), dict) or set(row[field]) != keys:
+                raise RuntimeError("Palimpsest research dataset " + field + " fields differ")
+        for field in ("license", "urls"):
+            if not all(value is None or isinstance(value, str) for value in row[field].values()):
+                raise RuntimeError("Palimpsest research dataset " + field + " is not text metadata")
+        # The producer deliberately does not read observations. A generation
+        # clock therefore cannot establish fresh source values or an as-of date.
+        if (row["artifacts"]["evidence_state"] not in ("unknown", "gated") or
+                row["artifacts"]["observed_at"] is not None):
+            raise RuntimeError("Palimpsest research dataset invents observation freshness")
+        if row["artifacts"]["evidence_state"] == "gated" and row["urls"]["latest"] is not None:
+            raise RuntimeError("Palimpsest research gated dataset exposes a value URL")
+    if len(set(identities)) != len(identities):
+        raise RuntimeError("Palimpsest research dataset identities are duplicated")
+    _require_equal(body.get("seiche"), {
+        "site": "https://seiche.info/#RESEARCH",
+        "api": "https://api.seiche.info/api/v2/research-network",
+        "mcp": "https://api.seiche.info/mcp", "tool": "research_network",
+        "arguments": {"topic": "all"},
+    }, "Palimpsest research Seiche handoff")
+    if not isinstance(body.get("boundary"), str) or not body["boundary"]:
+        raise RuntimeError("Palimpsest research catalog has no authority boundary")
+
+
+def _verify_palimpsest_research_catalog(endpoint: str) -> None:
+    request_id = "palimpsest-research-catalog"
+    response, _ = _mcp_request(endpoint, {
+        "jsonrpc": "2.0", "id": request_id, "method": "tools/call",
+        "params": {"name": "research_catalog", "arguments": {"offset": 0, "limit": 3}},
+    })
+    _validate_palimpsest_research_catalog(_require_result(response, request_id))
+
+
 def _verify_palimpsest_release(
     *,
     ai_catalog: dict[str, Any],
@@ -1471,6 +1579,13 @@ def _verify_palimpsest_release(
         },
     )
     initialized = _require_result(initialize, "palimpsest-initialize")
+    native_proof = ""
+    if "research_catalog" in card.get("capabilities", []) or metadata.get("publicToolCount") != 6:
+        try:
+            from .verify_palimpsest_release import verify_release
+        except ImportError:
+            from verify_palimpsest_release import verify_release
+        native_proof = "; " + verify_release(card, live_registry.get("server", {}), ROOT, _fetch_bytes)
     _validate_palimpsest_live_agreement(
         card,
         live_catalog,
@@ -1486,11 +1601,13 @@ def _verify_palimpsest_release(
     )
     rights_result = _palimpsest_rights_resource(endpoint, PALIMPSEST_RIGHTS_URI)
     _validate_palimpsest_rights_resource(rights_result, PALIMPSEST_RIGHTS_URI)
+    if "research_catalog" in card.get("capabilities", []):
+        _verify_palimpsest_research_catalog(endpoint)
     return (
         "Palimpsest receipts match exact bytes, source/version/run identity, "
         "RFC 9727 metadata targets, Registry latest, live MCP initialize, and "
-        "the exact 6-tool/4-prompt/1-resource inventory with fail-closed "
-        "publication-rights semantics"
+        f"the exact {len(card['capabilities'])}-tool/4-prompt/1-resource inventory "
+        "with fail-closed publication-rights semantics" + native_proof
     )
 
 

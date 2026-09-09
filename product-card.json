@@ -243,7 +243,7 @@
         "2025-06-18",
         "2025-03-26"
       ],
-      "public_tools": 6,
+      "public_tools": 7,
       "public_prompts": 4,
       "public_resources": 1,
       "deployment_commit": "1b71dd2bb2dcdec0b99691f7d4caaa13c4857574",
@@ -253,7 +253,16 @@
       "registry_receipt_sha256": "sha256:d9f153a99b52b686995e22e378fcd1383335d0f74c175932d4dfd6d70147b4f5",
       "registry_snapshot": "https://palimpsest.info/.well-known/receipts/mcp-registry-latest-1.9.3.json",
       "registry_snapshot_sha256": "sha256:b242bf50ef87441222ac2b3b9103b99d4fad44d52dd5b119a500ee13d4508287",
-      "live_version_authority": "Initialize the linked MCP remote and compare serverInfo.version before treating a release as deployed."
+      "live_version_authority": "Initialize the linked MCP remote and compare serverInfo.version before treating a release as deployed.",
+      "historical_deployment_public_tools": 6,
+      "native_deployment_commit": "8288940062498d5e3fd60cb232cb589b3cb3b97e",
+      "native_deployment_receipt": "https://liquilens.in/protocol/release-evidence/palimpsest/8288940062498d5e3fd60cb232cb589b3cb3b97e/host-receipt.json",
+      "native_deployment_receipt_sha256": "sha256:baa8532e6c788e543fe276af909c481222ddb8ea60d48eef8dd303a0592b82c8",
+      "native_deployment_signature": "https://liquilens.in/protocol/release-evidence/palimpsest/8288940062498d5e3fd60cb232cb589b3cb3b97e/host-receipt.json.sig",
+      "native_deployment_signature_sha256": "sha256:5976efbdff72fd061ee25022b09e337717a62c0dfcc8af29e65e1034282d1449",
+      "native_runtime_sha256": "sha256:275fc2b8f6a411a7be486467bfb8fd40ff7a455740343569271a8723a3a2c8a1",
+      "native_manifest_sha256": "sha256:be115e404655aaf00b2b935881296d59809093fb5aa526317ca3aa1c7a8a8820",
+      "native_runtime_provenance": "Host-attested deployed source and module digest; public MCP inventory and behavior are independently checked. Publication-rights source clocks describe data, not the runtime."
     }
   ],
   "citation": "LiquiLens. Bank and lender failure early-warning research system. https://liquilens.in/ (cite the specific validation or API response and its as-of date for quantitative claims)."

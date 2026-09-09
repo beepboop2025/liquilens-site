@@ -195,7 +195,7 @@ Palimpsest, Evidence Signal, and NarcoScope are free public goods. They observe 
 
 - Funding page: https://palimpsest.info/fund.html
 - Evidence Signal: https://t.me/EvidenceSignalDesk
-- Palimpsest 1.9.3: https://palimpsest.info/ — six anonymous public read-only MCP tools, four visible prompts and one metadata-only publication-rights resource at https://api.seiche.info/palimpsest/mcp. The catalog publishes exact deployment and official MCP Registry receipt URLs and hashes; initialize the remote and compare serverInfo.version for live authority: https://palimpsest.info/.well-known/ai-catalog.json. Rights-denied economic evidence stays explicitly unavailable and cannot become a zero, neutral, healthy or directional result.
+- Palimpsest 1.9.3: https://palimpsest.info/ — seven anonymous public read-only MCP tools, four visible prompts and one metadata-only publication-rights resource at https://api.seiche.info/palimpsest/mcp. research_catalog pages the complete source registry and supplies a separate Seiche research handoff. A signed native host receipt binds the deployed source and runtime module; the original six-tool deployment receipts and unchanged official MCP Registry 1.9.3 manifest remain historical evidence. Initialize the remote and inspect tools/list for current version and inventory: https://palimpsest.info/.well-known/ai-catalog.json. Rights-denied economic evidence stays explicitly unavailable and cannot become a zero, neutral, healthy or directional result.
 - NarcoScope: https://narcoscope.com/
 
 ## Citation
