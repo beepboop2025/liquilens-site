@@ -305,7 +305,7 @@ def test_mcp_card_and_nested_product_line_are_current():
     for tool in ("crypto_regime_board", "stablecoin_rails_board",
                  "crypto_exposure_board"):
         assert tool in mcp["capabilities"]
-    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.12.4"
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.12.5"
     assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.10.0"
     assert entries["urn:air:liquilens.in:openapi:failure-radar"]["version"] == (
         "1.0.0")
@@ -331,8 +331,8 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
     entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
     seiche = entries["urn:air:liquilens.in:catalog:seiche"]
 
-    assert seiche["version"] == "0.12.4"
-    assert seiche["updatedAt"] == "2026-09-08T20:31:23Z"
+    assert seiche["version"] == "0.12.5"
+    assert seiche["updatedAt"] == "2026-09-09T02:52:54Z"
     assert seiche["capabilities"] == [
         "latest_article",
         "funding_stress_now",
@@ -355,11 +355,11 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
         "cross_market_cash_pressure",
     ]
     assert seiche["resourceTemplates"] == []
-    assert seiche["metadata"]["releasePublicToolCount"] == 12
-    assert "dated package" in seiche["metadata"]["inventoryScope"]
-    assert seiche["metadata"]["distributionState"] == "verified-recovery-deferred"
-    assert seiche["metadata"]["recoveryState"] == "deferred"
-    assert seiche["metadata"]["recoveryAccepted"] is False
+    assert seiche["metadata"]["releasePublicToolCount"] == 13
+    assert "package inventories agree" in seiche["metadata"]["inventoryScope"]
+    assert seiche["metadata"]["distributionState"] == "verified"
+    assert seiche["metadata"]["recoveryState"] == "verified"
+    assert seiche["metadata"]["recoveryAccepted"] is True
     assert seiche["metadata"]["fullReleaseAccepted"] is False
     assert {
         key: seiche["metadata"][key]
@@ -404,44 +404,44 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
         "apiCatalog": "https://api.seiche.info/api",
         "openapi": "https://api.seiche.info/api/openapi.json",
         "productCard": "https://seiche.info/product-card.json",
-        "pypiProject": "https://pypi.org/project/seiche/0.12.4/",
-        "pypiSpec": "seiche==0.12.4",
-        "releaseCommit": "d6d1dc1ce7f02d1155615ba1236f479d983d03b1",
-        "signedTag": "v0.12.4",
-        "signedTagObject": "9e72d473aa69579a0daa279e2ebe66a1d986a285",
+        "pypiProject": "https://pypi.org/project/seiche/0.12.5/",
+        "pypiSpec": "seiche==0.12.5",
+        "releaseCommit": "7964775f88759fe82a37dbf8d4886d2bf15369b2",
+        "signedTag": "v0.12.5",
+        "signedTagObject": "5004487dcd1f506f242c53ca7a50f9cc184441f8",
         "pypiRun": (
-            "https://github.com/beepboop2025/seiche/actions/runs/33998139045/attempts/1"
+            "https://github.com/beepboop2025/seiche/actions/runs/34303479605/attempts/1"
         ),
         "pypiWheelSha256": (
-            "sha256:724ba92bf8cfa05d2fd327f4cf44b4b48cd2e12d37c6cbe4f8e1ea832e19ae16"
+            "sha256:813ae982701cc1ad78593f4af6a4f76ca3ed02225192c86239e61b1890620290"
         ),
-        "pypiWheelBytes": 1264356,
+        "pypiWheelBytes": 1270715,
         "pypiSdistSha256": (
-            "sha256:40c6242ee33eee1d028bdc8496a74fcb59b9c05d2a36f2f7a6beb1e4ecddd1da"
+            "sha256:0d837e9304f31697a0861b20271b375d17329792b19da6e4b9b129da9f32d3cd"
         ),
-        "pypiSdistBytes": 1137843,
+        "pypiSdistBytes": 1143581,
         "staticRun": (
-            "https://github.com/beepboop2025/seiche/actions/runs/33998436326/attempts/1"
+            "https://railway.com/project/9c094747-8662-4ba7-8d6b-5a4fa7ca27eb/service/5b9d50fb-2bd6-4727-bccd-678c610e32f7?id=2eb73a65-48e6-431c-a4b4-9eab82815511"
         ),
-        "staticDeployment": "https://2a1a18b2.seiche.pages.dev",
+        "staticDeployment": "https://04825dda.seiche.pages.dev",
         "catalogSha256": (
-            "sha256:c77a8b509b6b056de92c6e3359b0ca067156bfa14ee9ec43d6e724b8d8ff80ae"
+            "sha256:46b965c08184ec92138e7e97fabe0c4e101d124d524c1055eefb499401440f1b"
         ),
         "productCardSha256": (
-            "sha256:fc66283d0967c114f454fd118c7ee3318d1f6dfded49d1653152e5285ded8591"
+            "sha256:d26fd5a35a712aa1e025510cd13c2dfda4d2cd55ce155ecea20773449393fe5a"
         ),
         "mcpDiscoverySha256": (
-            "sha256:f849a3812f82cab302220e5729c7d47ee937fc83b1a8dfbf5f0482f85d7d3fa4"
+            "sha256:914cbf6eda67dba781be0b91f3a8073f9f463eeef598531ddedfe8adec8a6da2"
         ),
         "registryRun": (
-            "https://github.com/beepboop2025/seiche/actions/runs/33998325936/attempts/1"
+            "https://github.com/beepboop2025/seiche/actions/runs/34303803101/attempts/1"
         ),
         "registryVersion": (
-            "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.12.4"
+            "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.12.5"
         ),
-        "registryPublishedAt": "2026-09-05T23:19:07.960215Z",
+        "registryPublishedAt": "2026-09-09T02:35:38.88733Z",
         "registryServerSha256": (
-            "sha256:6a1bcf723ce109dc948079ac92b59538d16f963f1b6229cb42d7ecd7511720b1"
+            "sha256:11280728f5da5c71235a9596fc2624c574045e55295cf05996898ed2b9093aef"
         ),
         "liveVersionAuthority": (
             "Initialize the linked MCP remote and compare serverInfo.version "
@@ -604,9 +604,9 @@ def test_sibling_product_cards_match_the_catalog_contracts():
         for sibling in json.loads(read("product-card.json"))["siblings"]
     }
     seiche = siblings["Seiche"]
-    assert seiche["distribution_state"] == "verified-recovery-deferred"
-    assert seiche["recovery_state"] == "deferred"
-    assert seiche["recovery_accepted"] is False
+    assert seiche["distribution_state"] == "verified"
+    assert seiche["recovery_state"] == "verified"
+    assert seiche["recovery_accepted"] is True
     assert seiche["full_release_accepted"] is False
     assert {
         key: seiche[key]
@@ -640,45 +640,45 @@ def test_sibling_product_cards_match_the_catalog_contracts():
             "live_version_authority",
         )
     } == {
-        "version": "0.12.4",
+        "version": "0.12.5",
         "ai_catalog": "https://seiche.info/.well-known/ai-catalog.json",
         "ai_catalog_sha256": (
-            "sha256:c77a8b509b6b056de92c6e3359b0ca067156bfa14ee9ec43d6e724b8d8ff80ae"
+            "sha256:46b965c08184ec92138e7e97fabe0c4e101d124d524c1055eefb499401440f1b"
         ),
         "product_card": "https://seiche.info/product-card.json",
         "product_card_sha256": (
-            "sha256:fc66283d0967c114f454fd118c7ee3318d1f6dfded49d1653152e5285ded8591"
+            "sha256:d26fd5a35a712aa1e025510cd13c2dfda4d2cd55ce155ecea20773449393fe5a"
         ),
         "mcp": "https://api.seiche.info/mcp",
         "mcp_discovery": "https://api.seiche.info/.well-known/mcp.json",
         "mcp_discovery_sha256": (
-            "sha256:f849a3812f82cab302220e5729c7d47ee937fc83b1a8dfbf5f0482f85d7d3fa4"
+            "sha256:914cbf6eda67dba781be0b91f3a8073f9f463eeef598531ddedfe8adec8a6da2"
         ),
         "mcp_server_name": "io.github.beepboop2025/seiche",
         "api_catalog": "https://api.seiche.info/api",
         "openapi": "https://api.seiche.info/api/openapi.json",
-        "public_tools": 12,
+        "public_tools": 13,
         "public_prompts": 4,
         "public_resources": 0,
-        "pypi": "https://pypi.org/project/seiche/0.12.4/",
-        "pypi_spec": "seiche==0.12.4",
+        "pypi": "https://pypi.org/project/seiche/0.12.5/",
+        "pypi_spec": "seiche==0.12.5",
         "pypi_wheel_sha256": (
-            "sha256:724ba92bf8cfa05d2fd327f4cf44b4b48cd2e12d37c6cbe4f8e1ea832e19ae16"
+            "sha256:813ae982701cc1ad78593f4af6a4f76ca3ed02225192c86239e61b1890620290"
         ),
-        "pypi_wheel_bytes": 1264356,
+        "pypi_wheel_bytes": 1270715,
         "pypi_sdist_sha256": (
-            "sha256:40c6242ee33eee1d028bdc8496a74fcb59b9c05d2a36f2f7a6beb1e4ecddd1da"
+            "sha256:0d837e9304f31697a0861b20271b375d17329792b19da6e4b9b129da9f32d3cd"
         ),
-        "pypi_sdist_bytes": 1137843,
-        "signed_tag": "v0.12.4",
-        "signed_tag_object": "9e72d473aa69579a0daa279e2ebe66a1d986a285",
-        "release_commit": "d6d1dc1ce7f02d1155615ba1236f479d983d03b1",
-        "static_deployment": "https://2a1a18b2.seiche.pages.dev",
+        "pypi_sdist_bytes": 1143581,
+        "signed_tag": "v0.12.5",
+        "signed_tag_object": "5004487dcd1f506f242c53ca7a50f9cc184441f8",
+        "release_commit": "7964775f88759fe82a37dbf8d4886d2bf15369b2",
+        "static_deployment": "https://04825dda.seiche.pages.dev",
         "registry_version": (
-            "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.12.4"
+            "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.12.5"
         ),
         "registry_server_sha256": (
-            "sha256:6a1bcf723ce109dc948079ac92b59538d16f963f1b6229cb42d7ecd7511720b1"
+            "sha256:11280728f5da5c71235a9596fc2624c574045e55295cf05996898ed2b9093aef"
         ),
         "live_version_authority": (
             "Initialize the linked MCP remote and compare serverInfo.version "
@@ -734,11 +734,11 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     status = read("status/index.html")
     assert "Release contract · 9 September 2026" in status
     assert "hosted MCP 0.12.5" in status
-    assert "API LIVE / RELEASE PENDING" in status
-    assert "The 0.12.5 package and full release acceptance remain pending" in status
-    assert "13 public read-only tools, 4 prompts and 0 resources" in status
-    assert "12 public read-only MCP tools" in status
-    assert "0.12.4 signed tag, exact PyPI artifacts, static catalog" in status
+    assert "LIVE / ARCHIVE PENDING" in status
+    assert "Portable export, isolated restore, immutable offsite receipts and strict recovery monitoring passed" in status
+    assert "13 public read-only MCP tools, 4 prompts and 0 resources" in status
+    assert "13 public read-only MCP tools" in status
+    assert "signed tag, exact PyPI artifacts, static catalog" in status
     assert "Undertow 1.10.0" in status
     assert "11 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
     assert "Palimpsest 1.9.3" in status

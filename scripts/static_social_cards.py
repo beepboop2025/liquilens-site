@@ -246,7 +246,7 @@ ROUTES = (
         "/world-economy/", "world-economy", "LIQUIDITY LAB / WORLD ECONOMY",
         "FOUR INDEPENDENT EVIDENCE LAYERS", "Route the claim; do not blend unlike signals into one house score.",
         "CLAIM ROUTER", "FUNDING / BANKS / EXITS / REVISIONS",
-        "SEICHE / LIQUILENS / UNDERTOW / PALIMPSEST", "CATALOG CUT", "2026-09-05",
+        "SEICHE / LIQUILENS / UNDERTOW / PALIMPSEST", "CATALOG CUT", "2026-09-09",
         "NO BLENDED SCORE", "EVIDENCE CATALOG", "CATALOG",
         signature_file="world-economy/evidence-catalog.json",
     ),
