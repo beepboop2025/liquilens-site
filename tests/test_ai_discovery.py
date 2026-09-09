@@ -505,8 +505,9 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
     assert palimpsest["metadata"]["deploymentPublicToolCount"] == 6
     assert "dated deployment" in palimpsest["metadata"]["inventoryScope"]
     assert palimpsest["version"] == "1.9.3"
-    assert palimpsest["updatedAt"] == "2026-09-08T20:31:23Z"
+    assert palimpsest["updatedAt"] == "2026-09-09T05:06:33Z"
     assert palimpsest["capabilities"] == [
+        "research_catalog",
         "list_signals",
         "get_signal",
         "get_newsroom",
@@ -550,7 +551,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
             "productCard",
         )
     } == {
-        "publicToolCount": 6,
+        "publicToolCount": 7,
         "publicPromptCount": 4,
         "publicResourceCount": 1,
         "mcpServerName": "io.github.beepboop2025/palimpsest",
@@ -718,7 +719,7 @@ def test_sibling_product_cards_match_the_catalog_contracts():
         palimpsest["public_tools"],
         palimpsest["public_prompts"],
         palimpsest["public_resources"],
-    ) == (6, 4, 1)
+    ) == (7, 4, 1)
     assert palimpsest["deployment_receipt_sha256"] == (
         "sha256:db370a46897b58d32e31561f1e664d68ea053ac38454caa58b52dd4c9ba5e834"
     )

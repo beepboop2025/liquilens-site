@@ -340,7 +340,7 @@
       "displayName": "Palimpsest Revision-Safe China Evidence",
       "type": "application/ai-catalog+json",
       "url": "https://palimpsest.info/.well-known/ai-catalog.json",
-      "description": "Independent public-good catalog with six hosted read-only tools and four prompts for revision-safe China economic observations, information conditions, release and collection clocks, provenance, coverage gates and abstentions. The complete source registry is available through the linked research API; the additional research_catalog MCP tool awaits deployment approval. Financial authority: none.",
+      "description": "Independent public-good catalog with seven hosted read-only tools and four prompts for revision-safe China economic observations, information conditions, release and collection clocks, provenance, coverage gates and abstentions. research_catalog pages the complete source registry and provides a separate Seiche research handoff. Financial authority: none.",
       "tags": [
         "China economy",
         "economic revisions",
@@ -354,6 +354,7 @@
         "Has the public information record changed or disappeared?"
       ],
       "capabilities": [
+        "research_catalog",
         "list_signals",
         "get_signal",
         "get_newsroom",
@@ -376,23 +377,20 @@
         "palimpsest://china-economic/publication-rights"
       ],
       "version": "1.9.3",
-      "updatedAt": "2026-09-08T20:31:23Z",
+      "updatedAt": "2026-09-09T05:06:33Z",
       "metadata": {
         "productUrl": "https://palimpsest.info/",
         "humanLandingPage": "https://palimpsest.info/china/",
         "observationManifest": "https://palimpsest.info/readings/china-econ-observations-latest.json",
         "financialAuthority": "none",
         "access": "public-read-only",
-        "publicToolCount": 6,
-        "pendingTool": "research_catalog",
-        "pendingToolsState": "owner-approval-required",
-        "pendingToolsSourceCommit": "b488092a45bf831fc2b2a4111eacc9e562c7f574",
+        "publicToolCount": 7,
         "publicPromptCount": 4,
         "publicResourceCount": 1,
         "mcpServerName": "io.github.beepboop2025/palimpsest",
         "mcpEndpoint": "https://api.seiche.info/palimpsest/mcp",
         "deploymentBoundary": "production-verified",
-        "deploymentNote": "This card describes the exact deployed and independently re-probed MCP 1.9.3 boundary, including native fail-closed publication-rights handling.",
+        "deploymentNote": "The original six-tool MCP 1.9.3 deployment and Registry receipts remain historical evidence. The seven-tool runtime has a separate signed native host receipt; the Registry manifest is unchanged.",
         "deploymentCommit": "1b71dd2bb2dcdec0b99691f7d4caaa13c4857574",
         "deploymentReceipt": "https://palimpsest.info/.well-known/receipts/mcp-deployment-1.9.3.json",
         "deploymentReceiptSha256": "sha256:db370a46897b58d32e31561f1e664d68ea053ac38454caa58b52dd4c9ba5e834",
@@ -408,8 +406,16 @@
         "quickstart": "https://palimpsest.info/developers.html",
         "productCard": "https://palimpsest.info/product-card.json",
         "deploymentPublicToolCount": 6,
-        "inventoryScope": "Hosted six-tool inventory and dated deployment receipts agree; research_catalog is prepared and awaits owner approval.",
-        "sourceRegistry": "https://www.palimpsest.info/readings/research-catalog-latest.json"
+        "inventoryScope": "Hosted seven-tool inventory is bound to a signed native host receipt; dated deployment receipts retain their original six-tool inventory. The Registry 1.9.3 manifest is unchanged.",
+        "sourceRegistry": "https://www.palimpsest.info/readings/research-catalog-latest.json",
+        "nativeDeploymentCommit": "8288940062498d5e3fd60cb232cb589b3cb3b97e",
+        "nativeDeploymentReceipt": "https://liquilens.in/protocol/release-evidence/palimpsest/8288940062498d5e3fd60cb232cb589b3cb3b97e/host-receipt.json",
+        "nativeDeploymentReceiptSha256": "sha256:baa8532e6c788e543fe276af909c481222ddb8ea60d48eef8dd303a0592b82c8",
+        "nativeDeploymentSignature": "https://liquilens.in/protocol/release-evidence/palimpsest/8288940062498d5e3fd60cb232cb589b3cb3b97e/host-receipt.json.sig",
+        "nativeDeploymentSignatureSha256": "sha256:5976efbdff72fd061ee25022b09e337717a62c0dfcc8af29e65e1034282d1449",
+        "nativeRuntimeSha256": "sha256:275fc2b8f6a411a7be486467bfb8fd40ff7a455740343569271a8723a3a2c8a1",
+        "nativeManifestSha256": "sha256:be115e404655aaf00b2b935881296d59809093fb5aa526317ca3aa1c7a8a8820",
+        "nativeRuntimeProvenance": "Host-attested deployed source and module digest; public MCP inventory and behavior are independently checked. Publication-rights source clocks describe data, not the runtime."
       }
     },
     {

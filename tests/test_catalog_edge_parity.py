@@ -617,6 +617,13 @@ def test_palimpsest_catalog_registry_and_initialize_must_agree():
                 "registryRun",
                 "registrySnapshot",
                 "registrySnapshotSha256",
+                "nativeDeploymentCommit",
+                "nativeDeploymentReceipt",
+                "nativeDeploymentReceiptSha256",
+                "nativeDeploymentSignature",
+                "nativeDeploymentSignatureSha256",
+                "nativeRuntimeSha256",
+                "nativeManifestSha256",
             )
         },
     }
