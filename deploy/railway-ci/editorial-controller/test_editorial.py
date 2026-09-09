@@ -60,6 +60,38 @@ class EditorialTests(unittest.TestCase):
                 editorial.validate_outputs(root, baseline, "2026-09-08")
 
     @unittest.skipUnless(os.geteuid() == 0 and os.path.exists("/proc"), "Linux root image test")
+    def test_writer_can_verify_real_signatures_without_changing_uid(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            root.chmod(0o755)
+            program = """import grp,os,pathlib,pwd,subprocess
+assert os.getuid() == os.getgid() == 65532
+assert os.getgroups() == []
+account = pwd.getpwuid(os.getuid())
+assert account.pw_gid == 65532
+assert account.pw_shell == '/usr/sbin/nologin'
+assert grp.getgrgid(65532).gr_name == account.pw_name
+scratch = pathlib.Path(os.environ['HOME'])
+key = scratch / 'test-only-key'
+subprocess.run(['ssh-keygen','-q','-t','ed25519','-N','','-f',str(key)],
+               check=True,capture_output=True)
+message = scratch / 'message'
+message.write_bytes(b'reviewed editorial receipt\\n')
+subprocess.run(['ssh-keygen','-Y','sign','-f',str(key),
+                '-n','editorial-account-test',str(message)],
+               check=True,capture_output=True)
+signers = scratch / 'allowed-signers'
+signers.write_text('test-only ' + key.with_suffix('.pub').read_text())
+verify = ['ssh-keygen','-Y','verify','-f',str(signers),'-I','test-only',
+          '-n','editorial-account-test','-s',str(message) + '.sig']
+subprocess.run(verify,input=message.read_bytes(),check=True,capture_output=True)
+assert subprocess.run(verify,input=b'tampered receipt\\n',
+                      capture_output=True).returncode != 0
+assert os.getuid() == os.getgid() == 65532
+"""
+            editorial.run_writer(root, root / "scratch", ["-c", program], {}, 20)
+
+    @unittest.skipUnless(os.geteuid() == 0 and os.path.exists("/proc"), "Linux root image test")
     def test_writer_cannot_read_publisher_key_or_inherited_descriptor(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

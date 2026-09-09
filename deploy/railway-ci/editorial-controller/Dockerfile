@@ -2,6 +2,9 @@ FROM python:3.12-slim-bookworm
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates git openssh-client procps tini \
     && rm -rf /var/lib/apt/lists/*
+RUN groupadd --gid 65532 editorial-writer \
+    && useradd --uid 65532 --gid 65532 --no-create-home --no-log-init \
+       --home-dir /nonexistent --shell /usr/sbin/nologin --password '!' editorial-writer
 WORKDIR /controller
 COPY requirements-ci.txt .
 RUN python -m pip install --disable-pip-version-check --no-cache-dir \
