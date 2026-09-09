@@ -1414,6 +1414,15 @@ def _validate_palimpsest_research_catalog(result: dict[str, Any]) -> None:
     body = result.get("structuredContent")
     if not isinstance(body, dict):
         raise RuntimeError("Palimpsest research_catalog has no structured metadata")
+    if set(body) != {
+        "schema", "generated_at", "source_url", "metadata_only", "offset", "total",
+        "returned", "next_offset", "datasets", "truncated", "seiche", "boundary",
+    }:
+        raise RuntimeError("Palimpsest research catalog exceeds metadata-only fields")
+    if not isinstance(body.get("generated_at"), str) or not body["generated_at"]:
+        raise RuntimeError("Palimpsest research catalog has no generation clock")
+    if body.get("truncated") != {}:
+        raise RuntimeError("Palimpsest research probe metadata was truncated")
     contents = result.get("content")
     if not isinstance(contents, list) or len(contents) != 1 or not isinstance(contents[0], dict):
         raise RuntimeError("Palimpsest research_catalog has no singular text result")
@@ -1448,6 +1457,14 @@ def _validate_palimpsest_research_catalog(result: dict[str, Any]) -> None:
         if not isinstance(row.get("id"), str) or not row["id"]:
             raise RuntimeError("Palimpsest research dataset has no identity")
         identities.append(row["id"])
+        for field in ("name", "description", "layer", "cadence"):
+            if row[field] is not None and not isinstance(row[field], str):
+                raise RuntimeError("Palimpsest research dataset " + field + " is not text metadata")
+        for field in ("geography", "sources"):
+            value = row[field]
+            if value is not None and (not isinstance(value, list) or
+                                      not all(isinstance(item, str) for item in value)):
+                raise RuntimeError("Palimpsest research dataset " + field + " is not a string list")
         for field, keys in (
             ("artifacts", {"evidence_state", "observed_at"}),
             ("license", {"name", "url"}),
@@ -1455,6 +1472,16 @@ def _validate_palimpsest_research_catalog(result: dict[str, Any]) -> None:
         ):
             if not isinstance(row.get(field), dict) or set(row[field]) != keys:
                 raise RuntimeError("Palimpsest research dataset " + field + " fields differ")
+        for field in ("license", "urls"):
+            if not all(value is None or isinstance(value, str) for value in row[field].values()):
+                raise RuntimeError("Palimpsest research dataset " + field + " is not text metadata")
+        # The producer deliberately does not read observations. A generation
+        # clock therefore cannot establish fresh source values or an as-of date.
+        if (row["artifacts"]["evidence_state"] not in ("unknown", "gated") or
+                row["artifacts"]["observed_at"] is not None):
+            raise RuntimeError("Palimpsest research dataset invents observation freshness")
+        if row["artifacts"]["evidence_state"] == "gated" and row["urls"]["latest"] is not None:
+            raise RuntimeError("Palimpsest research gated dataset exposes a value URL")
     if len(set(identities)) != len(identities):
         raise RuntimeError("Palimpsest research dataset identities are duplicated")
     _require_equal(body.get("seiche"), {

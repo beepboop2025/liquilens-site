@@ -121,6 +121,7 @@ def research_body():
            "urls": {"latest": None, "landing_page": None, "method": None},
            "values_included": False}
     return {"schema": "palimpsest.research-catalog.v1", "metadata_only": True,
+            "generated_at": "2026-09-09T05:06:33Z", "truncated": {},
             "source_url": "https://www.palimpsest.info/readings/research-catalog-latest.json",
             "offset": 0, "returned": 1, "total": 1, "next_offset": None, "datasets": [row],
             "seiche": {"site": "https://seiche.info/#RESEARCH",
@@ -136,6 +137,30 @@ def research_result(body):
 
 def test_research_probe_retains_unknown_state_without_inventing_freshness():
     edge._validate_palimpsest_research_catalog(research_result(research_body()))
+
+
+@pytest.mark.parametrize("mutation", ["top_level_values", "source_values", "description_values",
+                                     "license_values", "fresh_state", "observation_clock", "gated_url"])
+def test_research_projection_rejects_observations_and_invented_freshness(mutation):
+    body = research_body()
+    row = body["datasets"][0]
+    if mutation == "top_level_values":
+        body["observations"] = [{"source_id": "chinamoney", "value": 4.2}]
+    elif mutation == "source_values":
+        row["sources"] = [{"source_id": "chinamoney", "value": 4.2}]
+    elif mutation == "description_values":
+        row["description"] = {"value": 4.2}
+    elif mutation == "license_values":
+        row["license"]["name"] = {"value": 4.2}
+    elif mutation == "fresh_state":
+        row["artifacts"]["evidence_state"] = "fresh"
+    elif mutation == "observation_clock":
+        row["artifacts"]["observed_at"] = body["generated_at"]
+    else:
+        row["artifacts"]["evidence_state"] = "gated"
+        row["urls"]["latest"] = "https://www.palimpsest.info/restricted-values.json"
+    with pytest.raises(RuntimeError):
+        edge._validate_palimpsest_research_catalog(research_result(body))
 
 
 @pytest.mark.parametrize("mutation", ["values", "extra_value", "nested_value", "error", "text",
