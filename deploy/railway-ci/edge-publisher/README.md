@@ -36,6 +36,12 @@ Worker release is never overwritten by rollback. An interrupted transaction is
 reconciled to its recorded prior version on the next explicit invocation before
 new publication proceeds.
 
+Catalog and MCP probes require the source tag and actual Worker version ID,
+including when an unchanged catalog would otherwise pass. Zero-traffic staging
+allows up to 24 attempts at five-second intervals within a 150-second total
+network budget for deployment propagation. Post-promotion checks require the
+candidate ID without an override, proving that ordinary traffic reached it.
+
 Service credential updates do not authorize source changes. Keep the API token
 only on this validation service; application and PR CI must have no copy.
 `RAILWAY_CATALOG_PREPARED` and `RAILWAY_CATALOG_PUBLISH_PASS` identify exact-source

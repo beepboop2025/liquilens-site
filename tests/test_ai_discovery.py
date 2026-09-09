@@ -360,7 +360,10 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
     assert seiche["metadata"]["distributionState"] == "verified"
     assert seiche["metadata"]["recoveryState"] == "verified"
     assert seiche["metadata"]["recoveryAccepted"] is True
-    assert seiche["metadata"]["fullReleaseAccepted"] is False
+    assert seiche["metadata"]["fullReleaseAccepted"] is True
+    assert seiche["metadata"]["archiveState"] == "verified"
+    assert seiche["metadata"]["archiveDoi"] == "10.5281/zenodo.22668163"
+    assert seiche["metadata"]["archiveSourceFileCount"] == 1089
     assert {
         key: seiche["metadata"][key]
         for key in (
@@ -608,7 +611,7 @@ def test_sibling_product_cards_match_the_catalog_contracts():
     assert seiche["distribution_state"] == "verified"
     assert seiche["recovery_state"] == "verified"
     assert seiche["recovery_accepted"] is True
-    assert seiche["full_release_accepted"] is False
+    assert seiche["full_release_accepted"] is True
     assert {
         key: seiche[key]
         for key in (
@@ -735,7 +738,8 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     status = read("status/index.html")
     assert "Release contract · 9 September 2026" in status
     assert "hosted MCP 0.12.5" in status
-    assert "LIVE / ARCHIVE PENDING" in status
+    assert "LIVE / ARCHIVED" in status
+    assert "https://doi.org/10.5281/zenodo.22668163" in status
     assert "Portable export, isolated restore, immutable offsite receipts and strict recovery monitoring passed" in status
     assert "13 public read-only MCP tools, 4 prompts and 0 resources" in status
     assert "13 public read-only MCP tools" in status
@@ -743,7 +747,7 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     assert "Undertow 1.10.0" in status
     assert "11 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
     assert "Palimpsest 1.9.3" in status
-    assert "6 public read-only MCP tools, 4 prompts and 1 metadata-only" in status
+    assert "7 public read-only MCP tools, 4 prompts and 1 metadata-only" in status
     assert "LIVE / RECEIPTED" in status
     assert "Evidence Carrier 0.20.1 + Trade Safety Receipt v1" in status
 
@@ -960,3 +964,38 @@ def test_every_discovery_pointer_uses_the_well_known_catalog():
     api_catalog = "https://liquilens.in/.well-known/api-catalog"
     assert 'rel="api-catalog"' in read("index.html")
     assert api_catalog in read("llms.txt")
+
+
+def test_seiche_full_acceptance_is_bound_to_signed_public_receipt(tmp_path):
+    import hashlib
+    from pathlib import Path
+    import subprocess
+
+    entry = next(e for e in _catalog()['entries'] if e['identifier'].endswith(':seiche'))
+    metadata = entry['metadata']
+    files = {}
+    for field in ('releaseAcceptanceReceipt', 'releaseAcceptanceSignature'):
+        url = urlparse(metadata[field])
+        assert url.scheme == 'https' and url.netloc == 'liquilens.in'
+        path = Path(ROOT) / url.path.lstrip('/')
+        assert metadata[field + 'Sha256'] == 'sha256:' + hashlib.sha256(path.read_bytes()).hexdigest()
+        files[field] = path
+    body = files['releaseAcceptanceReceipt'].read_bytes()
+    receipt = json.loads(body)
+    assert receipt['source'] == metadata['releaseCommit']
+    assert receipt['signed_tag_object'] == metadata['signedTagObject']
+    assert receipt['version'] == entry['version'] == '0.12.5'
+    assert receipt['status'] == 'PASS' and receipt['full_release_accepted'] is True
+    archive = receipt['archive']
+    assert archive['status'] == metadata['archiveState'] == 'verified'
+    assert archive['doi'] == metadata['archiveDoi']
+    assert archive['zip_commit_comment'] == receipt['source']
+    assert 'sha256:' + archive['sha256'] == metadata['archiveSha256']
+    assert archive['bytes'] == metadata['archiveBytes']
+    assert archive['source_file_count'] == metadata['archiveSourceFileCount'] == 1089
+    signers = tmp_path / 'allowed_signers'
+    signers.write_text('fleet-owner ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuJV6o8YL2XXR9q4vcwpHuc2z1GEBawSmrJWGrgwzFV\n')
+    subprocess.run(['ssh-keygen', '-Y', 'verify', '-f', str(signers), '-I', 'fleet-owner',
+                    '-n', 'seiche-connected-release-acceptance',
+                    '-s', str(files['releaseAcceptanceSignature'])], input=body, check=True,
+                   capture_output=True)

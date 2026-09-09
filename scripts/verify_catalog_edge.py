@@ -60,6 +60,9 @@ PAGES_RELEASE_EVIDENCE_PATHS = tuple(
 ) + tuple(
     "protocol/release-evidence/palimpsest/8288940062498d5e3fd60cb232cb589b3cb3b97e/" + name
     for name in ("host-receipt.json", "host-receipt.json.sig")
+) + tuple(
+    "protocol/release-evidence/seiche/7964775f88759fe82a37dbf8d4886d2bf15369b2/" + name
+    for name in ("full-release-acceptance.json", "full-release-acceptance.json.sig")
 )
 DEFAULT_URL = "https://liquilens.in/.well-known/ai-catalog.json"
 DEFAULT_API_CATALOG_URL = "https://liquilens.in/.well-known/api-catalog"
@@ -435,6 +438,10 @@ def _parser() -> argparse.ArgumentParser:
         help="require live Undertow, Riptide, and NarcoScope release agreement",
     )
     parser.add_argument("--expected-version-tag")
+    parser.add_argument(
+        "--expected-worker-version-id",
+        help="require this served Worker ID without forcing a version override",
+    )
     parser.add_argument("--attempts", type=int, default=12)
     parser.add_argument("--delay", type=float, default=10.0)
     parser.add_argument("--budget-seconds", type=float, default=240.0)
@@ -527,13 +534,15 @@ def _mcp_request(
     return decoded, response_headers
 
 
-def _require_version_tag(headers: dict[str, str], expected: str | None) -> None:
-    if not expected:
-        return
-    actual = headers.get("x-liquilens-worker-tag")
-    if actual != expected:
+def _require_version_tag(
+    headers: dict[str, str], expected: str | None, version_id: str | None = None,
+) -> None:
+    actual_tag = headers.get("x-liquilens-worker-tag")
+    actual_id = headers.get("x-liquilens-worker-version")
+    if (expected and actual_tag != expected) or (version_id and actual_id != version_id):
         raise RuntimeError(
-            f"Worker version tag differs: expected {expected!r}, received {actual!r}"
+            f"Worker identity differs: expected tag={expected!r} version={version_id!r}; "
+            f"received tag={actual_tag!r} version={actual_id!r}"
         )
 
 
@@ -615,7 +624,9 @@ def _verify_mcp(
     url: str,
     expected_version_tag: str | None,
     worker_version_id: str | None = None,
+    expected_worker_version_id: str | None = None,
 ) -> str:
+    expected_worker_version_id = expected_worker_version_id or worker_version_id
     extra_headers = (
         {
             "Cloudflare-Workers-Version-Overrides": (
@@ -639,7 +650,7 @@ def _verify_mcp(
         },
         extra_headers=extra_headers,
     )
-    _require_version_tag(headers, expected_version_tag)
+    _require_version_tag(headers, expected_version_tag, expected_worker_version_id)
     initialized = _require_result(legacy_initialize, "legacy-initialize")
     if initialized.get("protocolVersion") != "2025-11-25":
         raise RuntimeError(f"legacy MCP protocol differs: {initialized!r}")
@@ -654,7 +665,7 @@ def _verify_mcp(
         {"jsonrpc": "2.0", "id": "legacy-list", "method": "tools/list", "params": {}},
         extra_headers=extra_headers,
     )
-    _require_version_tag(headers, expected_version_tag)
+    _require_version_tag(headers, expected_version_tag, expected_worker_version_id)
     tools = _require_result(legacy_list, "legacy-list").get("tools")
     _require_tool_contract(tools, "legacy")
 
@@ -678,7 +689,7 @@ def _verify_mcp(
         method_header="server/discover",
         extra_headers=extra_headers,
     )
-    _require_version_tag(headers, expected_version_tag)
+    _require_version_tag(headers, expected_version_tag, expected_worker_version_id)
     discovered = _require_modern_result(
         modern_discover,
         headers,
@@ -708,7 +719,7 @@ def _verify_mcp(
         method_header="tools/list",
         extra_headers=extra_headers,
     )
-    _require_version_tag(headers, expected_version_tag)
+    _require_version_tag(headers, expected_version_tag, expected_worker_version_id)
     modern_list_result = _require_modern_result(
         modern_list,
         headers,
@@ -736,7 +747,7 @@ def _verify_mcp(
         name_header="financial_evidence_route",
         extra_headers=extra_headers,
     )
-    _require_version_tag(headers, expected_version_tag)
+    _require_version_tag(headers, expected_version_tag, expected_worker_version_id)
     routed = _require_modern_result(
         modern_route,
         headers,
@@ -766,7 +777,7 @@ def _verify_mcp(
         },
         extra_headers=extra_headers,
     )
-    _require_version_tag(headers, expected_version_tag)
+    _require_version_tag(headers, expected_version_tag, expected_worker_version_id)
     probed = _require_result(limiter_probe, "limiter-probe")
     require_fetch_semantics(probed)
     probe_summary = probed.get("structuredContent", {})
@@ -799,11 +810,13 @@ def _verify_mcp_with_retries(
     attempts: int,
     delay: float,
     worker_version_id: str | None = None,
+    expected_worker_version_id: str | None = None,
 ) -> str:
     problem = "remote MCP was not checked"
     for attempt in range(1, attempts + 1):
         try:
-            return _verify_mcp(url, expected_version_tag, worker_version_id)
+            return _verify_mcp(url, expected_version_tag, worker_version_id,
+                               expected_worker_version_id)
         except (OSError, ValueError, RuntimeError, urllib.error.URLError) as error:
             problem = str(error)
         if attempt < attempts:
@@ -2615,6 +2628,8 @@ def _verify_url(
     attempts: int,
     delay: float,
     worker_version_id: str | None = None,
+    expected_version_tag: str | None = None,
+    expected_worker_version_id: str | None = None,
 ) -> str:
     problem = "edge catalog was not checked"
     for attempt in range(1, attempts + 1):
@@ -2636,6 +2651,9 @@ def _verify_url(
                 timeout=20,
                 extra_headers=extra_headers,
                 max_bytes=MAX_CATALOG_BODY_BYTES,
+            )
+            _require_version_tag(
+                headers, expected_version_tag, expected_worker_version_id or worker_version_id,
             )
             problem = (
                 response_problem(
@@ -2662,6 +2680,7 @@ def _verify_url(
         if not problem:
             return f"edge catalog matches {expected_path}"
         if attempt < attempts:
+            print(f"{expected_path.name} attempt {attempt}/{attempts}: {problem}", flush=True)
             _bounded_sleep(delay)
     raise RuntimeError(f"{expected_path}: {problem}")
 
@@ -2796,6 +2815,8 @@ def _run(args: argparse.Namespace) -> int:
                     attempts=args.attempts,
                     delay=args.delay,
                     worker_version_id=args.worker_version_id,
+                    expected_version_tag=args.expected_version_tag,
+                    expected_worker_version_id=args.expected_worker_version_id,
                     **check,
                 )
             )
@@ -2806,6 +2827,7 @@ def _run(args: argparse.Namespace) -> int:
                 attempts=args.attempts,
                 delay=args.delay,
                 worker_version_id=args.worker_version_id,
+                expected_worker_version_id=args.expected_worker_version_id,
             )
         )
         for result in _verify_external_release_proofs(
@@ -2835,14 +2857,13 @@ def main() -> int:
         raise SystemExit("--pages-proof-only requires --pages-base-url")
     if args.pages_base_url and not args.pages_proof_only:
         raise SystemExit("--pages-base-url requires --pages-proof-only")
-    if args.worker_version_id and (
-        len(args.worker_version_id) != 36
-        or any(
-            character not in "0123456789abcdef-"
-            for character in args.worker_version_id.lower()
-        )
-    ):
-        raise SystemExit("--worker-version-id must be one UUID-shaped version ID")
+    for label, value in (("worker-version-id", args.worker_version_id),
+                         ("expected-worker-version-id", args.expected_worker_version_id)):
+        if value and not re.fullmatch(r"[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}", value):
+            raise SystemExit(f"--{label} must be one UUID-shaped version ID")
+    if (args.worker_version_id and args.expected_worker_version_id
+            and args.worker_version_id != args.expected_worker_version_id):
+        raise SystemExit("override and expected Worker version IDs must agree")
     if args.external_proof_only and (
         not args.palimpsest_proof or not args.sibling_proof
     ):

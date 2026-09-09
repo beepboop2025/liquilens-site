@@ -203,8 +203,14 @@
       "distribution_state": "verified",
       "recovery_state": "verified",
       "recovery_accepted": true,
-      "full_release_accepted": false,
-      "release_acceptance_scope": "Exact application, signed package, static site, Registry, public multi-platform container, portable export, isolated restore, immutable off-site receipts and strict recovery monitor verified. Zenodo archive pending after its release webhook timed out; full release acceptance remains incomplete."
+      "full_release_accepted": true,
+      "release_acceptance_scope": "Exact application, signed package, static site, Registry, public multi-platform container, portable export, isolated restore, immutable off-site receipts, strict recovery monitor and Zenodo archive verified. All 1,089 archived files match the signed 0.12.5 source tree.",
+      "archive_state": "verified",
+      "archive_doi": "10.5281/zenodo.22668163",
+      "archive_url": "https://zenodo.org/records/22668163",
+      "archive_sha256": "sha256:cdf8339a789ffb6e5ee07ad36d5bdd386e92430eb0b629df4e38761a4d02605c",
+      "release_acceptance_receipt": "https://liquilens.in/protocol/release-evidence/seiche/7964775f88759fe82a37dbf8d4886d2bf15369b2/full-release-acceptance.json",
+      "release_acceptance_signature": "https://liquilens.in/protocol/release-evidence/seiche/7964775f88759fe82a37dbf8d4886d2bf15369b2/full-release-acceptance.json.sig"
     },
     {
       "name": "Undertow",

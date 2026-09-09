@@ -255,15 +255,25 @@
         "distributionState": "verified",
         "recoveryState": "verified",
         "recoveryAccepted": true,
-        "fullReleaseAccepted": false,
-        "releaseAcceptanceScope": "Exact application, signed package, static site, Registry, public multi-platform container, portable export, isolated restore, immutable off-site receipts and strict recovery monitor verified. Zenodo archive pending after its release webhook timed out; full release acceptance remains incomplete.",
+        "fullReleaseAccepted": true,
+        "releaseAcceptanceScope": "Exact application, signed package, static site, Registry, public multi-platform container, portable export, isolated restore, immutable off-site receipts, strict recovery monitor and Zenodo archive verified. All 1,089 archived files match the signed 0.12.5 source tree.",
         "releasePublicToolCount": 13,
         "inventoryScope": "Hosted and signed package inventories agree: thirteen read-only tools, four prompts and zero resources.",
         "researchNetworkApi": "https://api.seiche.info/api/v2/research-network",
         "registryServerHashScope": "Exact signed server.json bytes; both Registry records match after the signed release auditor normalizes schema-defined optional false Input flags",
         "recoveryRun": "https://github.com/beepboop2025/seiche/actions/runs/34300864162/attempts/1",
         "recoveryReceiptSha256": "sha256:e45094ac176783a56f746935578aeeecf7e61ec48e10cae2b32c9eb2ec9f1cde",
-        "offsiteReceiptSha256": "sha256:e744b037986d79032524cfd61fb116036fc2b54a4b90c82a1db90a304e47516e"
+        "offsiteReceiptSha256": "sha256:e744b037986d79032524cfd61fb116036fc2b54a4b90c82a1db90a304e47516e",
+        "archiveState": "verified",
+        "archiveDoi": "10.5281/zenodo.22668163",
+        "archiveUrl": "https://zenodo.org/records/22668163",
+        "archiveSha256": "sha256:cdf8339a789ffb6e5ee07ad36d5bdd386e92430eb0b629df4e38761a4d02605c",
+        "archiveBytes": 5168779,
+        "archiveSourceFileCount": 1089,
+        "releaseAcceptanceReceipt": "https://liquilens.in/protocol/release-evidence/seiche/7964775f88759fe82a37dbf8d4886d2bf15369b2/full-release-acceptance.json",
+        "releaseAcceptanceReceiptSha256": "sha256:b2049f14594e5e68b546c7ec5c197e651665bf36e1eb7c6b8f856547db71fc38",
+        "releaseAcceptanceSignature": "https://liquilens.in/protocol/release-evidence/seiche/7964775f88759fe82a37dbf8d4886d2bf15369b2/full-release-acceptance.json.sig",
+        "releaseAcceptanceSignatureSha256": "sha256:f3ca8559aa6030528772de1c919114a3c35df4ff5254597fab4ef5c4eaa4d77c"
       }
     },
     {
