@@ -9,7 +9,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[3]
 GATES = ("scripts/verify_catalog_edge.py", "scripts/verify_financial_evidence_semantics.py",
-         "scripts/verify_narcoscope_release.py")
+         "scripts/verify_narcoscope_release.py", "scripts/verify_palimpsest_release.py")
 PINS = GATES + (".github/workflows/deploy-catalog-edge.yml", "wrangler.catalog.jsonc",
                 "deploy/railway-ci/run.sh")
 OWNER_KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBuJV6o8YL2XXR9q4vcwpHuc2z1GEBawSmrJWGrgwzFV"
