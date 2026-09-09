@@ -286,13 +286,14 @@ def execute(source, apply, evidence):
             durable_json(pending, transaction)
             assert_active(api, staged["id"], [(previous, 100), (candidate, 0)])
             verify("--worker-version-id", candidate, "--expected-version-tag", source,
-                   "--attempts", "3", "--delay", "2", "--budget-seconds", "75",
+                   "--attempts", "24", "--delay", "5", "--budget-seconds", "150",
                    "--no-palimpsest-proof", "--no-sibling-proof")
             current_main(source)
             assert_active(api, staged["id"], [(previous, 100), (candidate, 0)])
             promoted = api.deploy([(candidate, 100)], "Railway promote " + transaction["operation_id"])
             transaction["promoted_deployment_id"] = promoted["id"]
-            verify("--expected-version-tag", source, "--attempts", "12", "--delay", "5",
+            verify("--expected-version-tag", source, "--expected-worker-version-id", candidate,
+                   "--attempts", "24", "--delay", "5",
                    "--budget-seconds", "150")
             current_main(source)
             assert_active(api, promoted["id"], [(candidate, 100)])

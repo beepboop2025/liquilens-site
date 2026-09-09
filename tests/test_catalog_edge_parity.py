@@ -1331,3 +1331,54 @@ def test_pages_waits_for_native_status_without_queuing_irrelevant_events():
     assert capture["continue-on-error"] is True
     assert notify["if"] == "steps.indexnow-range.outcome == 'success'"
     assert notify["env"]["BEFORE_SHA"] == "${{ steps.indexnow-range.outputs.before }}"
+
+
+@pytest.mark.parametrize('headers', [
+    {},
+    {'x-liquilens-worker-tag': 'new-source', 'x-liquilens-worker-version': 'old-worker'},
+    {'x-liquilens-worker-tag': 'old-source', 'x-liquilens-worker-version': 'new-worker'},
+])
+def test_identical_catalog_cannot_hide_wrong_worker_identity(monkeypatch, headers):
+    monkeypatch.setattr(verifier, '_fetch_bytes', lambda *a, **k: (
+        b'{}', {'content-type': 'application/json', **headers}, 'https://liquilens.in/'))
+    with pytest.raises(RuntimeError, match='Worker identity differs'):
+        verifier._verify_url(expected={}, expected_path=Path('catalog.json'),
+                            expected_content_type='application/json', url=verifier.DEFAULT_URL,
+                            attempts=1, delay=0, expected_version_tag='new-source',
+                            expected_worker_version_id='new-worker')
+
+
+def test_zero_traffic_probe_waits_for_actual_candidate(monkeypatch):
+    calls = []
+    def fetch(url, **kwargs):
+        calls.append(kwargs['extra_headers'])
+        return b'{}', {'content-type': 'application/json',
+                      'x-liquilens-worker-tag': 'source',
+                      'x-liquilens-worker-version': 'old-worker' if len(calls) == 1 else 'candidate'}, url
+    monkeypatch.setattr(verifier, '_fetch_bytes', fetch)
+    result = verifier._verify_url(expected={}, expected_path=Path('catalog.json'),
+                                 expected_content_type='application/json', url=verifier.DEFAULT_URL,
+                                 attempts=2, delay=0, expected_version_tag='source',
+                                 worker_version_id='candidate')
+    assert 'matches' in result and len(calls) == 2
+    assert all(c == {'Cloudflare-Workers-Version-Overrides': 'liquilens-ai-catalog="candidate"'} for c in calls)
+
+
+def test_promoted_identity_check_does_not_force_candidate(monkeypatch):
+    def fetch(url, **kwargs):
+        assert kwargs['extra_headers'] is None
+        return b'{}', {'content-type': 'application/json',
+                      'x-liquilens-worker-tag': 'source',
+                      'x-liquilens-worker-version': 'candidate'}, url
+    monkeypatch.setattr(verifier, '_fetch_bytes', fetch)
+    assert 'matches' in verifier._verify_url(
+        expected={}, expected_path=Path('catalog.json'), expected_content_type='application/json',
+        url=verifier.DEFAULT_URL, attempts=1, delay=0, expected_version_tag='source',
+        expected_worker_version_id='candidate')
+
+
+def test_mcp_identity_is_checked_before_contract(monkeypatch):
+    monkeypatch.setattr(verifier, '_mcp_request', lambda *a, **k: (
+        {}, {'x-liquilens-worker-tag': 'source', 'x-liquilens-worker-version': 'old-worker'}))
+    with pytest.raises(RuntimeError, match='Worker identity differs'):
+        verifier._verify_mcp(verifier.DEFAULT_MCP_URL, 'source', 'candidate')
