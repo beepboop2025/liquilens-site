@@ -732,18 +732,19 @@ def test_sibling_product_cards_match_the_catalog_contracts():
 
 def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     status = read("status/index.html")
-    assert "Release contract · 6 September 2026" in status
-    assert "Seiche 0.12.4" in status
-    assert "LIVE / RECOVERY PENDING" in status
-    assert "0.12.4 recovery proof is deferred; full release acceptance remains incomplete" in status
-    assert "12 public read-only MCP tools, 4 prompts and 0 resources" in status
-    assert "runtime, signed tag, exact PyPI artifacts, static catalog" in status
+    assert "Release contract · 9 September 2026" in status
+    assert "hosted MCP 0.12.5" in status
+    assert "API LIVE / RELEASE PENDING" in status
+    assert "The 0.12.5 package and full release acceptance remain pending" in status
+    assert "13 public read-only tools, 4 prompts and 0 resources" in status
+    assert "12 public read-only MCP tools" in status
+    assert "0.12.4 signed tag, exact PyPI artifacts, static catalog" in status
     assert "Undertow 1.10.0" in status
     assert "11 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
     assert "Palimpsest 1.9.3" in status
     assert "6 public read-only MCP tools, 4 prompts and 1 metadata-only" in status
     assert "LIVE / RECEIPTED" in status
-    assert "Evidence Carrier 0.20.0 + Trade Safety Receipt v1" in status
+    assert "Evidence Carrier 0.20.1 + Trade Safety Receipt v1" in status
 
     ship_log = read("ship-log/index.html")
     assert "Seiche 0.11.1 closes its public distribution contract" in ship_log
@@ -766,7 +767,7 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     ) in sitemap
     assert (
         "<loc>https://liquilens.in/status/</loc>\n"
-        "    <lastmod>2026-09-06</lastmod>"
+        "    <lastmod>2026-09-09</lastmod>"
     ) in sitemap
     generator = read("scripts/build_replay_pages.py")
     assert '("/protocol/", "2026-09-02", "monthly", "0.9")' in generator

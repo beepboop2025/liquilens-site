@@ -109,15 +109,15 @@ def test_agent_catalog_has_a_dedicated_non_executing_trade_safety_entry():
 
     assert entry["url"] == "https://liquilens.in/protocol/trade-safety/"
     assert entry["version"] == "1.0.0"
-    assert entry["metadata"]["implementationRelease"] == "0.20.0"
-    assert entry["metadata"]["sourceTag"] == "v0.20.0"
+    assert entry["metadata"]["implementationRelease"] == "0.20.1"
+    assert entry["metadata"]["sourceTag"] == "v0.20.1"
     assert entry["metadata"]["releaseCommit"] == (
-        "bfe665431c0c2203e71d1a5e9c7ba57095320585"
+        "6f9077bf0879a76db7b9bf98fb37839f7755dd9f"
     )
     assert entry["metadata"]["releaseTagObject"] == (
-        "51cbb4645bbd603f38be65f23d8c03a4b9d30272"
+        "6e00524ab201c87dd87273c8c205f82912c1b80f"
     )
-    assert entry["metadata"]["offlineVerifierRegistry"].endswith("/versions/0.20.0")
+    assert entry["metadata"]["offlineVerifierRegistry"].endswith("/versions/0.20.1")
     assert entry["metadata"]["requiredProducts"] == "Seiche, Undertow"
     assert entry["metadata"]["conditionalProduct"] == "LiquiLens"
     assert entry["metadata"]["hostedApi"] == (
@@ -453,9 +453,9 @@ def test_rfc9727_catalog_exposes_only_the_real_gateway_surfaces():
 
 def test_protocol_catalog_binds_v0190_release_and_stable_trade_safety_hashes():
     catalog = json.loads(_read("protocol/catalog.json"))
-    assert catalog["version"] == "0.20.0"
-    assert catalog["releaseCommit"] == ("bfe665431c0c2203e71d1a5e9c7ba57095320585")
-    assert catalog["releaseTagObject"] == ("51cbb4645bbd603f38be65f23d8c03a4b9d30272")
+    assert catalog["version"] == "0.20.1"
+    assert catalog["releaseCommit"] == ("6f9077bf0879a76db7b9bf98fb37839f7755dd9f")
+    assert catalog["releaseTagObject"] == ("6e00524ab201c87dd87273c8c205f82912c1b80f")
     artifacts = {row["url"]: row["sha256"] for row in catalog["artifacts"]}
     for relative, expected_sha256 in TAGGED_BYTES.items():
         if relative == "protocol/fdc3/com.liquilens.evidence.schema.json":

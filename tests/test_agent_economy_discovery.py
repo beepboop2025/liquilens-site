@@ -67,7 +67,7 @@ def test_undertow_rfc9727_catalog_is_bound_to_live_deployment_proof():
         "sha256:bffb6a7626d066cdb5293cc28eca465baaae99974ef951eb3280c67501cc5e84"
     )
     assert metadata["aiCatalogSha256"] == (
-        "sha256:536ef933e5ec70799263b0a66b5c90e5f4ab84a27b4df793b4ae86b74e533491"
+        "sha256:9b9184730f19e16f128477fcaa09cf99d1df46475051821ebd42af78d9014fba"
     )
     assert metadata["apiCatalogVerifiedAt"] == "2026-09-04T19:37:30Z"
 
@@ -112,13 +112,13 @@ def test_scamshield_remains_local_even_with_a_modern_mcp_contract():
 def test_carrier_and_palimpsest_versions_match_verified_release_receipts():
     carrier = ENTRIES["urn:air:liquilens.in:protocol:evidence-carrier"]
     palimpsest = ENTRIES["urn:air:liquilens.in:catalog:palimpsest-china"]
-    assert carrier["version"] == "0.20.0"
+    assert carrier["version"] == "0.20.1"
     assert carrier["metadata"]["mcpBundleSha256"] == (
-        "1c740167183cba7ad39862ee749f497930f43cfd27b1362d703c81e71d5b2d6f"
+        "09b25571f61f4ba2bd5e1c367a580355a6e08eccf0d1c34bdde0bbd460be0ed6"
     )
-    assert carrier["metadata"]["consumerChannelSnapshotVersion"] == "0.20.0"
+    assert carrier["metadata"]["consumerChannelSnapshotVersion"] == "0.20.1"
     assert carrier["metadata"]["releaseCommit"] == (
-        "bfe665431c0c2203e71d1a5e9c7ba57095320585"
+        "6f9077bf0879a76db7b9bf98fb37839f7755dd9f"
     )
     assert carrier["metadata"]["registryStatus"] == "active-latest"
     assert palimpsest["version"] == "1.9.3"
