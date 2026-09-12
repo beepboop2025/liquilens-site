@@ -319,6 +319,13 @@ def test_every_published_article_and_replay_page_binds_its_exact_png_revision():
     assert observed == expected
 
 
+def test_world_economy_card_uses_the_catalog_revision_date():
+    catalog = json.loads((ROOT / "world-economy/evidence-catalog.json").read_text(encoding="utf-8"))
+    route = next(row for row in static_social_cards.ROUTES if row.path == "/world-economy/")
+    assert route.clock_label == "CATALOG CUT"
+    assert route.clock == catalog["dateModified"]
+
+
 def test_static_card_builder_is_current_and_preserves_reviewed_investigation():
     assert static_social_cards.refresh(check=True) == []
     investigation = (
