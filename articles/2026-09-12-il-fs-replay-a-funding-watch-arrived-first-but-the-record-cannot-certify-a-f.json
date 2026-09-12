@@ -1,0 +1,116 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-09-12-il-fs-replay-a-funding-watch-arrived-first-but-the-record-cannot-certify-a-f",
+  "product": "liquilens",
+  "slug": "2026-09-12-il-fs-replay-a-funding-watch-arrived-first-but-the-record-cannot-certify-a-f",
+  "date": "2026-09-12",
+  "article_type": "historical_replay",
+  "topic": "ilfs",
+  "headline": "IL&FS replay: a funding watch arrived first, but the record cannot certify a forecast",
+  "dek": "The IL&FS reconstruction places a funding watch before the recorded default while finding no first PCA action-zone entry. That is a filing-period signal under an optimistic availability proxy—not a market confirmation, a causal account, or a validated prediction.",
+  "canonical_url": "https://liquilens.in/articles/2026-09-12-il-fs-replay-a-funding-watch-arrived-first-but-the-record-cannot-certify-a-f/",
+  "published_at": "2026-09-12T11:18:43Z",
+  "evidence_as_of": "2026-09-12",
+  "board_signature": "611dab169b21f3df4d3bb97f1fb2642ee799eef63c2ad141345d3737bfe35c79",
+  "subject": {
+    "slug": "ilfs",
+    "name": "IL&FS",
+    "inst_type": "nbfc",
+    "default_date": "2018-08-28",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "ilfs",
+      "inst_type": "nbfc",
+      "default_date": "2018-08-28",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "ilfs",
+      "inst_type": "nbfc",
+      "scoreable": true,
+      "first_signal": {
+        "period_end": "2015-03-31",
+        "index": 45.4,
+        "knowledge_time_proxy": "2015-05-30",
+        "band": "watch",
+        "flags": []
+      },
+      "lead_months": 38
+    }
+  },
+  "word_count": 1440,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:6121dbcb933b0e8192433b285f939aed092ec3320055883abb981ba76cf9a59b",
+    "memory_fingerprint": "sha256:92f30f0d4f0ea8b9336bd60b41888493cc68be7a0bb78bbfdc2aa6fca6c939f7",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 2,
+    "dossier_sha256": "bc2e96f8514656800682cc857e1f723487f6ffe3efb45a9882d3eb42616ae8a7",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "not_a_credit_rating",
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Rebuilt the truncated draft into a complete replay article with every required heading.",
+      "Separated filing-period evidence, unavailable market authority, and causal/model interpretation.",
+      "Retained fraud-masking, missing-data, construction-PIT, stale-exclusion and diagnostic-only disclosures.",
+      "Added allowed source links and the required product-boundary phrases."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:6121dbcb933b0e8192433b285f939aed092ec3320055883abb981ba76cf9a59b",
+      "memory_fingerprint": "sha256:92f30f0d4f0ea8b9336bd60b41888493cc68be7a0bb78bbfdc2aa6fca6c939f7",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
