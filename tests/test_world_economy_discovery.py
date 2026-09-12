@@ -32,7 +32,7 @@ DATASETS = {
         },
     },
     "https://seiche.info/#dollar-funding-dataset": {
-        "date_modified": "2026-09-09",
+        "date_modified": "2026-09-12",
         "identifier": (
             "urn:liquidity-lab:dataset:seiche-dollar-funding-money-markets"
         ),
@@ -137,7 +137,7 @@ def test_machine_catalog_has_four_distinct_bounded_datasets():
     assert data["@type"] == "DataCatalog"
     assert data["@id"] == CATALOG_ID
     assert data["url"] == WORLD_ECONOMY_URL
-    assert data["dateModified"] == "2026-09-09"
+    assert data["dateModified"] == "2026-09-12"
     assert "not a complete database of the world economy" in data[
         "description"
     ].lower()
@@ -192,7 +192,7 @@ def test_machine_catalog_has_four_distinct_bounded_datasets():
             "urn:liquidity-lab:dataset:undertow-market-liquidity-exit-cost"
         )
     )
-    assert seiche["version"] == "0.12.5"
+    assert seiche["version"] == "0.13.1"
     assert undertow["version"] == "1.9.0"
     assert palimpsest["version"] == "1.9.3"
     assert palimpsest["additionalProperty"] == {
@@ -329,14 +329,14 @@ def test_seiche_routes_and_release_count_do_not_regress():
     developers = read("developers/index.html")
     status = read("status/index.html")
     seiche_row = next(
-        line for line in status.splitlines() if "hosted MCP 0.12.5" in line
+        line for line in status.splitlines() if "hosted MCP 0.13.1" in line
     )
 
     assert "https://seiche.info/use-cases" in use_cases
     assert "https://seiche.info/use-cases.html" not in use_cases
     assert "https://seiche.info/developers" in developers
     assert "https://seiche.info/developers.html" not in developers
-    assert "13 public read-only MCP tools" in seiche_row
+    assert "14 public read-only MCP tools" in seiche_row
     assert "4 prompts and 0 resources" in seiche_row
     assert "ten free MCP tools" not in status
     assert "signed tag, exact PyPI artifacts, static catalog" in seiche_row
@@ -344,7 +344,7 @@ def test_seiche_routes_and_release_count_do_not_regress():
     assert "bounded money/FX/macro-capital context" in seiche_row
 
     llms = read("llms.txt")
-    assert "Seiche 0.12.5" in llms
+    assert "Seiche 0.13.1" in llms
     assert "https://api.seiche.info/.well-known/mcp.json" in llms
-    assert "https://pypi.org/project/seiche/0.12.5/" in llms
-    assert "io.github.beepboop2025%2Fseiche/versions/0.12.5" in llms
+    assert "https://pypi.org/project/seiche/0.13.1/" in llms
+    assert "io.github.beepboop2025%2Fseiche/versions/0.13.1" in llms

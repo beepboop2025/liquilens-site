@@ -22,7 +22,7 @@ def test_adjacent_products_are_individually_discoverable():
     assert ENTRIES["urn:air:liquilens.in:catalog:riptide"]["version"] == "1.3.0"
     assert ENTRIES[
         "urn:air:liquilens.in:catalog:myquant-editorial"
-    ]["version"] == "2.1.0"
+    ]["version"] == "2.1.1"
     assert ENTRIES["urn:air:liquilens.in:catalog:myquant-app"]["version"] == "2.0.0"
     assert ENTRIES["urn:air:liquilens.in:catalog:narcoscope"]["version"] == "1.6.0"
 

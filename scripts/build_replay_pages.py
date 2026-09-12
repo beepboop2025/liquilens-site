@@ -504,7 +504,7 @@ BASE_SITEMAP = [
     ("/ship-log/", "2026-09-02", "weekly", "0.7"),
     ("/about/", "2026-08-04", None, None),
     ("/security/", "2026-08-09", None, None),
-    ("/status/", "2026-09-05", None, None),
+    ("/status/", "2026-09-12", None, None),
     ("/privacy/", "2026-08-21", None, None),
     ("/terms/", "2026-08-04", None, None),
 ]

@@ -1,0 +1,123 @@
+{
+  "schema": "seiche.connected-release-acceptance.v1",
+  "status": "PARTIAL",
+  "full_release_accepted": false,
+  "source": "19118eecee64ffec907838b89f364f53d7cab3de",
+  "version": "0.13.1",
+  "signed_tag": "v0.13.1",
+  "signed_tag_object": "9383ed448ccf257753336492e05b9551249c5f42",
+  "observed_at": "2026-09-12T20:46:27.456028+00:00",
+  "scope": "Seiche 0.13.1 application, fourteen read-only tools, signed packages, both public site origins, Registry, multi-platform container, manual portable export, isolated restore, sixteen immutable off-site objects, strict recovery monitor and Zenodo archive verified. All 1,113 archive files match the signed source. Full release acceptance remains incomplete: scheduled recovery attestation needs a project credential. The NY Fed archive acceptance covers the new import and preservation of prior captures; pre-March-2016 EFFR legacy label correction remains incomplete.",
+  "pending_checks": [
+    "scheduled_recovery_attestation"
+  ],
+  "pending_repair": "https://github.com/beepboop2025/seiche/pull/246",
+  "application": {
+    "deployment": "c81321ef-adb9-4c8a-aa92-849112f6dcdf",
+    "both_origins_verified": true,
+    "public_tools": 14
+  },
+  "publication": {
+    "source": "504b8cc912908e9729a95c3da799ef383e5aee8c",
+    "site_commit": "32363a58083a3718c0fa34fba849b0fb38fddd4e",
+    "deployment": "e235a427-873d-4b71-91a1-d17885ef7c0c",
+    "image": "sha256:d9ff533c80c892e2330d2a7079e38a868aad63e5355b40a3a342f5f2ba059dbf",
+    "normal_scheduled_repeat": "verified",
+    "previous_site_archive": "verified"
+  },
+  "distribution": {
+    "pypi": "verified",
+    "registry": "verified",
+    "ghcr_amd64_arm64": "verified",
+    "static_site": "verified"
+  },
+  "recovery": {
+    "manual_export_restore_offsite_attestation": "verified",
+    "run": 34710079181,
+    "snapshot": "20260912T180646Z",
+    "immutable_objects_verified": 16,
+    "recovery_receipt_sha256": "43ada9813aa9b10e902b296d929fe1243c4316cb0271ec8db51968d4b59d8723",
+    "offsite_receipt_sha256": "75e02cfc07a76ed65e6400dfb7d1e938dc7de98af1361aad8e42d2ae757fa660",
+    "strict_monitor": "verified",
+    "scheduled_attestation": "pending_project_credential"
+  },
+  "archive": {
+    "status": "verified",
+    "record_url": "https://zenodo.org/records/22728703",
+    "doi": "10.5281/zenodo.22728703",
+    "concept_doi": "10.5281/zenodo.22315385",
+    "access_right": "open",
+    "license": "agpl-3.0-or-later",
+    "file": "beepboop2025/seiche-v0.13.1.zip",
+    "bytes": 5278858,
+    "sha256": "69d4d5906f26d4e10ad049d79aba3d21cecb6775c5585057b8a4eef07591eaa9",
+    "md5": "4ba8f6809eae1d195a99c199823f9189",
+    "source_file_count": 1113,
+    "source_tree_comparison": "PASS",
+    "zip_commit_comment": "19118eecee64ffec907838b89f364f53d7cab3de"
+  },
+  "historical_import": {
+    "status": "IMPORT_SCOPE_PASS",
+    "whole_api_methodology_pass": false,
+    "legacy_correction_complete": false,
+    "known_limitation": "Some pre-March-2016 EFFR records retain a legacy median label although that period used a weighted mean."
+  },
+  "evidence": {
+    "manual-recovery-acceptance.json": {
+      "sha256": "7297e21a6a369dca044c5c9103f4921cf84db4ea06bbdafbb19da83ee7db2241",
+      "status": "PASS"
+    },
+    "strict-monitor-proof.json": {
+      "sha256": "8baa071a705e94122499194267b5f004607b449712e4c6e18107b7565afd1593",
+      "status": "pass"
+    },
+    "seiche-packages-current/acceptance.json": {
+      "sha256": "51e7156276f176680e8da7a267c6ee87c91ee52c8fffa5b53665a9f46590e303",
+      "status": "PASS"
+    },
+    "seiche-packages-current/metadata-hashes-r12.json": {
+      "sha256": "8a6ceb400a8ef77a181edb7a0fd12cce48078d50a61262cc15b50443b3442a44",
+      "status": "verified_identity"
+    },
+    "zenodo-0.13.1/archive-acceptance.json": {
+      "sha256": "b8cb78b4d410fe65add3e5a6de958e2d9bbc1c978e11d57b31684a2d82c5839f",
+      "status": "PASS"
+    },
+    "seiche-closure/runtime-r12/runtime-acceptance.json": {
+      "sha256": "85fce27a506a6aeccce94a87e4ac380be867e0a2f0868b61d6a80550913793ff",
+      "status": "RUNTIME_PASS"
+    },
+    "seiche-closure/assets-r12/application-site-proof.json": {
+      "sha256": "68b532b35beac45c9cffdcf55c788de288b79f90a23363fadcb0131b7710eade",
+      "status": "PASS"
+    },
+    "seiche-closure/browser-r12/result.json": {
+      "sha256": "e929bdaff797bd2637664a2d62b552685de91c1a93fe3028113a242679f5baaf",
+      "status": "pass"
+    },
+    "seiche-closure/catalog-dataset-r12/dataset-proof.json": {
+      "sha256": "6e71831011c3c6a1d9dffa2aa5a554ce8903df04e458db9fbe81154edc2ef4f4",
+      "status": "PASS"
+    },
+    "seiche-closure/catalog-dataset-r12/catalog-proof.json": {
+      "sha256": "a8c8c2c3ad7f6c21e9d81458d2b58437beb46c91c45f47e76053e9cf2a87051f",
+      "status": "verified_identity"
+    },
+    "seiche-closure/nyfed-import-scope-r12.json": {
+      "sha256": "5d764294941ac016b1e8fc72ec3c5d6dc85c35e11c948710ef266500bb98d2d7",
+      "status": "IMPORT_SCOPE_PASS"
+    },
+    "seiche-closure/durable-r12-v2/durable-acceptance.json": {
+      "sha256": "2cc55c5d21f73643a84e6f569402c2e8577d4804e572fd76cd3ca4291a6ad3dd",
+      "status": "PASS"
+    },
+    "seiche-closure/repeat-r12/scheduled-repeat-acceptance.json": {
+      "sha256": "e2d88c2a046af5355e57165c55eb4a8996bf6fb99f87a35aff2068507846376f",
+      "status": "PASS"
+    },
+    "seiche-closure/github-content/github-content-restored.json": {
+      "sha256": "78d46abbc182dcc7b260d178466e30c2b88fcf0a3b7944a0a49891916e8ef981",
+      "status": "PASS"
+    }
+  }
+}

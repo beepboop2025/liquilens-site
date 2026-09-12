@@ -61,7 +61,8 @@ PAGES_RELEASE_EVIDENCE_PATHS = tuple(
     "protocol/release-evidence/palimpsest/8288940062498d5e3fd60cb232cb589b3cb3b97e/" + name
     for name in ("host-receipt.json", "host-receipt.json.sig")
 ) + tuple(
-    "protocol/release-evidence/seiche/7964775f88759fe82a37dbf8d4886d2bf15369b2/" + name
+    "protocol/release-evidence/seiche/" + source + "/" + name
+    for source in ('7964775f88759fe82a37dbf8d4886d2bf15369b2', '19118eecee64ffec907838b89f364f53d7cab3de')
     for name in ("full-release-acceptance.json", "full-release-acceptance.json.sig")
 )
 DEFAULT_URL = "https://liquilens.in/.well-known/ai-catalog.json"
