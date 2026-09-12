@@ -6,6 +6,13 @@ Configure `deploy/railway-ci/Dockerfile`, one replica, restart policy `NEVER`
 and Wait for CI disabled. The service uses Python 3.12, Node 24 and the existing
 hash-locked dependencies. It receives no production or GitHub credentials.
 
+The CI and manual Worker publisher use Docker Official Images from ECR Public,
+pinned to identical manifests verified against Docker Hub. This avoids requiring
+Docker Hub availability for each build's base-image resolution. Update both
+Dockerfiles together after verifying the new official manifest digests, then run
+the full native checks and assemble a new signed publisher controller. Digest
+pins do not advance automatically when an upstream tag receives security updates.
+
 Only `RAILWAY_CI_PASS` for the exact source SHA and deployment proves success.
 Every run has a ten-minute deadline and exits when complete. Live evidence
 verification and the protected Pages/Worker publication workflows retain their
