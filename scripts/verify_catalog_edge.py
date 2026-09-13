@@ -68,6 +68,12 @@ PAGES_RELEASE_EVIDENCE_PATHS = tuple(
     "protocol/release-evidence/seiche/19118eecee64ffec907838b89f364f53d7cab3de/" + name
     for name in ("full-release-acceptance-20260913.json", "full-release-acceptance-20260913.json.sig")
 )
+PAGES_RELEASE_EVIDENCE_PATHS += (
+    "protocol/release-evidence/seiche/19118eecee64ffec907838b89f364f53d7cab3de/discovery-snapshot-20260914.json",
+) + tuple(
+    "protocol/release-evidence/seiche/1deccedc16dc832f6c0bdef61a0426e4b9b2d9eb/" + name
+    for name in ("application-distribution-acceptance.json", "application-distribution-acceptance.json.sig")
+)
 DEFAULT_URL = "https://liquilens.in/.well-known/ai-catalog.json"
 DEFAULT_API_CATALOG_URL = "https://liquilens.in/.well-known/api-catalog"
 DEFAULT_PROTOCOL_URL = "https://liquilens.in/protocol/catalog.json"
