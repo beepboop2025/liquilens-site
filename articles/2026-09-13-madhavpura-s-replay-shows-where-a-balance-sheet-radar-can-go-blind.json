@@ -1,0 +1,113 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-09-13-madhavpura-s-replay-shows-where-a-balance-sheet-radar-can-go-blind",
+  "product": "liquilens",
+  "slug": "2026-09-13-madhavpura-s-replay-shows-where-a-balance-sheet-radar-can-go-blind",
+  "date": "2026-09-13",
+  "article_type": "historical_replay",
+  "topic": "madhavpura-mercantile-co-operative-bank",
+  "headline": "Madhavpura’s replay shows where a balance-sheet radar can go blind",
+  "dek": "Madhavpura Mercantile Co-operative Bank produced no recorded conventional early funding or action-zone warning. Fraud masking means that silence cannot be treated as resilience: a disclosure-driven screen cannot verify a balance sheet when reported evidence may be false.",
+  "canonical_url": "https://liquilens.in/articles/2026-09-13-madhavpura-s-replay-shows-where-a-balance-sheet-radar-can-go-blind/",
+  "published_at": "2026-09-13T11:16:42Z",
+  "evidence_as_of": "2026-09-13",
+  "board_signature": "611dab169b21f3df4d3bb97f1fb2642ee799eef63c2ad141345d3737bfe35c79",
+  "subject": {
+    "slug": "madhavpura-mercantile-co-operative-bank",
+    "name": "Madhavpura Mercantile Co-operative Bank",
+    "inst_type": "ucb",
+    "default_date": "2012-06-04",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "madhavpura-mercantile-co-operative-bank",
+      "inst_type": "ucb",
+      "default_date": "2012-06-04",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "madhavpura-mercantile-co-operative-bank",
+      "inst_type": "ucb",
+      "scoreable": false,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1429,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:7c635f0f5828a89cc67c7c776c97daea122ca1da4138b7131a5662d5aa369f81",
+    "memory_fingerprint": "sha256:f4b00ed91c6674788d3a86face991cca97bf8c6ab01871a5f4929f44dfb5d5e4",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 3,
+    "dossier_sha256": "aa2b85c055a4643c60fd2c237c1e4efcb857cd7fa86982560314d21515d51014",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "not_a_credit_rating",
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Cut unsupported causal detail and retained the fraud-masked limitation as the central finding.",
+      "Separated filing-period observations, unauthorized market-price readings, and model-derived tiers.",
+      "Preserved construction-PIT, filing-lag, eligibility, missing-data, and market-authority disclosures.",
+      "Strengthened the counter-case so the replay cannot support a claim that hidden stress was demonstrably observable.",
+      "Shortened the dek to meet the publication limit.",
+      "Retained all required sections, eligibility limits, missing-data disclosures, and product boundaries.",
+      "Preserved the distinction between filings, market-price authority, and model-derived outputs."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:7c635f0f5828a89cc67c7c776c97daea122ca1da4138b7131a5662d5aa369f81",
+      "memory_fingerprint": "sha256:f4b00ed91c6674788d3a86face991cca97bf8c6ab01871a5f4929f44dfb5d5e4",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
