@@ -23,7 +23,7 @@ test("GET returns the RFC 9727 API Catalog with its profile and link relation", 
 
   assert.equal(response.status, 200);
   assert.deepEqual(actual, expected);
-  assert.equal(actual.linkset.length, 19);
+  assert.equal(actual.linkset.length, 20);
   assert.equal(
     response.headers.get("content-type"),
     'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"; charset=utf-8',

@@ -32,7 +32,7 @@ DATASETS = {
         },
     },
     "https://seiche.info/#dollar-funding-dataset": {
-        "date_modified": "2026-09-12",
+        "date_modified": "2026-09-14",
         "identifier": (
             "urn:liquidity-lab:dataset:seiche-dollar-funding-money-markets"
         ),
@@ -53,7 +53,7 @@ DATASETS = {
         },
     },
     "https://liquilens-undertow.com/#market-liquidity-dataset": {
-        "date_modified": "2026-08-21",
+        "date_modified": "2026-09-14",
         "identifier": (
             "urn:liquidity-lab:dataset:undertow-market-liquidity-exit-cost"
         ),
