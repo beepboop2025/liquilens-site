@@ -1,0 +1,158 @@
+{
+  "schema": "seiche.connected-release-acceptance.v1",
+  "status": "PASS",
+  "full_release_accepted": true,
+  "source": "19118eecee64ffec907838b89f364f53d7cab3de",
+  "version": "0.13.1",
+  "signed_tag": "v0.13.1",
+  "signed_tag_object": "9383ed448ccf257753336492e05b9551249c5f42",
+  "observed_at": "2026-09-13T00:58:16.110620+00:00",
+  "scope": "Seiche 0.13.1 application, fourteen read-only tools, signed packages, both public site origins, Registry, multi-platform container, manual and native portable exports, isolated restores, sixteen immutable off-site objects, original OIDC attestations, matching strict recovery monitor and Zenodo archive verified. All 1,113 archive files match the signed source. Daily native recovery and the existing same-installation attestation workflow are enabled; their next normal executions have not yet been observed. The NY Fed acceptance covers the new import and preservation of prior captures; pre-March-2016 EFFR legacy label correction remains incomplete.",
+  "pending_checks": [],
+  "supersedes": {
+    "url": "https://liquilens.in/protocol/release-evidence/seiche/19118eecee64ffec907838b89f364f53d7cab3de/full-release-acceptance.json",
+    "sha256": "26834492c4e8945427ae19cdc06edf5200d105a7a15fe16120dc756642bf168d",
+    "signature_sha256": "d09752f3f3ccde3d1142391f4594b98accf7d9359730b9c70784509aad5ff072",
+    "correction": "The existing same-installation attestation workflow does not require the optional live-provider verifier credential."
+  },
+  "application": {
+    "deployment": "c81321ef-adb9-4c8a-aa92-849112f6dcdf",
+    "both_origins_verified": true,
+    "public_tools": 14
+  },
+  "publication": {
+    "source": "ebfc4b2d2694824ec608cb01ed3b870a18ca3a03",
+    "site_commit": "0a0123a2bab9af58859efdb1873ceaa2b248456c",
+    "deployment": "8ca350a4-f8ed-4e72-85da-6f069b0c9d57",
+    "image": "sha256:d18e1f53e47ad1cc2124344ec084e52645482946c16899a9e1964fdbfae30b9c",
+    "normal_scheduled_repeat": "verified",
+    "previous_site_archive": "verified"
+  },
+  "distribution": {
+    "pypi": "verified",
+    "registry": "verified",
+    "ghcr_amd64_arm64": "verified",
+    "static_site": "verified"
+  },
+  "recovery": {
+    "manual_export_restore_offsite_attestation": "verified",
+    "native_export_restore_offsite_attestation": "verified",
+    "strict_monitor": "verified",
+    "run": 34729111949,
+    "attempt": 1,
+    "snapshot": "20260913T000606Z",
+    "immutable_objects_verified": 16,
+    "total_bytes": 1850176027,
+    "recovery_receipt_sha256": "d0046be00f20546f07bb03491896af0b7a0d0fe66e99ad41695366cb17c2fa26",
+    "offsite_receipt_sha256": "ab962644b74f7121a94a1dc37fed2acc3dee18418aaa50c7af68de5f4e73bb8d",
+    "controller_deployment": "12cc1e3c-511b-4d7d-8447-61eb4e0372ef",
+    "controller_source": "ebfc4b2d2694824ec608cb01ed3b870a18ca3a03",
+    "controller_image": "sha256:dc1ec81be29203277cf1c4152cf8abb2ce2cf5e658dc9ca8782750b791e3dc6a",
+    "native_index": {
+      "key": "seiche/railway-stateful-recovery/v1/native-executions/2026-09-13/index.json",
+      "sha256": "40e34a7e49cbfe0ae2d2a246545bececcdd525d357b8fd49e737f93e07f358d1",
+      "size": 2950,
+      "version_id": "j6M8pj-ff2IRnpWxN0k95lGb4Zd55r-"
+    },
+    "scheduled_attestation": "configured_same_installation",
+    "native_schedule_utc": "31 2 * * *",
+    "attestation_schedule_utc": "46 4 * * *",
+    "normal_native_execution_observed": false,
+    "normal_attestation_execution_observed": false
+  },
+  "archive": {
+    "status": "verified",
+    "record_url": "https://zenodo.org/records/22728703",
+    "doi": "10.5281/zenodo.22728703",
+    "concept_doi": "10.5281/zenodo.22315385",
+    "access_right": "open",
+    "license": "agpl-3.0-or-later",
+    "file": "beepboop2025/seiche-v0.13.1.zip",
+    "bytes": 5278858,
+    "sha256": "69d4d5906f26d4e10ad049d79aba3d21cecb6775c5585057b8a4eef07591eaa9",
+    "md5": "4ba8f6809eae1d195a99c199823f9189",
+    "source_file_count": 1113,
+    "source_tree_comparison": "PASS",
+    "zip_commit_comment": "19118eecee64ffec907838b89f364f53d7cab3de"
+  },
+  "historical_import": {
+    "status": "IMPORT_SCOPE_PASS",
+    "whole_api_methodology_pass": false,
+    "legacy_correction_complete": false,
+    "known_limitation": "Some pre-March-2016 EFFR records retain a legacy median label although that period used a weighted mean."
+  },
+  "evidence": {
+    "manual-response-recovery/manual-recovery-acceptance.json": {
+      "sha256": "a3107a74ed805f03958118ba9be4f6fa78516f4320450af109f9c0c25987decf",
+      "status": "PASS"
+    },
+    "manual-response-recovery/monitor-ops/strict-monitor-proof.json": {
+      "sha256": "36d03324f9468429d0bd85926524f446082aaa83455fe35d7ddbe95f2c60c08b",
+      "status": "pass"
+    },
+    "native-response-recovery-acceptance.json": {
+      "sha256": "5cba5e2f66cb27303d2e07d2d0207da163721f8177d03035c64dad7e4d8a72df",
+      "status": "PASS"
+    },
+    "native-response-monitor/proof.json": {
+      "sha256": "2b25b54d5784e9d79119978e73f5ead5819612f51e6e05d20c9c4de674404871",
+      "status": "pass"
+    },
+    "native-response-monitor/index-after.json": {
+      "sha256": "32c04e6bbb510423df41a6e451ae643b8897adcfc3583778def16664e411b0cb",
+      "status": "verified_identity"
+    },
+    "seiche-recovery-schedules-current.json": {
+      "sha256": "dc22731e6e32212dcd425e82302a68374575b6e28122f96c690283af700096e9",
+      "status": "PASS"
+    },
+    "seiche-response-ops/native-restored.json": {
+      "sha256": "f7f23e6bcfaa22560f4ed9d2f60084f654abcdc0f3c7093309979890e821e816",
+      "status": "PASS"
+    },
+    "seiche-packages-response/acceptance.json": {
+      "sha256": "24a6bf98bdbacd581898ec14c51298c4e11dbbac5ed733c5d463a8947d4c2d68",
+      "status": "PASS"
+    },
+    "zenodo-0.13.1/archive-acceptance.json": {
+      "sha256": "b8cb78b4d410fe65add3e5a6de958e2d9bbc1c978e11d57b31684a2d82c5839f",
+      "status": "PASS"
+    },
+    "seiche-closure/runtime-response-complete/runtime-acceptance.json": {
+      "sha256": "a65f933662f4776e5bcddb8ee49f6c3488bab9014f84209a5fe986bcd0220caa",
+      "status": "RUNTIME_PASS"
+    },
+    "seiche-closure/runtime-response-actual/durable-acceptance.json": {
+      "sha256": "7db3e903c1cc4a1b6122a7819fb486d3b473d457b1ae874fb88133d7bf2cd8a8",
+      "status": "PASS"
+    },
+    "seiche-closure/repeat-response/scheduled-repeat-acceptance.json": {
+      "sha256": "d9c5c3802f000ea4312ca3db1b28ff9e8cd33b9153dedd2105f80334de76964c",
+      "status": "PASS"
+    },
+    "seiche-closure/public-response/application-site-proof.json": {
+      "sha256": "094622c97220dbe6a6106c0e8eb57ee6ffaee4d37cdce668134dde1dc65093c1",
+      "status": "PASS"
+    },
+    "seiche-closure/assets-response/application-site-proof.json": {
+      "sha256": "6fb345bd5ff6628b2a6fdda7b650e1c5d3b116bef9401f5e7b3d100c7732e64f",
+      "status": "PASS"
+    },
+    "seiche-closure/browser-response/result.json": {
+      "sha256": "7912b6c06516f4965617ff06a8e1615fe2ec21155449681012dc4965aec84363",
+      "status": "pass"
+    },
+    "seiche-closure/catalog-dataset-r12/dataset-proof.json": {
+      "sha256": "6e71831011c3c6a1d9dffa2aa5a554ce8903df04e458db9fbe81154edc2ef4f4",
+      "status": "PASS"
+    },
+    "seiche-closure/catalog-dataset-r12/catalog-proof.json": {
+      "sha256": "a8c8c2c3ad7f6c21e9d81458d2b58437beb46c91c45f47e76053e9cf2a87051f",
+      "status": "verified_identity"
+    },
+    "seiche-closure/nyfed-import-scope-r12.json": {
+      "sha256": "5d764294941ac016b1e8fc72ec3c5d6dc85c35e11c948710ef266500bb98d2d7",
+      "status": "IMPORT_SCOPE_PASS"
+    }
+  }
+}

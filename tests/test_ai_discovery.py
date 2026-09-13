@@ -49,7 +49,7 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["evidence_carrier_browser_verifier"] == (
         "https://beepboop2025.github.io/liquilens-evidence-carrier/")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
-    assert card["updated"] == "2026-09-12"
+    assert card["updated"] == "2026-09-13"
     assert card["access"]["api_catalog_discovery"] == (
         "https://liquilens.in/.well-known/api-catalog")
     assert card["access"]["daily_articles"] == "https://liquilens.in/articles/"
@@ -332,7 +332,7 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
     seiche = entries["urn:air:liquilens.in:catalog:seiche"]
 
     assert seiche["version"] == "0.13.1"
-    assert seiche["updatedAt"] == "2026-09-12T20:46:27.456028Z"
+    assert seiche["updatedAt"] == "2026-09-13T00:58:16.110620Z"
     assert seiche["capabilities"] == [
         "latest_article",
         "funding_stress_now",
@@ -359,9 +359,9 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
     assert seiche["metadata"]["releasePublicToolCount"] == 14
     assert "package inventories agree" in seiche["metadata"]["inventoryScope"]
     assert seiche["metadata"]["distributionState"] == "verified"
-    assert seiche["metadata"]["recoveryState"] == "manual_verified_scheduled_attestation_pending"
+    assert seiche["metadata"]["recoveryState"] == "verified"
     assert seiche["metadata"]["recoveryAccepted"] is True
-    assert seiche["metadata"]["fullReleaseAccepted"] is False
+    assert seiche["metadata"]["fullReleaseAccepted"] is True
     assert seiche["metadata"]["archiveState"] == "verified"
     assert seiche["metadata"]["archiveDoi"] == "10.5281/zenodo.22728703"
     assert seiche["metadata"]["archiveSourceFileCount"] == 1113
@@ -425,7 +425,7 @@ def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
         ),
         "pypiSdistBytes": 1173483,
         "staticRun": (
-            "https://railway.com/project/9c094747-8662-4ba7-8d6b-5a4fa7ca27eb/service/5b9d50fb-2bd6-4727-bccd-678c610e32f7?id=e235a427-873d-4b71-91a1-d17885ef7c0c"
+            "https://railway.com/project/9c094747-8662-4ba7-8d6b-5a4fa7ca27eb/service/5b9d50fb-2bd6-4727-bccd-678c610e32f7?id=8ca350a4-f8ed-4e72-85da-6f069b0c9d57"
         ),
         "staticDeployment": "https://15023196.seiche.pages.dev",
         "catalogSha256": (
@@ -610,9 +610,9 @@ def test_sibling_product_cards_match_the_catalog_contracts():
     }
     seiche = siblings["Seiche"]
     assert seiche["distribution_state"] == "verified"
-    assert seiche["recovery_state"] == "manual_verified_scheduled_attestation_pending"
+    assert seiche["recovery_state"] == "verified"
     assert seiche["recovery_accepted"] is True
-    assert seiche["full_release_accepted"] is False
+    assert seiche["full_release_accepted"] is True
     assert {
         key: seiche[key]
         for key in (
@@ -737,12 +737,12 @@ def test_sibling_product_cards_match_the_catalog_contracts():
 
 def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     status = read("status/index.html")
-    assert "Release contract · 12 September 2026" in status
+    assert "Release contract · 13 September 2026" in status
     assert "hosted MCP 0.13.1" in status
-    assert "LIVE / VERIFICATION PENDING" in status
+    assert "LIVE / VERIFIED" in status
     assert "https://doi.org/10.5281/zenodo.22728703" in status
-    assert "Manual portable export, isolated restore, immutable offsite receipts and strict recovery monitoring passed" in status
-    assert "Scheduled recovery attestation awaits a project credential" in status
+    assert "Manual and native portable exports, isolated restores, immutable offsite receipts, original OIDC attestations and matching strict recovery monitoring passed" in status
+    assert "their next normal executions have not yet been observed" in status
     assert "14 public read-only MCP tools, 4 prompts and 0 resources" in status
     assert "14 public read-only MCP tools" in status
     assert "signed tag, exact PyPI artifacts, static catalog" in status
@@ -774,13 +774,13 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     ) in sitemap
     assert (
         "<loc>https://liquilens.in/status/</loc>\n"
-        "    <lastmod>2026-09-12</lastmod>"
+        "    <lastmod>2026-09-13</lastmod>"
     ) in sitemap
     generator = read("scripts/build_replay_pages.py")
     assert '("/protocol/", "2026-09-02", "monthly", "0.9")' in generator
     assert '("/protocol/trade-safety/", "2026-09-02", "monthly", "0.95")' in generator
     assert '("/ship-log/", "2026-09-02", "weekly", "0.7")' in generator
-    assert '("/status/", "2026-09-12", None, None)' in generator
+    assert '("/status/", "2026-09-13", None, None)' in generator
 
 
 def test_human_claim_surfaces_print_the_same_evidence_boundary():
@@ -987,10 +987,17 @@ def test_seiche_full_acceptance_is_bound_to_signed_public_receipt(tmp_path):
     assert receipt['source'] == metadata['releaseCommit']
     assert receipt['signed_tag_object'] == metadata['signedTagObject']
     assert receipt['version'] == entry['version'] == '0.13.1'
-    assert receipt['status'] == 'PARTIAL' and receipt['full_release_accepted'] is False
-    assert metadata['fullReleaseAccepted'] is False
-    assert receipt['pending_checks'] == ['scheduled_recovery_attestation']
-    assert metadata['scheduledRecoveryAttestation'] == 'pending_project_credential'
+    assert receipt['status'] == 'PASS' and receipt['full_release_accepted'] is True
+    assert metadata['fullReleaseAccepted'] is True
+    assert receipt['pending_checks'] == []
+    assert metadata['scheduledRecoveryAttestation'] == 'configured_same_installation'
+    assert receipt['recovery']['native_export_restore_offsite_attestation'] == 'verified'
+    assert receipt['recovery']['normal_native_execution_observed'] is False
+    assert receipt['recovery']['normal_attestation_execution_observed'] is False
+    prior = Path(ROOT) / urlparse(receipt['supersedes']['url']).path.lstrip('/')
+    assert hashlib.sha256(prior.read_bytes()).hexdigest() == receipt['supersedes']['sha256']
+    assert hashlib.sha256(Path(str(prior) + '.sig').read_bytes()).hexdigest() == receipt['supersedes']['signature_sha256']
+    assert json.loads(prior.read_bytes())['status'] == 'PARTIAL'
     assert metadata['nyfedWholeApiMethodologyPass'] is False
     archive = receipt['archive']
     assert archive['status'] == metadata['archiveState'] == 'verified'
