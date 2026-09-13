@@ -237,7 +237,7 @@ def test_catalog_obeys_the_ard_envelope():
     catalog = _catalog()
     assert catalog["specVersion"] == "1.0"
     assert catalog["host"]["displayName"] == "LiquiLens"
-    assert len(catalog["entries"]) == 18
+    assert len(catalog["entries"]) == 19
 
     identifiers = set()
     for entry in catalog["entries"]:
@@ -305,7 +305,7 @@ def test_mcp_card_and_nested_product_line_are_current():
     for tool in ("crypto_regime_board", "stablecoin_rails_board",
                  "crypto_exposure_board"):
         assert tool in mcp["capabilities"]
-    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.13.1"
+    assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.13.2"
     assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.10.0"
     assert entries["urn:air:liquilens.in:openapi:failure-radar"]["version"] == (
         "1.0.0")
@@ -327,9 +327,8 @@ def test_mcp_card_and_nested_product_line_are_current():
         "https://liquilens-undertow.com/.well-known/ai-catalog.json")
 
 
-def test_seiche_discovery_contract_and_distribution_receipts_are_exact():
-    entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
-    seiche = entries["urn:air:liquilens.in:catalog:seiche"]
+def test_historical_seiche_discovery_and_distribution_receipts_remain_exact():
+    seiche = json.loads(read("protocol/release-evidence/seiche/19118eecee64ffec907838b89f364f53d7cab3de/discovery-snapshot-20260914.json"))["catalog_entry"]
 
     assert seiche["version"] == "0.13.1"
     assert seiche["updatedAt"] == "2026-09-13T00:58:16.110620Z"
@@ -608,7 +607,7 @@ def test_sibling_product_cards_match_the_catalog_contracts():
         sibling["name"]: sibling
         for sibling in json.loads(read("product-card.json"))["siblings"]
     }
-    seiche = siblings["Seiche"]
+    seiche = json.loads(read("protocol/release-evidence/seiche/19118eecee64ffec907838b89f364f53d7cab3de/discovery-snapshot-20260914.json"))["product_card"]
     assert seiche["distribution_state"] == "verified"
     assert seiche["recovery_state"] == "verified"
     assert seiche["recovery_accepted"] is True
@@ -738,11 +737,11 @@ def test_sibling_product_cards_match_the_catalog_contracts():
 def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     status = read("status/index.html")
     assert "Release contract · 13 September 2026" in status
-    assert "hosted MCP 0.13.1" in status
+    assert "hosted MCP 0.13.2" in status
     assert "LIVE / VERIFIED" in status
-    assert "https://doi.org/10.5281/zenodo.22728703" in status
-    assert "Manual and native portable exports, isolated restores, immutable offsite receipts, original OIDC attestations and matching strict recovery monitoring passed" in status
-    assert "their next normal executions have not yet been observed" in status
+    assert "https://doi.org/10.5281/zenodo.22732023" in status
+    assert "Current-release recovery and volume resize are owner-deferred" in status
+    assert "signed 0.13.1 recovery receipt remains historical evidence for its original application" in status
     assert "14 public read-only MCP tools, 4 prompts and 0 resources" in status
     assert "14 public read-only MCP tools" in status
     assert "signed tag, exact PyPI artifacts, static catalog" in status
@@ -968,12 +967,12 @@ def test_every_discovery_pointer_uses_the_well_known_catalog():
     assert api_catalog in read("llms.txt")
 
 
-def test_seiche_full_acceptance_is_bound_to_signed_public_receipt(tmp_path):
+def test_historical_seiche_full_acceptance_keeps_its_original_identity(tmp_path):
     import hashlib
     from pathlib import Path
     import subprocess
 
-    entry = next(e for e in _catalog()['entries'] if e['identifier'].endswith(':seiche'))
+    entry = json.loads(read('protocol/release-evidence/seiche/19118eecee64ffec907838b89f364f53d7cab3de/discovery-snapshot-20260914.json'))['catalog_entry']
     metadata = entry['metadata']
     files = {}
     for field in ('releaseAcceptanceReceipt', 'releaseAcceptanceSignature'):

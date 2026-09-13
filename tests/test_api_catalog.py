@@ -15,7 +15,7 @@ CATALOG = json.loads(
 def test_api_catalog_uses_linkset_json_and_unique_https_anchors():
     assert set(CATALOG) == {"linkset"}
     linkset = CATALOG["linkset"]
-    assert len(linkset) == 19
+    assert len(linkset) == 20
     anchors = [item["anchor"] for item in linkset]
     assert len(anchors) == len(set(anchors))
     assert all(urlparse(anchor).scheme == "https" for anchor in anchors)
@@ -156,6 +156,7 @@ def test_catalog_never_promotes_planned_or_private_surfaces_to_live():
     serialized = json.dumps(CATALOG).lower()
     assert "drug-price-observatory.vercel.app" not in serialized
     assert "scamshield" not in serialized
-    assert "/.well-known/mcp.json" not in serialized
+    assert "https://liquilens.in/.well-known/mcp.json" not in serialized
+    assert "https://api.seiche.info/.well-known/mcp.json" in serialized
     assert "agent-card" not in serialized
     assert "a2a" not in serialized

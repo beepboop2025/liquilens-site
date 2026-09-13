@@ -406,6 +406,25 @@
           "type": "application/ai-catalog+json"
         }
       ]
+    },
+    {
+      "anchor": "https://api.seiche.info/api/v2/corpus/mcp",
+      "service-doc": [
+        {
+          "href": "https://seiche.info/#corpus",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://seiche.info/.well-known/ai-catalog.json",
+          "type": "application/ai-catalog+json"
+        },
+        {
+          "href": "https://api.seiche.info/.well-known/mcp.json",
+          "type": "application/json"
+        }
+      ]
     }
   ]
 }

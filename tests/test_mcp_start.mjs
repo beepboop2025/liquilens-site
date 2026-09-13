@@ -19,12 +19,12 @@ function fixtureFetch(task, mutate = x => x) {
   return {fetcher, calls};
 }
 
-test("all supported clients produce fixed-endpoint configurations for nine servers", () => {
-  assert.equal(SERVERS.length, 9);
+test("all supported clients produce fixed-endpoint configurations for eleven servers", () => {
+  assert.equal(SERVERS.length, 11);
   const ids = SERVERS.map(s => s.id);
-  assert.equal(Object.keys(JSON.parse(configuration("cursor", ids)).mcpServers).length, 9);
-  assert.equal(Object.keys(JSON.parse(configuration("vscode", ids)).servers).length, 9);
-  assert.equal(configuration("codex", ids).split("\n").length, 9);
+  assert.equal(Object.keys(JSON.parse(configuration("cursor", ids)).mcpServers).length, 11);
+  assert.equal(Object.keys(JSON.parse(configuration("vscode", ids)).servers).length, 11);
+  assert.equal(configuration("codex", ids).split("\n").length, 11);
   assert.match(configuration("claude", ["undertow"]), /^claude mcp add --transport http undertow https:\/\/api.seiche.info\/undertow\/mcp$/);
   assert.throws(() => configuration("cursor", ["evil"]));
   assert.throws(() => configuration("unknown", ids));

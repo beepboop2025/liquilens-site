@@ -1,0 +1,71 @@
+{
+  "schema": "seiche.application-and-distribution-discovery-acceptance.v1",
+  "status": "PASS",
+  "version": "0.13.2",
+  "source": "1deccedc16dc832f6c0bdef61a0426e4b9b2d9eb",
+  "observed_at": "2026-09-13T04:18:13.038134+00:00",
+  "signed_tag": "v0.13.2",
+  "signed_tag_object": "f4260610bc97015b19831a8c9593118a06824265",
+  "scope": "Application, website, PyPI, MCP Registry, container and Zenodo publication verified. Recovery and volume resize were deferred by the owner; this receipt makes no current-release recovery acceptance.",
+  "application_deployment": "9eb5abec-a2cf-4064-ab97-b5c9ce2c3417",
+  "application_image": "sha256:2299dbe25cb7d9a5659d101ce01a61e63610eaaff5dc80b347faeeb689d48b67",
+  "site_commit": "f60aabd506ef33b67666dff51af9196c2463ef1a",
+  "static_deployment": "a786d882-86e0-4621-8df8-3a4c1822c280",
+  "container_index": "sha256:74da139f9565dc3a2ff113e27895aa8c816afb42ea90de89b2a8194474fd95ea",
+  "distribution_state": "verified",
+  "recovery_accepted": false,
+  "full_release_accepted": false,
+  "recovery_status": "USER_DEFERRED_RECOVERY_AND_VOLUME_RESIZE",
+  "volume_capacity_gb_unchanged": 200,
+  "new_recovery_export_performed": false,
+  "pypi_files": [
+    {
+      "bytes": 1303409,
+      "filename": "seiche-0.13.2-py3-none-any.whl",
+      "sha256": "2c875d9af50a13f1e31cf3646c5ebab69a2fc9237cf0d774c0910cf3e7116000",
+      "uploaded_at": "2026-09-13T03:36:41.254591Z",
+      "url": "https://files.pythonhosted.org/packages/5f/81/9c5576ae67582b8641a181c2120d2d92269e7d05d594b80346b886451ece/seiche-0.13.2-py3-none-any.whl"
+    },
+    {
+      "bytes": 1173887,
+      "filename": "seiche-0.13.2.tar.gz",
+      "sha256": "51b4baecfcf2f95b873c0cfd68e56dfead2298c5cb34057069f19f952fe650e6",
+      "uploaded_at": "2026-09-13T03:36:43.136583Z",
+      "url": "https://files.pythonhosted.org/packages/36/bb/5fb71cf07c23c5fb2c2b00483a8ab8813f0a8ecc8f61ed74354051e8019c/seiche-0.13.2.tar.gz"
+    }
+  ],
+  "registry": {
+    "version": "0.13.2",
+    "run": 34736780216,
+    "published_at": "2026-09-13T03:59:02.499194Z",
+    "server_manifest_sha256": "41cb698246258907ed245a28e3b22fb3cb5478050c688de8ee1dc140d7236236"
+  },
+  "archive": {
+    "doi": "10.5281/zenodo.22732023",
+    "url": "https://zenodo.org/records/22732023",
+    "sha256": "cf25eb35005725348cfa5413978939b8e6ac77e9b08d531bd6193475ef69cac1",
+    "bytes": 5548387,
+    "source_file_count": 1126,
+    "source": "1deccedc16dc832f6c0bdef61a0426e4b9b2d9eb"
+  },
+  "historical_release_acceptance": {
+    "version": "0.13.1",
+    "source": "19118eecee64ffec907838b89f364f53d7cab3de",
+    "receipt": "https://liquilens.in/protocol/release-evidence/seiche/19118eecee64ffec907838b89f364f53d7cab3de/full-release-acceptance-20260913.json",
+    "sha256": "sha256:45b8d062344e96fa3b141c8cecaef2e9a2ae2b0b1ae6aed84da56ecf467a06e4",
+    "signature": "https://liquilens.in/protocol/release-evidence/seiche/19118eecee64ffec907838b89f364f53d7cab3de/full-release-acceptance-20260913.json.sig",
+    "signature_sha256": "sha256:949bf28c85a4ae9ab767cde204b05c197d072fe1961c832c6358cb3fbc6f9ccb"
+  },
+  "operator_evidence_sha256": {
+    "deployment": "sha256:c1c888712676d1015da78a2cabcbd0a54dd80fa14d1f6ac7d765eaef8259db80",
+    "pypi": "sha256:2d2e756a1167e1e59a66c39cc17299618c82b2f6f28309bb8e0a392ede12f591",
+    "registry": "sha256:7ea70d0e9466970a2c637118f9ba085aa4664ff85afe0e436a0abd5916df4bf9",
+    "archive": "sha256:105a945227e868ab7eee0af41e2d4453c6adfe5fb951d4ab0c5c5001f20553e0"
+  },
+  "limitations": [
+    "China data remains explicitly unavailable with zero accepted series.",
+    "Pre-March2016 EFFR methodology limitation remains unresolved.",
+    "The direct OFR dataset is verified on both sites; its external submission status remains draft_not_submitted.",
+    "Missing original publisher test build logs and the controlled-restart wrapper failure remain preserved; actual-image tests passed and were independently reconciled."
+  ]
+}
