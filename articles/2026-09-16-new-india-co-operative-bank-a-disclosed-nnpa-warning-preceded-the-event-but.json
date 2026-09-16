@@ -1,0 +1,125 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-09-16-new-india-co-operative-bank-a-disclosed-nnpa-warning-preceded-the-event-but",
+  "product": "liquilens",
+  "slug": "2026-09-16-new-india-co-operative-bank-a-disclosed-nnpa-warning-preceded-the-event-but",
+  "date": "2026-09-16",
+  "article_type": "historical_replay",
+  "topic": "new-india-co-operative-bank",
+  "headline": "New India Co-operative Bank: a disclosed NNPA warning preceded the event, but fraud limits the replay",
+  "dek": "The reconstructed record places an NNPA action-zone breach before New India Co-operative Bank’s recorded event. That is a filing-period observation, not market-price confirmation or a model-derived failure forecast, and fraud masking limits what the case can establish.",
+  "canonical_url": "https://liquilens.in/articles/2026-09-16-new-india-co-operative-bank-a-disclosed-nnpa-warning-preceded-the-event-but/",
+  "published_at": "2026-09-16T11:19:23Z",
+  "evidence_as_of": "2026-09-16",
+  "board_signature": "611dab169b21f3df4d3bb97f1fb2642ee799eef63c2ad141345d3737bfe35c79",
+  "subject": {
+    "slug": "new-india-co-operative-bank",
+    "name": "New India Co-operative Bank",
+    "inst_type": "ucb",
+    "default_date": "2025-02-13",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "new-india-co-operative-bank",
+      "inst_type": "ucb",
+      "default_date": "2025-02-13",
+      "first_action_zone": {
+        "period_end": "2021-03-31",
+        "q": "FY2021",
+        "status": "saf_triggered",
+        "knowledge_time_proxy": "2021-05-30",
+        "breaches": [
+          "NNPA"
+        ]
+      },
+      "lead_months": 44,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "new-india-co-operative-bank",
+      "inst_type": "ucb",
+      "scoreable": true,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1580,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:a10dca9b7ee2799c9b0b96a0c4529e6622e0b06efdc6a36d8e7cf280ed94c430",
+    "memory_fingerprint": "sha256:1186134605e216792bf4315bbcedfddddfb7f8990b52cb67eef70bb17dfe34a4",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 4,
+    "dossier_sha256": "daaa1b7ac7e9c1eb8df8706bffc62d05a685c2b584460a20eda230ff9c329428",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "historical_news_and_forecast_boundary",
+      "not_a_credit_rating",
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Reframed the core claim as a filing-period observation rather than a causal or predictive conclusion.",
+      "Separated filing, market-price, and model-derived signals; retained market authority and missing-data limits.",
+      "Strengthened the fraud-masked counter-case and preserved construction-PIT, eligibility, and validation disclosures.",
+      "Removed the unsupported confidence-interval percentage reference.",
+      "Removed construction-status placeholder language from published copy.",
+      "Preserved fraud masking, funding eligibility, construction-PIT, market-authority, and model-diagnostic limits.",
+      "Separated filing-period observation, market-price evidence, and model derivation throughout.",
+      "Removed the leaked construction-status language and retained only dossier-supported terminology.",
+      "Preserved the filing-period, market-price, and model-derivation distinctions.",
+      "Retained fraud masking, funding eligibility, construction-PIT, market-authority, and validation limits."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:a10dca9b7ee2799c9b0b96a0c4529e6622e0b06efdc6a36d8e7cf280ed94c430",
+      "memory_fingerprint": "sha256:1186134605e216792bf4315bbcedfddddfb7f8990b52cb67eef70bb17dfe34a4",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
