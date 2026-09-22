@@ -1,0 +1,117 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-09-22-religare-finvest-s-funding-warning-came-first-but-the-replay-cannot-forecast",
+  "product": "liquilens",
+  "slug": "2026-09-22-religare-finvest-s-funding-warning-came-first-but-the-replay-cannot-forecast",
+  "date": "2026-09-22",
+  "article_type": "historical_replay",
+  "topic": "religare-finvest",
+  "headline": "Religare Finvest’s funding warning came first—but the replay cannot forecast",
+  "dek": "A disclosed-liability signal appeared before Religare Finvest’s default date under a conservative availability proxy. The result is a fraud-masked historical sequence, not causal proof, a market verdict, or a tradable forecast.",
+  "canonical_url": "https://liquilens.in/articles/2026-09-22-religare-finvest-s-funding-warning-came-first-but-the-replay-cannot-forecast/",
+  "published_at": "2026-09-22T11:19:10Z",
+  "evidence_as_of": "2026-09-22",
+  "board_signature": "611dab169b21f3df4d3bb97f1fb2642ee799eef63c2ad141345d3737bfe35c79",
+  "subject": {
+    "slug": "religare-finvest",
+    "name": "Religare Finvest",
+    "inst_type": "nbfc",
+    "default_date": "2018-01-18",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "religare-finvest",
+      "inst_type": "nbfc",
+      "default_date": "2018-01-18",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "religare-finvest",
+      "inst_type": "nbfc",
+      "scoreable": true,
+      "first_signal": {
+        "period_end": "2016-03-31",
+        "index": 44.3,
+        "knowledge_time_proxy": "2016-05-30",
+        "band": "watch",
+        "flags": []
+      },
+      "lead_months": 19
+    }
+  },
+  "word_count": 1451,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:97cf9b6d70fd8d31888393593fd2a0d59b96f65b54bf678838ed776fb00fd5d1",
+    "memory_fingerprint": "sha256:ab52af94753066cea689778289d752916c14d69fb5c5a4ec58031fa9973a7174",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 3,
+    "dossier_sha256": "3b387b4607f482f55201154153723c48150d9b06b939f4bcfb3f5e79b76fbe33",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "not_a_credit_rating"
+    ],
+    "review_notes": [
+      "Rebuilt the incomplete draft into a bounded historical replay and retained fraud-masked, missing-data, stale-record, and authority disclosures.",
+      "Separated filing-period evidence, market-price data, and model diagnostics; removed causal and predictive implications.",
+      "Added the required research-boundary phrases and linked only to permitted dossier sources.",
+      "Rebuilt the lede to state the thesis, availability clock and consequences of over-reading the replay.",
+      "Preserved fraud masking, incomplete liability-disclosure coverage, stale-record exclusions and market-authority limits.",
+      "Separated filing observations, model diagnostics and market-price evidence throughout."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:97cf9b6d70fd8d31888393593fd2a0d59b96f65b54bf678838ed776fb00fd5d1",
+      "memory_fingerprint": "sha256:ab52af94753066cea689778289d752916c14d69fb5c5a4ec58031fa9973a7174",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
