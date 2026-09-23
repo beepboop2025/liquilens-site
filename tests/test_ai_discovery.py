@@ -97,7 +97,7 @@ def test_discovery_indexes_and_home_link_the_selection_surface():
     assert 'https://liquilens.in/banking/' in read("llms.txt")
 
 
-def test_home_exposes_an_attributed_daily_brief_above_the_mobile_fold():
+def test_home_keeps_an_attributed_daily_brief_in_primary_actions():
     home = read("index.html")
     hero = home[home.index('<div class="hero-actions">'):
                 home.index('</div>', home.index('<div class="hero-actions">'))]
@@ -107,7 +107,7 @@ def test_home_exposes_an_attributed_daily_brief_above_the_mobile_fold():
     assert "Get 09:00 IST brief" in hero
     assert "daily failure radar · /stop any time" in hero
     assert 'target="_blank" rel="noopener noreferrer"' in hero
-    assert hero.index(telegram) < hero.index('href="/replay/"')
+    assert home.index(telegram) < home.index('<details class="hero-more">')
 
 
 def test_sitemap_excludes_cross_domain_undertow_mirrors():

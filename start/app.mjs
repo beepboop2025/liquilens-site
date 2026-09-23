@@ -1,5 +1,6 @@
 import {TASKS, SERVERS, configuration, runTask, safeUrl} from "./core.mjs";
 import {acquisitionSource, questionLink, telegramLink, TELEGRAM_DESKS} from "./acquisition.mjs";
+import {captureReview, reviewPacket, reviewMarkdown} from "./review.mjs";
 
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(location.search);
@@ -8,6 +9,7 @@ const source = acquisitionSource(location.search);
 let task = Object.hasOwn(TASKS, params.get("task")) ? params.get("task") : "bank";
 let selectedIds = [task === "bank" ? "liquilens" : task === "funding" ? "seiche" : "undertow"];
 let activeRequest = null, activeResult = null, resultTask = null;
+const review = new Map();
 const size = Number(params.get("size"));
 if ([1000, 10000, 100000, 1000000].includes(size)) $("size").value = String(size);
 
@@ -28,6 +30,17 @@ function download(text, name, type = "application/json") {
 function definitionList(id, rows) {
   $(id).replaceChildren(...rows.map(([label, value]) => {const row = document.createElement("div"), dt = document.createElement("dt"), dd = document.createElement("dd"); dt.textContent = label; dd.textContent = value; row.append(dt, dd); return row;}));
 }
+function renderReview() {
+  $("review-count").textContent = review.size ? `${review.size} of 3 product snapshots kept in this tab.` : "No snapshots kept yet.";
+  $("review-items").replaceChildren(...[...review.values()].map(entry => {
+    const item = document.createElement("li"), text = document.createElement("p"), button = document.createElement("button");
+    text.textContent = `${entry.product} — retrieved ${entry.retrieved_at}${entry.task === "exit" ? `; requested size $${entry.arguments.size_usd.toLocaleString("en-US")}` : ""}`;
+    button.type = "button"; button.textContent = `Remove ${entry.product}`;
+    button.addEventListener("click", () => {review.delete(entry.task); renderReview();});
+    item.append(text, button); return item;
+  }));
+  for (const id of ["download-brief", "download-review", "clear-review"]) $(id).disabled = review.size === 0;
+}
 function renderResult(result) {
   const v = result.view;
   $("result-state").textContent = `Returned state: ${v.state}`;
@@ -47,7 +60,7 @@ function setup() {
   $("config").textContent = configuration($("client").value, selectedIds);
   const server = SERVERS.find(s => s.id === $("server").value);
   $("prompt").value = server.prompt;
-  $("config-help").textContent = ({codex: "Run in your terminal. Your existing configured servers are preserved.", claude: "Run in your terminal. The command adds the server in Claude Code’s default scope.", cursor: "Merge into .cursor/mcp.json in your project. Keep existing server entries.", vscode: "Merge into .vscode/mcp.json in your project. Keep existing server entries."})[$("client").value];
+  $("config-help").textContent = ({codex: "Run in your terminal. Your existing configured servers are preserved.", claude: "Run in your terminal. The command adds the server in Claude Code’s default scope.", cursor: "Merge into .cursor/mcp.json in your project. Keep existing server entries.", vscode: "Merge into .vscode/mcp.json in your project. Keep existing server entries.", openclaw: "Merge these mcp.servers entries into ~/.openclaw/openclaw.json. Keep your existing settings and review discovered tools. Requires an OpenClaw version with native MCP support.", hermes: "Merge these mcp_servers entries into ~/.hermes/config.yaml. Keep existing settings, then start a new session or use /reload-mcp."})[$("client").value];
 }
 function chooseTask(value, updateUrl = true) {
   activeRequest?.abort(); activeRequest = null; activeResult = null; resultTask = null; task = value;
@@ -76,7 +89,7 @@ $("size").addEventListener("change", () => {if (task === "exit") chooseTask("exi
 $("bundle").addEventListener("click", () => {selectedIds = ["liquilens", "seiche", "undertow"]; setup(); $("config-help").textContent += " This setup adds all three public MCPs.";});
 $("copy-config").addEventListener("click", function () {copy($("config").textContent, this, "setup_copied");});
 $("copy-prompt").addEventListener("click", function () {copy($("prompt").value, this, "prompt_copied");});
-$("download-config").addEventListener("click", () => {const cli = ["codex", "claude"].includes($("client").value); download($("config").textContent + "\n", `${$("client").value}-financial-mcp.${cli ? "txt" : "json"}`, cli ? "text/plain" : "application/json"); track("setup_downloaded");});
+$("download-config").addEventListener("click", () => {const client = $("client").value, cli = ["codex", "claude"].includes(client), yaml = client === "hermes"; download($("config").textContent + "\n", `${client}-financial-mcp.${cli ? "txt" : yaml ? "yaml" : "json"}`, cli || yaml ? "text/plain" : "application/json"); track("setup_downloaded");});
 $("share").addEventListener("click", function () {copy(questionLink(task, "shared", $("size").value), this, "question_shared");});
 $("run").addEventListener("click", async () => {
   if (activeRequest) return;
@@ -95,6 +108,16 @@ $("run").addEventListener("click", async () => {
   } finally {clearTimeout(timeout); if (activeRequest === controller) {activeRequest = null; $("run").disabled = false;}}
 });
 $("download").addEventListener("click", () => {if (!activeResult) return; download(JSON.stringify({schema: "liquilens.browser-research.v1", task: resultTask, retrieved_at: activeResult.retrievedAt, endpoint: TASKS[resultTask].endpoint, tool: TASKS[resultTask].tool, evidence: activeResult.evidence}, null, 2), `${resultTask}-evidence.json`); track("evidence_downloaded", resultTask);});
+$("keep-review").addEventListener("click", () => {
+  if (!activeResult) return;
+  try {
+    review.set(resultTask, captureReview(resultTask, activeResult, {size: Number($("size").value)}));
+    renderReview(); announce(`${TASKS[resultTask].product} snapshot kept. A later selection for this product replaces it in the brief.`);
+  } catch (error) {announce(error.message, "error");}
+});
+$("download-brief").addEventListener("click", () => {if (review.size) download(reviewMarkdown([...review.values()]), "financial-evidence-review.md", "text/markdown;charset=utf-8");});
+$("download-review").addEventListener("click", () => {if (review.size) download(JSON.stringify(reviewPacket([...review.values()]), null, 2), "financial-evidence-review.json");});
+$("clear-review").addEventListener("click", () => {review.clear(); renderReview();});
 $("useful").addEventListener("click", async function () {
   if (!activeResult || this.disabled) return;
   const submitted = activeResult; this.disabled = true; this.textContent = "Sending feedback…";
@@ -104,3 +127,4 @@ $("useful").addEventListener("click", async function () {
   this.disabled = accepted || verification;
 });
 chooseTask(task, false);
+renderReview();

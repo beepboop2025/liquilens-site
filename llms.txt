@@ -1,5 +1,15 @@
 # LiquiLens
 
+## Institutional agent workflow
+
+- Task guide: https://liquilens.in/developers/institutions/
+- OpenClaw native MCP configuration: https://liquilens.in/developers/institutions/openclaw.json
+- Hermes MCP configuration: https://liquilens.in/developers/institutions/hermes.yaml
+- Institution stress-review skill: https://liquilens.in/developers/institutions/liquilens-institution-review/SKILL.md
+- Python review plus Seiche context: https://liquilens.in/developers/recipes/institution_review.py (keep financial_research.py beside it).
+
+Use for a named institution's stress buildup, default-risk evidence and risk/compliance review questions. Discover coverage, resolve the exact entity and preserve jurisdiction, filing dates, source units, missingness and separately dated Seiche money-market context. A public review does not certify private-book compliance. These are custom connection recipes, not a claim of OpenClaw or Nous catalog approval or universal institution coverage.
+
 LiquiLens is a bank and lender early-warning system. It uses public filings, funding structure, regulatory thresholds, and market signals to identify signs of distress. Public outputs are risk screens, not credit ratings or predictions that an institution will fail.
 
 Canonical site: https://liquilens.in/
