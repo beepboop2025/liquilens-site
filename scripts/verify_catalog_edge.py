@@ -1431,7 +1431,50 @@ def _validate_palimpsest_rights_resource(
         )
 
 
-def _validate_palimpsest_research_catalog(result: dict[str, Any]) -> None:
+def _palimpsest_research_source_catalogs() -> tuple[dict[str, Any], dict[str, Any]]:
+    """Bind source-reported availability to one published static edition."""
+    base = "https://www.palimpsest.info"
+    manifest_raw, headers, _ = _fetch_bytes(base + "/railway-release.json", accept="application/json")
+    manifest = _json_object(manifest_raw, headers.get("content-type", ""), "Palimpsest static manifest")
+    if (manifest.get("schema_version") != "palimpsest.railway-static-release.v1"
+            or manifest.get("state") != "artifact_ready"
+            or manifest.get("deployment_source") != "local-git-archive"
+            or manifest.get("github_required") is not False
+            or re.fullmatch(r"[0-9a-f]{40}", str(manifest.get("source_commit", ""))) is None):
+        raise RuntimeError("Palimpsest research source has no exact static edition")
+    files = manifest.get("critical_files")
+    if not isinstance(files, dict):
+        raise RuntimeError("Palimpsest research source manifest has no file hashes")
+    catalogs = []
+    for path in ("readings/research-catalog-latest.json", "readings/public-data-catalog-latest.json"):
+        anchor = files.get(path)
+        if (not isinstance(anchor, dict) or type(anchor.get("bytes")) is not int
+                or not 1 <= anchor["bytes"] <= MAX_CATALOG_BODY_BYTES
+                or re.fullmatch(r"[0-9a-f]{64}", str(anchor.get("sha256", ""))) is None):
+            raise RuntimeError("Palimpsest research source has no exact file anchor")
+        raw, headers, _ = _fetch_bytes(base + "/" + path, accept="application/json")
+        if len(raw) != anchor["bytes"] or hashlib.sha256(raw).hexdigest() != anchor["sha256"]:
+            raise RuntimeError("Palimpsest research source bytes differ from the static edition")
+        catalogs.append(_json_object(raw, headers.get("content-type", ""), path))
+    final_raw, _, _ = _fetch_bytes(base + "/railway-release.json", accept="application/json")
+    if final_raw != manifest_raw:
+        raise RuntimeError("Palimpsest static edition changed during research verification")
+    return catalogs[0], catalogs[1]
+
+
+def _research_clock(value: Any, label: str) -> datetime:
+    if not isinstance(value, str) or re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z", value) is None:
+        raise RuntimeError(f"Palimpsest research {label} is not a UTC observation clock")
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as error:
+        raise RuntimeError(f"Palimpsest research {label} is invalid") from error
+
+
+def _validate_palimpsest_research_catalog(
+    result: dict[str, Any],
+    source_catalogs: tuple[dict[str, Any], dict[str, Any]] | None = None,
+) -> None:
     if result.get("isError") is not False:
         raise RuntimeError("Palimpsest research_catalog did not succeed")
     body = result.get("structuredContent")
@@ -1473,6 +1516,30 @@ def _validate_palimpsest_research_catalog(result: dict[str, Any]) -> None:
         "id", "name", "description", "layer", "cadence", "geography", "sources",
         "artifacts", "license", "urls", "values_included",
     }
+    source_rows: dict[str, Any] = {}
+    public_rows: dict[str, Any] = {}
+    if source_catalogs is not None:
+        research, public = source_catalogs
+        if (research.get("schema") != "palimpsest-research-catalog/v1"
+                or research.get("metadata_only") is not True
+                or public.get("schema") != "palimpsest-data-catalog/v1"):
+            raise RuntimeError("Palimpsest research source catalog schema differs")
+        for document in (research, public):
+            _require_equal(document.get("generated_at"), body["generated_at"], "Palimpsest source generation")
+        generation = _research_clock(body["generated_at"], "generation")
+        if generation > datetime.now(timezone.utc):
+            raise RuntimeError("Palimpsest research generation clock is in the future")
+        for document, mapping in ((research, source_rows), (public, public_rows)):
+            datasets = document.get("datasets")
+            if not isinstance(datasets, list) or len(datasets) != body["total"]:
+                raise RuntimeError("Palimpsest research source coverage differs")
+            for dataset in datasets:
+                if not isinstance(dataset, dict) or not isinstance(dataset.get("id"), str) or dataset["id"] in mapping:
+                    raise RuntimeError("Palimpsest research source identity is invalid or duplicated")
+                mapping[dataset["id"]] = dataset
+        _require_equal(list(source_rows)[:len(rows)], [row.get("id") for row in rows if isinstance(row, dict)],
+                       "Palimpsest research source page identities")
+        _require_equal(set(source_rows), set(public_rows), "Palimpsest public source coverage")
     identities = []
     for row in rows:
         if not isinstance(row, dict) or set(row) != expected_fields or row.get("values_included") is not False:
@@ -1498,11 +1565,45 @@ def _validate_palimpsest_research_catalog(result: dict[str, Any]) -> None:
         for field in ("license", "urls"):
             if not all(value is None or isinstance(value, str) for value in row[field].values()):
                 raise RuntimeError("Palimpsest research dataset " + field + " is not text metadata")
-        # The producer deliberately does not read observations. A generation
-        # clock therefore cannot establish fresh source values or an as-of date.
-        if (row["artifacts"]["evidence_state"] not in ("unknown", "gated") or
-                row["artifacts"]["observed_at"] is not None):
-            raise RuntimeError("Palimpsest research dataset invents observation freshness")
+        # Editorial-only metadata cannot establish observation freshness. The
+        # final publisher can copy source clocks from its rights-checked public
+        # catalog; accept those only with exact edition-bound source agreement.
+        if source_catalogs is None:
+            if (row["artifacts"]["evidence_state"] not in ("unknown", "gated") or
+                    row["artifacts"]["observed_at"] is not None):
+                raise RuntimeError("Palimpsest research dataset invents observation freshness")
+        else:
+            source = source_rows[row["id"]]
+            public = public_rows[row["id"]]
+            for field in expected_fields - {"urls", "license"}:
+                _require_equal(row[field], source.get(field), "Palimpsest research source " + field)
+            for field, keys in (("license", ("name", "url")), ("urls", ("latest", "landing_page", "method"))):
+                mapping = source.get(field)
+                if not isinstance(mapping, dict):
+                    raise RuntimeError("Palimpsest research source text metadata is invalid")
+                _require_equal(row[field], {key: mapping.get(key) for key in keys}, "Palimpsest research source " + field)
+            artifacts = public.get("artifacts")
+            if not isinstance(artifacts, dict):
+                raise RuntimeError("Palimpsest public source has no availability metadata")
+            state = row["artifacts"]["evidence_state"]
+            observed_at = row["artifacts"]["observed_at"]
+            denied = public.get("publication_allowed") is False
+            expected_artifacts = {"evidence_state": "gated" if denied else artifacts.get("evidence_state"),
+                                  "observed_at": None if denied else artifacts.get("observed_at")}
+            _require_equal(row["artifacts"], expected_artifacts, "Palimpsest rights-checked availability")
+            if state not in {"unknown", "gated", "fresh", "stale", "partial", "abstained", "pending", "invalid", "undated", "disabled", "historical", "private-node", "warming"}:
+                raise RuntimeError("Palimpsest research availability state is unknown")
+            if observed_at is not None and _research_clock(observed_at, "observed_at") > generation:
+                raise RuntimeError("Palimpsest research observation clock exceeds the source edition")
+            if state in {"fresh", "stale"} and observed_at is None:
+                raise RuntimeError("Palimpsest research dated state has no observation clock")
+            if state in {"unknown", "gated", "undated", "pending", "invalid"} and observed_at is not None:
+                raise RuntimeError("Palimpsest research unavailable state exposes an observation clock")
+            public_urls = public.get("urls")
+            if not isinstance(public_urls, dict):
+                raise RuntimeError("Palimpsest public source has no URL metadata")
+            expected_latest = None if denied or artifacts.get("latest_available") is not True else public_urls.get("latest")
+            _require_equal(row["urls"]["latest"], expected_latest, "Palimpsest rights-checked download")
         if row["artifacts"]["evidence_state"] == "gated" and row["urls"]["latest"] is not None:
             raise RuntimeError("Palimpsest research gated dataset exposes a value URL")
     if len(set(identities)) != len(identities):
@@ -1523,7 +1624,9 @@ def _verify_palimpsest_research_catalog(endpoint: str) -> None:
         "jsonrpc": "2.0", "id": request_id, "method": "tools/call",
         "params": {"name": "research_catalog", "arguments": {"offset": 0, "limit": 3}},
     })
-    _validate_palimpsest_research_catalog(_require_result(response, request_id))
+    _validate_palimpsest_research_catalog(
+        _require_result(response, request_id), _palimpsest_research_source_catalogs(),
+    )
 
 
 def _verify_palimpsest_release(
