@@ -299,9 +299,17 @@
         "observedRuntimeContainerState": "verified",
         "observedRuntimeContainerImage": "ghcr.io/beepboop2025/seiche:0.13.4",
         "observedRuntimeContainerDigest": "sha256:bc464f29af45ffb7bec82226b799e81893b87f824dc47126fd88b5a68e9424fb",
-        "observedRuntimeArchiveState": "accepted_pending_public_record",
-        "observedRuntimeArchiveScope": "Zenodo accepted the release webhook with HTTP 202; a public 0.13.4 record was not yet observed at the check time. The 0.13.2 DOI does not verify a 0.13.4 archive.",
-        "observedRuntimeAcceptanceScope": "Runtime source, PyPI, MCP Registry and public container verified at the check time; no archive, recovery or full-release acceptance is inferred."
+        "observedRuntimeArchiveState": "verified",
+        "observedRuntimeArchiveScope": "Public Zenodo 0.13.4 archive verified against all 1,138 tracked blobs of the owner-signed v0.13.4 source; its DOI and hashes apply only to that release.",
+        "observedRuntimeAcceptanceScope": "Runtime source, PyPI, MCP Registry and public container verified at the runtime check time; the separately dated 0.13.4 archive verification establishes source-byte identity. No recovery or full-release acceptance is inferred.",
+        "observedRuntimeArchiveDoi": "10.5281/zenodo.22924642",
+        "observedRuntimeArchiveUrl": "https://zenodo.org/records/22924642",
+        "observedRuntimeArchiveSha256": "sha256:02cc6244452a3eaf857de7474ca5ae8768b29392311dd575a18da912a0c23f0a",
+        "observedRuntimeArchiveBytes": 5582992,
+        "observedRuntimeArchiveSourceFileCount": 1138,
+        "observedRuntimeArchiveSource": "dbeb5589740f34a6951a1849c11566c6e8035f60",
+        "observedRuntimeArchiveSignedTagObject": "ede12c43b1a3d6364b2f17b497afd312363c0e5b",
+        "observedRuntimeArchiveCheckedAt": "2026-09-23T19:59:03.343155+00:00"
       }
     },
     {

@@ -75,7 +75,7 @@ def test_palimpsest_download_discovery_retains_per_dataset_rights_boundary():
     assert pal["metadata"]["publicResourceCount"] == 1
 
 
-def test_observed_runtime_does_not_inherit_the_signed_bundles_archive_acceptance():
+def test_observed_runtime_archive_has_separate_evidence_and_no_inherited_recovery_acceptance():
     catalog = json.loads((ROOT / ".well-known/ai-catalog.json").read_text())
     entry = next(e for e in catalog["entries"] if e["identifier"].endswith(":seiche"))
     meta = entry["metadata"]
@@ -91,9 +91,18 @@ def test_observed_runtime_does_not_inherit_the_signed_bundles_archive_acceptance
     assert meta["observedRuntimeSource"] != meta["releaseCommit"]
     assert meta["observedRuntimeCheckedAt"] == "2026-09-23T19:23:31.124880+00:00"
     assert meta["archiveState"] == sibling["archive_state"] == "verified"
-    assert meta["observedRuntimeArchiveState"] == "accepted_pending_public_record"
-    assert "HTTP 202" in meta["observedRuntimeArchiveScope"]
-    assert "no archive, recovery or full-release acceptance" in meta["observedRuntimeAcceptanceScope"]
+    assert meta["observedRuntimeArchiveState"] == "verified"
+    assert meta["observedRuntimeArchiveDoi"] == "10.5281/zenodo.22924642" != meta["archiveDoi"]
+    assert meta["observedRuntimeArchiveUrl"] == "https://zenodo.org/records/22924642"
+    assert meta["observedRuntimeArchiveSource"] == meta["observedRuntimeSource"]
+    assert meta["observedRuntimeArchiveSignedTagObject"] == "ede12c43b1a3d6364b2f17b497afd312363c0e5b"
+    assert meta["observedRuntimeArchiveSha256"] == "sha256:02cc6244452a3eaf857de7474ca5ae8768b29392311dd575a18da912a0c23f0a"
+    assert meta["observedRuntimeArchiveBytes"] == 5582992
+    assert meta["observedRuntimeArchiveSourceFileCount"] == 1138 != meta["archiveSourceFileCount"]
+    assert meta["observedRuntimeArchiveCheckedAt"] == "2026-09-23T19:59:03.343155+00:00"
+    assert meta["observedRuntimeArchiveCheckedAt"] != meta["observedRuntimeCheckedAt"]
+    assert "all 1,138 tracked blobs" in meta["observedRuntimeArchiveScope"]
+    assert "No recovery or full-release acceptance" in meta["observedRuntimeAcceptanceScope"]
     for suffix in ("PypiState", "RegistryState", "ContainerState"):
         assert meta["observedRuntime" + suffix] == "verified"
     assert meta["pypiProject"].endswith("/0.13.2/")
@@ -106,8 +115,6 @@ def test_observed_runtime_does_not_inherit_the_signed_bundles_archive_acceptance
         if key.startswith("observedRuntime"):
             assert isinstance(value, (str, int, float, bool))
             assert sibling[re.sub(r"(?<!^)(?=[A-Z])", "_", key).lower()] == value
-    assert "observedRuntimeArchiveDoi" not in meta
-    assert "observed_runtime_archive_doi" not in sibling
     status = (ROOT / "status/index.html").read_text()
     observed_row = next(line for line in status.splitlines() if "<b>Seiche 0.13.4</b>" in line)
     historical_row = next(line for line in status.splitlines() if "Seiche 0.13.2 signed bundle" in line)
@@ -120,5 +127,8 @@ def test_observed_runtime_does_not_inherit_the_signed_bundles_archive_acceptance
     for text in (observed_row, observed_text):
         assert meta["observedRuntimeSource"] in text
         assert meta["observedRuntimeCheckedAt"] in text
-        assert "public 0.13.4 archive record was not yet observed" in text
-        assert "does not establish archive, recovery or full-release acceptance" in text
+        assert meta["observedRuntimeArchiveDoi"] in text
+        assert meta["observedRuntimeArchiveCheckedAt"] in text
+        assert "all 1,138 tracked files match the signed v0.13.4 source" in text
+        assert "do not establish recovery or full-release acceptance" in text
+        assert "archive record was not yet observed" not in text
