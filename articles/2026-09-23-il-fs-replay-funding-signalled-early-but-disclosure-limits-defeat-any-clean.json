@@ -1,0 +1,116 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-09-23-il-fs-replay-funding-signalled-early-but-disclosure-limits-defeat-any-clean",
+  "product": "liquilens",
+  "slug": "2026-09-23-il-fs-replay-funding-signalled-early-but-disclosure-limits-defeat-any-clean",
+  "date": "2026-09-23",
+  "article_type": "historical_replay",
+  "topic": "ilfs",
+  "headline": "IL&FS replay: funding signalled early, but disclosure limits defeat any clean verdict",
+  "dek": "The IL&FS record supports a narrow proposition: a disclosed funding signal can precede default, while fraud masking and proxy timing prevent that signal from becoming proof.",
+  "canonical_url": "https://liquilens.in/articles/2026-09-23-il-fs-replay-funding-signalled-early-but-disclosure-limits-defeat-any-clean/",
+  "published_at": "2026-09-23T11:18:30Z",
+  "evidence_as_of": "2026-09-23",
+  "board_signature": "611dab169b21f3df4d3bb97f1fb2642ee799eef63c2ad141345d3737bfe35c79",
+  "subject": {
+    "slug": "ilfs",
+    "name": "IL&FS",
+    "inst_type": "nbfc",
+    "default_date": "2018-08-28",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "ilfs",
+      "inst_type": "nbfc",
+      "default_date": "2018-08-28",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "ilfs",
+      "inst_type": "nbfc",
+      "scoreable": true,
+      "first_signal": {
+        "period_end": "2015-03-31",
+        "index": 45.4,
+        "knowledge_time_proxy": "2015-05-30",
+        "band": "watch",
+        "flags": []
+      },
+      "lead_months": 38
+    }
+  },
+  "word_count": 1453,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:144c4e7ca6d4dc65c995674bc2a50b07618be1a52290968f880fdc842552a79b",
+    "memory_fingerprint": "sha256:fac74b366f10782d3ec83ffb31a2164ac480bd849d9ffe92c43bc942ecbc2fc4",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 2,
+    "dossier_sha256": "a0aff037b9c139e6ac1c233b551ab9eb30566aa389cb9a81cac2b5523b44c348",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "historical_news_and_forecast_boundary",
+      "not_a_credit_rating",
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Recast the thesis as a filing-period diagnostic rather than a market or probability claim.",
+      "Retained fraud masking, construction-PIT, missing-disclosure, timing, and market-authority limits.",
+      "Expanded the counter-case and preserved the product-boundary distinction."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:144c4e7ca6d4dc65c995674bc2a50b07618be1a52290968f880fdc842552a79b",
+      "memory_fingerprint": "sha256:fac74b366f10782d3ec83ffb31a2164ac480bd849d9ffe92c43bc942ecbc2fc4",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
