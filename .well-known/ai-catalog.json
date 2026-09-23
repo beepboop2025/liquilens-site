@@ -177,7 +177,7 @@
       "displayName": "Seiche Funding-Stress Catalog",
       "type": "application/ai-catalog+json",
       "url": "https://seiche.info/.well-known/ai-catalog.json",
-      "description": "Hosted Seiche contract with fourteen anonymous read-only tools, four prompts and zero resources for US dollar funding stress, connected Palimpsest research, granular money-market context with optional diagnostics, bounded money/FX/macro-capital world-markets context, dated FX histories and explicitly unavailable China context, Trade Safety risk context, positioning, analogs, and a status-bound construction-PIT historical diagnostic. Context cannot authorize an order.",
+      "description": "Historical signed Seiche 0.13.2 contract with fourteen anonymous read-only tools, four prompts and zero resources for US dollar funding stress, connected Palimpsest research, granular money-market context with optional diagnostics, bounded money/FX/macro-capital world-markets context, dated FX histories and explicitly unavailable China context, Trade Safety risk context, positioning, analogs, and a status-bound construction-PIT historical diagnostic. Context cannot authorize an order. The separately observed runtime is recorded in metadata; this bundle does not confer archive or recovery acceptance on a newer release.",
       "tags": [
         "funding liquidity",
         "repo",
@@ -257,9 +257,9 @@
         "recoveryState": "user_deferred",
         "recoveryAccepted": false,
         "fullReleaseAccepted": false,
-        "releaseAcceptanceScope": "Application, website, PyPI, MCP Registry, container and Zenodo publication verified. Recovery and volume resize were deferred by the owner; this receipt makes no current-release recovery acceptance.",
+        "releaseAcceptanceScope": "For release 0.13.2: Application, website, PyPI, MCP Registry, container and Zenodo publication verified. Recovery and volume resize were deferred by the owner; this receipt makes no current-release recovery acceptance.",
         "releasePublicToolCount": 14,
-        "inventoryScope": "Hosted and signed package inventories agree: fourteen read-only tools, four prompts and zero resources.",
+        "inventoryScope": "Historical 0.13.2 inventory: Hosted and signed package inventories agree: fourteen read-only tools, four prompts and zero resources.",
         "researchNetworkApi": "https://api.seiche.info/api/v2/research-network",
         "registryServerHashScope": "Exact signed server.json bytes; both Registry records match after the signed release auditor normalizes schema-defined optional false Input flags",
         "archiveState": "verified",
@@ -287,7 +287,21 @@
         "historicalReleaseAcceptanceReceiptSha256": "sha256:45b8d062344e96fa3b141c8cecaef2e9a2ae2b0b1ae6aed84da56ecf467a06e4",
         "historicalDiscoverySnapshot": "https://liquilens.in/protocol/release-evidence/seiche/19118eecee64ffec907838b89f364f53d7cab3de/discovery-snapshot-20260914.json",
         "historicalDiscoverySnapshotSha256": "sha256:59d1590cc115cb2efdebc4df40a7e7c0257f1bff3e7605a9711b091fa8b768ca",
-        "currentChinaCoverage": "unavailable; zero accepted series"
+        "currentChinaCoverage": "unavailable; zero accepted series",
+        "versionScope": "Historical signed 0.13.2 acceptance bundle. Version, source, hashes, DOI and acceptance flags describe that release; observedRuntime fields describe a separate dated observation.",
+        "observedRuntimeVersion": "0.13.4",
+        "observedRuntimeSource": "dbeb5589740f34a6951a1849c11566c6e8035f60",
+        "observedRuntimeCheckedAt": "2026-09-23T19:23:31.124880+00:00",
+        "observedRuntimePypiState": "verified",
+        "observedRuntimePypiProject": "https://pypi.org/project/seiche/0.13.4/",
+        "observedRuntimeRegistryState": "verified",
+        "observedRuntimeRegistryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.13.4",
+        "observedRuntimeContainerState": "verified",
+        "observedRuntimeContainerImage": "ghcr.io/beepboop2025/seiche:0.13.4",
+        "observedRuntimeContainerDigest": "sha256:bc464f29af45ffb7bec82226b799e81893b87f824dc47126fd88b5a68e9424fb",
+        "observedRuntimeArchiveState": "accepted_pending_public_record",
+        "observedRuntimeArchiveScope": "Zenodo accepted the release webhook with HTTP 202; a public 0.13.4 record was not yet observed at the check time. The 0.13.2 DOI does not verify a 0.13.4 archive.",
+        "observedRuntimeAcceptanceScope": "Runtime source, PyPI, MCP Registry and public container verified at the check time; no archive, recovery or full-release acceptance is inferred."
       }
     },
     {

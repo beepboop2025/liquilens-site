@@ -329,7 +329,7 @@ def test_seiche_routes_and_release_count_do_not_regress():
     developers = read("developers/index.html")
     status = read("status/index.html")
     seiche_row = next(
-        line for line in status.splitlines() if "hosted MCP 0.13.2" in line
+        line for line in status.splitlines() if "Seiche 0.13.2 signed bundle" in line
     )
 
     assert "https://seiche.info/use-cases" in use_cases
@@ -344,7 +344,10 @@ def test_seiche_routes_and_release_count_do_not_regress():
     assert "bounded money/FX/macro-capital context" in seiche_row
 
     llms = read("llms.txt")
-    assert "Seiche 0.13.2" in llms
+    assert "Seiche 0.13.2 historical signed acceptance bundle" in llms
+    assert "Seiche 0.13.4" in llms
+    assert "https://pypi.org/project/seiche/0.13.4/" in llms
+    assert "io.github.beepboop2025%2Fseiche/versions/0.13.4" in llms
     assert "https://api.seiche.info/.well-known/mcp.json" in llms
     assert "https://pypi.org/project/seiche/0.13.2/" in llms
     assert "io.github.beepboop2025%2Fseiche/versions/0.13.2" in llms
