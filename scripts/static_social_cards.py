@@ -66,10 +66,17 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/developers/institutions/", "institution-agents", "LIQUILENS / INSTITUTION REVIEW", "AGENTS + AUTOMATION",
+        "Institution stress evidence, connected to funding context.",
+        "WORKFLOW", "LIQUILENS + SEICHE",
+        "OPENCLAW / HERMES / PYTHON", "PAGE CUT", "2026-09-23",
+        "HUMAN REVIEW REQUIRED", "PUBLIC MCP EVIDENCE",
+    ),
+    RouteDefinition(
         "/start/", "start", "LIQUILENS / SEICHE / UNDERTOW", "TRY THE RESEARCH",
         "A bank filing. A funding brief. A BTC exit estimate.",
-        "FIRST RESULT", "THREE QUESTIONS / NINE MCPS",
-        "NO KEY / SOURCE DATES / EXPLICIT LIMITS", "PAGE CUT", "2026-09-07",
+        "FIRST RESULT", "THREE QUESTIONS / ELEVEN MCPS",
+        "NO KEY / SOURCE DATES / EXPLICIT LIMITS", "PAGE CUT", "2026-09-23",
         "PUBLIC READ-ONLY RESEARCH", "LIVE MCP RESPONSES",
     ),
     RouteDefinition(

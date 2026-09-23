@@ -24,18 +24,18 @@
 <meta property="og:url" content="https://liquilens.in/start/">
 <meta property="og:title" content="Start with a question.See the evidence.">
 <meta property="og:description" content="Read a bank filing, understand dollar funding or compare BTC exit estimates. Try a real question without a key or installation, then connect the MCPs to your agent.">
-<meta property="og:image" content="https://liquilens.in/start/share.png?v=4e6409a06200403e">
-<meta property="og:image:secure_url" content="https://liquilens.in/start/share.png?v=4e6409a06200403e">
+<meta property="og:image" content="https://liquilens.in/start/share.png?v=e71c294e9bc366bf">
+<meta property="og:image:secure_url" content="https://liquilens.in/start/share.png?v=e71c294e9bc366bf">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="LiquiLens route card for TRY THE RESEARCH: A bank filing. A funding brief. A BTC exit estimate. FIRST RESULT: THREE QUESTIONS / NINE MCPS. NO KEY / SOURCE DATES / EXPLICIT LIMITS. PAGE CUT 2026-09-07; status PUBLIC READ-ONLY RESEARCH.">
+<meta property="og:image:alt" content="LiquiLens route card for TRY THE RESEARCH: A bank filing. A funding brief. A BTC exit estimate. FIRST RESULT: THREE QUESTIONS / ELEVEN MCPS. NO KEY / SOURCE DATES / EXPLICIT LIMITS. PAGE CUT 2026-09-23; status PUBLIC READ-ONLY RESEARCH.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Start with a question.See the evidence.">
 <meta name="twitter:description" content="Read a bank filing, understand dollar funding or compare BTC exit estimates. Try a real question without a key or installation, then connect the MCPs to your agent.">
-<meta name="twitter:image" content="https://liquilens.in/start/share.png?v=4e6409a06200403e">
-<meta name="twitter:image:alt" content="LiquiLens route card for TRY THE RESEARCH: A bank filing. A funding brief. A BTC exit estimate. FIRST RESULT: THREE QUESTIONS / NINE MCPS. NO KEY / SOURCE DATES / EXPLICIT LIMITS. PAGE CUT 2026-09-07; status PUBLIC READ-ONLY RESEARCH.">
-<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/start/#social-card","url":"https://liquilens.in/start/","image":"https://liquilens.in/start/share.png?v=4e6409a06200403e","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/start/share.png?v=4e6409a06200403e","width":1200,"height":630,"caption":"LiquiLens route card for TRY THE RESEARCH: A bank filing. A funding brief. A BTC exit estimate. FIRST RESULT: THREE QUESTIONS / NINE MCPS. NO KEY / SOURCE DATES / EXPLICIT LIMITS. PAGE CUT 2026-09-07; status PUBLIC READ-ONLY RESEARCH."}}</script>
+<meta name="twitter:image" content="https://liquilens.in/start/share.png?v=e71c294e9bc366bf">
+<meta name="twitter:image:alt" content="LiquiLens route card for TRY THE RESEARCH: A bank filing. A funding brief. A BTC exit estimate. FIRST RESULT: THREE QUESTIONS / ELEVEN MCPS. NO KEY / SOURCE DATES / EXPLICIT LIMITS. PAGE CUT 2026-09-23; status PUBLIC READ-ONLY RESEARCH.">
+<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/start/#social-card","url":"https://liquilens.in/start/","image":"https://liquilens.in/start/share.png?v=e71c294e9bc366bf","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/start/share.png?v=e71c294e9bc366bf","width":1200,"height":630,"caption":"LiquiLens route card for TRY THE RESEARCH: A bank filing. A funding brief. A BTC exit estimate. FIRST RESULT: THREE QUESTIONS / ELEVEN MCPS. NO KEY / SOURCE DATES / EXPLICIT LIMITS. PAGE CUT 2026-09-23; status PUBLIC READ-ONLY RESEARCH."}}</script>
 <!-- SOCIAL-CARD:END -->
 </head>
 <body>
@@ -64,7 +64,7 @@
             <h4>What the source reports</h4><dl class="detail-list" id="details"></dl>
             <h4>Read with these limits</h4><ul id="limits"></ul>
             <h4>Sources and further reading</h4><ul id="sources"></ul>
-            <div class="actions"><button type="button" id="download">Download the source response</button><button type="button" id="useful">This helped my research</button></div>
+            <div class="actions"><button type="button" id="keep-review">Keep in review brief</button><button type="button" id="download">Download the source response</button><button type="button" id="useful">This helped my research</button></div>
             <p class="small" id="feedback-note">Optional feedback records a button click, not a verified research outcome.</p>
             <details><summary>Inspect the complete returned JSON</summary><pre id="raw"></pre></details>
             <a id="next" href="/banking/">Choose another covered bank</a>
@@ -74,14 +74,23 @@
         <aside class="connect" id="connect" aria-labelledby="connect-heading">
           <h2 id="connect-heading">Use it in your agent</h2><p>The example and your agent use the same public endpoint.</p>
           <label for="server">MCP server</label><select id="server"></select>
-          <label for="client">Your client</label><select id="client"><option value="codex">Codex</option><option value="claude">Claude Code</option><option value="cursor">Cursor</option><option value="vscode">VS Code</option></select>
+          <label for="client">Your client</label><select id="client"><option value="codex">Codex</option><option value="claude">Claude Code</option><option value="cursor">Cursor</option><option value="vscode">VS Code</option><option value="openclaw">OpenClaw</option><option value="hermes">Hermes</option></select>
           <pre id="config" tabindex="0"></pre><button type="button" id="copy-config">Copy setup</button>
           <p class="small" id="config-help"></p>
           <label for="prompt">Then ask this</label><textarea id="prompt" rows="6" readonly></textarea><button type="button" id="copy-prompt">Copy starter question</button>
           <div class="bundle"><h3>Working across all three?</h3><p>Connect LiquiLens, Seiche and Undertow together. Your agent can combine the evidence while keeping each source’s scope separate.</p><button type="button" id="bundle">Show the three-MCP setup</button><button type="button" id="download-config">Download selected setup</button></div>
+          <p><a href="/developers/institutions/">Set up an institution stress-review workflow →</a></p>
           <p class="small">MCP clients may require their own subscription. Adding a server does not grant it authority to execute trades or approve credit.</p>
         </aside>
       </div>
+    </section>
+    <section class="family" id="review" aria-labelledby="review-heading">
+      <h2 id="review-heading">Build a review brief</h2>
+      <p>Run a question and choose <strong>Keep in review brief</strong>. Keep one snapshot each from LiquiLens, Seiche and Undertow, then download a readable brief with the source dates, reported measures and evidence limits.</p>
+      <p class="small">Snapshots stay in this tab until you remove them, reload or close it. Each product retains its own retrieval time and coverage; keeping a newer snapshot replaces the previous one for that product. The brief does not refresh automatically.</p>
+      <p id="review-count" role="status" aria-live="polite">No snapshots kept yet.</p>
+      <ul id="review-items"></ul>
+      <div class="actions"><button type="button" id="download-brief" disabled>Download review brief (.md)</button><button type="button" id="download-review" disabled>Download evidence bundle (.json)</button><button type="button" id="clear-review" disabled>Clear brief</button></div>
     </section>
     <section class="family" id="family" aria-labelledby="family-heading"><h2 id="family-heading">Pick the tool for your next question</h2><p>Start with the evidence you need. These products answer different questions.</p><div id="server-list"></div>
       <div class="local"><h3>Local tools and adjacent research</h3><p><a href="https://github.com/beepboop2025/liquilens-evidence-carrier">Evidence Carrier</a> verifies and transports evidence packets locally. <a href="https://github.com/beepboop2025/scamshield">ScamShield</a> provides local scam-triage tooling. Their installation and privacy requirements are documented in their repositories.</p><p><a href="https://groundcheck.seiche.info/">Groundcheck</a> checks claims, <a href="https://github.com/beepboop2025/noisefloor">Noisefloor</a> examines statistical changes, and <a href="https://github.com/beepboop2025/data-breach-detector">Breach</a> covers breach evidence. These adjacent tools have their own access and evidence boundaries. <a href="https://myquant-app.vercel.app/">MyQuant app discovery</a> describes app capabilities; an app listing does not establish an active news feed.</p></div>

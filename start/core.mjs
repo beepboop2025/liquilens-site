@@ -26,6 +26,8 @@ export function configuration(client, ids) {
   if (client === "claude") return chosen.map(s => `claude mcp add --transport http ${s.id} ${s.url}`).join("\n");
   if (client === "vscode") return JSON.stringify({servers: Object.fromEntries(chosen.map(s => [s.id, {type: "http", url: s.url}]))}, null, 2);
   if (client === "cursor") return JSON.stringify({mcpServers: Object.fromEntries(chosen.map(s => [s.id, {url: s.url}]))}, null, 2);
+  if (client === "openclaw") return JSON.stringify({mcp: {servers: Object.fromEntries(chosen.map(s => [s.id, {url: s.url, transport: "streamable-http"}]))}}, null, 2);
+  if (client === "hermes") return "mcp_servers:\n" + chosen.map(s => `  ${s.id}:\n    url: ${JSON.stringify(s.url)}`).join("\n");
   throw new Error("Unsupported client.");
 }
 

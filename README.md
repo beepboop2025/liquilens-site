@@ -21,6 +21,38 @@ source dates and limitations; none grants credit or execution authority.
 
 The private scoring engine, customer data connectors, and production underwriting workflows do not live in this repository. The interactive demonstration is available by request at [demo.liquilens.in](https://demo.liquilens.in), and sign-in is required.
 
+## Research review brief
+
+The [institutional integration guide](developers/institutions/index.html)
+includes filtered OpenClaw/Hermes configuration, a task skill and the
+[`institution_review.py`](developers/recipes/institution_review.py) automation
+recipe. It reuses the existing MCP client and preserves independent institution
+and Seiche responses, including partial failures. A returned institution packet
+must match the requested identity and its content hash. Regulatory compliance
+remains unassessed. Official client configuration docs were checked on
+2026-09-23; native client execution and third-party catalog approval require
+separate evidence.
+
+[`/start/`](start/index.html) lets a reader retain one response each from
+LiquiLens (institution disclosures), Seiche (system funding) and Undertow
+(position-size exit context). The reader runs each question explicitly, keeps
+the responses they choose, then downloads a Markdown brief or a JSON bundle.
+Each observation retains its request, retrieval time, source dates, units,
+unavailable states and limitations. A new brief timestamp never refreshes the
+underlying evidence. The brief is not a signed Evidence Carrier or a combined
+risk score.
+
+Snapshots live only in the current tab: replacing, removing, clearing, reloading
+or closing changes that selection. Keeping and downloading a brief sends no new
+network request or analytics event. Existing run and optional feedback events
+remain governed by [`start/measurement.md`](start/measurement.md).
+
+Run `node --test tests/test_mcp_start.mjs tests/test_research_review.mjs` for the
+source, request-binding, missingness and export invariants. Use
+`/start/?verification=1` for operator checks without acquisition beacons. Local
+browser access to LiquiLens may be rejected by its production origin allowlist;
+use synthetic responses for local UI verification rather than weakening CORS.
+
 ## Preview locally
 
 The site is static and does not require a build step:

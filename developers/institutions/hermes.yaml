@@ -1,0 +1,9 @@
+mcp_servers:
+  liquilens:
+    url: https://api.liquilens.in/mcp
+    tools:
+      include: [institution_review_packet, failure_radar_board, failure_radar_institution, evidence_markets, universe_search, banking_specialisation_coverage, bank_asset_quality_review, bank_npa_reconciliation]
+  seiche:
+    url: https://api.seiche.info/mcp
+    tools:
+      include: [data_health, funding_stress_now, money_market_context, world_markets_context]
