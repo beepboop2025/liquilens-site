@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def _render(payload: dict) -> str:
-    home = (ROOT / "index.html").read_text(encoding="utf-8")
+    home = (ROOT / "evidence-library.js").read_text(encoding="utf-8")
     start = home.index("    function marketState(m){")
     end = home.index("\n\n    function marketLayerState", start)
     function_source = home[start:end]

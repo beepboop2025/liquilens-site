@@ -53,6 +53,35 @@ source, request-binding, missingness and export invariants. Use
 browser access to LiquiLens may be rejected by its production origin allowlist;
 use synthetic responses for local UI verification rather than weakening CORS.
 
+## Product and editorial experience
+
+The homepage introduces institution stress evidence, funding context and market
+depth through a shared dark product-family design. Supporting public pages and
+the article/replay generators retain this styling. The original research boards
+remain in the expandable evidence library; existing section links open it, and
+its data scripts load only when needed.
+
+The product walkthrough is explicitly illustrative. The separate data preview
+runs a reader-selected MCP request and displays its measured browser round trip,
+retrieval time, source dates, units and limitations. A single request timing is
+not an availability or latency guarantee. Motion respects reduced-motion
+preferences, and the opening illustration finishes without a persistent loop.
+
+`family-editorial.mjs` loads the public MyQuant web archive when the editorial
+section approaches the viewport. Product tabs show dated excerpts with explicit
+MyQuant-edition attribution and original-desk links. It validates publication
+status, source identity, approved hosts and evidence limitations; unavailable
+feeds produce a retry path rather than invented stories. Other desks are a
+clearly labelled publication directory. No subscription research is republished.
+
+Public copy and structured metadata use the product and operating-entity names.
+Contact links use company labels and retain the confirmed business mailbox.
+Personal biographies and unused legacy promotional banners are retired; the
+primary homepage action opens the real data preview.
+
+Run `node --test tests/test_family_editorial.mjs` for the archive's publication,
+attribution, deduplication and URL-boundary checks.
+
 ## Preview locally
 
 The site is static and does not require a build step:

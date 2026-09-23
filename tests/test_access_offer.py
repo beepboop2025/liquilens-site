@@ -16,8 +16,8 @@ def read(path):
 def test_named_list_offer_is_software_and_asks_for_names():
     page = read("access/index.html")
     assert "Send 15 names" in page
-    assert "Write the founder" in page
-    assert "Ask the founder" in page
+    assert "Contact LiquiLens" in page
+    assert "Request a quote" in page
     assert "₹3 lakh" not in page
     assert "₹75,000" not in page
     assert "₹2.5 lakh" not in page
@@ -52,7 +52,7 @@ def test_home_and_pilot_point_at_named_list_first():
     assert 'data-funnel="access_cta_clicked" href="/access/"' in home
     assert "Send 15 counterparties" in home
     assert "₹3 lakh" not in home
-    assert "Write the founder" in home or "mrinal@liquilens.in" in home
+    assert "Contact LiquiLens" in home or "mrinal@liquilens.in" in home
     pilot = read("pilot/index.html")
     assert 'href="/access/"' in pilot
     assert "Send 15 names instead" in pilot
@@ -64,7 +64,7 @@ def test_about_keeps_book_pilot_prices_and_adds_the_seat():
     assert "₹3 lakh" not in about
     assert "₹2.5 lakh" not in about
     assert "₹12 lakh" not in about
-    assert "Write the founder" in about
+    assert "Contact LiquiLens" in about
     assert "/access/" in about
     assert "The public-good house" in about
     assert "palimpsest.info/fund.html" in about

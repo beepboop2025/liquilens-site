@@ -11,21 +11,15 @@ def read(path: str) -> str:
     return (ROOT / path).read_text(encoding="utf-8")
 
 
-def test_sticky_surfaces_share_a_safe_measured_chrome_offset():
+def test_product_motion_is_bounded_and_respects_reduced_motion():
     home = read("index.html")
-    css = read("experience.css")
-    js = read("experience.js")
-
-    body_rule = re.search(r"body\s*\{(?P<body>.*?)\}", home, re.S)
-    assert body_rule
-    assert "overflow-x:clip" in body_rule.group("body")
-    assert "overflow-x:hidden" not in body_rule.group("body")
-    assert "overflow-x: clip;" in css
-    assert "--site-chrome-height" in css
-    assert "top: var(--site-chrome-height);" in css
-    assert "height: calc(100svh - var(--site-chrome-height));" in css
-    assert "function siteChrome()" in js
-    assert "ResizeObserver" in js
+    css = read("product-home.css")
+    assert 'id="main"' in home
+    assert 'Concept illustration' in home
+    assert 'prefers-reduced-motion:reduce' in css
+    assert 'animation:none!important' in css
+    assert 'infinite' not in css
+    assert 'overflow-x:clip' in css
 
 
 def test_warning_horizon_is_exact_and_progressively_enhanced():
@@ -42,7 +36,7 @@ def test_warning_horizon_is_exact_and_progressively_enhanced():
     assert home.count('class="tminus__mark') == 6
     assert "Math.round(m)" not in home
     assert "tmCap" not in home
-    assert "sec.setAttribute('data-enhanced', 'true')" in home
+    assert "sec.setAttribute('data-enhanced', 'true')" in read("evidence-library.js")
     assert ".tminus[data-enhanced] .tminus__stage" in css
     assert ".tminus[data-enhanced] .tminus__chapter" in css
 
@@ -59,5 +53,6 @@ def test_motion_never_mutates_audited_totals_and_has_accessible_fallbacks():
     assert "animation: none !important;" in css
     assert "revealSelection(initial, false);" in js
     assert "function motionGovernor()" in js
-    assert "/experience.css?v=20260809e" in home
-    assert "/experience.js?v=20260809e" in home
+    assert 'src="/product-home.js"' in home
+    assert 'src="/evidence-library.js"' not in home
+    assert "library?.addEventListener('toggle', loadEvidence)" in read("product-home.js")
