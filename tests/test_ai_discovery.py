@@ -91,8 +91,8 @@ def test_discovery_indexes_and_home_link_the_selection_surface():
     assert "https://liquilens.in/use-cases/" in read("llms.txt")
     assert "https://liquilens.in/product-card.json" in read("llms.txt")
     home = read("index.html")
-    assert '<a class="nav-link" href="/use-cases/">Use cases</a>' in home
-    assert '<a class="btn btn-ghost" href="/banking/">Research a bank for free</a>' in home
+    assert 'href="/use-cases/">Use cases</a>' in home
+    assert 'href="/banking/">Explore bank research</a>' in home
     assert 'https://liquilens.in/banking/' in read("sitemap.xml")
     assert 'https://liquilens.in/banking/' in read("llms.txt")
 
@@ -107,7 +107,7 @@ def test_home_keeps_an_attributed_daily_brief_in_primary_actions():
     assert "Get 09:00 IST brief" in hero
     assert "daily failure radar · /stop any time" in hero
     assert 'target="_blank" rel="noopener noreferrer"' in hero
-    assert home.index(telegram) < home.index('<details class="hero-more">')
+    assert home.index(telegram) < home.index('<details class="hero-more evidence-library"')
 
 
 def test_sitemap_excludes_cross_domain_undertow_mirrors():
@@ -137,13 +137,14 @@ def test_search_and_answer_crawlers_are_explicitly_welcome():
         assert f"User-agent: {training_agent}\nAllow: /" not in robots
 
 
-def test_home_has_landmark_and_hides_the_ticker_clone_from_focus():
+def test_home_keeps_landmarks_and_evidence_access_without_a_ticker():
     home = read("index.html")
-    assert '<main id="main">' in home and "</main>\n<footer>" in home
-    assert ".ticker .half[aria-hidden=\"true\"]" in home
-    assert "el.inert = true" in home
-    assert "--muted-2:#7F89A3" in home
-    assert "display=optional" in home
+    assert '<main id="main">' in home and '</main>\n<footer class="family-footer">' in home
+    assert 'href="#main">Skip to content</a>' in home
+    assert 'id="evidence-library"' in home
+    assert 'id="radar"' in home and 'id="board"' in home
+    assert 'id="tickerTrack"' not in home
+    assert 'prefers-reduced-motion' in read("product-home.css")
 
 
 def test_developer_page_exposes_openapi_and_openai_activation_paths():

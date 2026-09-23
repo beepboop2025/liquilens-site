@@ -55,7 +55,7 @@ def test_human_and_machine_copy_names_the_api_freshness_contract():
 
 
 def test_homepage_renders_absent_market_governance_as_unstated():
-    home = read("index.html")
+    home = read("evidence-library.js")
     assert "m.stale === false" in home
     assert "m.tier_authority === false" in home
     assert "freshness unstated" in home
