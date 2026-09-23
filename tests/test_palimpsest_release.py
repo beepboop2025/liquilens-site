@@ -208,3 +208,93 @@ def test_native_catalog_cannot_omit_the_host_receipt_identity():
             "prompts": card["prompts"], "resources": card["resources"]}
     with pytest.raises(RuntimeError, match="nativeDeploymentCommit"):
         edge._validate_palimpsest_live_agreement(card, {"entries": [live]}, {}, {})
+
+
+def source_reported_research():
+    body = research_body()
+    row = body["datasets"][0]
+    row["artifacts"] = {"evidence_state": "fresh", "observed_at": "2026-09-09T05:00:00Z"}
+    row["urls"]["latest"] = "https://palimpsest.info/readings/one-latest.json"
+    research = {"schema": "palimpsest-research-catalog/v1", "metadata_only": True,
+                "generated_at": body["generated_at"], "datasets": copy.deepcopy(body["datasets"])}
+    public = {"schema": "palimpsest-data-catalog/v1", "generated_at": body["generated_at"],
+              "datasets": copy.deepcopy(body["datasets"])}
+    public["datasets"][0]["artifacts"]["latest_available"] = True
+    return body, research, public
+
+
+def test_research_accepts_edition_bound_source_clock_without_treating_generation_as_observation():
+    body, research, public = source_reported_research()
+    edge._validate_palimpsest_research_catalog(research_result(body), (research, public))
+    assert body["datasets"][0]["artifacts"]["observed_at"] != body["generated_at"]
+
+
+@pytest.mark.parametrize("mutation", [
+    "source_clock", "public_clock", "source_state", "public_state", "source_generation",
+    "public_generation", "future_observation", "future_generation", "naive_clock", "missing_clock",
+    "public_denied", "download_missing", "download_changed", "source_value", "public_duplicate",
+    "source_duplicate", "source_count", "source_id", "unknown_state", "gated_clock",
+])
+def test_research_source_clock_proof_rejects_fabrication_rights_and_identity_drift(mutation):
+    body, research, public = source_reported_research()
+    row = body["datasets"][0]
+    source = research["datasets"][0]
+    original = public["datasets"][0]
+    if mutation == "source_clock": source["artifacts"]["observed_at"] = "2026-09-09T04:00:00Z"
+    elif mutation == "public_clock": original["artifacts"]["observed_at"] = "2026-09-09T04:00:00Z"
+    elif mutation == "source_state": source["artifacts"]["evidence_state"] = "stale"
+    elif mutation == "public_state": original["artifacts"]["evidence_state"] = "stale"
+    elif mutation == "source_generation": research["generated_at"] = "2026-09-09T05:06:34Z"
+    elif mutation == "public_generation": public["generated_at"] = "2026-09-09T05:06:34Z"
+    elif mutation == "future_generation":
+        for document in (body, research, public): document["generated_at"] = "2999-01-01T00:00:00Z"
+    elif mutation in {"future_observation", "naive_clock", "missing_clock", "unknown_state", "gated_clock"}:
+        for dataset in (row, source, original):
+            if mutation == "future_observation": dataset["artifacts"]["observed_at"] = "2026-09-09T05:07:00Z"
+            elif mutation == "naive_clock": dataset["artifacts"]["observed_at"] = "2026-09-09T05:00:00"
+            elif mutation == "missing_clock": dataset["artifacts"]["observed_at"] = None
+            else: dataset["artifacts"]["evidence_state"] = "gated" if mutation == "gated_clock" else "safe"
+    elif mutation == "public_denied": original["publication_allowed"] = False
+    elif mutation == "download_missing": original["artifacts"]["latest_available"] = False
+    elif mutation == "download_changed": original["urls"]["latest"] = "https://palimpsest.info/other.json"
+    elif mutation == "source_value": source["values_included"] = True
+    elif mutation == "public_duplicate": public["datasets"].append(copy.deepcopy(original))
+    elif mutation == "source_duplicate": research["datasets"].append(copy.deepcopy(source))
+    elif mutation == "source_count": research["datasets"] = []
+    elif mutation == "source_id": source["id"] = "another"
+    with pytest.raises(RuntimeError):
+        edge._validate_palimpsest_research_catalog(research_result(body), (research, public))
+
+
+@pytest.mark.parametrize("mutation", [None, "hash", "bytes", "missing_anchor", "edition_changed", "invalid_edition"])
+def test_research_source_fetch_binds_exact_bytes_to_one_static_edition(monkeypatch, mutation):
+    import hashlib
+    _, research, public = source_reported_research()
+    documents = {
+        "readings/research-catalog-latest.json": json.dumps(research).encode(),
+        "readings/public-data-catalog-latest.json": json.dumps(public).encode(),
+    }
+    manifest = {"schema_version": "palimpsest.railway-static-release.v1", "state": "artifact_ready",
+                "deployment_source": "local-git-archive", "github_required": False,
+                "source_commit": "a" * 40,
+                "critical_files": {path: {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+                                   for path, raw in documents.items()}}
+    anchor = manifest["critical_files"]["readings/research-catalog-latest.json"]
+    if mutation == "hash": anchor["sha256"] = "b" * 64
+    elif mutation == "bytes": anchor["bytes"] += 1
+    elif mutation == "missing_anchor": manifest["critical_files"] = {}
+    elif mutation == "invalid_edition": manifest["source_commit"] = "main"
+    calls = []
+    def fetch(url, **kwargs):
+        assert url.startswith("https://www.palimpsest.info/")
+        path = url.removeprefix("https://www.palimpsest.info/")
+        calls.append(path)
+        raw = json.dumps(manifest).encode() if path == "railway-release.json" else documents[path]
+        if mutation == "edition_changed" and calls.count("railway-release.json") == 2: raw += b"\n"
+        return raw, {"content-type": "application/json"}, url
+    monkeypatch.setattr(edge, "_fetch_bytes", fetch)
+    if mutation is None:
+        assert edge._palimpsest_research_source_catalogs() == (research, public)
+        assert calls.count("railway-release.json") == 2
+    else:
+        with pytest.raises(RuntimeError): edge._palimpsest_research_source_catalogs()
