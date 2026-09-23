@@ -1,3 +1,4 @@
+@media screen{
 /* The public reading and review surfaces share the same visual foundation. */
 html.family-design{color-scheme:dark;--bg:#08090b;--base:#08090b;--paper:#08090b;--paper2:#111317;--panel:#111317;--panel2:#171a20;--card:#111317;--ink:#08090b;--ink2:#111317;--ink-2:#111317;--ink-3:#171a20;--text:#f4f5f7;--muted:#a1a7b2;--muted2:#a1a7b2;--muted-2:#a1a7b2;--faint:#a1a7b2;--line:#2c313b;--line2:#414b5c;--line-2:#414b5c;--gold:#8aafff;--gold2:#a8c2ff;--gold-deep:#a8c2ff;--gold-dim:#18243a;--teal:#7fc8bd;--green:#7cc5ac;--red:#f0a1a1;--blue:#8aafff;--soft:#eef2f7;--sans:var(--family-font);--serif:var(--family-font);--mono:ui-monospace,SFMono-Regular,Consolas,monospace;--site-chrome-height:64px;scroll-padding-top:25px}
 html.family-ink-text{--ink:#f4f5f7}
@@ -10,3 +11,7 @@ body.family-page{margin:0;background:#08090b;color:#f4f5f7;font-family:var(--fam
 @media(prefers-reduced-motion:reduce){.family-page *,.family-page *:before,.family-page *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 .family-page *{box-sizing:border-box}.family-page main,.family-page section,.family-page article,.family-page .wrap,.family-page .shell{min-width:0}.family-page .family-header a{background:none;padding:0;margin:0}.family-page .family-header{width:100%}.family-page pre{max-width:100%;overflow:auto}.family-page pre code{white-space:pre-wrap;overflow-wrap:anywhere}.family-bridge body.family-page{display:block}.family-bridge main{margin:64px auto;width:min(34rem,calc(100% - 40px))}.family-bridge .family-header a{border-radius:0}.family-bridge .family-nav{width:100%}
 @media(max-width:640px){.family-page table{display:block;max-width:100%;overflow-x:auto}.family-page .statusrow,.family-page .stat,.family-page .card,.family-page .panel{min-width:0;overflow-wrap:anywhere}.family-page .ticker{position:relative}.family-page .hero>div,.family-page .hero .wrap{min-width:0}.family-page .body{overflow-wrap:anywhere}}
+
+.family-page .copy,.family-page .corro,.family-page .note,.family-page .miss{overflow-wrap:anywhere}
+@media(max-width:640px){.family-page>header.wrap>nav{flex-wrap:wrap;gap:14px}.family-page>header.wrap .nav-right{flex-wrap:wrap;gap:12px;min-width:0;max-width:100%}}
+}

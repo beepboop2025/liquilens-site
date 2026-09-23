@@ -13,3 +13,5 @@
 .family-header :focus-visible,.family-footer :focus-visible,.product-home :focus-visible{outline:3px solid #8aafff;outline-offset:5px}
 @media(max-width:640px){.family-nav{padding:0 20px;min-height:88px;gap:8px;flex-wrap:wrap;padding-block:13px}.family-brand{font-size:19px}.family-products{order:3;flex-basis:100%;gap:24px;font-size:12px}.family-connect{margin-left:auto}.family-footer>div{display:block}.family-footer>div p{margin-top:10px}.family-footer{padding:36px 24px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+
+@media print{:root{color-scheme:light}.family-header,.family-footer,.family-skip{display:none}}
