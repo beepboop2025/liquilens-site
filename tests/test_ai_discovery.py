@@ -171,7 +171,7 @@ def test_developer_page_exposes_openapi_and_openai_activation_paths():
 
 def test_paid_pilot_has_a_bounded_offer_and_replaces_the_401_as_primary_cta():
     pilot = read("pilot/index.html")
-    for required in ("Ask the founder", "Write the founder", "six weeks",
+    for required in ("Request a quote", "Contact LiquiLens", "six weeks",
                      "credited toward", "Runs in your environment",
                      "Alerts per catch"):
         assert required.lower() in pilot.lower()

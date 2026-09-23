@@ -74,6 +74,11 @@ status, source identity, approved hosts and evidence limitations; unavailable
 feeds produce a retry path rather than invented stories. Other desks are a
 clearly labelled publication directory. No subscription research is republished.
 
+Public copy and structured metadata use the product and operating-entity names.
+Contact links use company labels and retain the confirmed business mailbox.
+Personal biographies and unused legacy promotional banners are retired; the
+primary homepage action opens the real data preview.
+
 Run `node --test tests/test_family_editorial.mjs` for the archive's publication,
 attribution, deduplication and URL-boundary checks.
 

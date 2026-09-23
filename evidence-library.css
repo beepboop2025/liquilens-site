@@ -329,12 +329,6 @@
   .ev-caption{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--muted-2);letter-spacing:.05em;margin:14px 8px 0}
   .sei-fallback{padding:26px 22px;font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7}
 
-  /* founder */
-  .founder{display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:start;margin-top:40px}
-  .founder .glyph{width:64px;height:64px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(150deg,var(--ink-3),var(--ink-2));border:1px solid var(--line-2);font-family:var(--serif);font-style:italic;font-size:30px;color:var(--gold)}
-  .founder p{font-size:18px;color:var(--muted);max-width:42em;line-height:1.62}
-  .founder p b{color:var(--text);font-weight:500}
-  .founder .sig{font-family:var(--mono);font-size:13px;color:var(--muted-2);margin-top:16px;letter-spacing:.03em}
 
   /* close */
   .close{padding:104px 0;text-align:center;background:var(--rule) no-repeat top / 100% 1px,radial-gradient(120% 90% at 50% 0%,rgba(227,183,120,.06),transparent 60%)}
@@ -395,7 +389,6 @@
     .engines,.who,.desk{grid-template-columns:1fr}
     .stats{grid-template-columns:1fr 1fr}
     .truth-grid{grid-template-columns:1fr}
-    .founder{grid-template-columns:1fr;gap:18px}
     .band{padding:68px 0}
     nav .nav-link{display:none}
     nav .nav-cta{display:inline-flex;padding:8px 11px;font-size:11px}
