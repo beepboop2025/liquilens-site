@@ -737,11 +737,13 @@ def test_sibling_product_cards_match_the_catalog_contracts():
 
 def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     status = read("status/index.html")
-    assert "Release contract · 13 September 2026" in status
-    assert "hosted MCP 0.13.2" in status
-    assert "LIVE / VERIFIED" in status
+    assert "Release evidence and runtime observations" in status
+    assert "Seiche 0.13.2 signed bundle" in status
+    assert "Seiche 0.13.4" in status
+    assert "OBSERVED RUNTIME" in status
+    assert "HISTORICAL PROOF" in status
     assert "https://doi.org/10.5281/zenodo.22732023" in status
-    assert "Current-release recovery and volume resize are owner-deferred" in status
+    assert "For 0.13.2, recovery and volume resize were owner-deferred" in status
     assert "signed 0.13.1 recovery receipt remains historical evidence for its original application" in status
     assert "14 public read-only MCP tools, 4 prompts and 0 resources" in status
     assert "14 public read-only MCP tools" in status

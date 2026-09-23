@@ -29,9 +29,14 @@ includes filtered OpenClaw/Hermes configuration, a task skill and the
 recipe. It reuses the existing MCP client and preserves independent institution
 and Seiche responses, including partial failures. A returned institution packet
 must match the requested identity and its content hash. Regulatory compliance
-remains unassessed. Official client configuration docs were checked on
-2026-09-23; native client execution and third-party catalog approval require
-separate evidence.
+remains unassessed. On 2026-09-23, installed Hermes 0.18.2 and OpenClaw
+2026.6.5 passed native configuration loading, tool discovery and direct MCP
+calls using the published [Hermes configuration](developers/institutions/hermes.yaml)
+and [OpenClaw configuration](developers/institutions/openclaw.json). Both returned
+public evidence from `institution_review_packet` for `esaf-sfb` and
+`funding_stress_now`. Checks used isolated configuration directories without an
+LLM call; they do not establish LLM decision routing or third-party catalog
+acceptance.
 
 [`/start/`](start/index.html) lets a reader retain one response each from
 LiquiLens (institution disclosures), Seiche (system funding) and Undertow
