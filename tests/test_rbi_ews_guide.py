@@ -40,7 +40,7 @@ def test_guide_is_indexable_dated_and_analytics_enabled():
 
 
 def test_guide_uses_only_named_primary_rbi_sources():
-    page = re.sub(r'<header class="family-header">.*?</header>', "", _page(), flags=re.S)
+    page = re.sub(r'<header class="(?:family|research)-header">.*?</header>', "", _page(), flags=re.S)
     external_urls = {
         url
         for url in re.findall(r'href="(https?://[^"]+)"', page)

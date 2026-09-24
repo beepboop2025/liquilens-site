@@ -26,6 +26,11 @@ import urllib.request
 import xml.etree.ElementTree as ET
 
 try:
+    from scripts.research_shell import unify_html
+except ModuleNotFoundError:
+    from research_shell import unify_html
+
+try:
     from scripts.social_cards import (
         RenderedCard,
         render_replay_card,
@@ -200,6 +205,8 @@ footer a{{color:var(--muted)}}
   <div class="navlinks"><a href="/replay/">Replay index</a><a href="/research/">Research</a><a href="/us/">US layer</a><a href="/">Home</a></div>
 </div></nav>
 """
+
+HEAD = unify_html(HEAD, "/replay/")
 
 FOOT = """
 <footer><div class="wrap">

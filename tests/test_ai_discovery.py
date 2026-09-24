@@ -99,13 +99,13 @@ def test_discovery_indexes_and_home_link_the_selection_surface():
 
 def test_home_keeps_an_attributed_daily_brief_in_primary_actions():
     home = read("index.html")
-    hero = home[home.index('<div class="hero-actions">'):
-                home.index('</div>', home.index('<div class="hero-actions">'))]
+    hero = home[home.index('<div class="research-intro-actions">'):
+                home.index('</div>', home.index('<div class="research-intro-actions">'))]
     telegram = "https://t.me/LiquiLens_bot?start=liquilens_home_hero"
 
     assert f'href="{telegram}"' in hero
-    assert "Get 09:00 IST brief" in hero
-    assert "daily failure radar · /stop any time" in hero
+    assert "Follow the daily brief" in hero
+    assert "Daily failure radar · /stop any time" in hero
     assert 'target="_blank" rel="noopener noreferrer"' in hero
     assert home.index(telegram) < home.index('<details class="hero-more evidence-library"')
 
@@ -139,7 +139,8 @@ def test_search_and_answer_crawlers_are_explicitly_welcome():
 
 def test_home_keeps_landmarks_and_evidence_access_without_a_ticker():
     home = read("index.html")
-    assert '<main id="main">' in home and '</main>\n<footer class="family-footer">' in home
+    assert re.search(r'<main\b[^>]*\bid="main"', home)
+    assert '</main>\n<footer class="family-footer">' in home
     assert 'href="#main">Skip to content</a>' in home
     assert 'id="evidence-library"' in home
     assert 'id="radar"' in home and 'id="board"' in home

@@ -33,6 +33,11 @@ from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
 try:
+    from scripts.research_shell import unify_html
+except ModuleNotFoundError:
+    from research_shell import unify_html
+
+try:
     from scripts.social_cards import (
         RenderedCard,
         article_archive_card,
@@ -1376,7 +1381,7 @@ def page_shell(*, title: str, description: str, canonical: str, jsonld: dict,
     jsonld_text = json.dumps(jsonld, ensure_ascii=True).replace(
         "<", "\\u003c"
     ).replace(">", "\\u003e").replace("&", "\\u0026")
-    return f"""<!doctype html>
+    return unify_html(f"""<!doctype html>
 <html lang="en" class="family-design"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://cloudflareinsights.com https://api.liquilens.in; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <title>{esc(title)}</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="{esc(canonical)}">{feed_link}
@@ -1386,7 +1391,7 @@ def page_shell(*, title: str, description: str, canonical: str, jsonld: dict,
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500&amp;display=swap">
 <script type="application/ld+json">{jsonld_text}</script><style>{ARTICLE_CSS}</style>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{{"token":"43b422e63bb44fb5975c7bb39bd0ba24"}}'></script><!-- End Cloudflare Web Analytics -->
-<link rel="stylesheet" href="/family-design.css"><link rel="stylesheet" href="/family-pages.css"></head><body class="family-page"><header class="family-header"><nav class="family-nav" aria-label="Product family"><a class="family-brand" href="/" aria-label="LiquiLens home"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M9 20V12M14 23V9M19 20V12M24 17V15"/></svg>LiquiLens</a><div class="family-products"><a href="/" aria-current="page">LiquiLens</a><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a></div><a class="family-connect" href="/developers/institutions/">For agents</a></nav></header><header class="mast"><div class="wrap"><a class="brand" href="/"><b>L</b>LiquiLens</a><nav class="nav"><a href="/articles/">Daily articles</a><a href="/investigations/">Investigations</a><a href="/replay/">Case files</a><a href="/research/">Research</a></nav></div></header>{body}<footer><div class="wrap">Every article separates observed filings, market inputs and LiquiLens derivations. Screens are not credit ratings or predictions of failure. <a href="/research/">Evidence record</a> · <a href="/pilot/">Proof pilot</a> · not investment advice.</div></footer><script src="/ai-referral.js" defer></script></body></html>"""
+<link rel="stylesheet" href="/family-design.css"><link rel="stylesheet" href="/family-pages.css"></head><body class="family-page"><header class="family-header"><nav class="family-nav" aria-label="Product family"><a class="family-brand" href="/" aria-label="LiquiLens home"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M9 20V12M14 23V9M19 20V12M24 17V15"/></svg>LiquiLens</a><div class="family-products"><a href="/" aria-current="page">LiquiLens</a><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a></div><a class="family-connect" href="/developers/institutions/">For agents</a></nav></header><header class="mast"><div class="wrap"><a class="brand" href="/"><b>L</b>LiquiLens</a><nav class="nav"><a href="/articles/">Daily articles</a><a href="/investigations/">Investigations</a><a href="/replay/">Case files</a><a href="/research/">Research</a></nav></div></header>{body}<footer><div class="wrap">Every article separates observed filings, market inputs and LiquiLens derivations. Screens are not credit ratings or predictions of failure. <a href="/research/">Evidence record</a> · <a href="/pilot/">Proof pilot</a> · not investment advice.</div></footer><script src="/ai-referral.js" defer></script></body></html>""", canonical)
 
 
 def render_article(article: dict, *, social_card: RenderedCard | None = None) -> str:
