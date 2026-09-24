@@ -60,7 +60,21 @@ three servers and nine selected tools with no diagnostics. This is a discovery
 and filtering check; a model turn or native OpenClaw tool invocation was not
 part of this check. Follow your installed release's Node requirements.
 
-[Official OpenClaw MCP guide](https://docs.openclaw.ai/cli/mcp)
+### Optional ClawHub research skill
+
+Review [LiquiLens Trading Research on ClawHub](https://clawhub.ai/beepboop2025/skills/liquilens-trading-research), then install the pinned version:
+
+```sh
+openclaw skills install @beepboop2025/liquilens-trading-research --version 1.0.0
+```
+
+This adds task instructions and a configuration template. Connect the three MCP
+servers separately using the steps above. Installation does not run research.
+The ClawHub bundle is MIT-0; source data and API responses retain their own rights.
+
+The ClawHub release also installed successfully in an isolated Linux workspace using OpenClaw 2026.9.6 and Node 24.16.0. Its three source files matched the published SHA-256 checksums. This checked installation, not a model turn.
+
+[Official OpenClaw MCP guide](https://docs.openclaw.ai/cli/mcp) · [Official skills commands](https://docs.openclaw.ai/cli/skills)
 
 ## Install the research skill
 

@@ -7,6 +7,7 @@
 - Tested client versions and installation commands: https://liquilens.in/agents/clients.md
 - Hermes setup and first research task: https://liquilens.in/agents/hermes/
 - OpenClaw setup and first research task: https://liquilens.in/agents/openclaw/
+- OpenClaw research skill on ClawHub: https://clawhub.ai/beepboop2025/skills/liquilens-trading-research
 - Reproducible Python kit and configurations: https://liquilens.in/agents/trading-research-kit.zip
 - Machine manifest and file checksums: https://liquilens.in/agents/manifest.json
 - Trading research skill: https://liquilens.in/agents/trading-research/SKILL.md
