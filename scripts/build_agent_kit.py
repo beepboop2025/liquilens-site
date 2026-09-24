@@ -4,10 +4,13 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import re
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "agents"
+VERSION = "1.0.1"
+SKILL_NAME = "liquilens-trading-research"
 SERVERS = {
     "seiche": {"url": "https://api.seiche.info/mcp", "tools": ["data_health", "funding_stress_now", "money_market_context"]},
     "liquilens": {"url": "https://api.liquilens.in/mcp", "tools": ["banking_specialisation_coverage", "bank_asset_quality_review", "institution_review_packet", "universe_search"]},
@@ -17,6 +20,33 @@ SERVERS = {
 
 def json_bytes(value):
     return (json.dumps(value, indent=2, ensure_ascii=False) + "\n").encode()
+
+
+def discovery_assets(skill):
+    """Publish both discovery formats from one reviewed, single-file skill."""
+    text = skill.decode("utf-8")
+    if not text.startswith("---\n") or "\n---\n" not in text[4:]:
+        raise ValueError("Skill frontmatter is required for discovery")
+    frontmatter = text[4:].split("\n---\n", 1)[0]
+    names = re.findall(r"^name: ([a-z0-9-]+)$", frontmatter, re.MULTILINE)
+    descriptions = re.findall(r"^description: (.+)$", frontmatter, re.MULTILINE)
+    if names != [SKILL_NAME] or len(descriptions) != 1:
+        raise ValueError("Discovery requires the expected name and one-line description")
+    description = descriptions[0].strip()
+    if not description or len(description) > 1024 or description[0] in "|>\"'":
+        raise ValueError("Discovery description must be unquoted plain single-line text")
+    skill_path = f"/.well-known/skills/{SKILL_NAME}/SKILL.md"
+    legacy = {"skills": [{"name": SKILL_NAME, "description": description, "files": ["SKILL.md"]}]}
+    current = {
+        "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+        "skills": [{"name": SKILL_NAME, "type": "skill-md", "description": description,
+                    "url": skill_path, "digest": "sha256:" + hashlib.sha256(skill).hexdigest()}],
+    }
+    return {
+        ".well-known/skills/index.json": json_bytes(legacy),
+        ".well-known/agent-skills/index.json": json_bytes(current),
+        skill_path.lstrip("/"): skill,
+    }
 
 
 def assets():
@@ -57,10 +87,14 @@ def build():
     for name, body in files.items():
         (OUT / name).parent.mkdir(parents=True, exist_ok=True)
         (OUT / name).write_bytes(body)
+    for name, data in discovery_assets(files["trading-research/SKILL.md"]).items():
+        destination = ROOT / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(data)
     body = archive(files)
     (OUT / "trading-research-kit.zip").write_bytes(body)
     manifest = {
-        "schema": "liquilens.agent-kit.v1", "version": "1.0.0",
+        "schema": "liquilens.agent-kit.v1", "version": VERSION,
         "updated_at": "2026-09-24", "homepage": "https://liquilens.in/agents/",
         "price": {"public_research": "free", "api_key_required": False,
                   "limits": "Fair-use limits apply. Model providers may charge separately."},

@@ -1,6 +1,6 @@
 {
   "schema": "liquilens.agent-kit.v1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "updated_at": "2026-09-24",
   "homepage": "https://liquilens.in/agents/",
   "price": {
@@ -42,13 +42,13 @@
   ],
   "archive": {
     "url": "https://liquilens.in/agents/trading-research-kit.zip",
-    "sha256": "df0c0064bb26a202762b0314e2229853f90dcca6417c59b007e25b077d2f5ecc",
-    "bytes": 13614
+    "sha256": "c88ca5837088dceb5ea430552dfc9db78b557156b103750d858f68853ec9f5ee",
+    "bytes": 14410
   },
   "files": {
     "README.md": {
-      "sha256": "58dfb24dde68ba2e7d3efa4002bf2722ece3c085f448f787090a7d6aa86c623b",
-      "bytes": 3815
+      "sha256": "75d2ceb6808e00ee40e439d6b99b4cc5f3dd52850a361234bf05589d9713669f",
+      "bytes": 4738
     },
     "claude.txt": {
       "sha256": "34ed8064237887d623de4e6c1a7d34007958f81d7e043378f0615a1a3c6b3ca4",
@@ -79,8 +79,8 @@
       "bytes": 916
     },
     "trading-research/SKILL.md": {
-      "sha256": "12c92ba84aa1239de1b42e88623eed9d3eb94cedf6386acd971b15c3cd729816",
-      "bytes": 2686
+      "sha256": "13de77b315a72b97c976436cb1b8af1546edb2ed5301b1df035e034584fe6915",
+      "bytes": 3955
     },
     "trading_brief.py": {
       "sha256": "df428079f3f0e342fa6caef7db72dc89471388b101ce04fbea1dc8198848ff8d",

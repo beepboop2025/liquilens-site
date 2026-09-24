@@ -1,0 +1,11 @@
+{
+  "skills": [
+    {
+      "name": "liquilens-trading-research",
+      "description": "Prepare a source-backed trading research brief with dollar-funding context, public bank evidence and position-sized BTC exit estimates. Use for macro preparation, counterparty research or market-depth questions, preserving source dates and missing data.",
+      "files": [
+        "SKILL.md"
+      ]
+    }
+  ]
+}

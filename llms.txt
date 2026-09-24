@@ -11,6 +11,8 @@
 - Reproducible Python kit and configurations: https://liquilens.in/agents/trading-research-kit.zip
 - Machine manifest and file checksums: https://liquilens.in/agents/manifest.json
 - Trading research skill: https://liquilens.in/agents/trading-research/SKILL.md
+- Hermes-compatible domain skill discovery: https://liquilens.in/.well-known/skills/index.json
+- Agent skill discovery draft v0.2 with integrity digest: https://liquilens.in/.well-known/agent-skills/index.json
 - n8n funding API workflow: https://liquilens.in/agents/n8n-funding-research.json
 
 Public research is free with no account or API key; fair-use limits apply.

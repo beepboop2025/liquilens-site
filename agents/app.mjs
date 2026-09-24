@@ -1,8 +1,11 @@
 import {configuration} from "../start/core.mjs";
 import {createTracker, entryEvent} from "./metrics.mjs";
+import {applyAgentNavigation, browserNavigationContext} from "./navigation.mjs";
+const navigation = browserNavigationContext(location, navigator, window);
+applyAgentNavigation(document, location.href, navigation);
 const track = createTracker({
-  verification: location.hostname !== "liquilens.in" || new URLSearchParams(location.search).get("verification") === "1" || navigator.webdriver === true,
-  privacyOptOut: navigator.globalPrivacyControl === true || navigator.doNotTrack === "1" || window.doNotTrack === "1",
+  verification: navigation.verification,
+  privacyOptOut: navigation.privacyOptOut,
 });
 const ids = ["seiche", "liquilens", "undertow"];
 const help = {

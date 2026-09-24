@@ -1,10 +1,13 @@
 import {TASKS, SERVERS, configuration, runTask, safeUrl} from "./core.mjs";
 import {acquisitionSource, questionLink, telegramLink, TELEGRAM_DESKS} from "./acquisition.mjs";
 import {captureReview, reviewPacket, reviewMarkdown} from "./review.mjs";
+import {applyAgentNavigation, browserNavigationContext} from "../agents/navigation.mjs";
 
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(location.search);
-const verification = params.get("verification") === "1";
+const navigation = browserNavigationContext(location, navigator, window);
+const {verification, privacyOptOut} = navigation;
+applyAgentNavigation(document, location.href, navigation);
 const source = acquisitionSource(location.search);
 let task = Object.hasOwn(TASKS, params.get("task")) ? params.get("task") : "bank";
 let selectedIds = [task === "bank" ? "liquilens" : task === "funding" ? "seiche" : "undertow"];
@@ -15,7 +18,7 @@ if ([1000, 10000, 100000, 1000000].includes(size)) $("size").value = String(size
 
 function announce(message, state = "idle") {$("notice").textContent = message; $("notice").dataset.state = state;}
 function track(action, product = task) {
-  if (verification) return Promise.resolve(false);
+  if (verification || privacyOptOut) return Promise.resolve(false);
   // Closed enums only: never send queries, prompts, identities or source data.
   return fetch("https://api.liquilens.in/api/events", {method: "POST", headers: {"Content-Type": "application/json"}, credentials: "omit", keepalive: true,
     body: JSON.stringify({surface: "mcp_start", event: `${product}_${action}`, source})}).then(response => response.status === 202).catch(() => false);
@@ -123,8 +126,8 @@ $("useful").addEventListener("click", async function () {
   const submitted = activeResult; this.disabled = true; this.textContent = "Sending feedback…";
   const accepted = await track("helpful_clicked", resultTask);
   if (activeResult !== submitted) return;
-  this.textContent = accepted ? "Feedback recorded" : verification ? "Verification: feedback not sent" : "Feedback could not be sent";
-  this.disabled = accepted || verification;
+  this.textContent = accepted ? "Feedback recorded" : verification ? "Verification: feedback not sent" : privacyOptOut ? "Privacy preference: feedback not sent" : "Feedback could not be sent";
+  this.disabled = accepted || verification || privacyOptOut;
 });
 chooseTask(task, false);
 renderReview();
