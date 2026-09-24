@@ -49,6 +49,8 @@ jobs:
         run: python3 scripts/verify_pages_ci.py --indexnow-before
       - name: Require external proof before publishing catalog claims
         timeout-minutes: 3
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: >-
           python3 scripts/verify_catalog_edge.py --external-proof-only
           --attempts 2 --delay 2 --budget-seconds 150
@@ -59,6 +61,8 @@ jobs:
       - name: Report where the catalog edge disagrees with the committed catalog
         continue-on-error: true
         timeout-minutes: 1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: python3 scripts/verify_catalog_edge.py --attempts 1
       - name: Preserve postdeployment verifiers outside the site artifact
         run: |

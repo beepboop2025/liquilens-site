@@ -346,6 +346,8 @@ def test_publish_workflows_block_on_external_proof_before_mutation():
     assert edge_names.index(proof_name) < edge_names.index(upload_name)
     assert edge_names.index(main_name) + 1 == edge_names.index(upload_name)
     edge_proof = edge_steps[edge_names.index(proof_name)]
+    assert edge_proof["env"]["GITHUB_TOKEN"] == "${{ github.token }}"
+    assert pages_steps[pages_names.index(proof_name)]["env"]["GITHUB_TOKEN"] == "${{ github.token }}"
     assert edge_proof["timeout-minutes"] * 60 >= 150
     assert "--budget-seconds 150" in edge_proof["run"]
     assert "continue-on-error" not in edge_proof
