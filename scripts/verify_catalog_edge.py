@@ -520,6 +520,9 @@ def _mcp_request(
         headers=headers,
         method="POST",
     )
+    # Release checks are synthetic, including when extra headers are supplied.
+    # Request normalizes header names, so mixed-case overrides cannot remove it.
+    request.add_header("X-Liquilens-Traffic-Class", "synthetic")
     try:
         with _SAFE_OPENER.open(
             request,
