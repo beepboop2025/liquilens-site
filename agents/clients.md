@@ -7,6 +7,8 @@ charge separately.
 
 ## Hermes
 
+[Step-by-step Hermes setup and research tasks](https://liquilens.in/agents/hermes/).
+
 1. Download https://liquilens.in/agents/hermes.yaml and review it.
 2. Merge its `mcp_servers` entries into `~/.hermes/config.yaml`. Keep your existing
    settings and other servers. The configuration exposes nine research tools
@@ -39,6 +41,8 @@ review as of 24 September; it is not a Nous approval or a released catalog entry
 [Official Hermes MCP guide](https://hermes-agent.nousresearch.com/docs/user-guide/features/mcp)
 
 ## OpenClaw
+
+[Step-by-step OpenClaw setup and research tasks](https://liquilens.in/agents/openclaw/).
 
 Download https://liquilens.in/agents/openclaw.json and merge its `mcp.servers`
 entries into `~/.openclaw/openclaw.json`, preserving your other settings. Then run:
