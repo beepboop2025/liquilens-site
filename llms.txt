@@ -4,6 +4,7 @@
 
 - Connect Hermes, OpenClaw, Claude Code, Codex, Cursor or VS Code: https://liquilens.in/agents/
 - Text guide: https://liquilens.in/agents/README.md
+- Tested client versions and installation commands: https://liquilens.in/agents/clients.md
 - Reproducible Python kit and configurations: https://liquilens.in/agents/trading-research-kit.zip
 - Machine manifest and file checksums: https://liquilens.in/agents/manifest.json
 - Trading research skill: https://liquilens.in/agents/trading-research/SKILL.md
