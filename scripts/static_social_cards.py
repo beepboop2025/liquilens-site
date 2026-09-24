@@ -66,6 +66,20 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/agents/hermes/", "hermes-research", "LIQUILENS / SEICHE / UNDERTOW", "HERMES + MCP",
+        "Give Hermes a financial research desk.",
+        "RESEARCH", "FUNDING / BANKS / MARKET DEPTH",
+        "NINE TOOLS / NO API KEY / SOURCE DATES", "CLIENT CHECK", "2026-09-24",
+        "PUBLIC READ-ONLY RESEARCH", "NATIVE HERMES RUNTIME CHECK",
+    ),
+    RouteDefinition(
+        "/agents/openclaw/", "openclaw-research", "LIQUILENS / SEICHE / UNDERTOW", "OPENCLAW + MCP",
+        "Give OpenClaw a financial research desk.",
+        "RESEARCH", "FUNDING / BANKS / MARKET DEPTH",
+        "NINE TOOLS / NO API KEY / SOURCE DATES", "CLIENT CHECK", "2026-09-24",
+        "PUBLIC READ-ONLY RESEARCH", "NATIVE OPENCLAW DISCOVERY CHECK",
+    ),
+    RouteDefinition(
         "/agents/", "agent-starter-kit", "LIQUILENS / SEICHE / UNDERTOW", "FREE AGENT TOOLS",
         "Financial research your agent can actually call.",
         "STARTER KIT", "FUNDING / BANKS / MARKET DEPTH",

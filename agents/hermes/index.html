@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" class="family-design">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://api.liquilens.in; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Free financial research MCP for Hermes | LiquiLens</title>
+  <meta name="description" content="Connect Hermes to free funding context, bank filing evidence and BTC market-depth estimates. Copy the tested MCP configuration and try a research task. No API key.">
+  <link rel="canonical" href="https://liquilens.in/agents/hermes/">
+  <link rel="alternate" type="text/markdown" href="https://liquilens.in/agents/clients.md">
+  <link rel="icon" href="/og.png">
+  <link rel="stylesheet" href="/family-design.css"><link rel="stylesheet" href="/family-pages.css"><link rel="stylesheet" href="/agents/styles.css">
+<!-- SOCIAL-CARD:START -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LiquiLens">
+<meta property="og:url" content="https://liquilens.in/agents/hermes/">
+<meta property="og:title" content="Give Hermes a financial research desk.">
+<meta property="og:description" content="Connect Hermes to free funding context, bank filing evidence and BTC market-depth estimates. Copy the tested MCP configuration and try a research task. No API key.">
+<meta property="og:image" content="https://liquilens.in/agents/hermes/share.png?v=458901d602483308">
+<meta property="og:image:secure_url" content="https://liquilens.in/agents/hermes/share.png?v=458901d602483308">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LiquiLens route card for HERMES + MCP: Give Hermes a financial research desk. RESEARCH: FUNDING / BANKS / MARKET DEPTH. NINE TOOLS / NO API KEY / SOURCE DATES. CLIENT CHECK 2026-09-24; status PUBLIC READ-ONLY RESEARCH.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Give Hermes a financial research desk.">
+<meta name="twitter:description" content="Connect Hermes to free funding context, bank filing evidence and BTC market-depth estimates. Copy the tested MCP configuration and try a research task. No API key.">
+<meta name="twitter:image" content="https://liquilens.in/agents/hermes/share.png?v=458901d602483308">
+<meta name="twitter:image:alt" content="LiquiLens route card for HERMES + MCP: Give Hermes a financial research desk. RESEARCH: FUNDING / BANKS / MARKET DEPTH. NINE TOOLS / NO API KEY / SOURCE DATES. CLIENT CHECK 2026-09-24; status PUBLIC READ-ONLY RESEARCH.">
+<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/agents/hermes/#social-card","url":"https://liquilens.in/agents/hermes/","image":"https://liquilens.in/agents/hermes/share.png?v=458901d602483308","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/agents/hermes/share.png?v=458901d602483308","width":1200,"height":630,"caption":"LiquiLens route card for HERMES + MCP: Give Hermes a financial research desk. RESEARCH: FUNDING / BANKS / MARKET DEPTH. NINE TOOLS / NO API KEY / SOURCE DATES. CLIENT CHECK 2026-09-24; status PUBLIC READ-ONLY RESEARCH."}}</script>
+<!-- SOCIAL-CARD:END -->
+</head>
+<body class="family-page" data-agent-client="hermes">
+<main class="agent-shell">
+  <nav aria-label="Agent navigation"><a href="/">LiquiLens</a><a href="/agents/">All agent tools</a><a href="/agents/hermes/" aria-current="page">Hermes</a><a href="/agents/openclaw/">OpenClaw</a><a href="/developers/">API documentation</a></nav>
+  <header class="agent-hero"><div><p class="access">Hermes + free public research</p><h1>Give Hermes a financial research desk.</h1><p class="lede">Ask about funding conditions, a bank’s disclosed risks or the depth behind a BTC exit estimate. Get evidence with source dates and clear gaps.</p><div class="actions"><a class="primary" href="#connect">Connect Hermes</a><a href="/start/?task=funding">Try a funding question first</a></div><p class="fine">No account or API key. Public research tools are free with fair-use limits. Your agent or model provider may charge separately.</p></div><aside class="brief-preview" aria-label="Included research"><h2>Three desks. One connection kit.</h2><dl><div><dt>Seiche · 3 tools</dt><dd>Funding conditions, money markets and source health</dd></div><div><dt>LiquiLens · 4 tools</dt><dd>Institution coverage, filing evidence and review packets</dd></div><div><dt>Undertow · 2 tools</dt><dd>Published BTC exit estimates and venue concentration</dd></div></dl><p>Read-only evidence. Source dates travel with the result.</p></aside></header>
+  <section id="connect"><h2>Connect Hermes</h2><ol class="steps"><li><h3>Add the research servers</h3><p>Download <a data-config-download href="/agents/hermes.yaml" download>hermes.yaml</a>, or copy the configuration below. Merge its <code>mcp_servers</code> entries into <code>~/.hermes/config.yaml</code>, preserving your other settings and servers. Review the three endpoint URLs before saving.</p><details><summary>View the complete configuration</summary><pre><code id="client-configuration">mcp_servers:
+  seiche:
+    url: https://api.seiche.info/mcp
+    tools:
+      include: [&quot;data_health&quot;, &quot;funding_stress_now&quot;, &quot;money_market_context&quot;]
+  liquilens:
+    url: https://api.liquilens.in/mcp
+    tools:
+      include: [&quot;banking_specialisation_coverage&quot;, &quot;bank_asset_quality_review&quot;, &quot;institution_review_packet&quot;, &quot;universe_search&quot;]
+  undertow:
+    url: https://api.seiche.info/undertow/mcp
+    tools:
+      include: [&quot;exit_cost&quot;, &quot;venue_concentration&quot;]</code></pre></details><div class="actions"><button type="button" data-copy="client-configuration" data-action="config_copied">Copy configuration</button></div></li><li><h3>Check discovery</h3><pre><code>hermes mcp test seiche
+hermes mcp test liquilens
+hermes mcp test undertow</code></pre><p>Look for successful connections to all three servers. This configuration selects nine research tools; Hermes may also register resource and prompt helpers.</p></li><li><h3>Run your first research task</h3><p>Start a new Hermes chat or use <code>/reload-mcp</code> in an existing session. Ask it to use the connected research tools with the task below.</p></li></ol><p id="copy-status" role="status" aria-live="polite"></p></section>
+  <section><h2>Start with a question that needs evidence</h2><blockquote id="research-task">Use the connected financial research tools to prepare a research brief. Start with Seiche money_market_context and data_health. Show funding conditions, observation dates, units and stale or missing sources. Use Undertow exit_cost for a $100,000 BTC exit estimate and keep each venue separate. If I name a bank, resolve its exact LiquiLens coverage before reviewing its filings. Return evidence, sources and open questions.</blockquote><button type="button" data-copy="research-task" data-action="research_prompt_copied">Copy research task</button><p>For a first look without configuring an agent, <a href="/start/?task=funding">run the funding question in your browser</a>. The result includes source quality and export options.</p></section>
+  <section><h2>Choose a useful next task</h2><div class="table-wrap"><table><caption class="fine">Questions for your connected agent</caption><thead><tr><th>Research question</th><th>Tools to use</th><th>What to check</th></tr></thead><tbody><tr><td>What is the funding backdrop?</td><td><code>money_market_context</code>, <code>data_health</code>, <code>funding_stress_now</code></td><td>Observation dates, units, stale sources and missing readings</td></tr><tr><td>What changed in this bank’s filings?</td><td><code>universe_search</code>, <code>banking_specialisation_coverage</code>, <code>bank_asset_quality_review</code>, <code>institution_review_packet</code></td><td>Exact institution, reporting periods and disclosed evidence gaps</td></tr><tr><td>What does published depth imply for a BTC exit?</td><td><code>exit_cost</code>, <code>venue_concentration</code></td><td>Requested dollar size, venue-level estimates and source time</td></tr></tbody></table></div><p>For scheduled briefs and comparisons between saved runs, use the <a href="/agents/#workflow">Python starter workflow</a>. For a manual HTTP workflow, follow the <a href="/agents/clients.md#n8n">n8n setup guide</a>.</p></section>
+  <section><h2>What we tested</h2><p>Checked on <time datetime="2026-09-24">24 September 2026</time>.</p><p>Hermes <code>v2026.9.24</code> with Python 3.12 registered all nine selected research tools and ten resource/prompt helpers. Native runtime calls to <code>money_market_context</code> and <code>banking_specialisation_coverage</code> returned data. The check dispatched tools directly; it did not test a model’s tool selection.</p><p>This is a custom MCP connection. The optional <a href="https://github.com/NousResearch/hermes-agent/pull/121379">Hermes catalog contribution</a> is awaiting review as of 24 September. You can use this configuration while that review is pending.</p><p><a href="/agents/clients.md">All client checks and commands</a> · <a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/mcp">Official Hermes MCP instructions</a></p></section>
+  <section><h2>If a connection needs attention</h2><p>If a server connects but a tool is missing, check its <code>tools.include</code> list and reload MCP. If a connection fails, run <code>hermes mcp test SERVER_NAME</code> for that server and inspect the reported HTTP error.</p><p>If your client does not recognise an <code>mcp</code> command, check its version and official instructions. If a source is unavailable or stale, retain that state in the brief and continue with any available evidence.</p></section>
+  <section class="limits"><h2>Use the evidence with its limits</h2><p>These tools supply public research. They do not execute orders or certify a bank’s safety. Check the source dates and coverage before drawing a conclusion.</p><p>This page makes no research calls on load. Explicit configuration copies, download requests and prompt copies are counted in aggregate without visitor identifiers. Operator verification is excluded; setup actions do not establish installations or users.</p></section>
+  <footer><a href="/agents/">Agent starter kit</a><a href="/agents/trading-research/SKILL.md">Research skill</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/beepboop2025/liquilens-site">Source</a></footer>
+</main><script type="module" src="/agents/client-pages.mjs"></script>
+</body></html>
