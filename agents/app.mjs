@@ -1,4 +1,9 @@
 import {configuration} from "../start/core.mjs";
+import {createTracker, entryEvent} from "./metrics.mjs";
+const track = createTracker({
+  verification: location.hostname !== "liquilens.in" || new URLSearchParams(location.search).get("verification") === "1" || navigator.webdriver === true,
+  privacyOptOut: navigator.globalPrivacyControl === true || navigator.doNotTrack === "1" || window.doNotTrack === "1",
+});
 const ids = ["seiche", "liquilens", "undertow"];
 const help = {
   hermes: "Merge hermes.yaml into ~/.hermes/config.yaml. Keep existing settings, then start a new session or use /reload-mcp.",
@@ -25,11 +30,16 @@ async function update() {
     } catch { /* The native configuration above remains usable. */ }
   }
 }
-async function copy(id) {
-  try {await navigator.clipboard.writeText($(id).textContent); $("copy-status").textContent = "Copied.";}
+async function copy(id, action) {
+  const event = entryEvent(action, $("client").value);
+  try {await navigator.clipboard.writeText($(id).textContent); $("copy-status").textContent = "Copied."; track(event);}
   catch {$("copy-status").textContent = "Select and copy the text, or download the configuration.";}
 }
 $("client").addEventListener("change", update);
-$("copy-config").addEventListener("click", () => copy("configuration"));
-$("copy-prompt").addEventListener("click", () => copy("task-prompt"));
+$("copy-config").addEventListener("click", () => copy("configuration", "config_copied"));
+$("copy-prompt").addEventListener("click", () => copy("task-prompt", "research_prompt_copied"));
+$("config-download").addEventListener("click", () => track(entryEvent("config_download_requested", $("client").value)));
+for (const [id, action] of [["kit-download", "kit_download_requested"], ["n8n-download", "n8n_download_requested"], ["agent-skill", "skill_opened"]]) {
+  $(id).addEventListener("click", () => track(entryEvent(action)));
+}
 update();
