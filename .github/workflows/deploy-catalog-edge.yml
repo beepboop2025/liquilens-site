@@ -39,6 +39,8 @@ jobs:
           python3 -m pytest tests/test_catalog_edge_parity.py -q
       - name: Require external proof before publishing catalog claims
         timeout-minutes: 3
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: >-
           python3 scripts/verify_catalog_edge.py --external-proof-only
           --attempts 2 --delay 2 --budget-seconds 150

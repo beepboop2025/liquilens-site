@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 import hashlib
 import ipaddress
 import json
+import os
 import re
 import socket
 import time
@@ -925,6 +926,14 @@ def _fetch_bytes(
         url,
         headers=request_headers,
     )
+    parsed = urllib.parse.urlsplit(url)
+    if parsed.scheme == "https" and parsed.netloc in ("api.github.com", "api.github.com:443"):
+        token = os.environ.get("GITHUB_TOKEN", "").strip()
+        if token:
+            if any(character.isspace() for character in token):
+                raise RuntimeError("GITHUB_TOKEN contains invalid whitespace")
+            # Defense in depth: never forward credentials if redirect handling changes.
+            request.add_unredirected_header("Authorization", f"Bearer {token}")
     try:
         with _SAFE_OPENER.open(
             request,
