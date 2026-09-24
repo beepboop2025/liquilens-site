@@ -7,7 +7,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "test:edge": "node --test tests/test_catalog_candidate_binding.mjs tests/test_catalog_worker.mjs tests/test_financial_evidence_mcp.mjs tests/test_banking_display.mjs tests/test_developer_demo.mjs tests/test_mcp_start.mjs tests/test_research_review.mjs tests/test_social_acquisition.mjs tests/test_family_editorial.mjs tests/test_agent_entry_metrics.mjs"
+    "test:edge": "node --test tests/test_catalog_candidate_binding.mjs tests/test_catalog_worker.mjs tests/test_financial_evidence_mcp.mjs tests/test_banking_display.mjs tests/test_developer_demo.mjs tests/test_mcp_start.mjs tests/test_research_review.mjs tests/test_social_acquisition.mjs tests/test_family_editorial.mjs tests/test_agent_entry_metrics.mjs tests/test_agent_navigation.mjs tests/test_start_privacy.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "2.0.0",

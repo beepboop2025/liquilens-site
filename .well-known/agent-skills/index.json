@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "liquilens-trading-research",
+      "type": "skill-md",
+      "description": "Prepare a source-backed trading research brief with dollar-funding context, public bank evidence and position-sized BTC exit estimates. Use for macro preparation, counterparty research or market-depth questions, preserving source dates and missing data.",
+      "url": "/.well-known/skills/liquilens-trading-research/SKILL.md",
+      "digest": "sha256:13de77b315a72b97c976436cb1b8af1546edb2ed5301b1df035e034584fe6915"
+    }
+  ]
+}

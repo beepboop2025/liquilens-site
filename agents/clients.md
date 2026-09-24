@@ -34,6 +34,19 @@ Native calls to `money_market_context` and `banking_specialisation_coverage`
 returned data. This checked runtime dispatch directly; it did not test a model's
 decision to select those tools.
 
+### Discover and install the research skill from this domain
+
+Hermes can find these task instructions directly, without a central catalog listing:
+
+```sh
+hermes skills search https://liquilens.in --source well-known
+hermes skills inspect well-known:https://liquilens.in/.well-known/skills/liquilens-trading-research
+hermes skills install well-known:https://liquilens.in/.well-known/skills/liquilens-trading-research
+```
+
+Review the inspection and normal install prompt. The skill provides instructions;
+the three MCP connections above remain separate. Installing it does not run research.
+
 The configuration works as a custom connection. The optional Hermes catalog
 [contribution](https://github.com/NousResearch/hermes-agent/pull/121379) is awaiting
 review as of 24 September; it is not a Nous approval or a released catalog entry.
@@ -65,7 +78,7 @@ part of this check. Follow your installed release's Node requirements.
 Review [LiquiLens Trading Research on ClawHub](https://clawhub.ai/beepboop2025/skills/liquilens-trading-research), then install the pinned version:
 
 ```sh
-openclaw skills install @beepboop2025/liquilens-trading-research --version 1.0.0
+openclaw skills install @beepboop2025/liquilens-trading-research --version 1.0.1
 ```
 
 This adds task instructions and a configuration template. Connect the three MCP
