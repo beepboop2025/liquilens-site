@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="family-design family-ink-text">
+<html lang="en" class="family-design family-ink-text research-interface">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="/desk/styles.css">
 <link rel="stylesheet" href="/family-design.css">
 <link rel="stylesheet" href="/family-pages.css">
-<!-- SOCIAL-CARD:START -->
+<link rel="stylesheet" href="/research-ui/research.css"><!-- SOCIAL-CARD:START -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LiquiLens">
 <meta property="og:url" content="https://liquilens.in/desk/">
@@ -35,7 +35,7 @@
 <!-- SOCIAL-CARD:END -->
 </head>
 <body class="family-page">
-<header class="family-header"><nav class="family-nav" aria-label="Product family"><a class="family-brand" href="/" aria-label="LiquiLens home"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M9 20V12M14 23V9M19 20V12M24 17V15"/></svg>LiquiLens</a><div class="family-products"><a href="/" aria-current="page">LiquiLens</a><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a></div><a class="family-connect" href="/developers/institutions/">For agents</a></nav></header>
+<a class="research-skip" href="#main">Skip to content</a><header class="research-header"><div class="research-mast"><a class="research-identity" href="/"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="14"/><path d="M10 23V13m5 14V9m5 15V12m5 9v-6"/></svg><span><strong>LiquiLens</strong><small>Institution intelligence</small></span></a><nav class="research-network" aria-label="Products"><a href="/" aria-current="page">LiquiLens</a><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a></nav><a class="research-api" href="/agents/">API &amp; agents</a></div><nav class="research-tabs" aria-label="LiquiLens sections"><a href="/">Overview</a><a href="/banking/">Banking research</a><a href="/start/">Review workspace</a><a href="/articles/">Published research</a><a href="/world-economy/">World economy</a><a href="/research/">Methods &amp; evidence</a></nav></header>
   <a class="skip" href="#wire">Skip to the evidence wire</a>
   <header class="mast">
     <a class="brand" href="/" aria-label="LiquiLens home"><span class="brand-mark">L</span><span>LiquiLens</span></a>
@@ -47,7 +47,7 @@
     </nav>
   </header>
 
-  <main>
+  <main id="main">
     <section class="opening" aria-labelledby="desk-title">
       <div class="opening-copy">
         <p class="kicker"><span class="live-dot" aria-hidden="true"></span> Four instruments. One evidence wire.</p>
@@ -148,5 +148,5 @@
   {"@context":"https://schema.org","@type":"CollectionPage","name":"LiquiLens Intelligence Desk","url":"https://liquilens.in/desk/","description":"Original evidence-bounded analysis across LiquiLens, Seiche, Palimpsest and LiquiLens-Undertow."}
   </script>
   <script src="/desk/app.js" defer></script>
-</body>
+<script type="module" src="/research-ui/context.js"></script></body>
 </html>

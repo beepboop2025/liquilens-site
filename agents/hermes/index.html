@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="family-design">
+<html lang="en" class="family-design research-interface">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://api.liquilens.in; object-src 'none'; base-uri 'self'; form-action 'none'">
@@ -9,7 +9,7 @@
   <link rel="alternate" type="text/markdown" href="https://liquilens.in/agents/clients.md">
   <link rel="icon" href="/og.png">
   <link rel="stylesheet" href="/family-design.css"><link rel="stylesheet" href="/family-pages.css"><link rel="stylesheet" href="/agents/styles.css">
-<!-- SOCIAL-CARD:START -->
+<link rel="stylesheet" href="/research-ui/research.css"><!-- SOCIAL-CARD:START -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LiquiLens">
 <meta property="og:url" content="https://liquilens.in/agents/hermes/">
@@ -29,8 +29,8 @@
 <script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/agents/hermes/#social-card","url":"https://liquilens.in/agents/hermes/","image":"https://liquilens.in/agents/hermes/share.png?v=458901d602483308","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/agents/hermes/share.png?v=458901d602483308","width":1200,"height":630,"caption":"LiquiLens route card for HERMES + MCP: Give Hermes a financial research desk. RESEARCH: FUNDING / BANKS / MARKET DEPTH. NINE TOOLS / NO API KEY / SOURCE DATES. CLIENT CHECK 2026-09-24; status PUBLIC READ-ONLY RESEARCH."}}</script>
 <!-- SOCIAL-CARD:END -->
 </head>
-<body class="family-page" data-agent-client="hermes">
-<main class="agent-shell">
+<body class="family-page" data-agent-client="hermes"><a class="research-skip" href="#main">Skip to content</a><header class="research-header"><div class="research-mast"><a class="research-identity" href="/"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="14"/><path d="M10 23V13m5 14V9m5 15V12m5 9v-6"/></svg><span><strong>LiquiLens</strong><small>Institution intelligence</small></span></a><nav class="research-network" aria-label="Products"><a href="/" aria-current="page">LiquiLens</a><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a></nav><a class="research-api" href="/agents/">API &amp; agents</a></div><nav class="research-tabs" aria-label="LiquiLens sections"><a href="/">Overview</a><a href="/banking/">Banking research</a><a href="/start/">Review workspace</a><a href="/articles/">Published research</a><a href="/world-economy/">World economy</a><a href="/research/">Methods &amp; evidence</a></nav></header>
+<main id="main" class="agent-shell">
   <nav aria-label="Agent navigation"><a href="/">LiquiLens</a><a href="/agents/">All agent tools</a><a href="/agents/hermes/" aria-current="page">Hermes</a><a href="/agents/openclaw/">OpenClaw</a><a href="/developers/">API documentation</a></nav>
   <header class="agent-hero"><div><p class="access">Hermes + free public research</p><h1>Give Hermes a financial research desk.</h1><p class="lede">Ask about funding conditions, a bank’s disclosed risks or the depth behind a BTC exit estimate. Get evidence with source dates and clear gaps.</p><div class="actions"><a class="primary" href="#connect">Connect Hermes</a><a href="/start/?task=funding">Try a funding question first</a></div><p class="fine">No account or API key. Public research tools are free with fair-use limits. Your agent or model provider may charge separately.</p></div><aside class="brief-preview" aria-label="Included research"><h2>Three desks. One connection kit.</h2><dl><div><dt>Seiche · 3 tools</dt><dd>Funding conditions, money markets and source health</dd></div><div><dt>LiquiLens · 4 tools</dt><dd>Institution coverage, filing evidence and review packets</dd></div><div><dt>Undertow · 2 tools</dt><dd>Published BTC exit estimates and venue concentration</dd></div></dl><p>Read-only evidence. Source dates travel with the result.</p></aside></header>
   <section id="connect"><h2>Connect Hermes</h2><ol class="steps"><li><h3>Add the research servers</h3><p>Download <a data-config-download href="/agents/hermes.yaml" download>hermes.yaml</a>, or copy the configuration below. Merge its <code>mcp_servers</code> entries into <code>~/.hermes/config.yaml</code>, preserving your other settings and servers. Review the three endpoint URLs before saving.</p><details><summary>View the complete configuration</summary><pre><code id="client-configuration">mcp_servers:
@@ -58,4 +58,4 @@ hermes skills install well-known:https://liquilens.in/.well-known/skills/liquile
   <section class="limits"><h2>Use the evidence with its limits</h2><p>These tools supply public research. They do not execute orders or certify a bank’s safety. Check the source dates and coverage before drawing a conclusion.</p><p>This page makes no research calls on load. Explicit configuration copies, download requests and prompt copies are counted in aggregate without visitor identifiers. Operator verification is excluded; setup actions do not establish installations or users.</p></section>
   <footer><a href="/agents/">Agent starter kit</a><a href="/agents/trading-research/SKILL.md">Research skill</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/beepboop2025/liquilens-site">Source</a></footer>
 </main><script type="module" src="/agents/client-pages.mjs"></script>
-</body></html>
+<script type="module" src="/research-ui/context.js"></script></body></html>

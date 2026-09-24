@@ -13,13 +13,16 @@ def read(path: str) -> str:
 
 def test_product_motion_is_bounded_and_respects_reduced_motion():
     home = read("index.html")
-    css = read("product-home.css")
+    css = read("research-ui/research.css")
+    flow = read("research-ui/flow.js")
     assert 'id="main"' in home
-    assert 'Concept illustration' in home
+    assert '<research-flow product="liquilens">' in home
+    assert 'Illustration connecting institutions, funding and market liquidity.' in flow
     assert 'prefers-reduced-motion:reduce' in css
-    assert 'animation:none!important' in css
-    assert 'infinite' not in css
-    assert 'overflow-x:clip' in css
+    assert 'animation: none !important' in css
+    assert 'Pause motion' in flow and 'aria-pressed' in flow
+    assert 'paused||media.matches' in flow
+    assert 'animation-play-state:paused' in css
 
 
 def test_warning_horizon_is_exact_and_progressively_enhanced():

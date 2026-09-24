@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="family-design">
+<html lang="en" class="family-design research-interface">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/start/styles.css">
 <link rel="stylesheet" href="/family-design.css">
 <link rel="stylesheet" href="/family-pages.css">
-<!-- SOCIAL-CARD:START -->
+<link rel="stylesheet" href="/research-ui/research.css"><!-- SOCIAL-CARD:START -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LiquiLens">
 <meta property="og:url" content="https://liquilens.in/start/">
@@ -41,10 +41,10 @@
 <!-- SOCIAL-CARD:END -->
 </head>
 <body class="family-page">
-<header class="family-header"><nav class="family-nav" aria-label="Product family"><a class="family-brand" href="/" aria-label="LiquiLens home"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M9 20V12M14 23V9M19 20V12M24 17V15"/></svg>LiquiLens</a><div class="family-products"><a href="/" aria-current="page">LiquiLens</a><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a></div><a class="family-connect" href="/developers/institutions/">For agents</a></nav></header>
+<a class="research-skip" href="#main">Skip to content</a><header class="research-header"><div class="research-mast"><a class="research-identity" href="/"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="14"/><path d="M10 23V13m5 14V9m5 15V12m5 9v-6"/></svg><span><strong>LiquiLens</strong><small>Institution intelligence</small></span></a><nav class="research-network" aria-label="Products"><a href="/" aria-current="page">LiquiLens</a><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a></nav><a class="research-api" href="/agents/">API &amp; agents</a></div><nav class="research-tabs" aria-label="LiquiLens sections"><a href="/">Overview</a><a href="/banking/">Banking research</a><a href="/start/" aria-current="page">Review workspace</a><a href="/articles/">Published research</a><a href="/world-economy/">World economy</a><a href="/research/">Methods &amp; evidence</a></nav></header>
   <a class="skip" href="#questions">Skip to the questions</a>
   <header class="top"><a class="brand" href="/">LiquiLens</a><nav aria-label="Main"><a href="#connect">Connect your agent</a><a href="#family">Explore the MCPs</a><a href="/developers/">Documentation</a></nav></header>
-  <main>
+  <main id="main">
     <div class="intro"><h1>Start with a question.<br>See the evidence.</h1><p>Read a bank filing, check the funding backdrop or compare market depth. Try it here, then bring the same tools into your agent.</p><p class="terms">No account, API key or installation for these examples. Public read-only research; usage limits apply.</p></div>
     <section id="questions" aria-labelledby="question-heading">
       <h2 id="question-heading">What are you working on?</h2>
@@ -104,5 +104,5 @@ python3 financial_research.py exit-brief --size-usd 100000</pre></section>
     <footer><p>Source dates, unavailable evidence and research limits remain visible. Public data is not a credit rating, investment recommendation or execution instruction.</p><p><a href="/privacy/">Privacy</a> · <a href="/security/">Security</a> · <a href="mailto:mrinal@liquilens.in?subject=MCP%20integration%20help">Integration help</a> · <a href="/start/measurement.md">How these interactions are measured</a></p></footer>
     <noscript><p>The interactive examples need JavaScript. <a href="/developers/">Use the documented MCP endpoints and downloadable scripts</a>; they work independently of this page.</p></noscript>
   </main><script type="module" src="/start/app.mjs"></script>
-</body>
+<script type="module" src="/research-ui/context.js"></script></body>
 </html>
