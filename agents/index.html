@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" class="family-design">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Free financial research tools for AI agents | LiquiLens</title>
+  <meta name="description" content="Connect Hermes, OpenClaw, Claude, Codex or your Python workflow to free public financial research. Get funding context, bank evidence and BTC exit estimates with source dates. No API key required.">
+  <link rel="canonical" href="https://liquilens.in/agents/">
+  <link rel="alternate" type="text/markdown" href="https://liquilens.in/agents/README.md">
+  <link rel="icon" href="/og.png"><link rel="stylesheet" href="/family-design.css"><link rel="stylesheet" href="/family-pages.css"><link rel="stylesheet" href="/agents/styles.css">
+
+
+
+
+<!-- SOCIAL-CARD:START -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LiquiLens">
+<meta property="og:url" content="https://liquilens.in/agents/">
+<meta property="og:title" content="Financial research your agent can actually call.">
+<meta property="og:description" content="Connect Hermes, OpenClaw, Claude, Codex or your Python workflow to free public financial research. Get funding context, bank evidence and BTC exit estimates with source dates. No API key required.">
+<meta property="og:image" content="https://liquilens.in/agents/share.png?v=16191278f2b5aa75">
+<meta property="og:image:secure_url" content="https://liquilens.in/agents/share.png?v=16191278f2b5aa75">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LiquiLens route card for FREE AGENT TOOLS: Financial research your agent can actually call. STARTER KIT: FUNDING / BANKS / MARKET DEPTH. NO API KEY / SOURCE DATES / PYTHON + MCP. PAGE CUT 2026-09-24; status PUBLIC READ-ONLY RESEARCH.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Financial research your agent can actually call.">
+<meta name="twitter:description" content="Connect Hermes, OpenClaw, Claude, Codex or your Python workflow to free public financial research. Get funding context, bank evidence and BTC exit estimates with source dates. No API key required.">
+<meta name="twitter:image" content="https://liquilens.in/agents/share.png?v=16191278f2b5aa75">
+<meta name="twitter:image:alt" content="LiquiLens route card for FREE AGENT TOOLS: Financial research your agent can actually call. STARTER KIT: FUNDING / BANKS / MARKET DEPTH. NO API KEY / SOURCE DATES / PYTHON + MCP. PAGE CUT 2026-09-24; status PUBLIC READ-ONLY RESEARCH.">
+<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/agents/#social-card","url":"https://liquilens.in/agents/","image":"https://liquilens.in/agents/share.png?v=16191278f2b5aa75","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/agents/share.png?v=16191278f2b5aa75","width":1200,"height":630,"caption":"LiquiLens route card for FREE AGENT TOOLS: Financial research your agent can actually call. STARTER KIT: FUNDING / BANKS / MARKET DEPTH. NO API KEY / SOURCE DATES / PYTHON + MCP. PAGE CUT 2026-09-24; status PUBLIC READ-ONLY RESEARCH."}}</script>
+<!-- SOCIAL-CARD:END -->
+</head>
+<body class="family-page">
+<main class="agent-shell">
+  <nav aria-label="Agent navigation"><a href="/">LiquiLens</a><a href="/start/">Try a live question</a><a href="/developers/">API documentation</a><a href="/agents/" aria-current="page">Agent starter kit</a></nav>
+  <header class="agent-hero"><div><p class="access">Free public research · no API key</p><h1>Financial research your agent can actually call.</h1><p class="lede">Give Hermes, OpenClaw or your automation workflow the funding backdrop, institution evidence and market-depth estimates. Keep the source dates. Bring back what changed.</p><div class="actions"><a class="primary" href="/agents/trading-research-kit.zip" download>Download the starter kit</a><a href="/start/?task=funding">Try the funding question</a></div><p class="fine">Public read-only tools are free. Fair-use limits apply. Your agent or model provider may charge separately.</p></div><aside class="brief-preview" aria-label="What the brief contains"><h2>Your research brief</h2><dl><div><dt>Funding</dt><dd>Money-market context and source freshness</dd></div><div><dt>Counterparty</dt><dd>An optional exact covered bank, with filing evidence</dd></div><div><dt>Market depth</dt><dd>BTC exit estimates at your selected dollar size</dd></div><div><dt>Since last run</dt><dd>Changed source payloads, failures and missing evidence</dd></div></dl><p>JSON for your workflow. Markdown for your desk.</p></aside></header>
+  <section id="connect" class="connect-section"><h2>Connect the client you already use</h2><p>Choose a focused set of research tools. Downloaded configurations are additions to your existing setup.</p><div class="client-layout"><div><label for="client">Client</label><select id="client"><option value="hermes">Hermes</option><option value="openclaw">OpenClaw</option><option value="claude">Claude Code</option><option value="codex">Codex</option><option value="cursor">Cursor</option><option value="vscode">VS Code</option></select><p id="client-help">Merge hermes.yaml into ~/.hermes/config.yaml, then start a new session or use /reload-mcp.</p><button id="copy-config" type="button">Copy configuration</button><a id="config-download" href="/agents/hermes.yaml" download>Download configuration</a><p id="copy-status" role="status" aria-live="polite"></p></div><pre><code id="configuration">mcp_servers:
+  seiche:
+    url: https://api.seiche.info/mcp
+  liquilens:
+    url: https://api.liquilens.in/mcp
+  undertow:
+    url: https://api.seiche.info/undertow/mcp</code></pre></div><p class="fine">Custom connections. Tool discovery and availability depend on your client version and service status. <a href="/developers/institutions/">Read the dated Hermes/OpenClaw verification</a>.</p></section>
+  <section id="workflow"><h2>One useful workflow, ready for your scheduler</h2><p>Unzip the kit. Python 3.11 or newer is enough; there are no packages or model keys to install.</p><ol class="steps"><li><h3>Check the connection</h3><pre><code>python3 trading_brief.py doctor</code></pre><p>Checks the three MCP connections and required tools. It does not run research or modify your agent.</p></li><li><h3>Make your first brief</h3><pre><code>python3 trading_brief.py run --size-usd 100000 &gt; first.json</code></pre><p>Reads funding context and published BTC exit estimates. Add <code>--slug cosmos-ucb</code> for the covered bank example. <a href="/banking/">Choose a covered institution</a>.</p></li><li><h3>Come back to the evidence</h3><pre><code>python3 trading_brief.py run --size-usd 100000 --previous first.json &gt; next.json</code></pre><p>Compares the same request with the saved brief. Source clocks and revisions count as payload changes; the result does not claim a trading signal. Use <code>--format markdown</code> for a readable export.</p></li></ol><p>The script runs once and exits. Schedule it at the cadence your research needs. A partial result exits with code 2 and retains the available sections; transport failure never becomes a neutral market reading.</p></section>
+  <section class="prompt-section"><h2>Give your agent a specific job</h2><blockquote id="task-prompt">Use the connected financial research tools to prepare a trading research brief. Read Seiche funding context and freshness. Compare Undertow's published BTC exit estimates for $100,000. If I name a bank, resolve its exact LiquiLens coverage before reviewing it. Keep source dates, units, counterevidence and unavailable sections. Return sources and open questions, without issuing a trade instruction.</blockquote><button id="copy-prompt" type="button">Copy the research prompt</button><p><a href="/agents/trading-research/SKILL.md">Read the agent skill</a> · <a href="/agents/n8n-funding-research.json" download>Download the n8n HTTP workflow</a> · <a href="/agents/manifest.json">Machine-readable kit manifest</a></p></section>
+  <section><h2>Choose the question before the tool</h2><div class="table-wrap"><table><thead><tr><th>Question</th><th>Product</th><th>Start here</th></tr></thead><tbody><tr><td>What is happening in dollar funding?</td><td>Seiche</td><td><a href="https://seiche.info/developers">money_market_context</a></td></tr><tr><td>What changed in a bank's disclosed asset quality?</td><td>LiquiLens</td><td><a href="/developers/institutions/">bank_asset_quality_review</a></td></tr><tr><td>What does published depth imply for a BTC exit?</td><td>Undertow</td><td><a href="https://liquilens-undertow.com/developers/">exit_cost</a></td></tr><tr><td>What other research services are available?</td><td>Product family</td><td><a href="/start/#connect">Browse the connection builder</a></td></tr></tbody></table></div></section>
+  <section class="limits"><h2>Know what the result means</h2><p>These tools supply public research evidence. They do not execute orders, recommend a venue, certify deposit safety or assess a private book's compliance. Dates, stale sources, unavailable data and access restrictions stay in the response. The free kit requires no subscription; private services retain their own access rules.</p><p>Nothing runs when this page loads. The kit writes only to standard output unless you redirect it. It creates no persistent identifier. Operator tests use <code>--verification</code> and are excluded from adoption reporting.</p></section>
+  <footer><a href="/agents/README.md">Text guide</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/beepboop2025/liquilens-site">Source</a></footer>
+</main><script type="module" src="/agents/app.mjs"></script>
+</body></html>

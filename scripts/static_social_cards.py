@@ -66,6 +66,13 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/agents/", "agent-starter-kit", "LIQUILENS / SEICHE / UNDERTOW", "FREE AGENT TOOLS",
+        "Financial research your agent can actually call.",
+        "STARTER KIT", "FUNDING / BANKS / MARKET DEPTH",
+        "NO API KEY / SOURCE DATES / PYTHON + MCP", "PAGE CUT", "2026-09-24",
+        "PUBLIC READ-ONLY RESEARCH", "PUBLIC MCP EVIDENCE",
+    ),
+    RouteDefinition(
         "/developers/institutions/", "institution-agents", "LIQUILENS / INSTITUTION REVIEW", "AGENTS + AUTOMATION",
         "Institution stress evidence, connected to funding context.",
         "WORKFLOW", "LIQUILENS + SEICHE",
