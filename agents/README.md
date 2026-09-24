@@ -41,6 +41,50 @@ Source-generation clocks, revisions and coverage changes can cause a changed
 payload. It is not a market-movement detector or trade signal. Use a distinct
 output file so your shell does not truncate the input before comparison.
 
+### Branch on a repeat result
+
+Each compared section keeps its existing `status` (`changed_payload`,
+`unchanged_payload` or `not_comparable`) and previous/current outcomes. It also
+returns `outcome_changed`, `previous_evidence_sha256`, `current_evidence_sha256`
+and `changes`, for example:
+
+```json
+{"path": "/exit_cost/sell_cost_bp_by_venue/example", "kind": "changed"}
+```
+
+Paths are RFC 6901 JSON pointers rooted at that section's `evidence`, with `~`
+escaped as `~0` and `/` as `~1`. An empty path means the evidence root. Changes
+are `added`, `removed` or `changed`; absent fields differ from null, false and
+zero. Object keys are sorted; array positions are compared by index, so an
+insertion can change several positions. Added/removed containers and type
+changes are reported at the container's path, including all its descendants.
+
+For repeat research, first branch on `outcome_changed` and unavailable/error
+outcomes so failures and recovery stay visible. Then inspect relevant paths
+(for example `/exit_cost/sell_cost_bp_by_venue`) to decide whether another
+evidence review is needed. Match the exact path, descendants and any changed
+ancestor; do not treat a missing path in a truncated list as proof of no change.
+Source-generation clocks, observation dates and freshness fields remain in both
+the diff and digest. A clock-only change is visible at its own path and is not
+presented as a changed market value. These paths describe evidence changes;
+they do not judge freshness, materiality or authorize action.
+
+The list is bounded to 64 changes, 16 path levels and 16 KiB of compact JSON per
+section. `changes_truncated` and `truncation_reasons` (`max_changes`, `max_depth`,
+`max_bytes`) report incomplete detail. A depth limit reports the changed ancestor
+subtree. On any truncation, inspect the full evidence instead of assuming the
+listed paths are exhaustive. `not_comparable` has no change paths; a missing
+evidence object has a null digest, distinct from the digest of JSON null.
+
+To suppress duplicate downstream handling, store the request (bank slug and
+size), section recipe, current digest and outcome after handling a result. The
+same tuple means the same returned evidence and outcome; it does not prove the
+evidence is current. Digests include source clocks and revisions but exclude the
+client's run/retrieval timestamps. Keep the prior snapshot until you have
+handled the result, and retain failed snapshots separately if you need the last
+successful evidence for a later comparison. This client does not persist state,
+deduplicate external actions or install a schedule.
+
 ## Hermes and OpenClaw
 
 Merge `hermes.yaml` into `~/.hermes/config.yaml`, preserving existing settings.

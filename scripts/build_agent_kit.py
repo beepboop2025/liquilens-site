@@ -9,7 +9,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "agents"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 SKILL_NAME = "liquilens-trading-research"
 SERVERS = {
     "seiche": {"url": "https://api.seiche.info/mcp", "tools": ["data_health", "funding_stress_now", "money_market_context"]},
