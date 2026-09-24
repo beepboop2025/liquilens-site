@@ -17,6 +17,9 @@ from financial_research import Client, ENDPOINTS, ResearchError, exchange, parse
 
 SCHEMA = "liquilens.trading-brief.v1"
 MAX_PREVIOUS_BYTES = 8 * 1024 * 1024
+MAX_CHANGES = 64
+MAX_CHANGE_DEPTH = 16
+MAX_CHANGE_BYTES = 16 * 1024
 REQUIRED = {
     "funding-brief": ("money_market_context",),
     "exit-brief": ("exit_cost",),
@@ -33,6 +36,63 @@ LIMITS = [
 def digest(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"),
                                      allow_nan=False).encode()).hexdigest()
+
+
+def evidence_changes(previous, current):
+    """Bounded structural differences; pointers address the section's evidence.
+
+    Added/removed containers and type changes are represented at their own path.
+    Arrays are positional. No source values or clocks are discarded or rewritten.
+    """
+    changes, reasons = [], set()
+    encoded_bytes = 2  # JSON list brackets.
+    stopped = False
+
+    def add(path, kind):
+        nonlocal encoded_bytes, stopped
+        change = {"path": path, "kind": kind}
+        size = len(json.dumps(change, separators=(",", ":")).encode()) + bool(changes)
+        if len(changes) >= MAX_CHANGES:
+            reasons.add("max_changes")
+        elif encoded_bytes + size > MAX_CHANGE_BYTES:
+            reasons.add("max_bytes")
+        else:
+            changes.append(change)
+            encoded_bytes += size
+            return
+        stopped = True
+
+    def visit(before, after, path, depth):
+        if stopped:
+            return
+        if type(before) is not type(after):
+            add(path, "changed")
+        elif isinstance(before, (dict, list)):
+            if depth >= MAX_CHANGE_DEPTH:
+                if digest(before) != digest(after):
+                    reasons.add("max_depth")
+                    add(path, "changed")
+                return
+            keys = sorted(before.keys() | after.keys()) if isinstance(before, dict) else range(max(len(before), len(after)))
+            for key in keys:
+                child = path + "/" + str(key).replace("~", "~0").replace("/", "~1")
+                old_present = key in before if isinstance(before, dict) else key < len(before)
+                new_present = key in after if isinstance(after, dict) else key < len(after)
+                if not old_present:
+                    add(child, "added")
+                elif not new_present:
+                    add(child, "removed")
+                else:
+                    visit(before[key], after[key], child, depth + 1)
+                if stopped:
+                    break
+        elif digest(before) != digest(after):
+            # JSON distinctions include false versus 0, 0 versus 0.0 and -0.0.
+            add(path, "changed")
+
+    visit(previous, current, "", 0)
+    return {"changes": changes, "changes_truncated": bool(reasons),
+            "truncation_reasons": sorted(reasons)}
 
 
 def previous_report(path):
@@ -64,14 +124,23 @@ def compare(current, previous):
     changes = []
     for row in current["sections"]:
         prior = old[row["recipe"]]
-        if "evidence" not in prior or "evidence" not in row:
+        previous_digest = digest(prior["evidence"]) if "evidence" in prior else None
+        current_digest = digest(row["evidence"]) if "evidence" in row else None
+        delta = {"changes": [], "changes_truncated": False, "truncation_reasons": []}
+        if previous_digest is None or current_digest is None:
             state = "not_comparable"
         else:
-            state = ("unchanged_payload" if digest(prior["evidence"]) == digest(row["evidence"])
-                     else "changed_payload")
+            state = "unchanged_payload" if previous_digest == current_digest else "changed_payload"
+            if state == "changed_payload":
+                delta = evidence_changes(prior["evidence"], row["evidence"])
         changes.append({"recipe": row["recipe"], "status": state,
-                        "previous_outcome": prior.get("outcome"), "outcome": row["outcome"]})
+                        "previous_outcome": prior.get("outcome"), "outcome": row["outcome"],
+                        "outcome_changed": prior.get("outcome") != row["outcome"],
+                        "previous_evidence_sha256": previous_digest,
+                        "current_evidence_sha256": current_digest, **delta})
     return {"status": "compared", "sections": changes,
+            "change_limits": {"max_changes": MAX_CHANGES, "max_depth": MAX_CHANGE_DEPTH,
+                              "max_bytes": MAX_CHANGE_BYTES},
             "meaning": "Exact source payload comparison; includes source clocks and revisions."}
 
 
@@ -130,17 +199,21 @@ def doctor(*, verification=False, transport=exchange):
             "research_calls": 0, "services": results}
 
 
+def _fenced_json(value):
+    # Source values and field names stay data, including Markdown and backticks.
+    body = json.dumps(value, indent=2, ensure_ascii=False)
+    fence = "`" * max(3, max((len(m.group()) + 1 for m in re.finditer(r"`+", body)), default=3))
+    return [fence + "json", body, fence]
+
+
 def markdown(report):
     lines = ["# Trading research brief", "", "Retrieved: " + report["retrieved_at"], "",
              "Result: " + report["outcome"], "", *["- " + limit for limit in report["limits"]]]
     for row in report["sections"]:
         lines += ["", "## " + row["recipe"], "", "Endpoint: " + row["endpoint"],
                   "", "Outcome: " + row["outcome"], ""]
-        # Fence length is derived from the evidence so source text cannot escape it.
-        body = json.dumps(row.get("evidence", {"reason": row.get("reason")}), indent=2, ensure_ascii=False)
-        fence = "`" * max(3, max((len(m.group()) + 1 for m in re.finditer(r"`+", body)), default=3))
-        lines += [fence + "json", body, fence]
-    lines += ["", "## Changes since the previous brief", "", json.dumps(report["comparison"], indent=2), ""]
+        lines += _fenced_json(row.get("evidence", {"reason": row.get("reason")}))
+    lines += ["", "## Changes since the previous brief", "", *_fenced_json(report["comparison"]), ""]
     return "\n".join(lines)
 
 
