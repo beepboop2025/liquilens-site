@@ -1,5 +1,20 @@
 # LiquiLens
 
+## Free agent starter kit
+
+- Connect Hermes, OpenClaw, Claude Code, Codex, Cursor or VS Code: https://liquilens.in/agents/
+- Text guide: https://liquilens.in/agents/README.md
+- Reproducible Python kit and configurations: https://liquilens.in/agents/trading-research-kit.zip
+- Machine manifest and file checksums: https://liquilens.in/agents/manifest.json
+- Trading research skill: https://liquilens.in/agents/trading-research/SKILL.md
+- n8n funding API workflow: https://liquilens.in/agents/n8n-funding-research.json
+
+Public research is free with no account or API key; fair-use limits apply.
+The kit checks MCP connections, reads source-separated funding, optional bank
+evidence and BTC exit estimates, and compares the same request with a previous
+brief. No model dependency, background polling, automatic retries or execution.
+Keep source dates, unavailable sections and rights restrictions attached.
+
 ## Institutional agent workflow
 
 - Task guide: https://liquilens.in/developers/institutions/

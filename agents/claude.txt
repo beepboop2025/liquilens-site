@@ -1,0 +1,3 @@
+claude mcp add --transport http seiche https://api.seiche.info/mcp
+claude mcp add --transport http liquilens https://api.liquilens.in/mcp
+claude mcp add --transport http undertow https://api.seiche.info/undertow/mcp

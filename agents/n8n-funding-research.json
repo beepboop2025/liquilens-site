@@ -1,0 +1,102 @@
+{
+  "name": "Free Seiche funding research - manual public API read",
+  "active": false,
+  "nodes": [
+    {
+      "id": "manual-start",
+      "name": "Run funding research",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        200,
+        240
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "funding-api",
+      "name": "Read public funding evidence",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        240
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.seiche.info/api/public",
+        "options": {
+          "timeout": 20000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "evidence-check",
+      "name": "Preserve evidence and dates",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const items = $input.all();\nif (items.length !== 1) throw new Error('Expected one funding response');\nconst evidence = items[0].json;\nif (evidence.schema !== 'seiche.public.v2' || typeof evidence.generated_at !== 'string' || !Number.isFinite(Date.parse(evidence.generated_at)) || !evidence.data_quality || typeof evidence.data_quality !== 'object' || Array.isArray(evidence.data_quality)) throw new Error('Unexpected funding evidence contract');\nreturn [{ json: { schema: 'liquilens.n8n-funding-research.v1', endpoint: 'https://api.seiche.info/api/public', retrieved_at: new Date().toISOString(), execution_authority: false, note: 'Retrieval time is not source freshness. Inspect data_quality, headline source ages and each cited observation date.', evidence } }];"
+      }
+    },
+    {
+      "id": "guide",
+      "name": "Read before scheduling",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -80
+      ],
+      "parameters": {
+        "width": 780,
+        "height": 250,
+        "content": "## Free public funding research\nExecute once to read the current published evidence. No account, API key or model required.\n\nRetains source dates, data quality and counterevidence. Research only; no order or message is sent. No automatic retry. Add a schedule only at the cadence you need and respect rate limits.\n\n[Agent kit and source](https://liquilens.in/agents/)"
+      }
+    }
+  ],
+  "connections": {
+    "Run funding research": {
+      "main": [
+        [
+          {
+            "node": "Read public funding evidence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read public funding evidence": {
+      "main": [
+        [
+          {
+            "node": "Preserve evidence and dates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "tags": []
+}

@@ -1,5 +1,10 @@
 # LiquiLens public site
 
+The [free agent starter kit](agents/README.md) connects Hermes, OpenClaw and
+other MCP clients to public funding, bank and market-depth research. Its Python
+brief retains partial results and supports comparison with a previous run.
+Rebuild the deterministic download with `python3 scripts/build_agent_kit.py`.
+
 This repository is the source for [liquilens.in](https://liquilens.in), the public evidence and documentation site for LiquiLens.
 
 LiquiLens monitors public signs of financial stress at banks, NBFCs, co-operative banks, and microfinance lenders. The site publishes the product definition, validation record, historical crisis replays, methodology notes, use cases, and developer entry points that can be checked without access to a private lender book.
