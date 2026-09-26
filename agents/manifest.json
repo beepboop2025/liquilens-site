@@ -1,7 +1,7 @@
 {
   "schema": "liquilens.agent-kit.v1",
-  "version": "1.0.2",
-  "updated_at": "2026-09-24",
+  "version": "1.1.0",
+  "updated_at": "2026-09-26",
   "homepage": "https://liquilens.in/agents/",
   "price": {
     "public_research": "free",
@@ -38,17 +38,23 @@
   "external_python_packages": [],
   "commands": [
     "python3 trading_brief.py doctor",
-    "python3 trading_brief.py run"
+    "python3 trading_brief.py run",
+    "python3 source_data.py catalog"
   ],
+  "source_data": {
+    "mcp": "https://api.seiche.info/api/v2/research-data/mcp",
+    "openapi": "https://api.seiche.info/api/v2/research-data/openapi.json",
+    "scope": "Funding series, bank filings and Bitcoin/Liquid settlement; units, capture clocks and receipts retained."
+  },
   "archive": {
     "url": "https://liquilens.in/agents/trading-research-kit.zip",
-    "sha256": "23c67c6da0bfd0c5064a050369503c60931724660c8bc4b72630f76843991faf",
-    "bytes": 16370
+    "sha256": "1085ed662d6736206694669abf01797d7cb41417fec2f80139fdf9a9a44ac9e0",
+    "bytes": 19384
   },
   "files": {
     "README.md": {
-      "sha256": "19632331656965a6d078d9d6e7536d22417be916e39184812668066f9962a842",
-      "bytes": 7341
+      "sha256": "ba7a25314aa71d4cd0c451cea5fe5a847bb1f37bd96e580b06c80ec6c91c79b9",
+      "bytes": 9164
     },
     "claude.txt": {
       "sha256": "34ed8064237887d623de4e6c1a7d34007958f81d7e043378f0615a1a3c6b3ca4",
@@ -63,8 +69,8 @@
       "bytes": 238
     },
     "financial_research.py": {
-      "sha256": "e5d66604c8e6fdb697889fc880672e342572ebfcbade880b78b047865256e1c0",
-      "bytes": 11844
+      "sha256": "5ac34083238de25be4fc952464cd7ba09f0735683b32f389f06b9429906be9e6",
+      "bytes": 13270
     },
     "hermes.yaml": {
       "sha256": "1b1debd61e17f27e915e8c706f0d5a1fe91d1a6b6259c38654459253afa309b2",
@@ -77,6 +83,10 @@
     "openclaw.json": {
       "sha256": "507869aafcc59618204cb7b737de31727f122c52c2d6d20b72b462ed96455cfd",
       "bytes": 916
+    },
+    "source_data.py": {
+      "sha256": "fc34edc57ace279e0a62b9471519b24f5fa13e192bfa7c214894e7d6c5a37440",
+      "bytes": 4977
     },
     "trading-research/SKILL.md": {
       "sha256": "13de77b315a72b97c976436cb1b8af1546edb2ed5301b1df035e034584fe6915",
