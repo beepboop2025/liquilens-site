@@ -14,12 +14,20 @@
 - Hermes-compatible domain skill discovery: https://liquilens.in/.well-known/skills/index.json
 - Agent skill discovery draft v0.2 with integrity digest: https://liquilens.in/.well-known/agent-skills/index.json
 - n8n funding API workflow: https://liquilens.in/agents/n8n-funding-research.json
+- Live source coverage and six-client connection recipes: https://liquilens.in/agents/#source-data
+- Funding histories, bank filings and Bitcoin/Liquid settlement MCP: https://api.seiche.info/api/v2/research-data/mcp
+- Source-data OpenAPI 3.1 contract: https://api.seiche.info/api/v2/research-data/openapi.json
+- Standard-library history client: https://liquilens.in/agents/source_data.py
 
 Public research is free with no account or API key; fair-use limits apply.
 The kit checks MCP connections, reads source-separated funding, optional bank
 evidence and BTC exit estimates, and compares the same request with a previous
 brief. No model dependency, background polling, automatic retries or execution.
 Keep source dates, unavailable sections and rights restrictions attached.
+The source-data connection exposes six read-only tools for catalog, series,
+entities, observations, tracked institutions and descriptive analysis. Historical
+observations keep native units, capture clocks and receipts. Paginate explicitly;
+an as-known-at filter cannot recover knowledge before the first archive capture.
 
 ## Institutional agent workflow
 

@@ -9,7 +9,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "agents"
-VERSION = "1.0.2"
+VERSION = "1.1.0"
 SKILL_NAME = "liquilens-trading-research"
 SERVERS = {
     "seiche": {"url": "https://api.seiche.info/mcp", "tools": ["data_health", "funding_stress_now", "money_market_context"]},
@@ -63,7 +63,7 @@ def assets():
         "claude.txt": ("\n".join(f"claude mcp add --transport http {n} {s['url']}" for n, s in SERVERS.items()) + "\n").encode(),
         "codex.txt": ("\n".join(f"codex mcp add {n} --url {s['url']}" for n, s in SERVERS.items()) + "\n").encode(),
     }
-    for name in ("financial_research.py", "trading_brief.py"):
+    for name in ("financial_research.py", "trading_brief.py", "source_data.py"):
         result[name] = (ROOT / "developers/recipes" / name).read_bytes()
     for name in ("README.md", "trading-research/SKILL.md", "n8n-funding-research.json"):
         result[name] = (OUT / name).read_bytes()
@@ -95,11 +95,14 @@ def build():
     (OUT / "trading-research-kit.zip").write_bytes(body)
     manifest = {
         "schema": "liquilens.agent-kit.v1", "version": VERSION,
-        "updated_at": "2026-09-24", "homepage": "https://liquilens.in/agents/",
+        "updated_at": "2026-09-26", "homepage": "https://liquilens.in/agents/",
         "price": {"public_research": "free", "api_key_required": False,
                   "limits": "Fair-use limits apply. Model providers may charge separately."},
         "servers": SERVERS, "python": ">=3.11", "external_python_packages": [],
-        "commands": ["python3 trading_brief.py doctor", "python3 trading_brief.py run"],
+        "commands": ["python3 trading_brief.py doctor", "python3 trading_brief.py run", "python3 source_data.py catalog"],
+        "source_data": {"mcp": "https://api.seiche.info/api/v2/research-data/mcp",
+                        "openapi": "https://api.seiche.info/api/v2/research-data/openapi.json",
+                        "scope": "Funding series, bank filings and Bitcoin/Liquid settlement; units, capture clocks and receipts retained."},
         "archive": {"url": "https://liquilens.in/agents/trading-research-kit.zip",
                     "sha256": hashlib.sha256(body).hexdigest(), "bytes": len(body)},
         "files": {name: {"sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}

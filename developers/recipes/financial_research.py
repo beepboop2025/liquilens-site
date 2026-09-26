@@ -16,6 +16,8 @@ from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_ope
 
 VERSION = "1.1.0"
 PROTOCOL = "2025-11-25"
+SUPPORTED_PROTOCOLS = (PROTOCOL, "2025-06-18", "2025-03-26")
+RESEARCH_DATA_ENDPOINT = "https://api.seiche.info/api/v2/research-data/mcp"
 CLIENT_INFO = {"name": "liquilens-research-recipes", "version": VERSION}
 ENDPOINTS = {
     "bank-review": "https://api.liquilens.in/mcp",
@@ -46,16 +48,43 @@ class NoRedirects(HTTPRedirectHandler):
         raise ResearchError("redirect refused; only the documented endpoints are allowed")
 
 
+def read_response(response, payload):
+    """Stop an SSE response at our reply, even if the server keeps the stream open."""
+    content_type = response.headers.get("Content-Type", "").split(";", 1)[0].strip().lower()
+    if content_type != "text/event-stream":
+        raw = response.read(MAX_BYTES + 1)
+        if len(raw) > MAX_BYTES:
+            raise ResearchError("response exceeds the 2 MiB limit")
+        return raw
+    consumed, lines = 0, []
+    while True:
+        line = response.readline(MAX_BYTES - consumed + 1)
+        consumed += len(line)
+        if consumed > MAX_BYTES:
+            raise ResearchError("response exceeds the 2 MiB limit")
+        if not line:
+            raise ResearchError("event stream ended before the matching JSON-RPC response")
+        line = line.rstrip(b"\r\n")
+        if not line and lines:
+            raw = b"\n".join(lines)
+            value = parse_json(raw)
+            if (isinstance(value, dict) and type(value.get("id")) is int
+                    and value["id"] == payload.get("id")):
+                return raw
+            lines = []
+        elif line.startswith(b"data:"):
+            data = line[5:]
+            lines.append(data[1:] if data.startswith(b" ") else data)
+
+
 def _exchange(url, payload, headers):
     """A bounded HTTP exchange; called inside a deadline-limited daemon thread."""
-    if url not in ENDPOINTS.values():
+    if url not in (*ENDPOINTS.values(), RESEARCH_DATA_ENDPOINT):
         raise ResearchError("endpoint is not allowed")
     request = Request(url, data=json.dumps(payload).encode(), headers=headers)
     try:
         with build_opener(ProxyHandler({}), NoRedirects()).open(request, timeout=TIMEOUT) as response:
-            raw = response.read(MAX_BYTES + 1)
-            if len(raw) > MAX_BYTES:
-                raise ResearchError("response exceeds the 2 MiB limit")
+            raw = read_response(response, payload)
             if response.status not in (200, 202, 204):
                 raise ResearchError("unexpected HTTP status " + str(response.status))
             return response.status, dict(response.headers.items()), raw
@@ -89,12 +118,13 @@ def exchange(url, payload, headers):
 
 class Client:
     def __init__(self, endpoint, *, verification=False, transport=exchange):
-        if endpoint not in ENDPOINTS.values():
+        if endpoint not in (*ENDPOINTS.values(), RESEARCH_DATA_ENDPOINT):
             raise ResearchError("endpoint is not allowed")
         self.endpoint = endpoint
         self.transport = transport
         self.sequence = 0
         self.session = None
+        self.protocol = PROTOCOL
         self.headers = {
             "Content-Type": "application/json",
             "Accept": "application/json, text/event-stream",
@@ -130,15 +160,16 @@ class Client:
         if not isinstance(result, dict):
             raise ResearchError("MCP response has no result object")
         if method == "initialize":
-            if result.get("protocolVersion") != PROTOCOL:
+            if result.get("protocolVersion") not in SUPPORTED_PROTOCOLS:
                 raise ResearchError("server did not negotiate the supported MCP version")
+            self.protocol = result["protocolVersion"]
             self.session = received_headers.get("mcp-session-id")
         return result
 
     def initialize(self):
         self.request("initialize", {"protocolVersion": PROTOCOL,
                                     "capabilities": {}, "clientInfo": CLIENT_INFO})
-        self.headers["MCP-Protocol-Version"] = PROTOCOL
+        self.headers["MCP-Protocol-Version"] = self.protocol
         self.request("notifications/initialized", notification=True)
 
     def call(self, name, arguments):
