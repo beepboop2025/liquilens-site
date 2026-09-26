@@ -53,7 +53,7 @@ DATASETS = {
         },
     },
     "https://liquilens-undertow.com/#market-liquidity-dataset": {
-        "date_modified": "2026-09-14",
+        "date_modified": "2026-09-26",
         "identifier": (
             "urn:liquidity-lab:dataset:undertow-market-liquidity-exit-cost"
         ),
@@ -137,7 +137,7 @@ def test_machine_catalog_has_four_distinct_bounded_datasets():
     assert data["@type"] == "DataCatalog"
     assert data["@id"] == CATALOG_ID
     assert data["url"] == WORLD_ECONOMY_URL
-    assert data["dateModified"] == "2026-09-14"
+    assert data["dateModified"] == "2026-09-26"
     assert "not a complete database of the world economy" in data[
         "description"
     ].lower()
