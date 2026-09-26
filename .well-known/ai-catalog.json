@@ -371,7 +371,7 @@
       "displayName": "Undertow Market-Liquidity Catalog",
       "type": "application/ai-catalog+json",
       "url": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
-      "description": "Sibling catalog with eleven public read-only tools and three prompt templates for cross-market liquidity tiers, crypto exit costs, venue concentration, depth collapses, Trade Safety exit context, the sealed calls record and connected Palimpsest/Seiche research.",
+      "description": "Sibling catalog with fourteen public read-only tools and three prompts for market liquidity, BTC exit-rung comparisons, caller-supplied funding and portfolio scenarios, venue concentration, Trade Safety exit context and connected research.",
       "tags": [
         "market liquidity",
         "exit cost",
@@ -380,10 +380,15 @@
       ],
       "representativeQueries": [
         "What would it cost to sell a large BTC position across venues?",
-        "Are Treasury, credit, FX or crypto liquidity conditions strained?"
+        "Are Treasury, credit, FX or crypto liquidity conditions strained?",
+        "How do funding and fees change a constant-notional scenario?",
+        "How would my assumed price shocks affect portfolio equity and gross concentration?"
       ],
       "capabilities": [
         "agent_access_status",
+        "crypto_exit_check",
+        "crypto_funding_cost",
+        "crypto_portfolio_stress",
         "depth_episodes",
         "exit_cost",
         "latest_article",
@@ -407,11 +412,11 @@
         "market_liquidity_briefing"
       ],
       "resourceTemplates": [],
-      "version": "1.10.1",
-      "updatedAt": "2026-09-26T13:00:00Z",
+      "version": "1.11.0",
+      "updatedAt": "2026-09-26T20:30:00Z",
       "metadata": {
         "productUrl": "https://liquilens-undertow.com",
-        "publicToolCount": 11,
+        "publicToolCount": 14,
         "subscriberToolCount": 8,
         "publicPromptCount": 3,
         "publicResourceCount": 0,
@@ -424,15 +429,18 @@
         "apiCatalogCoreProofCommit": "724b445ca57b8f48793d29cda45d95f62088082a",
         "apiCatalogSiteCommit": "9d32a5d7b1eac390b5da643b5151c15ce54ad9a5",
         "apiCatalogSha256": "sha256:bffb6a7626d066cdb5293cc28eca465baaae99974ef951eb3280c67501cc5e84",
-        "aiCatalogSha256": "sha256:7bca1e6006e5a1bd56d4c0dab346fdaaff8bb6cbed0015c56628132cf49fba30",
-        "aiCatalogSiteCommit": "846e4eb2c72020db7814d9115daf9c34f7152297",
-        "aiCatalogVerifiedAt": "2026-09-26T13:19:51.205137Z",
+        "aiCatalogSha256": "sha256:cf5f9bf685eb3d88d816f30efb6e231fc197e9a509bf59fa37900721ac712331",
+        "aiCatalogSiteCommit": "393f0fac52155e84a6d77ff559f995ce966efbd0",
+        "aiCatalogVerifiedAt": "2026-09-26T21:19:05.669822Z",
         "apiCatalogUpgradeState": "live-externally-verified",
         "apiCatalogVerifiedAt": "2026-09-04T19:37:30Z",
         "telegramBot": "https://t.me/Undertow_LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityCryptoDesk",
         "deploymentPublicToolCount": 10,
-        "inventoryScope": "Hosted MCP 1.10.1 includes eleven public tools with exact measure counts and replay eligibility in liquidity_tiers; dated deployment receipts retain their original ten-tool inventory."
+        "inventoryScope": "Hosted MCP 1.11.0 includes fourteen public tools with BTC exit-rung comparisons and caller-supplied funding/portfolio scenarios; dated deployment receipts retain their original ten-tool inventory.",
+        "cryptoWorkbench": "https://liquilens-undertow.com/crypto/",
+        "cryptoAgentKit": "https://liquilens-undertow.com/crypto/undertow-crypto-kit.zip",
+        "cryptoKitManifest": "https://liquilens-undertow.com/crypto/kit-manifest.json"
       }
     },
     {

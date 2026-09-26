@@ -48,9 +48,9 @@ def test_adjacent_products_are_individually_discoverable():
 def test_undertow_rfc9727_catalog_is_bound_to_live_deployment_proof():
     entry = ENTRIES["urn:air:liquilens.in:catalog:undertow"]
     metadata = entry["metadata"]
-    assert entry["version"] == "1.10.1"
+    assert entry["version"] == "1.11.0"
     assert "trade_safety_exit_context" in entry["capabilities"]
-    assert metadata["publicToolCount"] == 11
+    assert metadata["publicToolCount"] == 14
     assert metadata["deploymentPublicToolCount"] == 10
     assert metadata["apiCatalogUpgradeState"] == "live-externally-verified"
     assert metadata["apiCatalogSourceCommit"] == (
@@ -67,7 +67,7 @@ def test_undertow_rfc9727_catalog_is_bound_to_live_deployment_proof():
         "sha256:bffb6a7626d066cdb5293cc28eca465baaae99974ef951eb3280c67501cc5e84"
     )
     assert metadata["aiCatalogSha256"] == (
-        "sha256:7bca1e6006e5a1bd56d4c0dab346fdaaff8bb6cbed0015c56628132cf49fba30"
+        "sha256:cf5f9bf685eb3d88d816f30efb6e231fc197e9a509bf59fa37900721ac712331"
     )
     assert metadata["apiCatalogVerifiedAt"] == "2026-09-04T19:37:30Z"
 
