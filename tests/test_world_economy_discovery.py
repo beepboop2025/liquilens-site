@@ -53,7 +53,7 @@ DATASETS = {
         },
     },
     "https://liquilens-undertow.com/#market-liquidity-dataset": {
-        "date_modified": "2026-09-14",
+        "date_modified": "2026-09-26",
         "identifier": (
             "urn:liquidity-lab:dataset:undertow-market-liquidity-exit-cost"
         ),
@@ -137,7 +137,7 @@ def test_machine_catalog_has_four_distinct_bounded_datasets():
     assert data["@type"] == "DataCatalog"
     assert data["@id"] == CATALOG_ID
     assert data["url"] == WORLD_ECONOMY_URL
-    assert data["dateModified"] == "2026-09-14"
+    assert data["dateModified"] == "2026-09-26"
     assert "not a complete database of the world economy" in data[
         "description"
     ].lower()
@@ -193,7 +193,7 @@ def test_machine_catalog_has_four_distinct_bounded_datasets():
         )
     )
     assert seiche["version"] == "0.13.2"
-    assert undertow["version"] == "1.10.0"
+    assert undertow["version"] == "1.10.1"
     assert palimpsest["version"] == "1.9.3"
     assert palimpsest["additionalProperty"] == {
         "@type": "PropertyValue",

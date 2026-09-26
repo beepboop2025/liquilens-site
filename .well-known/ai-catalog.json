@@ -28,7 +28,7 @@
           }
         ]
       },
-      "description": "Twenty-two free public read-only tools for NPA reconciliation, small finance and urban cooperative bank research, cited institution dossiers, RBI evidence, historical diagnostics, editorial and display-only market context, and connected source discovery.",
+      "description": "Twenty-three free public read-only tools for NPA reconciliation, small finance and urban cooperative bank research, institution coverage, cited dossiers, RBI evidence, historical diagnostics, editorial and display-only market context, and connected source discovery.",
       "tags": [
         "bank failure early warning",
         "NBFC risk",
@@ -56,6 +56,7 @@
         "failure_radar_institution",
         "forward_odds",
         "household_credit_board",
+        "institution_research_coverage",
         "institution_review_packet",
         "latest_article",
         "rbi_supervisory_tape",
@@ -86,18 +87,19 @@
         "Find recent RBI supervisory actions."
       ],
       "version": "1.8.0",
-      "updatedAt": "2026-09-08T20:31:23Z",
+      "updatedAt": "2026-09-26T13:10:00Z",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
-        "publicToolCount": 22,
+        "publicToolCount": 23,
         "articleJsonFeed": "https://liquilens.in/articles/feed.json",
         "telegramBot": "https://t.me/LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityLabDesk",
         "price": 0,
         "bankResearchGuide": "https://liquilens.in/banking/",
         "bankCoverage": "https://api.liquilens.in/api/experimental/v1/banking/coverage",
-        "researchNetworkApi": "https://api.liquilens.in/api/experimental/v1/research-network"
+        "researchNetworkApi": "https://api.liquilens.in/api/experimental/v1/research-network",
+        "institutionResearchCoverage": "https://api.liquilens.in/api/experimental/v1/banking/research-data/coverage"
       }
     },
     {
@@ -405,8 +407,8 @@
         "market_liquidity_briefing"
       ],
       "resourceTemplates": [],
-      "version": "1.10.0",
-      "updatedAt": "2026-09-08T20:31:23Z",
+      "version": "1.10.1",
+      "updatedAt": "2026-09-26T13:00:00Z",
       "metadata": {
         "productUrl": "https://liquilens-undertow.com",
         "publicToolCount": 11,
@@ -422,15 +424,15 @@
         "apiCatalogCoreProofCommit": "724b445ca57b8f48793d29cda45d95f62088082a",
         "apiCatalogSiteCommit": "9d32a5d7b1eac390b5da643b5151c15ce54ad9a5",
         "apiCatalogSha256": "sha256:bffb6a7626d066cdb5293cc28eca465baaae99974ef951eb3280c67501cc5e84",
-        "aiCatalogSha256": "sha256:9b9184730f19e16f128477fcaa09cf99d1df46475051821ebd42af78d9014fba",
-        "aiCatalogSiteCommit": "8dffca265e0c78f88031ecfa436486aba3e7660d",
-        "aiCatalogVerifiedAt": "2026-09-08T23:19:11Z",
+        "aiCatalogSha256": "sha256:7bca1e6006e5a1bd56d4c0dab346fdaaff8bb6cbed0015c56628132cf49fba30",
+        "aiCatalogSiteCommit": "846e4eb2c72020db7814d9115daf9c34f7152297",
+        "aiCatalogVerifiedAt": "2026-09-26T13:19:51.205137Z",
         "apiCatalogUpgradeState": "live-externally-verified",
         "apiCatalogVerifiedAt": "2026-09-04T19:37:30Z",
         "telegramBot": "https://t.me/Undertow_LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityCryptoDesk",
         "deploymentPublicToolCount": 10,
-        "inventoryScope": "Hosted MCP 1.10.0 independently verified with eleven public tools; dated deployment receipts retain their original ten-tool inventory."
+        "inventoryScope": "Hosted MCP 1.10.1 includes eleven public tools with exact measure counts and replay eligibility in liquidity_tiers; dated deployment receipts retain their original ten-tool inventory."
       }
     },
     {

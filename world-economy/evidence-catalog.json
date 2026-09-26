@@ -5,7 +5,7 @@
   "name": "Liquidity Lab World Economy Evidence Catalog",
   "description": "A public catalog that routes questions to four independent evidence layers: Seiche for system-wide dollar funding and global money-market context, LiquiLens for bank and lender failure-risk screening, Undertow for market-liquidity and position-sized exit evidence, and Palimpsest for revision-safe China economy and information evidence. It is not a complete database of the world economy.",
   "url": "https://liquilens.in/world-economy/",
-  "dateModified": "2026-09-14",
+  "dateModified": "2026-09-26",
   "publisher": {
     "@type": "Organization",
     "@id": "https://liquilens.in/#org",
@@ -162,8 +162,8 @@
       "description": "A public market-liquidity summary covering provider concentration, market-depth fragility, segment evidence states and position-sized exit costs where observable. A PARTIAL or UNAVAILABLE segment is an evidence warning, never a calm reading, and historical replays remain separately labeled construction-PIT evidence.",
       "url": "https://liquilens-undertow.com/",
       "sameAs": "https://liquilens-undertow.com/",
-      "dateModified": "2026-09-14",
-      "version": "1.10.0",
+      "dateModified": "2026-09-26",
+      "version": "1.10.1",
       "creator": {
         "@type": "Organization",
         "name": "Undertow by LiquiLens",
