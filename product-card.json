@@ -249,7 +249,7 @@
       "name": "Undertow",
       "use_for": "Cross-market liquidity fragility and exit cost",
       "url": "https://liquilens-undertow.com/",
-      "version": "1.10.1",
+      "version": "1.11.0",
       "ai_catalog": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
       "mcp": "https://api.seiche.info/undertow/mcp",
       "mcp_server_name": "io.github.beepboop2025/undertow",
@@ -259,10 +259,11 @@
         "2025-06-18",
         "2025-03-26"
       ],
-      "public_tools": 11,
+      "public_tools": 14,
       "trade_safety_tool": "trade_safety_exit_context",
       "public_prompts": 3,
-      "public_resources": 0
+      "public_resources": 0,
+      "crypto_workbench": "https://liquilens-undertow.com/crypto/"
     },
     {
       "name": "My Quant Doesn't Speak English",
