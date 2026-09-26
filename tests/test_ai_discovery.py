@@ -281,6 +281,7 @@ def test_mcp_card_and_nested_product_line_are_current():
         "failure_radar_institution",
         "forward_odds",
         "household_credit_board",
+        "institution_research_coverage",
         "institution_review_packet",
         "latest_article",
         "rbi_supervisory_tape",
@@ -300,7 +301,7 @@ def test_mcp_card_and_nested_product_line_are_current():
         "stress_evidence_pack",
     ]
     assert mcp["resourceTemplates"] == []
-    assert mcp["metadata"]["publicToolCount"] == 22
+    assert mcp["metadata"]["publicToolCount"] == 23
     assert mcp["metadata"]["articleJsonFeed"] == (
         "https://liquilens.in/articles/feed.json")
     assert "latest_article" in mcp["capabilities"]
@@ -308,7 +309,7 @@ def test_mcp_card_and_nested_product_line_are_current():
                  "crypto_exposure_board"):
         assert tool in mcp["capabilities"]
     assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.13.2"
-    assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.10.0"
+    assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.10.1"
     assert entries["urn:air:liquilens.in:openapi:failure-radar"]["version"] == (
         "1.0.0")
     assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
@@ -459,8 +460,8 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
     entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
 
     undertow = entries["urn:air:liquilens.in:catalog:undertow"]
-    assert undertow["version"] == "1.10.0"
-    assert undertow["updatedAt"] == "2026-09-08T20:31:23Z"
+    assert undertow["version"] == "1.10.1"
+    assert undertow["updatedAt"] == "2026-09-26T13:00:00Z"
     assert undertow["capabilities"] == [
         "agent_access_status",
         "depth_episodes",
@@ -705,7 +706,7 @@ def test_sibling_product_cards_match_the_catalog_contracts():
             undertow["public_resources"],
         ),
     } == {
-        "version": "1.10.0",
+        "version": "1.10.1",
         "catalog": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
         "mcp": "https://api.seiche.info/undertow/mcp",
         "server": "io.github.beepboop2025/undertow",
@@ -749,7 +750,7 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     assert "14 public read-only MCP tools, 4 prompts and 0 resources" in status
     assert "14 public read-only MCP tools" in status
     assert "signed tag, exact PyPI artifacts, static catalog" in status
-    assert "Undertow 1.10.0" in status
+    assert "Undertow 1.10.1" in status
     assert "11 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
     assert "Palimpsest 1.9.3" in status
     assert "7 public read-only MCP tools, 4 prompts and 1 metadata-only" in status

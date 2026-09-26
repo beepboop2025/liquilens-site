@@ -193,7 +193,7 @@ def test_machine_catalog_has_four_distinct_bounded_datasets():
         )
     )
     assert seiche["version"] == "0.13.2"
-    assert undertow["version"] == "1.10.0"
+    assert undertow["version"] == "1.10.1"
     assert palimpsest["version"] == "1.9.3"
     assert palimpsest["additionalProperty"] == {
         "@type": "PropertyValue",
