@@ -1,0 +1,1147 @@
+{
+  "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/city-union-bank?include_history=true",
+  "captured_at": "2026-09-27T15:44:24Z",
+  "evidence": {
+    "age_days": 89,
+    "as_of": "2026-09-27",
+    "available_at": "2026-09-24T21:36:30.694179Z",
+    "can_authorize_credit": false,
+    "changes": {
+      "quarter": {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "changes": {
+          "crar_pct": -0.19,
+          "gnpa_pct": -0.18,
+          "nnpa_pct": -0.07
+        },
+        "from_period": "2026-03-31",
+        "sources": [
+          "https://cityunionbank.bank.in/filemanager/Jul26/CUB-INV-PPT-JUN-2026.pdf"
+        ],
+        "status": "observed",
+        "to_period": "2026-06-30",
+        "unit": "percentage_points"
+      },
+      "year": {
+        "reason": "no comparable disclosed period in the requested interval",
+        "status": "unavailable"
+      }
+    },
+    "comparability_notes": [
+      "Selected facts verified against the cited primary filing; capture time is not backdated to publication."
+    ],
+    "default_event": null,
+    "exclusions": [],
+    "freshness_limit_days": 183,
+    "historical_evidence": {
+      "availability_time_basis": "explicit publication clock when present; otherwise period_end + 60 days",
+      "bitemporal_input_contract": false,
+      "filing_lag_days": 60,
+      "lead_times_optimistic": true,
+      "real_money_eligible": false,
+      "reason": "the committed crisis dossiers do not preserve a complete public-availability/revision archive; a conservative filing lag prevents quarter-end lookahead but cannot reconstruct overwritten amendments",
+      "status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "validated_backtest_eligible": false
+    },
+    "history": [
+      {
+        "available_at": "2018-05-30",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 16.22
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.03
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.7
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2018-03-31",
+        "sources": [
+          "https://www.cityunionbank.com/assets/frontend/pdf/others/AnnualReport2019.pdf",
+          "https://www.screener.in/company/CUB/",
+          "https://cityunionbank.com/assets/frontend/pdf/others/Investor_Presentation_Sep_2018.pdf"
+        ]
+      },
+      {
+        "available_at": "2019-05-30",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 13.16
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 15.55
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.95
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.81
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2019-03-31",
+        "sources": [
+          "https://www.cityunionbank.com/assets/frontend/pdf/others/AnnualReport2019.pdf",
+          "https://www.screener.in/company/CUB/"
+        ]
+      },
+      {
+        "available_at": "2020-05-30",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 16.76
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 4.09
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.29
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2020-03-31",
+        "sources": [
+          "https://www.equitymaster.com/research-it/annual-results-analysis/CTUN/CITY-UNION-BANK-2020-21-Annual-Report-Analysis/4245",
+          "https://www.screener.in/company/CUB/"
+        ]
+      },
+      {
+        "available_at": "2021-05-30",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 19.52
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 5.11
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.97
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2021-03-31",
+        "sources": [
+          "https://www.equitymaster.com/research-it/annual-results-analysis/CTUN/CITY-UNION-BANK-2020-21-Annual-Report-Analysis/4245",
+          "https://www.screener.in/company/CUB/"
+        ]
+      },
+      {
+        "available_at": "2022-05-30",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 20.85
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 4.7
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.95
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2022-03-31",
+        "sources": [
+          "https://www.equitymaster.com/research-it/annual-results-analysis/CTUN/CITY-UNION-BANK-2021-22-Annual-Report-Analysis/4246",
+          "https://www.business-standard.com/article/companies/city-union-bank-q4-net-jumps-88-to-rs-209-cr-on-less-bad-loan-provisions-122052701155_1.html",
+          "https://www.screener.in/company/CUB/"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.09
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.25
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-03-31",
+        "sources": [
+          "https://cityunionbank.bank.in/filemanager/Jul26/CUB-INV-PPT-JUN-2026.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 21.92
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.91
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.68
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 20.82
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2026-03-31",
+        "sources": [
+          "https://cityunionbank.bank.in/filemanager/Jul26/CUB-INV-PPT-JUN-2026.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "metrics": {
+          "advances": {
+            "basis": "Gross advances on the asset-quality table, converted from INR million to crore; not the net balance-sheet advances.",
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 67645.4
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 21.73
+          },
+          "deposits": {
+            "basis": "Converted from INR million to INR crore by dividing by 10.",
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 79342.3
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.73
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_crore",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.61
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 85
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 20.97
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2026-06-30",
+        "sources": [
+          "https://cityunionbank.bank.in/filemanager/Jul26/CUB-INV-PPT-JUN-2026.pdf"
+        ]
+      }
+    ],
+    "interpretation_limits": [
+      "A falling NPA percentage does not identify recoveries; loan growth, write-offs and sales can also change it.",
+      "GNPA and NNPA use different denominators. Their ratio or difference is not provision coverage.",
+      "A zero reported NNPA is not proof of zero credit risk or full deposit safety.",
+      "Institution type is the dossier's reporting classification; licence transitions require separate verification."
+    ],
+    "metrics": {
+      "advances": {
+        "basis": "Gross advances on the asset-quality table, converted from INR million to crore; not the net balance-sheet advances.",
+        "label": "Reported advances",
+        "status": "observed",
+        "unit": "INR_crore",
+        "value": 67645.4
+      },
+      "casa_pct": {
+        "basis": null,
+        "label": "Current and savings account deposits / deposits",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "cet1_pct": {
+        "basis": null,
+        "label": "Common equity Tier 1 capital ratio",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "crar_pct": {
+        "basis": null,
+        "label": "Capital adequacy",
+        "status": "observed",
+        "unit": "percent",
+        "value": 21.73
+      },
+      "deposits": {
+        "basis": "Converted from INR million to INR crore by dividing by 10.",
+        "label": "Deposits",
+        "status": "observed",
+        "unit": "INR_crore",
+        "value": 79342.3
+      },
+      "gnpa_pct": {
+        "basis": null,
+        "label": "Gross NPA / gross advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 1.73
+      },
+      "gross_loan_portfolio": {
+        "basis": null,
+        "label": "Gross loan portfolio",
+        "status": "not_disclosed",
+        "unit": "INR_crore",
+        "value": null
+      },
+      "lcr_pct": {
+        "basis": null,
+        "label": "Reported liquidity coverage",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "nnpa_pct": {
+        "basis": null,
+        "label": "Net NPA / net advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 0.61
+      },
+      "pcr_excluding_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR excluding technical write-offs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "pcr_including_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR including technical write-offs",
+        "status": "observed",
+        "unit": "percent",
+        "value": 85
+      },
+      "pcr_reported_pct": {
+        "basis": null,
+        "label": "Reported PCR; consult disclosed basis",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "tier1_pct": {
+        "basis": null,
+        "label": "Tier 1 capital ratio",
+        "status": "observed",
+        "unit": "percent",
+        "value": 20.97
+      },
+      "top20_depositors_pct": {
+        "basis": null,
+        "label": "Twenty largest depositors / deposits",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "top20_npa_pct": {
+        "basis": null,
+        "label": "Twenty largest NPA exposures / gross NPAs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      }
+    },
+    "name": "City Union Bank Ltd",
+    "next_disclosures": [
+      "Sector and borrower concentration",
+      "Capital buffers and actual supervisory directions",
+      "Deposit concentration and maturity",
+      "Slippages, recoveries and write-offs"
+    ],
+    "npa_movement": {
+      "reason": "closed NPA movement table not disclosed in the accepted record",
+      "status": "unavailable"
+    },
+    "period_end": "2026-06-30",
+    "publication_date": null,
+    "quarter": "Q1FY27",
+    "regulatory_comparison": {
+      "applicable": true,
+      "breaches": [],
+      "framework": "RBI PCA for SCBs (Nov 2021, effective Jan 2022)",
+      "headroom": [
+        {
+          "entry_at": 11.5,
+          "headroom_pp": 10.23,
+          "indicator": "CRAR",
+          "value": 21.73
+        },
+        {
+          "entry_at": 6.0,
+          "headroom_pp": 5.39,
+          "indicator": "NNPA",
+          "value": 0.61
+        }
+      ],
+      "not_assessed": [
+        "CET1",
+        "Tier-1 leverage (not in public quarterly disclosures)"
+      ],
+      "note": null,
+      "risk_level": 0,
+      "rule_as_of": null,
+      "sources": [],
+      "status": "none"
+    },
+    "retrieved_at": "2026-09-24T21:20:36.313352+00:00",
+    "schema": "liquilens.bank-specialisation.v1",
+    "scope": "research",
+    "score_authority": false,
+    "sector": "bank",
+    "slug": "city-union-bank",
+    "source_documents": [
+      {
+        "pdf_pages": [
+          9,
+          13,
+          14,
+          28
+        ],
+        "sha256": "d0996bcc8f3ee05fcb6e0e8b6f7353cd96a8b14a059a97efc6ae145bccbdaaaa",
+        "url": "https://cityunionbank.bank.in/filemanager/Jul26/CUB-INV-PPT-JUN-2026.pdf"
+      }
+    ],
+    "sources": [
+      "https://cityunionbank.bank.in/filemanager/Jul26/CUB-INV-PPT-JUN-2026.pdf"
+    ],
+    "status": "observed"
+  },
+  "schema": "liquilens.public-filing-snapshot.v1",
+  "source_payload_sha256": "75f3f32385f7dc382b7f50c9d9303a34a907ad615482971765ade2e53ac558ad"
+}

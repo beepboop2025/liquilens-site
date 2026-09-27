@@ -1,0 +1,466 @@
+{
+  "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/slice-sfb?include_history=true",
+  "captured_at": "2026-09-27T15:44:24Z",
+  "evidence": {
+    "age_days": 180,
+    "as_of": "2026-09-27",
+    "available_at": "2026-09-05T07:05:33Z",
+    "can_authorize_credit": false,
+    "changes": {
+      "quarter": {
+        "reason": "no comparable disclosed period in the requested interval",
+        "status": "unavailable"
+      },
+      "year": {
+        "available_at": "2026-09-05T07:05:33Z",
+        "changes": {
+          "crar_pct": -1.24,
+          "gnpa_pct": -1.44,
+          "nnpa_pct": -1.06
+        },
+        "from_period": "2025-03-31",
+        "sources": [
+          "https://slice.bank.in/documents/corporate-governance/annual-report/annual-report-2025-26.pdf"
+        ],
+        "status": "observed",
+        "to_period": "2026-03-31",
+        "unit": "percentage_points"
+      }
+    },
+    "comparability_notes": [
+      "Amounts in the movement table are rounded to INR thousands. Component reductions and reported totals have small rounding differences; those residuals are retained."
+    ],
+    "default_event": null,
+    "exclusions": [],
+    "freshness_limit_days": 400,
+    "historical_evidence": {
+      "availability_time_basis": "explicit publication clock when present; otherwise period_end + 60 days",
+      "bitemporal_input_contract": false,
+      "filing_lag_days": 60,
+      "lead_times_optimistic": true,
+      "real_money_eligible": false,
+      "reason": "the committed crisis dossiers do not preserve a complete public-availability/revision archive; a conservative filing lag prevents quarter-end lookahead but cannot reconstruct overwritten amendments",
+      "status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "validated_backtest_eligible": false
+    },
+    "history": [
+      {
+        "available_at": "2026-09-05T07:05:33Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_thousand",
+            "value": 29540341
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 8.21
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 20.3
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": "INR_thousand",
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 6.25
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_thousand",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 4.67
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 26.61
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 79.46
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 15.68
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 15.65
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-03-31",
+        "sources": [
+          "https://slice.bank.in/documents/corporate-governance/annual-report/annual-report-2025-26.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-05T07:05:33Z",
+        "metrics": {
+          "advances": {
+            "basis": "Gross standard advances plus gross NPAs, Schedule 18; INR thousands.",
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_thousand",
+            "value": 45320187
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 8.26
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 19.06
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": "INR_thousand",
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 4.81
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_thousand",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.61
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 25.73
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 78.85
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 14.12
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 7.75
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2026-03-31",
+        "sources": [
+          "https://slice.bank.in/documents/corporate-governance/annual-report/annual-report-2025-26.pdf"
+        ]
+      }
+    ],
+    "interpretation_limits": [
+      "A falling NPA percentage does not identify recoveries; loan growth, write-offs and sales can also change it.",
+      "GNPA and NNPA use different denominators. Their ratio or difference is not provision coverage.",
+      "A zero reported NNPA is not proof of zero credit risk or full deposit safety.",
+      "Institution type is the dossier's reporting classification; licence transitions require separate verification."
+    ],
+    "metrics": {
+      "advances": {
+        "basis": "Gross standard advances plus gross NPAs, Schedule 18; INR thousands.",
+        "label": "Reported advances",
+        "status": "observed",
+        "unit": "INR_thousand",
+        "value": 45320187
+      },
+      "casa_pct": {
+        "basis": null,
+        "label": "Current and savings account deposits / deposits",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "cet1_pct": {
+        "basis": null,
+        "label": "Common equity Tier 1 capital ratio",
+        "status": "observed",
+        "unit": "percent",
+        "value": 8.26
+      },
+      "crar_pct": {
+        "basis": null,
+        "label": "Capital adequacy",
+        "status": "observed",
+        "unit": "percent",
+        "value": 19.06
+      },
+      "deposits": {
+        "basis": null,
+        "label": "Deposits",
+        "status": "not_disclosed",
+        "unit": "INR_thousand",
+        "value": null
+      },
+      "gnpa_pct": {
+        "basis": null,
+        "label": "Gross NPA / gross advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 4.81
+      },
+      "gross_loan_portfolio": {
+        "basis": null,
+        "label": "Gross loan portfolio",
+        "status": "not_disclosed",
+        "unit": "INR_thousand",
+        "value": null
+      },
+      "lcr_pct": {
+        "basis": null,
+        "label": "Reported liquidity coverage",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "nnpa_pct": {
+        "basis": null,
+        "label": "Net NPA / net advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 3.61
+      },
+      "pcr_excluding_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR excluding technical write-offs",
+        "status": "observed",
+        "unit": "percent",
+        "value": 25.73
+      },
+      "pcr_including_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR including technical write-offs",
+        "status": "observed",
+        "unit": "percent",
+        "value": 78.85
+      },
+      "pcr_reported_pct": {
+        "basis": null,
+        "label": "Reported PCR; consult disclosed basis",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "tier1_pct": {
+        "basis": null,
+        "label": "Tier 1 capital ratio",
+        "status": "observed",
+        "unit": "percent",
+        "value": 14.12
+      },
+      "top20_depositors_pct": {
+        "basis": null,
+        "label": "Twenty largest depositors / deposits",
+        "status": "observed",
+        "unit": "percent",
+        "value": 7.75
+      },
+      "top20_npa_pct": {
+        "basis": null,
+        "label": "Twenty largest NPA exposures / gross NPAs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      }
+    },
+    "name": "slice Small Finance Bank",
+    "next_disclosures": [
+      "Microfinance and unsecured-loan concentration",
+      "Collection-efficiency denominator and exclusions",
+      "Deposit concentration and maturity",
+      "Slippages and write-offs by loan cohort"
+    ],
+    "npa_movement": {
+      "additions": 1852217.0,
+      "amount_unit": "INR_thousand",
+      "cash_recovery_attribution": "reported_components_only",
+      "closing_gnpa": 2178227.0,
+      "factual_authority": "input_statement_only",
+      "interpretation": "Write-offs, upgrades, settlements and sales are separate from cash recovery. Arithmetic agreement does not verify a filing.",
+      "net_stock_change": 330590.0,
+      "opening_gnpa": 1847637.0,
+      "period_end": "2026-03-31",
+      "period_start": "2025-04-01",
+      "reductions": {
+        "cash_recoveries": 418494.0,
+        "upgrades": 53780.0,
+        "write_offs": 1049355.0
+      },
+      "residual": -2.0,
+      "rounding_basis": "sum of half a reported unit of precision for each input amount",
+      "rounding_decimals": 0,
+      "rounding_tolerance": 3.0,
+      "status": "within_rounding"
+    },
+    "period_end": "2026-03-31",
+    "publication_date": null,
+    "quarter": "FY26",
+    "regulatory_comparison": {
+      "applicable": false,
+      "breaches": [],
+      "framework": null,
+      "headroom": [
+        {
+          "entry_at": 15.0,
+          "headroom_pp": 4.06,
+          "indicator": "CRAR",
+          "value": 19.06
+        }
+      ],
+      "not_assessed": [],
+      "note": "SFBs are outside the 2021 bank-PCA framework; headroom shown against the 15% licensing CRAR floor",
+      "risk_level": 0,
+      "rule_as_of": null,
+      "sources": [],
+      "status": "not_applicable"
+    },
+    "retrieved_at": "2026-09-05T07:05:33Z",
+    "schema": "liquilens.bank-specialisation.v1",
+    "scope": "research",
+    "score_authority": false,
+    "sector": "sfb",
+    "slug": "slice-sfb",
+    "source_documents": [
+      {
+        "pdf_pages": [
+          88,
+          96,
+          98,
+          111,
+          112
+        ],
+        "sha256": "4469e6941f1122f7ce546ddcc3d3a00d8b8b19b17fe21024395fd07eea47890c",
+        "url": "https://slice.bank.in/documents/corporate-governance/annual-report/annual-report-2025-26.pdf"
+      }
+    ],
+    "sources": [
+      "https://slice.bank.in/documents/corporate-governance/annual-report/annual-report-2025-26.pdf"
+    ],
+    "status": "observed"
+  },
+  "schema": "liquilens.public-filing-snapshot.v1",
+  "source_payload_sha256": "3838d6205446ad548a6493b025ca15f5b9325664dfac56e579a3873021c61159"
+}

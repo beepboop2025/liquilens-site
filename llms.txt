@@ -317,3 +317,8 @@ The selected FY2026 supplements for AU, Cosmos and Slice are review-only, outsid
 - The browser performs no research calls until the visitor asks. Returned evidence, copied setup and helpful-button clicks are different measurements; none establishes a verified user or execution authority.
 
 Crypto workbench: https://liquilens-undertow.com/crypto/ provides published BTC sell-rung comparisons plus caller-supplied funding and portfolio scenarios. Its crypto_exit_check, crypto_funding_cost and crypto_portfolio_stress tools are public in hosted MCP 1.11.0. Three agent skills and a standard-library Python brief are packaged at https://liquilens-undertow.com/crypto/undertow-crypto-kit.zip; exact file digests are in https://liquilens-undertow.com/crypto/kit-manifest.json. The brief preserves independent Undertow, Seiche and optional LiquiLens evidence states.
+
+## Citable accepted bank filings
+
+- [Bank filing evidence](https://liquilens.in/banking/institutions/): dated HTML snapshots of accepted disclosures, source clocks, definitions, missing values and source-document hashes; not live bank-health assessments.
+- [Snapshot catalog](https://liquilens.in/banking/institutions/manifest.json): institution IDs, reporting periods and capture time. Each HTML record links matching evidence.json and the live API. Original reports remain at their publishers; no new rights to redistribute those reports are granted.

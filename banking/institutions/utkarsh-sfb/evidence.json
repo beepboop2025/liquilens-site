@@ -1,0 +1,912 @@
+{
+  "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/utkarsh-sfb?include_history=true",
+  "captured_at": "2026-09-27T15:44:24Z",
+  "evidence": {
+    "age_days": 89,
+    "as_of": "2026-09-27",
+    "available_at": "2026-09-24T21:36:30.694179Z",
+    "can_authorize_credit": false,
+    "changes": {
+      "quarter": {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "changes": {
+          "crar_pct": null,
+          "gnpa_pct": -1.7,
+          "nnpa_pct": -0.4
+        },
+        "from_period": "2026-03-31",
+        "sources": [
+          "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+        ],
+        "status": "observed",
+        "to_period": "2026-06-30",
+        "unit": "percentage_points"
+      },
+      "year": {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "changes": {
+          "crar_pct": null,
+          "gnpa_pct": -5.5,
+          "nnpa_pct": -2.2
+        },
+        "from_period": "2025-06-30",
+        "sources": [
+          "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+        ],
+        "status": "observed",
+        "to_period": "2026-06-30",
+        "unit": "percentage_points"
+      }
+    },
+    "comparability_notes": [
+      "Selected facts verified against the cited primary filing; capture time is not backdated to publication."
+    ],
+    "default_event": null,
+    "exclusions": [],
+    "freshness_limit_days": 183,
+    "historical_evidence": {
+      "availability_time_basis": "explicit publication clock when present; otherwise period_end + 60 days",
+      "bitemporal_input_contract": false,
+      "filing_lag_days": 60,
+      "lead_times_optimistic": true,
+      "real_money_eligible": false,
+      "reason": "the committed crisis dossiers do not preserve a complete public-availability/revision archive; a conservative filing lag prevents quarter-end lookahead but cannot reconstruct overwritten amendments",
+      "status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "validated_backtest_eligible": false
+    },
+    "history": [
+      {
+        "available_at": "2024-05-30",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.5
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.03
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2024-03-31",
+        "sources": [
+          "https://www.utkarsh.bank.in/uploads/pdf/InvestorPresentationQ4.pdf"
+        ]
+      },
+      {
+        "available_at": "2025-03-01",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 6.2
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.5
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2024-12-31",
+        "sources": [
+          "https://www.utkarsh.bank.in/uploads/pdf/InvestorPresentationQ4.pdf"
+        ]
+      },
+      {
+        "available_at": "2025-05-30",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 20.93
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 9.4
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 4.84
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-03-31",
+        "sources": [
+          "https://www.utkarsh.bank.in/uploads/pdf/InvestorPresentationQ4.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 11.4
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 5.0
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-06-30",
+        "sources": [
+          "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 7.6
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.2
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2026-03-31",
+        "sources": [
+          "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": "INR_crore",
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 22
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 17.4
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 22054
+          },
+          "gnpa_pct": {
+            "basis": "Advances used for the NPA calculation include IBPC; this differs from the older presentation denominator.",
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 5.9
+          },
+          "gross_loan_portfolio": {
+            "basis": "Reported gross loan portfolio; not relabelled as net advances.",
+            "label": "Gross loan portfolio",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 19610
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": "Advances used for the NPA calculation include IBPC.",
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.8
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported PCR; no inferred write-off classification.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 54.6
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 15.1
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2026-06-30",
+        "sources": [
+          "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+        ]
+      }
+    ],
+    "interpretation_limits": [
+      "A falling NPA percentage does not identify recoveries; loan growth, write-offs and sales can also change it.",
+      "GNPA and NNPA use different denominators. Their ratio or difference is not provision coverage.",
+      "A zero reported NNPA is not proof of zero credit risk or full deposit safety.",
+      "Institution type is the dossier's reporting classification; licence transitions require separate verification."
+    ],
+    "metrics": {
+      "advances": {
+        "basis": null,
+        "label": "Reported advances",
+        "status": "not_disclosed",
+        "unit": "INR_crore",
+        "value": null
+      },
+      "casa_pct": {
+        "basis": null,
+        "label": "Current and savings account deposits / deposits",
+        "status": "observed",
+        "unit": "percent",
+        "value": 22
+      },
+      "cet1_pct": {
+        "basis": null,
+        "label": "Common equity Tier 1 capital ratio",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "crar_pct": {
+        "basis": null,
+        "label": "Capital adequacy",
+        "status": "observed",
+        "unit": "percent",
+        "value": 17.4
+      },
+      "deposits": {
+        "basis": null,
+        "label": "Deposits",
+        "status": "observed",
+        "unit": "INR_crore",
+        "value": 22054
+      },
+      "gnpa_pct": {
+        "basis": "Advances used for the NPA calculation include IBPC; this differs from the older presentation denominator.",
+        "label": "Gross NPA / gross advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 5.9
+      },
+      "gross_loan_portfolio": {
+        "basis": "Reported gross loan portfolio; not relabelled as net advances.",
+        "label": "Gross loan portfolio",
+        "status": "observed",
+        "unit": "INR_crore",
+        "value": 19610
+      },
+      "lcr_pct": {
+        "basis": null,
+        "label": "Reported liquidity coverage",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "nnpa_pct": {
+        "basis": "Advances used for the NPA calculation include IBPC.",
+        "label": "Net NPA / net advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 2.8
+      },
+      "pcr_excluding_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR excluding technical write-offs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "pcr_including_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR including technical write-offs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "pcr_reported_pct": {
+        "basis": "Reported PCR; no inferred write-off classification.",
+        "label": "Reported PCR; consult disclosed basis",
+        "status": "observed",
+        "unit": "percent",
+        "value": 54.6
+      },
+      "tier1_pct": {
+        "basis": null,
+        "label": "Tier 1 capital ratio",
+        "status": "observed",
+        "unit": "percent",
+        "value": 15.1
+      },
+      "top20_depositors_pct": {
+        "basis": null,
+        "label": "Twenty largest depositors / deposits",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "top20_npa_pct": {
+        "basis": null,
+        "label": "Twenty largest NPA exposures / gross NPAs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      }
+    },
+    "name": "Utkarsh Small Finance Bank",
+    "next_disclosures": [
+      "Microfinance and unsecured-loan concentration",
+      "Collection-efficiency denominator and exclusions",
+      "Deposit concentration and maturity",
+      "Slippages and write-offs by loan cohort"
+    ],
+    "npa_movement": {
+      "reason": "closed NPA movement table not disclosed in the accepted record",
+      "status": "unavailable"
+    },
+    "period_end": "2026-06-30",
+    "publication_date": "2026-08-01",
+    "quarter": "Q1FY27",
+    "regulatory_comparison": {
+      "applicable": false,
+      "breaches": [],
+      "framework": null,
+      "headroom": [
+        {
+          "entry_at": 15.0,
+          "headroom_pp": 2.4,
+          "indicator": "CRAR",
+          "value": 17.4
+        }
+      ],
+      "not_assessed": [],
+      "note": "SFBs are outside the 2021 bank-PCA framework; headroom shown against the 15% licensing CRAR floor",
+      "risk_level": 0,
+      "rule_as_of": null,
+      "sources": [],
+      "status": "not_applicable"
+    },
+    "retrieved_at": "2026-09-24T21:32:16.772208+00:00",
+    "schema": "liquilens.bank-specialisation.v1",
+    "scope": "research",
+    "score_authority": false,
+    "sector": "sfb",
+    "slug": "utkarsh-sfb",
+    "source_documents": [
+      {
+        "pdf_pages": [
+          3,
+          5
+        ],
+        "sha256": "309ec7cd700e2b5be663d33087e4633897a8281b39928b948934bbb9fc15d6d2",
+        "url": "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+      }
+    ],
+    "sources": [
+      "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+    ],
+    "status": "observed"
+  },
+  "schema": "liquilens.public-filing-snapshot.v1",
+  "source_payload_sha256": "b838fbdc42373a7ab635c374ee09ec3c177fec0fbfe63c8cbee4f34b52450f20"
+}

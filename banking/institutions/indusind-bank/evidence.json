@@ -1,0 +1,1162 @@
+{
+  "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/indusind-bank?include_history=true",
+  "captured_at": "2026-09-27T15:44:24Z",
+  "evidence": {
+    "age_days": 89,
+    "as_of": "2026-09-27",
+    "available_at": "2026-09-24T21:43:04.041506Z",
+    "can_authorize_credit": false,
+    "changes": {
+      "quarter": {
+        "available_at": "2026-09-24T21:43:04.041506Z",
+        "changes": {
+          "crar_pct": null,
+          "gnpa_pct": -0.18,
+          "nnpa_pct": -0.05
+        },
+        "from_period": "2026-03-31",
+        "sources": [
+          "https://www.indusind.bank.in/content/dam/indusind-corporate/investors/investor-presentation/FY2026-2027/Investor-Presentation-Q1-FY26-27.pdf"
+        ],
+        "status": "observed",
+        "to_period": "2026-06-30",
+        "unit": "percentage_points"
+      },
+      "year": {
+        "available_at": "2026-09-24T21:43:04.041506Z",
+        "changes": {
+          "crar_pct": null,
+          "gnpa_pct": -0.39,
+          "nnpa_pct": -0.17
+        },
+        "from_period": "2025-06-30",
+        "sources": [
+          "https://www.indusind.bank.in/content/dam/indusind-corporate/investors/investor-presentation/FY2026-2027/Investor-Presentation-Q1-FY26-27.pdf"
+        ],
+        "status": "observed",
+        "to_period": "2026-06-30",
+        "unit": "percentage_points"
+      }
+    },
+    "comparability_notes": [
+      "Selected facts verified against the primary filing; capture time is not backdated to publication."
+    ],
+    "default_event": null,
+    "exclusions": [],
+    "freshness_limit_days": 183,
+    "historical_evidence": {
+      "availability_time_basis": "explicit publication clock when present; otherwise period_end + 60 days",
+      "bitemporal_input_contract": false,
+      "filing_lag_days": 60,
+      "lead_times_optimistic": true,
+      "real_money_eligible": false,
+      "reason": "the committed crisis dossiers do not preserve a complete public-availability/revision archive; a conservative filing lag prevents quarter-end lookahead but cannot reconstruct overwritten amendments",
+      "status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "validated_backtest_eligible": false
+    },
+    "history": [
+      {
+        "available_at": "2024-11-29",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 16.51
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.11
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.64
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2024-09-30",
+        "sources": [
+          "https://www.business-standard.com/companies/results/indusind-bank-q2-results-net-profit-falls-39-5-to-rs-1-331-29-crore-124102401279_1.html",
+          "https://www.indusind.bank.in/content/dam/indusind-corporate/investors/QuarterFinancialResults/FY2024-2025/Quarter2/Analyst-CallOpening-Remarks-Q2FY25.pdf",
+          "https://www.businesstoday.in/markets/company-stock/story/indusind-bank-q2-earnings-net-profit-falls-provisions-rise-451393-2024-10-24"
+        ]
+      },
+      {
+        "available_at": "2025-03-01",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 16.46
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.25
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.68
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2024-12-31",
+        "sources": [
+          "https://www.bajajbroking.in/share-market-news/indusind-bank-quarterly-results",
+          "https://www.business-standard.com/markets/capital-market-news/indusind-bank-s-net-advances-climb-13-yoy-in-q3-fy25-125010400301_1.html",
+          "https://www.icicidirect.com/research/equity/rapid-results/indusind-bank-ltd"
+        ]
+      },
+      {
+        "available_at": "2025-05-30",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 16.24
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.13
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "observed",
+            "unit": "percent",
+            "value": 118
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.95
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-03-31",
+        "sources": [
+          "https://www.indusind.bank.in/content/dam/indusind-corporate/investors/QuarterFinancialResults/FY2024-2025/Quarter4/SEPressRelease.pdf",
+          "https://www.business-standard.com/companies/news/indusind-bank-posts-rs-2329-cr-loss-on-provisions-accounting-discrepancies-125052101905_1.html",
+          "https://www.businesstoday.in/markets/stocks/story/indusind-bank-posts-net-loss-of-rs-2329-crore-in-q4-amid-accounting-discrepancies-477245-2025-05-21"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:43:04.041506Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.64
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.12
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported provision coverage ratio; no inferred technical-write-off classification.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 70
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-06-30",
+        "sources": [
+          "https://www.indusind.bank.in/content/dam/indusind-corporate/investors/investor-presentation/FY2026-2027/Investor-Presentation-Q1-FY26-27.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:43:04.041506Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.6
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.04
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported provision coverage ratio; no inferred technical-write-off classification.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 72
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-09-30",
+        "sources": [
+          "https://www.indusind.bank.in/content/dam/indusind-corporate/investors/investor-presentation/FY2026-2027/Investor-Presentation-Q1-FY26-27.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:43:04.041506Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.56
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.04
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported provision coverage ratio; no inferred technical-write-off classification.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 72
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-12-31",
+        "sources": [
+          "https://www.indusind.bank.in/content/dam/indusind-corporate/investors/investor-presentation/FY2026-2027/Investor-Presentation-Q1-FY26-27.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:43:04.041506Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.43
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported provision coverage ratio; no inferred technical-write-off classification.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 71
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2026-03-31",
+        "sources": [
+          "https://www.indusind.bank.in/content/dam/indusind-corporate/investors/investor-presentation/FY2026-2027/Investor-Presentation-Q1-FY26-27.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:43:04.041506Z",
+        "metrics": {
+          "advances": {
+            "basis": "Consolidated balance-sheet advances, end of period.",
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 326274
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 16.1
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 17.15
+          },
+          "deposits": {
+            "basis": "Consolidated balance-sheet deposits, end of period.",
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 414766
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.25
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_crore",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": "Quarterly average as stated in the presentation.",
+            "label": "Reported liquidity coverage",
+            "status": "observed",
+            "unit": "percent",
+            "value": 127
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.95
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported provision coverage ratio; no inferred technical-write-off classification.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 71
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 16.1
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2026-06-30",
+        "sources": [
+          "https://www.indusind.bank.in/content/dam/indusind-corporate/investors/investor-presentation/FY2026-2027/Investor-Presentation-Q1-FY26-27.pdf"
+        ]
+      }
+    ],
+    "interpretation_limits": [
+      "A falling NPA percentage does not identify recoveries; loan growth, write-offs and sales can also change it.",
+      "GNPA and NNPA use different denominators. Their ratio or difference is not provision coverage.",
+      "A zero reported NNPA is not proof of zero credit risk or full deposit safety.",
+      "Institution type is the dossier's reporting classification; licence transitions require separate verification."
+    ],
+    "metrics": {
+      "advances": {
+        "basis": "Consolidated balance-sheet advances, end of period.",
+        "label": "Reported advances",
+        "status": "observed",
+        "unit": "INR_crore",
+        "value": 326274
+      },
+      "casa_pct": {
+        "basis": null,
+        "label": "Current and savings account deposits / deposits",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "cet1_pct": {
+        "basis": null,
+        "label": "Common equity Tier 1 capital ratio",
+        "status": "observed",
+        "unit": "percent",
+        "value": 16.1
+      },
+      "crar_pct": {
+        "basis": null,
+        "label": "Capital adequacy",
+        "status": "observed",
+        "unit": "percent",
+        "value": 17.15
+      },
+      "deposits": {
+        "basis": "Consolidated balance-sheet deposits, end of period.",
+        "label": "Deposits",
+        "status": "observed",
+        "unit": "INR_crore",
+        "value": 414766
+      },
+      "gnpa_pct": {
+        "basis": null,
+        "label": "Gross NPA / gross advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 3.25
+      },
+      "gross_loan_portfolio": {
+        "basis": null,
+        "label": "Gross loan portfolio",
+        "status": "not_disclosed",
+        "unit": "INR_crore",
+        "value": null
+      },
+      "lcr_pct": {
+        "basis": "Quarterly average as stated in the presentation.",
+        "label": "Reported liquidity coverage",
+        "status": "observed",
+        "unit": "percent",
+        "value": 127
+      },
+      "nnpa_pct": {
+        "basis": null,
+        "label": "Net NPA / net advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 0.95
+      },
+      "pcr_excluding_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR excluding technical write-offs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "pcr_including_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR including technical write-offs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "pcr_reported_pct": {
+        "basis": "Reported provision coverage ratio; no inferred technical-write-off classification.",
+        "label": "Reported PCR; consult disclosed basis",
+        "status": "observed",
+        "unit": "percent",
+        "value": 71
+      },
+      "tier1_pct": {
+        "basis": null,
+        "label": "Tier 1 capital ratio",
+        "status": "observed",
+        "unit": "percent",
+        "value": 16.1
+      },
+      "top20_depositors_pct": {
+        "basis": null,
+        "label": "Twenty largest depositors / deposits",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "top20_npa_pct": {
+        "basis": null,
+        "label": "Twenty largest NPA exposures / gross NPAs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      }
+    },
+    "name": "IndusInd Bank",
+    "next_disclosures": [
+      "Sector and borrower concentration",
+      "Capital buffers and actual supervisory directions",
+      "Deposit concentration and maturity",
+      "Slippages, recoveries and write-offs"
+    ],
+    "npa_movement": {
+      "reason": "closed NPA movement table not disclosed in the accepted record",
+      "status": "unavailable"
+    },
+    "period_end": "2026-06-30",
+    "publication_date": "2026-07-22",
+    "quarter": "Q1FY27",
+    "regulatory_comparison": {
+      "applicable": true,
+      "breaches": [],
+      "framework": "RBI PCA for SCBs (Nov 2021, effective Jan 2022)",
+      "headroom": [
+        {
+          "entry_at": 11.5,
+          "headroom_pp": 5.65,
+          "indicator": "CRAR",
+          "value": 17.15
+        },
+        {
+          "entry_at": 8.0,
+          "headroom_pp": 8.1,
+          "indicator": "CET1",
+          "value": 16.1
+        },
+        {
+          "entry_at": 6.0,
+          "headroom_pp": 5.05,
+          "indicator": "NNPA",
+          "value": 0.95
+        }
+      ],
+      "not_assessed": [
+        "Tier-1 leverage (not in public quarterly disclosures)"
+      ],
+      "note": null,
+      "risk_level": 0,
+      "rule_as_of": null,
+      "sources": [],
+      "status": "none"
+    },
+    "retrieved_at": "2026-09-24T21:38:14.357495+00:00",
+    "schema": "liquilens.bank-specialisation.v1",
+    "scope": "research",
+    "score_authority": false,
+    "sector": "bank",
+    "slug": "indusind-bank",
+    "source_documents": [
+      {
+        "pdf_pages": [
+          4,
+          7,
+          24,
+          34
+        ],
+        "sha256": "278de71d3876f3dfee7eef07d7e2448ec2fc275f1a258c98fe872657f314bc7b",
+        "url": "https://www.indusind.bank.in/content/dam/indusind-corporate/investors/investor-presentation/FY2026-2027/Investor-Presentation-Q1-FY26-27.pdf"
+      }
+    ],
+    "sources": [
+      "https://www.indusind.bank.in/content/dam/indusind-corporate/investors/investor-presentation/FY2026-2027/Investor-Presentation-Q1-FY26-27.pdf"
+    ],
+    "status": "observed"
+  },
+  "schema": "liquilens.public-filing-snapshot.v1",
+  "source_payload_sha256": "92e1e7894628afc82527050af3396303e215a33991be3c53171a39aa9b27d12f"
+}

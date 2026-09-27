@@ -1,0 +1,1144 @@
+{
+  "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/esaf-sfb?include_history=true",
+  "captured_at": "2026-09-27T15:44:24Z",
+  "evidence": {
+    "age_days": 89,
+    "as_of": "2026-09-27",
+    "available_at": "2026-09-24T21:36:30.694179Z",
+    "can_authorize_credit": false,
+    "changes": {
+      "quarter": {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "changes": {
+          "crar_pct": null,
+          "gnpa_pct": 0.0,
+          "nnpa_pct": -1.0
+        },
+        "from_period": "2026-03-31",
+        "sources": [
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+        ],
+        "status": "observed",
+        "to_period": "2026-06-30",
+        "unit": "percentage_points"
+      },
+      "year": {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "changes": {
+          "crar_pct": null,
+          "gnpa_pct": -2.1,
+          "nnpa_pct": -3.0
+        },
+        "from_period": "2025-06-30",
+        "sources": [
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+        ],
+        "status": "observed",
+        "to_period": "2026-06-30",
+        "unit": "percentage_points"
+      }
+    },
+    "comparability_notes": [
+      "Selected facts verified against the cited primary filing; capture time is not backdated to publication."
+    ],
+    "default_event": null,
+    "exclusions": [],
+    "freshness_limit_days": 183,
+    "historical_evidence": {
+      "availability_time_basis": "explicit publication clock when present; otherwise period_end + 60 days",
+      "bitemporal_input_contract": false,
+      "filing_lag_days": 60,
+      "lead_times_optimistic": true,
+      "real_money_eligible": false,
+      "reason": "the committed crisis dossiers do not preserve a complete public-availability/revision archive; a conservative filing lag prevents quarter-end lookahead but cannot reconstruct overwritten amendments",
+      "status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "validated_backtest_eligible": false
+    },
+    "history": [
+      {
+        "available_at": "2024-11-29",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 6.98
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.98
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2024-09-30",
+        "sources": [
+          "https://www.esaf.bank.in/pdf/otherDisclosures/FY-2024-25/Press_Release_on_the_Financial_Results_of_the_Bank_for_the.pdf",
+          "https://www.marketsmojo.com/news/result-analysis/esaf-small-finance-banks-q3-2024-financial-results-show-negative-performance-trend-303124"
+        ]
+      },
+      {
+        "available_at": "2025-03-01",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 6.5
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.97
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2024-12-31",
+        "sources": [
+          "https://www.icicidirect.com/research/equity/rapid-results/esaf-small-finance-bank-ltd"
+        ]
+      },
+      {
+        "available_at": "2025-05-30",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 21.8
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 6.9
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.9
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-03-31",
+        "sources": [
+          "https://www.esaf.bank.in/wp-content/uploads/2025/05/ESAF-SFB-Investor-Presentation-Q4FY25.pdf",
+          "https://www.icicidirect.com/research/equity/rapid-results/esaf-small-finance-bank-ltd"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 7.5
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.8
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-06-30",
+        "sources": [
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 8.5
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.8
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-09-30",
+        "sources": [
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 5.6
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.7
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-12-31",
+        "sources": [
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 5.4
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": null,
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.8
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2026-03-31",
+        "sources": [
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-24T21:36:30.694179Z",
+        "metrics": {
+          "advances": {
+            "basis": "Gross advances; the report distinguishes total business including IBPC.",
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 23216
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 23.4
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 23.9
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 26924
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 5.4
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_crore",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.8
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported PCR includes an additional INR 64.7 crore provision; the presentation separately shows 80.5% excluding that additional provision.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 85.5
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 15.9
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2026-06-30",
+        "sources": [
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+        ]
+      }
+    ],
+    "interpretation_limits": [
+      "A falling NPA percentage does not identify recoveries; loan growth, write-offs and sales can also change it.",
+      "GNPA and NNPA use different denominators. Their ratio or difference is not provision coverage.",
+      "A zero reported NNPA is not proof of zero credit risk or full deposit safety.",
+      "Institution type is the dossier's reporting classification; licence transitions require separate verification."
+    ],
+    "metrics": {
+      "advances": {
+        "basis": "Gross advances; the report distinguishes total business including IBPC.",
+        "label": "Reported advances",
+        "status": "observed",
+        "unit": "INR_crore",
+        "value": 23216
+      },
+      "casa_pct": {
+        "basis": null,
+        "label": "Current and savings account deposits / deposits",
+        "status": "observed",
+        "unit": "percent",
+        "value": 23.4
+      },
+      "cet1_pct": {
+        "basis": null,
+        "label": "Common equity Tier 1 capital ratio",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "crar_pct": {
+        "basis": null,
+        "label": "Capital adequacy",
+        "status": "observed",
+        "unit": "percent",
+        "value": 23.9
+      },
+      "deposits": {
+        "basis": null,
+        "label": "Deposits",
+        "status": "observed",
+        "unit": "INR_crore",
+        "value": 26924
+      },
+      "gnpa_pct": {
+        "basis": null,
+        "label": "Gross NPA / gross advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 5.4
+      },
+      "gross_loan_portfolio": {
+        "basis": null,
+        "label": "Gross loan portfolio",
+        "status": "not_disclosed",
+        "unit": "INR_crore",
+        "value": null
+      },
+      "lcr_pct": {
+        "basis": null,
+        "label": "Reported liquidity coverage",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "nnpa_pct": {
+        "basis": null,
+        "label": "Net NPA / net advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 0.8
+      },
+      "pcr_excluding_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR excluding technical write-offs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "pcr_including_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR including technical write-offs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "pcr_reported_pct": {
+        "basis": "Reported PCR includes an additional INR 64.7 crore provision; the presentation separately shows 80.5% excluding that additional provision.",
+        "label": "Reported PCR; consult disclosed basis",
+        "status": "observed",
+        "unit": "percent",
+        "value": 85.5
+      },
+      "tier1_pct": {
+        "basis": null,
+        "label": "Tier 1 capital ratio",
+        "status": "observed",
+        "unit": "percent",
+        "value": 15.9
+      },
+      "top20_depositors_pct": {
+        "basis": null,
+        "label": "Twenty largest depositors / deposits",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "top20_npa_pct": {
+        "basis": null,
+        "label": "Twenty largest NPA exposures / gross NPAs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      }
+    },
+    "name": "ESAF Small Finance Bank",
+    "next_disclosures": [
+      "Microfinance and unsecured-loan concentration",
+      "Collection-efficiency denominator and exclusions",
+      "Deposit concentration and maturity",
+      "Slippages and write-offs by loan cohort"
+    ],
+    "npa_movement": {
+      "reason": "closed NPA movement table not disclosed in the accepted record",
+      "status": "unavailable"
+    },
+    "period_end": "2026-06-30",
+    "publication_date": null,
+    "quarter": "Q1FY27",
+    "regulatory_comparison": {
+      "applicable": false,
+      "breaches": [],
+      "framework": null,
+      "headroom": [
+        {
+          "entry_at": 15.0,
+          "headroom_pp": 8.9,
+          "indicator": "CRAR",
+          "value": 23.9
+        }
+      ],
+      "not_assessed": [],
+      "note": "SFBs are outside the 2021 bank-PCA framework; headroom shown against the 15% licensing CRAR floor",
+      "risk_level": 0,
+      "rule_as_of": null,
+      "sources": [],
+      "status": "not_applicable"
+    },
+    "retrieved_at": "2026-09-24T21:30:45.685Z",
+    "schema": "liquilens.bank-specialisation.v1",
+    "scope": "research",
+    "score_authority": false,
+    "sector": "sfb",
+    "slug": "esaf-sfb",
+    "source_documents": [
+      {
+        "pdf_pages": [
+          3,
+          5,
+          17,
+          18
+        ],
+        "sha256": "c57afade153c53401c3049d0d7644f0a0dcf5db4b3b51fb87277f62bdb702820",
+        "url": "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+      }
+    ],
+    "sources": [
+      "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+    ],
+    "status": "observed"
+  },
+  "schema": "liquilens.public-filing-snapshot.v1",
+  "source_payload_sha256": "98037385e9ef6e33b1ba6a6201e023316bd904ca9e6417803dcf4234cb41c9e0"
+}

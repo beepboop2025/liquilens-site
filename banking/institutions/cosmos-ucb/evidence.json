@@ -1,0 +1,466 @@
+{
+  "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/cosmos-ucb?include_history=true",
+  "captured_at": "2026-09-27T15:44:24Z",
+  "evidence": {
+    "age_days": 180,
+    "as_of": "2026-09-27",
+    "available_at": "2026-09-05T07:05:33Z",
+    "can_authorize_credit": false,
+    "changes": {
+      "quarter": {
+        "reason": "no comparable disclosed period in the requested interval",
+        "status": "unavailable"
+      },
+      "year": {
+        "available_at": "2026-09-05T07:05:33Z",
+        "changes": {
+          "crar_pct": 0.06,
+          "gnpa_pct": -1.35,
+          "nnpa_pct": -0.76
+        },
+        "from_period": "2025-03-31",
+        "sources": [
+          "https://www.cosmos.bank.in/auth/writereaddata/files/2506261014357950_Cosmos%20Annual%20Report%202025-26%20_Final%20file__cleaned.pdf"
+        ],
+        "status": "observed",
+        "to_period": "2026-03-31",
+        "unit": "percentage_points"
+      }
+    },
+    "comparability_notes": [
+      "A sourced filing does not by itself establish absence of RBI directions or discharge of prior SAF restrictions; current PCA applicability remains unverified."
+    ],
+    "default_event": null,
+    "exclusions": [],
+    "freshness_limit_days": 400,
+    "historical_evidence": {
+      "availability_time_basis": "explicit publication clock when present; otherwise period_end + 60 days",
+      "bitemporal_input_contract": false,
+      "filing_lag_days": 60,
+      "lead_times_optimistic": true,
+      "real_money_eligible": false,
+      "reason": "the committed crisis dossiers do not preserve a complete public-availability/revision archive; a conservative filing lag prevents quarter-end lookahead but cannot reconstruct overwritten amendments",
+      "status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "validated_backtest_eligible": false
+    },
+    "history": [
+      {
+        "available_at": "2026-09-05T07:05:33Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 15727.07
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 15.15
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 22907.2
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 4.46
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_crore",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.67
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported provision coverage ratio; no generic including/excluding rewrite is applied.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 63.65
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "period_end": "2025-03-31",
+        "sources": [
+          "https://www.cosmos.bank.in/auth/writereaddata/files/2506261014357950_Cosmos%20Annual%20Report%202025-26%20_Final%20file__cleaned.pdf"
+        ]
+      },
+      {
+        "available_at": "2026-09-05T07:05:33Z",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 17879.05
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 15.21
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 26121.64
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.11
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_crore",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.91
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported provision coverage ratio; technical write-off movements are separately disclosed as zero.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 71.45
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 58.94
+          }
+        },
+        "period_end": "2026-03-31",
+        "sources": [
+          "https://www.cosmos.bank.in/auth/writereaddata/files/2506261014357950_Cosmos%20Annual%20Report%202025-26%20_Final%20file__cleaned.pdf"
+        ]
+      }
+    ],
+    "interpretation_limits": [
+      "A falling NPA percentage does not identify recoveries; loan growth, write-offs and sales can also change it.",
+      "GNPA and NNPA use different denominators. Their ratio or difference is not provision coverage.",
+      "A zero reported NNPA is not proof of zero credit risk or full deposit safety.",
+      "Institution type is the dossier's reporting classification; licence transitions require separate verification."
+    ],
+    "metrics": {
+      "advances": {
+        "basis": null,
+        "label": "Reported advances",
+        "status": "observed",
+        "unit": "INR_crore",
+        "value": 17879.05
+      },
+      "casa_pct": {
+        "basis": null,
+        "label": "Current and savings account deposits / deposits",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "cet1_pct": {
+        "basis": null,
+        "label": "Common equity Tier 1 capital ratio",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "crar_pct": {
+        "basis": null,
+        "label": "Capital adequacy",
+        "status": "observed",
+        "unit": "percent",
+        "value": 15.21
+      },
+      "deposits": {
+        "basis": null,
+        "label": "Deposits",
+        "status": "observed",
+        "unit": "INR_crore",
+        "value": 26121.64
+      },
+      "gnpa_pct": {
+        "basis": null,
+        "label": "Gross NPA / gross advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 3.11
+      },
+      "gross_loan_portfolio": {
+        "basis": null,
+        "label": "Gross loan portfolio",
+        "status": "not_disclosed",
+        "unit": "INR_crore",
+        "value": null
+      },
+      "lcr_pct": {
+        "basis": null,
+        "label": "Reported liquidity coverage",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "nnpa_pct": {
+        "basis": null,
+        "label": "Net NPA / net advances",
+        "status": "observed",
+        "unit": "percent",
+        "value": 0.91
+      },
+      "pcr_excluding_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR excluding technical write-offs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "pcr_including_technical_writeoffs_pct": {
+        "basis": null,
+        "label": "PCR including technical write-offs",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "pcr_reported_pct": {
+        "basis": "Reported provision coverage ratio; technical write-off movements are separately disclosed as zero.",
+        "label": "Reported PCR; consult disclosed basis",
+        "status": "observed",
+        "unit": "percent",
+        "value": 71.45
+      },
+      "tier1_pct": {
+        "basis": null,
+        "label": "Tier 1 capital ratio",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "top20_depositors_pct": {
+        "basis": null,
+        "label": "Twenty largest depositors / deposits",
+        "status": "not_disclosed",
+        "unit": "percent",
+        "value": null
+      },
+      "top20_npa_pct": {
+        "basis": null,
+        "label": "Twenty largest NPA exposures / gross NPAs",
+        "status": "observed",
+        "unit": "percent",
+        "value": 58.94
+      }
+    },
+    "name": "Cosmos Co-operative Bank",
+    "next_disclosures": [
+      "Dated UCB tier and actual supervisory directions",
+      "Related-party and single-borrower exposures",
+      "Deposit concentration and maturity",
+      "Annual profit, capital and NPA movement"
+    ],
+    "npa_movement": {
+      "additions": 207.11,
+      "amount_unit": "INR_crore",
+      "cash_recovery_attribution": "reported_components_only",
+      "closing_gnpa": 555.84,
+      "factual_authority": "input_statement_only",
+      "interpretation": "Write-offs, upgrades, settlements and sales are separate from cash recovery. Arithmetic agreement does not verify a filing.",
+      "net_stock_change": -145.46,
+      "opening_gnpa": 701.3,
+      "period_end": "2026-03-31",
+      "period_start": "2025-04-01",
+      "reductions": {
+        "cash_recoveries": 92.88,
+        "other_reductions": 0.0,
+        "upgrades": 98.56,
+        "write_offs": 161.13
+      },
+      "residual": 0.0,
+      "rounding_basis": "sum of half a reported unit of precision for each input amount",
+      "rounding_decimals": 2,
+      "rounding_tolerance": 0.035,
+      "status": "reconciled"
+    },
+    "period_end": "2026-03-31",
+    "publication_date": null,
+    "quarter": "FY26",
+    "regulatory_comparison": {
+      "applicable": false,
+      "breaches": [],
+      "framework": "RBI PCA for Tier 2-4 UCBs (Jul 2024, effective Apr 2025)",
+      "headroom": [],
+      "not_assessed": [
+        "dated UCB tier, AID and continuing SAF status"
+      ],
+      "note": "A disclosed threshold breach is not an RBI decision to invoke PCA.",
+      "risk_level": 0,
+      "rule_as_of": "2026-09-27",
+      "sources": [
+        "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12711",
+        "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12418"
+      ],
+      "status": "scope_unverified"
+    },
+    "retrieved_at": "2026-09-05T07:05:33Z",
+    "schema": "liquilens.bank-specialisation.v1",
+    "scope": "research",
+    "score_authority": false,
+    "sector": "ucb",
+    "slug": "cosmos-ucb",
+    "source_documents": [
+      {
+        "pdf_pages": [
+          11,
+          37,
+          89,
+          90,
+          91,
+          100
+        ],
+        "sha256": "f227970056f7a0af377888796cf922b3ba5fbe597f2b434faf8f58730f2ebcf1",
+        "url": "https://www.cosmos.bank.in/auth/writereaddata/files/2506261014357950_Cosmos%20Annual%20Report%202025-26%20_Final%20file__cleaned.pdf"
+      }
+    ],
+    "sources": [
+      "https://www.cosmos.bank.in/auth/writereaddata/files/2506261014357950_Cosmos%20Annual%20Report%202025-26%20_Final%20file__cleaned.pdf"
+    ],
+    "status": "observed"
+  },
+  "schema": "liquilens.public-filing-snapshot.v1",
+  "source_payload_sha256": "e9ee3f3ad516166d48755e7772cbda8fafd96f53ed2b14521c6625928b96c494"
+}
