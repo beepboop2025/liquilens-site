@@ -1,0 +1,98 @@
+{
+  "captured_at": "2026-09-27T15:44:24Z",
+  "coverage_as_of": "2026-09-27",
+  "records": [
+    {
+      "name": "AU Small Finance Bank",
+      "period_end": "2026-06-30",
+      "slug": "au-sfb",
+      "status": "observed"
+    },
+    {
+      "name": "City Union Bank Ltd",
+      "period_end": "2026-06-30",
+      "slug": "city-union-bank",
+      "status": "observed"
+    },
+    {
+      "name": "Cosmos Co-operative Bank",
+      "period_end": "2026-03-31",
+      "slug": "cosmos-ucb",
+      "status": "observed"
+    },
+    {
+      "name": "Equitas Small Finance Bank",
+      "period_end": "2026-06-30",
+      "slug": "equitas-sfb",
+      "status": "observed"
+    },
+    {
+      "name": "ESAF Small Finance Bank",
+      "period_end": "2026-06-30",
+      "slug": "esaf-sfb",
+      "status": "observed"
+    },
+    {
+      "name": "Federal Bank",
+      "period_end": "2026-06-30",
+      "slug": "federal-bank",
+      "status": "observed"
+    },
+    {
+      "name": "IndusInd Bank",
+      "period_end": "2026-06-30",
+      "slug": "indusind-bank",
+      "status": "observed"
+    },
+    {
+      "name": "Jana Small Finance Bank",
+      "period_end": "2026-06-30",
+      "slug": "jana-sfb",
+      "status": "observed"
+    },
+    {
+      "name": "RBL Bank Ltd",
+      "period_end": "2026-06-30",
+      "slug": "rbl-bank",
+      "status": "observed"
+    },
+    {
+      "name": "Saraswat Co-operative Bank",
+      "period_end": "2026-03-31",
+      "slug": "saraswat-ucb",
+      "status": "observed"
+    },
+    {
+      "name": "slice Small Finance Bank",
+      "period_end": "2026-03-31",
+      "slug": "slice-sfb",
+      "status": "observed"
+    },
+    {
+      "name": "Suryoday Small Finance Bank",
+      "period_end": "2026-06-30",
+      "slug": "suryoday-sfb",
+      "status": "observed"
+    },
+    {
+      "name": "SVC Co-operative Bank",
+      "period_end": "2026-03-31",
+      "slug": "svc-ucb",
+      "status": "observed"
+    },
+    {
+      "name": "Ujjivan Small Finance Bank",
+      "period_end": "2026-06-30",
+      "slug": "ujjivan-sfb",
+      "status": "observed"
+    },
+    {
+      "name": "Utkarsh Small Finance Bank",
+      "period_end": "2026-06-30",
+      "slug": "utkarsh-sfb",
+      "status": "observed"
+    }
+  ],
+  "schema": "liquilens.public-filing-catalog.v1",
+  "selection": "observed_at_capture_not_a_census"
+}

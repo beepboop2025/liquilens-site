@@ -126,11 +126,16 @@ def expected_shareable_paths() -> set[str]:
     replay_index = json.loads(
         (ROOT / "replay" / "index.json").read_text(encoding="utf-8")
     )
+    filing_index = json.loads(
+        (ROOT / "banking/institutions/manifest.json").read_text(encoding="utf-8")
+    )
     return (
         set(static_social_cards.cards())
         | {"/articles/", "/replay/"}
         | {f"/articles/{row['slug']}/" for row in article_index}
         | {f"/replay/{row['slug']}/" for row in replay_index["articles"]}
+        | {"/banking/institutions/"}
+        | {f"/banking/institutions/{row['slug']}/" for row in filing_index["records"]}
     )
 
 

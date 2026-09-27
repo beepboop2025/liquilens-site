@@ -190,6 +190,22 @@ published post, a bot activation, or a retained member.
 
 Merges to `main` run the consistency gate and deploy the static files to GitHub Pages. The workflow excludes test and verification code from the published artifact.
 
+## Citable bank filing snapshots
+
+`banking/institutions/` publishes accepted filing evidence as HTML, JSON and
+contextual share cards. Reporting periods, publication dates, capture dates,
+source digests and missing disclosures remain distinct. These are dated
+research snapshots with no scoring or credit authority.
+
+Run `python3 scripts/build_bank_evidence.py --fetch` to capture the public API's
+observed records, then review the complete source/HTML/card/sitemap diff through
+the normal Pages release. This is an explicit editorial refresh, not a page-load
+fetch. Run `python3 scripts/build_bank_evidence.py --check` to reproduce the
+committed cut offline, or omit flags to rebuild it. The existing social-card
+renderer supplies deterministic PNGs and full Open Graph/Twitter metadata.
+`tests/test_bank_evidence_pages.py` checks the evidence contract and reproducible
+output; the general social-card tests include every filing route.
+
 ## Related repositories
 
 - [LiquiLens MCP](https://github.com/beepboop2025/liquilens-mcp): public MCP connector and tool documentation

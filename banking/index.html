@@ -59,6 +59,7 @@
 
     <section id="review" class="section">
       <p class="eyebrow">Try the public evidence</p><h2>Start with a filing-backed review.</h2>
+      <p><a href="/banking/institutions/">Browse source-linked filing snapshots</a> for readable evidence tables, reporting dates, source documents and downloadable JSON.</p>
       <p>These examples include reviewed FY2026 disclosures. The wider coverage list also contains older and historical dossiers; it is not a census of Indian banks.</p>
       <form id="bank-form" class="controls"><label for="bank">Bank</label><select id="bank" name="bank"><option value="cosmos-ucb">Cosmos Co-operative Bank</option><option value="au-sfb">AU Small Finance Bank</option><option value="slice-sfb">slice Small Finance Bank</option></select><button type="submit" id="review-button">Read evidence</button><button type="button" class="secondary" id="coverage-button">Browse all covered banks</button></form>
       <p id="request-status" role="status" aria-live="polite">Choose a bank to fetch its latest accepted record.</p>
@@ -76,7 +77,7 @@
 
     <section id="connect" class="section">
       <p class="eyebrow">The same evidence for your agent</p><h2>Ask a better banking question.</h2>
-      <p>Add the Streamable HTTP endpoint to an MCP client, then ask it to review a bank's disclosed asset quality. The public server offers 21 read-only tools and 5 prompts.</p>
+      <p>Add the Streamable HTTP endpoint to an MCP client, then ask it to review a bank's disclosed asset quality. The public server offers 23 read-only tools and 5 prompts.</p>
       <div class="endpoint"><code id="mcp-url">https://api.liquilens.in/mcp</code><button type="button" id="copy-mcp">Copy endpoint</button></div><p id="copy-status" role="status"></p>
       <div class="two"><div class="card"><h3>A useful first prompt</h3><blockquote>Review Cosmos Co-operative Bank's disclosed NPAs. Show the reporting date, cash recoveries, upgrades and write-offs. Cite the filing and explain any missing evidence or unverified regulatory scope.</blockquote><p>Use the <code>bank_asset_quality_brief</code> prompt template, or ask in your own words.</p></div><div class="card"><h3>Three specialised tools</h3><dl><dt><code>banking_specialisation_coverage</code></dt><dd>Find exact names, sectors and evidence states.</dd><dt><code>bank_asset_quality_review</code></dt><dd>Read cited asset-quality, capital and funding disclosures.</dd><dt><code>bank_npa_reconciliation</code></dt><dd>Check a complete NPA movement table in one stated unit.</dd></dl></div></div>
       <p><a href="/developers/">Client setup and API examples</a> · <a href="#methods">Calculation and evidence methods</a> · <a href="https://api.liquilens.in/api/experimental/v1/banking/coverage">Live coverage JSON</a></p>
