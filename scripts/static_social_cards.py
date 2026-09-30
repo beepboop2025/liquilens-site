@@ -66,6 +66,13 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/agents/quant/", "quant-research", "LIQUILENS / SEICHE / UNDERTOW", "QUANT + AGENT TOOLS",
+        "Source-cited research for your quant agent.",
+        "RESEARCH", "FUNDING / BANKS / MARKET DEPTH",
+        "FOUR NATIVE FRAMEWORKS / SOURCE DATES", "GUIDE CUT", "2026-10-01",
+        "PUBLIC READ-ONLY RESEARCH", "SOURCE-PINNED AGENT GUIDE",
+    ),
+    RouteDefinition(
         "/agents/hermes/", "hermes-research", "LIQUILENS / SEICHE / UNDERTOW", "HERMES + MCP",
         "Give Hermes a financial research desk.",
         "RESEARCH", "FUNDING / BANKS / MARKET DEPTH",
