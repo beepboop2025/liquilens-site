@@ -205,7 +205,7 @@ def prepare(source, work):
     run(["npx", "--no-install", "wrangler", "deploy", "--dry-run", "--outdir", "/app/worker-output",
          "--config", "wrangler.catalog.jsonc"], app, builder=True, extra=env)
     quiesce_builder()
-    module = read_regular(app / "worker-output/catalog-worker.js", 5 * 1024 * 1024)
+    module = read_regular(app / "worker-output/catalog-entry.js", 5 * 1024 * 1024)
     verify("--external-proof-only", "--attempts", "2", "--delay", "2", "--budget-seconds", "150")
     current_main(source)
     return module
