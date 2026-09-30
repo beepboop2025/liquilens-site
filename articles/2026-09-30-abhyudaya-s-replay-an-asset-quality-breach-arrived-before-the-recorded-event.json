@@ -1,0 +1,114 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-09-30-abhyudaya-s-replay-an-asset-quality-breach-arrived-before-the-recorded-event",
+  "product": "liquilens",
+  "slug": "2026-09-30-abhyudaya-s-replay-an-asset-quality-breach-arrived-before-the-recorded-event",
+  "date": "2026-09-30",
+  "article_type": "historical_replay",
+  "topic": "abhyudaya-co-operative-bank",
+  "headline": "Abhyudaya’s replay: an asset-quality breach arrived before the recorded event",
+  "dek": "Abhyudaya Co-operative Bank entered an RBI action zone on disclosed NNPA before its recorded default date. The replay is a filing-period signal, not a market-price call or a live forecast—and its proxy clocks materially limit the claim.",
+  "canonical_url": "https://liquilens.in/articles/2026-09-30-abhyudaya-s-replay-an-asset-quality-breach-arrived-before-the-recorded-event/",
+  "published_at": "2026-09-30T11:18:21Z",
+  "evidence_as_of": "2026-09-30",
+  "board_signature": "611dab169b21f3df4d3bb97f1fb2642ee799eef63c2ad141345d3737bfe35c79",
+  "subject": {
+    "slug": "abhyudaya-co-operative-bank",
+    "name": "Abhyudaya Co-operative Bank",
+    "inst_type": "ucb",
+    "default_date": "2023-11-24",
+    "fraud_masked": false,
+    "pca": {
+      "slug": "abhyudaya-co-operative-bank",
+      "inst_type": "ucb",
+      "default_date": "2023-11-24",
+      "first_action_zone": {
+        "period_end": "2021-03-31",
+        "q": "FY2021",
+        "status": "saf_triggered",
+        "knowledge_time_proxy": "2021-05-30",
+        "breaches": [
+          "NNPA"
+        ]
+      },
+      "lead_months": 29,
+      "fraud_masked": false
+    },
+    "funding": {
+      "slug": "abhyudaya-co-operative-bank",
+      "inst_type": "ucb",
+      "scoreable": true,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1400,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:4a0b4a32c454a4100a0fac34556148decfc05096996b21b5315097418cc2d392",
+    "memory_fingerprint": "sha256:0254f0b8be87f41acd6d3da412a2331706fcdc3d845d4bd9757a787f594be140",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 2,
+    "dossier_sha256": "6358464befb5168565821d0aed72836e85dda4723511f615b9c56580e6bb9c04",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [],
+    "review_notes": [
+      "Rebuilt the thesis around a filing-period NNPA signal and removed any implication of market confirmation.",
+      "Preserved construction-PIT, proxy-clock, funding-disclosure, forensic, stale-data and market-authority limits.",
+      "Added explicit separation of filing signals, market-price signals and model derivations; retained all required section headings and source links."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:4a0b4a32c454a4100a0fac34556148decfc05096996b21b5315097418cc2d392",
+      "memory_fingerprint": "sha256:0254f0b8be87f41acd6d3da412a2331706fcdc3d845d4bd9757a787f594be140",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
