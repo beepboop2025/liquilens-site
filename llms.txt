@@ -325,3 +325,8 @@ Crypto workbench: https://liquilens-undertow.com/crypto/ provides published BTC 
 
 - [Bank filing evidence](https://liquilens.in/banking/institutions/): dated HTML snapshots of accepted disclosures, source clocks, definitions, missing values and source-document hashes; not live bank-health assessments.
 - [Snapshot catalog](https://liquilens.in/banking/institutions/manifest.json): institution IDs, reporting periods and capture time. Each HTML record links matching evidence.json and the live API. Original reports remain at their publishers; no new rights to redistribute those reports are granted.
+
+## Quant agent integrations
+
+Native LangChain/LangGraph, CrewAI, OpenAI Agents and Pydantic AI research tools; compact source-cited tables and repeat-call revisions. Setup: https://liquilens.in/agents/quant/
+Current published history is not an as-published vintage archive. Integration recipes do not imply external institutional adoption.
