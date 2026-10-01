@@ -132,6 +132,9 @@ SIBLING_CARD_IDS = (
     ("NarcoScope", "urn:air:liquilens.in:catalog:narcoscope"),
 )
 SIBLING_REQUEST_TIMEOUT = 5.0
+# Registry lookups can take longer than the product endpoints. They still
+# consume the same overall network budget and must pass every identity check.
+REGISTRY_REQUEST_TIMEOUT = 20.0
 SIBLING_MAX_ATTEMPTS = 2
 SIBLING_RETRY_DELAY = 2.0
 MCP_2026_VERSION = "2026-07-28"
@@ -545,6 +548,8 @@ def _mcp_request(
         raise RuntimeError(f"{url}: HTTP {error.code} {error.reason}") from error
     except urllib.error.URLError as error:
         raise RuntimeError(f"{url}: request failed: {error.reason}") from error
+    except TimeoutError as error:
+        raise RuntimeError(f"{url}: MCP {payload.get('method')!r} timed out") from error
     return decoded, response_headers
 
 
@@ -946,6 +951,8 @@ def _fetch_bytes(
         raise RuntimeError(f"{url}: HTTP {error.code} {error.reason}") from error
     except urllib.error.URLError as error:
         raise RuntimeError(f"{url}: request failed: {error.reason}") from error
+    except TimeoutError as error:
+        raise RuntimeError(f"{url}: GET timed out") from error
     if final_url != url:
         raise RuntimeError(f"verification URL changed: {url!r} -> {final_url!r}")
     return body, headers, final_url
@@ -2621,7 +2628,7 @@ def _verify_sibling_product(label: str, card: dict[str, Any]) -> str:
     registry_body, registry_headers, _ = _fetch_bytes(
         latest_url,
         accept="application/json",
-        timeout=SIBLING_REQUEST_TIMEOUT,
+        timeout=REGISTRY_REQUEST_TIMEOUT,
     )
     latest_registry = _json_object(
         registry_body,
@@ -2641,7 +2648,7 @@ def _verify_sibling_product(label: str, card: dict[str, Any]) -> str:
         exact_body, exact_headers, _ = _fetch_bytes(
             exact_registry_url,
             accept="application/json",
-            timeout=SIBLING_REQUEST_TIMEOUT,
+            timeout=REGISTRY_REQUEST_TIMEOUT,
         )
         exact_registry = _json_object(
             exact_body,

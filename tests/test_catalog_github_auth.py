@@ -60,3 +60,25 @@ def test_verifier_still_rejects_redirects_before_following_them(monkeypatch):
         verifier._RejectRedirects().redirect_request(
             request, None, 302, "Found", {}, "https://liquilens.in/"
         )
+
+
+def test_registry_timeout_still_consumes_the_shared_deadline(monkeypatch):
+    monkeypatch.setattr(verifier.time, "monotonic", lambda: 100.0)
+    with verifier._network_budget(7.0):
+        assert verifier._bounded_timeout(verifier.REGISTRY_REQUEST_TIMEOUT, "Registry") == 7.0
+        monkeypatch.setattr(verifier.time, "monotonic", lambda: 107.0)
+        with pytest.raises(RuntimeError, match="network deadline exhausted"):
+            verifier._bounded_timeout(verifier.REGISTRY_REQUEST_TIMEOUT, "Registry")
+
+
+def test_read_timeout_names_the_failing_public_endpoint(monkeypatch):
+    url = "https://registry.modelcontextprotocol.io/v0.1/servers/example/versions/latest"
+    monkeypatch.setattr(verifier, "_validate_public_https_url", lambda value: value)
+
+    def time_out(*args, **kwargs):
+        raise TimeoutError("The read operation timed out")
+
+    monkeypatch.setattr(verifier._SAFE_OPENER, "open", time_out)
+    with pytest.raises(RuntimeError, match="GET timed out") as error:
+        verifier._fetch_bytes(url, accept="application/json")
+    assert url in str(error.value)
