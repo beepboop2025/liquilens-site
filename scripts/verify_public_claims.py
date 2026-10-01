@@ -121,7 +121,7 @@ EVIDENCE_SURFACES = (
     os.path.join("developers", "index.html"),
     "llms.txt",
 )
-MCP_VERSION = "1.8.0"
+MCP_VERSION = "1.8.1"
 OPENAPI_VERSION = "1.0.0"
 MCP_PROTOCOL_VERSIONS = (
     "2026-07-28",

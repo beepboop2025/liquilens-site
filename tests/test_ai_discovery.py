@@ -259,7 +259,7 @@ def test_catalog_obeys_the_ard_envelope():
 def test_mcp_card_and_nested_product_line_are_current():
     entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
     mcp = entries["urn:air:liquilens.in:mcp:failure-radar"]
-    assert mcp["version"] == "1.8.0"
+    assert mcp["version"] == "1.8.1"
     assert mcp["data"]["name"] == "io.github.beepboop2025/liquilens"
     assert mcp["data"]["version"] == mcp["version"]
     assert mcp["data"]["remotes"] == [
@@ -744,7 +744,7 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     status = read("status/index.html")
     assert "Release evidence and runtime observations" in status
     assert "Seiche 0.13.2 signed bundle" in status
-    assert "Seiche 0.13.4" in status
+    assert "Seiche 0.13.13" in status
     assert "OBSERVED RUNTIME" in status
     assert "HISTORICAL PROOF" in status
     assert "https://doi.org/10.5281/zenodo.22732023" in status

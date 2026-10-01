@@ -86,42 +86,42 @@ def test_observed_runtime_archive_has_separate_evidence_and_no_inherited_recover
     assert meta["releaseAcceptanceScope"].startswith("For release 0.13.2:")
     assert sibling["release_acceptance_scope"].startswith("For release 0.13.2:")
     assert "Historical 0.13.2 inventory" in meta["inventoryScope"]
-    assert meta["observedRuntimeVersion"] == "0.13.4" != entry["version"]
-    assert meta["observedRuntimeSource"] == "dbeb5589740f34a6951a1849c11566c6e8035f60"
+    assert meta["observedRuntimeVersion"] == "0.13.13" != entry["version"]
+    assert meta["observedRuntimeSource"] == "0778835d7c80f53c4d7c8382b857457b3599dc58"
     assert meta["observedRuntimeSource"] != meta["releaseCommit"]
-    assert meta["observedRuntimeCheckedAt"] == "2026-09-23T19:23:31.124880+00:00"
+    assert meta["observedRuntimeCheckedAt"] == "2026-10-01T09:03:39.362779+00:00"
     assert meta["archiveState"] == sibling["archive_state"] == "verified"
     assert meta["observedRuntimeArchiveState"] == "verified"
-    assert meta["observedRuntimeArchiveDoi"] == "10.5281/zenodo.22924642" != meta["archiveDoi"]
-    assert meta["observedRuntimeArchiveUrl"] == "https://zenodo.org/records/22924642"
+    assert meta["observedRuntimeArchiveDoi"] == "10.5281/zenodo.23076880" != meta["archiveDoi"]
+    assert meta["observedRuntimeArchiveUrl"] == "https://zenodo.org/records/23076880"
     assert meta["observedRuntimeArchiveSource"] == meta["observedRuntimeSource"]
-    assert meta["observedRuntimeArchiveSignedTagObject"] == "ede12c43b1a3d6364b2f17b497afd312363c0e5b"
-    assert meta["observedRuntimeArchiveSha256"] == "sha256:02cc6244452a3eaf857de7474ca5ae8768b29392311dd575a18da912a0c23f0a"
-    assert meta["observedRuntimeArchiveBytes"] == 5582992
-    assert meta["observedRuntimeArchiveSourceFileCount"] == 1138 != meta["archiveSourceFileCount"]
-    assert meta["observedRuntimeArchiveCheckedAt"] == "2026-09-23T19:59:03.343155+00:00"
+    assert meta["observedRuntimeArchiveSignedTagObject"] == "8395a96c02bf9a539f2f4a1d262a2a44988b2253"
+    assert meta["observedRuntimeArchiveSha256"] == "sha256:0b5e17a2cd795fbb8b8ded87ab44f577dc32eed46ac315e63272f1d9b0755ee9"
+    assert meta["observedRuntimeArchiveBytes"] == 5758017
+    assert meta["observedRuntimeArchiveSourceFileCount"] == 1191 != meta["archiveSourceFileCount"]
+    assert meta["observedRuntimeArchiveCheckedAt"] == "2026-10-01T07:09:43.050229+00:00"
     assert meta["observedRuntimeArchiveCheckedAt"] != meta["observedRuntimeCheckedAt"]
-    assert "all 1,138 tracked blobs" in meta["observedRuntimeArchiveScope"]
+    assert "all 1,191 tracked blobs" in meta["observedRuntimeArchiveScope"]
     assert "No recovery or full-release acceptance" in meta["observedRuntimeAcceptanceScope"]
     for suffix in ("PypiState", "RegistryState", "ContainerState"):
         assert meta["observedRuntime" + suffix] == "verified"
     assert meta["pypiProject"].endswith("/0.13.2/")
     assert meta["registryVersion"].endswith("/0.13.2")
-    assert meta["observedRuntimePypiProject"].endswith("/0.13.4/")
-    assert meta["observedRuntimeRegistryVersion"].endswith("/0.13.4")
-    assert meta["observedRuntimeContainerImage"].endswith(":0.13.4")
-    assert meta["observedRuntimeContainerDigest"] == "sha256:bc464f29af45ffb7bec82226b799e81893b87f824dc47126fd88b5a68e9424fb"
+    assert meta["observedRuntimePypiProject"].endswith("/0.13.13/")
+    assert meta["observedRuntimeRegistryVersion"].endswith("/0.13.13")
+    assert meta["observedRuntimeContainerImage"].endswith(":0.13.13")
+    assert meta["observedRuntimeContainerDigest"] == "sha256:b9b3140d2f127ca44ac0a234f731d028095be88fa63f3c93073251179b858a13"
     for key, value in meta.items():
         if key.startswith("observedRuntime"):
             assert isinstance(value, (str, int, float, bool))
             assert sibling[re.sub(r"(?<!^)(?=[A-Z])", "_", key).lower()] == value
     status = (ROOT / "status/index.html").read_text()
-    observed_row = next(line for line in status.splitlines() if "<b>Seiche 0.13.4</b>" in line)
+    observed_row = next(line for line in status.splitlines() if "<b>Seiche 0.13.13</b>" in line)
     historical_row = next(line for line in status.splitlines() if "Seiche 0.13.2 signed bundle" in line)
     assert "OBSERVED RUNTIME" in observed_row and "HISTORICAL PROOF" in historical_row
     assert meta["archiveDoi"] not in observed_row and meta["archiveDoi"] in historical_row
     llms = (ROOT / "llms.txt").read_text()
-    observed_text = next(line for line in llms.splitlines() if line.startswith("- Seiche 0.13.4,"))
+    observed_text = next(line for line in llms.splitlines() if line.startswith("- Seiche 0.13.13,"))
     historical_text = next(line for line in llms.splitlines() if line.startswith("- Seiche 0.13.2 historical"))
     assert meta["archiveDoi"] not in observed_text and meta["archiveDoi"] in historical_text
     for text in (observed_row, observed_text):
@@ -129,6 +129,6 @@ def test_observed_runtime_archive_has_separate_evidence_and_no_inherited_recover
         assert meta["observedRuntimeCheckedAt"] in text
         assert meta["observedRuntimeArchiveDoi"] in text
         assert meta["observedRuntimeArchiveCheckedAt"] in text
-        assert "all 1,138 tracked files match the signed v0.13.4 source" in text
+        assert "all 1,191 tracked files match the signed v0.13.13 source" in text
         assert "do not establish recovery or full-release acceptance" in text
         assert "archive record was not yet observed" not in text

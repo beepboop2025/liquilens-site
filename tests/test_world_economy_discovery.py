@@ -345,9 +345,9 @@ def test_seiche_routes_and_release_count_do_not_regress():
 
     llms = read("llms.txt")
     assert "Seiche 0.13.2 historical signed acceptance bundle" in llms
-    assert "Seiche 0.13.4" in llms
-    assert "https://pypi.org/project/seiche/0.13.4/" in llms
-    assert "io.github.beepboop2025%2Fseiche/versions/0.13.4" in llms
+    assert "Seiche 0.13.13" in llms
+    assert "https://pypi.org/project/seiche/0.13.13/" in llms
+    assert "io.github.beepboop2025%2Fseiche/versions/0.13.13" in llms
     assert "https://api.seiche.info/.well-known/mcp.json" in llms
     assert "https://pypi.org/project/seiche/0.13.2/" in llms
     assert "io.github.beepboop2025%2Fseiche/versions/0.13.2" in llms
