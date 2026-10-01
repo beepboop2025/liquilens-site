@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 import hashlib
 import ipaddress
@@ -2682,21 +2683,30 @@ def _verify_sibling_products_with_retries(
 ) -> str:
     bounded_attempts = min(attempts, SIBLING_MAX_ATTEMPTS)
     bounded_delay = min(delay, SIBLING_RETRY_DELAY)
-    results = []
-    failures = []
-    for label, identifier in SIBLING_CARD_IDS:
+    def verify_one(label, identifier):
         card = _catalog_card(ai_catalog, identifier, label)
         problem = f"{label} was not checked"
         for attempt in range(1, bounded_attempts + 1):
             try:
-                results.append(_verify_sibling_product(label, card))
-                break
+                return _verify_sibling_product(label, card)
             except (OSError, ValueError, RuntimeError, urllib.error.URLError) as error:
                 problem = str(error)
             if attempt < bounded_attempts:
                 _bounded_sleep(bounded_delay)
-        else:
-            failures.append(f"{label}: {problem}")
+        raise RuntimeError(problem)
+
+    results = []
+    failures = []
+    # These reads share the existing absolute network deadline. One slow
+    # Registry cannot prevent the other products from starting their proof.
+    with ThreadPoolExecutor(max_workers=len(SIBLING_CARD_IDS)) as pool:
+        pending = [(label, pool.submit(verify_one, label, identifier))
+                   for label, identifier in SIBLING_CARD_IDS]
+        for label, future in pending:
+            try:
+                results.append(future.result())
+            except (OSError, ValueError, RuntimeError, urllib.error.URLError) as error:
+                failures.append(f"{label}: {error}")
     if failures:
         summary = "; ".join(failures)
         if results:
@@ -2716,29 +2726,24 @@ def _verify_external_release_proofs(
 ) -> tuple[str, ...]:
     results = []
     failures = []
-    if palimpsest_proof:
-        try:
-            results.append(
-                _verify_palimpsest_release_with_retries(
-                    ai_catalog=ai_catalog,
-                    api_catalog=api_catalog,
-                    attempts=attempts,
-                    delay=delay,
-                )
-            )
-        except RuntimeError as error:
-            failures.append(str(error))
-    if sibling_proof:
-        try:
-            results.append(
-                _verify_sibling_products_with_retries(
-                    ai_catalog=ai_catalog,
-                    attempts=attempts,
-                    delay=delay,
-                )
-            )
-        except RuntimeError as error:
-            failures.append(str(error))
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        pending = []
+        if palimpsest_proof:
+            pending.append(pool.submit(
+                _verify_palimpsest_release_with_retries,
+                ai_catalog=ai_catalog, api_catalog=api_catalog,
+                attempts=attempts, delay=delay,
+            ))
+        if sibling_proof:
+            pending.append(pool.submit(
+                _verify_sibling_products_with_retries,
+                ai_catalog=ai_catalog, attempts=attempts, delay=delay,
+            ))
+        for future in pending:
+            try:
+                results.append(future.result())
+            except RuntimeError as error:
+                failures.append(str(error))
     if failures:
         summary = "; ".join(failures)
         if results:

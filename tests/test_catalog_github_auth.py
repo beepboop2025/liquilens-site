@@ -82,3 +82,47 @@ def test_read_timeout_names_the_failing_public_endpoint(monkeypatch):
     with pytest.raises(RuntimeError, match="GET timed out") as error:
         verifier._fetch_bytes(url, accept="application/json")
     assert url in str(error.value)
+
+
+def test_four_product_proofs_start_together_and_share_the_original_deadline(monkeypatch):
+    import json
+    import threading
+
+    ready = threading.Barrier(4, timeout=5)
+    monkeypatch.setattr(verifier.time, "monotonic", lambda: 100.0)
+
+    def proof(label):
+        ready.wait()
+        assert verifier._bounded_timeout(20, label) == 7.0
+        return label + " passed"
+
+    monkeypatch.setattr(verifier, "_verify_palimpsest_release_with_retries",
+                        lambda **kwargs: proof("Palimpsest"))
+    monkeypatch.setattr(verifier, "_verify_sibling_product",
+                        lambda label, card: proof(label))
+    with verifier._network_budget(7):
+        result = verifier._verify_external_release_proofs(
+            ai_catalog=json.loads(verifier.CATALOG_PATH.read_text()), api_catalog={},
+            palimpsest_proof=True, sibling_proof=True, attempts=1, delay=0)
+    assert result == ("Palimpsest passed", "Undertow passed; Riptide passed; NarcoScope passed")
+
+
+def test_concurrent_siblings_keep_retry_caps_and_fail_on_one_missing_proof(monkeypatch):
+    import json
+    from collections import Counter
+
+    calls = Counter()
+
+    def proof(label, card):
+        calls[label] += 1
+        if label == "NarcoScope":
+            raise RuntimeError("Registry unavailable")
+        return label + " passed"
+
+    monkeypatch.setattr(verifier, "_verify_sibling_product", proof)
+    monkeypatch.setattr(verifier, "_bounded_sleep", lambda delay: None)
+    with pytest.raises(RuntimeError, match="NarcoScope: Registry unavailable") as error:
+        verifier._verify_sibling_products_with_retries(
+            ai_catalog=json.loads(verifier.CATALOG_PATH.read_text()), attempts=99, delay=99)
+    assert calls == {"Undertow": 1, "Riptide": 1, "NarcoScope": 2}
+    assert "passed=Undertow passed; Riptide passed" in str(error.value)
