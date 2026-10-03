@@ -44,7 +44,10 @@ def test_actual_host_receipt_verifies_with_the_reviewed_owner_signature():
     release.verify_signature(receipt, signature)
     release.validate_receipt(receipt, card["metadata"], card["version"])
     with pytest.raises(RuntimeError, match="signature"):
-        release.verify_signature(receipt.replace(SOURCE.encode(), b"a" * 40), signature)
+        release.verify_signature(
+            receipt.replace(card["metadata"]["nativeDeploymentCommit"].encode(), b"a" * 40),
+            signature,
+        )
 
 
 @pytest.mark.parametrize("field", ["nativeDeploymentReceipt", "nativeDeploymentReceiptSha256",
