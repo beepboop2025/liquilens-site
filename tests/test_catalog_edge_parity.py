@@ -990,6 +990,32 @@ def test_sibling_mcp_inventory_must_match_the_central_card_exactly():
         _validate_sibling_mcp("Riptide", card, initialize, tools)
 
 
+def test_undertow_corpus_catalog_requires_the_new_live_contract():
+    card = _sibling_card("urn:air:liquilens.in:catalog:undertow")
+    assert card["version"] == "1.13.0"
+    assert all(isinstance(value, (str, int, float, bool)) or value is None
+               for value in card["metadata"].values())
+    assert card["metadata"]["previousAiCatalogVersion"] == "1.11.0"
+    assert card["metadata"]["previousAiCatalogPublicToolCount"] == 14
+    assert card["metadata"]["publicToolCount"] == 16
+    assert card["metadata"]["subscriberToolCount"] == 8
+    assert {"gold_cash_realisation", "market_corpus_context"} <= set(card["capabilities"])
+    initialize = {
+        "protocolVersion": "2025-06-18",
+        "serverInfo": {"name": "undertow", "version": "1.13.0"},
+    }
+    tools = {"tools": [{"name": name} for name in card["capabilities"]]}
+    _validate_sibling_mcp("Undertow", card, initialize, tools)
+
+    initialize["serverInfo"]["version"] = "1.12.0"
+    with pytest.raises(RuntimeError, match="MCP version differs"):
+        _validate_sibling_mcp("Undertow", card, initialize, tools)
+    initialize["serverInfo"]["version"] = "1.13.0"
+    tools["tools"] = [t for t in tools["tools"] if t["name"] != "market_corpus_context"]
+    with pytest.raises(RuntimeError, match="live public tool count differs"):
+        _validate_sibling_mcp("Undertow", card, initialize, tools)
+
+
 def test_riptide_registry_split_requires_every_explicit_gate():
     card = _sibling_card("urn:air:liquilens.in:catalog:riptide")
     assert _sibling_registry_version("Riptide", card) == "1.3.0"

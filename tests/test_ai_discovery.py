@@ -309,7 +309,7 @@ def test_mcp_card_and_nested_product_line_are_current():
                  "crypto_exposure_board"):
         assert tool in mcp["capabilities"]
     assert entries["urn:air:liquilens.in:catalog:seiche"]["version"] == "0.13.2"
-    assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.11.0"
+    assert entries["urn:air:liquilens.in:catalog:undertow"]["version"] == "1.13.0"
     assert entries["urn:air:liquilens.in:openapi:failure-radar"]["version"] == (
         "1.0.0")
     assert entries["urn:air:liquilens.in:catalog:seiche"]["url"] == (
@@ -460,8 +460,8 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
     entries = {entry["identifier"]: entry for entry in _catalog()["entries"]}
 
     undertow = entries["urn:air:liquilens.in:catalog:undertow"]
-    assert undertow["version"] == "1.11.0"
-    assert undertow["updatedAt"] == "2026-09-26T20:30:00Z"
+    assert undertow["version"] == "1.13.0"
+    assert undertow["updatedAt"] == "2026-10-03T20:14:00Z"
     assert undertow["capabilities"] == [
         "agent_access_status",
         "crypto_exit_check",
@@ -469,8 +469,10 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
         "crypto_portfolio_stress",
         "depth_episodes",
         "exit_cost",
+        "gold_cash_realisation",
         "latest_article",
         "liquidity_tiers",
+        "market_corpus_context",
         "research_network",
         "sealed_record",
         "trade_safety_exit_context",
@@ -500,7 +502,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
             "productCard",
         )
     } == {
-        "publicToolCount": 14,
+        "publicToolCount": 16,
         "subscriberToolCount": 8,
         "publicPromptCount": 3,
         "publicResourceCount": 0,
@@ -709,16 +711,19 @@ def test_sibling_product_cards_match_the_catalog_contracts():
             undertow["public_resources"],
         ),
     } == {
-        "version": "1.11.0",
+        "version": "1.13.0",
         "catalog": "https://liquilens-undertow.com/.well-known/ai-catalog.json",
         "mcp": "https://api.seiche.info/undertow/mcp",
         "server": "io.github.beepboop2025/undertow",
         "protocols": [
             "2026-07-28", "2025-11-25", "2025-06-18", "2025-03-26",
         ],
-        "counts": (14, 3, 0),
+        "counts": (16, 3, 0),
     }
     assert undertow["trade_safety_tool"] == "trade_safety_exit_context"
+    assert undertow["corpus_context_tool"] == "market_corpus_context"
+    assert undertow["gold_scenario_tool"] == "gold_cash_realisation"
+    assert undertow["corpus_context"] == "https://liquilens-undertow.com/corpus/"
 
     palimpsest = siblings["Palimpsest"]
     assert palimpsest["version"] == "1.9.3"
@@ -753,8 +758,8 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     assert "14 public read-only MCP tools, 4 prompts and 0 resources" in status
     assert "14 public read-only MCP tools" in status
     assert "signed tag, exact PyPI artifacts, static catalog" in status
-    assert "Undertow 1.11.0" in status
-    assert "14 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
+    assert "Undertow 1.13.0" in status
+    assert "16 public + 8 subscriber MCP tools, 3 public prompts and 0 resources" in status
     assert "Palimpsest 1.9.3" in status
     assert "7 public read-only MCP tools, 4 prompts and 1 metadata-only" in status
     assert "LIVE / RECEIPTED" in status
