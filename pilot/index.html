@@ -20,6 +20,8 @@
 @media(max-width:820px){.hero{grid-template-columns:1fr;gap:30px;padding-top:52px}.strip,.grid,.ladder{grid-template-columns:1fr 1fr}.criteria{grid-template-columns:1fr}}
 @media(max-width:580px){.nav{display:none}.strip,.grid,.ladder{grid-template-columns:1fr}.hero h1{font-size:43px}.offer{padding:22px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.contact-template{margin-top:22px;text-align:left}.contact-template summary{cursor:pointer;color:var(--gold)}.contact-template label{display:block;margin:14px 0 8px;color:var(--muted)}.contact-template textarea{display:block;width:100%;max-width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:var(--text);font:12px/1.65 var(--mono);resize:vertical}.contact-template button{font:inherit;cursor:pointer}.contact-template button[hidden]{display:none}.contact-template :focus-visible{outline:2px solid var(--teal);outline-offset:4px}.contact-template .copy-status{min-height:1.7em;color:var(--muted);font-size:13px}
 </style>
 <!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"43b422e63bb44fb5975c7bb39bd0ba24"}'></script>
 <link rel="stylesheet" href="/family-design.css">
@@ -49,7 +51,22 @@
 <header class="shell top"><a class="brand" href="/"><span class="mark">L</span>LiquiLens</a><nav class="nav" aria-label="Pilot navigation"><a href="/replay/">Failure replays</a><a href="/research/">Validation</a><a href="/security/">Security</a><a href="/developers/">API + MCP + CLI</a></nav></header>
 <main id="main">
   <section class="shell hero">
-    <div><div class="label">Last rung · private-book proof</div><h1>Prove the warning on <em>your own book</em> before you buy.</h1><p class="lede">Run LiquiLens in parallel with your existing DPD, review or counterparty process for six weeks. The work runs inside your environment, against success criteria agreed before the first score. If you do not want to send a book yet, start with <a href="/access/">15 public names</a>.</p><div class="actions"><a class="btn" data-event="email_clicked" href="mailto:mrinal@liquilens.in?subject=LiquiLens%20paid%20proof%20pilot&amp;body=Institution%3A%0ARole%3A%0ABook%20or%20AUM%20size%3A%0ACurrent%20DPD%20or%20EWS%20process%3A%0APreferred%20deployment%20(self-hosted%20or%20managed)%3A%0A">Contact LiquiLens</a><a class="btn alt" data-event="named_list_clicked" href="/access/">Send 15 names instead</a></div><p class="fine">Scope and pricing by written proposal · no customer rows required for the first scoping call</p></div>
+    <div><div class="label">Last rung · private-book proof</div><h1>Prove the warning on <em>your own book</em> before you buy.</h1><p class="lede">Run LiquiLens in parallel with your existing DPD, review or counterparty process for six weeks. The work runs inside your environment, against success criteria agreed before the first score. If you do not want to send a book yet, start with <a href="/access/">15 public names</a>.</p><div class="actions"><a class="btn" data-event="email_clicked" href="mailto:mrinal@liquilens.in?subject=LiquiLens%20paid%20proof%20pilot&amp;body=Institution%3A%0ARole%3A%0ABook%20or%20AUM%20size%3A%0ACurrent%20DPD%20or%20EWS%20process%3A%0APreferred%20deployment%20(self-hosted%20or%20managed)%3A%0A">Contact LiquiLens</a><a class="btn alt" data-event="named_list_clicked" href="/access/">Send 15 names instead</a></div><p class="fine">Scope and pricing by written proposal · no customer rows required for the first scoping call</p>
+      <p class="contact-address">Email <a data-event="email_clicked" href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a> directly, or use the enquiry template below.</p>
+      <details class="contact-template">
+        <summary>Use the template in your email app or webmail</summary>
+        <label for="enquiry-template">Select and copy this template, then fill it in in your email app. No customer records are needed.</label>
+        <textarea id="enquiry-template" rows="10" readonly spellcheck="false" aria-describedby="enquiry-copy-status">To: mrinal@liquilens.in
+Subject: LiquiLens paid proof pilot
+
+Institution:
+Role:
+Book or AUM size:
+Current DPD or EWS process:
+Preferred deployment (self-hosted or managed):</textarea>
+        <div class="actions"><button class="btn alt" type="button" data-copy-enquiry hidden>Copy enquiry template</button></div>
+        <p class="copy-status" id="enquiry-copy-status" role="status">Copying the template does not send an email.</p>
+      </details></div>
     <aside class="offer" aria-label="Pilot scope"><div class="label">Six-week proof pilot</div><div class="price">Request a quote</div><div class="unit">priced in the reply · one lender book or counterparty portfolio</div><ul><li>Success criteria frozen before scoring</li><li>Runs in your environment</li><li>Comparison at the same alert budget</li><li>Board-ready validation and governance pack</li><li>Go, revise or stop decision at week six</li></ul><div class="credit">100% of the pilot fee is credited toward the first annual production contract.</div></aside>
   </section>
 
@@ -66,6 +83,7 @@
   <section class="close"><div class="shell"><div class="label">Next step</div><h2>Bring one book and one baseline. We will define the proof together.</h2><p>Send the institution, your role, approximate book or AUM size, current early-warning process and preferred deployment boundary. You will get a scoped response from LiquiLens.</p><div class="actions"><a class="btn" data-event="email_clicked" href="mailto:mrinal@liquilens.in?subject=LiquiLens%20paid%20proof%20pilot&amp;body=Institution%3A%0ARole%3A%0ABook%20or%20AUM%20size%3A%0ACurrent%20DPD%20or%20EWS%20process%3A%0APreferred%20deployment%20(self-hosted%20or%20managed)%3A%0A">Contact LiquiLens</a><a class="btn alt" href="/security/">Review the security posture</a></div></div></section>
 </main>
 <footer class="shell foot">© 2026 LiquiLens · a product of ai.de, Jaipur, India · Screening research, not a credit rating or investment advice · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="mailto:mrinal@liquilens.in">Contact LiquiLens</a></footer>
+<script src="/access/enquiry-copy.js" defer></script>
 <script src="/pilot/app.js" defer></script>
 <script type="module" src="/research-ui/context.js"></script></body>
 </html>
