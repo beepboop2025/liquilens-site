@@ -1,6 +1,7 @@
 import copy
 import json
 from pathlib import Path
+import re
 import xml.etree.ElementTree as ET
 
 import pytest
@@ -27,6 +28,31 @@ def test_committed_cut_reproduces_and_every_snapshot_is_discoverable():
     urls = [n.text for n in sitemap.iter() if n.tag.endswith('}loc')]
     for row in manifest['records']:
         assert urls.count(bank.SITE + bank.PREFIX + row['slug'] + '/') == 1
+
+
+def test_catalog_datasets_are_complete_and_match_canonical_filing_pages():
+    def structured(path):
+        match = re.search(r'<script type="application/ld\+json">(.*?)</script>', path.read_text(), re.S)
+        assert match, path
+        return json.loads(match.group(1))
+
+    directory = ROOT/'banking/institutions'
+    manifest = json.loads((directory/'manifest.json').read_text())
+    catalog = structured(directory/'index.html')
+    datasets = catalog['dataset']
+    assert len(datasets) == len(manifest['records'])
+    canonical = {
+        bank.SITE + bank.PREFIX + row['slug'] + '/': structured(directory/row['slug']/'index.html')
+        for row in manifest['records']
+    }
+    assert {item['url'] for item in datasets} == set(canonical)
+    for item in datasets:
+        assert item['@type'] == 'Dataset'
+        assert item['name'].strip()
+        assert 50 <= len(item['description']) <= 5000
+        assert item['sameAs'] == item['url']
+        for field in ('@id', 'name', 'description', 'creator'):
+            assert item[field] == canonical[item['url']][field], (item['url'], field)
 
 
 def test_snapshot_preserves_clocks_and_source_identity(snapshot):

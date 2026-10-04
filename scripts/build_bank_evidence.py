@@ -137,6 +137,20 @@ def index_card(manifest):
                          signature=digest(manifest), collection=True)
 
 
+def filing_description(record):
+    return f"Dated {record['name']} filing evidence for {record['period_end']}: reported NPA, capital and funding disclosures, source citations and explicit missing data."
+
+
+def dataset_metadata(record):
+    # A catalog's embedded Dataset needs its own required fields; readers do
+    # not have to retrieve the canonical page to learn its identity or scope.
+    url = SITE + PREFIX + record['slug'] + '/'
+    return {"@type":"Dataset", "@id":url + "#dataset", "url":url,
+        "name":f"{record['name']}: NPA, capital and funding evidence",
+        "description":filing_description(record) + ' ' + LIMIT,
+        "creator":{"@type":"Organization", "name":"LiquiLens", "url":SITE + '/about/'}}
+
+
 def render_record(snapshot, card=None):
     record = validate(snapshot["evidence"], snapshot["evidence"]["slug"])
     if snapshot.get("schema") != SCHEMA or digest(record) != snapshot.get("source_payload_sha256"):
@@ -148,7 +162,7 @@ def render_record(snapshot, card=None):
     if captured.tzinfo is None:
         raise ValueError('snapshot capture clock needs timezone')
     title = f"{name}: NPA, capital and funding evidence | LiquiLens"
-    description = f"Dated {name} filing evidence for {record['period_end']}: reported NPA, capital and funding disclosures, source citations and explicit missing data."
+    description = filing_description(record)
     # The saved JSON is canonicalized by key. Live API insertion order must
     # not change either the table or its structured-data measurement order.
     ordered_metrics = [record['metrics'][key] for key in sorted(record['metrics'])]
@@ -168,9 +182,7 @@ def render_record(snapshot, card=None):
     movement = record.get('npa_movement', {})
     movement_text = movement.get('reason') or 'Read the accepted NPA movement fields in the linked evidence JSON; no cash-recovery conclusion is inferred from a ratio change.'
     citation = f"LiquiLens. {name}: filing evidence for period ending {record['period_end']}. Evidence snapshot captured {snapshot['captured_at']}; source publication {record.get('publication_date') or 'not supplied'}. {SITE + path}"
-    structured = {"@context":"https://schema.org", "@type":"Dataset", "@id":SITE + path + "#dataset", "url":SITE + path,
-        "name":title.replace(' | LiquiLens', ''), "description":description + ' ' + LIMIT,
-        "creator":{"@type":"Organization", "name":"LiquiLens", "url":SITE + '/about/'},
+    structured = {"@context":"https://schema.org", **dataset_metadata(record),
         "dateModified":snapshot['captured_at'], "temporalCoverage":record['period_end'],
         "identifier":"sha256:" + snapshot['source_payload_sha256'], "isBasedOn":record['sources'],
         "measurementTechnique":"Selected disclosed facts from accepted issuer filings; definitions, absent values and reporting clocks are preserved.",
@@ -196,7 +208,7 @@ def render_index(manifest, card=None):
     body = f'''<section class="hero"><p class="eyebrow">Public filing evidence · readable without JavaScript</p><h1>Bank disclosures you can inspect and cite.</h1><p class="lede">These {len(rows)} snapshots preserve accepted filing evidence, source links and missing disclosures. Each page identifies its reporting period and capture date.</p><p>Coverage snapshot: {escape(manifest['captured_at'])}. This collection contains records observed at capture. It is not a census of Indian banks or a ranking.</p></section><section class="section"><h2>Accepted filing snapshots</h2><div class="evidence-scroll"><table><caption>Institution, source period and evidence state at capture</caption><thead><tr><th scope="col">Institution</th><th scope="col">Period ending</th><th scope="col">State at capture</th></tr></thead><tbody>{links}</tbody></table></div></section><section class="section"><h2>Use the source trail</h2><p>Open a record for the disclosed figures, definitions, reporting and publication dates, available source digests and the exact JSON snapshot. Check the linked live API when freshness matters. A static page's capture date never replaces a filing date.</p><p><a href="/banking/">Interactive bank research</a> · <a href="{API}/coverage">Live coverage including historical records</a> · <a href="/replay/">Historical failure replays and their limits</a> · <a href="manifest.json">Machine-readable snapshot catalog</a></p></section>'''
     structured = {"@context":"https://schema.org", "@type":"DataCatalog", "name":"LiquiLens accepted bank filing evidence", "description":description, "url":SITE + PREFIX,
         "creator":{"@type":"Organization", "name":"LiquiLens", "url":SITE + '/about/'},
-        "dataset":[{"@type":"Dataset", "name":r['name'] + ' filing evidence', "url":SITE + PREFIX + r['slug'] + '/'} for r in rows]}
+        "dataset":[{**dataset_metadata(r), "sameAs":SITE + PREFIX + r['slug'] + '/'} for r in rows]}
     return inject_metadata(shell(title, description, PREFIX, body, structured),
                            route=PREFIX, card=card or index_card(manifest), og_type='website')
 
