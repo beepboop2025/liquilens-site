@@ -66,6 +66,14 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/guides/how-to-assess-bank-risk/", "bank-risk-guide",
+        "LIQUILENS / RESEARCH GUIDE", "READ THE BANK RECORD",
+        "Assess asset quality, capital and funding with the source dates attached.",
+        "RESEARCH METHOD", "AMOUNTS / RATIOS / SOURCE CLOCKS",
+        "PRIMARY SOURCES / HYPOTHETICAL EXAMPLE", "GUIDE CUT", "2026-10-04",
+        "EDUCATIONAL RESEARCH", "FFIEC / BASEL COMMITTEE",
+    ),
+    RouteDefinition(
         "/developers/bank-filing-review/", "bank-filing-review", "LIQUILENS / BANK RESEARCH", "PYTHON + EVIDENCE",
         "Read a bank filing and preserve its evidence limits.",
         "REVIEW GUIDE", "SOURCE DATES / MISSING EVIDENCE",
