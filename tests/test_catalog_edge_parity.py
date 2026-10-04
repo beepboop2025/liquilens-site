@@ -498,10 +498,10 @@ def test_mcp_receipt_decoder_accepts_one_json_or_sse_message():
         )
         == payload
     )
-    assert EXPECTED_MCP_VERSION == "0.1.5"
+    assert EXPECTED_MCP_VERSION == "0.1.6"
     assert EXPECTED_MCP_CONTRACT["serverInfo"] == {
         "name": "financial-evidence",
-        "version": "0.1.5",
+        "version": "0.1.6",
     }
     assert [tool["name"] for tool in EXPECTED_MCP_CONTRACT["tools"]] == list(
         EXPECTED_MCP_TOOLS
@@ -1314,6 +1314,86 @@ def test_financial_evidence_release_gate_rejects_missing_semantics_and_wrong_pro
     broken["structuredContent"]["sources"][0]["source_reported"]["state"][0]["provenance"]["kind"] = "source_reported_allowlisted_field"
     with pytest.raises(RuntimeError, match="source-reported provenance differs"):
         require_fetch_semantics(broken)
+
+
+def _financial_evidence_topic_fixture(topics):
+    fixture = json.loads((ROOT / "tests/fixtures/financial-evidence-v0.1.6-semantics.json").read_text())
+    cases = [case for topic in topics for case in fixture["cases"] if case["topic"] == topic]
+    sources = [{
+        "topic": case["topic"], "product": "Seiche", "ok": True,
+        "bytes": len(case["raw_document"].encode()),
+        "retrieved_at": "2026-10-04T20:00:00Z",
+        "source_url": case["source_url"], "content_sha256": case["content_sha256"],
+        "source_reported": case["expected_reported"],
+    } for case in cases]
+    return {"isError": False, "structuredContent": {
+        "status": "complete", "transport_status": "complete",
+        "status_semantics": "transport_only", "evidence_status": "not_evaluated",
+        "carrier_verification": "not_performed", "output_status": "complete",
+        "output_error": None, "topics": topics, "sources": sources,
+    }}
+
+
+def test_topic_release_gate_preserves_partial_states_and_rejects_receipt_drift():
+    from scripts.verify_financial_evidence_semantics import require_fetch_semantics
+    topics = ["gift-city", "forex", "gold"]
+    result = _financial_evidence_topic_fixture(topics)
+    expected = [{
+        "topic": source["topic"], "product": "Seiche",
+        "source_url": source["source_url"],
+        "adapter": source["source_reported"]["adapter"],
+    } for source in result["structuredContent"]["sources"]]
+    # Source partial/restricted states are valid receipts, never transport failure
+    # or an assertion of eligible evidence.
+    require_fetch_semantics(result, expected_sources=expected)
+    for key, value in [("topic", "bank-risk"), ("source_url", "https://example.com/"),
+                       ("bytes", True), ("content_sha256", "sha256:" + "x" * 64)]:
+        broken = json.loads(json.dumps(result))
+        broken["structuredContent"]["sources"][0][key] = value
+        with pytest.raises(RuntimeError, match="provenance receipt differs"):
+            require_fetch_semantics(broken, expected_sources=expected)
+    broken = json.loads(json.dumps(result))
+    broken["structuredContent"]["sources"][0]["source_reported"]["clocks"][0]["provenance"]["source_url"] = "https://example.com/"
+    with pytest.raises(RuntimeError, match="source-reported provenance differs"):
+        require_fetch_semantics(broken, expected_sources=expected)
+    broken = json.loads(json.dumps(result))
+    broken["structuredContent"]["sources"][-1]["retrieved_at"] = "2026-10-04T20:01:00Z"
+    with pytest.raises(RuntimeError, match="shared-source receipts differ"):
+        require_fetch_semantics(broken, expected_sources=expected)
+    broken["structuredContent"]["sources"].pop()
+    with pytest.raises(RuntimeError, match="source count differs"):
+        require_fetch_semantics(broken, expected_sources=expected)
+
+
+def test_mcp_release_probe_checks_every_route_and_new_topic_receipts(monkeypatch):
+    calls = []
+    def request(url, payload, **kwargs):
+        calls.append(payload)
+        request_id = payload["id"]
+        if request_id == "legacy-initialize":
+            result = {"protocolVersion": "2025-11-25", "serverInfo": EXPECTED_MCP_CONTRACT["serverInfo"]}
+        elif request_id in {"legacy-list", "modern-list"}:
+            result = {"tools": EXPECTED_MCP_CONTRACT["tools"]}
+        elif request_id == "modern-discover":
+            result = {"supportedVersions": [verifier.MCP_2026_VERSION], "capabilities": {"tools": {}},
+                      "ttlMs": 1000, "cacheScope": "public"}
+        elif request_id == "modern-route":
+            assert payload["params"]["arguments"]["topics"] == list(verifier.EXPECTED_MCP_ROUTING["routes"])
+            result = {"structuredContent": {"topics": verifier.EXPECTED_MCP_ROUTING["routes"]}}
+        else:
+            topics = payload["params"]["arguments"]["topics"]
+            assert topics == (["money-market"] if request_id == "limiter-probe" else ["gift-city", "forex", "gold"])
+            result = _financial_evidence_topic_fixture(topics)
+        if request_id.startswith("modern-"):
+            result.update({"resultType": "complete", "_meta": {
+                "io.modelcontextprotocol/serverInfo": EXPECTED_MCP_CONTRACT["serverInfo"],
+            }})
+        return {"jsonrpc": "2.0", "id": request_id, "result": result}, {
+            "x-liquilens-worker-tag": "source", "x-liquilens-worker-version": "candidate",
+        }
+    monkeypatch.setattr(verifier, "_mcp_request", request)
+    assert "all eight fixed routes" in verifier._verify_mcp(verifier.DEFAULT_MCP_URL, "source", "candidate")
+    assert [call["id"] for call in calls][-2:] == ["limiter-probe", "topic-probe"]
 
 
 def test_pages_postdeployment_verifier_copies_its_current_dependencies(tmp_path):

@@ -24,15 +24,15 @@ Never commit the issued token or pass it through a workflow input.
 
 The MCP endpoint exposes three read-only tools for LiquiLens, Undertow, Seiche,
 and Palimpsest over current Streamable HTTP, with stateless compatibility for
-2025 clients. Its v0.1.5 identity, tool metadata, and accepted input schemas are
+2025 clients. Its v0.1.6 identity, tool metadata, and accepted input schemas are
 locked to the packaged server by
-[`protocol/financial-evidence-mcp-v0.1.5.json`](../protocol/financial-evidence-mcp-v0.1.5.json).
+[`protocol/financial-evidence-mcp-v0.1.6.json`](../protocol/financial-evidence-mcp-v0.1.6.json).
 It has no account or mutation surface and can fetch only the fixed public HTTPS
 evidence routes in the committed worker.
 
-The v0.1.5 packet keeps transport success separate from evidence evaluation and
-Carrier verification. Its fixed routes and six source adapters are copied from
-the signed package core in `protocol/financial-evidence-routing-v0.1.5.json`;
+The v0.1.6 packet keeps transport success separate from evidence evaluation and
+Carrier verification. Its fixed routes and eight source adapters are copied from
+the signed package core in `protocol/financial-evidence-routing-v0.1.6.json`;
 only declared scalar paths are reported, with exact source-byte provenance.
 Missing fields remain `not_reported`. An output cap preserves transport results
 and marks `output_status` unavailable when documents must be omitted. If the
@@ -47,9 +47,15 @@ envelope; if necessary, metadata is explicitly omitted with reason
 `serialized_result_limit` while the typed transport receipt is retained.
 
 The public boundary rejects request bodies over 32 KiB and JSON-RPC batches.
-All five unique topics may be fetched in one call, producing at most six fixed
-source reads. The package-compatible `max_bytes` ceiling is 4 MiB per source and
-the default is 1 MiB, while the remote endpoint additionally enforces a 1.5 MiB
+All eight unique topics may be fetched in one call, producing at most nine
+source records from eight distinct fixed sources. GIFT City and gold share one
+public GET context: the Worker retrieves it once per packet and reuses the same
+receipt, including failures, source hash and retrieval clock. These are separate
+topic records of one observation, not independent corroboration. Forex uses the
+bounded public forex section. No topic runs a scenario or produces an executable
+quote, and the Worker preserves upstream partial, restricted and unavailable
+states and source-native clocks. The package-compatible `max_bytes` ceiling is
+4 MiB per source and the default is 1 MiB, while the remote endpoint additionally enforces a 1.5 MiB
 aggregate source-byte budget, a 2 MiB encoded evidence-packet cap, and a 4 MiB
 fully serialized HTTP-response cap. The aggregate byte budget is accounted
 sequentially: a source may use the caller's full per-source ceiling while
@@ -67,18 +73,31 @@ The catalog is imported from the repository's canonical
 `.well-known/ai-catalog.json`; do not maintain a second manifest in this
 directory.
 
-Validate and deploy from the repository root:
+Validate from the repository root:
 
 ```bash
 npm ci --ignore-scripts
+LIQUILENS_OFFLINE=1 python3 -m pytest tests -q
 npm run test:edge
+node --test tests/test_x_bridge.mjs
+npm audit --audit-level=moderate
 npx --no-install wrangler deploy --config wrangler.catalog.jsonc --dry-run
-npx --no-install wrangler deploy --config wrangler.catalog.jsonc
 ```
 
-Production deployment is also available through the manual **Deploy AI catalog
-edge Worker** workflow. Its `production` environment requires
-`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`; store them as GitHub
-environment secrets and never paste their values into an issue or workflow
-input. The workflow deploys with Wrangler 4.125.0 and requires the anonymous
-edge response to equal the committed catalog before it succeeds.
+Production Worker publication is separate from merging the source and publishing
+Pages. Use the existing [manual Railway signed controller](../deploy/railway-ci/edge-publisher/README.md)
+with the exact current protected main SHA; it replaces execution of the legacy
+`deploy-catalog-edge.yml` workflow. The v0.1.6 verification scripts change pinned
+controller inputs, so assemble and review a new owner-signed controller. Keep
+credentials only on its dedicated publishing service.
+
+First reconcile retained controller evidence and any existing candidate; do not
+repeat an upload after an interrupted invocation. Prepare with `PUBLISH_APPLY=0`,
+then use the reviewed apply transaction with `PUBLISH_APPLY=1`. The controller
+stages the candidate at zero traffic, requires exact source tag and Worker
+version identity, verifies all eight routes and limiter-backed money-market,
+GIFT City, forex and gold receipts, then promotes and repeats the live proof.
+The GIFT City and gold receipts must match apart from topic. Transport completion
+does not assert evidence eligibility, freshness or Carrier verification. On a
+failed proof, the controller restores the recorded prior version while respecting
+concurrent releases. Preserve the immutable v0.1.5 protocol and fixture snapshots.
