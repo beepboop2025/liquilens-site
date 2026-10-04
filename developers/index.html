@@ -48,6 +48,7 @@
     <h2 id="recipes-title">Read a bank filing. Check funding. Compare BTC exit estimates.</h2>
     <p>Download one small Python file, inspect it, then run the question you need. Each command performs one read-only task and returns the original evidence as JSON, including sources, dates and missing disclosures.</p>
     <div class="actions"><a class="btn" href="/developers/recipes/financial_research.py" download>Download research recipes</a><a class="btn alt" href="/developers/recipes/financial_research.py">Read the Python source</a></div>
+    <p><a href="/developers/bank-filing-review/">Follow the complete bank-filing tutorial and download the analyst worksheet</a>.</p>
     <div class="grid" style="margin:22px 0 16px">
       <article class="card"><div class="label">01 / Indian bank research</div><h2>What changed in the bank's NPAs?</h2><p>First list covered banks. Then use an exact slug, such as <code>cosmos-ucb</code>, to fetch its accepted filing and disclosed history. The script checks coverage before requesting a review.</p><div class="code">python3 financial_research.py bank-review
 python3 financial_research.py bank-review --slug cosmos-ucb<button class="copy" data-copy="python3 financial_research.py bank-review&#10;python3 financial_research.py bank-review --slug cosmos-ucb">copy</button></div><p>Read <code>evidence.review.period_end</code>, <code>available_at</code>, <code>npa_movement</code>, <code>sources</code> and <code>interpretation_limits</code> together. Write-offs remain separate from cash recoveries.</p></article>
