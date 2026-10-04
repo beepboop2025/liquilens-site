@@ -516,7 +516,7 @@ def test_undertow_and_palimpsest_discovery_contracts_are_exact():
     assert palimpsest["metadata"]["deploymentPublicToolCount"] == 6
     assert "dated deployment" in palimpsest["metadata"]["inventoryScope"]
     assert palimpsest["version"] == "1.9.3"
-    assert palimpsest["updatedAt"] == "2026-09-09T05:06:33Z"
+    assert palimpsest["updatedAt"] == "2026-10-03T23:15:32Z"
     assert palimpsest["capabilities"] == [
         "research_catalog",
         "list_signals",
