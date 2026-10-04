@@ -67,12 +67,22 @@ python3 financial_research.py bank-review --slug cosmos-ucb --verification &gt; 
 import sys
 from pathlib import Path
 
-payload = json.loads(Path(sys.argv[1]).read_text())
+if len(sys.argv) != 2:
+    raise SystemExit(&quot;Usage: python3 read_review.py PATH_TO_SAVED_JSON&quot;)
+try:
+    payload = json.loads(Path(sys.argv[1]).read_text(encoding=&quot;utf-8&quot;))
+except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+    raise SystemExit(&quot;Cannot read saved JSON: &quot; + str(exc))
+if not isinstance(payload, dict):
+    raise SystemExit(&quot;Expected a JSON object; inspect the saved response.&quot;)
 if payload.get(&quot;schema&quot;) != &quot;liquilens.research-recipe.v1&quot;:
     raise SystemExit(&quot;Unexpected recipe contract; inspect the saved response.&quot;)
 if payload.get(&quot;outcome&quot;) != &quot;evidence_returned&quot;:
     raise SystemExit(&quot;No review available: &quot; + str(payload.get(&quot;outcome&quot;)))
-review = payload.get(&quot;evidence&quot;, {}).get(&quot;review&quot;)
+evidence = payload.get(&quot;evidence&quot;)
+if not isinstance(evidence, dict):
+    raise SystemExit(&quot;Missing or invalid evidence object; inspect the saved response.&quot;)
+review = evidence.get(&quot;review&quot;)
 if not isinstance(review, dict):
     raise SystemExit(&quot;Coverage returned; choose an exact covered bank slug.&quot;)
 if review.get(&quot;schema&quot;) != &quot;liquilens.bank-specialisation.v1&quot;:
