@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "liquilens": {
+      "type": "http",
+      "url": "https://api.liquilens.in/mcp"
+    }
+  }
+}

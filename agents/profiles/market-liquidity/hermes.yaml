@@ -1,0 +1,5 @@
+mcp_servers:
+  undertow:
+    url: https://api.seiche.info/undertow/mcp
+    tools:
+      include: ["exit_cost", "venue_concentration"]

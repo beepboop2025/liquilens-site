@@ -1,0 +1,5 @@
+mcp_servers:
+  seiche:
+    url: https://api.seiche.info/mcp
+    tools:
+      include: ["data_health", "funding_stress_now", "money_market_context"]

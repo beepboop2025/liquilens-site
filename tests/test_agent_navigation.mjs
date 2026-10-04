@@ -2,10 +2,37 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {SOURCES} from "../start/acquisition.mjs";
 import {navigationContext, browserNavigationContext, agentNavigationLink, applyAgentNavigation} from "../agents/navigation.mjs";
+import {topicProfiles, selectConfiguration} from "../agents/profile-config.mjs";
+import {readFileSync} from "node:fs";
 
 const currentUrl = "https://liquilens.in/agents/?utm_source=telegram";
 const context = navigationContext({search: "?utm_source=telegram"});
 const link = (href, options = {}) => agentNavigationLink(href, {currentUrl, context, ...options});
+
+test("topic selection copies the downloaded configuration and the matching research prompt", () => {
+  for (const id of Object.keys(topicProfiles)) {
+    for (const client of ["hermes", "openclaw", "claude", "codex", "cursor", "vscode"]) {
+      const selected = selectConfiguration(client, id);
+      const downloaded = readFileSync(new URL(".." + selected.download, import.meta.url), "utf8");
+      assert.equal(selected.configuration, downloaded);
+      assert.equal(selected.prompt, topicProfiles[id].prompt);
+      assert.match(selected.scope, client === "hermes" || client === "openclaw" ? /selects the listed tools/ : /does not apply a tool allowlist/);
+    }
+  }
+  const gold = selectConfiguration("openclaw", "gold");
+  assert.match(gold.configuration, /gold_inventory_carry/);
+  assert.match(gold.configuration, /gold_cash_realisation/);
+  assert.doesNotMatch(gold.configuration, /exit_schedule|board_full/);
+  assert.match(gold.prompt, /ask for every required/);
+  assert.match(gold.prompt, /future settlement as current cash/);
+});
+
+test("unknown topic or client cannot create a configuration or download path", () => {
+  for (const bad of ["__proto__", "constructor", "../gold", "https://other.example", ""]) {
+    assert.throws(() => selectConfiguration("hermes", bad), /supported research topic/);
+    assert.throws(() => selectConfiguration(bad, "gold"), /supported research topic/);
+  }
+});
 
 test("each first-result task survives local navigation with its bounded source", () => {
   for (const source of SOURCES) for (const task of ["funding", "bank", "exit"]) {

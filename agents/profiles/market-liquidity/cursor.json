@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "undertow": {
+      "url": "https://api.seiche.info/undertow/mcp"
+    }
+  }
+}

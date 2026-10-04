@@ -1,0 +1,17 @@
+{
+  "mcp": {
+    "servers": {
+      "seiche": {
+        "url": "https://api.seiche.info/mcp",
+        "transport": "streamable-http",
+        "toolFilter": {
+          "include": [
+            "data_health",
+            "market_workbench",
+            "gift_city_context"
+          ]
+        }
+      }
+    }
+  }
+}

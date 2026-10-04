@@ -1,7 +1,7 @@
 {
   "schema": "liquilens.agent-kit.v1",
-  "version": "1.1.0",
-  "updated_at": "2026-09-26",
+  "version": "1.2.0",
+  "updated_at": "2026-10-05",
   "homepage": "https://liquilens.in/agents/",
   "price": {
     "public_research": "free",
@@ -14,7 +14,10 @@
       "tools": [
         "data_health",
         "funding_stress_now",
-        "money_market_context"
+        "money_market_context",
+        "market_workbench",
+        "gift_city_context",
+        "gold_inventory_carry"
       ]
     },
     "liquilens": {
@@ -30,12 +33,28 @@
       "url": "https://api.seiche.info/undertow/mcp",
       "tools": [
         "exit_cost",
-        "venue_concentration"
+        "venue_concentration",
+        "gold_cash_realisation"
       ]
     }
   },
   "python": ">=3.11",
   "external_python_packages": [],
+  "topic_profiles": {
+    "url": "https://liquilens.in/agents/profiles.json",
+    "default": "all-topics",
+    "ids": [
+      "all-topics",
+      "gift-city",
+      "forex",
+      "gold",
+      "bank-risk",
+      "money-market",
+      "market-liquidity",
+      "funding-bank-exits"
+    ],
+    "scenario_inputs": "explicit caller assumptions required; never auto-run"
+  },
   "commands": [
     "python3 trading_brief.py doctor",
     "python3 trading_brief.py run",
@@ -48,13 +67,13 @@
   },
   "archive": {
     "url": "https://liquilens.in/agents/trading-research-kit.zip",
-    "sha256": "1085ed662d6736206694669abf01797d7cb41417fec2f80139fdf9a9a44ac9e0",
-    "bytes": 19384
+    "sha256": "ab505c64891695e33b8d049e1aa7eeb9fca12e4c021365d58862b188fe31279e",
+    "bytes": 40940
   },
   "files": {
     "README.md": {
-      "sha256": "ba7a25314aa71d4cd0c451cea5fe5a847bb1f37bd96e580b06c80ec6c91c79b9",
-      "bytes": 9164
+      "sha256": "5ab62dd46dd919e6b2aeec82feeecee0febcb195b236eff77c33bd2e5af47984",
+      "bytes": 12173
     },
     "claude.txt": {
       "sha256": "34ed8064237887d623de4e6c1a7d34007958f81d7e043378f0615a1a3c6b3ca4",
@@ -73,24 +92,224 @@
       "bytes": 13270
     },
     "hermes.yaml": {
-      "sha256": "1b1debd61e17f27e915e8c706f0d5a1fe91d1a6b6259c38654459253afa309b2",
-      "bytes": 459
+      "sha256": "da1eabe7927ad22e2c143603ccbaf5051b848c579d155a57339d762e69b165a3",
+      "bytes": 549
     },
     "n8n-funding-research.json": {
       "sha256": "d894815c861e7ac7e5c221fbc5aadc708aeee648bd0af190394837305b297543",
       "bytes": 3189
     },
     "openclaw.json": {
+      "sha256": "943dc940ba2c3de52d924f7a8ff26db0536f849314640bb3d4a60a0383172f4c",
+      "bytes": 1054
+    },
+    "profiles.json": {
+      "sha256": "2cd37917ae0fc5d7ecf648f6f89d058f9288dce96bce3c5a4ecbcf7d5a378b13",
+      "bytes": 24979
+    },
+    "profiles.mjs": {
+      "sha256": "ee9ef7cb0391c5129ac7745d03ab16e15de1f50f0bb6ec872186a07b1cd1941d",
+      "bytes": 25039
+    },
+    "profiles/all-topics/claude.txt": {
+      "sha256": "34ed8064237887d623de4e6c1a7d34007958f81d7e043378f0615a1a3c6b3ca4",
+      "bytes": 216
+    },
+    "profiles/all-topics/codex.txt": {
+      "sha256": "7f20b9da885cdeaeb448ba250400254469771a209d2559a43ca76fdc0b5d648c",
+      "bytes": 180
+    },
+    "profiles/all-topics/cursor.json": {
+      "sha256": "9fa3ebbbb5b45ddc9f3ab132f0e8ccde338a62f7bbd67fee11470e27b798672b",
+      "bytes": 238
+    },
+    "profiles/all-topics/hermes.yaml": {
+      "sha256": "da1eabe7927ad22e2c143603ccbaf5051b848c579d155a57339d762e69b165a3",
+      "bytes": 549
+    },
+    "profiles/all-topics/openclaw.json": {
+      "sha256": "943dc940ba2c3de52d924f7a8ff26db0536f849314640bb3d4a60a0383172f4c",
+      "bytes": 1054
+    },
+    "profiles/all-topics/vscode.json": {
+      "sha256": "b0930fd7fd34e437a212c5bf0d2fc13a12ef5f69f6074ac505ad266733e322fa",
+      "bytes": 301
+    },
+    "profiles/bank-risk/claude.txt": {
+      "sha256": "70c3a1803cf773d536f82eb3d42a62d5e93706b13ac4c4644f7ac4d35d7187e0",
+      "bytes": 71
+    },
+    "profiles/bank-risk/codex.txt": {
+      "sha256": "620677b887fa978c868c9c4199069c329e2d7121276152b9138726e2a2af7736",
+      "bytes": 59
+    },
+    "profiles/bank-risk/cursor.json": {
+      "sha256": "95734f049d659673ff4764ee6836a3d383a1e9d198988bf722bc6b6ea7512e59",
+      "bytes": 95
+    },
+    "profiles/bank-risk/hermes.yaml": {
+      "sha256": "8ab850f5ca755ae06548fcd97205692e973f435cb4c71425abf163761b0b3291",
+      "bytes": 203
+    },
+    "profiles/bank-risk/openclaw.json": {
+      "sha256": "38ff7259345fbb67688820fd15012c39e5b827cb99067eb305fc46a3d7950581",
+      "bytes": 386
+    },
+    "profiles/bank-risk/vscode.json": {
+      "sha256": "7b340114fb6b30af2bcfed9f493e6fa474942976725d9df878e5bb3a13c3742e",
+      "bytes": 114
+    },
+    "profiles/forex/claude.txt": {
+      "sha256": "696632306124430999427a061a88ea315e885812e4ca6b2ec5215c45d4faa73e",
+      "bytes": 67
+    },
+    "profiles/forex/codex.txt": {
+      "sha256": "72ca3446c9846d35e69a2759d501bda025886d8cb652b452a747b33e2b25929a",
+      "bytes": 55
+    },
+    "profiles/forex/cursor.json": {
+      "sha256": "0afe4a16f7643c65c7cdd3f064ca148e552980ec733cf8f0a72e2da2f5d2deb6",
+      "bytes": 91
+    },
+    "profiles/forex/hermes.yaml": {
+      "sha256": "a958a02bc53a4c9b390c66271c30dde717ac307d99f79b42e6cae7b73da24153",
+      "bytes": 143
+    },
+    "profiles/forex/openclaw.json": {
+      "sha256": "00e8a5138f88259e994141daa2c99ac455ce89013c3d6f091e29b3fd55b7e680",
+      "bytes": 314
+    },
+    "profiles/forex/vscode.json": {
+      "sha256": "967b536f2cc016ed571510f6361cd276061cbdba85ed6e26053d2ebe045ae7c4",
+      "bytes": 110
+    },
+    "profiles/funding-bank-exits/claude.txt": {
+      "sha256": "34ed8064237887d623de4e6c1a7d34007958f81d7e043378f0615a1a3c6b3ca4",
+      "bytes": 216
+    },
+    "profiles/funding-bank-exits/codex.txt": {
+      "sha256": "7f20b9da885cdeaeb448ba250400254469771a209d2559a43ca76fdc0b5d648c",
+      "bytes": 180
+    },
+    "profiles/funding-bank-exits/cursor.json": {
+      "sha256": "9fa3ebbbb5b45ddc9f3ab132f0e8ccde338a62f7bbd67fee11470e27b798672b",
+      "bytes": 238
+    },
+    "profiles/funding-bank-exits/hermes.yaml": {
+      "sha256": "1b1debd61e17f27e915e8c706f0d5a1fe91d1a6b6259c38654459253afa309b2",
+      "bytes": 459
+    },
+    "profiles/funding-bank-exits/openclaw.json": {
       "sha256": "507869aafcc59618204cb7b737de31727f122c52c2d6d20b72b462ed96455cfd",
       "bytes": 916
+    },
+    "profiles/funding-bank-exits/vscode.json": {
+      "sha256": "b0930fd7fd34e437a212c5bf0d2fc13a12ef5f69f6074ac505ad266733e322fa",
+      "bytes": 301
+    },
+    "profiles/gift-city/claude.txt": {
+      "sha256": "34ed8064237887d623de4e6c1a7d34007958f81d7e043378f0615a1a3c6b3ca4",
+      "bytes": 216
+    },
+    "profiles/gift-city/codex.txt": {
+      "sha256": "7f20b9da885cdeaeb448ba250400254469771a209d2559a43ca76fdc0b5d648c",
+      "bytes": 180
+    },
+    "profiles/gift-city/cursor.json": {
+      "sha256": "9fa3ebbbb5b45ddc9f3ab132f0e8ccde338a62f7bbd67fee11470e27b798672b",
+      "bytes": 238
+    },
+    "profiles/gift-city/hermes.yaml": {
+      "sha256": "5e448a9e8c5d9b71388d795123b39c429ddb742eadee423950f430cc4892f517",
+      "bytes": 443
+    },
+    "profiles/gift-city/openclaw.json": {
+      "sha256": "e04877abcfc1e57492756e47ef7ce4ba2177e78f43d0114f2236ae6df3db60ec",
+      "bytes": 888
+    },
+    "profiles/gift-city/vscode.json": {
+      "sha256": "b0930fd7fd34e437a212c5bf0d2fc13a12ef5f69f6074ac505ad266733e322fa",
+      "bytes": 301
+    },
+    "profiles/gold/claude.txt": {
+      "sha256": "19c95690909fa10615260a9d65ac0f4f32f24bf102efe07d245d85cb7e36029a",
+      "bytes": 145
+    },
+    "profiles/gold/codex.txt": {
+      "sha256": "a09e50d4a77b4093cf44773fccbff5b64588c74bcfd525d40f87488af7add3f0",
+      "bytes": 121
+    },
+    "profiles/gold/cursor.json": {
+      "sha256": "f601fce38c38e65e63dbc7ebf406e6409a92e69ede608d1135f1e82b8107de95",
+      "bytes": 168
+    },
+    "profiles/gold/hermes.yaml": {
+      "sha256": "f49cce2d13d85af0c38a69d8f931ced782179ba21955500502cd50c7ce64324e",
+      "bytes": 257
+    },
+    "profiles/gold/openclaw.json": {
+      "sha256": "716ebe5530b4cb7942129f049a54853747a6240bf3fba4b5a0223798a79f8b54",
+      "bytes": 547
+    },
+    "profiles/gold/vscode.json": {
+      "sha256": "ebc637585b0c45660bdf573e973d827a27770057e0712558ed7d49cbbfd54346",
+      "bytes": 209
+    },
+    "profiles/market-liquidity/claude.txt": {
+      "sha256": "306960e76ce4e0a1ca8b50fa7084a2c99cde98a9d7fd29cc90904d9a412cc7b9",
+      "bytes": 78
+    },
+    "profiles/market-liquidity/codex.txt": {
+      "sha256": "318dae4f583f16d7466b11a09666e8338593176bc4be2ee78b8d441ebefc7944",
+      "bytes": 66
+    },
+    "profiles/market-liquidity/cursor.json": {
+      "sha256": "1b32be62d9e72652b57dd13f3d10cabd3c8839134f708c8132d79eb9798a3ac4",
+      "bytes": 102
+    },
+    "profiles/market-liquidity/hermes.yaml": {
+      "sha256": "c56d782bb552bfda17e7c49e9a15bdc223752ccb111fd8d777d7141899bd5ab1",
+      "bytes": 134
+    },
+    "profiles/market-liquidity/openclaw.json": {
+      "sha256": "d27b90360aad8e232dd86683f4049a8ccbfe8788e4208770c8ce133e94c928be",
+      "bytes": 293
+    },
+    "profiles/market-liquidity/vscode.json": {
+      "sha256": "2918bdf0052b844dc883fb2d9b8b016fe9af6cf50b5201be6a496f4b7070ccdf",
+      "bytes": 121
+    },
+    "profiles/money-market/claude.txt": {
+      "sha256": "696632306124430999427a061a88ea315e885812e4ca6b2ec5215c45d4faa73e",
+      "bytes": 67
+    },
+    "profiles/money-market/codex.txt": {
+      "sha256": "72ca3446c9846d35e69a2759d501bda025886d8cb652b452a747b33e2b25929a",
+      "bytes": 55
+    },
+    "profiles/money-market/cursor.json": {
+      "sha256": "0afe4a16f7643c65c7cdd3f064ca148e552980ec733cf8f0a72e2da2f5d2deb6",
+      "bytes": 91
+    },
+    "profiles/money-market/hermes.yaml": {
+      "sha256": "d1f33b60f57249b25079b7683ddd208e378bd34a11ff6b720c5a75fc816fe91d",
+      "bytes": 148
+    },
+    "profiles/money-market/openclaw.json": {
+      "sha256": "7f1da8bf0ae5c7a9fed26ad07e6e833f76f7f5a8fc99154e68b48b83116cce1a",
+      "bytes": 319
+    },
+    "profiles/money-market/vscode.json": {
+      "sha256": "967b536f2cc016ed571510f6361cd276061cbdba85ed6e26053d2ebe045ae7c4",
+      "bytes": 110
     },
     "source_data.py": {
       "sha256": "fc34edc57ace279e0a62b9471519b24f5fa13e192bfa7c214894e7d6c5a37440",
       "bytes": 4977
     },
     "trading-research/SKILL.md": {
-      "sha256": "13de77b315a72b97c976436cb1b8af1546edb2ed5301b1df035e034584fe6915",
-      "bytes": 3955
+      "sha256": "b0ee61e3cd88c230f9ff080ba381856530265d14b9f50f48d5a244e04129aea7",
+      "bytes": 6628
     },
     "trading_brief.py": {
       "sha256": "0dc845676ea8df479862ccbeba3cc0b2e02341218f22a0e4944769e66789a846",

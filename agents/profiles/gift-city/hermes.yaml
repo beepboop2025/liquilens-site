@@ -1,0 +1,13 @@
+mcp_servers:
+  seiche:
+    url: https://api.seiche.info/mcp
+    tools:
+      include: ["data_health", "money_market_context", "market_workbench", "gift_city_context", "gold_inventory_carry"]
+  liquilens:
+    url: https://api.liquilens.in/mcp
+    tools:
+      include: ["banking_specialisation_coverage", "bank_asset_quality_review"]
+  undertow:
+    url: https://api.seiche.info/undertow/mcp
+    tools:
+      include: ["gold_cash_realisation"]

@@ -1,4 +1,4 @@
-import {configuration} from "../start/core.mjs";
+import {topicProfiles, defaultProfile, selectConfiguration} from "./profile-config.mjs";
 import {createTracker, entryEvent} from "./metrics.mjs";
 import {applyAgentNavigation, browserNavigationContext} from "./navigation.mjs";
 const navigation = browserNavigationContext(location, navigator, window);
@@ -7,7 +7,6 @@ const track = createTracker({
   verification: navigation.verification,
   privacyOptOut: navigation.privacyOptOut,
 });
-const ids = ["seiche", "liquilens", "undertow"];
 const help = {
   hermes: "Merge hermes.yaml into ~/.hermes/config.yaml. Keep existing settings, then start a new session or use /reload-mcp.",
   openclaw: "Merge openclaw.json into ~/.openclaw/openclaw.json. Native MCP support is required. Keep existing settings and review the discovered tools.",
@@ -17,21 +16,23 @@ const help = {
   vscode: "Merge these entries into .vscode/mcp.json in your project, keeping existing servers.",
 };
 const $ = id => document.getElementById(id);
-const files = {hermes: "hermes.yaml", openclaw: "openclaw.json", claude: "claude.txt", codex: "codex.txt", cursor: "cursor.json", vscode: "vscode.json"};
-async function update() {
+for (const [id, profile] of Object.entries(topicProfiles)) {
+  const option = document.createElement("option");
+  option.value = id;
+  option.textContent = profile.label;
+  $("topic-profile").append(option);
+}
+$("topic-profile").value = defaultProfile;
+function update() {
   const client = $("client").value;
-  $("configuration").textContent = configuration(client, ids);
+  const selection = selectConfiguration(client, $("topic-profile").value);
+  $("configuration").textContent = selection.configuration.trim();
   $("client-help").textContent = help[client];
-  $("config-download").href = "/agents/" + files[client];
-  // Use the same focused files as the downloadable kit. No MCP call is made.
-  if (["hermes", "openclaw"].includes(client)) {
-    try {
-      const response = await fetch("/agents/" + files[client], {redirect: "error", credentials: "omit"});
-      if (!response.ok) return;
-      const text = await response.text();
-      if ($("client").value === client && text.length < 12000) $("configuration").textContent = text.trim();
-    } catch { /* The native configuration above remains usable. */ }
-  }
+  $("config-download").href = selection.download;
+  $("profile-description").textContent = selection.description;
+  $("profile-scope").textContent = selection.scope;
+  $("task-prompt").textContent = selection.prompt;
+  $("copy-status").textContent = "";
 }
 async function copy(id, action) {
   const event = entryEvent(action, $("client").value);
@@ -39,6 +40,7 @@ async function copy(id, action) {
   catch {$("copy-status").textContent = "Select and copy the text, or download the configuration.";}
 }
 $("client").addEventListener("change", update);
+$("topic-profile").addEventListener("change", update);
 $("copy-config").addEventListener("click", () => copy("configuration", "config_copied"));
 $("copy-prompt").addEventListener("click", () => copy("task-prompt", "research_prompt_copied"));
 $("config-download").addEventListener("click", () => track(entryEvent("config_download_requested", $("client").value)));

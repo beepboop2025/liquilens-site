@@ -1,0 +1,16 @@
+{
+  "mcp": {
+    "servers": {
+      "undertow": {
+        "url": "https://api.seiche.info/undertow/mcp",
+        "transport": "streamable-http",
+        "toolFilter": {
+          "include": [
+            "exit_cost",
+            "venue_concentration"
+          ]
+        }
+      }
+    }
+  }
+}

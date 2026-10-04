@@ -1,0 +1,1 @@
+claude mcp add --transport http undertow https://api.seiche.info/undertow/mcp

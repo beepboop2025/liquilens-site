@@ -4,6 +4,7 @@
 
 - Connect Hermes, OpenClaw, Claude Code, Codex, Cursor or VS Code: https://liquilens.in/agents/
 - Text guide: https://liquilens.in/agents/README.md
+- Topic profiles for GIFT City, reference FX, gold scenarios, money markets, bank risk and BTC exits: https://liquilens.in/agents/profiles.json . Current Hermes/OpenClaw defaults select thirteen public tools; the original nine-tool selection remains a separate profile. Gold scenarios require explicit caller inputs and do not supply executable quotes.
 - Tested client versions and installation commands: https://liquilens.in/agents/clients.md
 - Hermes setup and first research task: https://liquilens.in/agents/hermes/
 - OpenClaw setup and first research task: https://liquilens.in/agents/openclaw/
