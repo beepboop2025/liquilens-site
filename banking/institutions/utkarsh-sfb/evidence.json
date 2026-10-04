@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/utkarsh-sfb?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:43:23Z",
   "evidence": {
-    "age_days": 96,
-    "as_of": "2026-10-04",
-    "available_at": "2026-09-24T21:36:30.694179Z",
+    "age_days": 97,
+    "as_of": "2026-10-05",
+    "available_at": "2026-10-04T19:19:10.185842Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -39,7 +39,8 @@
       }
     },
     "comparability_notes": [
-      "Selected facts verified against the cited primary filing; capture time is not backdated to publication."
+      "Selected facts verified against the cited primary filing; capture time is not backdated to publication.",
+      "Primary filing re-reviewed on 5 October 2026 (Asia/Kolkata) from the bank-hosted document. The June 2026 reporting period is unchanged; earlier knowledge versions and their source identities are retained."
     ],
     "default_event": null,
     "exclusions": [],
@@ -626,14 +627,14 @@
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T19:19:10.185842Z",
         "metrics": {
           "advances": {
-            "basis": null,
+            "basis": "Reported advances net of provisions at 30 June 2026, INR crore; distinct from gross loan portfolio of INR 19,610 crore. PDF page 32 (printed page 31).",
             "label": "Reported advances",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "INR_crore",
-            "value": null
+            "value": 18478
           },
           "casa_pct": {
             "basis": null,
@@ -736,7 +737,7 @@
         },
         "period_end": "2026-06-30",
         "sources": [
-          "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+          "https://www.utkarsh.bank.in/uploads/pdf/InvestorPresentation01082026.pdf"
         ]
       }
     ],
@@ -748,11 +749,11 @@
     ],
     "metrics": {
       "advances": {
-        "basis": null,
+        "basis": "Reported advances net of provisions at 30 June 2026, INR crore; distinct from gross loan portfolio of INR 19,610 crore. PDF page 32 (printed page 31).",
         "label": "Reported advances",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "INR_crore",
-        "value": null
+        "value": 18478
       },
       "casa_pct": {
         "basis": null,
@@ -886,7 +887,7 @@
       "sources": [],
       "status": "not_applicable"
     },
-    "retrieved_at": "2026-09-24T21:32:16.772208+00:00",
+    "retrieved_at": "2026-10-04T19:17:15.268308+00:00",
     "schema": "liquilens.bank-specialisation.v1",
     "scope": "research",
     "score_authority": false,
@@ -896,17 +897,18 @@
       {
         "pdf_pages": [
           3,
-          5
+          5,
+          32
         ],
         "sha256": "309ec7cd700e2b5be663d33087e4633897a8281b39928b948934bbb9fc15d6d2",
-        "url": "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+        "url": "https://www.utkarsh.bank.in/uploads/pdf/InvestorPresentation01082026.pdf"
       }
     ],
     "sources": [
-      "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+      "https://www.utkarsh.bank.in/uploads/pdf/InvestorPresentation01082026.pdf"
     ],
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "eba961b4c17c2f8e3550a3cee75ddbd1a1bd89c5a879dcc7bb746e0b25701ffb"
+  "source_payload_sha256": "5714268478c6c8222571c2782cc1de60019a45fc316435264aba1155bcc3dfdf"
 }

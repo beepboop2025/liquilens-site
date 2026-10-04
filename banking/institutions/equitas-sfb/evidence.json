@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/equitas-sfb?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:43:23Z",
   "evidence": {
-    "age_days": 96,
-    "as_of": "2026-10-04",
-    "available_at": "2026-09-24T21:36:30.694179Z",
+    "age_days": 97,
+    "as_of": "2026-10-05",
+    "available_at": "2026-10-04T19:36:34.240212Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -39,7 +39,8 @@
       }
     },
     "comparability_notes": [
-      "Selected facts verified against the cited primary filing; capture time is not backdated to publication."
+      "Selected facts verified against the cited primary filing; capture time is not backdated to publication.",
+      "Primary filing re-reviewed on 5 October 2026 (Asia/Kolkata) from the official bank-hosted document. Reporting periods and earlier knowledge versions are retained."
     ],
     "default_event": null,
     "exclusions": [],
@@ -856,7 +857,7 @@
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T19:36:34.240212Z",
         "metrics": {
           "advances": {
             "basis": "Reported gross advances include IBPC, securitisation and direct assignment.",
@@ -908,11 +909,11 @@
             "value": null
           },
           "lcr_pct": {
-            "basis": null,
+            "basis": "Reported liquidity coverage ratio as on 30 June 2026, not a quarterly average. Investor presentation PDF page 28.",
             "label": "Reported liquidity coverage",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "percent",
-            "value": null
+            "value": 178.46
           },
           "nnpa_pct": {
             "basis": null,
@@ -1027,11 +1028,11 @@
         "value": null
       },
       "lcr_pct": {
-        "basis": null,
+        "basis": "Reported liquidity coverage ratio as on 30 June 2026, not a quarterly average. Investor presentation PDF page 28.",
         "label": "Reported liquidity coverage",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "percent",
-        "value": null
+        "value": 178.46
       },
       "nnpa_pct": {
         "basis": null,
@@ -1116,7 +1117,7 @@
       "sources": [],
       "status": "not_applicable"
     },
-    "retrieved_at": "2026-09-24T21:30:45.863Z",
+    "retrieved_at": "2026-10-04T19:35:14.211458+00:00",
     "schema": "liquilens.bank-specialisation.v1",
     "scope": "research",
     "score_authority": false,
@@ -1128,7 +1129,8 @@
           2,
           5,
           12,
-          14
+          14,
+          28
         ],
         "sha256": "14583c5e78616200bd6062571c035265fe99f3c72a67349ed54bba4f99fef8c5",
         "url": "https://ir.equitas.bank.in/wp-content/uploads/2026/07/ESFB-InvestorPresentation_Q1FY27.pdf"
@@ -1140,5 +1142,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "6a8396919abf6c1bf647b526d89a6d29f5a462f0b083c0bde167e550c417b8b8"
+  "source_payload_sha256": "138393ff6f05dda45202e1fffe6a8c031af6aaaf5a58322204da9a06126dc255"
 }

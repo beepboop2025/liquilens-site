@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/federal-bank?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:43:23Z",
   "evidence": {
-    "age_days": 96,
-    "as_of": "2026-10-04",
-    "available_at": "2026-09-24T21:36:30.694179Z",
+    "age_days": 97,
+    "as_of": "2026-10-05",
+    "available_at": "2026-10-04T19:19:10.185842Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -39,7 +39,8 @@
       }
     },
     "comparability_notes": [
-      "Selected facts verified against the cited primary filing; capture time is not backdated to publication."
+      "Selected facts verified against the cited primary filing; capture time is not backdated to publication.",
+      "Primary filing re-reviewed on 5 October 2026 (Asia/Kolkata) from the bank-hosted document. The June 2026 reporting period is unchanged; earlier knowledge versions and their source identities are retained."
     ],
     "default_event": null,
     "exclusions": [],
@@ -857,14 +858,14 @@
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T19:19:10.185842Z",
         "metrics": {
           "advances": {
-            "basis": null,
+            "basis": "Reported balance-sheet advances at 30 June 2026, INR crore. PDF page 30 (printed page 29).",
             "label": "Reported advances",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "INR_crore",
-            "value": null
+            "value": 277498
           },
           "casa_pct": {
             "basis": null,
@@ -951,11 +952,11 @@
             "value": 15.89
           },
           "top20_depositors_pct": {
-            "basis": null,
+            "basis": "Reported twenty largest depositors as a percentage of deposits for Q1 FY27. PDF page 35 (printed page 34); the separately plotted 7.09% is borrower concentration.",
             "label": "Twenty largest depositors / deposits",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "percent",
-            "value": null
+            "value": 4.55
           },
           "top20_npa_pct": {
             "basis": null,
@@ -967,7 +968,7 @@
         },
         "period_end": "2026-06-30",
         "sources": [
-          "https://nsearchives.nseindia.com/corporate/FEDERALBNK_17072026134906_fbl_investor_presentation_170726_signd.pdf"
+          "https://federal.bank.in/documents/10180/0/FEDERALBNK_17072026134906_fbl_investor_presentation_170726_signd.pdf/a6e071f2-54c8-9d04-5694-f0fea711ee39?t=1784286060274"
         ]
       }
     ],
@@ -979,11 +980,11 @@
     ],
     "metrics": {
       "advances": {
-        "basis": null,
+        "basis": "Reported balance-sheet advances at 30 June 2026, INR crore. PDF page 30 (printed page 29).",
         "label": "Reported advances",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "INR_crore",
-        "value": null
+        "value": 277498
       },
       "casa_pct": {
         "basis": null,
@@ -1070,11 +1071,11 @@
         "value": 15.89
       },
       "top20_depositors_pct": {
-        "basis": null,
+        "basis": "Reported twenty largest depositors as a percentage of deposits for Q1 FY27. PDF page 35 (printed page 34); the separately plotted 7.09% is borrower concentration.",
         "label": "Twenty largest depositors / deposits",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "percent",
-        "value": null
+        "value": 4.55
       },
       "top20_npa_pct": {
         "basis": null,
@@ -1126,7 +1127,7 @@
       "sources": [],
       "status": "none"
     },
-    "retrieved_at": "2026-09-24T21:32:16.019219+00:00",
+    "retrieved_at": "2026-10-04T19:14:10.047759+00:00",
     "schema": "liquilens.bank-specialisation.v1",
     "scope": "research",
     "score_authority": false,
@@ -1138,17 +1139,19 @@
           5,
           9,
           11,
-          22
+          22,
+          30,
+          35
         ],
-        "sha256": "d4f296091e0ba25efb40bbfb376b2cb5e52c0c65d25d100201e5fda45108c30a",
-        "url": "https://nsearchives.nseindia.com/corporate/FEDERALBNK_17072026134906_fbl_investor_presentation_170726_signd.pdf"
+        "sha256": "b56605f1b3c1ac6f4f8cea3abf6361b4e82ce0e04c2c0cad83a895e1cf243c55",
+        "url": "https://federal.bank.in/documents/10180/0/FEDERALBNK_17072026134906_fbl_investor_presentation_170726_signd.pdf/a6e071f2-54c8-9d04-5694-f0fea711ee39?t=1784286060274"
       }
     ],
     "sources": [
-      "https://nsearchives.nseindia.com/corporate/FEDERALBNK_17072026134906_fbl_investor_presentation_170726_signd.pdf"
+      "https://federal.bank.in/documents/10180/0/FEDERALBNK_17072026134906_fbl_investor_presentation_170726_signd.pdf/a6e071f2-54c8-9d04-5694-f0fea711ee39?t=1784286060274"
     ],
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "bf2a3f74bdf31971f35b70430ffefd7c8066b056e43099347844701f986a2c4b"
+  "source_payload_sha256": "b6bdd286d101f0bdfc8716ff358777b36b1584744130bac48f01f50107c863d8"
 }

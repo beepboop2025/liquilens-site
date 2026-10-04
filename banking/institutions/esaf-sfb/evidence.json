@@ -1,14 +1,14 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/esaf-sfb?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:43:23Z",
   "evidence": {
-    "age_days": 96,
-    "as_of": "2026-10-04",
-    "available_at": "2026-09-24T21:36:30.694179Z",
+    "age_days": 97,
+    "as_of": "2026-10-05",
+    "available_at": "2026-10-04T19:36:34.240212Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T19:36:34.240212Z",
         "changes": {
           "crar_pct": null,
           "gnpa_pct": 0.0,
@@ -16,14 +16,14 @@
         },
         "from_period": "2026-03-31",
         "sources": [
-          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
         ],
         "status": "observed",
         "to_period": "2026-06-30",
         "unit": "percentage_points"
       },
       "year": {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T19:36:34.240212Z",
         "changes": {
           "crar_pct": null,
           "gnpa_pct": -2.1,
@@ -31,7 +31,7 @@
         },
         "from_period": "2025-06-30",
         "sources": [
-          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
         ],
         "status": "observed",
         "to_period": "2026-06-30",
@@ -39,7 +39,8 @@
       }
     },
     "comparability_notes": [
-      "Selected facts verified against the cited primary filing; capture time is not backdated to publication."
+      "Selected facts verified against the cited primary filing; capture time is not backdated to publication.",
+      "Primary filing re-reviewed on 5 October 2026 (Asia/Kolkata) from the official bank-hosted document. Reporting periods and earlier knowledge versions are retained."
     ],
     "default_event": null,
     "exclusions": [],
@@ -400,7 +401,7 @@
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T19:36:34.240212Z",
         "metrics": {
           "advances": {
             "basis": null,
@@ -510,11 +511,11 @@
         },
         "period_end": "2025-06-30",
         "sources": [
-          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T19:36:34.240212Z",
         "metrics": {
           "advances": {
             "basis": null,
@@ -624,11 +625,11 @@
         },
         "period_end": "2025-09-30",
         "sources": [
-          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T19:36:34.240212Z",
         "metrics": {
           "advances": {
             "basis": null,
@@ -738,11 +739,11 @@
         },
         "period_end": "2025-12-31",
         "sources": [
-          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T19:36:34.240212Z",
         "metrics": {
           "advances": {
             "basis": null,
@@ -852,11 +853,11 @@
         },
         "period_end": "2026-03-31",
         "sources": [
-          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T19:36:34.240212Z",
         "metrics": {
           "advances": {
             "basis": "Gross advances; the report distinguishes total business including IBPC.",
@@ -966,7 +967,7 @@
         },
         "period_end": "2026-06-30",
         "sources": [
-          "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
         ]
       }
     ],
@@ -1116,7 +1117,7 @@
       "sources": [],
       "status": "not_applicable"
     },
-    "retrieved_at": "2026-09-24T21:30:45.685Z",
+    "retrieved_at": "2026-10-04T19:34:09.247628+00:00",
     "schema": "liquilens.bank-specialisation.v1",
     "scope": "research",
     "score_authority": false,
@@ -1125,20 +1126,20 @@
     "source_documents": [
       {
         "pdf_pages": [
-          3,
-          5,
-          17,
-          18
+          4,
+          6,
+          18,
+          19
         ],
-        "sha256": "c57afade153c53401c3049d0d7644f0a0dcf5db4b3b51fb87277f62bdb702820",
-        "url": "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+        "sha256": "5ee8002ee858cc8e2ed3d45e052a3d14e39d72631fbc2b45a8daad596fe718e6",
+        "url": "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
       }
     ],
     "sources": [
-      "https://www.esaf.bank.in/wp-content/uploads/2026/07/ESAF-SFB-Investor-Presentation-Q1-FY27.pdf"
+      "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
     ],
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "48e37f0bad8af93622ad94a047b48c6eaa7949da419f3485a6d40f48dc3b7936"
+  "source_payload_sha256": "074a39f425cb9a1f1e4c9f4de331c1e7994430af35eb92c104a3cd3f7b6eba53"
 }

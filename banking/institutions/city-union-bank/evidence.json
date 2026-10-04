@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/city-union-bank?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:43:23Z",
   "evidence": {
-    "age_days": 96,
-    "as_of": "2026-10-04",
+    "age_days": 97,
+    "as_of": "2026-10-05",
     "available_at": "2026-10-04T17:06:35.119775Z",
     "can_authorize_credit": false,
     "changes": {
@@ -1145,5 +1145,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "ac2a82e360916591c26dc3588fdd3de436e4d1b2f8c4e9ddfa745f974162033c"
+  "source_payload_sha256": "27e87cec66bc3a01bb25cbb0094de3f248e7cd6d4b74de345ed0e5124ad82dfc"
 }

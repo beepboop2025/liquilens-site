@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/suryoday-sfb?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:43:23Z",
   "evidence": {
-    "age_days": 96,
-    "as_of": "2026-10-04",
-    "available_at": "2026-09-24T21:36:30.694179Z",
+    "age_days": 97,
+    "as_of": "2026-10-05",
+    "available_at": "2026-10-04T19:19:10.185842Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -41,7 +41,8 @@
     "comparability_notes": [
       "Selected facts verified against the cited primary filing; capture time is not backdated to publication.",
       "The presentation identifies INR 134 crore CGFMU receivable against INR 170 crore NNPA; a receivable is not collected cash.",
-      "Capital ratios are retained at the rounded precision printed on the chart."
+      "Capital ratios are retained at the rounded precision printed on the chart.",
+      "Primary filing re-reviewed on 5 October 2026 (Asia/Kolkata) from the bank-hosted document. The June 2026 reporting period is unchanged; earlier knowledge versions and their source identities are retained."
     ],
     "default_event": null,
     "exclusions": [],
@@ -859,7 +860,7 @@
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T19:19:10.185842Z",
         "metrics": {
           "advances": {
             "basis": "Includes IBPC, as does the stated NPA reporting basis.",
@@ -1119,7 +1120,7 @@
       "sources": [],
       "status": "not_applicable"
     },
-    "retrieved_at": "2026-09-24T21:27:44.140030+00:00",
+    "retrieved_at": "2026-10-04T19:14:10.048016+00:00",
     "schema": "liquilens.bank-specialisation.v1",
     "scope": "research",
     "score_authority": false,
@@ -1142,5 +1143,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "b40dc421a6683f01d3e69aa345833f7abb08e8a0eb35bc2a1230b974e33caa4e"
+  "source_payload_sha256": "fac80a00289ce2e540fe22422f9a68be01347abda53af764078b279c1801d24d"
 }

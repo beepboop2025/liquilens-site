@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/ujjivan-sfb?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:43:23Z",
   "evidence": {
-    "age_days": 96,
-    "as_of": "2026-10-04",
+    "age_days": 97,
+    "as_of": "2026-10-05",
     "available_at": "2026-09-24T21:36:30.694179Z",
     "can_authorize_credit": false,
     "changes": {
@@ -1133,5 +1133,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "7aa6efb993349700092576cd8a030bd36167d5cadffbaaed1c265450c828bf1a"
+  "source_payload_sha256": "1f7aa5057863458f9010383b4146da1334c6e9f34a253bcc416ddf90d9d7288e"
 }
