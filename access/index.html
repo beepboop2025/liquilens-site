@@ -20,6 +20,8 @@
 @media(max-width:820px){.hero{grid-template-columns:1fr;gap:30px;padding-top:52px}.strip,.grid,.ladder{grid-template-columns:1fr 1fr}}
 @media(max-width:580px){.nav{display:none}.strip,.grid,.ladder{grid-template-columns:1fr}.hero h1{font-size:43px}.offer{padding:22px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.contact-template{margin-top:22px;text-align:left}.contact-template summary{cursor:pointer;color:var(--gold)}.contact-template label{display:block;margin:14px 0 8px;color:var(--muted)}.contact-template textarea{display:block;width:100%;max-width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:var(--text);font:12px/1.65 var(--mono);resize:vertical}.contact-template button{font:inherit;cursor:pointer}.contact-template button[hidden]{display:none}.contact-template :focus-visible{outline:2px solid var(--teal);outline-offset:4px}.contact-template .copy-status{min-height:1.7em;color:var(--muted);font-size:13px}
 </style>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"43b422e63bb44fb5975c7bb39bd0ba24"}'></script>
 <link rel="stylesheet" href="/family-design.css">
@@ -58,6 +60,23 @@
         <a class="btn alt" data-event="sample_clicked" href="/access/sample/">See a generated pack</a>
       </div>
       <p class="fine">Scope and pricing by written proposal · no customer rows on the first invoice</p>
+      <p class="contact-address">Email <a data-event="email_clicked" href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a> directly, or use the enquiry template below.</p>
+      <details class="contact-template">
+        <summary>Use the template in your email app or webmail</summary>
+        <label for="enquiry-template">Select and copy this template, then fill it in in your email app. No customer records are needed.</label>
+        <textarea id="enquiry-template" rows="10" readonly spellcheck="false" aria-describedby="enquiry-copy-status">To: mrinal@liquilens.in
+Subject: LiquiLens named-list seat
+
+Institution:
+Role:
+Book (India and/or US):
+Fifteen names or FDIC certs:
+1.
+2.
+3.</textarea>
+        <div class="actions"><button class="btn alt" type="button" data-copy-enquiry hidden>Copy enquiry template</button></div>
+        <p class="copy-status" id="enquiry-copy-status" role="status">Copying the template does not send an email.</p>
+      </details>
     </div>
     <aside class="offer" aria-label="Named-list scope">
       <div class="label">Named-list software seat</div>
@@ -152,6 +171,7 @@
   </section>
 </main>
 <footer class="shell foot">© 2026 LiquiLens · a product of ai.de, Jaipur, India · Screening research, not a credit rating or investment advice · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="mailto:mrinal@liquilens.in">Contact LiquiLens</a></footer>
+<script src="/access/enquiry-copy.js" defer></script>
 <script src="/access/app.js" defer></script>
 <script type="module" src="/research-ui/context.js"></script></body>
 </html>
