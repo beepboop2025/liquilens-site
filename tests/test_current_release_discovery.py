@@ -132,3 +132,45 @@ def test_observed_runtime_archive_has_separate_evidence_and_no_inherited_recover
         assert "all 1,191 tracked files match the signed v0.13.13 source" in text
         assert "do not establish recovery or full-release acceptance" in text
         assert "archive record was not yet observed" not in text
+
+
+def test_hosted_mcp_observation_is_bound_to_retained_responses_and_separate_from_acceptance():
+    catalog = json.loads((ROOT / ".well-known/ai-catalog.json").read_text())
+    current = next(e for e in catalog["entries"] if e["identifier"].endswith(":mcp:seiche-hosted"))
+    historical = next(e for e in catalog["entries"] if e["identifier"].endswith(":catalog:seiche"))
+    meta = current["metadata"]
+    observation_bytes = local_public_file(meta["observation"]).read_bytes()
+    assert meta["observationSha256"] == "sha256:" + hashlib.sha256(observation_bytes).hexdigest()
+    observation = json.loads(observation_bytes)
+    receipt_bytes = local_public_file(observation["receipt"]).read_bytes()
+    assert observation["receipt_sha256"] == "sha256:" + hashlib.sha256(receipt_bytes).hexdigest()
+    receipt = json.loads(receipt_bytes)
+    initialized = receipt["initialize"]["result"]
+    tools = receipt["tools_list"]["result"]["tools"]
+    assert observation["server_info"] == initialized["serverInfo"]
+    assert current["version"] == current["data"]["version"] == initialized["serverInfo"]["version"] == "0.14.1"
+    assert observation["tool_names"] == current["capabilities"] == [tool["name"] for tool in tools]
+    assert observation["tool_count"] == meta["publicToolCount"] == len(tools) == 16
+    assert {"gift_city_context", "gold_inventory_carry", "market_workbench"} <= set(current["capabilities"])
+    assert observation["methods"] == ["initialize", "tools/list"]
+    assert observation["observed_at"] == meta["observedAt"] == current["updatedAt"] == "2026-10-04T20:12:51.863043+00:00"
+    assert current["data"]["remotes"] == [{"type": "streamable-http", "url": observation["endpoint"]}]
+    assert observation["scope"] == meta["observationScope"]
+    assert "native MCP endpoint is authoritative" in observation["scope"]
+    assert "No tools/call" in observation["scope"]
+    assert "full-release acceptance" in observation["scope"]
+    assert not {"recoveryAccepted", "fullReleaseAccepted", "archiveDoi", "pypiProject", "registryVersion"}.intersection(meta)
+    assert historical["version"] == "0.13.2"
+    assert historical["metadata"]["observedRuntimeVersion"] == "0.13.13"
+    assert historical["metadata"]["publicToolCount"] == 14
+    sibling = next(s for s in json.loads((ROOT / "product-card.json").read_text())["siblings"] if s["name"] == "Seiche")
+    hosted = sibling["observed_hosted_mcp"]
+    for key in ("observed_at", "endpoint", "tool_count", "tool_names", "scope"):
+        assert hosted[key] == observation[key]
+    assert hosted["observation"] == meta["observation"]
+    assert hosted["observation_sha256"] == meta["observationSha256"]
+    for filename in ("llms.txt", "status/index.html"):
+        text = (ROOT / filename).read_text()
+        assert "Seiche 0.14.1" in text
+        assert observation["observed_at"] in text
+        assert meta["observation"] in text

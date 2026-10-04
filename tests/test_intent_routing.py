@@ -8,10 +8,10 @@ from xml.etree import ElementTree
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_REVISION = "8a218dbf006b9e16cf0a2068dd0b580cb7321aaf"
+SKILL_REVISION = "22096b824ac09d47cf24d7ab1612d9a97a13c7b3"
 SKILL_DIRECTORY = (
     "https://github.com/beepboop2025/financial-evidence-skills/"
-    "tree/main/financial-evidence"
+    f"tree/{SKILL_REVISION}/financial-evidence"
 )
 SKILL_RAW_URL = (
     "https://raw.githubusercontent.com/beepboop2025/"
@@ -166,8 +166,28 @@ def test_existing_access_surface_and_pinned_agent_skill_are_discoverable():
     assert skill["url"] == SKILL_RAW_URL
     assert skill["version"] == SKILL_REVISION
     assert skill["metadata"]["canonicalDirectory"] == SKILL_DIRECTORY
-    assert skill["metadata"]["contentSha256"] == "sha256:1812e60e181afc21d08964e8cd28c3e09f2cd169d3432b5207c210ac0a2ba73e"
+    assert skill["metadata"]["contentSha256"] == "sha256:c2e9262fd2175c8181f59ef6b428fe91e3167ebc4fe24a33a1076c7243ed27ab"
 
     card = json.loads(read("product-card.json"))
     assert "Paid named-list software" in card["product"]["access_model"]
     assert card["access"]["named_list"] == "https://liquilens.in/access/"
+
+
+def test_current_skill_pin_and_topics_agree_with_reviewed_remote_contract():
+    catalog = json.loads(read(".well-known/ai-catalog.json"))
+    skill = next(entry for entry in catalog["entries"] if entry["identifier"].endswith(":skill:financial-evidence"))
+    card = json.loads(read("product-card.json"))["financial_evidence_skill"]
+    routing = json.loads(read("protocol/financial-evidence-routing-v0.1.6.json"))
+    assert routing["source_commit"] == card["source_commit"] == skill["version"] == SKILL_REVISION
+    assert list(routing["routes"]) == card["topics"] == skill["capabilities"]
+    assert routing["routes"]["gift-city"] == routing["routes"]["gold"]
+    assert card["skill_url"] == skill["url"] == SKILL_RAW_URL
+    for field, metadata in (("skill_sha256", "contentSha256"), ("helper_url", "helperUrl"),
+                            ("helper_sha256", "helperSha256"), ("routing_url", "routingUrl"),
+                            ("routing_sha256", "routingSha256")):
+        assert card[field] == skill["metadata"][metadata]
+    assert card["helper_sha256"] == "sha256:31decd53b876cd4e0b2d09892e3a09c122bbe58ea1c1dce8928228e724882580"
+    assert card["routing_sha256"] == "sha256:29b75f91618e264bc811584b34fb14c50b7c4f8d06f2c9e43b9c1ef6f209d37c"
+    assert SKILL_REVISION in card["helper_url"] and SKILL_REVISION in card["routing_url"]
+    assert "does not assert" in card["scope"]
+    assert "No scenario auto-execution" in card["topic_boundary"]
