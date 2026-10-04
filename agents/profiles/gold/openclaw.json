@@ -1,0 +1,26 @@
+{
+  "mcp": {
+    "servers": {
+      "seiche": {
+        "url": "https://api.seiche.info/mcp",
+        "transport": "streamable-http",
+        "toolFilter": {
+          "include": [
+            "data_health",
+            "gift_city_context",
+            "gold_inventory_carry"
+          ]
+        }
+      },
+      "undertow": {
+        "url": "https://api.seiche.info/undertow/mcp",
+        "transport": "streamable-http",
+        "toolFilter": {
+          "include": [
+            "gold_cash_realisation"
+          ]
+        }
+      }
+    }
+  }
+}

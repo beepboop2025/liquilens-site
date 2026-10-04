@@ -1,0 +1,1 @@
+codex mcp add seiche --url https://api.seiche.info/mcp

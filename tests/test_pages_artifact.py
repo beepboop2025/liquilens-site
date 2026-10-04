@@ -1,11 +1,25 @@
 """Exercise the real staging boundary and deployed discovery-byte verifier."""
 import subprocess
+import re
+import xml.etree.ElementTree as ET
 import urllib.error
 import urllib.parse
 
 import pytest
 
 from scripts import stage_pages_artifact as artifact
+
+
+def test_bing_ownership_file_is_public_xml_and_staged_byte_for_byte(tmp_path):
+    body = (artifact.Path(__file__).parents[1] / "BingSiteAuth.xml").read_bytes()
+    document = ET.fromstring(body)
+    assert document.tag == "users" and len(document) == 1
+    assert document[0].tag == "user"
+    assert re.fullmatch(r"[A-F0-9]{32}", document[0].text)
+    root = repository(tmp_path, {"BingSiteAuth.xml": body})
+    destination = tmp_path / "artifact"
+    artifact.stage(root, destination)
+    assert (destination / "BingSiteAuth.xml").read_bytes() == body
 
 
 def repository(tmp_path, extra=None):

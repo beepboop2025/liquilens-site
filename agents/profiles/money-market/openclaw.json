@@ -1,0 +1,17 @@
+{
+  "mcp": {
+    "servers": {
+      "seiche": {
+        "url": "https://api.seiche.info/mcp",
+        "transport": "streamable-http",
+        "toolFilter": {
+          "include": [
+            "data_health",
+            "funding_stress_now",
+            "money_market_context"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+codex mcp add liquilens --url https://api.liquilens.in/mcp

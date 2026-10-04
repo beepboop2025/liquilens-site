@@ -1,5 +1,6 @@
 """Verify native legacy layout and draft discovery integrity from shared bytes."""
 import hashlib
+import copy
 import importlib.util
 import json
 from pathlib import Path
@@ -54,3 +55,49 @@ def test_integrity_digest_changes_when_instructions_change():
     def digest(body):
         return json.loads(kit.discovery_assets(body)[".well-known/agent-skills/index.json"])["skills"][0]["digest"]
     assert digest(before) != digest(after)
+
+
+def test_topic_profiles_reach_live_gift_fx_and_gold_tools_without_private_tools():
+    profiles = kit.PROFILES
+    assert {"gift_city_context", "market_workbench", "gold_inventory_carry"} <= set(
+        profiles["gift-city"]["tools"]["seiche"]
+    )
+    assert profiles["gold"]["tools"]["undertow"] == ["gold_cash_realisation"]
+    assert "market_workbench" in profiles["forex"]["tools"]["seiche"]
+    assert "gift_city_context" in profiles["forex"]["tools"]["seiche"]
+    assert sum(map(len, profiles["all-topics"]["tools"].values())) == 13
+    assert sum(map(len, profiles["funding-bank-exits"]["tools"].values())) == 9
+    assert set(profiles["bank-risk"]["tools"]) == {"liquilens"}
+    assert set(profiles["market-liquidity"]["tools"]) == {"undertow"}
+    selected = {tool for profile in profiles.values() for tools in profile["tools"].values() for tool in tools}
+    assert not selected.intersection({"board_full", "exit_desk_full", "exit_schedule", "unwind_stress"})
+
+
+def test_topic_downloads_browser_payload_and_default_filters_cannot_diverge():
+    files = kit.assets()
+    manifest = json.loads(files["profiles.json"])
+    assert manifest["default"] == "all-topics"
+    assert set(manifest["profiles"]) == set(kit.PROFILES)
+    for key, profile in manifest["profiles"].items():
+        for client, text in profile["configurations"].items():
+            relative = profile["downloads"][client].removeprefix("/agents/")
+            assert files[relative].decode() == text
+            if key == "all-topics":
+                assert files[relative] == files[relative.rsplit("/", 1)[1]]
+        claw = json.loads(profile["configurations"]["openclaw"])["mcp"]["servers"]
+        assert set(claw) == set(profile["tools"])
+        for name, tools in profile["tools"].items():
+            assert claw[name]["toolFilter"]["include"] == tools
+            assert claw[name]["url"] == kit.SERVERS[name]["url"]
+            assert f'      include: {json.dumps(tools)}\n' in profile["configurations"]["hermes"]
+    assert manifest["filtering"]["hermes"] == manifest["filtering"]["openclaw"] == "selected-tools"
+    assert manifest["filtering"]["codex"] == "selected-servers"
+
+
+@pytest.mark.parametrize("tools", [["invented_gold_quote"], ["gold_inventory_carry"] * 2, []])
+def test_invalid_profile_tool_filters_fail_generation(monkeypatch, tools):
+    profiles = copy.deepcopy(kit.PROFILES)
+    profiles["gold"]["tools"]["seiche"] = tools
+    monkeypatch.setattr(kit, "PROFILES", profiles)
+    with pytest.raises(ValueError, match="Invalid tool selection"):
+        kit.profile_assets()

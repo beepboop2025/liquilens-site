@@ -1,0 +1,1 @@
+claude mcp add --transport http seiche https://api.seiche.info/mcp

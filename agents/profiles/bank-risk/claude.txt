@@ -1,0 +1,1 @@
+claude mcp add --transport http liquilens https://api.liquilens.in/mcp

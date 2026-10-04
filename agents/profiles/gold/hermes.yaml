@@ -1,0 +1,9 @@
+mcp_servers:
+  seiche:
+    url: https://api.seiche.info/mcp
+    tools:
+      include: ["data_health", "gift_city_context", "gold_inventory_carry"]
+  undertow:
+    url: https://api.seiche.info/undertow/mcp
+    tools:
+      include: ["gold_cash_realisation"]

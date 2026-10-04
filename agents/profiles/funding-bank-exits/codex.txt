@@ -1,0 +1,3 @@
+codex mcp add seiche --url https://api.seiche.info/mcp
+codex mcp add liquilens --url https://api.liquilens.in/mcp
+codex mcp add undertow --url https://api.seiche.info/undertow/mcp

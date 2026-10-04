@@ -4,9 +4,9 @@
     {
       "name": "liquilens-trading-research",
       "type": "skill-md",
-      "description": "Prepare a source-backed trading research brief with dollar-funding context, public bank evidence and position-sized BTC exit estimates. Use for macro preparation, counterparty research or market-depth questions, preserving source dates and missing data.",
+      "description": "Route sourced research about money markets, covered-bank risk, BTC exits, GIFT City, reference forex and caller-assumption gold scenarios across Seiche, LiquiLens and Undertow. Preserve source dates, rights, missing evidence and scenario assumptions; never infer execution prices or eligibility.",
       "url": "/.well-known/skills/liquilens-trading-research/SKILL.md",
-      "digest": "sha256:13de77b315a72b97c976436cb1b8af1546edb2ed5301b1df035e034584fe6915"
+      "digest": "sha256:b0ee61e3cd88c230f9ff080ba381856530265d14b9f50f48d5a244e04129aea7"
     }
   ]
 }

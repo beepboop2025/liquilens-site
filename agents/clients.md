@@ -1,6 +1,7 @@
 # Install the free financial research tools
 
-Checked on 24 September 2026. Start at https://liquilens.in/agents/ for
+Current topic configurations: 5 October 2026. Native-client checks below retain
+their original 24 September 2026 date and nine-tool selection. Start at https://liquilens.in/agents/ for
 configurations, the Python brief and the n8n workflow. Public research endpoints
 require no account or API key. Fair-use limits apply; your model provider may
 charge separately.
@@ -11,8 +12,9 @@ charge separately.
 
 1. Download https://liquilens.in/agents/hermes.yaml and review it.
 2. Merge its `mcp_servers` entries into `~/.hermes/config.yaml`. Keep your existing
-   settings and other servers. The configuration exposes nine research tools
-   across Seiche, LiquiLens and Undertow.
+   settings and other servers. The default configuration exposes thirteen research
+   tools across Seiche, LiquiLens and Undertow, including GIFT City, reference FX
+   and gold scenarios. Choose a narrower topic at https://liquilens.in/agents/#connect.
 3. Check each connection:
 
 ```sh
@@ -27,7 +29,9 @@ Start a new chat or use `/reload-mcp` in your existing session. Try this task:
 > observation dates, units, stale sources and unavailable fields. Return the
 > evidence and open questions.
 
-We tested Hermes tag `v2026.9.24`, commit
+The dated check below used the original nine-tool selection, now retained as
+`profiles/funding-bank-exits/hermes.yaml`; it is not a native runtime test of the
+new topic profiles. We tested Hermes tag `v2026.9.24`, commit
 `f97608f178d1ffeca59860195ab7da295f7c8e5f`, with Python 3.12. Its native runtime
 registered all nine selected research tools and ten resource/prompt helpers.
 Native calls to `money_market_context` and `banking_specialisation_coverage`
@@ -65,10 +69,12 @@ openclaw mcp probe --json
 ```
 
 In the result, check that LiquiLens, Seiche and Undertow are available. The kit
-selects four LiquiLens tools, three Seiche tools and two Undertow tools. Use a
+selects four LiquiLens tools, six Seiche tools and three Undertow tools. Use a
 research task in your agent session after discovery succeeds.
 
-We tested `openclaw@2026.9.6` with Node `24.16.0`. The native probe discovered all
+The dated check below used `profiles/funding-bank-exits/openclaw.json`, the
+original nine-tool selection. It is not a native runtime test of the expanded
+configuration. We tested `openclaw@2026.9.6` with Node `24.16.0`. The native probe discovered all
 three servers and nine selected tools with no diagnostics. This is a discovery
 and filtering check; a model turn or native OpenClaw tool invocation was not
 part of this check. Follow your installed release's Node requirements.
@@ -81,7 +87,11 @@ Review [LiquiLens Trading Research on ClawHub](https://clawhub.ai/beepboop2025/s
 openclaw skills install @beepboop2025/liquilens-trading-research --version 1.0.1
 ```
 
-This adds task instructions and a configuration template. Connect the three MCP
+This pinned ClawHub version contains the original funding/bank/BTC instructions
+and configuration template. It has not been republished with the new topic
+profiles. Review the current domain skill at
+https://liquilens.in/agents/trading-research/SKILL.md and use the current profile
+configuration when working on GIFT City, FX or gold. Connect the three MCP
 servers separately using the steps above. Installation does not run research.
 The ClawHub bundle is MIT-0; source data and API responses retain their own rights.
 

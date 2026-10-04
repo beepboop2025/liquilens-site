@@ -1,12 +1,50 @@
 # Free financial research for agents
 
-Get dollar-funding context, bank filing evidence and published BTC exit-cost
-estimates over MCP. The public research tools in this kit require no account,
+Get dollar-funding context, bank filing evidence, published BTC exit estimates,
+GIFT City context, reference FX and caller-assumption gold scenarios over MCP.
+The public research tools in this kit require no account,
 API key or subscription. Fair-use limits apply; a model provider may charge
 separately. Private services retain their own access rules.
 
 Download: https://liquilens.in/agents/trading-research-kit.zip
 Manifest and per-file SHA-256 digests: https://liquilens.in/agents/manifest.json
+
+## Choose a research topic
+
+Kit 1.2.0 adds topic profiles at https://liquilens.in/agents/#connect and the
+machine-readable https://liquilens.in/agents/profiles.json. The default
+`hermes.yaml` and `openclaw.json` select thirteen public tools across the three
+servers. The same files are under `profiles/all-topics/` in the download.
+Choose `profiles/<topic>/hermes.yaml` or `profiles/<topic>/openclaw.json` for a
+smaller selection. All profiles also include Claude Code, Codex, Cursor and
+VS Code configurations; those formats select servers, not individual tools.
+
+| Topic | Start with | Boundary |
+|---|---|---|
+| `gift-city` | Seiche `gift_city_context`, reference FX and funding; exact covered-bank evidence when relevant | For importers/treasury, investors/fund managers and banks/IFSC institutions; no eligibility ruling, fund NAV or live bullion feed |
+| `forex` | Seiche `market_workbench` with a supported pair and `h10` or `ecb`; `gift_city_context` for separate CBUAE context | Dated references; do not blend providers or invent an unsupported AED pair |
+| `gold` | Seiche gold-positioning context, then requested `gold_inventory_carry` or Undertow `gold_cash_realisation` | Every scenario needs explicit caller assumptions; no automatic calculation or executable quote |
+| `bank-risk` | LiquiLens coverage, exact filing review and separately requested Failure Radar | Coverage and registry membership do not establish creditworthiness |
+| `money-market` | Seiche freshness, funding conclusion and money-market context | Native observation dates, partial coverage and missing values remain visible |
+| `market-liquidity` | Undertow BTC exit estimate and venue concentration | Supported size rungs and source clocks; no executable price |
+| `funding-bank-exits` | Original nine-tool brief | Preserves the selection used in the dated September 24 client checks |
+
+Connect only the profile you need, preserving your existing settings. Review
+the live tool schemas before a call. The current tools were observed through
+anonymous MCP discovery on October 5, 2026 (India time); these new profiles have
+not been presented as a repeat of the September native-client checks.
+
+For gold financing, supply kilograms, fineness, USD per fine troy ounce,
+annual rate, days, day-count basis, fees and INR per USD as the schema requires.
+For gold sale/cash scenarios, also supply quote/FX observation and expiry times,
+settlement and cutoff times, and cleared/access-restricted/pledged flags.
+Keep decimal strings and timezone-aware timestamps. Never copy a reference FX
+rate into an executable-input assumption without the caller explicitly choosing
+that scenario input. Missing inputs require clarification, not fabricated defaults.
+
+These topic configurations and prompts do not expand the Python `trading_brief.py`
+workflow below, which remains the funding/bank/BTC brief. They do not install a
+schedule or run research when a profile is selected.
 
 For an immediate result before installation, choose funding, bank filing research
 or a BTC exit estimate at https://liquilens.in/start/. Research runs only after
