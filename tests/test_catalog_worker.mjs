@@ -63,7 +63,12 @@ test("GET returns the committed ARD catalog with discovery headers", async () =>
   assert.equal(response.status, 200);
   assert.deepEqual(catalog, expected);
   assert.equal(catalog.specVersion, "1.0");
-  assert.equal(catalog.entries.length, 19);
+  assert.equal(catalog.entries.length, 20);
+  const seicheHosted = catalog.entries.find(
+    (entry) => entry.identifier === "urn:air:liquilens.in:mcp:seiche-hosted",
+  );
+  assert.equal(seicheHosted.version, "0.14.1");
+  assert.equal(seicheHosted.metadata.publicToolCount, 16);
   const carrier = catalog.entries.find(
     (entry) => entry.identifier === "urn:air:liquilens.in:protocol:evidence-carrier",
   );
