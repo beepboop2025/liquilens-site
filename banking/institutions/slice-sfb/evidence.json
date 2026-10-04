@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/slice-sfb?include_history=true",
-  "captured_at": "2026-10-04T17:19:37Z",
+  "captured_at": "2026-10-04T17:42:02Z",
   "evidence": {
     "age_days": 187,
     "as_of": "2026-10-04",
-    "available_at": "2026-10-04T17:06:35.119775Z",
+    "available_at": "2026-10-04T17:34:22.036315Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -29,6 +29,7 @@
     },
     "comparability_notes": [
       "Amounts in the movement table are rounded to INR thousands. Component reductions and reported totals have small rounding differences; those residuals are retained.",
+      "Additional reported facts reviewed on 4 October 2026 from a newly retrieved, byte-identical primary filing; the reporting period is unchanged and the earlier capture is retained.",
       "Additional reported facts reviewed on 4 October 2026 from a newly retrieved, byte-identical primary filing; the reporting period is unchanged and the earlier capture is retained."
     ],
     "default_event": null,
@@ -160,7 +161,7 @@
         ]
       },
       {
-        "available_at": "2026-10-04T17:06:35.119775Z",
+        "available_at": "2026-10-04T17:34:22.036315Z",
         "metrics": {
           "advances": {
             "basis": "Gross standard advances plus gross NPAs, Schedule 18; INR thousands.",
@@ -212,11 +213,11 @@
             "value": null
           },
           "lcr_pct": {
-            "basis": null,
+            "basis": "Reported weighted liquidity coverage ratio for the quarter ended 31 March 2026, from the continued LCR disclosure table. PDF page 104 (printed page 102).",
             "label": "Reported liquidity coverage",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "percent",
-            "value": null
+            "value": 498.07
           },
           "nnpa_pct": {
             "basis": null,
@@ -261,11 +262,11 @@
             "value": 7.75
           },
           "top20_npa_pct": {
-            "basis": null,
+            "basis": "Reported twenty largest NPA exposures as a percentage of gross NPAs at 31 March 2026. PDF page 112 (printed page 110).",
             "label": "Twenty largest NPA exposures / gross NPAs",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "percent",
-            "value": null
+            "value": 1.45
           }
         },
         "period_end": "2026-03-31",
@@ -331,11 +332,11 @@
         "value": null
       },
       "lcr_pct": {
-        "basis": null,
+        "basis": "Reported weighted liquidity coverage ratio for the quarter ended 31 March 2026, from the continued LCR disclosure table. PDF page 104 (printed page 102).",
         "label": "Reported liquidity coverage",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "percent",
-        "value": null
+        "value": 498.07
       },
       "nnpa_pct": {
         "basis": null,
@@ -380,11 +381,11 @@
         "value": 7.75
       },
       "top20_npa_pct": {
-        "basis": null,
+        "basis": "Reported twenty largest NPA exposures as a percentage of gross NPAs at 31 March 2026. PDF page 112 (printed page 110).",
         "label": "Twenty largest NPA exposures / gross NPAs",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "percent",
-        "value": null
+        "value": 1.45
       }
     },
     "name": "slice Small Finance Bank",
@@ -451,6 +452,7 @@
           88,
           96,
           98,
+          104,
           111,
           112
         ],
@@ -464,5 +466,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "a546a88a0a5210aca77de86feb8e193608760b41fe1eb7080ff8f8ebf6443da8"
+  "source_payload_sha256": "d5439768adc76473537c250072cf65077073687175aa5d0471f1bba94a193a47"
 }
