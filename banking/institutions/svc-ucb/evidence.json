@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/svc-ucb?include_history=true",
-  "captured_at": "2026-10-04T17:19:37Z",
+  "captured_at": "2026-10-04T17:42:02Z",
   "evidence": {
     "age_days": 187,
     "as_of": "2026-10-04",
-    "available_at": "2026-10-04T17:06:35.119775Z",
+    "available_at": "2026-10-04T17:34:22.036315Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -31,6 +31,7 @@
       "Selected facts verified against the cited primary filing; capture time is not backdated to publication.",
       "The annual report discloses RBI-assessed FY2025 NPA divergence and states that its effect was incorporated by March 2026.",
       "Comparative period observed in this capture; not available retroactively.",
+      "Additional reported facts reviewed on 4 October 2026 from a newly retrieved, byte-identical primary filing; the reporting period is unchanged and the earlier capture is retained.",
       "Additional reported facts reviewed on 4 October 2026 from a newly retrieved, byte-identical primary filing; the reporting period is unchanged and the earlier capture is retained."
     ],
     "default_event": null,
@@ -849,7 +850,7 @@
         ]
       },
       {
-        "available_at": "2026-10-04T17:06:35.119775Z",
+        "available_at": "2026-10-04T17:34:22.036315Z",
         "metrics": {
           "advances": {
             "basis": null,
@@ -943,18 +944,18 @@
             "value": 11.54
           },
           "top20_depositors_pct": {
-            "basis": null,
+            "basis": "Reported twenty largest depositors as a percentage of total deposits at 31 March 2026. PDF page 85 (printed page 82).",
             "label": "Twenty largest depositors / deposits",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "percent",
-            "value": null
+            "value": 6.55
           },
           "top20_npa_pct": {
-            "basis": null,
+            "basis": "Reported twenty largest NPA exposures as a percentage of gross NPAs at 31 March 2026. PDF page 85 (printed page 82).",
             "label": "Twenty largest NPA exposures / gross NPAs",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "percent",
-            "value": null
+            "value": 88.44
           }
         },
         "period_end": "2026-03-31",
@@ -1062,18 +1063,18 @@
         "value": 11.54
       },
       "top20_depositors_pct": {
-        "basis": null,
+        "basis": "Reported twenty largest depositors as a percentage of total deposits at 31 March 2026. PDF page 85 (printed page 82).",
         "label": "Twenty largest depositors / deposits",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "percent",
-        "value": null
+        "value": 6.55
       },
       "top20_npa_pct": {
-        "basis": null,
+        "basis": "Reported twenty largest NPA exposures as a percentage of gross NPAs at 31 March 2026. PDF page 85 (printed page 82).",
         "label": "Twenty largest NPA exposures / gross NPAs",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "percent",
-        "value": null
+        "value": 88.44
       }
     },
     "name": "SVC Co-operative Bank",
@@ -1120,7 +1121,8 @@
           63,
           72,
           80,
-          81
+          81,
+          85
         ],
         "sha256": "fc0dc46dc1120c59c94a4ce146ed0a89e4816eb07cb475ec48714569436fcd2b",
         "url": "https://www.svc.bank.in/sites/default/files/document/AR_2025-26.pdf"
@@ -1132,5 +1134,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "82d30181b2a68a2a7fc4276f19d5c18e7c759a4c0d0430651f3304036a62a7cc"
+  "source_payload_sha256": "f6dfffe8e72578a3dede7d943b6fcdd1485617011c0dc2b9bb243f7e8faab544"
 }

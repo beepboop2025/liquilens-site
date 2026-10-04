@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/cosmos-ucb?include_history=true",
-  "captured_at": "2026-10-04T17:19:37Z",
+  "captured_at": "2026-10-04T17:42:02Z",
   "evidence": {
     "age_days": 187,
     "as_of": "2026-10-04",
-    "available_at": "2026-10-04T17:06:35.119775Z",
+    "available_at": "2026-10-04T17:34:22.036315Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -29,6 +29,7 @@
     },
     "comparability_notes": [
       "A sourced filing does not by itself establish absence of RBI directions or discharge of prior SAF restrictions; current PCA applicability remains unverified.",
+      "Additional reported facts reviewed on 4 October 2026 from a newly retrieved, byte-identical primary filing; the reporting period is unchanged and the earlier capture is retained.",
       "Additional reported facts reviewed on 4 October 2026 from a newly retrieved, byte-identical primary filing; the reporting period is unchanged and the earlier capture is retained."
     ],
     "default_event": null,
@@ -160,7 +161,7 @@
         ]
       },
       {
-        "available_at": "2026-10-04T17:06:35.119775Z",
+        "available_at": "2026-10-04T17:34:22.036315Z",
         "metrics": {
           "advances": {
             "basis": null,
@@ -254,11 +255,11 @@
             "value": null
           },
           "top20_depositors_pct": {
-            "basis": null,
+            "basis": "Reported twenty largest depositors as a percentage of total deposits at 31 March 2026. PDF page 100 (printed page 98).",
             "label": "Twenty largest depositors / deposits",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "percent",
-            "value": null
+            "value": 4.67
           },
           "top20_npa_pct": {
             "basis": null,
@@ -373,11 +374,11 @@
         "value": null
       },
       "top20_depositors_pct": {
-        "basis": null,
+        "basis": "Reported twenty largest depositors as a percentage of total deposits at 31 March 2026. PDF page 100 (printed page 98).",
         "label": "Twenty largest depositors / deposits",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "percent",
-        "value": null
+        "value": 4.67
       },
       "top20_npa_pct": {
         "basis": null,
@@ -463,5 +464,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "64ac855d826965e8f80ca885d29bba544ac11c872820c3a6ee7dab1d32c602e1"
+  "source_payload_sha256": "dbea419b9fb9e25fdade25568ec6d0c53dd29d937ce8e2631cdc305f45f01dd9"
 }

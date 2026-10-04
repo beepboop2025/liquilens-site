@@ -1,6 +1,6 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/indusind-bank?include_history=true",
-  "captured_at": "2026-10-04T17:19:37Z",
+  "captured_at": "2026-10-04T17:42:02Z",
   "evidence": {
     "age_days": 96,
     "as_of": "2026-10-04",
