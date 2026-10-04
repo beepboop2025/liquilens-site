@@ -149,7 +149,10 @@ def render_record(snapshot, card=None):
         raise ValueError('snapshot capture clock needs timezone')
     title = f"{name}: NPA, capital and funding evidence | LiquiLens"
     description = f"Dated {name} filing evidence for {record['period_end']}: reported NPA, capital and funding disclosures, source citations and explicit missing data."
-    metrics = "".join(f"<tr><th scope=\"row\">{escape(m['label'])}</th><td>{escape(metric_value(m))}</td><td>{escape(m.get('status', 'unavailable'))}</td><td>{escape(m.get('basis') or 'As labelled in the accepted record.')}</td></tr>" for m in record["metrics"].values())
+    # The saved JSON is canonicalized by key. Live API insertion order must
+    # not change either the table or its structured-data measurement order.
+    ordered_metrics = [record['metrics'][key] for key in sorted(record['metrics'])]
+    metrics = "".join(f"<tr><th scope=\"row\">{escape(m['label'])}</th><td>{escape(metric_value(m))}</td><td>{escape(m.get('status', 'unavailable'))}</td><td>{escape(m.get('basis') or 'As labelled in the accepted record.')}</td></tr>" for m in ordered_metrics)
     documents = {d['url']: d for d in record.get('source_documents', [])}
     sources = []
     for url in record['sources']:
@@ -171,7 +174,7 @@ def render_record(snapshot, card=None):
         "dateModified":snapshot['captured_at'], "temporalCoverage":record['period_end'],
         "identifier":"sha256:" + snapshot['source_payload_sha256'], "isBasedOn":record['sources'],
         "measurementTechnique":"Selected disclosed facts from accepted issuer filings; definitions, absent values and reporting clocks are preserved.",
-        "variableMeasured":[m['label'] for m in record['metrics'].values()],
+        "variableMeasured":[m['label'] for m in ordered_metrics],
         "distribution":[{"@type":"DataDownload", "encodingFormat":"application/json", "contentUrl":SITE + path + 'evidence.json'}],
         "isPartOf":{"@type":"DataCatalog", "name":"LiquiLens accepted bank filing evidence", "url":SITE + PREFIX}}
     body = f'''<section class="hero"><p class="eyebrow">Accepted filing evidence · dated research snapshot</p><h1>{escape(name)}</h1><p class="lede">Reported NPA, capital and funding disclosures for the period ending <strong>{record['period_end']}</strong>. Read every value with its definition and source.</p><p class="evidence-state">Evidence state at capture: <strong>{escape(record['status'])}</strong>. This page is a dated snapshot, not a live bank-health assessment.</p><div class="actions"><a class="button" href="evidence.json">Download cited evidence JSON</a><a class="button secondary" href="{escape(snapshot['api_url'], quote=True)}">Check latest accepted API record</a></div></section>

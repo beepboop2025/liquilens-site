@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/equitas-sfb?include_history=true",
-  "captured_at": "2026-09-27T15:44:24Z",
+  "captured_at": "2026-10-04T17:19:37Z",
   "evidence": {
-    "age_days": 89,
-    "as_of": "2026-09-27",
+    "age_days": 96,
+    "as_of": "2026-10-04",
     "available_at": "2026-09-24T21:36:30.694179Z",
     "can_authorize_credit": false,
     "changes": {
@@ -1140,5 +1140,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "b3d1609360a04ab08b9f56bd41f6869c443aa6acb5e30ca854c2145a1d70176d"
+  "source_payload_sha256": "6a8396919abf6c1bf647b526d89a6d29f5a462f0b083c0bde167e550c417b8b8"
 }

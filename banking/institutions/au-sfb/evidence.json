@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/au-sfb?include_history=true",
-  "captured_at": "2026-09-27T15:44:24Z",
+  "captured_at": "2026-10-04T17:19:37Z",
   "evidence": {
-    "age_days": 89,
-    "as_of": "2026-09-27",
-    "available_at": "2026-09-24T21:36:30.694179Z",
+    "age_days": 96,
+    "as_of": "2026-10-04",
+    "available_at": "2026-10-04T17:06:35.119775Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -39,7 +39,8 @@
       }
     },
     "comparability_notes": [
-      "Selected facts verified against the cited primary filing; capture time is not backdated to publication."
+      "Selected facts verified against the cited primary filing; capture time is not backdated to publication.",
+      "Additional reported facts reviewed on 4 October 2026 from a newly retrieved, byte-identical primary filing; the reporting period is unchanged and the earlier capture is retained."
     ],
     "default_event": null,
     "exclusions": [],
@@ -512,14 +513,14 @@
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T17:06:35.119775Z",
         "metrics": {
           "advances": {
-            "basis": null,
+            "basis": "Reported gross advances at 30 June 2026, INR crore; distinct from gross loan portfolio. PDF page 9 (printed page 8).",
             "label": "Reported advances",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "INR_crore",
-            "value": null
+            "value": 140461
           },
           "casa_pct": {
             "basis": null,
@@ -634,11 +635,11 @@
     ],
     "metrics": {
       "advances": {
-        "basis": null,
+        "basis": "Reported gross advances at 30 June 2026, INR crore; distinct from gross loan portfolio. PDF page 9 (printed page 8).",
         "label": "Reported advances",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "INR_crore",
-        "value": null
+        "value": 140461
       },
       "casa_pct": {
         "basis": null,
@@ -772,7 +773,7 @@
       "sources": [],
       "status": "not_applicable"
     },
-    "retrieved_at": "2026-09-24T21:20:35.133983+00:00",
+    "retrieved_at": "2026-10-04T17:00:14.931709+00:00",
     "schema": "liquilens.bank-specialisation.v1",
     "scope": "research",
     "score_authority": false,
@@ -799,5 +800,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "07e99f0980688e4811de5a885eca51e3137db0b65868bdab0ed894c61341de89"
+  "source_payload_sha256": "dc3adc5b08a88dce3be9f73b0f0f6a7e1c535eff8361a1716b35847e7d3c22bf"
 }

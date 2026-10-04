@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/slice-sfb?include_history=true",
-  "captured_at": "2026-09-27T15:44:24Z",
+  "captured_at": "2026-10-04T17:19:37Z",
   "evidence": {
-    "age_days": 180,
-    "as_of": "2026-09-27",
-    "available_at": "2026-09-05T07:05:33Z",
+    "age_days": 187,
+    "as_of": "2026-10-04",
+    "available_at": "2026-10-04T17:06:35.119775Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -28,7 +28,8 @@
       }
     },
     "comparability_notes": [
-      "Amounts in the movement table are rounded to INR thousands. Component reductions and reported totals have small rounding differences; those residuals are retained."
+      "Amounts in the movement table are rounded to INR thousands. Component reductions and reported totals have small rounding differences; those residuals are retained.",
+      "Additional reported facts reviewed on 4 October 2026 from a newly retrieved, byte-identical primary filing; the reporting period is unchanged and the earlier capture is retained."
     ],
     "default_event": null,
     "exclusions": [],
@@ -159,7 +160,7 @@
         ]
       },
       {
-        "available_at": "2026-09-05T07:05:33Z",
+        "available_at": "2026-10-04T17:06:35.119775Z",
         "metrics": {
           "advances": {
             "basis": "Gross standard advances plus gross NPAs, Schedule 18; INR thousands.",
@@ -169,11 +170,11 @@
             "value": 45320187
           },
           "casa_pct": {
-            "basis": null,
+            "basis": "Reported period-end CASA ratio at 31 March 2026. PDF page 30 (printed page 28).",
             "label": "Current and savings account deposits / deposits",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "percent",
-            "value": null
+            "value": 39.85
           },
           "cet1_pct": {
             "basis": null,
@@ -190,11 +191,11 @@
             "value": 19.06
           },
           "deposits": {
-            "basis": null,
+            "basis": "Reported total deposit base at 31 March 2026, INR thousands. PDF page 30 (printed page 28).",
             "label": "Deposits",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "INR_thousand",
-            "value": null
+            "value": 51325625
           },
           "gnpa_pct": {
             "basis": null,
@@ -288,11 +289,11 @@
         "value": 45320187
       },
       "casa_pct": {
-        "basis": null,
+        "basis": "Reported period-end CASA ratio at 31 March 2026. PDF page 30 (printed page 28).",
         "label": "Current and savings account deposits / deposits",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "percent",
-        "value": null
+        "value": 39.85
       },
       "cet1_pct": {
         "basis": null,
@@ -309,11 +310,11 @@
         "value": 19.06
       },
       "deposits": {
-        "basis": null,
+        "basis": "Reported total deposit base at 31 March 2026, INR thousands. PDF page 30 (printed page 28).",
         "label": "Deposits",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "INR_thousand",
-        "value": null
+        "value": 51325625
       },
       "gnpa_pct": {
         "basis": null,
@@ -437,7 +438,7 @@
       "sources": [],
       "status": "not_applicable"
     },
-    "retrieved_at": "2026-09-05T07:05:33Z",
+    "retrieved_at": "2026-10-04T17:00:16.673018+00:00",
     "schema": "liquilens.bank-specialisation.v1",
     "scope": "research",
     "score_authority": false,
@@ -446,6 +447,7 @@
     "source_documents": [
       {
         "pdf_pages": [
+          30,
           88,
           96,
           98,
@@ -462,5 +464,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "3838d6205446ad548a6493b025ca15f5b9325664dfac56e579a3873021c61159"
+  "source_payload_sha256": "a546a88a0a5210aca77de86feb8e193608760b41fe1eb7080ff8f8ebf6443da8"
 }

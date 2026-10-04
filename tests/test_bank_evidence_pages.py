@@ -49,6 +49,13 @@ def test_digest_mismatch_is_refused(snapshot):
         bank.render_record(snapshot)
 
 
+def test_live_metric_order_matches_saved_canonical_snapshot(snapshot):
+    live = copy.deepcopy(snapshot)
+    live['evidence']['metrics'] = dict(reversed(list(live['evidence']['metrics'].items())))
+    # Reordering an object changes neither its canonical digest nor its page.
+    assert bank.render_record(live) == bank.render_record(snapshot)
+
+
 def test_institution_identity_and_authority_are_not_promoted(snapshot):
     with pytest.raises(ValueError, match='identity'):
         bank.validate(snapshot['evidence'], 'different-bank')

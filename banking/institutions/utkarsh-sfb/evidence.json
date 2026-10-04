@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/utkarsh-sfb?include_history=true",
-  "captured_at": "2026-09-27T15:44:24Z",
+  "captured_at": "2026-10-04T17:19:37Z",
   "evidence": {
-    "age_days": 89,
-    "as_of": "2026-09-27",
+    "age_days": 96,
+    "as_of": "2026-10-04",
     "available_at": "2026-09-24T21:36:30.694179Z",
     "can_authorize_credit": false,
     "changes": {
@@ -908,5 +908,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "b838fbdc42373a7ab635c374ee09ec3c177fec0fbfe63c8cbee4f34b52450f20"
+  "source_payload_sha256": "eba961b4c17c2f8e3550a3cee75ddbd1a1bd89c5a879dcc7bb746e0b25701ffb"
 }
