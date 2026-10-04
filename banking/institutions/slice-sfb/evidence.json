@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/slice-sfb?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:31:44Z",
   "evidence": {
-    "age_days": 187,
-    "as_of": "2026-10-04",
+    "age_days": 188,
+    "as_of": "2026-10-05",
     "available_at": "2026-10-04T17:34:22.036315Z",
     "can_authorize_credit": false,
     "changes": {
@@ -466,5 +466,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "d5439768adc76473537c250072cf65077073687175aa5d0471f1bba94a193a47"
+  "source_payload_sha256": "b1a7a7d98acb6a767dea2a7fc342038a6774e5204cedb042fc320f3c564a1897"
 }

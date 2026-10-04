@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/esaf-sfb?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:31:44Z",
   "evidence": {
-    "age_days": 96,
-    "as_of": "2026-10-04",
+    "age_days": 97,
+    "as_of": "2026-10-05",
     "available_at": "2026-09-24T21:36:30.694179Z",
     "can_authorize_credit": false,
     "changes": {
@@ -1140,5 +1140,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "48e37f0bad8af93622ad94a047b48c6eaa7949da419f3485a6d40f48dc3b7936"
+  "source_payload_sha256": "baafd77486510c30c8129c400c6e4ba738b4998748ee0a4e048cefac46376f1d"
 }

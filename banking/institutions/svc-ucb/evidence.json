@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/svc-ucb?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:31:44Z",
   "evidence": {
-    "age_days": 187,
-    "as_of": "2026-10-04",
+    "age_days": 188,
+    "as_of": "2026-10-05",
     "available_at": "2026-10-04T17:34:22.036315Z",
     "can_authorize_credit": false,
     "changes": {
@@ -1101,7 +1101,7 @@
       ],
       "note": "A disclosed threshold breach is not an RBI decision to invoke PCA.",
       "risk_level": 0,
-      "rule_as_of": "2026-10-04",
+      "rule_as_of": "2026-10-05",
       "sources": [
         "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12711",
         "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12418"
@@ -1134,5 +1134,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "f6dfffe8e72578a3dede7d943b6fcdd1485617011c0dc2b9bb243f7e8faab544"
+  "source_payload_sha256": "7effa4aa1df6aca9d9c8c7b04fe21ee9083dfe4b73ca6e03c01bdc7b8b2189b2"
 }

@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/au-sfb?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:31:44Z",
   "evidence": {
-    "age_days": 96,
-    "as_of": "2026-10-04",
+    "age_days": 97,
+    "as_of": "2026-10-05",
     "available_at": "2026-10-04T17:06:35.119775Z",
     "can_authorize_credit": false,
     "changes": {
@@ -800,5 +800,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "dc3adc5b08a88dce3be9f73b0f0f6a7e1c535eff8361a1716b35847e7d3c22bf"
+  "source_payload_sha256": "61d8e322060b438ec7035ca29f7ff17add0a65d0d103a4468026a82c33e458d2"
 }

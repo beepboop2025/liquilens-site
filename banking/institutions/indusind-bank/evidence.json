@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/indusind-bank?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:31:44Z",
   "evidence": {
-    "age_days": 96,
-    "as_of": "2026-10-04",
+    "age_days": 97,
+    "as_of": "2026-10-05",
     "available_at": "2026-09-24T21:43:04.041506Z",
     "can_authorize_credit": false,
     "changes": {
@@ -1158,5 +1158,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "2a9b0f01c326a858b329d22e8ff5f36dd4860b5ab568b43188cfe823297cd4b7"
+  "source_payload_sha256": "098a6e0ada4d9bdf81f7ef020fe38d31670e11caa6e0b9ace0a33b08d3c4efcd"
 }

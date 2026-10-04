@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/saraswat-ucb?include_history=true",
-  "captured_at": "2026-10-04T17:42:02Z",
+  "captured_at": "2026-10-04T19:31:44Z",
   "evidence": {
-    "age_days": 187,
-    "as_of": "2026-10-04",
+    "age_days": 188,
+    "as_of": "2026-10-05",
     "available_at": "2026-10-04T17:34:22.036315Z",
     "can_authorize_credit": false,
     "changes": {
@@ -1103,7 +1103,7 @@
       ],
       "note": "A disclosed threshold breach is not an RBI decision to invoke PCA.",
       "risk_level": 0,
-      "rule_as_of": "2026-10-04",
+      "rule_as_of": "2026-10-05",
       "sources": [
         "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12711",
         "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12418"
@@ -1138,5 +1138,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "0f7ccfb9c8c942ec75d96a3d9bd1a9373281410eedc395e460d981825416ad75"
+  "source_payload_sha256": "989661d8f60d4d70fc26dddefb53158d4ad101eb4b1831c13aeb55fcc1ec4ac8"
 }
