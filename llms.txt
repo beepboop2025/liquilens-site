@@ -55,6 +55,7 @@ Free Trade Safety MCP and REST sandbox: https://trade-safety.liquilens.in/
 Trade Safety specification: https://liquilens.in/protocol/trade-safety/specification.md
 Trade Safety adoption plan: https://liquilens.in/protocol/trade-safety/adoption-plan.md
 Selection guide: https://liquilens.in/use-cases/
+Bank-risk reference guide: https://liquilens.in/guides/how-to-assess-bank-risk/ (asset quality, capital, funding, source clocks and a hypothetical ratio reconciliation; educational, not a credit rating)
 Free early-warning coverage check: https://liquilens.in/tools/ews-coverage-check/
 RBI/NBFC early-warning validation guide: https://liquilens.in/guides/rbi-nbfc-early-warning-system/
 Named-list software: https://liquilens.in/access/
