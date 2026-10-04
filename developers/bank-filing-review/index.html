@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" class="family-design research-interface">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Read a bank filing with Python and preserve its evidence limits | LiquiLens</title>
+<meta name="description" content="A complete Python bank-review tutorial with source dates, missing evidence, response contracts and a downloadable analyst worksheet.">
+<link rel="canonical" href="https://liquilens.in/developers/bank-filing-review/">
+<link rel="stylesheet" href="/family-design.css">
+<link rel="stylesheet" href="/family-pages.css">
+<link rel="stylesheet" href="/research-ui/research.css">
+<link rel="stylesheet" href="/developers/bank-filing-review/styles.css">
+<!-- SOCIAL-CARD:START -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LiquiLens">
+<meta property="og:url" content="https://liquilens.in/developers/bank-filing-review/">
+<meta property="og:title" content="Read a bank filing with Python and preserve its evidence limits">
+<meta property="og:description" content="A complete Python bank-review tutorial with source dates, missing evidence, response contracts and a downloadable analyst worksheet.">
+<meta property="og:image" content="https://liquilens.in/developers/bank-filing-review/share.png?v=e2a7208278627667">
+<meta property="og:image:secure_url" content="https://liquilens.in/developers/bank-filing-review/share.png?v=e2a7208278627667">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LiquiLens route card for PYTHON + EVIDENCE: Read a bank filing and preserve its evidence limits. REVIEW GUIDE: SOURCE DATES / MISSING EVIDENCE. PYTHON RECIPE / ANALYST WORKSHEET. EXAMPLE CHECK 2026-10-04; status PUBLIC READ-ONLY RESEARCH.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Read a bank filing with Python and preserve its evidence limits">
+<meta name="twitter:description" content="A complete Python bank-review tutorial with source dates, missing evidence, response contracts and a downloadable analyst worksheet.">
+<meta name="twitter:image" content="https://liquilens.in/developers/bank-filing-review/share.png?v=e2a7208278627667">
+<meta name="twitter:image:alt" content="LiquiLens route card for PYTHON + EVIDENCE: Read a bank filing and preserve its evidence limits. REVIEW GUIDE: SOURCE DATES / MISSING EVIDENCE. PYTHON RECIPE / ANALYST WORKSHEET. EXAMPLE CHECK 2026-10-04; status PUBLIC READ-ONLY RESEARCH.">
+<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/developers/bank-filing-review/#social-card","url":"https://liquilens.in/developers/bank-filing-review/","image":"https://liquilens.in/developers/bank-filing-review/share.png?v=e2a7208278627667","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/developers/bank-filing-review/share.png?v=e2a7208278627667","width":1200,"height":630,"caption":"LiquiLens route card for PYTHON + EVIDENCE: Read a bank filing and preserve its evidence limits. REVIEW GUIDE: SOURCE DATES / MISSING EVIDENCE. PYTHON RECIPE / ANALYST WORKSHEET. EXAMPLE CHECK 2026-10-04; status PUBLIC READ-ONLY RESEARCH."}}</script>
+<!-- SOCIAL-CARD:END -->
+</head><body class="family-page">
+<a class="research-skip" href="#main">Skip to content</a><header class="research-header"><div class="research-mast"><a class="research-identity" href="/"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="14"/><path d="M10 23V13m5 14V9m5 15V12m5 9v-6"/></svg><span><strong>LiquiLens</strong><small>Institution intelligence</small></span></a><nav class="research-network" aria-label="Products"><a href="/" aria-current="page">LiquiLens</a><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a></nav><a class="research-api" href="/agents/">API &amp; agents</a></div><nav class="research-tabs" aria-label="LiquiLens sections"><a href="/">Overview</a><a href="/banking/">Banking research</a><a href="/start/">Review workspace</a><a href="/articles/">Published research</a><a href="/world-economy/">World economy</a><a href="/research/">Methods &amp; evidence</a></nav></header><main id="main" class="resource-guide">
+<nav class="guide-nav" aria-label="Guide navigation"><a href="/developers/">API and recipes</a><a href="/banking/institutions/cosmos-ucb/">Read the cited bank example</a></nav>
+<header class="guide-intro"><p class="eyebrow">Python tutorial and analyst worksheet</p><h1>Read a bank filing with Python and preserve its evidence limits</h1><p class="guide-date">Example checked 4 October 2026. The filing period and source dates remain separate.</p></header>
+<aside class="guide-downloads" aria-labelledby="worksheet-title"><h2 id="worksheet-title">Keep a review worksheet</h2><p>The three-page handout works through the Cosmos record, preserves the source trail and includes a blank worksheet. Cosmos is an urban cooperative bank; it does not establish NBFC coverage.</p><div class="resource-links"><a href="cosmos-evidence-review.pdf" download>Download the analyst PDF</a><a href="reviewer-worksheet.md" download>Download the editable worksheet</a></div></aside>
+<article class="tutorial" aria-label="Bank filing review tutorial">
+<p>Disclosure: I build LiquiLens. This tutorial uses its public research tools and a disclosed example from Cosmos Co-operative Bank, an Indian urban cooperative bank. It makes no lending or investment recommendation.</p>
+<p>A financial-research integration needs more than a successful request. The record should still identify the institution, the filing period, the source and the missing evidence after it reaches your application.</p>
+<p>Here&#x27;s a small Python workflow for that task. It uses an existing standard-library recipe, then adds a short reader for its output. You need Python 3.11 or later. No model or API key is needed for these public examples; service limits apply.</p>
+<h2 id="inspect-the-recipe-first">Inspect the recipe first</h2>
+<p>The downloadable source and its manifest are public:</p>
+<ul><li><a href="https://liquilens.in/developers/recipes/financial_research.py">https://liquilens.in/developers/recipes/financial_research.py</a></li><li><a href="https://liquilens.in/developers/recipes/manifest.json">https://liquilens.in/developers/recipes/manifest.json</a></li><li><a href="https://liquilens.in/developers/">https://liquilens.in/developers/</a></li></ul>
+<p>Download the script into a directory you control, then inspect it before executing it:</p>
+<pre tabindex="0"><code class="language-bash">curl --fail --show-error --max-time 30 \
+  https://liquilens.in/developers/recipes/financial_research.py \
+  -o financial_research.py</code></pre>
+<p>The source retrieved on 4 October 2026 declared recipe version <code>1.1.0</code> and SHA-256 <code>5ac34083238de25be4fc952464cd7ba09f0735683b32f389f06b9429906be9e6</code>. Check your copy with this portable command:</p>
+<pre tabindex="0"><code class="language-bash">python3 -c &quot;import hashlib,pathlib; print(hashlib.sha256(pathlib.Path(&#x27;financial_research.py&#x27;).read_bytes()).hexdigest())&quot;</code></pre>
+<p>A different hash may mean the published script changed. Review the new source and manifest before using it; do not assume the version or behavior below remains current. The recipe limits each HTTP exchange to 20 seconds and 2 MiB, restricts endpoints and does not automatically retry.</p>
+<h2 id="discover-coverage-before-choosing-a-bank">Discover coverage before choosing a bank</h2>
+<pre tabindex="0"><code class="language-bash">python3 financial_research.py bank-review --verification &gt; coverage.json
+python3 financial_research.py bank-review --slug cosmos-ucb --verification &gt; cosmos-review.json</code></pre>
+<p>These commands, when run, call public read-only MCP tools. <code>--verification</code> identifies this operator rehearsal as synthetic traffic. Use it for tests, demos and health checks so those calls can be separated from adoption. Actual users doing their own research can omit that flag.</p>
+<p>Without a slug, <code>bank-review</code> requests <code>banking_specialisation_coverage</code>. With a slug, it checks for an exact match in <code>evidence.coverage.rows</code> before requesting <code>bank_asset_quality_review</code> with <code>include_history: true</code>. A plausible-sounding name is not a valid substitute for an exact slug.</p>
+<h2 id="read-the-returned-contract">Read the returned contract</h2>
+<p>The source defines this outer structure; fields inside <code>evidence.review</code> come from the public bank record:</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Field</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>schema</code></td><td><code>liquilens.research-recipe.v1</code></td></tr><tr><td><code>recipe</code></td><td><code>bank-review</code></td></tr><tr><td><code>verification</code></td><td>Whether the operator flag was supplied</td></tr><tr><td><code>outcome</code></td><td><code>evidence_returned</code>, <code>not_covered</code> or an unavailable result</td></tr><tr><td><code>execution_authority</code></td><td><code>false</code></td></tr><tr><td><code>retrieved_at</code></td><td>When this recipe assembled its result</td></tr><tr><td><code>evidence.coverage.rows</code></td><td>Exact covered names, slugs and evidence states</td></tr><tr><td><code>evidence.review</code></td><td>Present only when a named review was requested and returned</td></tr></tbody></table></div>
+<p>For the Cosmos API record inspected on 4 October, the inner schema was <code>liquilens.bank-specialisation.v1</code>, its status was <code>observed</code>, and <code>period_end</code> was <code>2026-03-31</code>. <code>available_at</code> and the inner <code>retrieved_at</code> were <code>2026-09-05T07:05:33Z</code>; <code>publication_date</code> was <code>null</code>. These are separate clocks. The example does not establish when that filing first became public or whether a newer filing exists.</p>
+<p>The record&#x27;s <code>npa_movement</code> keeps reported upgrades, cash recoveries and write-offs separate. Its <code>regulatory_comparison.status</code> was <code>scope_unverified</code>. Preserve those fields when summarizing; do not translate a missing regulatory comparison into a conclusion that no restrictions apply.</p>
+<p>Inspect the current API record directly at <a href="https://api.liquilens.in/api/experimental/v1/banking/institutions/cosmos-ucb?include_history=true">https://api.liquilens.in/api/experimental/v1/banking/institutions/cosmos-ucb?include_history=true</a> .</p>
+<h2 id="add-a-small-local-reader">Add a small local reader</h2>
+<p>Save the following original example as <code>read_review.py</code>. It reads a saved response; it does not make network calls or change the source payload.</p>
+<pre tabindex="0"><code class="language-python">import json
+import sys
+from pathlib import Path
+
+if len(sys.argv) != 2:
+    raise SystemExit(&quot;Usage: python3 read_review.py PATH_TO_SAVED_JSON&quot;)
+try:
+    payload = json.loads(Path(sys.argv[1]).read_text(encoding=&quot;utf-8&quot;))
+except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+    raise SystemExit(&quot;Cannot read saved JSON: &quot; + str(exc))
+if not isinstance(payload, dict):
+    raise SystemExit(&quot;Expected a JSON object; inspect the saved response.&quot;)
+if payload.get(&quot;schema&quot;) != &quot;liquilens.research-recipe.v1&quot;:
+    raise SystemExit(&quot;Unexpected recipe contract; inspect the saved response.&quot;)
+if payload.get(&quot;outcome&quot;) != &quot;evidence_returned&quot;:
+    raise SystemExit(&quot;No review available: &quot; + str(payload.get(&quot;outcome&quot;)))
+evidence = payload.get(&quot;evidence&quot;)
+if not isinstance(evidence, dict):
+    raise SystemExit(&quot;Missing or invalid evidence object; inspect the saved response.&quot;)
+review = evidence.get(&quot;review&quot;)
+if not isinstance(review, dict):
+    raise SystemExit(&quot;Coverage returned; choose an exact covered bank slug.&quot;)
+if review.get(&quot;schema&quot;) != &quot;liquilens.bank-specialisation.v1&quot;:
+    raise SystemExit(&quot;Unexpected bank contract; inspect the saved response.&quot;)
+state = review.get(&quot;status&quot;)
+if state not in {&quot;observed&quot;, &quot;stale&quot;, &quot;historical&quot;}:
+    raise SystemExit(&quot;Review is unavailable or has an unknown evidence state.&quot;)
+if state != &quot;observed&quot;:
+    print(&quot;Review limit:&quot;, state, &quot;record; do not describe it as current.&quot;)
+for key in (&quot;name&quot;, &quot;period_end&quot;, &quot;available_at&quot;, &quot;publication_date&quot;):
+    value = review.get(key)
+    print(f&quot;{key}: {value if value is not None else &#x27;not supplied&#x27;}&quot;)
+print(&quot;Evidence state:&quot;, state)
+for source in review.get(&quot;sources&quot;, []):
+    print(&quot;Source:&quot;, source)
+for limit in review.get(&quot;interpretation_limits&quot;, []):
+    print(&quot;Limit:&quot;, limit)</code></pre>
+<p>Then run:</p>
+<pre tabindex="0"><code class="language-bash">python3 read_review.py cosmos-review.json</code></pre>
+<p>Keep the original JSON alongside any derived display. <code>observed</code> is the record&#x27;s evidence state, not a freshness guarantee for your particular use. Read its period, available date, comparability notes and source trail before deciding whether it is adequate.</p>
+<h2 id="handle-missing-evidence-and-errors-separately">Handle missing evidence and errors separately</h2>
+<p>The recipe exits <code>0</code> when evidence is returned, including stale or historical facts; <code>2</code> when the requested result is unavailable or not covered; and <code>1</code> for transport, protocol or tool failure. Check the exit code before parsing a redirected file. Errors are written as JSON to stderr, so stdout may be empty after failure.</p>
+<p>For <code>2</code>, show the coverage or unavailability reason and let the researcher choose a supported question. For <code>1</code>, retain the diagnostic and avoid treating an empty response as a financial finding. The recipe does not schedule work or retry an outstanding request.</p>
+<p>Keep missing disclosures as missing. Do not replace them with a model guess. In particular, a falling NPA ratio does not tell you how much cash was recovered, and arithmetic agreement does not authenticate a filing.</p>
+<h2 id="try-the-same-question-in-the-browser">Try the same question in the browser</h2>
+<p><a href="https://liquilens.in/start/?task=bank&amp;utm_source=shared">Open the bank evidence example</a>.</p>
+<p>I&#x27;d welcome feedback on a concrete integration problem: was it hard to choose a covered name, preserve the dates, or present the unavailable fields? Share a non-sensitive example of that step.</p>
+<p>Verification: this recipe was run once with <code>--verification</code> on 4 October 2026 at 14:41 UTC. It returned the named Cosmos review with the dates and missing-evidence limits described above. This was an operator rehearsal, not a customer-usage result.</p>
+</article><footer class="guide-footer"><p><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/developers/">API documentation</a></p><p>Public research evidence. Source periods, missing disclosures and interpretation limits remain attached.</p></footer>
+</main><script type="module" src="/research-ui/context.js"></script></body></html>

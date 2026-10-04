@@ -66,6 +66,13 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/developers/bank-filing-review/", "bank-filing-review", "LIQUILENS / BANK RESEARCH", "PYTHON + EVIDENCE",
+        "Read a bank filing and preserve its evidence limits.",
+        "REVIEW GUIDE", "SOURCE DATES / MISSING EVIDENCE",
+        "PYTHON RECIPE / ANALYST WORKSHEET", "EXAMPLE CHECK", "2026-10-04",
+        "PUBLIC READ-ONLY RESEARCH", "DATED COSMOS BANK RECORD",
+    ),
+    RouteDefinition(
         "/agents/quant/", "quant-research", "LIQUILENS / SEICHE / UNDERTOW", "QUANT + AGENT TOOLS",
         "Source-cited research for your quant agent.",
         "RESEARCH", "FUNDING / BANKS / MARKET DEPTH",
