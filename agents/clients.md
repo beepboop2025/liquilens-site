@@ -84,18 +84,26 @@ part of this check. Follow your installed release's Node requirements.
 Review [LiquiLens Trading Research on ClawHub](https://clawhub.ai/beepboop2025/skills/liquilens-trading-research), then install the pinned version:
 
 ```sh
-openclaw skills install @beepboop2025/liquilens-trading-research --version 1.0.1
+openclaw skills install @beepboop2025/liquilens-trading-research --version 1.1.0
 ```
 
-This pinned ClawHub version contains the original funding/bank/BTC instructions
-and configuration template. It has not been republished with the new topic
-profiles. Review the current domain skill at
-https://liquilens.in/agents/trading-research/SKILL.md and use the current profile
-configuration when working on GIFT City, FX or gold. Connect the three MCP
-servers separately using the steps above. Installation does not run research.
+Version 1.1.0 adds GIFT City, reference FX and gold instructions with the current
+thirteen-tool configuration template. Gold scenarios require explicit caller
+inputs. Connect the three MCP servers separately using the steps above;
+installation does not configure servers or run research.
 The ClawHub bundle is MIT-0; source data and API responses retain their own rights.
 
-The ClawHub release also installed successfully in an isolated Linux workspace using OpenClaw 2026.9.6 and Node 24.16.0. Its three source files matched the published SHA-256 checksums. This checked installation, not a model turn.
+Checked on 5 October 2026: version 1.1.0 is public and ClawHub reports a clean
+security scan. An isolated Linux install with OpenClaw 2026.9.6 and Node 24.16.0
+completed, recorded version 1.1.0 and matched all three reviewed source files by
+SHA-256. Full ClawHub verification remains incomplete: its generated Skill Card
+is missing (`card.missing`). The isolated macOS install timed out without
+installed files. These checks ran no model or research tool. The direct MCP
+configuration above can be reviewed and connected independently of ClawHub.
+
+The historical 24 September check installed ClawHub version 1.0.1 in an isolated
+Linux workspace and matched its three source-file checksums; that receipt remains
+separate from the current version's verification status.
 
 [Official OpenClaw MCP guide](https://docs.openclaw.ai/cli/mcp) · [Official skills commands](https://docs.openclaw.ai/cli/skills)
 
