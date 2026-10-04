@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/federal-bank?include_history=true",
-  "captured_at": "2026-09-27T15:44:24Z",
+  "captured_at": "2026-10-04T17:19:37Z",
   "evidence": {
-    "age_days": 89,
-    "as_of": "2026-09-27",
+    "age_days": 96,
+    "as_of": "2026-10-04",
     "available_at": "2026-09-24T21:36:30.694179Z",
     "can_authorize_credit": false,
     "changes": {
@@ -1150,5 +1150,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "c3fd06d60aff3f805c370cef8f41f8afc47bae1c932779d9bc1d83ea8a5f2b25"
+  "source_payload_sha256": "bf2a3f74bdf31971f35b70430ffefd7c8066b056e43099347844701f986a2c4b"
 }

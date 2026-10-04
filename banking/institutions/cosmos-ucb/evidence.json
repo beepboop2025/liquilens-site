@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/cosmos-ucb?include_history=true",
-  "captured_at": "2026-09-27T15:44:24Z",
+  "captured_at": "2026-10-04T17:19:37Z",
   "evidence": {
-    "age_days": 180,
-    "as_of": "2026-09-27",
-    "available_at": "2026-09-05T07:05:33Z",
+    "age_days": 187,
+    "as_of": "2026-10-04",
+    "available_at": "2026-10-04T17:06:35.119775Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -28,7 +28,8 @@
       }
     },
     "comparability_notes": [
-      "A sourced filing does not by itself establish absence of RBI directions or discharge of prior SAF restrictions; current PCA applicability remains unverified."
+      "A sourced filing does not by itself establish absence of RBI directions or discharge of prior SAF restrictions; current PCA applicability remains unverified.",
+      "Additional reported facts reviewed on 4 October 2026 from a newly retrieved, byte-identical primary filing; the reporting period is unchanged and the earlier capture is retained."
     ],
     "default_event": null,
     "exclusions": [],
@@ -159,7 +160,7 @@
         ]
       },
       {
-        "available_at": "2026-09-05T07:05:33Z",
+        "available_at": "2026-10-04T17:06:35.119775Z",
         "metrics": {
           "advances": {
             "basis": null,
@@ -169,11 +170,11 @@
             "value": 17879.05
           },
           "casa_pct": {
-            "basis": null,
+            "basis": "Reported CASA deposits as a percentage of total deposits at 31 March 2026. PDF page 37 (printed page 35).",
             "label": "Current and savings account deposits / deposits",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "percent",
-            "value": null
+            "value": 25.57
           },
           "cet1_pct": {
             "basis": null,
@@ -288,11 +289,11 @@
         "value": 17879.05
       },
       "casa_pct": {
-        "basis": null,
+        "basis": "Reported CASA deposits as a percentage of total deposits at 31 March 2026. PDF page 37 (printed page 35).",
         "label": "Current and savings account deposits / deposits",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "percent",
-        "value": null
+        "value": 25.57
       },
       "cet1_pct": {
         "basis": null,
@@ -429,14 +430,14 @@
       ],
       "note": "A disclosed threshold breach is not an RBI decision to invoke PCA.",
       "risk_level": 0,
-      "rule_as_of": "2026-09-27",
+      "rule_as_of": "2026-10-04",
       "sources": [
         "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12711",
         "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12418"
       ],
       "status": "scope_unverified"
     },
-    "retrieved_at": "2026-09-05T07:05:33Z",
+    "retrieved_at": "2026-10-04T17:00:14.932218+00:00",
     "schema": "liquilens.bank-specialisation.v1",
     "scope": "research",
     "score_authority": false,
@@ -462,5 +463,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "e9ee3f3ad516166d48755e7772cbda8fafd96f53ed2b14521c6625928b96c494"
+  "source_payload_sha256": "64ac855d826965e8f80ca885d29bba544ac11c872820c3a6ee7dab1d32c602e1"
 }

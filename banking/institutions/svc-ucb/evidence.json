@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/svc-ucb?include_history=true",
-  "captured_at": "2026-09-27T15:44:24Z",
+  "captured_at": "2026-10-04T17:19:37Z",
   "evidence": {
-    "age_days": 180,
-    "as_of": "2026-09-27",
-    "available_at": "2026-09-24T21:36:30.694179Z",
+    "age_days": 187,
+    "as_of": "2026-10-04",
+    "available_at": "2026-10-04T17:06:35.119775Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -30,7 +30,8 @@
     "comparability_notes": [
       "Selected facts verified against the cited primary filing; capture time is not backdated to publication.",
       "The annual report discloses RBI-assessed FY2025 NPA divergence and states that its effect was incorporated by March 2026.",
-      "Comparative period observed in this capture; not available retroactively."
+      "Comparative period observed in this capture; not available retroactively.",
+      "Additional reported facts reviewed on 4 October 2026 from a newly retrieved, byte-identical primary filing; the reporting period is unchanged and the earlier capture is retained."
     ],
     "default_event": null,
     "exclusions": [],
@@ -848,7 +849,7 @@
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T17:06:35.119775Z",
         "metrics": {
           "advances": {
             "basis": null,
@@ -928,11 +929,11 @@
             "value": null
           },
           "pcr_reported_pct": {
-            "basis": null,
+            "basis": "Reported provision coverage ratio for 31 March 2026; the table does not classify the ratio as including or excluding technical write-offs. PDF page 72 (printed page 69).",
             "label": "Reported PCR; consult disclosed basis",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "percent",
-            "value": null
+            "value": 65.16
           },
           "tier1_pct": {
             "basis": null,
@@ -1047,11 +1048,11 @@
         "value": null
       },
       "pcr_reported_pct": {
-        "basis": null,
+        "basis": "Reported provision coverage ratio for 31 March 2026; the table does not classify the ratio as including or excluding technical write-offs. PDF page 72 (printed page 69).",
         "label": "Reported PCR; consult disclosed basis",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "percent",
-        "value": null
+        "value": 65.16
       },
       "tier1_pct": {
         "basis": null,
@@ -1099,14 +1100,14 @@
       ],
       "note": "A disclosed threshold breach is not an RBI decision to invoke PCA.",
       "risk_level": 0,
-      "rule_as_of": "2026-09-27",
+      "rule_as_of": "2026-10-04",
       "sources": [
         "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12711",
         "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12418"
       ],
       "status": "scope_unverified"
     },
-    "retrieved_at": "2026-09-24T21:27:46.699374+00:00",
+    "retrieved_at": "2026-10-04T17:00:18.035121+00:00",
     "schema": "liquilens.bank-specialisation.v1",
     "scope": "research",
     "score_authority": false,
@@ -1131,5 +1132,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "09e967963ab3aadd068a9367fcdad4cadcc3aeb1509ca35acbef49397b6b5db3"
+  "source_payload_sha256": "82d30181b2a68a2a7fc4276f19d5c18e7c759a4c0d0430651f3304036a62a7cc"
 }

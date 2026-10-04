@@ -1,10 +1,10 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/city-union-bank?include_history=true",
-  "captured_at": "2026-09-27T15:44:24Z",
+  "captured_at": "2026-10-04T17:19:37Z",
   "evidence": {
-    "age_days": 89,
-    "as_of": "2026-09-27",
-    "available_at": "2026-09-24T21:36:30.694179Z",
+    "age_days": 96,
+    "as_of": "2026-10-04",
+    "available_at": "2026-10-04T17:06:35.119775Z",
     "can_authorize_credit": false,
     "changes": {
       "quarter": {
@@ -28,7 +28,8 @@
       }
     },
     "comparability_notes": [
-      "Selected facts verified against the cited primary filing; capture time is not backdated to publication."
+      "Selected facts verified against the cited primary filing; capture time is not backdated to publication.",
+      "Additional reported facts reviewed on 4 October 2026 from a newly retrieved, byte-identical primary filing; the reporting period is unchanged and the earlier capture is retained."
     ],
     "default_event": null,
     "exclusions": [],
@@ -850,7 +851,7 @@
         ]
       },
       {
-        "available_at": "2026-09-24T21:36:30.694179Z",
+        "available_at": "2026-10-04T17:06:35.119775Z",
         "metrics": {
           "advances": {
             "basis": "Gross advances on the asset-quality table, converted from INR million to crore; not the net balance-sheet advances.",
@@ -916,11 +917,11 @@
             "value": 0.61
           },
           "pcr_excluding_technical_writeoffs_pct": {
-            "basis": null,
+            "basis": "Reported provision coverage without technical write-offs. PDF page 8.",
             "label": "PCR excluding technical write-offs",
-            "status": "not_disclosed",
+            "status": "observed",
             "unit": "percent",
-            "value": null
+            "value": 65
           },
           "pcr_including_technical_writeoffs_pct": {
             "basis": null,
@@ -1035,11 +1036,11 @@
         "value": 0.61
       },
       "pcr_excluding_technical_writeoffs_pct": {
-        "basis": null,
+        "basis": "Reported provision coverage without technical write-offs. PDF page 8.",
         "label": "PCR excluding technical write-offs",
-        "status": "not_disclosed",
+        "status": "observed",
         "unit": "percent",
-        "value": null
+        "value": 65
       },
       "pcr_including_technical_writeoffs_pct": {
         "basis": null,
@@ -1119,7 +1120,7 @@
       "sources": [],
       "status": "none"
     },
-    "retrieved_at": "2026-09-24T21:20:36.313352+00:00",
+    "retrieved_at": "2026-10-04T17:00:14.932143+00:00",
     "schema": "liquilens.bank-specialisation.v1",
     "scope": "research",
     "score_authority": false,
@@ -1128,6 +1129,7 @@
     "source_documents": [
       {
         "pdf_pages": [
+          8,
           9,
           13,
           14,
@@ -1143,5 +1145,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "75f3f32385f7dc382b7f50c9d9303a34a907ad615482971765ade2e53ac558ad"
+  "source_payload_sha256": "ac2a82e360916591c26dc3588fdd3de436e4d1b2f8c4e9ddfa745f974162033c"
 }

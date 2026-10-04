@@ -1,9 +1,9 @@
 {
   "api_url": "https://api.liquilens.in/api/experimental/v1/banking/institutions/jana-sfb?include_history=true",
-  "captured_at": "2026-09-27T15:44:24Z",
+  "captured_at": "2026-10-04T17:19:37Z",
   "evidence": {
-    "age_days": 89,
-    "as_of": "2026-09-27",
+    "age_days": 96,
+    "as_of": "2026-10-04",
     "available_at": "2026-09-24T21:36:30.694179Z",
     "can_authorize_credit": false,
     "changes": {
@@ -911,5 +911,5 @@
     "status": "observed"
   },
   "schema": "liquilens.public-filing-snapshot.v1",
-  "source_payload_sha256": "99fa8f8a3607904cf9e3ae06c61794d679a7c5d1602e591ef8a5363cfe964e9b"
+  "source_payload_sha256": "04069d8ae05a1af63fb70b265de87c0c76dc48859c295c68e38d75a54242c8d9"
 }
