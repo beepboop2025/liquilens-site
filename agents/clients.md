@@ -93,13 +93,20 @@ inputs. Connect the three MCP servers separately using the steps above;
 installation does not configure servers or run research.
 The ClawHub bundle is MIT-0; source data and API responses retain their own rights.
 
-Checked on 5 October 2026: version 1.1.0 is public and ClawHub reports a clean
-security scan. An isolated Linux install with OpenClaw 2026.9.6 and Node 24.16.0
+Checked on 4 October 2026 (UTC): version 1.1.0 is public and ClawHub's security
+check passes with a benign, high-confidence verdict. Its detailed scan retains
+seven findings, including medium external-transmission flags for the public MCP
+URLs, and reports partial analysis. Review the [versioned security audit](https://clawhub.ai/beepboop2025/skills/liquilens-trading-research/security-audit?version=1.1.0)
+before installation and use public research inputs.
+An isolated Linux install with OpenClaw 2026.9.6 and Node 24.16.0
 completed, recorded version 1.1.0 and matched all three reviewed source files by
-SHA-256. Full ClawHub verification remains incomplete: its generated Skill Card
-is missing (`card.missing`). The isolated macOS install timed out without
-installed files. These checks ran no model or research tool. The direct MCP
-configuration above can be reviewed and connected independently of ClawHub.
+SHA-256. ClawHub's public verifier and the installed Linux client's version-pinned
+`openclaw skills verify` now both report `pass`, with the generated Skill Card
+present. The upload is unsigned and has no server-resolved GitHub import
+provenance. A fresh isolated macOS install after storage recovery also matched all
+three source-file hashes, and its version-pinned verification reports `pass`.
+The earlier macOS timeout remains a separate failed attempt. These checks ran no model or research tool.
+The direct MCP configuration above can be reviewed and connected independently of ClawHub.
 
 The historical 24 September check installed ClawHub version 1.0.1 in an isolated
 Linux workspace and matched its three source-file checksums; that receipt remains
