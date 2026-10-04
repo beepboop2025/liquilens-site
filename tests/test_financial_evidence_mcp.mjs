@@ -2,10 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createHash } from "node:crypto";
 
-import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.5.json" with {
+import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.6.json" with {
   type: "json",
 };
-import semanticFixture from "./fixtures/financial-evidence-v0.1.5-semantics.json" with { type: "json" };
+import semanticFixture from "./fixtures/financial-evidence-v0.1.6-semantics.json" with { type: "json" };
 
 import worker, {
   DEFAULT_SOURCE_BYTES,
@@ -139,7 +139,7 @@ test("modern discovery is stateless and advertises the same server", async () =>
   );
   assert.equal(
     payload.result._meta["io.modelcontextprotocol/serverInfo"].version,
-    "0.1.5",
+    "0.1.6",
   );
   assert.equal(payload.result.resultType, "complete");
 });
@@ -267,10 +267,10 @@ test("a body over the byte cap is explicit unavailable evidence", async () => {
   }
 });
 
-test("all five topics fan out within hard public budgets", async () => {
+test("all eight topics fan out within hard public budgets", async () => {
   const originalFetch = globalThis.fetch;
   const requested = [];
-  const fixture = JSON.stringify({ payload: "x".repeat(249_900) });
+  const fixture = JSON.stringify({ payload: "x".repeat(169_900) });
   globalThis.fetch = async (url) => {
     requested.push(url);
     return new Response(fixture, {
@@ -293,6 +293,9 @@ test("all five topics fan out within hard public budgets", async () => {
               "china-economy",
               "bank-risk",
               "market-liquidity",
+              "gift-city",
+              "forex",
+              "gold",
             ],
             max_bytes: MAX_SOURCE_BYTES,
           },
@@ -317,8 +320,8 @@ test("all five topics fan out within hard public budgets", async () => {
       : JSON.parse(rawResponse);
     const packet = JSON.parse(payload.result.content[0].text);
     assert.equal(packet.status, "complete");
-    assert.equal(packet.sources.length, 6);
-    assert.equal(packet.limits.max_topics, 5);
+    assert.equal(packet.sources.length, 9);
+    assert.equal(packet.limits.max_topics, 8);
     assert.equal(packet.limits.max_source_bytes, MAX_SOURCE_BYTES);
     assert.equal(packet.limits.max_packet_source_bytes, MAX_PACKET_SOURCE_BYTES);
     assert.ok(
@@ -331,10 +334,72 @@ test("all five topics fan out within hard public budgets", async () => {
       ),
       true,
     );
-    assert.equal(requested.length, 6);
+    assert.equal(requested.length, 8);
   } finally {
     globalThis.fetch = originalFetch;
   }
+});
+
+test("gift-city and gold reuse one bounded GET receipt without double-charging bytes", async () => {
+  const requested = [];
+  const gift = JSON.stringify({ status: "partial", generated_at: "2026-10-04T19:00:00Z", gold: { positioning: { status: "restricted", as_of: "2026-09-29" } }, padding: "x".repeat(849_900) });
+  const forex = JSON.stringify({ status: "derived", forex: { status: "unavailable", observations: [] }, generated_at: "2026-10-04T19:01:00Z", padding: "x".repeat(599_900) });
+  const packet = await buildPacket(["gift-city", "forex", "gold"], {
+    maxBytes: MAX_SOURCE_BYTES,
+    fetchImpl: async (url, options) => {
+      requested.push(url);
+      assert.equal(options.method, "GET");
+      assert.equal(options.body, undefined);
+      assert.equal(options.redirect, "manual");
+      return new Response(url.endsWith("/gift-city") ? gift : forex, { headers: { "Content-Type": "application/json" } });
+    },
+  });
+  assert.deepEqual(requested, ["https://api.seiche.info/api/v2/gift-city", "https://api.seiche.info/api/v2/world-markets?section=forex"]);
+  assert.equal(packet.transport_status, "complete");
+  assert.equal(packet.evidence_status, "not_evaluated");
+  assert.equal(packet.sources.length, 3);
+  const [{ topic: _giftTopic, ...giftReceipt }, fxReceipt, { topic: _goldTopic, ...goldReceipt }] = packet.sources;
+  assert.deepEqual(giftReceipt, goldReceipt);
+  assert.equal(giftReceipt.document.gold.positioning.status, "restricted");
+  assert.equal(fxReceipt.document.forex.status, "unavailable");
+  assert.ok(giftReceipt.bytes + fxReceipt.bytes < MAX_PACKET_SOURCE_BYTES);
+  assert.ok(giftReceipt.bytes * 2 + fxReceipt.bytes > MAX_PACKET_SOURCE_BYTES);
+  assert.equal(giftReceipt.source_reported.clocks.find((field) => field.name === "gold_positioning_as_of").value, "2026-09-29");
+});
+
+test("shared-source failures stay identical and do not trigger another request", async () => {
+  const requested = [];
+  const packet = await buildPacket(["gift-city", "forex", "gold"], {
+    fetchImpl: async (url) => {
+      requested.push(url);
+      return url.endsWith("/gift-city")
+        ? new Response(null, { status: 503 })
+        : new Response('{"status":"partial","forex":{"status":"unavailable"}}', { headers: { "Content-Type": "application/json" } });
+    },
+  });
+  assert.equal(requested.length, 2);
+  assert.equal(packet.transport_status, "partial");
+  assert.equal(packet.evidence_status, "not_evaluated");
+  assert.equal(packet.sources[0].ok, false);
+  assert.equal(packet.sources[2].ok, false);
+  assert.equal(packet.sources[0].error, packet.sources[2].error);
+  assert.equal(packet.sources[0].retrieved_at, packet.sources[2].retrieved_at);
+  assert.equal("document" in packet.sources[0], false);
+  assert.equal("source_reported" in packet.sources[0], false);
+});
+
+test("new topic fetches reject caller URLs and implicit scenario inputs before retrieval", async () => {
+  const originalFetch = globalThis.fetch;
+  let calls = 0;
+  globalThis.fetch = async () => { calls += 1; throw new Error("must not fetch"); };
+  try {
+    for (const extra of [{ amount: 100 }, { url: "https://attacker.example/quote" }, { scenario: { grams: 10 } }]) {
+      const response = await worker.fetch(request({ jsonrpc: "2.0", id: "no-scenario", method: "tools/call", params: { name: "financial_evidence_fetch", arguments: { topics: ["gold"], ...extra } } }), ALLOW_FETCH_ENV);
+      const payload = await responsePayload(response);
+      assert.equal(payload.result.isError, true);
+    }
+    assert.equal(calls, 0);
+  } finally { globalThis.fetch = originalFetch; }
 });
 
 test("multi-topic fetches preserve the caller's per-source byte ceiling", async () => {
@@ -848,7 +913,7 @@ test("the server factory is lazy about network access", () => {
   const server = createFinancialEvidenceServer({ fetchImpl });
   assert.ok(server);
   assert.equal(calls, 0);
-  assert.equal(MAX_FETCH_TOPICS, 5);
+  assert.equal(MAX_FETCH_TOPICS, 8);
   assert.equal(DEFAULT_SOURCE_BYTES, 1_048_576);
   assert.equal(MAX_SOURCE_BYTES, 4_194_304);
   assert.equal(DEFAULT_TIMEOUT_SECONDS, 10);
@@ -900,7 +965,7 @@ test("browser Origins are restricted while server-side clients remain public", a
 });
 
 
-test("v0.1.5 fixed routes and all six adapters match signed stdio fixtures", async () => {
+test("v0.1.6 fixed routes and all eight adapters match canonical stdio fixtures", async () => {
   const response = await worker.fetch(request({ jsonrpc: "2.0", id: "all-routes", method: "tools/call", params: { name: "financial_evidence_topics", arguments: {} } }));
   assert.deepEqual((await responsePayload(response)).result.structuredContent, semanticFixture.routes);
   const byUrl = new Map(semanticFixture.cases.map((row) => [row.source_url, row]));
@@ -912,7 +977,7 @@ test("v0.1.5 fixed routes and all six adapters match signed stdio fixtures", asy
   assert.equal(packet.status_semantics, "transport_only");
   assert.equal(packet.evidence_status, "not_evaluated");
   assert.equal(packet.carrier_verification, "not_performed");
-  assert.equal(packet.sources.length, 6);
+  assert.equal(packet.sources.length, 9);
   for (const source of packet.sources) {
     const expected = byUrl.get(source.source_url);
     assert.deepEqual(source.source_reported, expected.expected_reported);

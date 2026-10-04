@@ -1,9 +1,9 @@
 import aiCatalog from "../.well-known/ai-catalog.json" with { type: "json" };
 import apiCatalog from "../.well-known/api-catalog.json" with { type: "json" };
-import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.5.json" with {
+import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.6.json" with {
   type: "json",
 };
-import financialEvidenceRouting from "../protocol/financial-evidence-routing-v0.1.5.json" with { type: "json" };
+import financialEvidenceRouting from "../protocol/financial-evidence-routing-v0.1.6.json" with { type: "json" };
 import protocolCatalog from "../protocol/catalog.json" with { type: "json" };
 import { McpServer } from "@modelcontextprotocol/server";
 import { createMcpHandler } from "agents/mcp/server";
@@ -327,6 +327,7 @@ async function fetchSource(
     }
 
     const response = await fetchImpl(source.url, {
+      method: "GET",
       headers: {
         Accept: "application/json",
         "User-Agent":
@@ -460,17 +461,27 @@ export async function buildPacket(
     ROUTES[topic].map((source) => ({ topic, source })),
   );
   const sources = [];
+  const receipts = new Map();
   let remainingBytes = MAX_PACKET_SOURCE_BYTES;
   for (const { topic, source } of planned) {
-    const { result, consumedBytes } = await fetchSource(source, {
-      maxBytes,
-      remainingPacketBytes: remainingBytes,
-      timeoutSeconds,
-      fetchImpl,
-      signal: combinedSignal,
-    });
-    sources.push({ topic, ...result });
-    remainingBytes = Math.max(0, remainingBytes - consumedBytes);
+    const identity = JSON.stringify([
+      source.product, source.url, source.evidence_class,
+      source.human_scope_url, source.financial_authority, source.carrier_state,
+    ]);
+    if (!receipts.has(identity)) {
+      const { result, consumedBytes } = await fetchSource(source, {
+        maxBytes,
+        remainingPacketBytes: remainingBytes,
+        timeoutSeconds,
+        fetchImpl,
+        signal: combinedSignal,
+      });
+      // Shared topics reuse one observation (including failures), never two
+      // apparent corroborating reads. Only actual response bytes use budget.
+      receipts.set(identity, result);
+      remainingBytes = Math.max(0, remainingBytes - consumedBytes);
+    }
+    sources.push({ topic, ...receipts.get(identity) });
   }
   const succeeded = sources.filter((source) => source.ok).length;
   const status =

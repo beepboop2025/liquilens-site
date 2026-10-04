@@ -32,7 +32,8 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / ".well-known/ai-catalog.json"
 API_CATALOG_PATH = ROOT / ".well-known/api-catalog.json"
 PROTOCOL_CATALOG_PATH = ROOT / "protocol/catalog.json"
-MCP_CONTRACT_PATH = ROOT / "protocol/financial-evidence-mcp-v0.1.5.json"
+MCP_CONTRACT_PATH = ROOT / "protocol/financial-evidence-mcp-v0.1.6.json"
+MCP_ROUTING_PATH = ROOT / "protocol/financial-evidence-routing-v0.1.6.json"
 PAGES_TRADE_SAFETY_PATHS = (
     "protocol/liquilens-trade-safety-request-v1.schema.json",
     "protocol/liquilens-trade-safety-policy-v1.schema.json",
@@ -192,6 +193,7 @@ SIBLING_REGISTRY_REPOSITORIES = {
     },
 }
 EXPECTED_MCP_CONTRACT = json.loads(MCP_CONTRACT_PATH.read_text(encoding="utf-8"))
+EXPECTED_MCP_ROUTING = json.loads(MCP_ROUTING_PATH.read_text(encoding="utf-8"))
 EXPECTED_MCP_SERVER = EXPECTED_MCP_CONTRACT["serverInfo"]["name"]
 EXPECTED_MCP_VERSION = EXPECTED_MCP_CONTRACT["serverInfo"]["version"]
 EXPECTED_MCP_TOOLS = tuple(tool["name"] for tool in EXPECTED_MCP_CONTRACT["tools"])
@@ -758,7 +760,7 @@ def _verify_mcp(
             "method": "tools/call",
             "params": {
                 "name": "financial_evidence_route",
-                "arguments": {"topics": ["china-economy"]},
+                "arguments": {"topics": list(EXPECTED_MCP_ROUTING["routes"])},
                 "_meta": modern_meta,
             },
         },
@@ -775,13 +777,7 @@ def _verify_mcp(
         expected_name=EXPECTED_MCP_SERVER,
         expected_version=EXPECTED_MCP_VERSION,
     )
-    products = [
-        source.get("product")
-        for source in routed.get("structuredContent", {})
-        .get("topics", {})
-        .get("china-economy", [])
-    ]
-    if products != ["Palimpsest", "Seiche"]:
+    if routed.get("structuredContent", {}).get("topics") != EXPECTED_MCP_ROUTING["routes"]:
         raise RuntimeError(f"modern MCP route differs: {routed!r}")
 
     limiter_probe, headers = _mcp_request(
@@ -800,26 +796,40 @@ def _verify_mcp(
     _require_version_tag(headers, expected_version_tag, expected_worker_version_id)
     probed = _require_result(limiter_probe, "limiter-probe")
     require_fetch_semantics(probed)
-    probe_summary = probed.get("structuredContent", {})
-    if probe_summary.get("status") != "complete" or probed.get("isError") is not False:
-        raise RuntimeError(f"MCP money-market fetch is not complete: {probed!r}")
-    probe_sources = probe_summary.get("sources", [])
-    if len(probe_sources) != 1:
-        raise RuntimeError(f"MCP money-market source count differs: {probed!r}")
-    source = probe_sources[0]
-    digest = source.get("content_sha256", "")
-    if (
-        source.get("product") != "Seiche"
-        or source.get("ok") is not True
-        or not isinstance(source.get("bytes"), int)
-        or source["bytes"] <= 0
-        or not digest.startswith("sha256:")
-        or len(digest) != 71
-    ):
-        raise RuntimeError(f"MCP money-market receipt is incomplete: {source!r}")
+    topic_probe_topics = ["gift-city", "forex", "gold"]
+    topic_probe, headers = _mcp_request(
+        url,
+        {
+            "jsonrpc": "2.0",
+            "id": "topic-probe",
+            "method": "tools/call",
+            "params": {
+                "name": "financial_evidence_fetch",
+                "arguments": {"topics": topic_probe_topics},
+            },
+        },
+        extra_headers=extra_headers,
+    )
+    _require_version_tag(headers, expected_version_tag, expected_worker_version_id)
+    topic_result = _require_result(topic_probe, "topic-probe")
+    if topic_result.get("structuredContent", {}).get("topics") != topic_probe_topics:
+        raise RuntimeError("MCP topic fetch selection differs")
+    expected_sources = [
+        {
+            "topic": topic,
+            "product": source["product"],
+            "source_url": source["url"],
+            "adapter": EXPECTED_MCP_ROUTING["adapters"][source["url"]]["name"],
+        }
+        for topic in topic_probe_topics
+        for source in EXPECTED_MCP_ROUTING["routes"][topic]
+    ]
+    require_fetch_semantics(topic_result, expected_sources=expected_sources)
     return (
         f"remote MCP exposes {len(EXPECTED_MCP_TOOLS)} exact tools, both protocol "
-        "generations, the China route, and a successful limiter-backed money-market fetch with transport-only semantics and source-document provenance"
+        "generations, all eight fixed routes, and successful limiter-backed "
+        "money-market, GIFT City, forex and gold fetches with transport-only "
+        "semantics, source-document provenance and one shared GIFT City/gold receipt"
     )
 
 

@@ -1,0 +1,717 @@
+{
+  "canonical_source_commit": "22096b824ac09d47cf24d7ab1612d9a97a13c7b3",
+  "canonical_core_sha256": "9c42ae1199b523c30ae542bd93767bb959bf8a02206f86eeb1e2852c86df5897",
+  "routes": {
+    "schema": "liquidity-lab.financial-evidence-routes.v1",
+    "absence_policy": "Missing, failed, restricted, or unavailable evidence is never converted to zero or calm.",
+    "topics": {
+      "money-market": [
+        {
+          "product": "Seiche",
+          "url": "https://api.seiche.info/api/v2/money-markets",
+          "evidence_class": "observed_or_unavailable",
+          "human_scope_url": "https://seiche.info/use-cases/money-market-research/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ],
+      "capital-market": [
+        {
+          "product": "Seiche",
+          "url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+          "evidence_class": "observed_derived_or_unavailable",
+          "human_scope_url": "https://seiche.info/use-cases/capital-market-transmission/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ],
+      "china-economy": [
+        {
+          "product": "Palimpsest",
+          "url": "https://www.palimpsest.info/readings/china-index-latest.json",
+          "evidence_class": "observed_structural_or_unavailable",
+          "human_scope_url": "https://palimpsest.info/china/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        },
+        {
+          "product": "Seiche",
+          "url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+          "evidence_class": "structural_or_restricted",
+          "human_scope_url": "https://seiche.info/markets/china-macro/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ],
+      "bank-risk": [
+        {
+          "product": "LiquiLens",
+          "url": "https://api.liquilens.in/api/failure-radar/board",
+          "evidence_class": "observed_derived_or_unavailable",
+          "human_scope_url": "https://liquilens.in/use-cases/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ],
+      "market-liquidity": [
+        {
+          "product": "Undertow",
+          "url": "https://api.seiche.info/undertow/x402/summary",
+          "evidence_class": "observed_derived_or_unavailable",
+          "human_scope_url": "https://liquilens-undertow.com/use-cases/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ],
+      "gift-city": [
+        {
+          "product": "Seiche",
+          "url": "https://api.seiche.info/api/v2/gift-city",
+          "evidence_class": "observed_derived_structural_or_unavailable",
+          "human_scope_url": "https://seiche.info/gift-city/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ],
+      "forex": [
+        {
+          "product": "Seiche",
+          "url": "https://api.seiche.info/api/v2/world-markets?section=forex",
+          "evidence_class": "observed_derived_or_unavailable",
+          "human_scope_url": "https://seiche.info/markets/forex/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ],
+      "gold": [
+        {
+          "product": "Seiche",
+          "url": "https://api.seiche.info/api/v2/gift-city",
+          "evidence_class": "observed_derived_structural_or_unavailable",
+          "human_scope_url": "https://seiche.info/gift-city/",
+          "financial_authority": "none",
+          "carrier_state": "not_published"
+        }
+      ]
+    }
+  },
+  "cases": [
+    {
+      "topic": "money-market",
+      "source_url": "https://api.seiche.info/api/v2/money-markets",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\",\"forex\":\"2026-10-01\"},\"selected_evidence_as_of\":\"2026-10-01\"},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"},\"availability\":\"metadata_only\",\"publication_allowed\":false,\"gold\":{\"positioning\":{\"status\":\"restricted\",\"as_of\":\"2026-09-29\",\"fetched_at\":\"2026-10-04T19:00:00Z\",\"source_publication_time\":null}},\"forex\":{\"status\":\"partial\",\"quotes\":[{\"pair\":\"USDINR\",\"status\":\"unavailable\",\"value\":null}],\"uae_capture\":{\"last_observation_date\":\"2026-10-02\",\"publisher_updated_at\":\"2026-10-02T12:00:00Z\",\"fetched_at\":\"2026-10-04T18:00:00Z\"}}}",
+      "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf",
+      "expected_reported": {
+        "adapter": "seiche_money_markets_v1",
+        "state": [
+          {
+            "name": "response_status",
+            "value": "DATA HOLD",
+            "path": "/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/money-markets",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "generated_at",
+            "value": "2026-08-25T19:35:45Z",
+            "path": "/generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/money-markets",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "capital-market",
+      "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\",\"forex\":\"2026-10-01\"},\"selected_evidence_as_of\":\"2026-10-01\"},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"},\"availability\":\"metadata_only\",\"publication_allowed\":false,\"gold\":{\"positioning\":{\"status\":\"restricted\",\"as_of\":\"2026-09-29\",\"fetched_at\":\"2026-10-04T19:00:00Z\",\"source_publication_time\":null}},\"forex\":{\"status\":\"partial\",\"quotes\":[{\"pair\":\"USDINR\",\"status\":\"unavailable\",\"value\":null}],\"uae_capture\":{\"last_observation_date\":\"2026-10-02\",\"publisher_updated_at\":\"2026-10-02T12:00:00Z\",\"fetched_at\":\"2026-10-04T18:00:00Z\"}}}",
+      "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf",
+      "expected_reported": {
+        "adapter": "seiche_capital_markets_v1",
+        "state": [
+          {
+            "name": "response_status",
+            "value": "DATA HOLD",
+            "path": "/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "section_status",
+            "value": "restricted",
+            "path": "/capital_markets/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "generated_at",
+            "value": "2026-08-25T19:35:45Z",
+            "path": "/generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "as_of",
+            "value": 0,
+            "path": "/as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "snapshot_generated_at",
+            "value": "old-clock",
+            "path": "/clocks/snapshot_generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "evaluation_at",
+            "value": false,
+            "path": "/clocks/evaluation_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "selected_evidence_as_of",
+            "value": "2026-10-01",
+            "path": "/clocks/selected_evidence_as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "capital_markets_domain_as_of",
+            "value": "domain-clock",
+            "path": "/clocks/domains/capital_markets",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=capital_markets",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "china-economy",
+      "source_url": "https://www.palimpsest.info/readings/china-index-latest.json",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\",\"forex\":\"2026-10-01\"},\"selected_evidence_as_of\":\"2026-10-01\"},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"},\"availability\":\"metadata_only\",\"publication_allowed\":false,\"gold\":{\"positioning\":{\"status\":\"restricted\",\"as_of\":\"2026-09-29\",\"fetched_at\":\"2026-10-04T19:00:00Z\",\"source_publication_time\":null}},\"forex\":{\"status\":\"partial\",\"quotes\":[{\"pair\":\"USDINR\",\"status\":\"unavailable\",\"value\":null}],\"uae_capture\":{\"last_observation_date\":\"2026-10-02\",\"publisher_updated_at\":\"2026-10-02T12:00:00Z\",\"fetched_at\":\"2026-10-04T18:00:00Z\"}}}",
+      "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf",
+      "expected_reported": {
+        "adapter": "palimpsest_china_index_v1",
+        "state": [
+          {
+            "name": "publication_status",
+            "value": "DATA HOLD",
+            "path": "/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://www.palimpsest.info/readings/china-index-latest.json",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "availability",
+            "value": "metadata_only",
+            "path": "/availability",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://www.palimpsest.info/readings/china-index-latest.json",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "publication_allowed",
+            "value": false,
+            "path": "/publication_allowed",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://www.palimpsest.info/readings/china-index-latest.json",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "economic_state",
+            "value": "structural",
+            "path": "/economic_state/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://www.palimpsest.info/readings/china-index-latest.json",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "readiness",
+            "value": "hold",
+            "path": "/readiness/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://www.palimpsest.info/readings/china-index-latest.json",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "generated_at",
+            "value": "2026-08-25T19:35:45Z",
+            "path": "/generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://www.palimpsest.info/readings/china-index-latest.json",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "head_as_of",
+            "value": "old-head",
+            "path": "/head/as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://www.palimpsest.info/readings/china-index-latest.json",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "china-economy",
+      "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\",\"forex\":\"2026-10-01\"},\"selected_evidence_as_of\":\"2026-10-01\"},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"},\"availability\":\"metadata_only\",\"publication_allowed\":false,\"gold\":{\"positioning\":{\"status\":\"restricted\",\"as_of\":\"2026-09-29\",\"fetched_at\":\"2026-10-04T19:00:00Z\",\"source_publication_time\":null}},\"forex\":{\"status\":\"partial\",\"quotes\":[{\"pair\":\"USDINR\",\"status\":\"unavailable\",\"value\":null}],\"uae_capture\":{\"last_observation_date\":\"2026-10-02\",\"publisher_updated_at\":\"2026-10-02T12:00:00Z\",\"fetched_at\":\"2026-10-04T18:00:00Z\"}}}",
+      "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf",
+      "expected_reported": {
+        "adapter": "seiche_china_macro_v1",
+        "state": [
+          {
+            "name": "response_status",
+            "value": "DATA HOLD",
+            "path": "/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "section_status",
+            "value": "unavailable",
+            "path": "/china_macro/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "section_evidence_status",
+            "value": "restricted",
+            "path": "/china_macro/evidence_status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "generated_at",
+            "value": "2026-08-25T19:35:45Z",
+            "path": "/generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "as_of",
+            "value": 0,
+            "path": "/as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=china_macro",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "bank-risk",
+      "source_url": "https://api.liquilens.in/api/failure-radar/board",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\",\"forex\":\"2026-10-01\"},\"selected_evidence_as_of\":\"2026-10-01\"},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"},\"availability\":\"metadata_only\",\"publication_allowed\":false,\"gold\":{\"positioning\":{\"status\":\"restricted\",\"as_of\":\"2026-09-29\",\"fetched_at\":\"2026-10-04T19:00:00Z\",\"source_publication_time\":null}},\"forex\":{\"status\":\"partial\",\"quotes\":[{\"pair\":\"USDINR\",\"status\":\"unavailable\",\"value\":null}],\"uae_capture\":{\"last_observation_date\":\"2026-10-02\",\"publisher_updated_at\":\"2026-10-02T12:00:00Z\",\"fetched_at\":\"2026-10-04T18:00:00Z\"}}}",
+      "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf",
+      "expected_reported": {
+        "adapter": "liquilens_failure_radar_v1",
+        "state": [
+          {
+            "name": "historical_evidence_status",
+            "value": "unavailable",
+            "path": "/historical_evidence/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.liquilens.in/api/failure-radar/board",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "as_of",
+            "value": 0,
+            "path": "/as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.liquilens.in/api/failure-radar/board",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "market-liquidity",
+      "source_url": "https://api.seiche.info/undertow/x402/summary",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\",\"forex\":\"2026-10-01\"},\"selected_evidence_as_of\":\"2026-10-01\"},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"},\"availability\":\"metadata_only\",\"publication_allowed\":false,\"gold\":{\"positioning\":{\"status\":\"restricted\",\"as_of\":\"2026-09-29\",\"fetched_at\":\"2026-10-04T19:00:00Z\",\"source_publication_time\":null}},\"forex\":{\"status\":\"partial\",\"quotes\":[{\"pair\":\"USDINR\",\"status\":\"unavailable\",\"value\":null}],\"uae_capture\":{\"last_observation_date\":\"2026-10-02\",\"publisher_updated_at\":\"2026-10-02T12:00:00Z\",\"fetched_at\":\"2026-10-04T18:00:00Z\"}}}",
+      "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf",
+      "expected_reported": {
+        "adapter": "undertow_summary_v1",
+        "state": [
+          {
+            "name": "funding_regime",
+            "value": "unknown",
+            "path": "/funding_regime",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/undertow/x402/summary",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "asof",
+            "value": "old-source",
+            "path": "/asof",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/undertow/x402/summary",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "gift-city",
+      "source_url": "https://api.seiche.info/api/v2/gift-city",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\",\"forex\":\"2026-10-01\"},\"selected_evidence_as_of\":\"2026-10-01\"},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"},\"availability\":\"metadata_only\",\"publication_allowed\":false,\"gold\":{\"positioning\":{\"status\":\"restricted\",\"as_of\":\"2026-09-29\",\"fetched_at\":\"2026-10-04T19:00:00Z\",\"source_publication_time\":null}},\"forex\":{\"status\":\"partial\",\"quotes\":[{\"pair\":\"USDINR\",\"status\":\"unavailable\",\"value\":null}],\"uae_capture\":{\"last_observation_date\":\"2026-10-02\",\"publisher_updated_at\":\"2026-10-02T12:00:00Z\",\"fetched_at\":\"2026-10-04T18:00:00Z\"}}}",
+      "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf",
+      "expected_reported": {
+        "adapter": "seiche_gift_city_v1",
+        "state": [
+          {
+            "name": "response_status",
+            "value": "DATA HOLD",
+            "path": "/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "gold_positioning_status",
+            "value": "restricted",
+            "path": "/gold/positioning/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "generated_at",
+            "value": "2026-08-25T19:35:45Z",
+            "path": "/generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "gold_positioning_as_of",
+            "value": "2026-09-29",
+            "path": "/gold/positioning/as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "gold_positioning_fetched_at",
+            "value": "2026-10-04T19:00:00Z",
+            "path": "/gold/positioning/fetched_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "uae_fx_observation_date",
+            "value": "2026-10-02",
+            "path": "/forex/uae_capture/last_observation_date",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "uae_fx_publisher_updated_at",
+            "value": "2026-10-02T12:00:00Z",
+            "path": "/forex/uae_capture/publisher_updated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "uae_fx_fetched_at",
+            "value": "2026-10-04T18:00:00Z",
+            "path": "/forex/uae_capture/fetched_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "forex",
+      "source_url": "https://api.seiche.info/api/v2/world-markets?section=forex",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\",\"forex\":\"2026-10-01\"},\"selected_evidence_as_of\":\"2026-10-01\"},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"},\"availability\":\"metadata_only\",\"publication_allowed\":false,\"gold\":{\"positioning\":{\"status\":\"restricted\",\"as_of\":\"2026-09-29\",\"fetched_at\":\"2026-10-04T19:00:00Z\",\"source_publication_time\":null}},\"forex\":{\"status\":\"partial\",\"quotes\":[{\"pair\":\"USDINR\",\"status\":\"unavailable\",\"value\":null}],\"uae_capture\":{\"last_observation_date\":\"2026-10-02\",\"publisher_updated_at\":\"2026-10-02T12:00:00Z\",\"fetched_at\":\"2026-10-04T18:00:00Z\"}}}",
+      "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf",
+      "expected_reported": {
+        "adapter": "seiche_forex_v1",
+        "state": [
+          {
+            "name": "response_status",
+            "value": "DATA HOLD",
+            "path": "/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=forex",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "section_status",
+            "value": "partial",
+            "path": "/forex/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=forex",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "generated_at",
+            "value": "2026-08-25T19:35:45Z",
+            "path": "/generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=forex",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "as_of",
+            "value": 0,
+            "path": "/as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=forex",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "snapshot_generated_at",
+            "value": "old-clock",
+            "path": "/clocks/snapshot_generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=forex",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "evaluation_at",
+            "value": false,
+            "path": "/clocks/evaluation_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=forex",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "selected_evidence_as_of",
+            "value": "2026-10-01",
+            "path": "/clocks/selected_evidence_as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=forex",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "forex_domain_as_of",
+            "value": "2026-10-01",
+            "path": "/clocks/domains/forex",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/world-markets?section=forex",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "topic": "gold",
+      "source_url": "https://api.seiche.info/api/v2/gift-city",
+      "raw_document": "{\"status\":\"DATA HOLD\",\"generated_at\":\"2026-08-25T19:35:45Z\",\"as_of\":0,\"clocks\":{\"snapshot_generated_at\":\"old-clock\",\"evaluation_at\":false,\"domains\":{\"capital_markets\":\"domain-clock\",\"forex\":\"2026-10-01\"},\"selected_evidence_as_of\":\"2026-10-01\"},\"capital_markets\":{\"status\":\"restricted\"},\"china_macro\":{\"status\":\"unavailable\",\"evidence_status\":\"restricted\",\"as_of\":null},\"economic_state\":{\"status\":\"structural\"},\"readiness\":{\"status\":\"hold\"},\"head\":{\"as_of\":\"old-head\"},\"historical_evidence\":{\"status\":\"unavailable\"},\"market_layer\":{\"as_of\":null},\"funding_regime\":\"unknown\",\"asof\":\"old-source\",\"untrusted\":{\"status\":\"calm\",\"carrier_verification\":\"verified\"},\"availability\":\"metadata_only\",\"publication_allowed\":false,\"gold\":{\"positioning\":{\"status\":\"restricted\",\"as_of\":\"2026-09-29\",\"fetched_at\":\"2026-10-04T19:00:00Z\",\"source_publication_time\":null}},\"forex\":{\"status\":\"partial\",\"quotes\":[{\"pair\":\"USDINR\",\"status\":\"unavailable\",\"value\":null}],\"uae_capture\":{\"last_observation_date\":\"2026-10-02\",\"publisher_updated_at\":\"2026-10-02T12:00:00Z\",\"fetched_at\":\"2026-10-04T18:00:00Z\"}}}",
+      "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf",
+      "expected_reported": {
+        "adapter": "seiche_gift_city_v1",
+        "state": [
+          {
+            "name": "response_status",
+            "value": "DATA HOLD",
+            "path": "/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "gold_positioning_status",
+            "value": "restricted",
+            "path": "/gold/positioning/status",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ],
+        "clocks": [
+          {
+            "name": "generated_at",
+            "value": "2026-08-25T19:35:45Z",
+            "path": "/generated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "gold_positioning_as_of",
+            "value": "2026-09-29",
+            "path": "/gold/positioning/as_of",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "gold_positioning_fetched_at",
+            "value": "2026-10-04T19:00:00Z",
+            "path": "/gold/positioning/fetched_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "uae_fx_observation_date",
+            "value": "2026-10-02",
+            "path": "/forex/uae_capture/last_observation_date",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "uae_fx_publisher_updated_at",
+            "value": "2026-10-02T12:00:00Z",
+            "path": "/forex/uae_capture/publisher_updated_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          },
+          {
+            "name": "uae_fx_fetched_at",
+            "value": "2026-10-04T18:00:00Z",
+            "path": "/forex/uae_capture/fetched_at",
+            "provenance": {
+              "kind": "source_document",
+              "source_url": "https://api.seiche.info/api/v2/gift-city",
+              "content_sha256": "sha256:07f87968392ce45f2bc6e91553822b374f63dc859a49edd6190eedd3a214b9bf"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
