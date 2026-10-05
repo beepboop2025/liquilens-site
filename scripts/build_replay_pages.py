@@ -481,7 +481,7 @@ def case_file_index(
 
 
 BASE_SITEMAP = [
-    ("/", "2026-09-01", "weekly", "1.0"),
+    ("/", "2026-10-05", "weekly", "1.0"),
     ("/investigations/", "2026-08-12", "weekly", "0.9"),
     ("/investigations/the-5-64x-private-credit-concentration/",
      "2026-08-12", "monthly", "0.8"),

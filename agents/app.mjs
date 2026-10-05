@@ -14,6 +14,7 @@ const help = {
   codex: "Run these commands in your terminal. Existing configured servers are preserved.",
   cursor: "Merge these entries into .cursor/mcp.json in your project, keeping existing servers.",
   vscode: "Merge these entries into .vscode/mcp.json in your project, keeping existing servers.",
+  gemini: "Merge gemini.json into .gemini/settings.json in your project, keeping existing settings. Run gemini mcp list to check connections, then review /mcp in a Gemini CLI session.",
 };
 const $ = id => document.getElementById(id);
 for (const [id, profile] of Object.entries(topicProfiles)) {

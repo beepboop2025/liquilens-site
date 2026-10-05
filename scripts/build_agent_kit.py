@@ -9,7 +9,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "agents"
-VERSION = "1.2.0"
+VERSION = "1.3.0"
 SKILL_NAME = "liquilens-trading-research"
 SERVERS = {
     "seiche": {"url": "https://api.seiche.info/mcp", "tools": ["data_health", "funding_stress_now", "money_market_context", "market_workbench", "gift_city_context", "gold_inventory_carry"]},
@@ -108,6 +108,8 @@ def configuration_assets(selected):
         "hermes.yaml": yaml.encode(),
         "cursor.json": json_bytes({"mcpServers": {n: {"url": s["url"]} for n, s in selected.items()}}),
         "vscode.json": json_bytes({"servers": {n: {"type": "http", "url": s["url"]} for n, s in selected.items()}}),
+        "gemini.json": json_bytes({"mcpServers": {n: {"httpUrl": s["url"], "timeout": 30000,
+                                                     "includeTools": s["tools"]} for n, s in selected.items()}}),
         "claude.txt": ("\n".join(f"claude mcp add --transport http {n} {s['url']}" for n, s in selected.items()) + "\n").encode(),
         "codex.txt": ("\n".join(f"codex mcp add {n} --url {s['url']}" for n, s in selected.items()) + "\n").encode(),
     }
@@ -131,7 +133,7 @@ def profile_assets():
             profiles[key]["downloads"][client] = f"/agents/{relative}"
     payload = {"schema": "liquilens.agent-topic-profiles.v1", "version": VERSION,
                "default": "all-topics", "profiles": profiles,
-               "filtering": {"hermes": "selected-tools", "openclaw": "selected-tools",
+               "filtering": {"hermes": "selected-tools", "openclaw": "selected-tools", "gemini": "selected-tools",
                              "claude": "selected-servers", "codex": "selected-servers",
                              "cursor": "selected-servers", "vscode": "selected-servers"}}
     files["profiles.json"] = json_bytes(payload)

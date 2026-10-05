@@ -11,12 +11,12 @@ const link = (href, options = {}) => agentNavigationLink(href, {currentUrl, cont
 
 test("topic selection copies the downloaded configuration and the matching research prompt", () => {
   for (const id of Object.keys(topicProfiles)) {
-    for (const client of ["hermes", "openclaw", "claude", "codex", "cursor", "vscode"]) {
+    for (const client of ["hermes", "openclaw", "claude", "codex", "cursor", "vscode", "gemini"]) {
       const selected = selectConfiguration(client, id);
       const downloaded = readFileSync(new URL(".." + selected.download, import.meta.url), "utf8");
       assert.equal(selected.configuration, downloaded);
       assert.equal(selected.prompt, topicProfiles[id].prompt);
-      assert.match(selected.scope, client === "hermes" || client === "openclaw" ? /selects the listed tools/ : /does not apply a tool allowlist/);
+      assert.match(selected.scope, ["hermes", "openclaw", "gemini"].includes(client) ? /selects the listed tools/ : /does not apply a tool allowlist/);
     }
   }
   const gold = selectConfiguration("openclaw", "gold");

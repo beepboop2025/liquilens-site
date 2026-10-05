@@ -8,6 +8,8 @@ test("only bounded setup intent reaches the transport, once per page", async () 
   assert.equal(await track(entryEvent("config_copied", "hermes")), true);
   assert.equal(await track(entryEvent("config_copied", "hermes")), false);
   assert.equal(await track(entryEvent("config_copied", "private-account")), false);
+  assert.equal(await track(entryEvent("config_copied", "gemini")), false);
+  assert.equal(await track(entryEvent("config_download_requested", "gemini")), false);
   assert.equal(await track("prompt=private"), false);
   assert.equal(calls.length, 1);
   const [url, options] = calls[0];

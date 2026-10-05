@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "seiche": {
+      "httpUrl": "https://api.seiche.info/mcp",
+      "timeout": 30000,
+      "includeTools": [
+        "data_health",
+        "money_market_context",
+        "market_workbench",
+        "gift_city_context",
+        "gold_inventory_carry"
+      ]
+    },
+    "liquilens": {
+      "httpUrl": "https://api.liquilens.in/mcp",
+      "timeout": 30000,
+      "includeTools": [
+        "banking_specialisation_coverage",
+        "bank_asset_quality_review"
+      ]
+    },
+    "undertow": {
+      "httpUrl": "https://api.seiche.info/undertow/mcp",
+      "timeout": 30000,
+      "includeTools": [
+        "gold_cash_realisation"
+      ]
+    }
+  }
+}

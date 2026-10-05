@@ -1,6 +1,6 @@
 {
   "schema": "liquilens.agent-kit.v1",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "updated_at": "2026-10-05",
   "homepage": "https://liquilens.in/agents/",
   "price": {
@@ -67,13 +67,13 @@
   },
   "archive": {
     "url": "https://liquilens.in/agents/trading-research-kit.zip",
-    "sha256": "ab505c64891695e33b8d049e1aa7eeb9fca12e4c021365d58862b188fe31279e",
-    "bytes": 40940
+    "sha256": "d302809f39700fea6b24c9745a168da793da770a6f82d2c0726f1fc72a24268a",
+    "bytes": 44812
   },
   "files": {
     "README.md": {
-      "sha256": "5ab62dd46dd919e6b2aeec82feeecee0febcb195b236eff77c33bd2e5af47984",
-      "bytes": 12173
+      "sha256": "ee45ac632c65c5c55bcfb096fac9c16851cfc751e783a5431ca09ad7aecd54cd",
+      "bytes": 12833
     },
     "claude.txt": {
       "sha256": "34ed8064237887d623de4e6c1a7d34007958f81d7e043378f0615a1a3c6b3ca4",
@@ -91,6 +91,10 @@
       "sha256": "5ac34083238de25be4fc952464cd7ba09f0735683b32f389f06b9429906be9e6",
       "bytes": 13270
     },
+    "gemini.json": {
+      "sha256": "b5c9f9c283eb4cec8b62cb42a492543c643179c6e95c4fd5eac63b07165250c6",
+      "bytes": 821
+    },
     "hermes.yaml": {
       "sha256": "da1eabe7927ad22e2c143603ccbaf5051b848c579d155a57339d762e69b165a3",
       "bytes": 549
@@ -104,12 +108,12 @@
       "bytes": 1054
     },
     "profiles.json": {
-      "sha256": "2cd37917ae0fc5d7ecf648f6f89d058f9288dce96bce3c5a4ecbcf7d5a378b13",
-      "bytes": 24979
+      "sha256": "9763c229f510fd6acff92eb9f61093d3b33d20a33d83612a55650109faff9a0e",
+      "bytes": 29684
     },
     "profiles.mjs": {
-      "sha256": "ee9ef7cb0391c5129ac7745d03ab16e15de1f50f0bb6ec872186a07b1cd1941d",
-      "bytes": 25039
+      "sha256": "3536e1f3ef0ffe151299826a3de76c472b0506c7a9d40826239d6d9cfb4f5040",
+      "bytes": 29744
     },
     "profiles/all-topics/claude.txt": {
       "sha256": "34ed8064237887d623de4e6c1a7d34007958f81d7e043378f0615a1a3c6b3ca4",
@@ -122,6 +126,10 @@
     "profiles/all-topics/cursor.json": {
       "sha256": "9fa3ebbbb5b45ddc9f3ab132f0e8ccde338a62f7bbd67fee11470e27b798672b",
       "bytes": 238
+    },
+    "profiles/all-topics/gemini.json": {
+      "sha256": "b5c9f9c283eb4cec8b62cb42a492543c643179c6e95c4fd5eac63b07165250c6",
+      "bytes": 821
     },
     "profiles/all-topics/hermes.yaml": {
       "sha256": "da1eabe7927ad22e2c143603ccbaf5051b848c579d155a57339d762e69b165a3",
@@ -147,6 +155,10 @@
       "sha256": "95734f049d659673ff4764ee6836a3d383a1e9d198988bf722bc6b6ea7512e59",
       "bytes": 95
     },
+    "profiles/bank-risk/gemini.json": {
+      "sha256": "8a0d6373d2b48307d99f9df55673a1d24853dfef87ec7a4ae3270942a3dc3b89",
+      "bytes": 299
+    },
     "profiles/bank-risk/hermes.yaml": {
       "sha256": "8ab850f5ca755ae06548fcd97205692e973f435cb4c71425abf163761b0b3291",
       "bytes": 203
@@ -170,6 +182,10 @@
     "profiles/forex/cursor.json": {
       "sha256": "0afe4a16f7643c65c7cdd3f064ca148e552980ec733cf8f0a72e2da2f5d2deb6",
       "bytes": 91
+    },
+    "profiles/forex/gemini.json": {
+      "sha256": "46dd0a12c01710c78b9268bda997b8d0c80b200beab819e03b0bc4af0cef8574",
+      "bytes": 231
     },
     "profiles/forex/hermes.yaml": {
       "sha256": "a958a02bc53a4c9b390c66271c30dde717ac307d99f79b42e6cae7b73da24153",
@@ -195,6 +211,10 @@
       "sha256": "9fa3ebbbb5b45ddc9f3ab132f0e8ccde338a62f7bbd67fee11470e27b798672b",
       "bytes": 238
     },
+    "profiles/funding-bank-exits/gemini.json": {
+      "sha256": "a9dd66150cc7cf262739ef6921bfac73f24cbd88265b1c2f6515f21175bed19b",
+      "bytes": 699
+    },
     "profiles/funding-bank-exits/hermes.yaml": {
       "sha256": "1b1debd61e17f27e915e8c706f0d5a1fe91d1a6b6259c38654459253afa309b2",
       "bytes": 459
@@ -218,6 +238,10 @@
     "profiles/gift-city/cursor.json": {
       "sha256": "9fa3ebbbb5b45ddc9f3ab132f0e8ccde338a62f7bbd67fee11470e27b798672b",
       "bytes": 238
+    },
+    "profiles/gift-city/gemini.json": {
+      "sha256": "e676dfc2938ce9f52e3ac03d4328da7e25afeecc37c8e998dc7986e8c23ee09f",
+      "bytes": 675
     },
     "profiles/gift-city/hermes.yaml": {
       "sha256": "5e448a9e8c5d9b71388d795123b39c429ddb742eadee423950f430cc4892f517",
@@ -243,6 +267,10 @@
       "sha256": "f601fce38c38e65e63dbc7ebf406e6409a92e69ede608d1135f1e82b8107de95",
       "bytes": 168
     },
+    "profiles/gold/gemini.json": {
+      "sha256": "d29ac0731f3a775eb87e217bdf16cf7fa62c7f3ac7ae5ebfe879c21cff9d6b16",
+      "bytes": 405
+    },
     "profiles/gold/hermes.yaml": {
       "sha256": "f49cce2d13d85af0c38a69d8f931ced782179ba21955500502cd50c7ce64324e",
       "bytes": 257
@@ -267,6 +295,10 @@
       "sha256": "1b32be62d9e72652b57dd13f3d10cabd3c8839134f708c8132d79eb9798a3ac4",
       "bytes": 102
     },
+    "profiles/market-liquidity/gemini.json": {
+      "sha256": "af57967b46907fd678ad74af5abc967d487f152e78741a387d13a5e26dca5d0b",
+      "bytes": 214
+    },
     "profiles/market-liquidity/hermes.yaml": {
       "sha256": "c56d782bb552bfda17e7c49e9a15bdc223752ccb111fd8d777d7141899bd5ab1",
       "bytes": 134
@@ -290,6 +322,10 @@
     "profiles/money-market/cursor.json": {
       "sha256": "0afe4a16f7643c65c7cdd3f064ca148e552980ec733cf8f0a72e2da2f5d2deb6",
       "bytes": 91
+    },
+    "profiles/money-market/gemini.json": {
+      "sha256": "b219c0fd0070ee4a4a57a97fca4c8e39d9b0d8b37d7440c094d4a80d61449248",
+      "bytes": 236
     },
     "profiles/money-market/hermes.yaml": {
       "sha256": "d1f33b60f57249b25079b7683ddd208e378bd34a11ff6b720c5a75fc816fe91d",

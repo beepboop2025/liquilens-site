@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "undertow": {
+      "httpUrl": "https://api.seiche.info/undertow/mcp",
+      "timeout": 30000,
+      "includeTools": [
+        "exit_cost",
+        "venue_concentration"
+      ]
+    }
+  }
+}

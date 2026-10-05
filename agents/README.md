@@ -11,12 +11,11 @@ Manifest and per-file SHA-256 digests: https://liquilens.in/agents/manifest.json
 
 ## Choose a research topic
 
-Kit 1.2.0 adds topic profiles at https://liquilens.in/agents/#connect and the
+Kit 1.3.0 includes Gemini CLI connections and topic profiles at https://liquilens.in/agents/#connect and the
 machine-readable https://liquilens.in/agents/profiles.json. The default
-`hermes.yaml` and `openclaw.json` select thirteen public tools across the three
+`hermes.yaml`, `openclaw.json` and `gemini.json` select thirteen public tools across the three
 servers. The same files are under `profiles/all-topics/` in the download.
-Choose `profiles/<topic>/hermes.yaml` or `profiles/<topic>/openclaw.json` for a
-smaller selection. All profiles also include Claude Code, Codex, Cursor and
+Choose the matching file under `profiles/<topic>/` for a smaller selection. All profiles also include Claude Code, Codex, Cursor and
 VS Code configurations; those formats select servers, not individual tools.
 
 | Topic | Start with | Boundary |
@@ -152,6 +151,23 @@ https://liquilens.in/.well-known/agent-skills/index.json.
 Official references:
 - https://hermes-agent.nousresearch.com/docs/user-guide/features/mcp
 - https://docs.openclaw.ai/cli/mcp/registry
+
+## Gemini CLI
+
+Merge the `mcpServers` entries from `gemini.json` (or a topic profile) into
+`.gemini/settings.json` in your project, preserving existing settings.
+`httpUrl` selects Streamable HTTP; `includeTools` keeps the selected research
+scope. The configuration retains normal tool confirmations.
+
+```sh
+gemini mcp list
+```
+
+Then open a Gemini CLI session and inspect `/mcp` before asking a research
+question. Server access is public; Gemini model access has its own account and
+usage terms. See https://liquilens.in/agents/clients.md for the check actually run.
+
+Official configuration: https://geminicli.com/docs/tools/mcp-server/
 
 ## n8n
 

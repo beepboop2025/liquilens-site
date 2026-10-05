@@ -1,4 +1,6 @@
 // Aggregate setup intent; no visitor identifier, query or research content.
+// Gemini configuration events remain uncounted until the API allowlist supports them.
+// General prompt/download events retain their existing meaning.
 const clients = new Set(["hermes", "openclaw", "claude", "codex", "cursor", "vscode"]);
 const general = new Set(["kit_download_requested", "n8n_download_requested", "research_prompt_copied", "skill_opened"]);
 const clientActions = new Set(["config_copied", "config_download_requested"]);

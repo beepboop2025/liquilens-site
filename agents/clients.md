@@ -188,3 +188,27 @@ each client's native runtime.
 These checks used separate local profiles. Operator MCP traffic was marked
 synthetic and is excluded from adoption reporting. No model credentials,
 persistent visitor identifiers or trading actions were added to the kit.
+
+## Gemini CLI
+
+On October 5, 2026, Gemini CLI **0.62.0** connected to all three public
+Streamable HTTP servers using the generated `all-topics/gemini.json`
+configuration in a separate local profile. `gemini mcp list` reported
+**Connected** for Seiche, LiquiLens and Undertow. The check added synthetic
+traffic headers and did not invoke a Gemini model or make a research tool call.
+It proves connection setup, not model tool selection or user adoption.
+
+1. Choose Gemini CLI and a research topic at https://liquilens.in/agents/#connect.
+2. Merge the downloaded `mcpServers` entries into `.gemini/settings.json` in
+   your project, preserving existing settings. Trust only your own reviewed
+   project when Gemini CLI asks; untrusted folders suppress MCP connections.
+3. Run `gemini mcp list`, then inspect `/mcp` in a Gemini CLI session.
+4. Ask the displayed research question and retain the returned source dates,
+   units and gaps. Gemini model access has separate account and usage terms.
+
+`httpUrl` is the Streamable HTTP field. `includeTools` selects the topic's
+research tools; ordinary tool confirmations remain enabled. The broader
+builder at https://liquilens.in/start/#connect selects servers without topic
+filters. Automated checks cover configuration/download parity for every topic.
+
+[Official Gemini CLI MCP configuration](https://geminicli.com/docs/tools/mcp-server/)
