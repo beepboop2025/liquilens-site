@@ -1,5 +1,7 @@
 # LiquiLens public site
 
+LiquiLens, Seiche and Undertow form one connected financial-evidence product system from **LIQUILENS PRIVATE LIMITED**, a registered company in India. Built for international users: institution evidence → funding conditions → market liquidity. [Company and investors](https://liquilens.in/investors/) · [Shared company profile](https://liquilens.in/company-profile.json). Coverage, clocks and authority remain product-specific.
+
 The [free agent starter kit](agents/README.md) connects Hermes, OpenClaw and
 other MCP clients to public funding, bank and market-depth research. Its Python
 brief retains partial results and supports comparison with a previous run.
