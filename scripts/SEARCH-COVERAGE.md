@@ -33,7 +33,7 @@ compatibility warnings rather than proof that a verified search crawler is
 blocked. The main monitor identifies itself honestly; it does not impersonate
 Googlebot. Training-crawler policy is not changed by this monitor.
 
-The minimum sitemap counts (124, 166, 28) and required entry routes are reviewed
+The minimum sitemap counts (124, 166, 58) and required entry routes are reviewed
 baselines, not frozen totals or evidence that the corpus is complete. New URLs
 are included automatically. Removal of any newer URL while staying above the
 minimum requires comparing retained reports; it is not automatically detected

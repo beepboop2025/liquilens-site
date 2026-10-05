@@ -22,7 +22,7 @@ PRODUCTS = (
     {"name": "Seiche", "origin": "https://seiche.info", "minimum_urls": 166,
      "pages": ("/", "/money-markets/", "/markets/"),
      "sitemaps": ("/sitemap.xml",)},
-    {"name": "Undertow", "origin": "https://liquilens-undertow.com", "minimum_urls": 28,
+    {"name": "Undertow", "origin": "https://liquilens-undertow.com", "minimum_urls": 58,
      "pages": ("/", "/crypto/"),
      "sitemaps": ("/sitemap.xml", "/articles/sitemap.xml")},
 )
