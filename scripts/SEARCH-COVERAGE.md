@@ -34,11 +34,34 @@ blocked. The main monitor identifies itself honestly; it does not impersonate
 Googlebot. Training-crawler policy is not changed by this monitor.
 
 The minimum sitemap counts (124, 166, 58) and required entry routes are reviewed
-baselines, not frozen totals or evidence that the corpus is complete. New URLs
-are included automatically. Removal of any newer URL while staying above the
-minimum requires comparing retained reports; it is not automatically detected
-as a historical loss. Review deliberate URL retirements and update the baseline
-with their redirect/indexing plan. The probe is bounded to three exact HTTPS
+baselines, not frozen totals or evidence that the corpus is complete. Every live
+workflow compares the complete sitemap inventory against the previous successful
+live run on `main`. A disappearing URL fails even if a new URL replaces it and
+totals remain above the minimum. New URLs in a successful run become part of the
+next comparison. Failed reports never redefine the successful baseline.
+
+`search_coverage_history.py` uses read-only GitHub Actions access to retrieve the
+exact artifact from a successful schedule, manual, or post-publication run of
+this workflow in this repository. PRs, other branches, forks, and the current run
+are excluded. The archive is bounded and only its root `report.json` is read;
+it is never extracted. The report is validated for all three origins, required
+pages, successful checks, and distinct bounded URL inventories. Its run, attempt,
+commit, artifact ID and downloaded hashes are retained in `baseline.source.json`.
+
+An absent, expired, malformed, or inaccessible baseline fails history validation
+while preserving the current site's audit report. There is no silent empty
+baseline or older-artifact fallback. The downloader step may continue after an
+error so current retrieval can still be measured; the final audit then fails.
+After a retention gap, restore a reviewed baseline through an explicit code and
+evidence review. A manual run alone does not reset history.
+
+For a deliberate retirement, add the exact product, URL and a meaningful reason
+(including the redirect/indexing plan) to `scripts/search-coverage-retirements.json`
+through normal review. Wildcard retirements are not supported; required entry
+pages cannot be retired. This permission does not waive minimum counts, current
+page validation or robots checks. Reviewed removals remain visible in reports.
+
+The probe is bounded to three exact HTTPS
 origins, at most 20 sitemaps and 2,500 URLs per product, 3 MiB per response, and
 a 15-second socket timeout. One product runs at a time per worker, with three
 workers total. Increasing these bounds requires review.
@@ -83,9 +106,17 @@ Sources:
 ## Local verification
 
 ```sh
-python3 -m unittest discover -s tests -p test_search_coverage.py -v
-python3 scripts/check_search_coverage.py --full --output /path/to/evidence/report.json
+python3 -m unittest discover -s tests -p 'test_search_coverage*.py' -v
+python3 scripts/search_coverage_history.py --output /path/to/evidence/baseline.json
+python3 scripts/check_search_coverage.py --full \
+  --baseline /path/to/evidence/baseline.json \
+  --retirements scripts/search-coverage-retirements.json \
+  --output /path/to/evidence/report.json
 ```
+
+The downloader requires an authenticated `gh` CLI with Actions read access.
+Local runs without `--baseline` label inventory history `NOT_REQUESTED`; they
+do not claim to have checked historical losses. CI always requires the baseline.
 
 The monitor establishes bounded technical retrieval coverage only. Source-data
 coverage, rights, freshness, Google processing/indexing, autocomplete placement,
