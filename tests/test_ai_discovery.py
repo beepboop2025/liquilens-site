@@ -239,7 +239,7 @@ def test_catalog_obeys_the_ard_envelope():
     catalog = _catalog()
     assert catalog["specVersion"] == "1.0"
     assert catalog["host"]["displayName"] == "LiquiLens"
-    assert len(catalog["entries"]) == 20
+    assert len(catalog["entries"]) == 21
 
     identifiers = set()
     for entry in catalog["entries"]:

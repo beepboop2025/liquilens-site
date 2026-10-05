@@ -1,0 +1,103 @@
+{
+  "schema": "liquilens.company-profile.v1",
+  "updated": "2026-10-05",
+  "canonical_url": "https://liquilens.in/company-profile.json",
+  "company": {
+    "name": "LiquiLens",
+    "legal_name": "LIQUILENS PRIVATE LIMITED",
+    "entity_type": "Registered private limited company",
+    "jurisdiction": "India",
+    "registered_city": "Jaipur",
+    "incorporated_on": "2026-08-05",
+    "registration_number": "U62011RJ2026PTC116792",
+    "website": "https://liquilens.in/",
+    "investors_url": "https://liquilens.in/investors/",
+    "contact": "mailto:mrinal@liquilens.in?subject=LiquiLens%20investor%20conversation"
+  },
+  "purpose": "Financial evidence for decisions that cross institutions, funding systems and markets.",
+  "positioning": "One company. Three connected products. Source-checkable financial research for people, software and AI agents.",
+  "audiences": [
+    "Treasury and credit teams",
+    "Funds and risk research teams",
+    "Financial software and AI agent builders"
+  ],
+  "global_strategy": {
+    "distribution": "Public websites, REST APIs and hosted MCP make the products accessible to international users, subject to applicable terms.",
+    "coverage": "Worldwide access is distinct from jurisdiction and market coverage. Follow each product card and the source dates served with each result.",
+    "initial_commercial_focus": "Repeatable institution monitoring and liquidity review for treasury, credit and research teams, starting with existing India and USD evidence.",
+    "expansion": "Additional jurisdictions and enterprise integrations are expansion opportunities, subject to source rights, local definitions and validation."
+  },
+  "products": [
+    {
+      "name": "LiquiLens",
+      "role": "Institution evidence",
+      "question": "What is changing at this bank or lender?",
+      "website": "https://liquilens.in/",
+      "product_card": "https://liquilens.in/product-card.json",
+      "mcp": "https://api.liquilens.in/mcp",
+      "openapi": "https://api.liquilens.in/api/openapi.json",
+      "coverage": "India and US public institution research; European named case files. Jurisdiction-specific definitions and served evidence eligibility apply.",
+      "commercial_path": "Public research and free integrations; named-list software proposals; separately scoped paid proof pilots."
+    },
+    {
+      "name": "Seiche",
+      "role": "Funding conditions",
+      "question": "What funding environment surrounds this exposure?",
+      "website": "https://seiche.info/",
+      "product_card": "https://seiche.info/product-card.json",
+      "mcp": "https://api.seiche.info/mcp",
+      "openapi": "https://api.seiche.info/api/openapi.json",
+      "coverage": "Deepest institutional desk coverage is USD funding. Broader money-market, FX and economic reference coverage carries market-specific clocks, rights and availability states.",
+      "commercial_path": "Free AGPL public core; potential commercial support and integration services must preserve the open-source licence."
+    },
+    {
+      "name": "Undertow",
+      "role": "Market liquidity",
+      "question": "What does liquidity look like at this position size?",
+      "website": "https://liquilens-undertow.com/",
+      "product_card": "https://liquilens-undertow.com/product-card.json",
+      "mcp": "https://api.seiche.info/undertow/mcp",
+      "openapi": "https://api.seiche.info/undertow/x402/openapi.json",
+      "coverage": "Cross-market public liquidity evidence; crypto exit estimates interpolate dated quote-depth bands. Gold scenarios require caller assumptions. Market segments can remain partial or unavailable.",
+      "commercial_path": "Published Alerts, Agent and Desk plans; fund subscription offer; x402 machine-call pricing. Offers are not evidence of completed sales."
+    }
+  ],
+  "connected_workflow": {
+    "entry": "https://liquilens.in/start/",
+    "steps": [
+      "Resolve an institution and inspect its dated public disclosures in LiquiLens.",
+      "Add relevant funding and money-market context from Seiche.",
+      "Inspect Undertow market liquidity or stated-size exit evidence when the exposure has a market exit.",
+      "Export a source-separated review and retain dates, assumptions and unavailable sections."
+    ],
+    "integration_evidence": [
+      "https://liquilens.in/start/",
+      "https://liquilens.in/developers/institutions/",
+      "https://liquilens.in/agents/"
+    ],
+    "contract": "The products can be used independently. Their complementary evidence connects in browser and agent workflows; their scores are not merged into a universal risk verdict."
+  },
+  "business_model": {
+    "current_offers": [
+      "LiquiLens named-list software and fixed-scope proof pilots",
+      "Undertow subscriptions and machine-priced data"
+    ],
+    "open_source_core": "Seiche remains a free AGPL research core. Commercial support and integration are opportunities, not a change to that licence.",
+    "commercial_evidence": "Published offers and live interfaces establish product availability. Revenue, customers and retention require separate dated evidence; traffic and tool calls are not customer proof."
+  },
+  "capital_milestones": [
+    "Prove repeated use and paid renewal for one institution-monitoring workflow.",
+    "Improve admitted source coverage, freshness and operating reliability for the markets buyers actually use.",
+    "Expand integrations and jurisdiction coverage only after rights and validation review.",
+    "Establish attributable acquisition, activation, retention and revenue reporting."
+  ],
+  "evidence_links": {
+    "company": "https://liquilens.in/about/",
+    "methods": "https://liquilens.in/research/",
+    "release_status": "https://liquilens.in/status/",
+    "source_and_coverage": "https://api.liquilens.in/api/evidence/markets",
+    "seiche_methods": "https://seiche.info/methodology",
+    "undertow_methods": "https://liquilens-undertow.com/research"
+  },
+  "authority": "Research and market data. No credit rating, regulatory approval, order execution or guaranteed investment or funding outcome."
+}

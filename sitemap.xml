@@ -276,4 +276,10 @@
   <url><loc>https://liquilens.in/banking/institutions/ujjivan-sfb/</loc><lastmod>2026-10-04</lastmod></url>
   <url><loc>https://liquilens.in/banking/institutions/utkarsh-sfb/</loc><lastmod>2026-10-04</lastmod></url>
 <!-- BANKING-SNAPSHOTS:END -->
+  <url>
+    <loc>https://liquilens.in/investors/</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
 </urlset>

@@ -1,5 +1,15 @@
 # LiquiLens
 
+## Company and connected products
+
+LiquiLens is a registered private limited company in India: LIQUILENS PRIVATE LIMITED, incorporated 5 August 2026 (CIN U62011RJ2026PTC116792). LiquiLens reviews institutions, Seiche adds funding conditions, and Undertow examines market liquidity and stated-size exits. International access does not imply uniform worldwide market coverage.
+
+- Company profile: https://liquilens.in/company-profile.json
+- Company and investors: https://liquilens.in/investors/
+- Connected review workflow: https://liquilens.in/start/
+
+Keep each product's source dates, limitations and authority separate. Use only the products relevant to the user's question.
+
 ## Free agent starter kit
 
 - Connect Hermes, OpenClaw, Claude Code, Codex, Cursor or VS Code: https://liquilens.in/agents/

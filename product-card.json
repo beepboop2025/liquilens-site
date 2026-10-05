@@ -361,5 +361,25 @@
     "scope": "Reviewed immutable source revision; this pin does not assert a PyPI, plugin or Registry release.",
     "evidence_boundary": "Transport success is not evidence eligibility or Carrier verification; preserve source states, clocks, rights and gaps.",
     "topic_boundary": "GIFT City and gold reuse one public GET context; forex uses the bounded world-markets forex section. No scenario auto-execution or executable price claim."
+  },
+  "company": {
+    "name": "LiquiLens",
+    "legal_name": "LIQUILENS PRIVATE LIMITED",
+    "entity_type": "Registered private limited company",
+    "jurisdiction": "India",
+    "registered_city": "Jaipur",
+    "incorporated_on": "2026-08-05",
+    "registration_number": "U62011RJ2026PTC116792",
+    "website": "https://liquilens.in/",
+    "investors_url": "https://liquilens.in/investors/",
+    "contact": "mailto:mrinal@liquilens.in?subject=LiquiLens%20investor%20conversation",
+    "profile_url": "https://liquilens.in/company-profile.json"
+  },
+  "portfolio": {
+    "company_profile": "https://liquilens.in/company-profile.json",
+    "investors": "https://liquilens.in/investors/",
+    "role": "Institution evidence",
+    "connected_workflow": "https://liquilens.in/start/",
+    "relationship": "Complementary evidence in one review; independent source clocks, coverage and scoring."
   }
 }

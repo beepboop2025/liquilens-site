@@ -1,0 +1,54 @@
+{
+  "schema": "liquilens.investor-claims.v1",
+  "updated": "2026-10-05",
+  "company_profile": "https://liquilens.in/company-profile.json",
+  "claims": [
+    {
+      "claim": "LiquiLens is a registered private limited company in India.",
+      "status": "VERIFIED_COMPANY_RECORD",
+      "public_source": "https://liquilens.in/about/",
+      "record": "Certificate of incorporation dated 5 August 2026, CIN U62011RJ2026PTC116792. Certificate available in controlled diligence."
+    },
+    {
+      "claim": "The three products expose public browser, API and hosted MCP access.",
+      "status": "PUBLIC_INTERFACES_OBSERVED",
+      "observed_on": "2026-10-05",
+      "sources": [
+        "https://api.liquilens.in/mcp",
+        "https://api.seiche.info/mcp",
+        "https://api.seiche.info/undertow/mcp"
+      ],
+      "limit": "Discovery availability does not prove observation freshness, full release acceptance or adoption."
+    },
+    {
+      "claim": "Browser and agent recipes connect complementary product evidence.",
+      "status": "PUBLIC_WORKFLOW_AVAILABLE",
+      "sources": [
+        "https://liquilens.in/start/",
+        "https://liquilens.in/developers/institutions/",
+        "https://liquilens.in/agents/"
+      ],
+      "limit": "No universal score or mandatory runtime dependency is implied."
+    },
+    {
+      "claim": "The company has a global distribution and expansion direction.",
+      "status": "STRATEGY",
+      "source": "https://liquilens.in/company-profile.json",
+      "limit": "Existing coverage remains market-specific; expansion requires source rights and local validation."
+    },
+    {
+      "claim": "Recurring monitoring, subscriptions and machine calls are commercial routes.",
+      "status": "PUBLISHED_OFFERS",
+      "sources": [
+        "https://liquilens.in/access/",
+        "https://liquilens-undertow.com/access/"
+      ],
+      "limit": "No customer, contracted revenue, pipeline or retention count is asserted by these materials."
+    },
+    {
+      "claim": "Capital can support commercial proof, reliability and coverage expansion.",
+      "status": "PROPOSED_MILESTONES",
+      "limit": "Round size, valuation and allocations require a reviewed runway and use-of-funds plan."
+    }
+  ]
+}

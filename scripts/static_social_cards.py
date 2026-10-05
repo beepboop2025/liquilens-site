@@ -66,6 +66,13 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/investors/", "investors", "LIQUILENS / COMPANY", "GLOBAL FINANCIAL EVIDENCE",
+        "One company. Three connected financial evidence products.",
+        "PRODUCT SYSTEM", "INSTITUTION / FUNDING / LIQUIDITY",
+        "BROWSER / API / MCP / INTERNATIONAL WORKFLOWS", "COMPANY CUT", "2026-10-05",
+        "REGISTERED COMPANY", "LIQUILENS PRIVATE LIMITED",
+    ),
+    RouteDefinition(
         "/guides/how-to-assess-bank-risk/", "bank-risk-guide",
         "LIQUILENS / RESEARCH GUIDE", "READ THE BANK RECORD",
         "Assess asset quality, capital and funding with the source dates attached.",
