@@ -1,0 +1,110 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-05-ckp-co-operative-bank-replay-when-a-missing-warning-is-not-an-all-clear",
+  "product": "liquilens",
+  "slug": "2026-10-05-ckp-co-operative-bank-replay-when-a-missing-warning-is-not-an-all-clear",
+  "date": "2026-10-05",
+  "article_type": "historical_replay",
+  "topic": "ckp-co-operative-bank",
+  "headline": "CKP Co-operative Bank replay: when a missing warning is not an all-clear",
+  "dek": "CKP Co-operative Bank’s historical file does not establish a clean advance balance-sheet alarm before default. It instead shows why an unscoreable institution must remain an observability problem, not be recast as a calm one.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-05-ckp-co-operative-bank-replay-when-a-missing-warning-is-not-an-all-clear/",
+  "published_at": "2026-10-05T11:17:13Z",
+  "evidence_as_of": "2026-10-05",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "ckp-co-operative-bank",
+    "name": "CKP Co-operative Bank",
+    "inst_type": "ucb",
+    "default_date": "2020-04-30",
+    "fraud_masked": false,
+    "pca": {
+      "slug": "ckp-co-operative-bank",
+      "inst_type": "ucb",
+      "default_date": "2020-04-30",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": false
+    },
+    "funding": {
+      "slug": "ckp-co-operative-bank",
+      "inst_type": "ucb",
+      "scoreable": false,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1310,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:02d24f490324ae0bc10a73445fb8def3c63529eb439c34af062ec7c46ff9a909",
+    "memory_fingerprint": "sha256:497a4446a4dc7725166883db3aba152e59607aeec170f6c0ad04f5df7dd2cb46",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 2,
+    "dossier_sha256": "5125029241832379cb0a6057d7e7ea752a8339ba4b45890c59c2f135640a84c6",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "not_a_credit_rating",
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Removed unsupported causal claims about CKP’s pre-default deterioration.",
+      "Separated filing-period reconstruction, unauthorized market context, and model-rule outputs.",
+      "Preserved all missing-data, eligibility, construction-PIT, and lead-time disclosures.",
+      "Strengthened the counter-case: non-scoreability is not evidence of demonstrated distress."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:02d24f490324ae0bc10a73445fb8def3c63529eb439c34af062ec7c46ff9a909",
+      "memory_fingerprint": "sha256:497a4446a4dc7725166883db3aba152e59607aeec170f6c0ad04f5df7dd2cb46",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
