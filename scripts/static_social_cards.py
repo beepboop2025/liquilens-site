@@ -132,9 +132,9 @@ ROUTES = (
     RouteDefinition(
         "/about/", "about", "LIQUILENS / PUBLIC IDENTITY", "ABOUT LIQUILENS",
         "A failure radar built for readers who ask what the evidence cannot prove.",
-        "PRODUCT IDENTITY", "LIQUILENS / AI.DE",
-        "PUBLIC-EVIDENCE SOFTWARE / JAIPUR, INDIA", "PAGE CUT", "2026-08-04",
-        "PUBLIC IDENTITY", "ABOUT PAGE",
+        "LEGAL ENTITY", "LIQUILENS PRIVATE LIMITED",
+        "REGISTERED PRIVATE LIMITED COMPANY / JAIPUR, INDIA", "PAGE CUT", "2026-10-05",
+        "REGISTERED COMPANY", "COMPANY DETAILS",
     ),
     RouteDefinition(
         "/access/", "access", "LIQUILENS / ACCESS", "NAMED-LIST SOFTWARE",
