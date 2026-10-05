@@ -88,7 +88,9 @@ status, source identity, approved hosts and evidence limitations; unavailable
 feeds produce a retry path rather than invented stories. Other desks are a
 clearly labelled publication directory. No subscription research is republished.
 
-Public copy and structured metadata use the product and operating-entity names.
+Public copy and structured metadata use the product name LiquiLens and the
+registered legal name LIQUILENS PRIVATE LIMITED, a private limited company
+incorporated in India on 5 August 2026 (CIN U62011RJ2026PTC116792).
 Contact links use company labels and retain the confirmed business mailbox.
 Personal biographies and unused legacy promotional banners are retired; the
 primary homepage action opens the real data preview.
