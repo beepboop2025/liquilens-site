@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "seiche": {
+      "httpUrl": "https://api.seiche.info/mcp",
+      "timeout": 30000,
+      "includeTools": [
+        "data_health",
+        "market_workbench",
+        "gift_city_context"
+      ]
+    }
+  }
+}

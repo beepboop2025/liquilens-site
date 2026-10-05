@@ -12,9 +12,10 @@ Keep each product's source dates, limitations and authority separate. Use only t
 
 ## Free agent starter kit
 
-- Connect Hermes, OpenClaw, Claude Code, Codex, Cursor or VS Code: https://liquilens.in/agents/
+- Connect Gemini CLI, Hermes, OpenClaw, Claude Code, Codex, Cursor or VS Code: https://liquilens.in/agents/
 - Text guide: https://liquilens.in/agents/README.md
-- Topic profiles for GIFT City, reference FX, gold scenarios, money markets, bank risk and BTC exits: https://liquilens.in/agents/profiles.json . Current Hermes/OpenClaw defaults select thirteen public tools; the original nine-tool selection remains a separate profile. Gold scenarios require explicit caller inputs and do not supply executable quotes.
+- Topic profiles for GIFT City, reference FX, gold scenarios, money markets, bank risk and BTC exits: https://liquilens.in/agents/profiles.json . Current Hermes/OpenClaw/Gemini CLI defaults select thirteen public tools; the original nine-tool selection remains a separate profile. Gold scenarios require explicit caller inputs and do not supply executable quotes.
+- Gemini CLI Streamable HTTP configuration: https://liquilens.in/agents/gemini.json
 - Tested client versions and installation commands: https://liquilens.in/agents/clients.md
 - Hermes setup and first research task: https://liquilens.in/agents/hermes/
 - OpenClaw setup and first research task: https://liquilens.in/agents/openclaw/
@@ -25,7 +26,7 @@ Keep each product's source dates, limitations and authority separate. Use only t
 - Hermes-compatible domain skill discovery: https://liquilens.in/.well-known/skills/index.json
 - Agent skill discovery draft v0.2 with integrity digest: https://liquilens.in/.well-known/agent-skills/index.json
 - n8n funding API workflow: https://liquilens.in/agents/n8n-funding-research.json
-- Live source coverage and six-client connection recipes: https://liquilens.in/agents/#source-data
+- Live source coverage and seven-client connection recipes: https://liquilens.in/agents/#source-data
 - Funding histories, bank filings and Bitcoin/Liquid settlement MCP: https://api.seiche.info/api/v2/research-data/mcp
 - Source-data OpenAPI 3.1 contract: https://api.seiche.info/api/v2/research-data/openapi.json
 - Standard-library history client: https://liquilens.in/agents/source_data.py

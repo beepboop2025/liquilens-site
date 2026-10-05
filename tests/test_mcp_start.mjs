@@ -24,6 +24,9 @@ test("all supported clients produce fixed-endpoint configurations for twelve ser
   const ids = SERVERS.map(s => s.id);
   assert.equal(Object.keys(JSON.parse(configuration("cursor", ids)).mcpServers).length, 12);
   assert.equal(Object.keys(JSON.parse(configuration("vscode", ids)).servers).length, 12);
+  const gemini = JSON.parse(configuration("gemini", ids)).mcpServers;
+  assert.deepEqual(Object.keys(gemini), ids);
+  for (const server of SERVERS) assert.deepEqual(gemini[server.id], {httpUrl: server.url, timeout: 30000});
   const claw = JSON.parse(configuration("openclaw", ids)).mcp.servers;
   assert.deepEqual(Object.values(claw).map(s => s.url), SERVERS.map(s => s.url));
   assert.ok(Object.values(claw).every(s => s.transport === "streamable-http"));

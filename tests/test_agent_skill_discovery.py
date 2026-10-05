@@ -85,13 +85,17 @@ def test_topic_downloads_browser_payload_and_default_filters_cannot_diverge():
             if key == "all-topics":
                 assert files[relative] == files[relative.rsplit("/", 1)[1]]
         claw = json.loads(profile["configurations"]["openclaw"])["mcp"]["servers"]
+        gemini = json.loads(profile["configurations"]["gemini"])["mcpServers"]
         assert set(claw) == set(profile["tools"])
+        assert set(gemini) == set(profile["tools"])
         for name, tools in profile["tools"].items():
+            assert gemini[name] == {"httpUrl": kit.SERVERS[name]["url"], "timeout": 30000, "includeTools": tools}
             assert claw[name]["toolFilter"]["include"] == tools
             assert claw[name]["url"] == kit.SERVERS[name]["url"]
             assert f'      include: {json.dumps(tools)}\n' in profile["configurations"]["hermes"]
     assert manifest["filtering"]["hermes"] == manifest["filtering"]["openclaw"] == "selected-tools"
     assert manifest["filtering"]["codex"] == "selected-servers"
+    assert manifest["filtering"]["gemini"] == "selected-tools"
 
 
 @pytest.mark.parametrize("tools", [["invented_gold_quote"], ["gold_inventory_carry"] * 2, []])
