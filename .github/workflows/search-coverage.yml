@@ -1,0 +1,68 @@
+name: Search coverage monitor
+
+on:
+  schedule:
+    - cron: '23 * * * *'
+    - cron: '43 3 * * *'
+  workflow_dispatch:
+    inputs:
+      full:
+        description: Audit every URL in all three products' sitemaps
+        type: boolean
+        default: true
+  pull_request:
+    paths:
+      - 'scripts/check_search_coverage.py'
+      - 'tests/test_search_coverage.py'
+      - '.github/workflows/search-coverage.yml'
+  workflow_run:
+    workflows: ['Deploy static site to Pages']
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: search-coverage-${{ github.event.pull_request.number || 'live' }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Test failure detection without network access
+        run: python3 -m unittest discover -s tests -p test_search_coverage.py -v
+      - name: Check public discovery and page coverage
+        if: github.event_name != 'pull_request'
+        env:
+          FULL: ${{ inputs.full || github.event.schedule == '43 3 * * *' }}
+        run: |
+          args=()
+          if [[ "$FULL" == 'true' ]]; then args+=(--full); fi
+          python3 scripts/check_search_coverage.py "${args[@]}" --output "$RUNNER_TEMP/search-coverage/report.json"
+      - name: Preserve the report even on failure
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          if [[ -f "$RUNNER_TEMP/search-coverage/report.md" ]]; then
+            cat "$RUNNER_TEMP/search-coverage/report.md" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Monitor did not complete; coverage is unknown.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always() && github.event_name != 'pull_request'
+        with:
+          name: search-coverage-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/search-coverage/
+          retention-days: 30
+          if-no-files-found: error
