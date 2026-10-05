@@ -13,7 +13,9 @@ on:
   pull_request:
     paths:
       - 'scripts/check_search_coverage.py'
-      - 'tests/test_search_coverage.py'
+      - 'scripts/search_coverage_history.py'
+      - 'scripts/search-coverage-retirements.json'
+      - 'tests/test_search_coverage*.py'
       - '.github/workflows/search-coverage.yml'
   workflow_run:
     workflows: ['Deploy static site to Pages']
@@ -21,6 +23,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: search-coverage-${{ github.event.pull_request.number || 'live' }}
@@ -42,7 +45,13 @@ jobs:
         with:
           python-version: '3.12'
       - name: Test failure detection without network access
-        run: python3 -m unittest discover -s tests -p test_search_coverage.py -v
+        run: python3 -m unittest discover -s tests -p 'test_search_coverage*.py' -v
+      - name: Retrieve the previous successful main inventory
+        if: github.event_name != 'pull_request'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/search_coverage_history.py --output "$RUNNER_TEMP/search-coverage/baseline.json"
       - name: Check public discovery and page coverage
         if: github.event_name != 'pull_request'
         env:
@@ -50,7 +59,10 @@ jobs:
         run: |
           args=()
           if [[ "$FULL" == 'true' ]]; then args+=(--full); fi
-          python3 scripts/check_search_coverage.py "${args[@]}" --output "$RUNNER_TEMP/search-coverage/report.json"
+          python3 scripts/check_search_coverage.py "${args[@]}" \
+            --baseline "$RUNNER_TEMP/search-coverage/baseline.json" \
+            --retirements scripts/search-coverage-retirements.json \
+            --output "$RUNNER_TEMP/search-coverage/report.json"
       - name: Preserve the report even on failure
         if: always() && github.event_name != 'pull_request'
         run: |

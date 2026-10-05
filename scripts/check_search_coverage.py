@@ -3,7 +3,7 @@
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import hashlib
 from html.parser import HTMLParser
 import json
@@ -318,12 +318,106 @@ def audit_product(product, full=False, fetcher=fetch):
     return result
 
 
+def validate_baseline(report, products=PRODUCTS, now=None):
+    """Accept a complete, successful inventory; never learn losses from failure."""
+    if (not isinstance(report, dict) or report.get("schema") != "liquilens.search-coverage.v1"
+            or report.get("operator_probe") is not True
+            or type(report.get("full_page_audit")) is not bool
+            or report.get("monitoring_errors")):
+        raise ValueError("baseline is not a successful coverage report")
+    try:
+        observed = datetime.fromisoformat(report["observed_at"].replace("Z", "+00:00"))
+    except (KeyError, TypeError, AttributeError, ValueError) as error:
+        raise ValueError("baseline observation time is invalid") from error
+    if observed.tzinfo is None or observed > (now or datetime.now(timezone.utc)) + timedelta(minutes=5):
+        raise ValueError("baseline observation time is unzoned or in the future")
+    rows = report.get("products")
+    if not isinstance(rows, list) or len(rows) != len(products):
+        raise ValueError("baseline must contain every reviewed product exactly once")
+    inventory = {}
+    expected = {p["name"]: p for p in products}
+    for row in rows:
+        if not isinstance(row, dict) or not isinstance(row.get("product"), str) or row["product"] not in expected:
+            raise ValueError("baseline has an unknown product")
+        name = row["product"]
+        product = expected[name]
+        urls = row.get("sitemap_urls")
+        if (name in inventory or row.get("origin") != product["origin"]
+                or row.get("errors") != [] or row.get("status") not in ("PASS", "PASS_WITH_WARNINGS")
+                or not isinstance(urls, list) or not product["minimum_urls"] <= len(urls) <= MAX_URLS
+                or not all(isinstance(url, str) for url in urls)):
+            raise ValueError("baseline product inventory is incomplete or unsuccessful")
+        if len(set(urls)) != len(urls):
+            raise ValueError("baseline contains duplicate URLs")
+        for url in urls:
+            validate_url(url, product["origin"])
+        required = {product["origin"] + path for path in product["pages"]}
+        if not required <= set(urls):
+            raise ValueError("baseline omits a required entry page")
+        inventory[name] = set(urls)
+    return inventory
+
+
+def validate_retirements(document, products=PRODUCTS):
+    """Only exact URLs with a version-controlled reason can leave the inventory."""
+    if (not isinstance(document, dict) or document.get("schema") != "liquilens.search-retirements.v1"
+            or not isinstance(document.get("retirements"), list)
+            or len(document["retirements"]) > MAX_URLS):
+        raise ValueError("invalid reviewed retirements document")
+    expected = {p["name"]: p for p in products}
+    result = {}
+    for row in document["retirements"]:
+        if not isinstance(row, dict) or not isinstance(row.get("product"), str) or row["product"] not in expected:
+            raise ValueError("retirement has an unknown product")
+        product = expected[row["product"]]
+        url, reason = row.get("url"), row.get("reason")
+        if not isinstance(url, str) or not isinstance(reason, str) or not 12 <= len(reason.strip()) <= 2000:
+            raise ValueError("retirement needs an exact URL and a meaningful reason")
+        validate_url(url, product["origin"])
+        key = (row["product"], url)
+        if key in result or url in {product["origin"] + path for path in product["pages"]}:
+            raise ValueError("retirement duplicates an entry or removes a required page")
+        result[key] = reason.strip()
+    return result
+
+
+def compare_inventory(report, baseline, retirements=None, products=PRODUCTS):
+    previous = validate_baseline(baseline, products)
+    retirements = retirements or {}
+    for row in report["products"]:
+        before, current = previous[row["product"]], set(row["sitemap_urls"])
+        removed = sorted(before - current)
+        approved = [{"url": url, "reason": retirements[(row["product"], url)]}
+                    for url in removed if (row["product"], url) in retirements]
+        unexpected = [url for url in removed if (row["product"], url) not in retirements]
+        row["inventory_changes"] = {"added": sorted(current - before), "removed": removed,
+                                    "reviewed_retirements": approved}
+        row["errors"].extend({"url": url, "problem": "URL disappeared since the previous successful inventory"}
+                             for url in unexpected)
+        if row["errors"]:
+            row["status"] = "FAIL"
+    report["inventory_history"] = {"status": "FAIL" if any(p["errors"] for p in report["products"]) else "PASS",
+                                   "baseline_observed_at": baseline["observed_at"]}
+
+
 def summarize(report):
     lines = ["# Public search coverage", "", f"Observed: {report['observed_at']}", "",
              "| Product | Status | Sitemap URLs | Pages checked | Errors | Warnings |",
              "| --- | --- | ---: | ---: | ---: | ---: |"]
     for p in report["products"]:
         lines.append(f"| {p['product']} | {p['status']} | {len(p['sitemap_urls'])} | {p['pages_checked']} | {len(p['errors'])} | {len(p['warnings'])} |")
+    history = report.get("inventory_history", {"status": "NOT_REQUESTED"})
+    lines.extend(["", f"Inventory history: {history['status']}."])
+    if "baseline_observed_at" in history:
+        lines.append(f"Previous successful inventory observed: {history['baseline_observed_at']}.")
+    for problem in report.get("monitoring_errors", []):
+        lines.append(f"\n- Monitoring error: {problem}")
+    for p in report["products"]:
+        changes = p.get("inventory_changes")
+        if changes:
+            lines.append(f"\n- {p['product']} inventory: {len(changes['added'])} added, {len(changes['removed'])} removed, {len(changes['reviewed_retirements'])} reviewed retirements.")
+            for item in changes["reviewed_retirements"]:
+                lines.append(f"  - Reviewed retirement: `{item['url']}` — {item['reason']}")
     lines.extend(["", "Technical retrieval checks only. Google processing/indexing, ranking, autocomplete, AI citations, source-data coverage/freshness, and external adoption are NOT verified by this monitor."])
     for p in report["products"]:
         for severity in ("errors", "warnings"):
@@ -335,6 +429,8 @@ def summarize(report):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--full", action="store_true", help="Fetch every declared sitemap page")
+    parser.add_argument("--baseline", type=Path, help="Previous successful report; missing/invalid input fails the audit")
+    parser.add_argument("--retirements", type=Path, help="Reviewed exact URL retirements with reasons")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     with ThreadPoolExecutor(max_workers=3) as pool:
@@ -343,11 +439,29 @@ def main():
               "full_page_audit": args.full, "operator_probe": True, "products": products,
               "google_processing_verified": False, "indexing_verified": False,
               "ranking_verified": False, "adoption_verified": False}
+    report["monitoring_errors"] = []
+    report["inventory_history"] = {"status": "NOT_REQUESTED"}
+    if args.baseline:
+        try:
+            if args.baseline.stat().st_size > MAX_BYTES:
+                raise ValueError("baseline exceeds the reviewed byte limit")
+            baseline = json.loads(args.baseline.read_text())
+            retirements = {}
+            if args.retirements:
+                if args.retirements.stat().st_size > MAX_BYTES:
+                    raise ValueError("retirements exceed the reviewed byte limit")
+                retirements = validate_retirements(json.loads(args.retirements.read_text()))
+            compare_inventory(report, baseline, retirements)
+        except (OSError, ValueError) as error:
+            report["inventory_history"] = {"status": "UNAVAILABLE"}
+            report["monitoring_errors"].append(f"Inventory history unavailable: {error}")
+    elif args.retirements:
+        report["monitoring_errors"].append("Reviewed retirements require an inventory baseline")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2) + "\n")
     args.output.with_suffix(".md").write_text(summarize(report))
     print(summarize(report))
-    return int(any(p["errors"] for p in products))
+    return int(bool(report["monitoring_errors"]) or any(p["errors"] for p in products))
 
 
 if __name__ == "__main__":
