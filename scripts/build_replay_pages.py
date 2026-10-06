@@ -600,9 +600,12 @@ def write_sitemap(
         # Other publishers own these inventories and their source dates.
         # Rebuilding crisis replays must not remove accepted bank snapshots.
         current = current_sitemap.read_text()
-        for section in ("DAILY-ARTICLES", "BANKING-SNAPSHOTS"):
+        for start, end in (
+            ("<!-- DAILY-ARTICLES:START -->", "<!-- DAILY-ARTICLES:END -->"),
+            ("<!-- BANKING-SNAPSHOTS:START -->", "<!-- BANKING-SNAPSHOTS:END -->"),
+        ):
             match = re.search(
-                rf"<!-- {section}:START -->.*?<!-- {section}:END -->",
+                re.escape(start) + r".*?" + re.escape(end),
                 current, flags=re.S,
             )
             if match:
