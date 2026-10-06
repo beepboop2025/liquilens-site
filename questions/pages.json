@@ -1,0 +1,611 @@
+{
+  "brand": "LiquiLens",
+  "origin": "https://liquilens.in",
+  "category": "India bank and NBFC risk",
+  "definition": "LiquiLens screens bank and NBFC risk through source-linked public filings, with reporting dates, comparison limits and missing evidence visible.",
+  "board": "https://liquilens.in/banking/",
+  "pages": [
+    {
+      "title": "Which small finance banks have rising NPAs?",
+      "slug": "small-finance-banks-rising-npas",
+      "answer": "In LiquiLens’s seven covered small finance banks with comparable June 2026 quarter-end records, AU Small Finance Bank was the only bank with a higher gross NPA ratio than in March: 2.10%, up 0.07 percentage point. Two ratios were unchanged and four fell. This answers a narrow question about those accepted filings; it does not say AU is unsafe or that every other small finance bank improved.",
+      "description": "Compare dated GNPA and NNPA ratios for seven Indian small finance banks, with quarter changes, primary filings and coverage limits.",
+      "card_title": "Which SFB NPA ratios rose?",
+      "observations": [
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "boundary": "One increase among seven comparable covered records. Reporting period: June 2026; review: October 2026.",
+      "tables": [
+        {
+          "title": "Seven banks with comparable June-quarter observations",
+          "clock": "Reporting period 2026-06-30; quarter comparison from 2026-03-31 · captured from LiquiLens on 2026-10-06",
+          "columns": [
+            "Bank",
+            "GNPA",
+            "NNPA",
+            "GNPA quarterly change",
+            "Period end"
+          ],
+          "rows": [
+            [
+              "AU Small Finance Bank",
+              "2.10%",
+              "0.76%",
+              "+0.07 pp",
+              "2026-06-30"
+            ],
+            [
+              "Equitas Small Finance Bank",
+              "2.36%",
+              "0.70%",
+              "-0.13 pp",
+              "2026-06-30"
+            ],
+            [
+              "ESAF Small Finance Bank",
+              "5.40%",
+              "0.80%",
+              "+0.00 pp",
+              "2026-06-30"
+            ],
+            [
+              "Jana Small Finance Bank",
+              "2.24%",
+              "0.85%",
+              "-0.09 pp",
+              "2026-06-30"
+            ],
+            [
+              "Suryoday Small Finance Bank",
+              "6.50%",
+              "1.20%",
+              "+0.00 pp",
+              "2026-06-30"
+            ],
+            [
+              "Ujjivan Small Finance Bank",
+              "2.17%",
+              "0.34%",
+              "-0.10 pp",
+              "2026-06-30"
+            ],
+            [
+              "Utkarsh Small Finance Bank",
+              "5.90%",
+              "2.80%",
+              "-1.70 pp",
+              "2026-06-30"
+            ]
+          ],
+          "note": "Among these seven records, one GNPA ratio rose, two were unchanged and four fell. The slice SFB record ends 31 March and is excluded from this June-quarter comparison. GNPA and NNPA have different denominators."
+        }
+      ],
+      "sections": [
+        {
+          "title": "Higher than last quarter is different from a high level",
+          "paragraphs": [
+            "Suryoday’s retained GNPA ratio is 6.50%, Utkarsh’s 5.90% and ESAF’s 5.40%. A high level and a rising level are different questions: Suryoday and ESAF were unchanged quarter over quarter in this accepted set, while Utkarsh fell by 1.70 percentage points.",
+            "AU’s 0.07 percentage-point quarterly increase also coexists with a 0.37 percentage-point year-on-year decline. State the comparison period before describing an institution as deteriorating."
+          ]
+        },
+        {
+          "title": "What should be checked in the underlying filing?",
+          "paragraphs": [
+            "Read gross and net NPA ratios alongside the loan denominator, new slippages, write-offs, recoveries and provisioning basis. Then inspect capital, funding concentration and maturity. A falling ratio can reflect a larger loan book or a write-off rather than improved borrower cash flows.",
+            "Where an accepted record does not contain a closed NPA movement table, LiquiLens marks that gap. Do not manufacture a recovery rate from the difference between GNPA and NNPA. Those ratios use different denominators."
+          ]
+        }
+      ],
+      "limits": [
+        "This is a selected set of accepted public filings, not a census of Indian lenders or a ranking of deposit safety.",
+        "A change in an NPA ratio is measured in percentage points. Recoveries, loan growth, write-offs and sales can all affect ratios; the ratio alone does not identify the cause.",
+        "The current model card does not establish an out-of-time validated false-positive rate. Historical replay evidence is not a validated probability of failure.",
+        "A June reporting period remains June evidence even when it is retrieved or reviewed in October. A newer unreviewed filing may exist."
+      ],
+      "sources": [
+        [
+          "LiquiLens current public-filing disclosures",
+          "https://api.liquilens.in/api/failure-radar/board"
+        ],
+        [
+          "Current model card and validation limits",
+          "https://api.liquilens.in/api/failure-radar/model-card"
+        ],
+        [
+          "AU Small Finance Bank: primary filing for 2026-06-30",
+          "https://www.au.bank.in/pdfs/stock-exchange-disclosure/eca/2026-27/20260725_Investor-Presentation.pdf"
+        ],
+        [
+          "Equitas Small Finance Bank: primary filing for 2026-06-30",
+          "https://ir.equitas.bank.in/wp-content/uploads/2026/07/ESFB-InvestorPresentation_Q1FY27.pdf"
+        ],
+        [
+          "ESAF Small Finance Bank: primary filing for 2026-06-30",
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
+        ],
+        [
+          "Jana Small Finance Bank: primary filing for 2026-06-30",
+          "https://www.jana.bank.in/images/financial-reports/JSFB_Investor-Presentation_Q1-FY27.pdf"
+        ],
+        [
+          "Suryoday Small Finance Bank: primary filing for 2026-06-30",
+          "https://suryoday.bank.in/assets/pdf/ssfb-intimation-investors-presentation-23jul2026-sd.pdf"
+        ],
+        [
+          "Ujjivan Small Finance Bank: primary filing for 2026-06-30",
+          "https://www.ujjivansfb.bank.in/assets/Ujjivan_SFB_Q1_FY_27_Press_Release_22f397b575.pdf"
+        ],
+        [
+          "Utkarsh Small Finance Bank: primary filing for 2026-06-30",
+          "https://www.utkarsh.bank.in/uploads/pdf/InvestorPresentation01082026.pdf"
+        ]
+      ],
+      "related": [
+        [
+          "Are Indian microfinance lenders under stress?",
+          "https://liquilens.in/questions/microfinance-lender-stress/"
+        ],
+        [
+          "What is the difference between a small finance bank and an NBFC-MFI?",
+          "https://liquilens.in/questions/small-finance-bank-vs-nbfc-mfi/"
+        ]
+      ],
+      "letter": {
+        "title": "CKP Co-operative Bank replay: when a missing warning is not an all-clear",
+        "url": "https://liquilens.in/articles/2026-10-05-ckp-co-operative-bank-replay-when-a-missing-warning-is-not-an-all-clear/",
+        "date": "2026-10-05",
+        "note": "Latest letter retained at this page’s review. It has its own publication date and subject; the numeric examples here come from the separately cited data capture. The letter archive continues to update."
+      }
+    },
+    {
+      "title": "Are Indian microfinance lenders under stress?",
+      "slug": "microfinance-lender-stress",
+      "answer": "The retained evidence warrants lender-by-lender scrutiny, but it does not establish a current industry-wide stress verdict. In the June 2026 filings covered here, Suryoday, Utkarsh and ESAF reported gross NPA ratios of 6.50%, 5.90% and 5.40%. Their quarterly GNPA ratios were flat, down 1.70 percentage points and flat, respectively. These bank-wide ratios are not microfinance-only default rates.",
+      "description": "Read microfinance-related lender risk through dated bank filings, NPA movements and missing evidence, without turning a partial sample into an industry verdict.",
+      "card_title": "Microfinance risk: inspect each lender",
+      "observations": [
+        "2026-03-31",
+        "2026-06-30"
+      ],
+      "boundary": "Three bank-wide filing examples; no industry census, segment default estimate or claim about today’s collections.",
+      "tables": [
+        {
+          "title": "Three relevant lender records",
+          "clock": "Quarter-end 2026-06-30 · quarter comparison from 2026-03-31",
+          "columns": [
+            "Bank",
+            "GNPA",
+            "NNPA",
+            "GNPA quarterly change",
+            "Period end"
+          ],
+          "rows": [
+            [
+              "Suryoday Small Finance Bank",
+              "6.50%",
+              "1.20%",
+              "+0.00 pp",
+              "2026-06-30"
+            ],
+            [
+              "Utkarsh Small Finance Bank",
+              "5.90%",
+              "2.80%",
+              "-1.70 pp",
+              "2026-06-30"
+            ],
+            [
+              "ESAF Small Finance Bank",
+              "5.40%",
+              "0.80%",
+              "+0.00 pp",
+              "2026-06-30"
+            ]
+          ],
+          "note": "The reported ratios cover the bank, not just a microfinance portfolio. This sample does not establish the condition of all NBFC-MFIs."
+        }
+      ],
+      "sections": [
+        {
+          "title": "What these numbers answer—and what they leave open",
+          "paragraphs": [
+            "They show the reported stock of non-performing advances relative to each filing’s denominator. They do not show this month’s collection efficiency, borrower overlap, household indebtedness, the performance of new loan vintages or the funding terms offered to an NBFC-MFI.",
+            "ESAF’s retained GNPA ratio was flat quarter over quarter and 2.10 percentage points lower year over year. Calling this particular accepted observation a fresh jump would be inaccurate. A different time window can tell a different story."
+          ]
+        },
+        {
+          "title": "The next evidence to request",
+          "paragraphs": [
+            "Look for microfinance loan share, borrower and geographic concentration, collection-efficiency definitions, slippages, write-offs and portfolio vintages. Keep bank-wide asset quality separate from segment-specific figures. Ask whether reported collection efficiency excludes overdue accounts or includes arrears recovered.",
+            "For an NBFC-MFI, add borrowing maturity, lender concentration, undrawn facilities and actual funding cost. This retained set does not support a league table of NBFCs unable to obtain bank funding. Missing financing evidence remains missing."
+          ]
+        }
+      ],
+      "limits": [
+        "This is a selected set of accepted public filings, not a census of Indian lenders or a ranking of deposit safety.",
+        "A change in an NPA ratio is measured in percentage points. Recoveries, loan growth, write-offs and sales can all affect ratios; the ratio alone does not identify the cause.",
+        "The current model card does not establish an out-of-time validated false-positive rate. Historical replay evidence is not a validated probability of failure.",
+        "A June reporting period remains June evidence even when it is retrieved or reviewed in October. A newer unreviewed filing may exist."
+      ],
+      "sources": [
+        [
+          "LiquiLens current public-filing disclosures",
+          "https://api.liquilens.in/api/failure-radar/board"
+        ],
+        [
+          "Current model card and validation limits",
+          "https://api.liquilens.in/api/failure-radar/model-card"
+        ],
+        [
+          "Suryoday Small Finance Bank: primary filing for 2026-06-30",
+          "https://suryoday.bank.in/assets/pdf/ssfb-intimation-investors-presentation-23jul2026-sd.pdf"
+        ],
+        [
+          "Utkarsh Small Finance Bank: primary filing for 2026-06-30",
+          "https://www.utkarsh.bank.in/uploads/pdf/InvestorPresentation01082026.pdf"
+        ],
+        [
+          "ESAF Small Finance Bank: primary filing for 2026-06-30",
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
+        ]
+      ],
+      "related": [
+        [
+          "Which small finance banks have rising NPAs?",
+          "https://liquilens.in/questions/small-finance-banks-rising-npas/"
+        ],
+        [
+          "What is the difference between a small finance bank and an NBFC-MFI?",
+          "https://liquilens.in/questions/small-finance-bank-vs-nbfc-mfi/"
+        ]
+      ],
+      "letter": {
+        "title": "CKP Co-operative Bank replay: when a missing warning is not an all-clear",
+        "url": "https://liquilens.in/articles/2026-10-05-ckp-co-operative-bank-replay-when-a-missing-warning-is-not-an-all-clear/",
+        "date": "2026-10-05",
+        "note": "Latest letter retained at this page’s review. It has its own publication date and subject; the numeric examples here come from the separately cited data capture. The letter archive continues to update."
+      }
+    },
+    {
+      "title": "What is the difference between a small finance bank and an NBFC-MFI?",
+      "slug": "small-finance-bank-vs-nbfc-mfi",
+      "answer": "A small finance bank is a bank that can accept deposits and lend; an NBFC-MFI is a non-bank microfinance lender in a non-deposit-taking category. That distinction changes the funding evidence a researcher should inspect. For example, AU Small Finance Bank’s accepted 30 June 2026 filing reports ₹157,727 crore of deposits and ₹140,461 crore of gross advances. Those are bank balance-sheet measures, not a template for an NBFC-MFI’s funding mix.",
+      "description": "Compare a small finance bank with an NBFC-MFI using a dated bank-filing example, funding questions and source limits. No deposit-safety verdict.",
+      "card_title": "Bank deposits and non-bank funding",
+      "observations": [
+        "2026-06-30"
+      ],
+      "boundary": "Institution labels and licensing status should be verified against the RBI and the filing. A large deposit base alone does not establish safety.",
+      "tables": [
+        {
+          "title": "A bank-filing example: AU at 30 June 2026",
+          "clock": "Accepted filing retrieved 2026-10-04; reporting period remains 2026-06-30",
+          "columns": [
+            "Reported measure",
+            "Value",
+            "Basis"
+          ],
+          "rows": [
+            [
+              "Deposits",
+              "₹157,727 crore",
+              "Period end"
+            ],
+            [
+              "Gross advances",
+              "₹140,461 crore",
+              "Reported advances; distinct from gross loan portfolio"
+            ],
+            [
+              "CASA / deposits",
+              "29.0%",
+              "Current and savings account share"
+            ],
+            [
+              "Liquidity coverage ratio",
+              "119%",
+              "Average for the quarter, not period end"
+            ]
+          ],
+          "note": "These figures are from one SFB. They are not observations of an NBFC-MFI and do not establish a like-for-like safety ranking."
+        }
+      ],
+      "sections": [
+        {
+          "title": "Different funding questions",
+          "paragraphs": [
+            "For a deposit-taking bank, inspect deposit concentration, withdrawal sensitivity, maturity, liquid assets and capital alongside loan quality. The absolute deposit total does not reveal concentration or how quickly funding could leave.",
+            "For an NBFC-MFI, inspect borrowings, maturity mismatches, bank and market-funding concentration, refinancing terms and liquidity buffers. “Microfinance” describes an activity or regulatory category; it does not make every institution’s balance sheet interchangeable."
+          ]
+        },
+        {
+          "title": "How to avoid a misleading comparison",
+          "paragraphs": [
+            "Use the current legal entity and reporting period. Do not carry an old NBFC label through a banking-licence transition without checking it. LiquiLens retains dossier classifications and explicitly notes where separate licensing verification is needed.",
+            "Compare ratios only when their numerator, denominator, accounting scope and observation period agree. A missing deposit metric at a non-deposit-taking lender is not a zero-risk signal, and a bank’s deposit base is not a repayment guarantee."
+          ]
+        }
+      ],
+      "limits": [
+        "This is a selected set of accepted public filings, not a census of Indian lenders or a ranking of deposit safety.",
+        "A change in an NPA ratio is measured in percentage points. Recoveries, loan growth, write-offs and sales can all affect ratios; the ratio alone does not identify the cause.",
+        "The current model card does not establish an out-of-time validated false-positive rate. Historical replay evidence is not a validated probability of failure.",
+        "A June reporting period remains June evidence even when it is retrieved or reviewed in October. A newer unreviewed filing may exist."
+      ],
+      "sources": [
+        [
+          "LiquiLens current public-filing disclosures",
+          "https://api.liquilens.in/api/failure-radar/board"
+        ],
+        [
+          "Current model card and validation limits",
+          "https://api.liquilens.in/api/failure-radar/model-card"
+        ],
+        [
+          "AU Small Finance Bank: primary filing for 2026-06-30",
+          "https://www.au.bank.in/pdfs/stock-exchange-disclosure/eca/2026-27/20260725_Investor-Presentation.pdf"
+        ],
+        [
+          "RBI: NBFC categories (category definition; historical thresholds are not reproduced here)",
+          "https://systemhealth.rbi.org.in/Scripts/FS_FAQs.aspx_Id%3D92%26fn%3D14.html"
+        ],
+        [
+          "RBI: small finance bank framework",
+          "https://rbi.org.in/scripts/PublicationsView.aspx?Id=18086"
+        ]
+      ],
+      "related": [
+        [
+          "Which small finance banks have rising NPAs?",
+          "https://liquilens.in/questions/small-finance-banks-rising-npas/"
+        ],
+        [
+          "Are Indian microfinance lenders under stress?",
+          "https://liquilens.in/questions/microfinance-lender-stress/"
+        ]
+      ],
+      "letter": {
+        "title": "CKP Co-operative Bank replay: when a missing warning is not an all-clear",
+        "url": "https://liquilens.in/articles/2026-10-05-ckp-co-operative-bank-replay-when-a-missing-warning-is-not-an-all-clear/",
+        "date": "2026-10-05",
+        "note": "Latest letter retained at this page’s review. It has its own publication date and subject; the numeric examples here come from the separately cited data capture. The letter archive continues to update."
+      }
+    },
+    {
+      "title": "Does tight dollar funding mean a bank will fail?",
+      "slug": "dollar-funding-and-bank-failure",
+      "answer": "No. Dollar funding conditions describe a market or funding channel; they do not establish that a particular bank will fail. Seiche’s retained 2 October 2026 SOFR–IORB spread is −2 bp, while LiquiLens’s separate AU filing ends 30 June and reports a 2.10% gross NPA ratio. Those observations answer different questions on different dates. Neither can be converted into the other product’s verdict.",
+      "description": "Separate dollar funding conditions from institution solvency using dated Seiche and LiquiLens examples. See what evidence a bank-risk review still needs.",
+      "card_title": "Funding pressure is not bank failure",
+      "observations": [
+        "2026-06-30",
+        "2026-10-02"
+      ],
+      "boundary": "Different clocks, different units, different claims. There is no combined failure score.",
+      "tables": [
+        {
+          "title": "Two observations with separate meanings",
+          "clock": "Evidence captured 2026-10-06; original reporting dates retained",
+          "columns": [
+            "Product",
+            "Observation",
+            "Source date",
+            "What it describes"
+          ],
+          "rows": [
+            [
+              "Seiche",
+              "SOFR–IORB −2 bp",
+              "2026-10-02",
+              "A matched overnight rate spread"
+            ],
+            [
+              "LiquiLens",
+              "AU GNPA 2.10%",
+              "2026-06-30",
+              "Reported gross NPA ratio"
+            ],
+            [
+              "LiquiLens",
+              "AU GNPA quarterly change +0.07 pp",
+              "2026-06-30",
+              "Change from 2026-03-31"
+            ]
+          ],
+          "note": "The captured funding spread is below IORB, so this is not evidence of a current tight-funding episode. The example illustrates separation of measures."
+        }
+      ],
+      "sections": [
+        {
+          "title": "What connects funding and institution risk?",
+          "paragraphs": [
+            "A lender that depends on a particular source of short-term funding can be sensitive to the price and availability of that funding. The transmission depends on its balance sheet, collateral, currency, maturity, counterparties and access to liquidity. A broad US-dollar rate cannot identify those exposures by itself.",
+            "A useful institution review therefore adds funding concentration, liability maturity, liquid assets, capital, asset quality and event evidence. Domestic Indian filings and US-dollar market measures have different scopes; a causal link needs institution-specific support."
+          ]
+        },
+        {
+          "title": "Use one product for each part of the question",
+          "paragraphs": [
+            "Seiche provides funding-market context. LiquiLens provides dated institution disclosures and their gaps. Undertow describes market-depth and position-size evidence if the question includes selling assets. Keep the three outputs separate and cite each observation date.",
+            "None of these readings alone authorizes credit, guarantees deposits or supplies a calibrated failure probability. Where the balance-sheet exposure or validation evidence is missing, the correct conclusion is that the failure question is unresolved."
+          ]
+        }
+      ],
+      "limits": [
+        "This is a selected set of accepted public filings, not a census of Indian lenders or a ranking of deposit safety.",
+        "A change in an NPA ratio is measured in percentage points. Recoveries, loan growth, write-offs and sales can all affect ratios; the ratio alone does not identify the cause.",
+        "The current model card does not establish an out-of-time validated false-positive rate. Historical replay evidence is not a validated probability of failure.",
+        "A June reporting period remains June evidence even when it is retrieved or reviewed in October. A newer unreviewed filing may exist.",
+        "Correlation or simultaneous movement does not establish a causal chain from dollar funding to a particular bank failure."
+      ],
+      "sources": [
+        [
+          "Seiche USD money-market desk: source-dated observations",
+          "https://api.seiche.info/api/money-markets"
+        ],
+        [
+          "New York Fed: SOFR definition and publication",
+          "https://www.newyorkfed.org/markets/reference-rates/sofr"
+        ],
+        [
+          "Federal Reserve: interest on reserve balances",
+          "https://www.federalreserve.gov/monetarypolicy/reserve-balances.htm"
+        ],
+        [
+          "LiquiLens current public-filing disclosures",
+          "https://api.liquilens.in/api/failure-radar/board"
+        ],
+        [
+          "Current model card and validation limits",
+          "https://api.liquilens.in/api/failure-radar/model-card"
+        ],
+        [
+          "AU Small Finance Bank: primary filing for 2026-06-30",
+          "https://www.au.bank.in/pdfs/stock-exchange-disclosure/eca/2026-27/20260725_Investor-Presentation.pdf"
+        ]
+      ],
+      "related": [
+        [
+          "Current SOFR–IORB and money-market evidence",
+          "https://seiche.info/money-markets/"
+        ],
+        [
+          "Which small finance banks have rising NPAs?",
+          "https://liquilens.in/questions/small-finance-banks-rising-npas/"
+        ],
+        [
+          "What does it cost to sell $100,000 of bitcoin by exchange?",
+          "https://liquilens-undertow.com/questions/bitcoin-sell-100000/"
+        ]
+      ],
+      "letter": {
+        "title": "CKP Co-operative Bank replay: when a missing warning is not an all-clear",
+        "url": "https://liquilens.in/articles/2026-10-05-ckp-co-operative-bank-replay-when-a-missing-warning-is-not-an-all-clear/",
+        "date": "2026-10-05",
+        "note": "Latest letter retained at this page’s review. It has its own publication date and subject; the numeric examples here come from the separately cited data capture. The letter archive continues to update."
+      },
+      "current_product": "seiche",
+      "current_label": "Load latest funding readings"
+    },
+    {
+      "title": "If funding is tight, can a large bitcoin position still get out?",
+      "slug": "tight-funding-bitcoin-exit",
+      "answer": "Only if sufficient executable liquidity is available at the relevant venue, size and time, subject to account and settlement constraints. A dollar-funding signal cannot settle that question. In the retained evidence, Undertow estimates a $1 million BTC sell at 2.081 bp on Binance on 6 October 2026, while Seiche’s separate 2 October SOFR–IORB observation is −2 bp. These do not establish an actual fill or a tight-funding event.",
+      "description": "Separate funding conditions from BTC exit capacity with a dated $1 million example, venue depth, quote conversion and explicit execution limits.",
+      "card_title": "Funding conditions versus BTC exits",
+      "observations": [
+        "2026-10-02",
+        "2026-10-06"
+      ],
+      "boundary": "The funding observation and venue book are four days apart. They are not a synchronized stress test.",
+      "tables": [
+        {
+          "title": "A funding reading and a sized market-depth estimate",
+          "clock": "Separate retained source clocks; no causal or execution claim",
+          "columns": [
+            "Question",
+            "Dated evidence",
+            "Source date"
+          ],
+          "rows": [
+            [
+              "Dollar funding price",
+              "SOFR–IORB −2 bp",
+              "2026-10-02"
+            ],
+            [
+              "$1m BTC sell on Binance",
+              "2.081 bp; $208.10 estimated dollar equivalent",
+              "2026-10-06 08:00:07 UTC"
+            ],
+            [
+              "$1m BTC sell on Bitfinex",
+              "10.646 bp; $1,064.60 estimated dollar equivalent",
+              "2026-10-06 08:00:10 UTC"
+            ]
+          ],
+          "note": "These venues differ within one captured sample. Venue access, fees, subsequent book changes and settlement are not established by this comparison."
+        }
+      ],
+      "sections": [
+        {
+          "title": "What must be checked before claiming exit capacity?",
+          "paragraphs": [
+            "Specify the asset, sell side, USD notional, venue, quote currency and observation time. Check that the requested size has a published estimate and that the depth and conversion evidence cover it. A missing venue is not a venue with zero cost.",
+            "Undertow’s estimates are band-interpolated research outputs. An executable exit also depends on the actual book when the order arrives, your access, order constraints and settlement. A displayed estimate is not an execution acknowledgement."
+          ]
+        },
+        {
+          "title": "How the products divide the work",
+          "paragraphs": [
+            "Use Seiche to inspect funding conditions. Use Undertow to inspect the size-specific market-depth evidence. Use LiquiLens when a separate institution or counterparty-disclosure question arises. A bank NPA ratio is not an exchange solvency score.",
+            "Tighter funding and a liquid BTC book can coexist, just as an easy funding environment can coexist with a thin book on a particular venue. Establishing either relationship for an episode requires synchronized evidence; the retained dates here do not provide it."
+          ]
+        }
+      ],
+      "limits": [
+        "These are dated, band-interpolated single-venue sell estimates. They are not executable quotes or a promise that an order will fill.",
+        "The estimate does not establish an all-in trading cost including your fee tier, latency, subsequent order-book changes or settlement constraints.",
+        "USD and USDT books require explicit conversion. USDT is not silently treated as one US dollar.",
+        "The venue sample is limited. A low estimate does not establish venue safety, account eligibility or the best route across all exchanges.",
+        "Public publication of a derived estimate does not establish independent redistribution rights for the underlying venue data.",
+        "No synchronized funding-to-BTC stress relationship is established by the retained examples."
+      ],
+      "sources": [
+        [
+          "Seiche USD money-market desk: source-dated observations",
+          "https://api.seiche.info/api/money-markets"
+        ],
+        [
+          "New York Fed: SOFR definition and publication",
+          "https://www.newyorkfed.org/markets/reference-rates/sofr"
+        ],
+        [
+          "Federal Reserve: interest on reserve balances",
+          "https://www.federalreserve.gov/monetarypolicy/reserve-balances.htm"
+        ],
+        [
+          "Undertow public BTC venue/size pack",
+          "https://api.seiche.info/undertow/crypto_desk.json"
+        ],
+        [
+          "Undertow exit-size methodology and limits",
+          "https://liquilens-undertow.com/exit/"
+        ],
+        [
+          "Undertow crypto research workbench",
+          "https://liquilens-undertow.com/crypto/"
+        ]
+      ],
+      "related": [
+        [
+          "What does it cost to sell $100,000 of bitcoin by exchange?",
+          "https://liquilens-undertow.com/questions/bitcoin-sell-100000/"
+        ],
+        [
+          "What does it cost to sell $1 million of bitcoin by exchange?",
+          "https://liquilens-undertow.com/questions/bitcoin-sell-1000000/"
+        ],
+        [
+          "Current SOFR–IORB and money-market evidence",
+          "https://seiche.info/money-markets/"
+        ],
+        [
+          "Which small finance banks have rising NPAs?",
+          "https://liquilens.in/questions/small-finance-banks-rising-npas/"
+        ]
+      ],
+      "letter": {
+        "title": "CKP Co-operative Bank replay: when a missing warning is not an all-clear",
+        "url": "https://liquilens.in/articles/2026-10-05-ckp-co-operative-bank-replay-when-a-missing-warning-is-not-an-all-clear/",
+        "date": "2026-10-05",
+        "note": "Latest letter retained at this page’s review. It has its own publication date and subject; the numeric examples here come from the separately cited data capture. The letter archive continues to update."
+      },
+      "current_product": "seiche",
+      "current_label": "Load latest funding readings"
+    }
+  ],
+  "reviewed_on": "2026-10-06",
+  "published_on": "2026-10-06"
+}

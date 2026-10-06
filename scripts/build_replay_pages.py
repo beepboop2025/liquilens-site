@@ -510,7 +510,13 @@ BASE_SITEMAP = [
     ("/replay/", "2026-08-04", "weekly", "0.8"),
     ("/replay/index.json", "2026-08-09", "weekly", "0.8"),
     ("/ship-log/", "2026-09-02", "weekly", "0.7"),
-    ("/about/", "2026-08-04", None, None),
+    ("/questions/", "2026-10-06", "monthly", "0.8"),
+    ("/questions/small-finance-banks-rising-npas/", "2026-10-06", "monthly", "0.8"),
+    ("/questions/microfinance-lender-stress/", "2026-10-06", "monthly", "0.8"),
+    ("/questions/small-finance-bank-vs-nbfc-mfi/", "2026-10-06", "monthly", "0.8"),
+    ("/questions/dollar-funding-and-bank-failure/", "2026-10-06", "monthly", "0.8"),
+    ("/questions/tight-funding-bitcoin-exit/", "2026-10-06", "monthly", "0.8"),
+    ("/about/", "2026-10-05", None, None),
     ("/security/", "2026-08-09", None, None),
     ("/status/", "2026-09-13", None, None),
     ("/privacy/", "2026-08-21", None, None),
@@ -591,13 +597,19 @@ def write_sitemap(
         out.append(f"  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod><changefreq>monthly</changefreq></url>")
     current_sitemap = ROOT / "sitemap.xml"
     if current_sitemap.exists():
-        match = re.search(
-            r"<!-- DAILY-ARTICLES:START -->.*?<!-- DAILY-ARTICLES:END -->",
-            current_sitemap.read_text(),
-            flags=re.S,
-        )
-        if match:
-            out.append(match.group(0))
+        # Other publishers own these inventories and their source dates.
+        # Rebuilding crisis replays must not remove accepted bank snapshots.
+        current = current_sitemap.read_text()
+        for start, end in (
+            ("<!-- DAILY-ARTICLES:START -->", "<!-- DAILY-ARTICLES:END -->"),
+            ("<!-- BANKING-SNAPSHOTS:START -->", "<!-- BANKING-SNAPSHOTS:END -->"),
+        ):
+            match = re.search(
+                re.escape(start) + r".*?" + re.escape(end),
+                current, flags=re.S,
+            )
+            if match:
+                out.append(match.group(0))
     out.append("</urlset>")
     (ROOT / "sitemap.xml").write_text("\n".join(out) + "\n")
 

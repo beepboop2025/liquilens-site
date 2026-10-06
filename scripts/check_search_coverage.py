@@ -33,12 +33,16 @@ AGENT = "LiquiLens-Discovery-Monitor/1.0 (+https://liquilens.in/)"
 SEARCH_BOTS = ("Googlebot", "Bingbot", "DuckDuckBot", "Applebot",
                "OAI-SearchBot", "Claude-SearchBot", "PerplexityBot")
 TOPIC_PAGES = {
-    "LiquiLens": ("/banking/", "/banking/institutions/", "/guides/how-to-assess-bank-risk/",
+    "LiquiLens": ("/questions/", "/questions/small-finance-banks-rising-npas/",
+                  "/questions/microfinance-lender-stress/", "/questions/small-finance-bank-vs-nbfc-mfi/",
+                  "/questions/dollar-funding-and-bank-failure/", "/questions/tight-funding-bitcoin-exit/",
+                  "/banking/", "/banking/institutions/", "/guides/how-to-assess-bank-risk/",
                   "/guides/rbi-nbfc-early-warning-system/", "/use-cases/"),
     "Seiche": ("/money-markets/", "/markets/capital-markets/", "/markets/forex/",
                "/gift-city/", "/use-cases/money-market-research/",
                "/use-cases/capital-market-transmission/"),
-    "Undertow": ("/crypto/", "/gold/", "/exit/", "/markets/crypto/", "/markets/ust/",
+    "Undertow": ("/questions/", "/questions/bitcoin-sell-100000/",
+                 "/questions/bitcoin-sell-1000000/", "/crypto/", "/gold/", "/exit/", "/markets/crypto/", "/markets/ust/",
                  "/markets/ig/", "/markets/hy/", "/capital-market-liquidity/",
                  "/guides/market-liquidity-and-exit-cost/",
                  "/guides/gold-conversion-grams-karat-currency/"),

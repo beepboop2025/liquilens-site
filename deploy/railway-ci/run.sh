@@ -6,7 +6,7 @@ printf '%s\n' "${RAILWAY_GIT_COMMIT_SHA:-}" | grep -Eq '^[0-9a-f]{40}$'
 python3 scripts/verify_public_claims.py
 python3 -m pytest tests -q
 npm run test:edge
-node --test tests/test_x_bridge.mjs
+node --test tests/test_x_bridge.mjs tests/test_question_evidence.mjs
 npm audit --audit-level=moderate
 npx --no-install wrangler deploy --config wrangler.catalog.jsonc --dry-run
 printf 'RAILWAY_CI_PASS source=%s deployment=%s\n' \
