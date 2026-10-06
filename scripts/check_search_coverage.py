@@ -21,7 +21,10 @@ PRODUCTS = (
      "sitemaps": ("/sitemap.xml",)},
     {"name": "Seiche", "origin": "https://seiche.info", "minimum_urls": 166,
      "pages": ("/", "/money-markets/", "/markets/"),
-     "sitemaps": ("/sitemap.xml",)},
+     "sitemaps": ("/sitemap.xml",),
+     "protected_robots": {"origin": "https://api.seiche.info", "agent": "Google-Extended",
+                          "blocked_prefixes": ("/api", "/mcp", "/.well-known/mcp.json",
+                                               "/.well-known/api-catalog")}},
     {"name": "Undertow", "origin": "https://liquilens-undertow.com", "minimum_urls": 58,
      "pages": ("/", "/crypto/"),
      "sitemaps": ("/sitemap.xml", "/articles/sitemap.xml")},
@@ -283,8 +286,8 @@ def audit_product(product, full=False, fetcher=fetch, *, topics=(),
     result = {"product": product["name"], "origin": origin, "errors": [], "warnings": [],
               "requests": [], "sitemaps": {}, "sitemap_urls": [], "pages_checked": 0}
 
-    def read(url, plain=False):
-        response = fetcher(url, origin, plain=plain)
+    def read(url, plain=False, *, request_origin=None):
+        response = fetcher(url, request_origin or origin, plain=plain)
         result["requests"].append({"url": url, "client": "plain-python" if plain else "identified-monitor",
                                    "status": response["status"], "error": response["error"],
                                    "bytes": len(response["body"]),
@@ -353,6 +356,27 @@ def audit_product(product, full=False, fetcher=fetch, *, topics=(),
             blocked = [bot for bot in SEARCH_BOTS if not robots.can_fetch(bot, url)]
             if blocked:
                 problem(url, "robots.txt blocks search retrieval: " + ", ".join(blocked))
+    # Robots declarations belong to one hostname. This explicit, reviewed API
+    # policy is independent of the website's explanation-only reuse permission.
+    # Never discover a second network origin from untrusted page content.
+    protected = product.get("protected_robots")
+    if protected:
+        policy_origin = protected["origin"]
+        policy_url = policy_origin + "/robots.txt"
+        try:
+            content = require_response(read(policy_url, request_origin=policy_origin), {"text/plain"})
+            policy = RobotsPolicy(content)
+            rules = {rule for agents, group in policy.groups
+                     if protected["agent"].lower() in agents for rule in group}
+            expected = {(False, prefix) for prefix in protected["blocked_prefixes"]}
+            if rules != expected:
+                raise ValueError("reviewed API crawler exclusions changed or are missing")
+            for prefix in protected["blocked_prefixes"]:
+                if any(not policy.can_fetch(bot, policy_origin + prefix) for bot in SEARCH_BOTS):
+                    raise ValueError("API reuse policy also blocks ordinary search retrieval")
+            result["protected_crawler_policy"] = {**protected, "status": "PASS"}
+        except ValueError as error:
+            problem(policy_url, error)
     # These are published discovery bytes, not a source-observation clock.
     discovery = [(r["url"], r["sha256"]) for r in result["requests"]]
     result["discovery_revision"] = hashlib.sha256(json.dumps(discovery, sort_keys=True).encode()).hexdigest()
