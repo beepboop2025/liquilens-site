@@ -134,6 +134,8 @@ def expected_shareable_paths() -> set[str]:
         | {"/articles/", "/replay/"}
         | {f"/articles/{row['slug']}/" for row in article_index}
         | {f"/replay/{row['slug']}/" for row in replay_index["articles"]}
+        | {"/questions/"}
+        | {f"/questions/{row['slug']}/" for row in json.loads((ROOT / "questions/pages.json").read_text())["pages"]}
         | {"/banking/institutions/"}
         | {f"/banking/institutions/{row['slug']}/" for row in filing_index["records"]}
     )

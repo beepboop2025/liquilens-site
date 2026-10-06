@@ -1,0 +1,1575 @@
+{
+  "liquilens": {
+    "source_url": "https://api.liquilens.in/api/failure-radar/board",
+    "retrieved_on": "2026-10-06",
+    "reporting_scope": "Accepted selected public filings; not a census",
+    "rows": [
+      {
+        "slug": "au-sfb",
+        "name": "AU Small Finance Bank",
+        "period_end": "2026-06-30",
+        "status": "observed",
+        "metrics": {
+          "advances": {
+            "basis": "Reported gross advances at 30 June 2026, INR crore; distinct from gross loan portfolio. PDF page 9 (printed page 8).",
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 140461
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 29
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 18.9
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 157727
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.1
+          },
+          "gross_loan_portfolio": {
+            "basis": "Reported gross loan portfolio; distinct from gross advances and the NPA denominator.",
+            "label": "Gross loan portfolio",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 144250
+          },
+          "lcr_pct": {
+            "basis": "Average for the quarter, not a period-end ratio.",
+            "label": "Reported liquidity coverage",
+            "status": "observed",
+            "unit": "percent",
+            "value": 119
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.76
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 64
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 85
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 17.1
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "changes": {
+          "quarter": {
+            "available_at": "2026-09-05T07:05:33Z",
+            "changes": {
+              "crar_pct": 0.2,
+              "gnpa_pct": 0.07,
+              "nnpa_pct": 0.02
+            },
+            "from_period": "2026-03-31",
+            "sources": [
+              "https://www.au.bank.in/pdfs/stock-exchange-disclosure/eca/2026-27/20260427_Press-Release-on-Audited-Financial-Result.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          },
+          "year": {
+            "available_at": "2026-09-24T21:36:30.694179Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": -0.37,
+              "nnpa_pct": -0.12
+            },
+            "from_period": "2025-06-30",
+            "sources": [
+              "https://www.au.bank.in/pdfs/stock-exchange-disclosure/eca/2026-27/20260725_Investor-Presentation.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          }
+        },
+        "sources": [
+          "https://www.au.bank.in/pdfs/stock-exchange-disclosure/eca/2026-27/20260725_Investor-Presentation.pdf"
+        ],
+        "publication_date": "2026-07-25",
+        "retrieved_at": "2026-10-04T17:00:14.931709+00:00",
+        "npa_movement": {
+          "reason": "closed NPA movement table not disclosed in the accepted record",
+          "status": "unavailable"
+        }
+      },
+      {
+        "slug": "equitas-sfb",
+        "name": "Equitas Small Finance Bank",
+        "period_end": "2026-06-30",
+        "status": "observed",
+        "metrics": {
+          "advances": {
+            "basis": "Reported gross advances include IBPC, securitisation and direct assignment.",
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 47641
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 25
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 19.44
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 48976
+          },
+          "gnpa_pct": {
+            "basis": "Headline GNPA excludes the securitisation denominator; the separately reported including-securitisation ratio is 2.31%.",
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.36
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_crore",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": "Reported liquidity coverage ratio as on 30 June 2026, not a quarterly average. Investor presentation PDF page 28.",
+            "label": "Reported liquidity coverage",
+            "status": "observed",
+            "unit": "percent",
+            "value": 178.46
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.7
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 86.96
+          },
+          "pcr_reported_pct": {
+            "basis": "The presentation labels this ratio PCR; the including-technical-write-offs ratio is separately retained.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 71.02
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 16.01
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "changes": {
+          "quarter": {
+            "available_at": "2026-09-24T21:36:30.694179Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": -0.13,
+              "nnpa_pct": 0.02
+            },
+            "from_period": "2026-03-31",
+            "sources": [
+              "https://ir.equitas.bank.in/wp-content/uploads/2026/07/ESFB-InvestorPresentation_Q1FY27.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          },
+          "year": {
+            "available_at": "2026-09-24T21:36:30.694179Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": -0.46,
+              "nnpa_pct": -0.25
+            },
+            "from_period": "2025-06-30",
+            "sources": [
+              "https://ir.equitas.bank.in/wp-content/uploads/2026/07/ESFB-InvestorPresentation_Q1FY27.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          }
+        },
+        "sources": [
+          "https://ir.equitas.bank.in/wp-content/uploads/2026/07/ESFB-InvestorPresentation_Q1FY27.pdf"
+        ],
+        "publication_date": null,
+        "retrieved_at": "2026-10-04T19:35:14.211458+00:00",
+        "npa_movement": {
+          "reason": "closed NPA movement table not disclosed in the accepted record",
+          "status": "unavailable"
+        }
+      },
+      {
+        "slug": "esaf-sfb",
+        "name": "ESAF Small Finance Bank",
+        "period_end": "2026-06-30",
+        "status": "observed",
+        "metrics": {
+          "advances": {
+            "basis": "Gross advances; the report distinguishes total business including IBPC.",
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 23216
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 23.4
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 23.9
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 26924
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 5.4
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_crore",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.8
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported PCR includes an additional INR 64.7 crore provision; the presentation separately shows 80.5% excluding that additional provision.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 85.5
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 15.9
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "changes": {
+          "quarter": {
+            "available_at": "2026-10-04T19:36:34.240212Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": 0.0,
+              "nnpa_pct": -1.0
+            },
+            "from_period": "2026-03-31",
+            "sources": [
+              "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          },
+          "year": {
+            "available_at": "2026-10-04T19:36:34.240212Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": -2.1,
+              "nnpa_pct": -3.0
+            },
+            "from_period": "2025-06-30",
+            "sources": [
+              "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          }
+        },
+        "sources": [
+          "https://www.esaf.bank.in/wp-content/uploads/2026/07/Investor-Presentation-on-the-Unaudited-Standalone-Financial-Results-of-the-Bank-for-the-quarter-ended-June-30-2026.pdf"
+        ],
+        "publication_date": null,
+        "retrieved_at": "2026-10-04T19:34:09.247628+00:00",
+        "npa_movement": {
+          "reason": "closed NPA movement table not disclosed in the accepted record",
+          "status": "unavailable"
+        }
+      },
+      {
+        "slug": "jana-sfb",
+        "name": "Jana Small Finance Bank",
+        "period_end": "2026-06-30",
+        "status": "observed",
+        "metrics": {
+          "advances": {
+            "basis": "Includes IBPC and securitisation book, also included in the reported NPA denominator.",
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 37612
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 19
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": "Includes interim Q1 FY27 profit.",
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 20.2
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 35756
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.24
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_crore",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": "Reported as at 30 June 2026, not labelled a quarterly average.",
+            "label": "Reported liquidity coverage",
+            "status": "observed",
+            "unit": "percent",
+            "value": 153
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.85
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported PCR; no inferred technical-write-off classification.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 62.64
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "changes": {
+          "quarter": {
+            "available_at": "2026-09-24T21:36:30.694179Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": -0.09,
+              "nnpa_pct": null
+            },
+            "from_period": "2026-03-31",
+            "sources": [
+              "https://www.jana.bank.in/images/financial-reports/JSFB_Investor-Presentation_Q1-FY27.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          },
+          "year": {
+            "available_at": "2026-09-24T21:36:30.694179Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": -0.52,
+              "nnpa_pct": null
+            },
+            "from_period": "2025-06-30",
+            "sources": [
+              "https://www.jana.bank.in/images/financial-reports/JSFB_Investor-Presentation_Q1-FY27.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          }
+        },
+        "sources": [
+          "https://www.jana.bank.in/images/financial-reports/JSFB_Investor-Presentation_Q1-FY27.pdf"
+        ],
+        "publication_date": "2026-07-15",
+        "retrieved_at": "2026-09-24T21:27:43.362916+00:00",
+        "npa_movement": {
+          "reason": "closed NPA movement table not disclosed in the accepted record",
+          "status": "unavailable"
+        }
+      },
+      {
+        "slug": "slice-sfb",
+        "name": "slice Small Finance Bank",
+        "period_end": "2026-03-31",
+        "status": "observed",
+        "metrics": {
+          "advances": {
+            "basis": "Gross standard advances plus gross NPAs, Schedule 18; INR thousands.",
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_thousand",
+            "value": 45320187
+          },
+          "casa_pct": {
+            "basis": "Reported period-end CASA ratio at 31 March 2026. PDF page 30 (printed page 28).",
+            "label": "Current and savings account deposits / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 39.85
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 8.26
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 19.06
+          },
+          "deposits": {
+            "basis": "Reported total deposit base at 31 March 2026, INR thousands. PDF page 30 (printed page 28).",
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_thousand",
+            "value": 51325625
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 4.81
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_thousand",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": "Reported weighted liquidity coverage ratio for the quarter ended 31 March 2026, from the continued LCR disclosure table. PDF page 104 (printed page 102).",
+            "label": "Reported liquidity coverage",
+            "status": "observed",
+            "unit": "percent",
+            "value": 498.07
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 3.61
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 25.73
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 78.85
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 14.12
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 7.75
+          },
+          "top20_npa_pct": {
+            "basis": "Reported twenty largest NPA exposures as a percentage of gross NPAs at 31 March 2026. PDF page 112 (printed page 110).",
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.45
+          }
+        },
+        "changes": {
+          "quarter": {
+            "reason": "no comparable disclosed period in the requested interval",
+            "status": "unavailable"
+          },
+          "year": {
+            "available_at": "2026-09-05T07:05:33Z",
+            "changes": {
+              "crar_pct": -1.24,
+              "gnpa_pct": -1.44,
+              "nnpa_pct": -1.06
+            },
+            "from_period": "2025-03-31",
+            "sources": [
+              "https://slice.bank.in/documents/corporate-governance/annual-report/annual-report-2025-26.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-03-31",
+            "unit": "percentage_points"
+          }
+        },
+        "sources": [
+          "https://slice.bank.in/documents/corporate-governance/annual-report/annual-report-2025-26.pdf"
+        ],
+        "publication_date": null,
+        "retrieved_at": "2026-10-04T17:00:16.673018+00:00",
+        "npa_movement": {
+          "additions": 1852217.0,
+          "amount_unit": "INR_thousand",
+          "cash_recovery_attribution": "reported_components_only",
+          "closing_gnpa": 2178227.0,
+          "factual_authority": "input_statement_only",
+          "interpretation": "Write-offs, upgrades, settlements and sales are separate from cash recovery. Arithmetic agreement does not verify a filing.",
+          "net_stock_change": 330590.0,
+          "opening_gnpa": 1847637.0,
+          "period_end": "2026-03-31",
+          "period_start": "2025-04-01",
+          "reductions": {
+            "cash_recoveries": 418494.0,
+            "upgrades": 53780.0,
+            "write_offs": 1049355.0
+          },
+          "residual": -2.0,
+          "rounding_basis": "sum of half a reported unit of precision for each input amount",
+          "rounding_decimals": 0,
+          "rounding_tolerance": 3.0,
+          "status": "within_rounding"
+        }
+      },
+      {
+        "slug": "suryoday-sfb",
+        "name": "Suryoday Small Finance Bank",
+        "period_end": "2026-06-30",
+        "status": "observed",
+        "metrics": {
+          "advances": {
+            "basis": "Includes IBPC, as does the stated NPA reporting basis.",
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 14376
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 21
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 20
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 14634
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 6.5
+          },
+          "gross_loan_portfolio": {
+            "basis": null,
+            "label": "Gross loan portfolio",
+            "status": "not_disclosed",
+            "unit": "INR_crore",
+            "value": null
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 1.2
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "observed",
+            "unit": "percent",
+            "value": 81.8
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": null,
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 19.4
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "changes": {
+          "quarter": {
+            "available_at": "2026-09-24T21:36:30.694179Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": 0.0,
+              "nnpa_pct": -3.0
+            },
+            "from_period": "2026-03-31",
+            "sources": [
+              "https://suryoday.bank.in/assets/pdf/ssfb-intimation-investors-presentation-23jul2026-sd.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          },
+          "year": {
+            "available_at": "2026-09-24T21:36:30.694179Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": -2.0,
+              "nnpa_pct": -4.4
+            },
+            "from_period": "2025-06-30",
+            "sources": [
+              "https://suryoday.bank.in/assets/pdf/ssfb-intimation-investors-presentation-23jul2026-sd.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          }
+        },
+        "sources": [
+          "https://suryoday.bank.in/assets/pdf/ssfb-intimation-investors-presentation-23jul2026-sd.pdf"
+        ],
+        "publication_date": "2026-07-23",
+        "retrieved_at": "2026-10-04T19:14:10.048016+00:00",
+        "npa_movement": {
+          "reason": "closed NPA movement table not disclosed in the accepted record",
+          "status": "unavailable"
+        }
+      },
+      {
+        "slug": "ujjivan-sfb",
+        "name": "Ujjivan Small Finance Bank",
+        "period_end": "2026-06-30",
+        "status": "observed",
+        "metrics": {
+          "advances": {
+            "basis": null,
+            "label": "Reported advances",
+            "status": "not_disclosed",
+            "unit": "INR_crore",
+            "value": null
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 26.9
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 20.36
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 48129
+          },
+          "gnpa_pct": {
+            "basis": null,
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.17
+          },
+          "gross_loan_portfolio": {
+            "basis": "Reported gross loan book, not relabelled as net advances.",
+            "label": "Gross loan portfolio",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 42903
+          },
+          "lcr_pct": {
+            "basis": "Quarterly average for Q1 FY27.",
+            "label": "Reported liquidity coverage",
+            "status": "observed",
+            "unit": "percent",
+            "value": 132
+          },
+          "nnpa_pct": {
+            "basis": null,
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 0.34
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported PCR includes INR 130 crore of floating provision earmarked for PCR calculation.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 85
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "changes": {
+          "quarter": {
+            "available_at": "2026-09-24T21:36:30.694179Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": -0.1,
+              "nnpa_pct": -0.09
+            },
+            "from_period": "2026-03-31",
+            "sources": [
+              "https://www.ujjivansfb.bank.in/assets/Ujjivan_SFB_Q1_FY_27_Press_Release_22f397b575.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          },
+          "year": {
+            "reason": "no comparable disclosed period in the requested interval",
+            "status": "unavailable"
+          }
+        },
+        "sources": [
+          "https://www.ujjivansfb.bank.in/assets/Ujjivan_SFB_Q1_FY_27_Press_Release_22f397b575.pdf"
+        ],
+        "publication_date": "2026-07-23",
+        "retrieved_at": "2026-09-24T21:20:38.385399+00:00",
+        "npa_movement": {
+          "reason": "closed NPA movement table not disclosed in the accepted record",
+          "status": "unavailable"
+        }
+      },
+      {
+        "slug": "utkarsh-sfb",
+        "name": "Utkarsh Small Finance Bank",
+        "period_end": "2026-06-30",
+        "status": "observed",
+        "metrics": {
+          "advances": {
+            "basis": "Reported advances net of provisions at 30 June 2026, INR crore; distinct from gross loan portfolio of INR 19,610 crore. PDF page 32 (printed page 31).",
+            "label": "Reported advances",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 18478
+          },
+          "casa_pct": {
+            "basis": null,
+            "label": "Current and savings account deposits / deposits",
+            "status": "observed",
+            "unit": "percent",
+            "value": 22
+          },
+          "cet1_pct": {
+            "basis": null,
+            "label": "Common equity Tier 1 capital ratio",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "crar_pct": {
+            "basis": null,
+            "label": "Capital adequacy",
+            "status": "observed",
+            "unit": "percent",
+            "value": 17.4
+          },
+          "deposits": {
+            "basis": null,
+            "label": "Deposits",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 22054
+          },
+          "gnpa_pct": {
+            "basis": "Advances used for the NPA calculation include IBPC; this differs from the older presentation denominator.",
+            "label": "Gross NPA / gross advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 5.9
+          },
+          "gross_loan_portfolio": {
+            "basis": "Reported gross loan portfolio; not relabelled as net advances.",
+            "label": "Gross loan portfolio",
+            "status": "observed",
+            "unit": "INR_crore",
+            "value": 19610
+          },
+          "lcr_pct": {
+            "basis": null,
+            "label": "Reported liquidity coverage",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "nnpa_pct": {
+            "basis": "Advances used for the NPA calculation include IBPC.",
+            "label": "Net NPA / net advances",
+            "status": "observed",
+            "unit": "percent",
+            "value": 2.8
+          },
+          "pcr_excluding_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR excluding technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_including_technical_writeoffs_pct": {
+            "basis": null,
+            "label": "PCR including technical write-offs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "pcr_reported_pct": {
+            "basis": "Reported PCR; no inferred write-off classification.",
+            "label": "Reported PCR; consult disclosed basis",
+            "status": "observed",
+            "unit": "percent",
+            "value": 54.6
+          },
+          "tier1_pct": {
+            "basis": null,
+            "label": "Tier 1 capital ratio",
+            "status": "observed",
+            "unit": "percent",
+            "value": 15.1
+          },
+          "top20_depositors_pct": {
+            "basis": null,
+            "label": "Twenty largest depositors / deposits",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          },
+          "top20_npa_pct": {
+            "basis": null,
+            "label": "Twenty largest NPA exposures / gross NPAs",
+            "status": "not_disclosed",
+            "unit": "percent",
+            "value": null
+          }
+        },
+        "changes": {
+          "quarter": {
+            "available_at": "2026-09-24T21:36:30.694179Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": -1.7,
+              "nnpa_pct": -0.4
+            },
+            "from_period": "2026-03-31",
+            "sources": [
+              "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          },
+          "year": {
+            "available_at": "2026-09-24T21:36:30.694179Z",
+            "changes": {
+              "crar_pct": null,
+              "gnpa_pct": -5.5,
+              "nnpa_pct": -2.2
+            },
+            "from_period": "2025-06-30",
+            "sources": [
+              "https://nsearchives.nseindia.com/corporate/UTKARSHBANK_01082026203451_InvestorPresentation01082026.pdf"
+            ],
+            "status": "observed",
+            "to_period": "2026-06-30",
+            "unit": "percentage_points"
+          }
+        },
+        "sources": [
+          "https://www.utkarsh.bank.in/uploads/pdf/InvestorPresentation01082026.pdf"
+        ],
+        "publication_date": "2026-08-01",
+        "retrieved_at": "2026-10-04T19:17:15.268308+00:00",
+        "npa_movement": {
+          "reason": "closed NPA movement table not disclosed in the accepted record",
+          "status": "unavailable"
+        }
+      }
+    ]
+  },
+  "seiche": {
+    "source_url": "https://api.seiche.info/api/money-markets",
+    "retrieved_on": "2026-10-06",
+    "source_sha256": "90f801dfd79e72486f61229deaf74013ac44e1223bfc9aecf4c41a02b1a57ee6",
+    "metrics": [
+      {
+        "id": "policy.sofr",
+        "value": 3.88,
+        "unit": "%",
+        "asof": "2026-10-02",
+        "status": "available",
+        "freshness": "aging",
+        "source": "New York Fed SOFR via FRED",
+        "change_1w": null,
+        "change_4w": null
+      },
+      {
+        "id": "policy.iorb",
+        "value": 3.9,
+        "unit": "%",
+        "asof": "2026-10-02",
+        "status": "available",
+        "freshness": "aging",
+        "source": "Federal Reserve via FRED IORB/IOER splice",
+        "change_1w": null,
+        "change_4w": null
+      },
+      {
+        "id": "policy.sofr_minus_iorb",
+        "value": -2.0,
+        "unit": "bp",
+        "asof": "2026-10-02",
+        "status": "available",
+        "freshness": "aging",
+        "source": "NY Fed SOFR + Federal Reserve IORB",
+        "change_1w": null,
+        "change_4w": null
+      },
+      {
+        "id": "liquidity.reserves",
+        "value": 2948.09,
+        "unit": "$B",
+        "asof": "2026-09-30",
+        "status": "available",
+        "freshness": "fresh",
+        "source": "Federal Reserve H.4.1 via FRED WRESBAL",
+        "change_1w": 17.897,
+        "change_4w": 53.559
+      },
+      {
+        "id": "liquidity.srf",
+        "value": 0.0,
+        "unit": "$B",
+        "asof": "2026-10-02",
+        "status": "available",
+        "freshness": "aging",
+        "source": "NY Fed repo operation results",
+        "change_1w": null,
+        "change_4w": null
+      }
+    ]
+  },
+  "undertow": {
+    "source_url": "https://api.seiche.info/undertow/crypto_desk.json",
+    "retrieved_on": "2026-10-06",
+    "source_sha256": "72a2eee76cf8e72c1f56a3a17def60c9745e12bfd9e490a1b68e1fbc8cba1d90",
+    "generated_at": "2026-10-06T08:01:30+00:00",
+    "venue_observation_at_utc_by_venue": {
+      "binance": "2026-10-06T08:00:07+00:00",
+      "bitfinex": "2026-10-06T08:00:10+00:00",
+      "coinbase": "2026-10-06T08:00:08+00:00",
+      "gemini": "2026-10-06T08:00:10+00:00",
+      "kraken": "2026-10-06T08:00:09+00:00",
+      "okx": "2026-10-06T08:00:09+00:00"
+    },
+    "rungs": [
+      {
+        "best_venue": {
+          "sell_bp": 0.209,
+          "venue": "binance"
+        },
+        "conversion_unavailable_venues": [],
+        "depth_coverage_by_venue": {
+          "binance": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": false,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 24040225.015420675,
+            "depth_2pct_bid_quote": 26340646.95350552,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.010936980828193074,
+            "within_observed_depth": true
+          },
+          "bitfinex": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": true,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 10413694.117885998,
+            "depth_2pct_bid_quote": 11750186.770140998,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.29281122150789013,
+            "within_observed_depth": true
+          },
+          "coinbase": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": true,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 21311525.825197488,
+            "depth_2pct_bid_quote": 28350509.32184129,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.9999998831160354,
+            "within_observed_depth": true
+          },
+          "gemini": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": true,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 8054082.78481745,
+            "depth_2pct_bid_quote": 8989966.666531125,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.9999998831415775,
+            "within_observed_depth": true
+          },
+          "kraken": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": false,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 19559444.4326,
+            "depth_2pct_bid_quote": 22482360.358300015,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.013302508618316925,
+            "within_observed_depth": true
+          },
+          "okx": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": false,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 14274559.112084696,
+            "depth_2pct_bid_quote": 15119426.565004133,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.012087388989641467,
+            "within_observed_depth": true
+          }
+        },
+        "q_usd": 100000.0,
+        "quote_conversion_by_venue": {
+          "binance": {
+            "quote_currency": "USDT",
+            "requested_notional_quote": 100030.00900270081,
+            "state": "bound_usdt_usd",
+            "usd_per_quote": 0.9997
+          },
+          "bitfinex": {
+            "quote_currency": "USD",
+            "requested_notional_quote": 100000.0,
+            "state": "identity",
+            "usd_per_quote": 1.0
+          },
+          "coinbase": {
+            "quote_currency": "USD",
+            "requested_notional_quote": 100000.0,
+            "state": "identity",
+            "usd_per_quote": 1.0
+          },
+          "gemini": {
+            "quote_currency": "USD",
+            "requested_notional_quote": 100000.0,
+            "state": "identity",
+            "usd_per_quote": 1.0
+          },
+          "kraken": {
+            "quote_currency": "USD",
+            "requested_notional_quote": 100000.0,
+            "state": "identity",
+            "usd_per_quote": 1.0
+          },
+          "okx": {
+            "quote_currency": "USDT",
+            "requested_notional_quote": 100030.00900270081,
+            "state": "bound_usdt_usd",
+            "usd_per_quote": 0.9997
+          }
+        },
+        "sell_bp_by_venue": {
+          "binance": 0.209,
+          "bitfinex": 6.325,
+          "coinbase": 0.235,
+          "gemini": 0.621,
+          "kraken": 0.261,
+          "okx": 0.356
+        },
+        "unable_at_observed_depth": [],
+        "uncovered_at_required_band": [],
+        "venue_spread_bp": 6.12,
+        "worst_venue": {
+          "sell_bp": 6.325,
+          "venue": "bitfinex"
+        }
+      },
+      {
+        "best_venue": {
+          "sell_bp": 2.081,
+          "venue": "binance"
+        },
+        "conversion_unavailable_venues": [],
+        "depth_coverage_by_venue": {
+          "binance": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": false,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 24040225.015420675,
+            "depth_2pct_bid_quote": 26340646.95350552,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.010936980828193074,
+            "within_observed_depth": true
+          },
+          "bitfinex": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": true,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 10413694.117885998,
+            "depth_2pct_bid_quote": 11750186.770140998,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.29281122150789013,
+            "within_observed_depth": true
+          },
+          "coinbase": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": true,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 21311525.825197488,
+            "depth_2pct_bid_quote": 28350509.32184129,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.9999998831160354,
+            "within_observed_depth": true
+          },
+          "gemini": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": true,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 8054082.78481745,
+            "depth_2pct_bid_quote": 8989966.666531125,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.9999998831415775,
+            "within_observed_depth": true
+          },
+          "kraken": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": false,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 19559444.4326,
+            "depth_2pct_bid_quote": 22482360.358300015,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.013302508618316925,
+            "within_observed_depth": true
+          },
+          "okx": {
+            "covers_1pct_bid": true,
+            "covers_2pct_bid": false,
+            "covers_required_band": true,
+            "depth_1pct_bid_quote": 14274559.112084696,
+            "depth_2pct_bid_quote": 15119426.565004133,
+            "required_band": "1pct",
+            "side": "bid",
+            "span_below": 0.012087388989641467,
+            "within_observed_depth": true
+          }
+        },
+        "q_usd": 1000000.0,
+        "quote_conversion_by_venue": {
+          "binance": {
+            "quote_currency": "USDT",
+            "requested_notional_quote": 1000300.0900270081,
+            "state": "bound_usdt_usd",
+            "usd_per_quote": 0.9997
+          },
+          "bitfinex": {
+            "quote_currency": "USD",
+            "requested_notional_quote": 1000000.0,
+            "state": "identity",
+            "usd_per_quote": 1.0
+          },
+          "coinbase": {
+            "quote_currency": "USD",
+            "requested_notional_quote": 1000000.0,
+            "state": "identity",
+            "usd_per_quote": 1.0
+          },
+          "gemini": {
+            "quote_currency": "USD",
+            "requested_notional_quote": 1000000.0,
+            "state": "identity",
+            "usd_per_quote": 1.0
+          },
+          "kraken": {
+            "quote_currency": "USD",
+            "requested_notional_quote": 1000000.0,
+            "state": "identity",
+            "usd_per_quote": 1.0
+          },
+          "okx": {
+            "quote_currency": "USDT",
+            "requested_notional_quote": 1000300.0900270081,
+            "state": "bound_usdt_usd",
+            "usd_per_quote": 0.9997
+          }
+        },
+        "sell_bp_by_venue": {
+          "binance": 2.081,
+          "bitfinex": 10.646,
+          "coinbase": 2.347,
+          "gemini": 6.209,
+          "kraken": 2.562,
+          "okx": 3.51
+        },
+        "unable_at_observed_depth": [],
+        "uncovered_at_required_band": [],
+        "venue_spread_bp": 8.57,
+        "worst_venue": {
+          "sell_bp": 10.646,
+          "venue": "bitfinex"
+        }
+      }
+    ],
+    "method": "Publisher band-interpolated single-venue estimate, not an executable quote",
+    "rights": "Public derived subset; independent raw-data redistribution rights not established"
+  }
+}

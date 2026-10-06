@@ -1,5 +1,9 @@
 # LiquiLens public site
 
+India bank and NBFC risk research from public filings. Live board: [liquilens.in](https://liquilens.in/).
+
+[Dated answers to common research questions](https://liquilens.in/questions/) explain the numbers, source dates and limits.
+
 LiquiLens, Seiche and Undertow form one connected financial-evidence product system from **LIQUILENS PRIVATE LIMITED**, a registered company in India. Built for international users: institution evidence → funding conditions → market liquidity. [Company and investors](https://liquilens.in/investors/) · [Shared company profile](https://liquilens.in/company-profile.json). Coverage, clocks and authority remain product-specific.
 
 The [free agent starter kit](agents/README.md) connects Hermes, OpenClaw and
