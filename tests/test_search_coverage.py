@@ -60,6 +60,40 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual(result["pages_checked"], 3)
         self.assertEqual(len(result["sitemaps"]), 3)
 
+    def test_changed_discovery_expands_to_full_inventory(self):
+        extra = ORIGIN + "/new-research/"
+        self.fixtures[extra] = page(extra)
+        self.fixtures[ORIGIN + "/sitemap.xml"]["body"] = xml([ORIGIN + "/", ORIGIN + "/guide/", extra]).encode()
+        first = monitor.audit_product(PRODUCT, fetcher=self.fetch, full_on_change=True)
+        self.assertTrue(first["full_page_audit"])
+        self.assertEqual(first["pages_checked"], 3)
+        same = monitor.audit_product(PRODUCT, fetcher=self.fetch, full_on_change=True,
+                                     previous_revision=first["discovery_revision"])
+        self.assertFalse(same["full_page_audit"])
+        self.assertEqual(same["pages_checked"], 2)
+        self.fixtures[ORIGIN + "/.well-known/ai-catalog.json"]["body"] = b'{"release":"updated"}'
+        changed = monitor.audit_product(PRODUCT, fetcher=self.fetch, full_on_change=True,
+                                        previous_revision=first["discovery_revision"])
+        self.assertTrue(changed["full_page_audit"])
+
+    def test_topic_content_jsonld_and_snippet_controls(self):
+        valid = '<h1>Bank evidence</h1><p>' + 'Research evidence with source dates. ' * 12 + '</p>'
+        self.assertEqual(monitor.validate_topic_page(page(ORIGIN, valid))["jsonld_blocks"], 0)
+        for suffix in ['<script type="application/ld+json">{bad}</script>',
+                       '<meta name="robots" content="nosnippet">',
+                       '<meta name="Googlebot" content="max-snippet:0">']:
+            with self.subTest(suffix=suffix), self.assertRaises(ValueError):
+                monitor.validate_topic_page(page(ORIGIN, valid + suffix))
+        with self.assertRaises(ValueError):
+            monitor.validate_topic_page(page(ORIGIN, '<div id="app"></div>'))
+
+    def test_gemini_policy_is_observed_separately_from_search(self):
+        self.fixtures[ORIGIN + "/robots.txt"]["body"] += b'\nUser-agent: Google-Extended\nDisallow: /\n'
+        self.fixtures[ORIGIN + "/guide/"] = page(ORIGIN + "/guide/", '<h1>Guide</h1><p>' + 'Evidence and limits. ' * 20 + '</p>')
+        result = monitor.audit_product(PRODUCT, fetcher=self.fetch, topics=("/guide/",))
+        self.assertEqual(result["status"], "PASS")
+        self.assertEqual(result["gemini_policy"], {ORIGIN + "/guide/": False})
+
     def test_sitemap_loss_and_missing_entry_are_failures(self):
         self.fixtures[ORIGIN + "/sitemap.xml"]["body"] = xml([ORIGIN + "/"]).encode()
         result = self.audit()

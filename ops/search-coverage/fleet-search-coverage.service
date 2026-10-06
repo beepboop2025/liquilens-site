@@ -1,0 +1,28 @@
+[Unit]
+Description=Read-only family search coverage and publication-change audit
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+DynamicUser=yes
+StateDirectory=fleet-search-coverage
+WorkingDirectory=/opt/fleet-search-coverage/current
+ExecStart=/usr/bin/python3 -B scripts/watch_search_coverage.py --state-dir /var/lib/fleet-search-coverage
+TimeoutStartSec=22min
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+LockPersonality=yes
+MemoryMax=256M
+CPUQuota=25%
+

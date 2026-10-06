@@ -1,0 +1,11 @@
+[Unit]
+Description=Check discovery every 15 minutes independently of GitHub schedules
+
+[Timer]
+OnBootSec=3min
+OnUnitInactiveSec=15min
+RandomizedDelaySec=30
+Unit=fleet-search-coverage.service
+
+[Install]
+WantedBy=timers.target
