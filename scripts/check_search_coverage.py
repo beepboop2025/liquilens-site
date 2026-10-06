@@ -27,7 +27,8 @@ PRODUCTS = (
      "sitemaps": ("/sitemap.xml", "/articles/sitemap.xml")},
 )
 AGENT = "LiquiLens-Discovery-Monitor/1.0 (+https://liquilens.in/)"
-SEARCH_BOTS = ("Googlebot", "Bingbot", "OAI-SearchBot", "Claude-SearchBot", "PerplexityBot")
+SEARCH_BOTS = ("Googlebot", "Bingbot", "DuckDuckBot", "Applebot",
+               "OAI-SearchBot", "Claude-SearchBot", "PerplexityBot")
 TOPIC_PAGES = {
     "LiquiLens": ("/banking/", "/banking/institutions/", "/guides/how-to-assess-bank-risk/",
                   "/guides/rbi-nbfc-early-warning-system/", "/use-cases/"),

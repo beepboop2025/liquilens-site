@@ -18,8 +18,8 @@ or send social/Telegram/email messages.
 Failures include HTTP errors, unexpected redirects/challenge HTML, invalid
 XML/JSON, missing sitemaps or required pages, reductions below reviewed page
 minimums, missing metadata, accidental `noindex`, incorrect canonicals, and
-robots exclusions for Googlebot, Bingbot, OAI-SearchBot, Claude-SearchBot or
-PerplexityBot. A failed check fails the workflow and retains the JSON/Markdown
+robots exclusions for Googlebot, Bingbot, DuckDuckBot, Applebot, OAI-SearchBot,
+Claude-SearchBot or PerplexityBot. A failed check fails the workflow and retains the JSON/Markdown
 report for 30 days. GitHub notification delivery depends on account settings;
 no separate notification service is installed by this workflow.
 
