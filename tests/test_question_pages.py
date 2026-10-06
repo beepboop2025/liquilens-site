@@ -5,7 +5,9 @@ import json
 import pathlib
 import subprocess
 import sys
+import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT=next(p for p in pathlib.Path(__file__).resolve().parents if (p/'scripts/build_question_pages.py').exists())
 spec=importlib.util.spec_from_file_location('question_pages_builder',ROOT/'scripts/build_question_pages.py')
@@ -31,6 +33,24 @@ class QuestionPageTests(unittest.TestCase):
         for field in ['tables','limits','sources']:
             altered=copy.deepcopy(self.catalog);altered['pages'][0][field]=[]
             with self.assertRaises(ValueError):builder.validate(altered)
+
+    def test_replay_publication_retains_other_inventories_and_editorial_dates(self):
+        from scripts import build_replay_pages as replay
+        with tempfile.TemporaryDirectory() as temp:
+            root = pathlib.Path(temp)
+            blocks = [
+                '<!-- DAILY-ARTICLES:START --><url><loc>https://liquilens.in/articles/example/</loc><lastmod>2026-10-05</lastmod></url><!-- DAILY-ARTICLES:END -->',
+                '<!-- BANKING-SNAPSHOTS:START --><url><loc>https://liquilens.in/banking/institutions/example/</loc><lastmod>2026-06-30</lastmod></url><!-- BANKING-SNAPSHOTS:END -->',
+            ]
+            (root/'sitemap.xml').write_text('<urlset>'+''.join(blocks)+'</urlset>')
+            with patch.object(replay, 'ROOT', root), patch.object(replay, 'committed_lastmods', return_value={}):
+                replay.write_sitemap([], set(), False)
+                first = (root/'sitemap.xml').read_text()
+                replay.write_sitemap([], set(), False)
+            self.assertEqual(first, (root/'sitemap.xml').read_text())
+            for block in blocks:self.assertEqual(first.count(block), 1)
+            self.assertIn('<loc>https://liquilens.in/questions/</loc>\n    <lastmod>2026-10-06</lastmod>', first)
+            self.assertIn('<loc>https://liquilens.in/about/</loc>\n    <lastmod>2026-10-05</lastmod>', first)
 
     def test_alias_noindex_does_not_cover_live_discovery_origins(self):
         if self.catalog['brand']!='Seiche':return

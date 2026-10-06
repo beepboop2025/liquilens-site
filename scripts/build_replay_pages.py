@@ -597,13 +597,16 @@ def write_sitemap(
         out.append(f"  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod><changefreq>monthly</changefreq></url>")
     current_sitemap = ROOT / "sitemap.xml"
     if current_sitemap.exists():
-        match = re.search(
-            r"<!-- DAILY-ARTICLES:START -->.*?<!-- DAILY-ARTICLES:END -->",
-            current_sitemap.read_text(),
-            flags=re.S,
-        )
-        if match:
-            out.append(match.group(0))
+        # Other publishers own these inventories and their source dates.
+        # Rebuilding crisis replays must not remove accepted bank snapshots.
+        current = current_sitemap.read_text()
+        for section in ("DAILY-ARTICLES", "BANKING-SNAPSHOTS"):
+            match = re.search(
+                rf"<!-- {section}:START -->.*?<!-- {section}:END -->",
+                current, flags=re.S,
+            )
+            if match:
+                out.append(match.group(0))
     out.append("</urlset>")
     (ROOT / "sitemap.xml").write_text("\n".join(out) + "\n")
 
