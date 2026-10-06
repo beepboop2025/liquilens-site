@@ -125,3 +125,5 @@ do not claim to have checked historical losses. CI always requires the baseline.
 The monitor establishes bounded technical retrieval coverage only. Source-data
 coverage, rights, freshness, Google processing/indexing, autocomplete placement,
 AI citations, and product adoption have independent evidence requirements.
+
+Seiche API crawler policy is checked on its separate `api.seiche.info` hostname. The reviewed Google-Extended exclusions for `/api`, `/mcp` and Seiche machine-discovery paths must remain present, without an Allow exception or an ordinary-search block. A missing policy or changed scope fails the audit; it never changes permissions automatically. Its policy bytes also participate in publication-change detection.

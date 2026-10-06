@@ -94,6 +94,41 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual(result["status"], "PASS")
         self.assertEqual(result["gemini_policy"], {ORIGIN + "/guide/": False})
 
+    def test_separate_api_policy_is_checked_on_its_own_origin(self):
+        api_origin = "https://api.example.test"
+        product = {**PRODUCT, "protected_robots": {
+            "origin": api_origin, "agent": "Google-Extended", "blocked_prefixes": ("/api", "/mcp")}}
+        def fetcher(url, origin, plain=False):
+            if url == api_origin + "/robots.txt":
+                self.assertEqual(origin, api_origin)
+                return response(url, "User-agent: Google-Extended\nDisallow: /api\nDisallow: /mcp\n")
+            return self.fetch(url, origin, plain=plain)
+        result = monitor.audit_product(product, fetcher=fetcher)
+        self.assertEqual(result["status"], "PASS")
+        self.assertEqual(result["protected_crawler_policy"]["status"], "PASS")
+        ordinary = self.audit()
+        self.assertNotEqual(result["discovery_revision"], ordinary["discovery_revision"])
+
+    def test_api_policy_missing_or_more_permissive_fails_the_audit(self):
+        api_origin = "https://api.example.test"
+        product = {**PRODUCT, "protected_robots": {
+            "origin": api_origin, "agent": "Google-Extended", "blocked_prefixes": ("/api", "/mcp")}}
+        for body, status in [
+            ("not here", 404),
+            ("User-agent: *\nAllow: /", 200),
+            ("User-agent: Google-Extended\nDisallow: /api", 200),
+            ("User-agent: Google-Extended\nDisallow: /api\nDisallow: /mcp\nAllow: /api/data/", 200),
+            ("User-agent: Googlebot\nUser-agent: Google-Extended\nDisallow: /api\nDisallow: /mcp", 200),
+        ]:
+            with self.subTest(body=body, status=status):
+                def fetcher(url, origin, plain=False):
+                    if url == api_origin + "/robots.txt":
+                        return response(url, body, status=status)
+                    return self.fetch(url, origin, plain=plain)
+                result = monitor.audit_product(product, fetcher=fetcher)
+                self.assertEqual(result["status"], "FAIL")
+                self.assertTrue(any(e["url"] == api_origin + "/robots.txt" for e in result["errors"]))
+
     def test_sitemap_loss_and_missing_entry_are_failures(self):
         self.fixtures[ORIGIN + "/sitemap.xml"]["body"] = xml([ORIGIN + "/"]).encode()
         result = self.audit()
