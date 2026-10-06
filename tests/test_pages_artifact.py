@@ -63,6 +63,17 @@ def test_required_discovery_cannot_silently_disappear(tmp_path):
     assert not (tmp_path / "artifact").exists()
 
 
+def test_removed_operational_configuration_does_not_break_staging_or_leak(tmp_path):
+    root = repository(tmp_path, {"ops/search-coverage/monitor.service": b"internal service"})
+    artifact.stage(root, tmp_path / "before-cleanup")
+    assert not (tmp_path / "before-cleanup/ops").exists()
+    # Match Pages cleanup: a tracked operational file is absent on disk.
+    (root / "ops/search-coverage/monitor.service").unlink()
+    artifact.stage(root, tmp_path / "after-cleanup")
+    assert not (tmp_path / "after-cleanup/ops").exists()
+    assert (tmp_path / "after-cleanup/index.html").read_bytes() == b"public home"
+
+
 def test_staging_refuses_symlinks_and_nonempty_or_internal_destinations(tmp_path):
     root = repository(tmp_path)
     outside = tmp_path / "private"

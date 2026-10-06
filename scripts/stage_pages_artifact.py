@@ -23,7 +23,7 @@ PUBLIC_HIDDEN = frozenset({
     ".well-known/agent-skills/index.json",
 })
 EXCLUDED_ROOTS = frozenset({
-    "scripts", "tests", "edge", "node_modules", "wrangler.catalog.jsonc",
+    "scripts", "tests", "ops", "edge", "node_modules", "wrangler.catalog.jsonc",
     "requirements-ci.txt", "package.json", "package-lock.json",
 })
 # The existing edge verifier covers the independently served AI/API catalogs.
