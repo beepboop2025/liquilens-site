@@ -99,7 +99,7 @@ jobs:
           cp sitemap.xml "$RUNNER_TEMP/pages-proof/sitemap.xml"
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - name: Keep the unscanned directories out of the artifact
-        run: rm -rf scripts tests edge wrangler.catalog.jsonc requirements-ci.txt package.json package-lock.json node_modules
+        run: rm -rf scripts tests ops edge wrangler.catalog.jsonc requirements-ci.txt package.json package-lock.json node_modules
       - name: Stage tracked public files and reviewed hidden discovery paths
         run: >-
           python3 "$RUNNER_TEMP/stage_pages_artifact.py" stage

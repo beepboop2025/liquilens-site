@@ -14,7 +14,9 @@ on:
     paths:
       - 'scripts/check_search_coverage.py'
       - 'scripts/search_coverage_history.py'
+      - 'scripts/watch_search_coverage.py'
       - 'scripts/search-coverage-retirements.json'
+      - 'ops/search-coverage/**'
       - 'tests/test_search_coverage*.py'
       - '.github/workflows/search-coverage.yml'
   workflow_run:
@@ -60,6 +62,7 @@ jobs:
           args=()
           if [[ "$FULL" == 'true' ]]; then args+=(--full); fi
           python3 scripts/check_search_coverage.py "${args[@]}" \
+            --full-on-change \
             --baseline "$RUNNER_TEMP/search-coverage/baseline.json" \
             --retirements scripts/search-coverage-retirements.json \
             --output "$RUNNER_TEMP/search-coverage/report.json"

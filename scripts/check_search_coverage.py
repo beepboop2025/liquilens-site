@@ -27,7 +27,19 @@ PRODUCTS = (
      "sitemaps": ("/sitemap.xml", "/articles/sitemap.xml")},
 )
 AGENT = "LiquiLens-Discovery-Monitor/1.0 (+https://liquilens.in/)"
-SEARCH_BOTS = ("Googlebot", "Bingbot", "OAI-SearchBot", "Claude-SearchBot", "PerplexityBot")
+SEARCH_BOTS = ("Googlebot", "Bingbot", "DuckDuckBot", "Applebot",
+               "OAI-SearchBot", "Claude-SearchBot", "PerplexityBot")
+TOPIC_PAGES = {
+    "LiquiLens": ("/banking/", "/banking/institutions/", "/guides/how-to-assess-bank-risk/",
+                  "/guides/rbi-nbfc-early-warning-system/", "/use-cases/"),
+    "Seiche": ("/money-markets/", "/markets/capital-markets/", "/markets/forex/",
+               "/gift-city/", "/use-cases/money-market-research/",
+               "/use-cases/capital-market-transmission/"),
+    "Undertow": ("/crypto/", "/gold/", "/exit/", "/markets/crypto/", "/markets/ust/",
+                 "/markets/ig/", "/markets/hy/", "/capital-market-liquidity/",
+                 "/guides/market-liquidity-and-exit-cost/",
+                 "/guides/gold-conversion-grams-karat-currency/"),
+}
 NS = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
 MAX_BYTES = 3 * 1024 * 1024
 MAX_URLS = 2500
@@ -175,9 +187,22 @@ class PageMetadata(HTMLParser):
         self.canonicals = []
         self.description = ""
         self.noindex = False
+        self.h1_count = 0
+        self.visible_text = ""
+        self.hidden_tag = None
+        self.jsonld = []
+        self.in_jsonld = False
+        self.no_snippet = False
 
     def handle_starttag(self, tag, attrs):
         attrs = {key: value or "" for key, value in attrs}
+        if tag == "h1":
+            self.h1_count += 1
+        if tag in {"script", "style"}:
+            self.hidden_tag = tag
+        if tag == "script" and attrs.get("type", "").lower() == "application/ld+json":
+            self.in_jsonld = True
+            self.jsonld.append("")
         if tag == "title":
             self.in_title = True
         if tag == "link" and "canonical" in attrs.get("rel", "").lower().split():
@@ -188,14 +213,40 @@ class PageMetadata(HTMLParser):
                 self.description = content.strip()
             if name in {"robots", *(bot.lower() for bot in SEARCH_BOTS)} and NOINDEX.search(content):
                 self.noindex = True
+            if name in {"robots", "googlebot"} and re.search(r"\bnosnippet\b|\bmax-snippet\s*:\s*0\b", content, re.I):
+                self.no_snippet = True
 
     def handle_endtag(self, tag):
         if tag == "title":
             self.in_title = False
+        if tag == "script":
+            self.in_jsonld = False
+        if tag == self.hidden_tag:
+            self.hidden_tag = None
 
     def handle_data(self, data):
         if self.in_title:
             self.title += data
+        if self.in_jsonld:
+            self.jsonld[-1] += data
+        if self.hidden_tag is None:
+            self.visible_text += " " + data
+
+
+def validate_topic_page(response):
+    page = PageMetadata()
+    page.feed(require_response(response, {"text/html", "application/xhtml+xml"}))
+    if not page.h1_count or len(page.visible_text.strip()) < 200:
+        raise ValueError("topic page lacks a heading or readable research content")
+    if page.no_snippet or re.search(r"\bnosnippet\b|\bmax-snippet\s*:\s*0\b",
+                                    response["headers"].get("x-robots-tag", ""), re.I):
+        raise ValueError("topic page prevents Google snippets and AI Search eligibility")
+    for raw in page.jsonld:
+        value = json.loads(raw)
+        if not isinstance(value, (dict, list)) or not value:
+            raise ValueError("topic page has empty or invalid JSON-LD")
+    return {"title": page.title.strip(), "jsonld_blocks": len(page.jsonld),
+            "readable_characters": len(page.visible_text.strip())}
 
 
 def validate_page(response, url):
@@ -226,7 +277,8 @@ def validate_page(response, url):
         raise ValueError("; ".join(problems))
 
 
-def audit_product(product, full=False, fetcher=fetch):
+def audit_product(product, full=False, fetcher=fetch, *, topics=(),
+                  full_on_change=False, previous_revision=None):
     origin = product["origin"]
     result = {"product": product["name"], "origin": origin, "errors": [], "warnings": [],
               "requests": [], "sitemaps": {}, "sitemap_urls": [], "pages_checked": 0}
@@ -291,7 +343,7 @@ def audit_product(product, full=False, fetcher=fetch):
     result["sitemap_urls"] = sorted(pages)
     if len(pages) < product["minimum_urls"]:
         problem(origin, f"sitemap coverage {len(pages)} below reviewed minimum {product['minimum_urls']}")
-    required = {origin + path for path in product["pages"]}
+    required = {origin + path for path in (*product["pages"], *topics)}
     for url in sorted(required - pages):
         problem(url, "required entry page absent from sitemaps")
 
@@ -301,9 +353,22 @@ def audit_product(product, full=False, fetcher=fetch):
             blocked = [bot for bot in SEARCH_BOTS if not robots.can_fetch(bot, url)]
             if blocked:
                 problem(url, "robots.txt blocks search retrieval: " + ", ".join(blocked))
+    # These are published discovery bytes, not a source-observation clock.
+    discovery = [(r["url"], r["sha256"]) for r in result["requests"]]
+    result["discovery_revision"] = hashlib.sha256(json.dumps(discovery, sort_keys=True).encode()).hexdigest()
+    changed = full_on_change and result["discovery_revision"] != previous_revision
+    full = bool(full or changed)
+    result["full_page_audit"] = full
+    result["publication_change_detected"] = changed
+    result["topic_pages"] = {}
+    result["gemini_policy"] = {origin + path: robots.can_fetch("Google-Extended", origin + path)
+                               for path in topics} if robots is not None else None
     for url in sorted((pages if full else set()) | required)[:MAX_URLS]:
         try:
-            validate_page(read(url), url)
+            response = read(url)
+            validate_page(response, url)
+            if url in {origin + path for path in topics}:
+                result["topic_pages"][url] = validate_topic_page(response)
         except ValueError as error:
             problem(url, error)
         result["pages_checked"] += 1
@@ -418,6 +483,12 @@ def summarize(report):
             lines.append(f"\n- {p['product']} inventory: {len(changes['added'])} added, {len(changes['removed'])} removed, {len(changes['reviewed_retirements'])} reviewed retirements.")
             for item in changes["reviewed_retirements"]:
                 lines.append(f"  - Reviewed retirement: `{item['url']}` — {item['reason']}")
+        if p.get("topic_pages"):
+            lines.append(f"\n- {p['product']}: {len(p['topic_pages'])} priority topic pages checked; full audit: {p.get('full_page_audit', False)}; discovery changed: {p.get('publication_change_detected', False)}.")
+        policy = p.get("gemini_policy")
+        if policy:
+            blocked = [url for url, allowed in policy.items() if not allowed]
+            lines.append(f"  - Google-Extended allowed on {len(policy) - len(blocked)}/{len(policy)} topic pages. This controls Gemini grounding and training separately from Google Search; no rights were changed.")
     lines.extend(["", "Technical retrieval checks only. Google processing/indexing, ranking, autocomplete, AI citations, source-data coverage/freshness, and external adoption are NOT verified by this monitor."])
     for p in report["products"]:
         for severity in ("errors", "warnings"):
@@ -429,14 +500,26 @@ def summarize(report):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--full", action="store_true", help="Fetch every declared sitemap page")
+    parser.add_argument("--full-on-change", action="store_true", help="Expand to a full product audit when its discovery bytes change")
     parser.add_argument("--baseline", type=Path, help="Previous successful report; missing/invalid input fails the audit")
     parser.add_argument("--retirements", type=Path, help="Reviewed exact URL retirements with reasons")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
+    prior = {}
+    if args.baseline:
+        try:
+            if args.baseline.stat().st_size <= MAX_BYTES:
+                baseline = json.loads(args.baseline.read_text())
+                validate_baseline(baseline)
+                prior = {row["product"]: row.get("discovery_revision") for row in baseline["products"]}
+        except (OSError, ValueError):
+            pass  # The mandatory history check below records the failure.
     with ThreadPoolExecutor(max_workers=3) as pool:
-        products = list(pool.map(lambda p: audit_product(p, args.full), PRODUCTS))
+        products = list(pool.map(lambda p: audit_product(p, args.full,
+            topics=TOPIC_PAGES[p["name"]], full_on_change=args.full_on_change,
+            previous_revision=prior.get(p["name"])), PRODUCTS))
     report = {"schema": "liquilens.search-coverage.v1", "observed_at": datetime.now(timezone.utc).isoformat(),
-              "full_page_audit": args.full, "operator_probe": True, "products": products,
+              "full_page_audit": all(p.get("full_page_audit", False) for p in products), "operator_probe": True, "products": products,
               "google_processing_verified": False, "indexing_verified": False,
               "ranking_verified": False, "adoption_verified": False}
     report["monitoring_errors"] = []

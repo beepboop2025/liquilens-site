@@ -1,4 +1,10 @@
 {
   "schema": "liquilens.search-retirements.v1",
-  "retirements": []
+  "retirements": [
+    {
+      "product": "Undertow",
+      "url": "https://liquilens-undertow.com/articles/2026-10-05-crypto-moves-tighter-by-0-09-inside-normal-funding-reads-strain/",
+      "reason": "The pre-archive publisher regenerated the 2026-10-05 daily article under a new headline. A permanent 301 on the original URL points to https://liquilens-undertow.com/articles/2026-10-05-ig-moves-strained-to-normal-funding-reads-strain/. Future daily revisions preserve their first permalink; older dates remain in the monthly archive."
+    }
+  ]
 }

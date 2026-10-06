@@ -11,19 +11,23 @@ or send social/Telegram/email messages.
   minimums, search-crawler robots permissions, and required entry pages.
 - Daily, at 03:43 UTC: also fetch every URL found through those sitemaps,
   including Undertow's separate article sitemap and nested sitemap indexes.
-- After a successful LiquiLens Pages publication: repeat the lightweight check.
+- After a successful LiquiLens Pages publication: check all priority topics; expand to a full audit for products whose discovery files changed.
+- On the independent host timer: repeat every 15 minutes after completion, with a daily full audit. See `ops/search-coverage/README.md` for installation and recurrence verification.
 - Manual dispatch: full audit by default.
 
 Failures include HTTP errors, unexpected redirects/challenge HTML, invalid
 XML/JSON, missing sitemaps or required pages, reductions below reviewed page
 minimums, missing metadata, accidental `noindex`, incorrect canonicals, and
-robots exclusions for Googlebot, Bingbot, OAI-SearchBot, Claude-SearchBot or
-PerplexityBot. A failed check fails the workflow and retains the JSON/Markdown
+robots exclusions for Googlebot, Bingbot, DuckDuckBot, Applebot, OAI-SearchBot,
+Claude-SearchBot or PerplexityBot. A failed check fails the workflow and retains the JSON/Markdown
 report for 30 days. GitHub notification delivery depends on account settings;
 no separate notification service is installed by this workflow.
 
-HTML pages require a title, description and one correct canonical. Published
-JSON and Markdown documents receive content-type and parse/content checks;
+HTML pages require a title, description and one correct canonical. The 21 priority topic pages cover bank/SFB evidence, RBI/NBFC review, funding, bond markets, gold and crypto. They also require a readable heading/content, valid JSON-LD when supplied, and snippet eligibility. Google-Extended permissions are reported separately because Gemini grounding and model-training policy is distinct from Google Search crawling. The monitor never changes those permissions.
+
+A hash of the published discovery files detects sitemap, robots, reference and catalog changes. `--full-on-change` expands that product to a complete audit. A publication hash is not an underlying observation date, an exact backend deployment identity, or proof that every product change modified its discovery files. Required pages are checked on every run even when discovery is unchanged.
+
+Published JSON and Markdown documents receive content-type and parse/content checks;
 they are not incorrectly required to have HTML metadata. Robots checks merge
 specific groups and apply longest-path rules, wildcard/end markers, encoded
 paths and allow-on-tie behavior. Unsupported policy extensions are preserved.
