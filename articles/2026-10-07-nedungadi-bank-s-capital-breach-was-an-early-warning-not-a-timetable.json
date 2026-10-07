@@ -1,0 +1,117 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-07-nedungadi-bank-s-capital-breach-was-an-early-warning-not-a-timetable",
+  "product": "liquilens",
+  "slug": "2026-10-07-nedungadi-bank-s-capital-breach-was-an-early-warning-not-a-timetable",
+  "date": "2026-10-07",
+  "article_type": "historical_replay",
+  "topic": "nedungadi-bank",
+  "headline": "Nedungadi Bank’s capital breach was an early warning, not a timetable",
+  "dek": "The replay identifies a CRAR action-zone breach well before Nedungadi Bank’s default. It supports a narrow historical finding about a filing-period capital signal, while leaving funding, market pricing and causation unresolved.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-07-nedungadi-bank-s-capital-breach-was-an-early-warning-not-a-timetable/",
+  "published_at": "2026-10-07T11:17:02Z",
+  "evidence_as_of": "2026-10-07",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "nedungadi-bank",
+    "name": "Nedungadi Bank",
+    "inst_type": "bank",
+    "default_date": "2002-11-02",
+    "fraud_masked": false,
+    "pca": {
+      "slug": "nedungadi-bank",
+      "inst_type": "bank",
+      "default_date": "2002-11-02",
+      "first_action_zone": {
+        "period_end": "1999-03-31",
+        "q": "FY1999",
+        "status": "threshold_1",
+        "knowledge_time_proxy": "1999-05-30",
+        "breaches": [
+          "CRAR"
+        ]
+      },
+      "lead_months": 41,
+      "fraud_masked": false
+    },
+    "funding": {
+      "slug": "nedungadi-bank",
+      "inst_type": "bank",
+      "scoreable": false,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1342,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:d699f0399e76d76ebd1b66b68bcb51be7590df9575282386d8264242ed9c59e5",
+    "memory_fingerprint": "sha256:f92b767f185654600ce572a6362f4a9e740c495bde60ea30edf07bb228953a12",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 2,
+    "dossier_sha256": "6f01771a5e6eea6b7652821dea0e8d308a350de9ba3ca086eb5b0753daef3b0a",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "not_a_credit_rating",
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Separated filing-period chronology, current market-data status, and model diagnostics.",
+      "Removed unsupported institution-specific causal claims about funding, confidence, management actions, and repair outcomes.",
+      "Preserved missing-data, construction-PIT, permissions, stale-data, and forensic-masking limitations."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:d699f0399e76d76ebd1b66b68bcb51be7590df9575282386d8264242ed9c59e5",
+      "memory_fingerprint": "sha256:f92b767f185654600ce572a6362f4a9e740c495bde60ea30edf07bb228953a12",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
