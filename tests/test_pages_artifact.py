@@ -44,6 +44,7 @@ def test_artifact_contains_required_discovery_but_no_hidden_or_untracked_leaks(t
         ".well-known/.private/key": b"private", ".well-known/unreviewed.json": b"private",
         "scripts/private.py": b"internal", "tests/private.py": b"internal",
         "edge/private.mjs": b"internal", "package.json": b"internal",
+        "wrangler.payments.jsonc": b"payment service infrastructure",
     })
     (root / "untracked-secret.txt").write_text("must not publish")
     destination = tmp_path / "artifact"
