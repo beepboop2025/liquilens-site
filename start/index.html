@@ -95,6 +95,11 @@
       <ul id="review-items"></ul>
       <div class="actions"><button type="button" id="download-brief" disabled>Download review brief (.md)</button><button type="button" id="download-review" disabled>Download evidence bundle (.json)</button><button type="button" id="clear-review" disabled>Clear brief</button></div>
     </section>
+    <section class="family" id="riptide-paper" data-lead="liquilens" aria-labelledby="riptide-heading">
+      <h2 id="riptide-heading">Riptide paper book</h2>
+      <div data-riptide-body role="status"><p>The public snapshot has no per-institution risky-asset figure. LiquiLens keeps the institution record.</p><p>Reading the public paper snapshot.</p></div>
+      <noscript><p>The paper snapshot needs JavaScript. Nothing is filled in.</p></noscript>
+    </section>
     <section class="family" id="family" aria-labelledby="family-heading"><h2 id="family-heading">Pick the tool for your next question</h2><p>Start with the evidence you need. These products answer different questions.</p><div id="server-list"></div>
       <div class="local"><h3>Local tools and adjacent research</h3><p><a href="https://github.com/beepboop2025/liquilens-evidence-carrier">Evidence Carrier</a> verifies and transports evidence packets locally. <a href="https://github.com/beepboop2025/scamshield">ScamShield</a> provides local scam-triage tooling. Their installation and privacy requirements are documented in their repositories.</p><p><a href="https://groundcheck.seiche.info/">Groundcheck</a> checks claims, <a href="https://github.com/beepboop2025/noisefloor">Noisefloor</a> examines statistical changes, and <a href="https://github.com/beepboop2025/data-breach-detector">Breach</a> covers breach evidence. These adjacent tools have their own access and evidence boundaries. <a href="https://myquant-app.vercel.app/">MyQuant app discovery</a> describes app capabilities; an app listing does not establish an active news feed.</p></div>
     </section>
@@ -105,5 +110,6 @@ python3 financial_research.py exit-brief --size-usd 100000</pre></section>
     <footer><p>Source dates, unavailable evidence and research limits remain visible. Public data is not a credit rating, investment recommendation or execution instruction.</p><p><a href="/privacy/">Privacy</a> · <a href="/security/">Security</a> · <a href="mailto:mrinal@liquilens.in?subject=MCP%20integration%20help">Integration help</a> · <a href="/start/measurement.md">How these interactions are measured</a></p></footer>
     <noscript><p>The interactive examples need JavaScript. <a href="/developers/">Use the documented MCP endpoints and downloadable scripts</a>; they work independently of this page.</p></noscript>
   </main><script type="module" src="/start/app.mjs"></script>
+<script type="module" src="/start/riptide-note.mjs"></script>
 <script type="module" src="/research-ui/context.js"></script></body>
 </html>
