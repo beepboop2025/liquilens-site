@@ -19,11 +19,11 @@ export const OPENAI_APPS_CHALLENGE_PATH =
   "/.well-known/openai-apps-challenge";
 export const FINANCIAL_EVIDENCE_MCP_PATH = "/mcp/financial-evidence";
 export const MAX_MCP_REQUEST_BYTES = 32_768;
-export const MAX_MCP_RESPONSE_BYTES = 2_097_152;
+export const MAX_MCP_RESPONSE_BYTES = 3_145_728;
 export const MAX_MCP_HTTP_RESPONSE_BYTES = 4_194_304;
 // Leave room for a bounded request ID and the SDK JSON-RPC/SSE envelope.
 const MAX_MCP_RESULT_BYTES = MAX_MCP_HTTP_RESPONSE_BYTES - MAX_MCP_REQUEST_BYTES - 8192;
-export const MAX_PACKET_SOURCE_BYTES = 1_572_864;
+export const MAX_PACKET_SOURCE_BYTES = 3_145_728;
 export const MAX_PACKET_TIMEOUT_SECONDS = 30;
 const FETCH_INPUT_PROPERTIES =
   financialEvidenceMcpContract.tools[2].inputSchema.properties;
