@@ -26,7 +26,8 @@
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"43b422e63bb44fb5975c7bb39bd0ba24"}'></script>
 <link rel="stylesheet" href="/family-design.css">
 <link rel="stylesheet" href="/family-pages.css">
-<link rel="stylesheet" href="/research-ui/research.css"><!-- SOCIAL-CARD:START -->
+<link rel="stylesheet" href="/research-ui/research.css"><link rel="stylesheet" href="/payments/payment.css">
+<!-- SOCIAL-CARD:START -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LiquiLens">
 <meta property="og:url" content="https://liquilens.in/access/">
@@ -48,7 +49,7 @@
 </head>
 <body class="family-page">
 <a class="research-skip" href="#main">Skip to content</a><header class="research-header"><div class="research-mast"><a class="research-identity" href="/"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="14"/><path d="M10 23V13m5 14V9m5 15V12m5 9v-6"/></svg><span><strong>LiquiLens</strong><small>Institution intelligence</small></span></a><nav class="research-network" aria-label="Products"><a href="/" aria-current="page">LiquiLens</a><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a></nav><a class="research-api" href="/agents/">API &amp; agents</a></div><nav class="research-tabs" aria-label="LiquiLens sections"><a href="/">Overview</a><a href="/banking/">Banking research</a><a href="/start/">Review workspace</a><a href="/articles/">Published research</a><a href="/world-economy/">World economy</a><a href="/research/">Methods &amp; evidence</a><a href="/investors/">Company &amp; investors</a></nav></header>
-<header class="shell top"><a class="brand" href="/"><span class="mark">L</span>LiquiLens</a><nav class="nav" aria-label="Access navigation"><a href="/access/sample/">Live sample pack</a><a href="/replay/">Failure replays</a><a href="/developers/">API + MCP</a><a href="/pilot/">Book pilot</a></nav></header>
+<header class="shell top"><a class="brand" href="/"><span class="mark">L</span>LiquiLens</a><nav class="nav" aria-label="Access navigation"><a href="/access/sample/">Live sample pack</a><a href="/replay/">Failure replays</a><a href="/developers/">API + MCP</a><a href="/pilot/">Book pilot</a><a href="#payment">Payments</a></nav></header>
 <main id="main">
   <section class="shell hero">
     <div>
@@ -60,6 +61,7 @@
         <a class="btn alt" data-event="sample_clicked" href="/access/sample/">See a generated pack</a>
       </div>
       <p class="fine">Scope and pricing by written proposal · no customer rows on the first invoice</p>
+      <p>Already have an invoice? <a href="#payment">Pay by UPI or bank transfer</a>.</p>
       <p class="contact-address">Email <a data-event="email_clicked" href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a> directly, or use the enquiry template below.</p>
       <details class="contact-template">
         <summary>Use the template in your email app or webmail</summary>
@@ -140,6 +142,42 @@ Fifteen names or FDIC certs:
     <p class="section-intro" style="margin-top:28px">A time-boxed challenger letter and an advisor seat, up to eight client lists on their letterhead, are scoped in the same written proposal. Nothing on this page is a list price.</p>
   </section>
 
+<section class="shell section payment-panel" id="payment" data-payment-panel aria-labelledby="payment-title">
+  <h2 id="payment-title">Pay your invoice with UPI or bank transfer</h2>
+  <p class="payment-intro">Pay the INR amount on your agreed invoice. If you do not have an invoice yet, contact us to confirm the product, scope and amount before paying.</p>
+  <p class="payment-intro">Payments are received by <strong>LIQUILENS PRIVATE LIMITED</strong>, the company behind LiquiLens, Seiche and Undertow.</p>
+  <div class="payment-layout">
+    <figure class="payment-figure">
+      <img class="payment-qr" src="/payments/idfc-upi.png" width="1016" height="1406" alt="IDFC FIRST Bank UPI QR for LIQUILENS PRIVATE LIMITED, liquilens@idfcbank">
+      <figcaption>Scan with your UPI app. Check the payee name and INR amount in the app before authorising payment.</figcaption>
+      <div class="payment-actions">
+        <a class="payment-action" href="upi://pay?pa=liquilens%40idfcbank&amp;pn=LIQUILENS%20PRIVATE%20LIMITED&amp;cu=INR">Open UPI app</a>
+        <a class="payment-action" href="/payments/idfc-upi.png" download="LiquiLens-IDFC-UPI.png">Download QR</a>
+      </div>
+    </figure>
+    <div>
+      <h3>Company payment details</h3>
+      <dl class="payment-details">
+        <div><dt>Account holder</dt><dd>LIQUILENS PRIVATE LIMITED</dd></div>
+        <div><dt>UPI ID</dt><dd><code id="payment-upi">liquilens@idfcbank</code><button class="payment-copy" type="button" data-payment-copy="payment-upi" data-copy-label="UPI ID" hidden>Copy UPI ID</button></dd></div>
+        <div><dt>Bank</dt><dd>IDFC FIRST Bank</dd></div>
+        <div><dt>Current account number</dt><dd><code id="payment-account">81788951831</code><button class="payment-copy" type="button" data-payment-copy="payment-account" data-copy-label="Account number" hidden>Copy account number</button></dd></div>
+        <div><dt>IFSC</dt><dd><code id="payment-ifsc">IDFB0043424</code><button class="payment-copy" type="button" data-payment-copy="payment-ifsc" data-copy-label="IFSC" hidden>Copy IFSC</button></dd></div>
+        <div><dt>Branch</dt><dd>Jaipur - Calgiri Road</dd></div>
+        <div><dt>Currency</dt><dd>Indian rupees (INR)</dd></div>
+      </dl>
+      <p class="payment-status" data-payment-status role="status" aria-live="polite"></p>
+    </div>
+  </div>
+  <div class="payment-next">
+    <h3>Already paid?</h3>
+    <p>Submit your UPI transaction ID or bank UTR to receive an acknowledgement number and a private status link. Your payment is marked verified after we match the credit in our bank account. We then confirm the access or delivery agreed on your invoice.</p>
+    <div class="payment-actions"><a class="payment-action" href="https://payments.liquilens.in/?product=liquilens#confirmation">Submit payment details</a></div>
+    <p class="payment-fine">An acknowledgement confirms that we received your details; it is not a bank receipt or tax invoice. For payment, invoice or refund help, email <a href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a> with your reference. Never share an OTP, UPI PIN or banking password.</p>
+  </div>
+  <p class="payment-fine">LIQUILENS PRIVATE LIMITED · CIN U62011RJ2026PTC116792 · Jaipur, India · <a href="https://liquilens.in/about/">Company information</a> · <a href="https://payments.liquilens.in/#terms">Payment terms and privacy</a></p>
+</section>
+
   <section class="shell section">
     <div class="label">Fit</div>
     <h2>Buy this when you already have a list.</h2>
@@ -173,5 +211,6 @@ Fifteen names or FDIC certs:
 <footer class="shell foot">© 2026 LiquiLens · LIQUILENS PRIVATE LIMITED · registered company · Jaipur, India · Screening research, not a credit rating or investment advice · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="mailto:mrinal@liquilens.in">Contact LiquiLens</a></footer>
 <script src="/access/enquiry-copy.js" defer></script>
 <script src="/access/app.js" defer></script>
-<script type="module" src="/research-ui/context.js"></script></body>
+<script type="module" src="/research-ui/context.js"></script><script src="/payments/payment.js" defer></script>
+</body>
 </html>

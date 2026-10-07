@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Payments | LiquiLens Private Limited</title>
+  <meta name="description" content="Official company payment details for LiquiLens, Seiche and Undertow. Pay by UPI or bank transfer and track payment verification.">
+  <meta name="referrer" content="no-referrer"><link rel="stylesheet" href="/portal.css">
+  <link rel="stylesheet" href="/payment.css"><script src="/portal.js" defer></script><script src="/payment.js" defer></script>
+</head>
+<body>
+<header class="company-header"><a class="brand" href="https://liquilens.in/">LiquiLens<span>Private Limited</span></a><nav aria-label="Products"><a href="https://liquilens.in/">LiquiLens</a><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a></nav></header>
+<main>
+  <div class="intro"><h1>Company payments</h1><p>Pay your invoice or support Seiche's public research. All transfers on this page go to LIQUILENS PRIVATE LIMITED.</p></div>
+  <ol class="steps"><li><strong>Pay</strong><span>Use the company UPI ID or current account.</span></li><li><strong>Send your reference</strong><span>Get an acknowledgement and private status link.</span></li><li><strong>Track verification</strong><span>We match the bank credit, then confirm receipt.</span></li></ol>
+  <section class="panel payment-panel" data-payment-panel aria-labelledby="pay-title">
+    <h2 id="pay-title">UPI or bank transfer</h2>
+    <p>For LiquiLens or Undertow purchases, pay the INR amount agreed on your invoice. Contact <a href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a> for an invoice first. Voluntary Seiche support can be any amount you choose and does not purchase paid access.</p>
+    <div class="payment-layout">
+      <figure class="payment-figure"><img class="payment-qr" src="/idfc-upi.png" width="1016" height="1406" alt="IDFC FIRST Bank QR for LIQUILENS PRIVATE LIMITED, UPI ID liquilens@idfcbank"><figcaption>Check the company name and INR amount in your UPI app before authorising payment.</figcaption><div class="payment-actions"><a class="payment-action" href="upi://pay?pa=liquilens%40idfcbank&amp;pn=LIQUILENS%20PRIVATE%20LIMITED&amp;cu=INR">Open UPI app</a><a class="payment-action" href="/idfc-upi.png" download="LiquiLens-IDFC-UPI.png">Download QR</a></div></figure>
+      <div><h3>Beneficiary details</h3><dl class="payment-details">
+        <div><dt>Account holder</dt><dd>LIQUILENS PRIVATE LIMITED</dd></div>
+        <div><dt>UPI ID</dt><dd><code id="payment-upi">liquilens@idfcbank</code><button class="payment-copy" type="button" data-payment-copy="payment-upi" data-copy-label="UPI ID" hidden>Copy UPI ID</button></dd></div>
+        <div><dt>Bank</dt><dd>IDFC FIRST Bank</dd></div>
+        <div><dt>Current account number</dt><dd><code id="payment-account">81788951831</code><button class="payment-copy" type="button" data-payment-copy="payment-account" data-copy-label="Account number" hidden>Copy account number</button></dd></div>
+        <div><dt>IFSC</dt><dd><code id="payment-ifsc">IDFB0043424</code><button class="payment-copy" type="button" data-payment-copy="payment-ifsc" data-copy-label="IFSC" hidden>Copy IFSC</button></dd></div>
+        <div><dt>Branch</dt><dd>Jaipur - Calgiri Road</dd></div><div><dt>Currency</dt><dd>Indian rupees (INR)</dd></div>
+      </dl><p class="payment-status" data-payment-status role="status" aria-live="polite"></p><p class="fine">Complete payment in your bank or UPI app. This website never asks for your PIN, OTP or banking password.</p></div>
+    </div>
+  </section>
+  <section class="panel" id="confirmation" aria-labelledby="confirmation-title">
+    <h2 id="confirmation-title">Already paid? Send your reference.</h2>
+    <p>Use the transaction ID or UTR from your payment receipt. You will receive an acknowledgement immediately after your details are saved. Bank verification is a separate step.</p>
+    <noscript><p>Email your product, invoice, INR amount, payment date and transaction reference to <a href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a>. Enable JavaScript to receive an online acknowledgement.</p></noscript>
+    <form id="payment-form">
+      <div class="form-grid">
+        <label>Product<select name="product" id="product" required><option value="liquilens">LiquiLens invoice</option><option value="undertow">Undertow invoice</option><option value="seiche">Seiche voluntary support</option></select></label>
+        <label>Payer or company name<input name="name" autocomplete="name" minlength="2" maxlength="100" required></label>
+        <label>Email for payment enquiries<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+        <label>Invoice reference <span id="invoice-hint">(required)</span><input name="invoice" id="invoice" maxlength="80" required></label>
+        <label>Amount paid in INR<input name="amount" type="number" inputmode="decimal" min="1" max="10000000" step="0.01" required></label>
+        <label>Payment date<input name="paid_on" id="paid-on" type="date" required></label>
+        <label class="wide">UPI transaction ID or bank UTR<input name="reference" minlength="6" maxlength="40" autocomplete="off" spellcheck="false" required aria-describedby="reference-help"><small id="reference-help">Enter the transaction reference, not your account number or UPI PIN.</small></label>
+      </div>
+      <label class="consent"><input name="consent" type="checkbox" required><span>I have made this transfer and agree to the <a href="#terms">payment terms and use of these details for verification</a>.</span></label>
+      <button id="submit-payment" class="primary" type="submit" disabled>Submit payment details</button>
+      <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+    </form>
+    <div id="acknowledgement" class="receipt" hidden tabindex="-1"><h3>Payment details received</h3><p>Your acknowledgement number is <strong id="ack-id"></strong>.</p><p>Your transfer is awaiting bank verification. Keep your bank receipt and save the private status link below.</p><a class="primary" id="status-link" href="/status.html">View payment status</a><p class="fine">This acknowledgement does not confirm bank receipt, activate a subscription or replace a tax invoice.</p></div>
+  </section>
+  <section class="terms" id="terms" aria-labelledby="terms-title"><h2 id="terms-title">Payment terms and support</h2>
+    <div class="terms-grid"><article><h3>Who you are paying</h3><p>LIQUILENS PRIVATE LIMITED operates LiquiLens, Seiche and Undertow. CIN U62011RJ2026PTC116792. Registered in Jaipur, India.</p><a href="https://liquilens.in/about/">Company information</a></article>
+    <article><h3>Verification and delivery</h3><p>We compare the submitted reference, amount and date with the company bank account. A pending acknowledgement is not proof of payment. After verification, paid access or delivery follows your agreed invoice. Voluntary support does not buy access.</p></article>
+    <article><h3>Payment or refund questions</h3><p>Email <a href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a> with your acknowledgement or invoice number for duplicate payments, an incorrect amount, missing access or a refund request. Requests are checked against the original payment and agreed invoice.</p></article>
+    <article><h3>Your payment information</h3><p>We store the submitted name, email, product, invoice reference, amount, date and transaction reference in our Cloudflare-hosted payment service for reconciliation, support and related business records. We do not collect bank statements, card details, PINs or OTPs. Keep your private status link confidential. Contact us about corrections or data questions.</p><a href="https://liquilens.in/privacy/">Company privacy policy</a></article></div>
+  </section>
+</main><footer>© 2026 LIQUILENS PRIVATE LIMITED · <a href="mailto:mrinal@liquilens.in">mrinal@liquilens.in</a></footer>
+</body></html>
