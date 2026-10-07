@@ -1,9 +1,34 @@
 import io
+import json
 import urllib.request
 
 import pytest
 
 from scripts import verify_catalog_edge as verifier
+
+
+@pytest.mark.parametrize("payload_bytes,accepted", [(2_200_000, True), (4_200_000, False)])
+def test_mcp_reader_enforces_the_worker_http_envelope(monkeypatch, payload_bytes, accepted):
+    url = verifier.DEFAULT_MCP_URL
+    payload = {"jsonrpc": "2.0", "id": "expanded-atlas", "result": {"context": "x" * payload_bytes}}
+    raw = json.dumps(payload).encode()
+    monkeypatch.setattr(verifier, "_validate_public_https_url", lambda value: value)
+
+    def open_request(request, **kwargs):
+        response = io.BytesIO(raw)
+        response.headers = {"Content-Type": "application/json"}
+        response.geturl = lambda: url
+        return response
+
+    monkeypatch.setattr(verifier._SAFE_OPENER, "open", open_request)
+    request = {"jsonrpc": "2.0", "id": "expanded-atlas", "method": "tools/call"}
+    if accepted:
+        actual, _ = verifier._mcp_request(url, request)
+        assert actual == payload
+    else:
+        with pytest.raises(RuntimeError, match="MCP response exceeds the 4194304-byte response limit"):
+            verifier._mcp_request(url, request)
+    assert verifier.MAX_JSON_BODY_BYTES == 2 * 1024 * 1024
 
 
 @pytest.mark.parametrize("url,authenticated", [

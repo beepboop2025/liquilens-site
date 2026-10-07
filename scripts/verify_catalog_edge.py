@@ -141,6 +141,7 @@ SIBLING_MAX_ATTEMPTS = 2
 SIBLING_RETRY_DELAY = 2.0
 MCP_2026_VERSION = "2026-07-28"
 MAX_JSON_BODY_BYTES = 2 * 1024 * 1024
+MAX_MCP_HTTP_BODY_BYTES = 4 * 1024 * 1024
 MAX_CATALOG_BODY_BYTES = 4 * 1024 * 1024
 MIN_FETCH_TIMEOUT = 0.25
 ALLOWED_FETCH_HOSTS = frozenset(
@@ -535,7 +536,7 @@ def _mcp_request(
             request,
             timeout=_bounded_timeout(timeout, f"MCP {payload.get('method')!r}"),
         ) as response:
-            body = _read_bounded(response, MAX_JSON_BODY_BYTES, "MCP response")
+            body = _read_bounded(response, MAX_MCP_HTTP_BODY_BYTES, "MCP response")
             decoded = decode_mcp_response(
                 body,
                 response.headers.get("Content-Type", ""),
