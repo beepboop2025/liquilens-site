@@ -1383,6 +1383,8 @@ def test_mcp_release_probe_checks_every_route_and_new_topic_receipts(monkeypatch
         else:
             topics = payload["params"]["arguments"]["topics"]
             assert topics == (["money-market"] if request_id == "limiter-probe" else ["gift-city", "forex", "gold"])
+            if request_id == "limiter-probe":
+                assert payload["params"]["arguments"]["max_bytes"] == 3_145_728
             result = _financial_evidence_topic_fixture(topics)
         if request_id.startswith("modern-"):
             result.update({"resultType": "complete", "_meta": {

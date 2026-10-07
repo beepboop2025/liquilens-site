@@ -342,8 +342,8 @@ test("all eight topics fan out within hard public budgets", async () => {
 
 test("gift-city and gold reuse one bounded GET receipt without double-charging bytes", async () => {
   const requested = [];
-  const gift = JSON.stringify({ status: "partial", generated_at: "2026-10-04T19:00:00Z", gold: { positioning: { status: "restricted", as_of: "2026-09-29" } }, padding: "x".repeat(849_900) });
-  const forex = JSON.stringify({ status: "derived", forex: { status: "unavailable", observations: [] }, generated_at: "2026-10-04T19:01:00Z", padding: "x".repeat(599_900) });
+  const gift = JSON.stringify({ status: "partial", generated_at: "2026-10-04T19:00:00Z", gold: { positioning: { status: "restricted", as_of: "2026-09-29" } }, padding: "x".repeat(1_599_900) });
+  const forex = JSON.stringify({ status: "derived", forex: { status: "unavailable", observations: [] }, generated_at: "2026-10-04T19:01:00Z", padding: "x".repeat(1_399_900) });
   const packet = await buildPacket(["gift-city", "forex", "gold"], {
     maxBytes: MAX_SOURCE_BYTES,
     fetchImpl: async (url, options) => {
@@ -405,7 +405,7 @@ test("new topic fetches reject caller URLs and implicit scenario inputs before r
 test("multi-topic fetches preserve the caller's per-source byte ceiling", async () => {
   const originalFetch = globalThis.fetch;
   const requested = [];
-  const largeFixture = JSON.stringify({ payload: "x".repeat(461_700) });
+  const largeFixture = JSON.stringify({ payload: "x".repeat(Math.floor(MAX_PACKET_SOURCE_BYTES / 3)) });
   const smallFixture = JSON.stringify({ payload: "x".repeat(99_900) });
   globalThis.fetch = async (url) => {
     requested.push(url);
@@ -462,7 +462,7 @@ test("multi-topic fetches preserve the caller's per-source byte ceiling", async 
 
 test("the aggregate source cap fails explicitly without changing max_bytes", async () => {
   const originalFetch = globalThis.fetch;
-  const largeFixture = JSON.stringify({ payload: "x".repeat(1_399_900) });
+  const largeFixture = JSON.stringify({ payload: "x".repeat(MAX_PACKET_SOURCE_BYTES - 170_000) });
   const smallFixture = JSON.stringify({ payload: "x".repeat(99_900) });
   let requestCount = 0;
   globalThis.fetch = async () => {
@@ -520,7 +520,7 @@ test("the aggregate source cap fails explicitly without changing max_bytes", asy
 
 test("malformed bodies are charged to the aggregate source budget", async () => {
   const originalFetch = globalThis.fetch;
-  const malformedFixture = `{"payload":"${"x".repeat(599_900)}`;
+  const malformedFixture = `{"payload":"${"x".repeat(Math.floor(MAX_PACKET_SOURCE_BYTES * 0.38))}`;
   let requestCount = 0;
   globalThis.fetch = async () => {
     requestCount += 1;
@@ -998,9 +998,46 @@ test("unreported or nonscalar metadata is never recursively inferred", async () 
   }
 });
 
+test("an explicit larger ceiling delivers the expanded atlas with its complete receipt", async () => {
+  const document = {
+    schema: "seiche.global-money-market-atlas.v1",
+    status: "PARTIAL",
+    generated_at: "2026-10-07T03:00:00Z",
+    coverage: { unavailable: ["missing-public-observation"] },
+    context: "x".repeat(2_200_000),
+  };
+  const body = JSON.stringify(document);
+  const defaultPacket = await buildPacket(["money-market"], {
+    fetchImpl: async () => new Response(body, { headers: { "Content-Type": "application/json" } }),
+  });
+  assert.equal(defaultPacket.transport_status, "unavailable");
+  assert.match(defaultPacket.sources[0].error, /response exceeds 1048576 bytes/);
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response(body, { headers: { "Content-Type": "application/json" } });
+  try {
+    const response = await worker.fetch(request({
+      jsonrpc: "2.0", id: "expanded-atlas", method: "tools/call",
+      params: { name: "financial_evidence_fetch", arguments: { topics: ["money-market"], max_bytes: 3_145_728 } },
+    }), ALLOW_FETCH_ENV);
+    const result = (await responsePayload(response)).result;
+    const packet = JSON.parse(result.content[0].text);
+    assert.equal(result.isError, false);
+    assert.equal(packet.transport_status, "complete");
+    assert.equal(packet.output_status, "complete");
+    assert.equal(packet.evidence_status, "not_evaluated");
+    assert.deepEqual(packet.sources[0].document, document);
+    assert.equal(packet.sources[0].bytes, new TextEncoder().encode(body).byteLength);
+    assert.equal(packet.sources[0].content_sha256, "sha256:" + createHash("sha256").update(body).digest("hex"));
+    assert.equal(packet.sources[0].source_reported.state[0].value, "PARTIAL");
+    assert.ok(new TextEncoder().encode(JSON.stringify(result)).byteLength < MAX_MCP_HTTP_RESPONSE_BYTES);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("truncated output preserves successful transport and marks delivery unavailable", async () => {
   const originalFetch = globalThis.fetch;
-  globalThis.fetch = async () => new Response(JSON.stringify({ status: "x".repeat(1_100_000) }), { headers: { "Content-Type": "application/json" } });
+  globalThis.fetch = async () => new Response(JSON.stringify({ status: "x".repeat(1_700_000) }), { headers: { "Content-Type": "application/json" } });
   try {
     const response = await worker.fetch(request({jsonrpc: "2.0", id: "output-cap", method: "tools/call", params: {name: "financial_evidence_fetch", arguments: {topics: ["money-market"], max_bytes: MAX_SOURCE_BYTES}}}), ALLOW_FETCH_ENV);
     const result = (await responsePayload(response)).result;
