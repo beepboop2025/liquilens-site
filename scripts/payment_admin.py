@@ -36,7 +36,10 @@ def main():
             'reviewer': args.reviewer, 'evidence': args.evidence, 'bank_reference': args.bank_reference,
             'bank_amount': args.bank_amount, 'bank_paid_on': args.bank_paid_on,
             'bank_credit_checked': args.bank_credit_checked}).encode()
-    req = urllib.request.Request(url, data=payload, headers={'Authorization': 'Bearer '+token, 'Content-Type':'application/json'})
+    req = urllib.request.Request(url, data=payload, headers={
+        'Authorization': 'Bearer '+token, 'Content-Type':'application/json',
+        'User-Agent': 'LiquiLensPaymentAdmin/1.0 (+https://liquilens.in/)',
+    })
     try:
         with urllib.request.urlopen(req, timeout=30) as response:
             print(json.dumps(json.load(response), indent=2))
