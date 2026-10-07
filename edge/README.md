@@ -36,7 +36,7 @@ the signed package core in `protocol/financial-evidence-routing-v0.1.6.json`;
 only declared scalar paths are reported, with exact source-byte provenance.
 Missing fields remain `not_reported`. An output cap preserves transport results
 and marks `output_status` unavailable when documents must be omitted. If the
-projected metadata itself still exceeds the 2 MiB packet cap, it is explicitly
+projected metadata itself still exceeds the 3 MiB packet cap, it is explicitly
 marked `source_reported_omitted` with reason `encoded_output_limit`; it is never
 relabeled `not_reported`. Original source byte counts, hashes and transport
 results remain in the bounded receipt. The separately serialized JSON-RPC HTTP
@@ -55,9 +55,13 @@ topic records of one observation, not independent corroboration. Forex uses the
 bounded public forex section. No topic runs a scenario or produces an executable
 quote, and the Worker preserves upstream partial, restricted and unavailable
 states and source-native clocks. The package-compatible `max_bytes` ceiling is
-4 MiB per source and the default is 1 MiB, while the remote endpoint additionally enforces a 1.5 MiB
-aggregate source-byte budget, a 2 MiB encoded evidence-packet cap, and a 4 MiB
-fully serialized HTTP-response cap. The aggregate byte budget is accounted
+4 MiB per source and the default is 1 MiB, while the remote endpoint additionally enforces a 3 MiB
+aggregate source-byte budget, a 3 MiB encoded evidence-packet cap, and a 4 MiB
+fully serialized HTTP-response cap. The expanded global money-market atlas
+requires an explicit `max_bytes: 3145728` request; a response exceeding the
+caller-selected ceiling remains unavailable with its size error. The release
+probe uses that supported request and requires the complete source receipt.
+The aggregate byte budget is accounted
 sequentially: a source may use the caller's full per-source ceiling while
 packet capacity remains, rather than receiving an undocumented equal share.
 Fetches run sequentially, accept timeouts up to 30 seconds per source, and share

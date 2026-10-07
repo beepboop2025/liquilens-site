@@ -788,7 +788,9 @@ def _verify_mcp(
             "method": "tools/call",
             "params": {
                 "name": "financial_evidence_fetch",
-                "arguments": {"topics": ["money-market"]},
+                # Exercise the published caller-controlled ceiling for the
+                # expanded atlas without truncating its source document.
+                "arguments": {"topics": ["money-market"], "max_bytes": 3_145_728},
             },
         },
         extra_headers=extra_headers,
@@ -850,7 +852,11 @@ def _verify_mcp_with_retries(
         except (OSError, ValueError, RuntimeError, urllib.error.URLError) as error:
             problem = str(error)
         if attempt < attempts:
-            _bounded_sleep(delay)
+            print(f"MCP attempt {attempt}/{attempts}: {problem}", flush=True)
+            try:
+                _bounded_sleep(delay)
+            except RuntimeError as error:
+                raise RuntimeError(f"{url}: {problem}; {error}") from error
     raise RuntimeError(f"{url}: {problem}")
 
 

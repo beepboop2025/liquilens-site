@@ -71,6 +71,27 @@ def test_registry_timeout_still_consumes_the_shared_deadline(monkeypatch):
             verifier._bounded_timeout(verifier.REGISTRY_REQUEST_TIMEOUT, "Registry")
 
 
+def test_mcp_retry_deadline_retains_the_original_failure(monkeypatch, capsys):
+    calls = []
+
+    def reject(*args):
+        calls.append(args)
+        raise RuntimeError("source response exceeds the selected byte ceiling")
+
+    def expired(delay):
+        raise RuntimeError("network deadline exhausted before retry")
+
+    monkeypatch.setattr(verifier, "_verify_mcp", reject)
+    monkeypatch.setattr(verifier, "_bounded_sleep", expired)
+    with pytest.raises(RuntimeError, match="selected byte ceiling.*deadline exhausted"):
+        verifier._verify_mcp_with_retries(
+            url=verifier.DEFAULT_MCP_URL, expected_version_tag="source",
+            attempts=24, delay=5,
+        )
+    assert len(calls) == 1
+    assert "MCP attempt 1/24: source response exceeds" in capsys.readouterr().out
+
+
 def test_read_timeout_names_the_failing_public_endpoint(monkeypatch):
     url = "https://registry.modelcontextprotocol.io/v0.1/servers/example/versions/latest"
     monkeypatch.setattr(verifier, "_validate_public_https_url", lambda value: value)
