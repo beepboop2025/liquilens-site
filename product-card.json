@@ -178,7 +178,10 @@
     "execution_capability_catalog": "https://beepboop2025.github.io/financial-evidence-skills/agents/execution.json",
     "financial_evidence_release": "https://beepboop2025.github.io/financial-evidence-skills/releases/0.1.7.json",
     "financial_evidence_research_mcp": "https://api.seiche.info/openbb/mcp",
-    "financial_evidence_research_openapi": "https://api.seiche.info/openbb/openapi.json"
+    "financial_evidence_research_openapi": "https://api.seiche.info/openbb/openapi.json",
+    "institution_monitoring": "https://liquilens.in/banking/monitoring/",
+    "institution_monitoring_api": "https://api.liquilens.in/api/experimental/v1/banking/monitoring/watchlist",
+    "connected_upgrades": "https://liquilens.in/updates/"
   },
   "siblings": [
     {

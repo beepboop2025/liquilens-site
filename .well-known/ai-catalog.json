@@ -28,7 +28,7 @@
           }
         ]
       },
-      "description": "Twenty-three free public read-only tools for NPA reconciliation, small finance and urban cooperative bank research, institution coverage, cited dossiers, RBI evidence, historical diagnostics, editorial and display-only market context, and connected source discovery.",
+      "description": "Public read-only institution monitoring, source-dated review alerts and visibility gaps alongside bank-filing research, NPA reconciliation, cited dossiers, RBI evidence and historical diagnostics.",
       "tags": [
         "bank failure early warning",
         "NBFC risk",
@@ -56,6 +56,7 @@
         "failure_radar_institution",
         "forward_odds",
         "household_credit_board",
+        "institution_evidence_monitor",
         "institution_research_coverage",
         "institution_review_packet",
         "latest_article",
@@ -87,11 +88,11 @@
         "Find recent RBI supervisory actions."
       ],
       "version": "1.8.1",
-      "updatedAt": "2026-10-01T09:03:39.362779+00:00",
+      "updatedAt": "2026-10-08T15:25:52.605269+00:00",
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
-        "publicToolCount": 23,
+        "publicToolCount": 24,
         "articleJsonFeed": "https://liquilens.in/articles/feed.json",
         "telegramBot": "https://t.me/LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityLabDesk",
@@ -100,16 +101,22 @@
         "bankCoverage": "https://api.liquilens.in/api/experimental/v1/banking/coverage",
         "researchNetworkApi": "https://api.liquilens.in/api/experimental/v1/research-network",
         "institutionResearchCoverage": "https://api.liquilens.in/api/experimental/v1/banking/research-data/coverage",
-        "runtimeSource": "efc4f94b0f4180ae0847bed96d32805d195d368e",
+        "runtimeSource": "dc6b199b02f28436e8c352cd4ade452a5787ec1d",
         "runtimeVersion": "1.8.1",
         "registryMetadataRevision": "1.8.1",
         "registryRepository": "https://github.com/beepboop2025/liquilens-mcp",
-        "latestDiscoveryObservedAt": "2026-10-08T11:12:54.885875+00:00",
+        "latestDiscoveryObservedAt": "2026-10-08T15:25:52.605269+00:00",
         "latestDiscoveryServerVersion": "1.8.1",
-        "latestDiscoveryAdvertisedToolCount": 23,
-        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/liquilens-mcp.json",
-        "latestDiscoveryReceiptSha256": "sha256:355edb0158006d62eaf9cc0252539ee2676a7f08813ed94e94dd49020df52c41",
-        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification."
+        "latestDiscoveryAdvertisedToolCount": 24,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T152552Z/liquilens-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:af2bf2e404ba4838da0ccc2554d5fde1974a488fe6803e9e13354f46c9a4076b",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification.",
+        "institutionMonitoringGuide": "https://liquilens.in/banking/monitoring/",
+        "institutionMonitoringRegister": "https://api.liquilens.in/api/experimental/v1/banking/monitoring/watchlist",
+        "connectedCapabilityRecord": "https://liquilens.in/updates/capabilities.json",
+        "runtimeIdentityUrl": "https://api.liquilens.in/api/v1/release/identity",
+        "runtimeIdentityVerification": "self_reported_not_independently_verified",
+        "runtimeIdentityObservedAt": "2026-10-08T15:30:44.271754+00:00"
       }
     },
     {

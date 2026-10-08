@@ -1,0 +1,77 @@
+{
+  "schema": "liquilens.connected-upgrades.v1",
+  "reviewed_on": "2026-10-08",
+  "title": "A connected review, from evidence to follow-up",
+  "description": "Review the institution, check funding conditions, inspect market liquidity, then retain the evidence for the next review.",
+  "products": [
+    {
+      "name": "LiquiLens",
+      "owns": "Institution disclosures and review gaps",
+      "url": "https://liquilens.in/banking/monitoring/"
+    },
+    {
+      "name": "Seiche",
+      "owns": "Funding conditions and money-market observations",
+      "url": "https://seiche.info/#money%20markets"
+    },
+    {
+      "name": "Undertow",
+      "owns": "Market depth and size-specific exit evidence",
+      "url": "https://liquilens-undertow.com/exit/"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "institution-monitoring",
+      "title": "Keep missing evidence in the review",
+      "description": "Inspect source-dated changes, overdue fields and visibility gaps across tracked banks and lenders. Open the live review queue and its original disclosures.",
+      "action": "Open institution monitoring",
+      "url": "https://liquilens.in/banking/monitoring/",
+      "state": "Available for research",
+      "boundary": "Review alerts require human assessment. They do not establish institutional safety or change model scores.",
+      "source": "https://github.com/beepboop2025/LiquiLens/commit/dc6b199b02f28436e8c352cd4ade452a5787ec1d"
+    },
+    {
+      "id": "research-infrastructure",
+      "title": "Make the review repeatable",
+      "description": "Connect the Research Desk, schedule bounded research and retain source records with operating diagnostics and recovery guidance.",
+      "action": "Set up recurring research",
+      "url": "https://liquilens.in/agents/infrastructure/",
+      "state": "Available for research",
+      "boundary": "Each source keeps its dates, rights and missingness. Operator checks do not establish customer adoption.",
+      "source": "https://github.com/beepboop2025/financial-evidence-skills/commit/dd45f2f32ee8617fd5bf6853081356228d6ffe7d"
+    },
+    {
+      "id": "noisefloor",
+      "title": "Inspect changes before interpreting them",
+      "description": "Use NoiseFloor 0.3.1 to examine caller-supplied market series and headlines. Preserve measure identity, source restrictions and gaps.",
+      "action": "Connect NoiseFloor",
+      "url": "https://liquilens.in/agents/infrastructure/#noisefloor",
+      "state": "Available for caller-supplied evidence",
+      "boundary": "Noise analysis supplies research context. It does not grant feed rights, validate predictions or authorize a trade.",
+      "source": "https://github.com/beepboop2025/noisefloor/commit/dd887a3ddb60adb948f324ae2e645524366b660f"
+    },
+    {
+      "id": "execution-workbench",
+      "title": "Rehearse the controls around an action",
+      "description": "Explore the paper workbench: inspect refusals, duplicate protection, STOP and reconciliation before considering an execution workflow.",
+      "action": "Explore the paper workbench",
+      "url": "https://beepboop2025.github.io/financial-evidence-skills/agents/execution.html",
+      "state": "Paper rehearsal; execution disabled",
+      "boundary": "The workbench is a simulation. Source permissions, freshness and account controls remain separate execution requirements.",
+      "source": "https://github.com/beepboop2025/financial-evidence-skills/commit/dd45f2f32ee8617fd5bf6853081356228d6ffe7d"
+    }
+  ],
+  "authority": {
+    "combined_score": false,
+    "can_authorize_credit": false,
+    "can_authorize_trade": false,
+    "human_review_required": true
+  },
+  "limits": [
+    "Coverage remains specific to each jurisdiction and market.",
+    "Funding conditions and market depth do not measure an institution’s deposit liquidity.",
+    "Release dates do not establish the freshness of source observations.",
+    "Evidence collection, delivery, validation and customer use are separate claims."
+  ]
+}
