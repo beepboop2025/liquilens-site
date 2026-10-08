@@ -57,7 +57,7 @@ def page(title, path, description, body):
 <html lang="en" class="research-interface" data-product="liquilens"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{escape(title)} | LiquiLens</title><meta name="description" content="{escape(description, quote=True)}">
-<link rel="canonical" href="{url}"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="{url}"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E3B778'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='600' fill='%231A1206' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E" type="image/svg+xml">
 <link rel="stylesheet" href="/research-ui/research.css"><link rel="stylesheet" href="/research-ui/institution-monitor.css"><link rel="stylesheet" href="/research-ui/family-upgrades.css">
 <meta property="og:type" content="website"><meta property="og:url" content="{url}"><meta property="og:title" content="{escape(title, quote=True)}"><meta property="og:description" content="{escape(description, quote=True)}">
 <script type="application/ld+json">{json.dumps({'@context':'https://schema.org','@type':'WebPage','name':title,'url':url,'description':description,'publisher':{'@type':'Organization','name':'LiquiLens','legalName':'LIQUILENS PRIVATE LIMITED'}})}</script>
