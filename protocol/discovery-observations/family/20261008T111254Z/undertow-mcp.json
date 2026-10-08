@@ -1,0 +1,617 @@
+{
+  "initialize": {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": {
+      "protocolVersion": "2025-11-25",
+      "capabilities": {
+        "tools": {
+          "listChanged": false
+        },
+        "prompts": {
+          "listChanged": false
+        },
+        "resources": {
+          "listChanged": false,
+          "subscribe": false
+        }
+      },
+      "serverInfo": {
+        "name": "undertow",
+        "title": "Undertow market liquidity map",
+        "version": "1.13.0",
+        "websiteUrl": "https://liquilens-undertow.com/"
+      },
+      "instructions": "LIQUILENS PRIVATE LIMITED (registered, India). LiquiLens institutions / Seiche funding / Undertow liquidity: https://liquilens.in/company-profile.json.\n\nResearch: cite clocks. Exit costs interpolate roughly hourly quote-depth bands; no book walks/executable quotes. PARTIAL: insufficient scoring/replay, not calm. Sealed calls include misses. Frozen priors: https://api.seiche.info/undertow/calibration.json. trade_safety_exit_context: exact-rung observe/paper; exit_cost: nearest-rung. No execution clearance. Gold: caller assumptions, aware ISO 8601 clocks, settlement/access gates; future proceeds are not cash. No verified balances; not investment advice.\n\nAnonymous: 200/day UTC; X-MCP-Usage-* or https://api.seiche.info/undertow/mcp/usage. /agent at https://t.me/undertow_LiquiLens_bot: tokens, per-call entitlement. Agent $99/mo: unmetered subscriber MCP, 5 watches. Desk $199/mo: 10 detailed watches, terminal. Alerts $29/mo: triggers, 3 watches, no details. Free 7-day /trial: Alerts only; subscriber MCP/meter unchanged. agent_access_status: access."
+    }
+  },
+  "tools_list": {
+    "jsonrpc": "2.0",
+    "id": 2,
+    "result": {
+      "tools": [
+        {
+          "name": "agent_access_status",
+          "title": "Your access + meter",
+          "description": "Identity, current entitlement, daily usage and access instructions; explains missing/refused subscriber tools.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Your access + meter",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "crypto_exit_check",
+          "title": "Compare crypto exit sizes and freshness",
+          "description": "Compare four BTC sell sizes by rung/bracket. Withholds stale/future, uncovered or unconverted venues. Fees excluded; no trade clearance.",
+          "inputSchema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sizes_usd": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 4,
+                "uniqueItems": true,
+                "items": {
+                  "type": "number",
+                  "minimum": 0.01,
+                  "maximum": 1000000000000.0
+                },
+                "default": [
+                  1000,
+                  10000,
+                  100000,
+                  1000000
+                ]
+              },
+              "max_age_seconds": {
+                "type": "integer",
+                "minimum": 60,
+                "maximum": 86400,
+                "default": 7200
+              }
+            }
+          },
+          "annotations": {
+            "title": "Compare crypto exit sizes and freshness",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "crypto_funding_cost",
+          "title": "Calculate perpetual funding and fee drag",
+          "description": "Caller-input perpetual funding, fees, net carry and linear break-even. Positive funding: longs pay shorts. Constant-rate scenario, not forecast.",
+          "inputSchema": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "notional_usd",
+              "side",
+              "rate_bps_per_settlement",
+              "settlements"
+            ],
+            "properties": {
+              "notional_usd": {
+                "type": "number",
+                "minimum": 0.01,
+                "maximum": 1000000000000.0
+              },
+              "side": {
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              },
+              "rate_bps_per_settlement": {
+                "type": "number",
+                "minimum": -10000,
+                "maximum": 10000,
+                "description": "1 bp = 0.01%; positive rate means longs pay shorts."
+              },
+              "settlements": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "round_trip_fee_bps": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10000,
+                "default": 0
+              }
+            }
+          },
+          "annotations": {
+            "title": "Calculate perpetual funding and fee drag",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "crypto_portfolio_stress",
+          "title": "Stress a crypto portfolio",
+          "description": "Caller-input linear shocks for 20 exposures: P&L, equity, asset/venue concentration. Symbols are scenario labels. No liquidation/probability model.",
+          "inputSchema": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "equity_usd",
+              "positions"
+            ],
+            "properties": {
+              "equity_usd": {
+                "type": "number",
+                "minimum": 0.01,
+                "maximum": 1000000000000.0
+              },
+              "positions": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 20,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "asset",
+                    "side",
+                    "notional_usd",
+                    "price_change_pct"
+                  ],
+                  "properties": {
+                    "asset": {
+                      "type": "string",
+                      "pattern": "^[A-Z0-9][A-Z0-9._-]{0,15}$"
+                    },
+                    "venue": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9][a-z0-9._-]{0,31}$"
+                    },
+                    "side": {
+                      "enum": [
+                        "long",
+                        "short"
+                      ]
+                    },
+                    "notional_usd": {
+                      "type": "number",
+                      "minimum": 0.01,
+                      "maximum": 1000000000000.0
+                    },
+                    "price_change_pct": {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 1000
+                    },
+                    "cost_usd": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1000000000000.0,
+                      "default": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "annotations": {
+            "title": "Stress a crypto portfolio",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "depth_episodes",
+          "title": "Realized depth collapses",
+          "description": "Realized BTC depth-collapse onset, trough, recovery under preregistered rules. Zero is distinct from missing. Subscriber exit_desk_full adds ETH.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Realized depth collapses",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "exit_cost",
+          "title": "Exit cost at your size, per venue",
+          "description": "BTC nearest-rung sell estimates, interpolated bid-depth bands; fees excluded, not executable. crypto_exit_check compares sizes/freshness.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "size_usd": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "position size in USD (published rungs run $1,000 to $1,000,000; nearest rung is used)"
+              }
+            },
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Exit cost at your size, per venue",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "gold_cash_realisation",
+          "title": "Gold sale, FX and cash availability scenario",
+          "description": "Caller-input gold/FX sale scenario and separate cash-at-cutoff gates: quote freshness/expiry, cleared settlement, access and pledge. Decimal strings; aware ISO clocks. No verified balance or executable quote.",
+          "inputSchema": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "quantity_kg",
+              "fineness",
+              "bid_usd_per_oz",
+              "fees_usd",
+              "fx_quote_per_usd",
+              "fx_fee_bps",
+              "quote_currency",
+              "cutoff",
+              "quote_asof",
+              "fx_asof",
+              "quote_valid_until",
+              "fx_valid_until",
+              "settlement_at",
+              "cleared",
+              "access_restricted",
+              "pledged"
+            ],
+            "properties": {
+              "quantity_kg": {
+                "type": "string",
+                "pattern": "^[0-9]{1,12}(\\.[0-9]{1,12})?$",
+                "maxLength": 25
+              },
+              "fineness": {
+                "type": "string",
+                "pattern": "^[0-9]{1,12}(\\.[0-9]{1,12})?$",
+                "maxLength": 25
+              },
+              "bid_usd_per_oz": {
+                "type": "string",
+                "pattern": "^[0-9]{1,12}(\\.[0-9]{1,12})?$",
+                "maxLength": 25
+              },
+              "fees_usd": {
+                "type": "string",
+                "pattern": "^[0-9]{1,12}(\\.[0-9]{1,12})?$",
+                "maxLength": 25
+              },
+              "fx_quote_per_usd": {
+                "type": "string",
+                "pattern": "^[0-9]{1,12}(\\.[0-9]{1,12})?$",
+                "maxLength": 25
+              },
+              "fx_fee_bps": {
+                "type": "string",
+                "pattern": "^[0-9]{1,12}(\\.[0-9]{1,12})?$",
+                "maxLength": 25
+              },
+              "quote_currency": {
+                "type": "string",
+                "enum": [
+                  "USD",
+                  "INR",
+                  "AED",
+                  "EUR",
+                  "GBP",
+                  "JPY",
+                  "CHF",
+                  "SGD"
+                ]
+              },
+              "cutoff": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              },
+              "quote_asof": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              },
+              "fx_asof": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              },
+              "quote_valid_until": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              },
+              "fx_valid_until": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              },
+              "settlement_at": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              },
+              "cleared": {
+                "type": "boolean"
+              },
+              "access_restricted": {
+                "type": "boolean"
+              },
+              "pledged": {
+                "type": "boolean"
+              },
+              "max_quote_age_seconds": {
+                "type": "integer",
+                "minimum": 60,
+                "maximum": 86400,
+                "default": 900
+              }
+            }
+          },
+          "annotations": {
+            "title": "Gold sale, FX and cash availability scenario",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "latest_article",
+          "title": "latest_article",
+          "description": "Exact published Undertow editorial, evidence clock and passing quality receipt.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "latest_article",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "liquidity_tiers",
+          "title": "Full board: tiers + funding",
+          "description": "Nine segment tiers, Seiche funding, measure counts and replay/withholding reasons. PARTIAL means missing history or unpassed replay, never calm.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Full board: tiers + funding",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "market_corpus_context",
+          "title": "Public corpus coverage and source clocks",
+          "description": "Corpus counts, rights and clocks; summary or bounded dataset/flow/export pages. Retrieval is not observation freshness. Context only.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "view": {
+                "type": "string",
+                "enum": [
+                  "summary",
+                  "datasets",
+                  "flows",
+                  "exports"
+                ],
+                "default": "summary"
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 20000,
+                "default": 0
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10,
+                "default": 2
+              }
+            },
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Public corpus coverage and source clocks",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "research_network",
+          "title": "research_network",
+          "description": "Discover Seiche funding, LiquiLens institutions and Palimpsest sources: metadata, dates and rights; no shared score or authority.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "topic": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "china",
+                  "regions",
+                  "information_controls",
+                  "model_evaluations",
+                  "funding",
+                  "institutions",
+                  "liquidity",
+                  "global_data"
+                ],
+                "default": "all"
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000,
+                "default": 0
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 25,
+                "default": 2
+              }
+            },
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "research_network",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "sealed_record",
+          "title": "Sealed calls record (misses kept)",
+          "description": "Forward calls sealed/signed before outcomes: hits, misses, decided counts, ledger root. Report hits and misses together.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Sealed calls record (misses kept)",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "trade_safety_exit_context",
+          "title": "PIT-bound exact-rung paper exit context",
+          "description": "Exact-rung BTC/USD observe/paper context: request hash, PIT source/rights, conversion, bid bands, six venue clocks, startup SHA. No live mode or clearance.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "request_hash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "description": "Opaque complete-request hash"
+              },
+              "mode": {
+                "enum": [
+                  "observe",
+                  "paper"
+                ]
+              },
+              "instrument": {
+                "const": "BTC/USD"
+              },
+              "side": {
+                "const": "sell"
+              },
+              "venue": {
+                "type": "null"
+              },
+              "requested_size_usd": {
+                "type": "number",
+                "enum": [
+                  1000,
+                  10000,
+                  100000,
+                  1000000
+                ],
+                "description": "Exact published USD rung"
+              }
+            },
+            "required": [
+              "request_hash",
+              "mode",
+              "instrument",
+              "side",
+              "venue",
+              "requested_size_usd"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "PIT-bound exact-rung paper exit context",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "unwind_watch",
+          "title": "Can the watched books exit? (free)",
+          "description": "Watched-filer headlines: effective positions, days-to-exit brackets, blind spots. No live execution model. unwind_stress has full scenario grids.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "cik": {
+                "type": "integer",
+                "description": "optional: SEC CIK of a watched filer (returns that filer's full FREE row instead of the all-filer headline)"
+              }
+            },
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Can the watched books exit? (free)",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "venue_concentration",
+          "title": "Depth concentration today",
+          "description": "BTC two-sided depth: HHI, effective/top venue and venue depth. Subscriber exit_desk_full adds ETH and venue failure.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Depth concentration today",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "venue_price_reconciliation",
+          "title": "Consensus price when venues disagree",
+          "description": "BTC/ETH consensus: depth/squared-half-spread weights, deepest-venue blindness, concentration, dislocations. Experimental; no execution authority.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Consensus price when venues disagree",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        }
+      ]
+    }
+  },
+  "scope": "anonymous_discovery_only_no_tools_called"
+}

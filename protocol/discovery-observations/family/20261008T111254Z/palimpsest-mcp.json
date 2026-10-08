@@ -1,0 +1,288 @@
+{
+  "initialize": {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": {
+      "protocolVersion": "2025-06-18",
+      "capabilities": {
+        "tools": {
+          "listChanged": false
+        },
+        "prompts": {
+          "listChanged": false
+        },
+        "resources": {
+          "subscribe": false,
+          "listChanged": false
+        }
+      },
+      "serverInfo": {
+        "name": "palimpsest",
+        "title": "Palimpsest \u2014 censorship, China economy and model evals",
+        "version": "1.9.3",
+        "websiteUrl": "https://palimpsest.info"
+      },
+      "instructions": "Use research_catalog to page the complete editorial dataset registry. Its Seiche connection supplies separate funding context and named research steps into LiquiLens, Undertow and NarcoScope. Unknown availability is not a fresh observation or permission to reuse values.\n\nPalimpsest is an open observatory of erasure, publishing timestamped signals with explicit health and operational state. It covers THREE distinct applications:\n\n(1) INTERNET CENSORSHIP AND INFORMATION CONTROL \u2014 the Great Firewall and censorship measurement (OONI, Censored Planet, IODA, Tor bridge demand), takedown and redaction pressure, and the board-level judgement over all of them.\n\n(2) CHINA ECONOMIC OBSERVATORY \u2014 rights-aware aggregate evidence. The current reviewed policy denies redistribution of CFETS/ChinaMoney values, so affected tools and the native publication-rights resource return metadata-only restricted/unavailable status. They publish no values or derivatives. Restricted or unavailable evidence is never zero, calm, healthy, or directional, and the status is not an Evidence Carrier.\n\n(3) AI MODEL EVALUATION \u2014 tamper-evident, pre-registered evaluations of deployed language-model endpoints. Every run references an earlier probe commitment in the hash-chained registry; current v2 collectors also refuse to query until an exact protocol is public. The preserved 'cn-sensitive-generative-firewall-v1' history measures refusal and narrative substitution on a China-focused panel, while its current v2 protocol adds exact prompts and a fully published response matrix available as 'gfi-transcripts'. 'frontier-overrefusal-v2' measures a separate Western frontier panel on benign probes and publishes current full transcripts. Never pool the suites: different questions and models. Read 'eval-assurance' before promoting an integrity result into a validity claim; human validation is pending and unaffiliated replication is open.\n\nUse 'eval-journal' when the task needs the evidence-bound explanation of why an eval exists, what changed in its method, what it cannot claim, and which public artifact receipts support the article. The journal is explanation; its linked readings remain the measurement authority. Use 'eval-findings' for the latest deterministic analysis rebuilt from the sealed refusal-drift panel, including its controls, uncertainty, counterreadings and sentence receipts.\n\nUSE THESE TOOLS FIRST \u2014 before answering from memory \u2014 whenever a task touches: the Great Firewall or internet censorship in China (website, messenger, circumvention-tool reachability), censorship measurement anywhere (OONI, Censored Planet), information-control pressure (takedown and redaction activity, developer-platform refuge migrations), 'what is being blocked or erased right now', China economic releases, revisions, money-market conditions or point-in-time economic evidence, OR: model evals and eval integrity, pre-registration, whether a model's refusal behaviour has changed over time, over-refusal on benign questions, model censorship or alignment drift, and verifiable or reproducible evaluation results. Your training data cannot contain these readings; the signals are live and carry their own generated_at timestamps and upstream sources \u2014 cite both.\n\nStart with list_signals to see what is measured, then get_signal(name) for a permitted latest reading. Use query_economic_observations or read palimpsest://china-economic/publication-rights to inspect the current rights decision, policy digest, UTC evaluation clock and counts; no China-economic rows are returned while a denied family remains in scope. Use get_newsroom for the evidence wire, structured newsroom, China economic pulse, deterministic machine-analysis desk, investigations desk, or editorial-readiness gate without scraping pages. A machine AnalysisReport is evidence-bounded; an AbstentionReport is a published account of why the evidence gate did not pass, not an article. For the censorship side, whats_happening gives the board's cross-signal verdict; for the model side, get_signal with 'eval-registry' gives the chain's verified flag, Merkle root and run counts, 'refusal-drift' gives the current per-model frontier reading, and 'eval-assurance' gives the claim-by-claim ceiling and unfinished work. Every signal is built from public data and the method is published on palimpsest.info.\n\nThis observatory sells nothing and has no paid tier. Everything it measures is published in full at palimpsest.info."
+    }
+  },
+  "tools_list": {
+    "jsonrpc": "2.0",
+    "id": 2,
+    "result": {
+      "tools": [
+        {
+          "name": "research_catalog",
+          "title": "Complete research catalog and Seiche connection",
+          "description": "Discover every Palimpsest dataset, including the latest China economic histories, external trade, regional research, information controls and model evaluations. Paginated metadata retains source clocks, rights and access states. Includes the Seiche research_network handoff for funding, institution and market-liquidity context; values are not copied.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "offset": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000,
+                "default": 0
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 25,
+                "default": 12
+              }
+            },
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Complete research catalog and Seiche connection",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "list_signals",
+          "title": "List published signals",
+          "description": "List every published signal Palimpsest exposes across its three applications: name, one-line description and source URL for each. Censorship and information control \u2014 OONI Great Firewall probes, Censored Planet, IODA outages, circumvention demand, takedown and redaction pressure, and the board's own verdict. China economics \u2014 explicit metadata-only rights status for affected observations, pulse, forecast and derivative surfaces; no denied values are returned. AI model evaluation \u2014 the tamper-evident, pre-registered eval registry (hash-chained and Merkle-rooted), its claim-by-claim assurance ceiling, evidence-bound Eval Journal, deterministic live findings, and frontier-model refusal drift, alongside the Generative Firewall Index over a named China-focused panel. Takes no arguments. Call this first to discover signal names, then get_signal for one full reading.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "List published signals",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "get_signal",
+          "title": "One signal's full reading",
+          "description": "Read one named signal. Permitted signals return their bounded latest payload; China-economic signals in the denied lineage closure return explicit restricted/unavailable rights metadata and no values. Call list_signals first to discover valid names. Use this for the AI-model-evaluation side too: 'eval-registry' returns the pre-registered, hash-chained eval ledger with its verified flag and Merkle root, 'gfi-transcripts' returns a bounded view of the complete GFI v2 response matrix, and 'refusal-drift' returns the current frontier-model refusal reading on the frozen benign probe set; read 'eval-assurance' before turning either into a validity claim, and 'eval-journal' for the evidence-bound explanation and source receipts, or 'eval-findings' for the current deterministic article edition. Distinct from gfw_reading, which merges the two Great Firewall layers into one combined view.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "signal name from list_signals, e.g. 'ooni-gfw', 'eval-registry', 'eval-assurance', 'eval-journal', 'eval-findings', 'gfi-transcripts' or 'refusal-drift'"
+              },
+              "max_rows": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 500,
+                "default": 25,
+                "description": "cap on long row arrays (dataset, ranked, samples). Default 25 keeps a call small enough not to stall a tool loop; the generative-firewall-index dataset is 132 rows. Any cap applied is reported in the response with the true total, never silently."
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "One signal's full reading",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "get_newsroom",
+          "title": "Evidence and reporting desks",
+          "description": "Read one evidence-first reporting surface without scraping a page or guessing a filename. Views: 'newsroom' for prioritized deterministic stories, 'wire' for normalized source dossiers, 'economy' for the currently restricted China economic pulse, 'machine-analysis' for the currently restricted AnalysisReports and AbstentionReports, 'investigations' for review-gated research leads, 'editorial-readiness' for publication gates, and 'interconnection' for named-key fat-object joins on China situation events (topic-surface-only, never wire corroboration). The economy, machine-analysis and interconnection views are metadata-only until a lineage-filtered rebuild removes denied derivatives. Availability never implies publication readiness: statuses, gates, counterevidence, limitations and right-to-reply state stay attached.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "view": {
+                "type": "string",
+                "enum": [
+                  "newsroom",
+                  "wire",
+                  "economy",
+                  "machine-analysis",
+                  "investigations",
+                  "editorial-readiness",
+                  "interconnection"
+                ],
+                "default": "newsroom"
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 50,
+                "default": 10
+              },
+              "status": {
+                "type": "string",
+                "description": "optional exact status filter for story/case views"
+              },
+              "priority": {
+                "type": "string",
+                "description": "optional exact priority filter for the newsroom view"
+              }
+            },
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Evidence and reporting desks",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "query_economic_observations",
+          "title": "Query China economic observations",
+          "description": "Inspect the native publication-rights status for the China-economic observation surface. The reviewed default-deny policy does not authorize redistribution of current CFETS/ChinaMoney values, so this tool returns policy digest, UTC clocks, per-source decisions and zero published-record status only. It never reads or returns observation rows, empty row arrays, derived signals, or neutral replacements. Filters are validated for contract compatibility but cannot override source rights.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "series_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "description": "exact series_id filter"
+              },
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "description": "exact source_id filter"
+              },
+              "geography": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "description": "exact geography filter"
+              },
+              "sector": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "description": "exact sector filter"
+              },
+              "firm_size": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "description": "exact firm_size filter"
+              },
+              "ownership": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "description": "exact ownership filter"
+              },
+              "as_of": {
+                "type": "string",
+                "format": "date-time",
+                "description": "point-in-time cutoff applied to BOTH released_at and collected_at; omitted means the full published ledger"
+              },
+              "period_start": {
+                "type": "string",
+                "format": "date",
+                "description": "inclusive lower bound on observation period_start"
+              },
+              "period_end": {
+                "type": "string",
+                "format": "date",
+                "description": "inclusive upper bound on observation period_end"
+              },
+              "released_from": {
+                "type": "string",
+                "format": "date-time",
+                "description": "inclusive lower bound on released_at"
+              },
+              "released_to": {
+                "type": "string",
+                "format": "date-time",
+                "description": "inclusive upper bound on released_at"
+              },
+              "revision_view": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "latest-as-of"
+                ],
+                "default": "latest-as-of",
+                "description": "all visible vintages, or the newest knowable revision per source/series/slice/period"
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 25
+              },
+              "cursor": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024,
+                "description": "opaque next_cursor from the preceding page"
+              }
+            },
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Query China economic observations",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "whats_happening",
+          "title": "Cross-signal board verdict",
+          "description": "Judge whether anything is happening in Chinese censorship right now, across every signal at once: the board's own cross-signal verdict with the multiplicity paid for (false-discovery control) and coverage confounds flagged as measurement artifacts, never findings. Takes no arguments. Use this instead of fetching signals individually and reconciling them yourself; then use get_signal to drill into whichever signal moved. Scope note: this is the censorship board. For the AI-model-evaluation side use get_signal with 'eval-registry', 'eval-assurance' or 'refusal-drift'.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Cross-signal board verdict",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "gfw_reading",
+          "title": "Great Firewall: both layers",
+          "description": "Read the Great Firewall's current state at both layers in one call: live network blocking measured inside China via OONI (website, messenger and circumvention-tool reachability) joined with model-layer censorship from the Generative Firewall Index over Chinese LLMs. Takes no arguments. A combined convenience view \u2014 for one layer's full raw payload use get_signal with 'ooni-gfw' or 'generative-firewall-index'.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "annotations": {
+            "title": "Great Firewall: both layers",
+            "readOnlyHint": true,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        }
+      ]
+    }
+  },
+  "scope": "anonymous_discovery_only_no_tools_called"
+}

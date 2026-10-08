@@ -425,6 +425,42 @@
           "type": "application/json"
         }
       ]
+    },
+    {
+      "anchor": "https://api.seiche.info/openbb",
+      "service-desc": [
+        {
+          "href": "https://api.seiche.info/openbb/openapi.json",
+          "type": "application/vnd.oai.openapi+json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://beepboop2025.github.io/financial-evidence-skills/api/",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://beepboop2025.github.io/financial-evidence-skills/agents/system.json",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.seiche.info/openbb/mcp",
+      "service-doc": [
+        {
+          "href": "https://beepboop2025.github.io/financial-evidence-skills/agents/CONNECT.md",
+          "type": "text/markdown"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://beepboop2025.github.io/financial-evidence-skills/agents/connections.json",
+          "type": "application/json"
+        }
+      ]
     }
   ]
 }

@@ -13,7 +13,7 @@
       "data": {
         "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
         "name": "io.github.beepboop2025/liquilens",
-        "title": "LiquiLens — the Failure Radar",
+        "title": "LiquiLens \u2014 the Failure Radar",
         "description": "Free bank-filing and counterparty research; cited evidence limits; public MCP needs no API key.",
         "version": "1.8.1",
         "repository": {
@@ -103,7 +103,13 @@
         "runtimeSource": "efc4f94b0f4180ae0847bed96d32805d195d368e",
         "runtimeVersion": "1.8.1",
         "registryMetadataRevision": "1.8.1",
-        "registryRepository": "https://github.com/beepboop2025/liquilens-mcp"
+        "registryRepository": "https://github.com/beepboop2025/liquilens-mcp",
+        "latestDiscoveryObservedAt": "2026-10-08T11:12:54.885875+00:00",
+        "latestDiscoveryServerVersion": "1.8.1",
+        "latestDiscoveryAdvertisedToolCount": 23,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/liquilens-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:355edb0158006d62eaf9cc0252539ee2676a7f08813ed94e94dd49020df52c41",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification."
       }
     },
     {
@@ -180,13 +186,13 @@
     },
     {
       "identifier": "urn:air:liquilens.in:mcp:seiche-hosted",
-      "displayName": "Seiche hosted MCP — dated current inventory",
+      "displayName": "Seiche hosted MCP \u2014 dated current inventory",
       "type": "application/mcp-server-card+json",
       "data": {
         "name": "io.github.beepboop2025/seiche",
-        "title": "Seiche — world-markets evidence terminal",
+        "title": "Seiche \u2014 world-markets evidence terminal",
         "description": "Public funding, market, GIFT City and gold scenario tools with source clocks and coverage limits.",
-        "version": "0.14.1",
+        "version": "0.16.2",
         "websiteUrl": "https://seiche.info/developers",
         "remotes": [
           {
@@ -195,7 +201,7 @@
           }
         ]
       },
-      "description": "Hosted MCP observed at version 0.14.1 with sixteen anonymous tools, including gift_city_context and gold_inventory_carry. Forex reference context is available through market_workbench and world_markets_context; gold carry is a caller-assumption scenario, not an executable quote. Check the native endpoint for current tools. This dated discovery observation confers no release or recovery acceptance.",
+      "description": "Hosted MCP observed at version 0.16.2 with sixteen anonymous tools, including gift_city_context and gold_inventory_carry. Forex reference context is available through market_workbench and world_markets_context; gold carry is a caller-assumption scenario, not an executable quote. Check the native endpoint for current tools. This dated discovery observation confers no release or recovery acceptance.",
       "tags": [
         "money markets",
         "GIFT City",
@@ -223,18 +229,24 @@
       "protocolVersions": [
         "2025-11-25"
       ],
-      "version": "0.14.1",
-      "updatedAt": "2026-10-04T20:12:51.863043+00:00",
+      "version": "0.16.2",
+      "updatedAt": "2026-10-08T11:12:54.886304+00:00",
       "metadata": {
         "mcpEndpoint": "https://api.seiche.info/mcp",
         "mcpDiscovery": "https://api.seiche.info/.well-known/mcp.json",
         "canonicalCatalog": "https://seiche.info/.well-known/ai-catalog.json",
         "publicToolCount": 16,
-        "observedAt": "2026-10-04T20:12:51.863043+00:00",
-        "observation": "https://liquilens.in/protocol/discovery-observations/seiche/20261004T201251Z/observation.json",
-        "observationSha256": "sha256:0bb73640aed35c170c37ed2b95c5e9112e0ee070e9a41da70769d345f34b627d",
+        "observedAt": "2026-10-08T11:12:54.886304+00:00",
+        "observation": "https://liquilens.in/protocol/discovery-observations/seiche/20261008T111254Z/observation.json",
+        "observationSha256": "sha256:d2cabb6d5ee59b2d09a9fbdd3f6fbf86a624056b616d7ee4743bc338270092ae",
         "observationScope": "Dated anonymous initialize and tools/list observation only. No tools/call was performed. This does not establish source identity, data freshness, package or archive parity, recovery, recurrence, or full-release acceptance. The native MCP endpoint is authoritative for the current inventory.",
-        "financialAuthority": "none"
+        "financialAuthority": "none",
+        "latestDiscoveryObservedAt": "2026-10-08T11:12:54.886304+00:00",
+        "latestDiscoveryServerVersion": "0.16.2",
+        "latestDiscoveryAdvertisedToolCount": 16,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/seiche-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:e12f32eeec92502b5c9fb443d8ca293b014b79277bdbd10341168156a8ea4552",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification."
       }
     },
     {
@@ -426,7 +438,13 @@
         "catalog": "https://api.seiche.info/api/v2/corpus/v1/catalog",
         "health": "https://api.seiche.info/api/v2/corpus/healthz?deep=true",
         "releaseScope": "Independent corpus 1.0.0 inventory; does not confer Seiche application recovery acceptance.",
-        "financialAuthority": "none"
+        "financialAuthority": "none",
+        "latestDiscoveryObservedAt": "2026-10-08T11:12:54.886349+00:00",
+        "latestDiscoveryServerVersion": "1.0.0",
+        "latestDiscoveryAdvertisedToolCount": 9,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/seiche-corpus-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:7e3ba63fae1e2cf2463beb776e6711a371229e32c6b3c608e42fbad003c8a6f6",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification."
       }
     },
     {
@@ -512,7 +530,13 @@
         "aiCatalogSha256": "sha256:84b091b167b12899b0ae9d932dba0bfa6fbc584e63026fc6f8de6c0b4b3e143d",
         "aiCatalogSiteCommit": "234f3870a2fe6f0c36b55a47c8df229237a4b8f8",
         "aiCatalogVerifiedAt": "2026-10-03T20:48:58.176536+00:00",
-        "aiCatalogWorkerVersion": "da159c6f-516a-4f0e-b0d6-2aaf24550147"
+        "aiCatalogWorkerVersion": "da159c6f-516a-4f0e-b0d6-2aaf24550147",
+        "latestDiscoveryObservedAt": "2026-10-08T11:12:55.967184+00:00",
+        "latestDiscoveryServerVersion": "1.13.0",
+        "latestDiscoveryAdvertisedToolCount": 16,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/undertow-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:55cf624d4c25daede67d17b2954f4183856d92dc4ce445026200dc11676a7b95",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification."
       }
     },
     {
@@ -597,7 +621,13 @@
         "nativeManifestSha256": "sha256:be115e404655aaf00b2b935881296d59809093fb5aa526317ca3aa1c7a8a8820",
         "nativeRuntimeProvenance": "Host-attested deployed source and module digest; public MCP inventory and behavior are independently checked. Publication-rights source clocks describe data, not the runtime.",
         "publicDataCatalog": "https://www.palimpsest.info/readings/public-data-catalog-latest.json",
-        "publicDataCatalogBoundary": "Per-dataset freshness and publication rights; restricted data has no public download."
+        "publicDataCatalogBoundary": "Per-dataset freshness and publication rights; restricted data has no public download.",
+        "latestDiscoveryObservedAt": "2026-10-08T11:12:55.983328+00:00",
+        "latestDiscoveryServerVersion": "1.9.3",
+        "latestDiscoveryAdvertisedToolCount": 7,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/palimpsest-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:2e8549dd44c8a6129830d20697939c5cb971c6ad34397ba5a8158d830f76e795",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification."
       }
     },
     {
@@ -715,7 +745,9 @@
         "routingUrl": "https://raw.githubusercontent.com/beepboop2025/financial-evidence-skills/22096b824ac09d47cf24d7ab1612d9a97a13c7b3/financial-evidence/references/routing.md",
         "routingSha256": "sha256:29b75f91618e264bc811584b34fb14c50b7c4f8d06f2c9e43b9c1ef6f209d37c",
         "sourceScope": "Reviewed immutable source revision; this pin does not assert a PyPI, plugin or Registry release.",
-        "evidenceBoundary": "Transport success is not evidence eligibility or Carrier verification; preserve source states, clocks, rights and gaps."
+        "evidenceBoundary": "Transport success is not evidence eligibility or Carrier verification; preserve source states, clocks, rights and gaps.",
+        "contentAlsoVerifiedInRelease": "0.1.7",
+        "releaseVerification": "https://beepboop2025.github.io/financial-evidence-skills/releases/0.1.7.json"
       },
       "capabilities": [
         "money-market",
@@ -858,7 +890,7 @@
       "data": {
         "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
         "name": "liquilens-trade-safety-gateway",
-        "title": "LiquiLens Trade Safety — read-only sandbox",
+        "title": "LiquiLens Trade Safety \u2014 read-only sandbox",
         "description": "Assess one exact proposed order against server-owned evidence and policy limits. The gateway cannot recommend, route, submit, custody, settle, or execute an order.",
         "version": "0.2.2",
         "repository": {
@@ -920,7 +952,13 @@
         "canSettle": false,
         "hasBrokerCredentials": false,
         "hasOrderSubmission": false,
-        "alpacaPaperAdapter": "source-only paper reference; not deployed in this gateway"
+        "alpacaPaperAdapter": "source-only paper reference; not deployed in this gateway",
+        "latestDiscoveryObservedAt": "2026-10-08T11:12:56.524692+00:00",
+        "latestDiscoveryServerVersion": "0.2.2",
+        "latestDiscoveryAdvertisedToolCount": 2,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/trade-safety-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:5c277bb10687245d97f1d64c8b88edfe7eb632feee61a70363a808069aa009a2",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification."
       }
     },
     {
@@ -930,7 +968,7 @@
       "data": {
         "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
         "name": "io.github.beepboop2025/riptide",
-        "title": "Riptide — public risk and event research",
+        "title": "Riptide \u2014 public risk and event research",
         "description": "Read-only paper risk evidence and policy-gated committed event research. No real orders.",
         "version": "1.3.0",
         "websiteUrl": "https://api.seiche.info/riptide/",
@@ -997,7 +1035,13 @@
         "registryUpgradeState": "published-active-latest",
         "originCatalogReleaseGate": "https://api.seiche.info/.well-known/api-catalog",
         "financialAuthority": "none",
-        "registryPublishedAt": "2026-09-06T00:00:55.939769Z"
+        "registryPublishedAt": "2026-09-06T00:00:55.939769Z",
+        "latestDiscoveryObservedAt": "2026-10-08T11:12:56.268231+00:00",
+        "latestDiscoveryServerVersion": "1.3.0",
+        "latestDiscoveryAdvertisedToolCount": 7,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/riptide-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:6288df47dfc7e479060dc7fb2dc71bb5be74bcfa78391df3c3240452a0b2a6fe",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification."
       }
     },
     {
@@ -1039,7 +1083,13 @@
         "openapi": "https://myquantdoesntspeakenglish.com/openapi.json",
         "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fmyquant-editorial/versions/2.1.1",
         "registryPublishedAt": "2026-09-06T10:51:06.808093Z",
-        "contentAuthority": "PUBLIC_EDITORIAL_ARCHIVE"
+        "contentAuthority": "PUBLIC_EDITORIAL_ARCHIVE",
+        "latestDiscoveryObservedAt": "2026-10-08T11:12:57.058026+00:00",
+        "latestDiscoveryServerVersion": "2.1.1",
+        "latestDiscoveryAdvertisedToolCount": 5,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/myquant-editorial-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:a12384d63266e038ed3ade4a8889d2e6fc9d2b0f8f517ecf18e2a977dd2ea1c3",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification."
       }
     },
     {
@@ -1077,7 +1127,13 @@
         "mcpEndpoint": "https://myquant-app.vercel.app/mcp",
         "openapi": "https://myquant-app.vercel.app/openapi.json",
         "registryVersion": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fmyquant-app/versions/2.0.0",
-        "onDeviceStateAccess": "none"
+        "onDeviceStateAccess": "none",
+        "latestDiscoveryObservedAt": "2026-10-08T11:12:57.104886+00:00",
+        "latestDiscoveryServerVersion": "2.0.0",
+        "latestDiscoveryAdvertisedToolCount": 2,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/myquant-app-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:e7629e80ebf3ebd99fa8a5cf37599f9cde9fc23a6c0fb2529d3763153a20d956",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification."
       }
     },
     {
@@ -1088,7 +1144,7 @@
         "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
         "name": "io.github.beepboop2025/narcoscope",
         "description": "Read bounded illicit-economy evidence with provenance, privacy, availability, and federation intact.",
-        "title": "NarcoScope — illicit-economy evidence atlas",
+        "title": "NarcoScope \u2014 illicit-economy evidence atlas",
         "repository": {
           "url": "https://github.com/beepboop2025/narcoscope",
           "source": "github"
@@ -1161,7 +1217,13 @@
         "registryPublicationMethod": "official-maintainer-client",
         "registryPublisherVersion": "1.8.0",
         "sourceValidationProvider": "railway-native",
-        "sourceValidationUrl": "https://railway.com/project/9c094747-8662-4ba7-8d6b-5a4fa7ca27eb/service/96649d78-59e0-4702-aa1e-20e4deabef91?id=85ed03dd-9958-47de-b1cb-5493c66fc2c8&environmentId=61489b68-9216-48b2-a755-d43e89368acd"
+        "sourceValidationUrl": "https://railway.com/project/9c094747-8662-4ba7-8d6b-5a4fa7ca27eb/service/96649d78-59e0-4702-aa1e-20e4deabef91?id=85ed03dd-9958-47de-b1cb-5493c66fc2c8&environmentId=61489b68-9216-48b2-a755-d43e89368acd",
+        "latestDiscoveryObservedAt": "2026-10-08T11:12:57.253157+00:00",
+        "latestDiscoveryServerVersion": "1.6.0",
+        "latestDiscoveryAdvertisedToolCount": 14,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/narcoscope-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:6edf2022ed21fd4b33e09232568558ab7084061c68d220e506bfe69d42819ede",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not source freshness or execution qualification."
       }
     },
     {
@@ -1223,6 +1285,118 @@
         "How do institution, funding and market-liquidity research connect?",
         "Where can investors inspect the company and product evidence?"
       ]
+    },
+    {
+      "identifier": "urn:air:liquilens.in:mcp:financial-evidence",
+      "displayName": "Financial Evidence router",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "name": "io.github.beepboop2025/financial-evidence",
+        "title": "Financial Evidence router",
+        "version": "0.1.7",
+        "description": "Three public read-only tools route topics, retrieve bounded evidence and inspect source status.",
+        "websiteUrl": "https://liquilens.in/agents/infrastructure/",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://liquilens.in/mcp/financial-evidence"
+          }
+        ]
+      },
+      "description": "Three public read-only tools route topics, retrieve bounded evidence and inspect source status.",
+      "version": "0.1.7",
+      "updatedAt": "2026-10-08T11:12:54.886166+00:00",
+      "capabilities": [
+        "financial_evidence_topics",
+        "financial_evidence_route",
+        "financial_evidence_fetch"
+      ],
+      "protocolVersions": [
+        "2025-11-25"
+      ],
+      "metadata": {
+        "authentication": "none",
+        "access": "public-read-only",
+        "publicToolCount": 3,
+        "financialAuthority": "none",
+        "mcpEndpoint": "https://liquilens.in/mcp/financial-evidence",
+        "receipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/financial-evidence-mcp.json",
+        "receiptSha256": "sha256:d60122012d4c7b73ccbffe259635563cf5a0ce51a52f48627ceabd68a09a7085",
+        "systemInterfaces": "https://beepboop2025.github.io/financial-evidence-skills/agents/system.json"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:mcp:financial-evidence-research",
+      "displayName": "Financial Evidence Research Desk",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "name": "io.github.beepboop2025/financial-evidence-workspace",
+        "title": "Financial Evidence Research Desk",
+        "version": "1.1.3",
+        "description": "Eight public read-only tools provide paginated research tables, source clocks and bounded reviews across LiquiLens, Seiche and Undertow.",
+        "websiteUrl": "https://liquilens.in/agents/infrastructure/",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://api.seiche.info/openbb/mcp"
+          }
+        ]
+      },
+      "description": "Eight public read-only tools provide paginated research tables, source clocks and bounded reviews across LiquiLens, Seiche and Undertow.",
+      "version": "1.1.3",
+      "updatedAt": "2026-10-08T11:12:54.886251+00:00",
+      "capabilities": [
+        "financial_evidence_datasets",
+        "financial_evidence_funding_review",
+        "financial_evidence_query",
+        "financial_evidence_sources",
+        "financial_evidence_route",
+        "financial_evidence_packet",
+        "financial_evidence_agent_query",
+        "financial_evidence_review"
+      ],
+      "protocolVersions": [
+        "2025-11-25"
+      ],
+      "metadata": {
+        "authentication": "none",
+        "access": "public-read-only",
+        "publicToolCount": 8,
+        "financialAuthority": "none",
+        "mcpEndpoint": "https://api.seiche.info/openbb/mcp",
+        "receipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T111254Z/research-desk-mcp.json",
+        "receiptSha256": "sha256:2f2b0741ee03a012eae805a690d31a46368054392daacc2d20c919823b4c3df0",
+        "systemInterfaces": "https://beepboop2025.github.io/financial-evidence-skills/agents/system.json"
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:local:financial-evidence-runtime",
+      "displayName": "Financial Evidence Runtime and private integration setup",
+      "type": "application/json",
+      "url": "https://beepboop2025.github.io/financial-evidence-skills/agents/system.json",
+      "description": "Customer-operated local scheduling, retained evidence, replay and recovery. The six-tool private runtime writes local state and grants no execution authority. Paper-host setup is separately authenticated and disabled by default.",
+      "version": "0.1.7",
+      "updatedAt": "2026-10-08",
+      "capabilities": [
+        "scheduled research",
+        "idempotent evidence runs",
+        "retained source clocks",
+        "replay",
+        "encrypted backup and restore"
+      ],
+      "metadata": {
+        "access": "customer-operated-local",
+        "publicRemoteEndpoint": "none",
+        "localStateWrites": true,
+        "executionAuthority": false,
+        "runtimeContractVersion": "1.0.0",
+        "runtimeToolCount": 6,
+        "operationsVersion": "1.0.3",
+        "documentation": "https://liquilens.in/agents/infrastructure/",
+        "runtimeGuide": "https://beepboop2025.github.io/financial-evidence-skills/agents/runtime.html",
+        "privatePaperHostGuide": "https://beepboop2025.github.io/financial-evidence-skills/agents/execution-setup.md",
+        "executionCapabilityCatalog": "https://beepboop2025.github.io/financial-evidence-skills/agents/execution.json"
+      }
     }
   ]
 }

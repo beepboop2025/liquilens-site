@@ -1,6 +1,6 @@
 {
   "schema": "liquidity-lab.product-card.v1",
-  "updated": "2026-10-05",
+  "updated": "2026-10-08",
   "product": {
     "name": "LiquiLens",
     "canonical_url": "https://liquilens.in/",
@@ -169,7 +169,16 @@
     "mcp": "https://api.liquilens.in/mcp",
     "telegram_bot": "https://t.me/LiquiLens_bot",
     "telegram_channel": "https://t.me/LiquidityLabDesk",
-    "authentication": "The public hosted MCP and public evidence endpoints require no token."
+    "authentication": "The public hosted MCP and public evidence endpoints require no token.",
+    "agent_infrastructure": "https://liquilens.in/agents/infrastructure/",
+    "system_interfaces": "https://beepboop2025.github.io/financial-evidence-skills/agents/system.json",
+    "financial_evidence_runtime": "https://beepboop2025.github.io/financial-evidence-skills/agents/runtime.html",
+    "financial_evidence_runtime_operations": "https://beepboop2025.github.io/financial-evidence-skills/releases/runtime-ops-1.0.3.json",
+    "private_paper_host_setup": "https://beepboop2025.github.io/financial-evidence-skills/agents/execution-setup.md",
+    "execution_capability_catalog": "https://beepboop2025.github.io/financial-evidence-skills/agents/execution.json",
+    "financial_evidence_release": "https://beepboop2025.github.io/financial-evidence-skills/releases/0.1.7.json",
+    "financial_evidence_research_mcp": "https://api.seiche.info/openbb/mcp",
+    "financial_evidence_research_openapi": "https://api.seiche.info/openbb/openapi.json"
   },
   "siblings": [
     {
@@ -248,8 +257,8 @@
       "observed_runtime_archive_signed_tag_object": "8395a96c02bf9a539f2f4a1d262a2a44988b2253",
       "observed_runtime_archive_checked_at": "2026-10-01T07:09:43.050229+00:00",
       "observed_hosted_mcp": {
-        "version": "0.14.1",
-        "observed_at": "2026-10-04T20:12:51.863043+00:00",
+        "version": "0.16.2",
+        "observed_at": "2026-10-08T11:12:54.886304+00:00",
         "endpoint": "https://api.seiche.info/mcp",
         "tool_count": 16,
         "tool_names": [
@@ -270,8 +279,8 @@
           "oil_funding_context",
           "fx_materials_passage"
         ],
-        "observation": "https://liquilens.in/protocol/discovery-observations/seiche/20261004T201251Z/observation.json",
-        "observation_sha256": "sha256:0bb73640aed35c170c37ed2b95c5e9112e0ee070e9a41da70769d345f34b627d",
+        "observation": "https://liquilens.in/protocol/discovery-observations/seiche/20261008T111254Z/observation.json",
+        "observation_sha256": "sha256:d2cabb6d5ee59b2d09a9fbdd3f6fbf86a624056b616d7ee4743bc338270092ae",
         "scope": "Dated anonymous initialize and tools/list observation only. No tools/call was performed. This does not establish source identity, data freshness, package or archive parity, recovery, recurrence, or full-release acceptance. The native MCP endpoint is authoritative for the current inventory."
       }
     },
@@ -360,7 +369,8 @@
     ],
     "scope": "Reviewed immutable source revision; this pin does not assert a PyPI, plugin or Registry release.",
     "evidence_boundary": "Transport success is not evidence eligibility or Carrier verification; preserve source states, clocks, rights and gaps.",
-    "topic_boundary": "GIFT City and gold reuse one public GET context; forex uses the bounded world-markets forex section. No scenario auto-execution or executable price claim."
+    "topic_boundary": "GIFT City and gold reuse one public GET context; forex uses the bounded world-markets forex section. No scenario auto-execution or executable price claim.",
+    "content_also_verified_in_release": "0.1.7"
   },
   "company": {
     "name": "LiquiLens",
