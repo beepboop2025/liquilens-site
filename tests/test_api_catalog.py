@@ -15,7 +15,7 @@ CATALOG = json.loads(
 def test_api_catalog_uses_linkset_json_and_unique_https_anchors():
     assert set(CATALOG) == {"linkset"}
     linkset = CATALOG["linkset"]
-    assert len(linkset) == 22
+    assert len(linkset) == 24
     anchors = [item["anchor"] for item in linkset]
     assert len(anchors) == len(set(anchors))
     assert all(urlparse(anchor).scheme == "https" for anchor in anchors)
