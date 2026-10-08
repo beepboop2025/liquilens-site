@@ -15,7 +15,7 @@ CATALOG = json.loads(
 def test_api_catalog_uses_linkset_json_and_unique_https_anchors():
     assert set(CATALOG) == {"linkset"}
     linkset = CATALOG["linkset"]
-    assert len(linkset) == 20
+    assert len(linkset) == 22
     anchors = [item["anchor"] for item in linkset]
     assert len(anchors) == len(set(anchors))
     assert all(urlparse(anchor).scheme == "https" for anchor in anchors)
@@ -49,6 +49,7 @@ def test_catalog_covers_every_verified_remote_mcp_boundary():
     assert {
         "https://api.liquilens.in/mcp",
         "https://liquilens.in/mcp/financial-evidence",
+        "https://api.seiche.info/openbb/mcp",
         "https://trade-safety.liquilens.in/mcp",
         "https://api.seiche.info/mcp",
         "https://api.seiche.info/undertow/mcp",

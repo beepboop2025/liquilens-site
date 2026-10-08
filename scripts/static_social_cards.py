@@ -66,6 +66,13 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/agents/infrastructure/", "agent-infrastructure", "LIQUILENS / SEICHE / UNDERTOW", "EVIDENCE + AGENT WORKFLOWS",
+        "Connect public research and retain recurring evidence reviews.",
+        "INTERFACES", "PUBLIC RESEARCH / PRIVATE RUNTIME",
+        "SOURCE CLOCKS / REPLAY / VERIFIED RECOVERY", "GUIDE CUT", "2026-10-08",
+        "BOUNDED RESEARCH WORKFLOWS", "ACCEPTED RELEASES AND PUBLIC DISCOVERY",
+    ),
+    RouteDefinition(
         "/investors/", "investors", "LIQUILENS / COMPANY", "GLOBAL FINANCIAL EVIDENCE",
         "One company. Three connected financial evidence products.",
         "PRODUCT SYSTEM", "INSTITUTION / FUNDING / LIQUIDITY",

@@ -1,0 +1,72 @@
+{
+  "initialize": {
+    "id": 1,
+    "jsonrpc": "2.0",
+    "result": {
+      "capabilities": {
+        "tools": {
+          "listChanged": false
+        }
+      },
+      "instructions": "Read-only public sandbox. Live results fail closed; there is no broker preview, recommendation, order route, resize, credential, custody, trade settlement, or execution tool. Optional x402 buys access only.",
+      "protocolVersion": "2025-11-25",
+      "serverInfo": {
+        "name": "liquilens-trade-safety-gateway",
+        "title": "LiquiLens Trade Safety Gateway",
+        "version": "0.2.2"
+      }
+    }
+  },
+  "tools_list": {
+    "id": 2,
+    "jsonrpc": "2.0",
+    "result": {
+      "tools": [
+        {
+          "annotations": {
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": true,
+            "readOnlyHint": true
+          },
+          "description": "Read fixed public native Trade Safety context from Seiche and Undertow, plus conditional LiquiLens context, and issue a short-lived SHA-256-only sandbox receipt. This tool cannot recommend, preview with a broker, route, resize, custody, settle, or execute an order.",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {
+              "policy": {
+                "type": "object"
+              },
+              "request": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "request",
+              "policy"
+            ],
+            "type": "object"
+          },
+          "name": "assess_trade_safety",
+          "title": "Assess exact-order trade safety"
+        },
+        {
+          "annotations": {
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": false,
+            "readOnlyHint": true
+          },
+          "description": "Describe the static sandbox authority, fixed sources, and limits.",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {},
+            "type": "object"
+          },
+          "name": "trade_safety_capabilities",
+          "title": "Trade-safety gateway capabilities"
+        }
+      ]
+    }
+  },
+  "scope": "anonymous_discovery_only_no_tools_called"
+}

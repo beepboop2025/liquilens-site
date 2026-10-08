@@ -1,0 +1,61 @@
+{
+  "initialize": {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": {
+      "protocolVersion": "2025-11-25",
+      "capabilities": {
+        "tools": {
+          "listChanged": false
+        }
+      },
+      "serverInfo": {
+        "name": "myquant-app",
+        "title": "my quant app",
+        "version": "2.0.0",
+        "description": "Read-only discovery for the finite, offline-capable market briefing app.",
+        "websiteUrl": "https://myquant-app.vercel.app"
+      },
+      "instructions": "Use this server to discover the My Quant app and its public feed contract. Do not infer access to on-device saved stories, topic settings, or caches; those remain local to the reader."
+    }
+  },
+  "tools_list": {
+    "jsonrpc": "2.0",
+    "id": 2,
+    "result": {
+      "tools": [
+        {
+          "name": "list_capabilities",
+          "title": "Discover the My Quant app",
+          "description": "List the current briefing, feed validation, offline reading, topic controls, API, MCP, and product boundaries.",
+          "inputSchema": {
+            "type": "object",
+            "additionalProperties": false
+          },
+          "annotations": {
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "get_health",
+          "title": "Check the My Quant app public surfaces",
+          "description": "Return a non-sensitive API and MCP compatibility heartbeat without reading or changing on-device state.",
+          "inputSchema": {
+            "type": "object",
+            "additionalProperties": false
+          },
+          "annotations": {
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        }
+      ]
+    }
+  },
+  "scope": "anonymous_discovery_only_no_tools_called"
+}

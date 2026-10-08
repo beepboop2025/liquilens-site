@@ -1,0 +1,242 @@
+{
+  "initialize": {
+    "id": 1,
+    "jsonrpc": "2.0",
+    "result": {
+      "capabilities": {
+        "tools": {
+          "listChanged": false
+        }
+      },
+      "protocolVersion": "2025-03-26",
+      "serverInfo": {
+        "name": "liquilens-market-corpus",
+        "version": "1.0.0"
+      }
+    }
+  },
+  "tools_list": {
+    "id": 2,
+    "jsonrpc": "2.0",
+    "result": {
+      "tools": [
+        {
+          "description": "Summarize every registered corpus and evidence class",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {},
+            "required": [],
+            "type": "object"
+          },
+          "name": "corpus_catalog"
+        },
+        {
+          "description": "List versioned datasets with rights and product eligibility",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {
+              "acquisition_review": {
+                "type": "string"
+              },
+              "collection_kind": {
+                "type": "string"
+              },
+              "cursor": {
+                "type": "string"
+              },
+              "data_class": {
+                "type": "string"
+              },
+              "engine": {
+                "type": "string"
+              },
+              "group": {
+                "type": "string"
+              },
+              "limit": {
+                "maximum": 1000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "publication_state": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "name": "list_datasets"
+        },
+        {
+          "description": "Inspect one canonical public-index dataset without reading raw storage",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {
+              "dataset_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "dataset_id"
+            ],
+            "type": "object"
+          },
+          "name": "inspect_dataset"
+        },
+        {
+          "description": "Read bounded, revision-aware BIS observations",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {
+              "flow_id": {
+                "type": "string"
+              },
+              "limit": {
+                "maximum": 1000,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "flow_id"
+            ],
+            "type": "object"
+          },
+          "name": "bis_observations"
+        },
+        {
+          "description": "Browse bounded full-fidelity BIS records; use the flow manifest and shard URLs for complete transfer",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {
+              "cursor": {
+                "type": "string"
+              },
+              "flow_id": {
+                "type": "string"
+              },
+              "limit": {
+                "maximum": 100,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "flow_id"
+            ],
+            "type": "object"
+          },
+          "name": "bis_records"
+        },
+        {
+          "description": "Discover the complete content-addressed BIS shard inventory; binary shards remain REST downloads",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {
+              "flow_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "flow_id"
+            ],
+            "type": "object"
+          },
+          "name": "bis_flow_manifest"
+        },
+        {
+          "description": "List normalized Seiche money-market coverage",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {},
+            "required": [],
+            "type": "object"
+          },
+          "name": "seiche_markets"
+        },
+        {
+          "description": "Read bounded canonical Seiche rows after source-wide redistribution validation",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {
+              "cursor": {
+                "type": "string"
+              },
+              "event_from": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "event_to": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "instrument_id": {
+                "type": "string"
+              },
+              "knowledge_at": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "limit": {
+                "maximum": 1000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "market": {
+                "pattern": "^[A-Z0-9]+-[A-Z]{3}$",
+                "type": "string"
+              },
+              "quality": {
+                "enum": [
+                  "estimated",
+                  "provisional",
+                  "rejected",
+                  "revised",
+                  "unavailable",
+                  "verified"
+                ],
+                "type": "string"
+              },
+              "semantic_role": {
+                "type": "string"
+              },
+              "source": {
+                "description": "Exact Seiche source-adapter partition id",
+                "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$",
+                "type": "string"
+              },
+              "staleness": {
+                "enum": [
+                  "aging",
+                  "dead",
+                  "fresh",
+                  "stale",
+                  "unavailable",
+                  "unknown"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "market",
+              "source"
+            ],
+            "type": "object"
+          },
+          "name": "seiche_observations"
+        },
+        {
+          "description": "Check the corpus service and storage roots",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {},
+            "required": [],
+            "type": "object"
+          },
+          "name": "corpus_health"
+        }
+      ]
+    }
+  },
+  "scope": "anonymous_discovery_only_no_tools_called"
+}

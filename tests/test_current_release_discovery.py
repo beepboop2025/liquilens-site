@@ -148,12 +148,12 @@ def test_hosted_mcp_observation_is_bound_to_retained_responses_and_separate_from
     initialized = receipt["initialize"]["result"]
     tools = receipt["tools_list"]["result"]["tools"]
     assert observation["server_info"] == initialized["serverInfo"]
-    assert current["version"] == current["data"]["version"] == initialized["serverInfo"]["version"] == "0.14.1"
+    assert current["version"] == current["data"]["version"] == initialized["serverInfo"]["version"] == "0.16.2"
     assert observation["tool_names"] == current["capabilities"] == [tool["name"] for tool in tools]
     assert observation["tool_count"] == meta["publicToolCount"] == len(tools) == 16
     assert {"gift_city_context", "gold_inventory_carry", "market_workbench"} <= set(current["capabilities"])
     assert observation["methods"] == ["initialize", "tools/list"]
-    assert observation["observed_at"] == meta["observedAt"] == current["updatedAt"] == "2026-10-04T20:12:51.863043+00:00"
+    assert observation["observed_at"] == meta["observedAt"] == current["updatedAt"] == "2026-10-08T11:12:54.886304+00:00"
     assert current["data"]["remotes"] == [{"type": "streamable-http", "url": observation["endpoint"]}]
     assert observation["scope"] == meta["observationScope"]
     assert "native MCP endpoint is authoritative" in observation["scope"]
@@ -171,6 +171,6 @@ def test_hosted_mcp_observation_is_bound_to_retained_responses_and_separate_from
     assert hosted["observation_sha256"] == meta["observationSha256"]
     for filename in ("llms.txt", "status/index.html"):
         text = (ROOT / filename).read_text()
-        assert "Seiche 0.14.1" in text
+        assert "Seiche 0.16.2" in text
         assert observation["observed_at"] in text
         assert meta["observation"] in text
