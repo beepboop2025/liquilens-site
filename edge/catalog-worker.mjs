@@ -1,6 +1,6 @@
 import aiCatalog from "../.well-known/ai-catalog.json" with { type: "json" };
 import apiCatalog from "../.well-known/api-catalog.json" with { type: "json" };
-import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.6.json" with {
+import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.7.json" with {
   type: "json",
 };
 import financialEvidenceRouting from "../protocol/financial-evidence-routing-v0.1.6.json" with { type: "json" };

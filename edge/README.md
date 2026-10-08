@@ -24,9 +24,9 @@ Never commit the issued token or pass it through a workflow input.
 
 The MCP endpoint exposes three read-only tools for LiquiLens, Undertow, Seiche,
 and Palimpsest over current Streamable HTTP, with stateless compatibility for
-2025 clients. Its v0.1.6 identity, tool metadata, and accepted input schemas are
+2025 clients. Its v0.1.7 identity, tool metadata, and accepted input schemas are
 locked to the packaged server by
-[`protocol/financial-evidence-mcp-v0.1.6.json`](../protocol/financial-evidence-mcp-v0.1.6.json).
+[`protocol/financial-evidence-mcp-v0.1.7.json`](../protocol/financial-evidence-mcp-v0.1.7.json).
 It has no account or mutation surface and can fetch only the fixed public HTTPS
 evidence routes in the committed worker.
 

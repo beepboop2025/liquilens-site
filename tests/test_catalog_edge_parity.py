@@ -498,10 +498,10 @@ def test_mcp_receipt_decoder_accepts_one_json_or_sse_message():
         )
         == payload
     )
-    assert EXPECTED_MCP_VERSION == "0.1.6"
+    assert EXPECTED_MCP_VERSION == "0.1.7"
     assert EXPECTED_MCP_CONTRACT["serverInfo"] == {
         "name": "financial-evidence",
-        "version": "0.1.6",
+        "version": "0.1.7",
     }
     assert [tool["name"] for tool in EXPECTED_MCP_CONTRACT["tools"]] == list(
         EXPECTED_MCP_TOOLS
