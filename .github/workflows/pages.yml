@@ -76,7 +76,7 @@ jobs:
           cp .well-known/ai-catalog.json "$RUNNER_TEMP/pages-proof/.well-known/ai-catalog.json"
           cp .well-known/api-catalog.json "$RUNNER_TEMP/pages-proof/.well-known/api-catalog.json"
           cp protocol/catalog.json "$RUNNER_TEMP/pages-proof/protocol/catalog.json"
-          cp protocol/financial-evidence-mcp-v0.1.6.json "$RUNNER_TEMP/pages-proof/protocol/financial-evidence-mcp-v0.1.6.json"
+          cp protocol/financial-evidence-mcp-v0.1.7.json "$RUNNER_TEMP/pages-proof/protocol/financial-evidence-mcp-v0.1.7.json"
           cp protocol/financial-evidence-routing-v0.1.6.json "$RUNNER_TEMP/pages-proof/protocol/financial-evidence-routing-v0.1.6.json"
           cp protocol/liquilens-trade-safety-request-v1.schema.json "$RUNNER_TEMP/pages-proof/protocol/liquilens-trade-safety-request-v1.schema.json"
           cp protocol/liquilens-trade-safety-policy-v1.schema.json "$RUNNER_TEMP/pages-proof/protocol/liquilens-trade-safety-policy-v1.schema.json"

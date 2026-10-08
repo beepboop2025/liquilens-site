@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / ".well-known/ai-catalog.json"
 API_CATALOG_PATH = ROOT / ".well-known/api-catalog.json"
 PROTOCOL_CATALOG_PATH = ROOT / "protocol/catalog.json"
-MCP_CONTRACT_PATH = ROOT / "protocol/financial-evidence-mcp-v0.1.6.json"
+MCP_CONTRACT_PATH = ROOT / "protocol/financial-evidence-mcp-v0.1.7.json"
 MCP_ROUTING_PATH = ROOT / "protocol/financial-evidence-routing-v0.1.6.json"
 PAGES_TRADE_SAFETY_PATHS = (
     "protocol/liquilens-trade-safety-request-v1.schema.json",
