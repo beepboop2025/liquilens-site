@@ -147,7 +147,7 @@ The interactive demonstration at https://demo.liquilens.in requires sign-in and 
 - Terminal CLI: https://github.com/beepboop2025/liquilens-cli
 - Agent Skill for bounded product selection: https://github.com/beepboop2025/financial-evidence-skills/tree/22096b824ac09d47cf24d7ab1612d9a97a13c7b3/financial-evidence
 
-The public MCP and public evidence endpoints require no token. MCP v1.8.1 exposes 23 read-only tools and 5 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification.
+The public MCP and public evidence endpoints require no token. MCP v1.8.1 exposes 24 read-only tools and 5 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification.
 
 The hosted endpoint accepts the current MCP 2026-07-28 method-discovery contract and its declared legacy protocol versions. It publishes empty resource and resource-template catalogs explicitly rather than implying unavailable resources.
 
@@ -362,3 +362,10 @@ Machine-readable scopes: https://beepboop2025.github.io/financial-evidence-skill
 NoiseFloor 0.3.1 adds eight descriptive tools for caller-supplied market series, headline repetition, measurement coverage and statistical evidence. MCP: https://api.seiche.info/noisefloor/mcp · OpenAPI: https://api.seiche.info/noisefloor/openapi.json
 NoiseFloor collects no feeds and grants no trading authority. Client integration, market utility and predictive performance require separate validation; publication does not establish integration across every family product.
 Financial Evidence 0.1.7 exposes the public three-tool router. The hosted Research Desk remains independently versioned at 1.1.3 with eight MCP tools and REST/OpenAPI. The six-tool local Runtime contract 1.0.0 uses package 0.1.7; Runtime Operations 1.0.3 adds private monitoring, stable backup schedules and verified encrypted restore. The private paper host has authenticated REST and stdio MCP, remains disabled by default and requires current eligible evidence. Its setup and capability catalog describe the exact qualification limits. Public research endpoints do not submit orders.
+
+## Connected upgrades and institution monitoring
+
+- [Institution evidence monitor](https://liquilens.in/banking/monitoring/): Source-dated review queue across tracked institutions, including missing and overdue evidence; no scoring, credit or trading authority.
+- [Monitoring source register](https://api.liquilens.in/api/experimental/v1/banking/monitoring/watchlist): Same evidence contract as MCP tool `institution_evidence_monitor`. Counts are source responses, not a census or safety verdict.
+- [Connected product upgrades](https://liquilens.in/updates/): Monitoring, recurring research, NoiseFloor and paper rehearsal with separate evidence boundaries.
+- [Capability record](https://liquilens.in/updates/capabilities.json): Dated, source-linked capability and authority manifest.

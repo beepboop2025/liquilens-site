@@ -66,6 +66,22 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/banking/monitoring/", "institution-monitoring", "LIQUILENS / INSTITUTION REVIEW", "CHANGES AND VISIBILITY GAPS",
+        "Keep missing evidence in the institution review.",
+        "REVIEW QUEUE", "DATED DISCLOSURES / HUMAN REVIEW",
+        "SOURCE CLOCKS / OVERDUE FIELDS / ORIGINAL RECORDS", "GUIDE CUT", "2026-10-08",
+        "RESEARCH / NOT A SAFETY VERDICT", "PUBLIC INSTITUTION MONITOR",
+        signature_file="updates/capabilities.json",
+    ),
+    RouteDefinition(
+        "/updates/", "connected-upgrades", "LIQUILENS / SEICHE / UNDERTOW", "CONNECTED EVIDENCE REVIEWS",
+        "Review the institution, funding and market liquidity together.",
+        "PRODUCT CAPABILITIES", "MONITOR / RESEARCH / REHEARSE",
+        "SEPARATE SOURCE CLOCKS / PERMISSIONS / AUTHORITY", "REVIEWED", "2026-10-08",
+        "HUMAN REVIEW / EXECUTION DISABLED", "REVIEWED PRODUCT RELEASES",
+        signature_file="updates/capabilities.json",
+    ),
+    RouteDefinition(
         "/agents/infrastructure/", "agent-infrastructure", "LIQUILENS / SEICHE / UNDERTOW", "EVIDENCE + AGENT WORKFLOWS",
         "Connect public research and retain recurring evidence reviews.",
         "INTERFACES", "PUBLIC RESEARCH / PRIVATE RUNTIME",

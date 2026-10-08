@@ -281,6 +281,7 @@ def test_mcp_card_and_nested_product_line_are_current():
         "failure_radar_institution",
         "forward_odds",
         "household_credit_board",
+        "institution_evidence_monitor",
         "institution_research_coverage",
         "institution_review_packet",
         "latest_article",
@@ -301,7 +302,7 @@ def test_mcp_card_and_nested_product_line_are_current():
         "stress_evidence_pack",
     ]
     assert mcp["resourceTemplates"] == []
-    assert mcp["metadata"]["publicToolCount"] == 23
+    assert mcp["metadata"]["publicToolCount"] == 24
     assert mcp["metadata"]["articleJsonFeed"] == (
         "https://liquilens.in/articles/feed.json")
     assert "latest_article" in mcp["capabilities"]

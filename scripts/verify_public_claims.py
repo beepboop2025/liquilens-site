@@ -145,6 +145,7 @@ MCP_TOOLS = (
     "failure_radar_institution",
     "forward_odds",
     "household_credit_board",
+    "institution_evidence_monitor",
     "institution_research_coverage",
     "institution_review_packet",
     "latest_article",
