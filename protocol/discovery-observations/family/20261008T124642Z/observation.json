@@ -1,0 +1,64 @@
+{
+  "schema": "liquilens.family-discovery-observation.v1",
+  "scope": "Anonymous MCP initialize/tools-list and schema/capability/health GETs. No tools called; no market utility or adoption claim.",
+  "observations": [
+    {
+      "kind": "mcp",
+      "name": "noisefloor-031",
+      "url": "https://api.seiche.info/noisefloor/mcp",
+      "observed_at": "2026-10-08T12:46:42.981789+00:00",
+      "status": "observed",
+      "server": {
+        "name": "noisefloor",
+        "version": "0.3.1",
+        "title": "noisefloor \u2014 is this number real?",
+        "websiteUrl": "https://github.com/beepboop2025/noisefloor"
+      },
+      "protocol": "2025-06-18",
+      "tools": [
+        "ab_test",
+        "did_it_change",
+        "forecast_next",
+        "market_assessment",
+        "narrative_triage",
+        "real_or_sampling",
+        "score_forecasts",
+        "which_metrics_matter"
+      ],
+      "tool_count": 8,
+      "sha256": "ded2e812e2886754c00071c4ceee03c70d913bb47712d776ab222ae289df6827"
+    },
+    {
+      "kind": "get",
+      "name": "noisefloor-031-openapi",
+      "url": "https://api.seiche.info/noisefloor/openapi.json",
+      "observed_at": "2026-10-08T12:46:42.992687+00:00",
+      "status": "observed",
+      "http_status": 200,
+      "sha256": "13e10b4b7812339227953abf0b735126be5a2f2028f4521dd668b62daeb4db79",
+      "final_url": "https://api.seiche.info/noisefloor/openapi.json",
+      "api_version": "0.3.1",
+      "path_count": 4
+    },
+    {
+      "kind": "get",
+      "name": "noisefloor-031-capabilities",
+      "url": "https://api.seiche.info/noisefloor/v1/capabilities",
+      "observed_at": "2026-10-08T12:46:42.998287+00:00",
+      "status": "observed",
+      "http_status": 200,
+      "sha256": "4a5f9c5fea4ea390a50cccbb732dfdf7ccf69faef84db9dfa8d5c4c7c3d1e542",
+      "final_url": "https://api.seiche.info/noisefloor/v1/capabilities"
+    },
+    {
+      "kind": "get",
+      "name": "noisefloor-031-health",
+      "url": "https://api.seiche.info/noisefloor/healthz",
+      "observed_at": "2026-10-08T12:46:43.000807+00:00",
+      "status": "observed",
+      "http_status": 200,
+      "sha256": "17756915393be4138ef9551100cc2fcf0eb853a17ea643e7be02586b4a11ce1f",
+      "final_url": "https://api.seiche.info/noisefloor/healthz"
+    }
+  ]
+}

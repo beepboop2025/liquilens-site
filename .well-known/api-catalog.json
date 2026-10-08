@@ -461,6 +461,60 @@
           "type": "application/json"
         }
       ]
+    },
+    {
+      "anchor": "https://api.seiche.info/noisefloor",
+      "service-desc": [
+        {
+          "href": "https://api.seiche.info/noisefloor/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://github.com/beepboop2025/noisefloor/blob/dd887a3ddb60adb948f324ae2e645524366b660f/docs/INTEGRATIONS.md",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://api.seiche.info/noisefloor/v1/capabilities",
+          "type": "application/json"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://api.seiche.info/noisefloor/healthz",
+          "type": "application/json"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.seiche.info/noisefloor/mcp",
+      "service-desc": [
+        {
+          "href": "https://api.seiche.info/noisefloor/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://github.com/beepboop2025/noisefloor/blob/dd887a3ddb60adb948f324ae2e645524366b660f/docs/INTEGRATIONS.md",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://api.seiche.info/noisefloor/v1/capabilities",
+          "type": "application/json"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://api.seiche.info/noisefloor/healthz",
+          "type": "application/json"
+        }
+      ]
     }
   ]
 }

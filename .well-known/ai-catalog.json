@@ -1397,6 +1397,99 @@
         "privatePaperHostGuide": "https://beepboop2025.github.io/financial-evidence-skills/agents/execution-setup.md",
         "executionCapabilityCatalog": "https://beepboop2025.github.io/financial-evidence-skills/agents/execution.json"
       }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:mcp:noisefloor",
+      "displayName": "NoiseFloor market attention and evidence checks",
+      "type": "application/mcp-server-card+json",
+      "data": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+        "name": "io.github.beepboop2025/noisefloor",
+        "title": "NoiseFloor \u2014 market attention and evidence checks",
+        "description": "Offline market diagnostics, news repetition, data coverage and statistical checks for AI agents.",
+        "version": "0.3.1",
+        "repository": {
+          "url": "https://github.com/beepboop2025/noisefloor",
+          "source": "github"
+        },
+        "packages": [
+          {
+            "registryType": "pypi",
+            "identifier": "noisefloor",
+            "version": "0.3.1",
+            "transport": {
+              "type": "stdio"
+            }
+          }
+        ],
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://api.seiche.info/noisefloor/mcp"
+          }
+        ]
+      },
+      "description": "Eight descriptive tools for caller-supplied market series, headline repetition, measurement coverage and statistical evidence. Source clocks, provenance and missing visibility remain explicit; no feed collection or trading authority.",
+      "tags": [
+        "market diagnostics",
+        "news repetition",
+        "measurement coverage",
+        "statistical evidence"
+      ],
+      "capabilities": [
+        "ab_test",
+        "did_it_change",
+        "forecast_next",
+        "market_assessment",
+        "narrative_triage",
+        "real_or_sampling",
+        "score_forecasts",
+        "which_metrics_matter"
+      ],
+      "protocolVersions": [
+        "2025-06-18"
+      ],
+      "version": "0.3.1",
+      "updatedAt": "2026-10-08T12:46:42.981789+00:00",
+      "metadata": {
+        "authentication": "none",
+        "access": "public-analysis-of-caller-supplied-data",
+        "publicToolCount": 8,
+        "runtimeSource": "dd887a3ddb60adb948f324ae2e645524366b660f",
+        "runtimeVersion": "0.3.1",
+        "implementationSha256": "ea4b57f927c9e4e9a15007b4bc0b0ec18b5b3bce660b8079ab6db935d6950925",
+        "registryUrl": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fnoisefloor/versions/0.3.1",
+        "integrationGuide": "https://github.com/beepboop2025/noisefloor/blob/dd887a3ddb60adb948f324ae2e645524366b660f/docs/INTEGRATIONS.md",
+        "openapiUrl": "https://api.seiche.info/noisefloor/openapi.json",
+        "latestDiscoveryObservedAt": "2026-10-08T12:46:42.981789+00:00",
+        "latestDiscoveryServerVersion": "0.3.1",
+        "latestDiscoveryAdvertisedToolCount": 8,
+        "latestDiscoveryReceipt": "https://liquilens.in/protocol/discovery-observations/family/20261008T124642Z/noisefloor-031-mcp.json",
+        "latestDiscoveryReceiptSha256": "sha256:ded2e812e2886754c00071c4ceee03c70d913bb47712d776ab222ae289df6827",
+        "latestDiscoveryScope": "Anonymous initialize and complete tools/list only; not market validation or adoption.",
+        "executionAuthority": false,
+        "collectsMarketFeeds": false
+      }
+    },
+    {
+      "identifier": "urn:air:liquilens.in:openapi:noisefloor",
+      "displayName": "NoiseFloor market and narrative analysis API",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://api.seiche.info/noisefloor/openapi.json",
+      "description": "Descriptive market assessment and headline repetition analysis for caller-supplied inputs, plus capability and health discovery. No order submission or predictive-performance claim.",
+      "version": "0.3.1",
+      "updatedAt": "2026-10-08T12:46:42.992687+00:00",
+      "tags": [
+        "OpenAPI",
+        "market diagnostics",
+        "news repetition"
+      ],
+      "capabilities": [
+        "market_assessment",
+        "narrative_triage",
+        "capabilities",
+        "health"
+      ]
     }
   ]
 }
