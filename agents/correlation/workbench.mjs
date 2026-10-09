@@ -31,19 +31,20 @@ function showReport(body, origin) {
   $('report').textContent=JSON.stringify(body,null,2);
 }
 function clearResult(){generation++;receipt=null;$('result').hidden=true;$('empty').hidden=false;$('status').textContent='';}
+function setBusy(busy){for(const id of ['run','load-example','request','file','product'])$(id).disabled=busy;}
 function callerInput(){inputOrigin='Caller-supplied observations; declarations unverified';$('input-origin').textContent=inputOrigin;clearResult();}
 $('request').addEventListener('input',callerInput);
 $('product').addEventListener('change',()=>{$('context').textContent=CONTEXTS[$('product').value];});
 const profile=new URL(location.href).searchParams.get('product');if(Object.hasOwn(CONTEXTS,profile))$('product').value=profile;
 $('context').textContent=CONTEXTS[$('product').value];
 $('load-example').addEventListener('click',async()=>{
-  const button=$('load-example');button.disabled=true;clearResult();
-  try{const response=await fetch(`examples/${$('product').value}.json`);if(!response.ok)throw new Error('The example could not be loaded.');const request=await response.json();$('request').value=JSON.stringify(request,null,2);inputOrigin=`Synthetic ${$('product').selectedOptions[0].textContent} example`; $('input-origin').textContent=inputOrigin;$('status').textContent='Synthetic example loaded. Press Run to assess it.';}catch(error){$('status').textContent=error.message;}finally{button.disabled=false;}
+  setBusy(true);clearResult();$('status').textContent='Loading synthetic example…';
+  try{const response=await fetch(`examples/${$('product').value}.json`);if(!response.ok)throw new Error('The example could not be loaded.');const request=await response.json();$('request').value=JSON.stringify(request,null,2);inputOrigin=`Synthetic ${$('product').selectedOptions[0].textContent} example`; $('input-origin').textContent=inputOrigin;$('status').textContent='Synthetic example loaded. Press Run to assess it.';}catch(error){$('status').textContent=error.message;}finally{setBusy(false);}
 });
 $('file').addEventListener('change',async()=>{const file=$('file').files[0];if(!file)return;callerInput();try{if(file.size>MAX_BYTES)throw new Error('File exceeds the 750 KB browser limit.');const text=await file.text();parseRequest(text);$('request').value=text;}catch(error){$('request').value='';$('status').textContent=error.message;}$('file').value='';});
 $('run').addEventListener('click',async()=>{
-  clearResult();const button=$('run');button.disabled=true;
-  try{const request=parseRequest($('request').value),origin=inputOrigin,runGeneration=generation;$('status').textContent='Assessing the supplied panel…';const body=await post('/v1/spectral/assess',request);if(runGeneration!==generation)return;showReport(body,origin);receipt={schema:'noisefloor.browser-review.v1',origin,request,response:body,received_at:new Date().toISOString(),execution_authority:false};$('status').textContent='Assessment received. Review source visibility and limitations.';}catch(error){$('status').textContent=error.message;}finally{button.disabled=false;}
+  clearResult();setBusy(true);
+  try{const request=parseRequest($('request').value),origin=inputOrigin,runGeneration=generation;$('status').textContent='Assessing the supplied panel…';const body=await post('/v1/spectral/assess',request);if(runGeneration!==generation)return;showReport(body,origin);receipt={schema:'noisefloor.browser-review.v1',origin,request,response:body,received_at:new Date().toISOString(),execution_authority:false};$('status').textContent='Assessment received. Review source visibility and limitations.';}catch(error){$('status').textContent=error.message;}finally{setBusy(false);}
 });
 $('download').addEventListener('click',()=>{if(!receipt)return;const url=URL.createObjectURL(new Blob([JSON.stringify(receipt,null,2)],{type:'application/json'}));const a=element('a','');a.href=url;a.download='noisefloor-review.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 $('simulate').addEventListener('click',async()=>{
