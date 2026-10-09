@@ -1,0 +1,6 @@
+{
+  "name": "noisefloor",
+  "version": "0.4.0",
+  "transport": "streamable-http",
+  "implementation_sha256": "a66b2ce516e5d9fb257e348c183cb489ac25b7c2a1af1cb30663f007a44159fa"
+}
