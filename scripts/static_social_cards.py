@@ -66,6 +66,14 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/agents/correlation/", "correlation-research", "LIQUILENS / NOISEFLOOR 0.4.0", "SHARED-FACTOR RESEARCH",
+        "How much moves together?",
+        "CORRELATION REVIEW", "SPECTRA / CONCENTRATION",
+        "ROLLING WINDOWS / SOURCE GAPS / DYSON REFERENCE", "RELEASE", "2026-10-09",
+        "DESCRIPTIVE RESEARCH / SYNTHETIC EXAMPLES", "NOISEFLOOR 0.4.0",
+        signature_file="updates/capabilities.json",
+    ),
+    RouteDefinition(
         "/banking/monitoring/", "institution-monitoring", "LIQUILENS / INSTITUTION REVIEW", "CHANGES AND VISIBILITY GAPS",
         "Keep missing evidence in the institution review.",
         "REVIEW QUEUE", "DATED DISCLOSURES / HUMAN REVIEW",

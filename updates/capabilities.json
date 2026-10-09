@@ -1,6 +1,6 @@
 {
   "schema": "liquilens.connected-upgrades.v1",
-  "reviewed_on": "2026-10-08",
+  "reviewed_on": "2026-10-09",
   "title": "A connected review, from evidence to follow-up",
   "description": "Review the institution, check funding conditions, inspect market liquidity, then retain the evidence for the next review.",
   "products": [
@@ -43,13 +43,13 @@
     },
     {
       "id": "noisefloor",
-      "title": "Inspect changes before interpreting them",
-      "description": "Use NoiseFloor 0.3.1 to examine caller-supplied market series and headlines. Preserve measure identity, source restrictions and gaps.",
-      "action": "Connect NoiseFloor",
-      "url": "https://liquilens.in/agents/infrastructure/#noisefloor",
+      "title": "Inspect what moves together",
+      "description": "Use NoiseFloor 0.4.0 to inspect shared-factor concentration and rolling correlations. Explore a separate synthetic Dyson reference and retain source restrictions and gaps.",
+      "action": "Open correlation workbench",
+      "url": "https://liquilens.in/agents/correlation/",
       "state": "Available for caller-supplied evidence",
       "boundary": "Noise analysis supplies research context. It does not grant feed rights, validate predictions or authorize a trade.",
-      "source": "https://github.com/beepboop2025/noisefloor/commit/dd887a3ddb60adb948f324ae2e645524366b660f"
+      "source": "https://github.com/beepboop2025/noisefloor/commit/18e7290a022c7cba0d1e5e417a4a467cccfaa7a0"
     },
     {
       "id": "execution-workbench",

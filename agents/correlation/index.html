@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://api.seiche.info; object-src 'none'; base-uri 'self'; form-action 'none'">
+<title>Correlation research workbench | NoiseFloor · LiquiLens</title>
+<meta name="description" content="Inspect shared-factor concentration, correlation eigenvalues and rolling changes with NoiseFloor. Bring permitted observations or explore clearly synthetic product examples.">
+<link rel="canonical" href="https://liquilens.in/agents/correlation/">
+<link rel="stylesheet" href="workbench.css"><link rel="icon" href="/og.png">
+<!-- SOCIAL-CARD:START -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LiquiLens">
+<meta property="og:url" content="https://liquilens.in/agents/correlation/">
+<meta property="og:title" content="How much moves together?">
+<meta property="og:description" content="Inspect shared-factor concentration, correlation eigenvalues and rolling changes with NoiseFloor. Bring permitted observations or explore clearly synthetic product examples.">
+<meta property="og:image" content="https://liquilens.in/agents/correlation/share.png?v=441bda0432f4fcbe">
+<meta property="og:image:secure_url" content="https://liquilens.in/agents/correlation/share.png?v=441bda0432f4fcbe">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LiquiLens route card for SHARED-FACTOR RESEARCH: How much moves together? CORRELATION REVIEW: SPECTRA / CONCENTRATION. ROLLING WINDOWS / SOURCE GAPS / DYSON REFERENCE. RELEASE 2026-10-09; status DESCRIPTIVE RESEARCH / SYNTHETIC EXAMPLES.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How much moves together?">
+<meta name="twitter:description" content="Inspect shared-factor concentration, correlation eigenvalues and rolling changes with NoiseFloor. Bring permitted observations or explore clearly synthetic product examples.">
+<meta name="twitter:image" content="https://liquilens.in/agents/correlation/share.png?v=441bda0432f4fcbe">
+<meta name="twitter:image:alt" content="LiquiLens route card for SHARED-FACTOR RESEARCH: How much moves together? CORRELATION REVIEW: SPECTRA / CONCENTRATION. ROLLING WINDOWS / SOURCE GAPS / DYSON REFERENCE. RELEASE 2026-10-09; status DESCRIPTIVE RESEARCH / SYNTHETIC EXAMPLES.">
+<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/agents/correlation/#social-card","url":"https://liquilens.in/agents/correlation/","image":"https://liquilens.in/agents/correlation/share.png?v=441bda0432f4fcbe","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/agents/correlation/share.png?v=441bda0432f4fcbe","width":1200,"height":630,"caption":"LiquiLens route card for SHARED-FACTOR RESEARCH: How much moves together? CORRELATION REVIEW: SPECTRA / CONCENTRATION. ROLLING WINDOWS / SOURCE GAPS / DYSON REFERENCE. RELEASE 2026-10-09; status DESCRIPTIVE RESEARCH / SYNTHETIC EXAMPLES."}}</script>
+<!-- SOCIAL-CARD:END -->
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="/">LiquiLens <span>/ NoiseFloor</span></a><nav aria-label="Products"><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a><a href="/agents/infrastructure/">API &amp; agents</a></nav></header>
+<main id="main">
+<p class="eyebrow">NoiseFloor 0.4.0 · research tools</p>
+<h1>How much moves together?</h1>
+<p class="intro">Explore the common structure in a panel of observations. Inspect concentration, correlation eigenvalues and changes across windows, while keeping source dates and gaps in view.</p>
+<div class="workflow"><a href="#panel">01 / Assess a panel</a><a href="#dyson">02 / Explore Dyson motion</a><a href="#connect">03 / Connect your workflow</a></div>
+<noscript><p>This workbench needs JavaScript. The <a href="https://api.seiche.info/noisefloor/openapi.json">REST API</a> and <a href="https://github.com/beepboop2025/noisefloor/blob/v0.4.0/docs/SPECTRAL_RISK.md">Python guide</a> expose the same diagnostics.</p></noscript>
+<section id="panel"><div class="section-head"><p class="eyebrow">01 / Comparable observations</p><h2>Assess a correlation panel</h2></div>
+<div class="workspace"><div class="input-panel">
+<label for="product">Research context</label><select id="product"><option value="liquilens">LiquiLens · peer funding spreads</option><option value="seiche">Seiche · funding benchmarks</option><option value="undertow">Undertow · venue liquidity</option><option value="riptide">Riptide · scenario factors</option><option value="trading_agents">Trading agents · strategy returns</option><option value="palimpsest">Palimpsest · source coverage</option></select>
+<p id="context" class="muted"></p><button id="load-example" type="button" class="secondary">Load synthetic example</button>
+<p id="input-origin" class="label">No observations loaded</p>
+<label for="request">NoiseFloor request JSON</label><textarea id="request" rows="13" spellcheck="false" placeholder='{"as_of":"…","series":[…],"policy":{"window_points":60}}'></textarea>
+<label class="file-label" for="file">Or open a JSON file <input id="file" type="file" accept=".json,application/json"></label>
+<p class="muted">Run sends this JSON to the public NoiseFloor API. Use permitted, non-confidential observations; run the Python package locally for private data. No request is sent until you press Run.</p>
+<button id="run" type="button">Run assessment</button><p id="status" role="status" aria-live="polite"></p>
+</div><div class="result-panel"><div id="empty" class="empty"><span>Σ</span><h3>Start with a comparable panel</h3><p>The examples construct a stronger shared factor in the second window. They demonstrate the tools and do not contain live product observations.</p></div>
+<div id="result" hidden><p id="result-origin" class="eyebrow"></p><h3 id="result-status"></h3><p id="result-clock" class="muted"></p><ul id="reasons"></ul><div id="metrics" class="metrics"></div><div id="spectrum"></div><div class="table-wrap"><table id="windows"><caption>Rolling concentration</caption><thead><tr><th>Window end</th><th>Intervals</th><th>Leading share</th><th>Effective rank</th></tr></thead><tbody></tbody></table></div><details><summary>Sources, transforms and visibility</summary><div id="sources"></div></details><details><summary>Full report, including experimental correlation candidate</summary><pre id="report"></pre></details><button id="download" type="button" class="secondary">Download request and report</button></div>
+</div></div>
+<p class="boundary">The Marchenko–Pastur band is an asymptotic independent-data reference, not a significance test. An outlier needs review; an in-band mode is not proven noise. The correlation-cleaning candidate needs held-out evaluation. These diagnostics do not authorize trades or determine creditworthiness.</p>
+</section>
+<section id="dyson"><div class="section-head"><p class="eyebrow">02 / Synthetic reference</p><h2>Watch eigenvalues evolve</h2></div><p>Dyson Brownian motion emerges from a randomly evolving symmetric matrix. This seeded illustration samples ordered eigenvalues. It is separate from your panel: it is not fitted to markets, and negative eigenvalues are possible because this is not a covariance model.</p><div class="controls"><label for="dimension">Matrix dimension <select id="dimension"><option>4</option><option selected>6</option><option>8</option><option>12</option><option>16</option></select></label><label for="seed">Seed <input id="seed" type="number" min="0" max="4294967295" value="6117" step="1"></label><button id="simulate" type="button">Run synthetic simulation</button></div><p id="dyson-status" role="status" aria-live="polite"></p><div id="dyson-chart"></div><details id="dyson-detail" hidden><summary>Simulation parameters and full path</summary><pre id="dyson-report"></pre></details></section>
+<section id="connect"><p class="eyebrow">03 / The same tools in your workflow</p><h2>From a browser review to an agent tool</h2><div class="connect-grid"><article><h3>MCP</h3><code>https://api.seiche.info/noisefloor/mcp</code><p>Call <code>spectral_assessment</code> with your panel or <code>dyson_reference</code> with simulation parameters. Both return structured results.</p></article><article><h3>REST</h3><code>POST /noisefloor/v1/spectral/assess</code><p>Use the same request as this workbench. <a href="https://api.seiche.info/noisefloor/openapi.json">OpenAPI</a> · <a href="https://api.seiche.info/noisefloor/v1/capabilities">Capabilities</a></p></article><article><h3>Local Python</h3><code>pip install noisefloor==0.4.0</code><p>Zero runtime dependencies. Adapt retained Financial Evidence tables without discarding rights or knowledge clocks. <a href="https://beepboop2025.github.io/financial-evidence-skills/agents/spectral_review.py">Download the integration script</a>.</p></article></div><p><a href="https://github.com/beepboop2025/noisefloor/blob/v0.4.0/docs/SPECTRAL_RISK.md">Methods and product recipes</a> · <a href="https://beepboop2025.github.io/financial-evidence-skills/distribution/noisefloor-0.4.0.json">Release verification</a></p></section>
+</main><footer>LIQUILENS PRIVATE LIMITED · Source-aware research for human review · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></footer><script type="module" src="workbench.mjs"></script></body></html>
