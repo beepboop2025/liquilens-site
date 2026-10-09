@@ -1,0 +1,118 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-09-sambandh-finserve-s-funding-flag-was-an-early-warning-not-a-verdict",
+  "product": "liquilens",
+  "slug": "2026-10-09-sambandh-finserve-s-funding-flag-was-an-early-warning-not-a-verdict",
+  "date": "2026-10-09",
+  "article_type": "historical_replay",
+  "topic": "sambandh-finserve",
+  "headline": "Sambandh Finserve’s funding flag was an early warning, not a verdict",
+  "dek": "The replay finds a disclosed wholesale-leverage vulnerability well before Sambandh Finserve’s default. That is evidence of potential refinancing fragility, not proof that the screen forecast, caused, or explained the outcome.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-09-sambandh-finserve-s-funding-flag-was-an-early-warning-not-a-verdict/",
+  "published_at": "2026-10-09T11:18:57Z",
+  "evidence_as_of": "2026-10-09",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "sambandh-finserve",
+    "name": "Sambandh Finserve",
+    "inst_type": "mfi",
+    "default_date": "2020-10-13",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "sambandh-finserve",
+      "inst_type": "mfi",
+      "default_date": "2020-10-13",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "sambandh-finserve",
+      "inst_type": "mfi",
+      "scoreable": true,
+      "first_signal": {
+        "period_end": "2016-03-31",
+        "index": 78.7,
+        "knowledge_time_proxy": "2016-05-30",
+        "band": "fragile",
+        "flags": [
+          "wholesale leverage 8.51x >= 7x"
+        ]
+      },
+      "lead_months": 52
+    }
+  },
+  "word_count": 1425,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:ca32aab219c1c2f9aae4cc706d3989e44d78440525231a3fb4e508e92b6189ea",
+    "memory_fingerprint": "sha256:a6708f404cda2ffe4838d437c6dc718f458ba7131ddaa6c43a7ce42dcc15494c",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 2,
+    "dossier_sha256": "b7fc3766194ab423a1112ddd8ca967a192b6ed747bdab68a58ebfe9b714ae450",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "not_a_credit_rating",
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Reframed the funding flag as a filing-period signal rather than a causal or predictive finding.",
+      "Separated filing availability, market-layer authority, and model-derived validation metrics.",
+      "Retained fraud masking, PCA missing-data, stale-exclusion, and construction-PIT eligibility limits.",
+      "Added the strongest falsification route and required product-boundary distinctions."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:ca32aab219c1c2f9aae4cc706d3989e44d78440525231a3fb4e508e92b6189ea",
+      "memory_fingerprint": "sha256:a6708f404cda2ffe4838d437c6dc718f458ba7131ddaa6c43a7ce42dcc15494c",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
