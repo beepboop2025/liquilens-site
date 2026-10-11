@@ -51,7 +51,7 @@ export function project(task, data) {
     return {state: text(data.status), title: text(data.name), note: "Amounts below are the filing’s disclosed components. An arithmetic reconciliation does not independently verify the filing.",
       facts: [["Reporting period ends", text(data.period_end)], ["Available to this service", text(data.available_at)], ["Gross NPA ratio", number(m.gnpa_pct?.value, "%")], ["Net NPA ratio", number(m.nnpa_pct?.value, "%")]],
       details: [["Opening gross NPAs", number(n.opening_gnpa)], ["New additions", number(n.additions)], ["Cash recoveries", number(reductions.cash_recoveries)], ["Upgrades", number(reductions.upgrades)], ["Write-offs", number(reductions.write_offs)], ["Closing gross NPAs", number(n.closing_gnpa)], ["Reported amount unit", text(n.amount_unit)], ["Reconciliation status", text(n.status)]],
-      limits: [...list(data.interpretation_limits), ...list(data.comparability_notes)].filter(x => typeof x === "string"), sources: list(data.sources).filter(safeUrl)};
+      limits: [...new Set([...list(data.interpretation_limits), ...list(data.comparability_notes)].filter(x => typeof x === "string"))], sources: list(data.sources).filter(safeUrl)};
   }
   if (task === "funding") {
     if (data.schema !== "seiche.public.v2") throw new Error("The funding response did not match the expected contract.");
