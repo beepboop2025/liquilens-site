@@ -333,6 +333,18 @@ def test_world_economy_card_uses_the_catalog_revision_date():
     assert route.clock == catalog["dateModified"]
 
 
+def test_social_title_keeps_line_breaks_and_inline_branding_readable():
+    assert static_social_cards._social_title(
+        '<h1>Start with a question.<br>See the evidence.</h1>'
+    ) == 'Start with a question. See the evidence.'
+    assert static_social_cards._social_title(
+        '<h1>Bank research.<BR />With the record in view.</h1>'
+    ) == 'Bank research. With the record in view.'
+    assert static_social_cards._social_title(
+        '<h1>Liqui<span>Lens</span> &amp; source dates</h1>'
+    ) == 'LiquiLens & source dates'
+
+
 def test_static_card_builder_is_current_and_preserves_reviewed_investigation():
     assert static_social_cards.refresh(check=True) == []
     investigation = (
