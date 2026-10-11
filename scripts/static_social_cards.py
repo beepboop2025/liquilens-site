@@ -430,6 +430,8 @@ def _image_path(route: str) -> pathlib.Path:
 
 
 def _text_content(value: str) -> str:
+    # A visual line break separates words; inline branding spans do not.
+    value = re.sub(r"<br\b[^>]*>", " ", value, flags=re.I)
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", value)).strip()
 
 

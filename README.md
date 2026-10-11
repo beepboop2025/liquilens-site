@@ -11,7 +11,7 @@ claude mcp add --transport http seiche https://api.seiche.info/mcp
 claude mcp add --transport http undertow https://api.seiche.info/undertow/mcp
 ```
 
-**Try this first:** What changed in ESAF Small Finance Bank's NPAs? Cite the filing, reporting period and missing disclosures.
+**Try this first:** What changed in Cosmos Co-operative Bank's NPAs? Cite the filing, reporting period and missing disclosures.
 
 [Try it in your browser](https://liquilens.in/start/?task=bank) ·
 [Cursor configuration](https://liquilens.in/agents/cursor.json) ·
