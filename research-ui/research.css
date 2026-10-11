@@ -67,8 +67,9 @@ html.research-interface main .step::after { background: var(--research-bg); }
 .research-tabs a { display: block; padding: 13px 1px; color: var(--research-muted); border-bottom: 2px solid transparent; text-decoration: none; font-size: 13px; white-space: nowrap; }
 .research-tabs a[aria-current="page"] { color: var(--research-accent); border-bottom-color: var(--research-accent); }
 .research-tabs a:hover { color: var(--research-text); }
-.research-skip { position: fixed; top: -80px; left: 20px; z-index: 200; color: var(--research-bg); background: var(--research-accent); padding: 12px 20px; }
-.research-skip:focus { top: 12px; }
+a.research-skip { position: fixed; top: -80px; left: 20px; z-index: 200; color: var(--research-bg); background: var(--research-accent); padding: 12px 20px; }
+a.research-skip:hover, a.research-skip:focus { color: var(--research-bg); }
+a.research-skip:focus { top: 12px; }
 .research-header :focus-visible, .research-page :focus-visible, .research-app :focus-visible { outline: 2px solid var(--research-accent); outline-offset: 4px; }
 .research-page { max-width: 1400px; margin: 0 auto; padding: 42px 32px 64px; }
 .research-intro { display: grid; grid-template-columns: minmax(0,1fr) minmax(250px,360px); align-items: end; gap: 40px; margin: 0 0 30px; }
