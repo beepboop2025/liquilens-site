@@ -1,5 +1,27 @@
 # LiquiLens public site
 
+## Connect and ask one question
+
+Hosted Streamable HTTP MCP; no local server or API key for public read-only tools.
+Add the products you need to Claude Code:
+
+```sh
+claude mcp add --transport http liquilens https://api.liquilens.in/mcp
+claude mcp add --transport http seiche https://api.seiche.info/mcp
+claude mcp add --transport http undertow https://api.seiche.info/undertow/mcp
+```
+
+**Try this first:** What changed in ESAF Small Finance Bank's NPAs? Cite the filing, reporting period and missing disclosures.
+
+[Try it in your browser](https://liquilens.in/start/?task=bank) ·
+[Cursor configuration](https://liquilens.in/agents/cursor.json) ·
+[Codex commands](https://liquilens.in/agents/codex.txt) ·
+[Free three-product starter kit and skill](https://liquilens.in/agents/#connect)
+
+For a connected review, ask for institution evidence → funding context → BTC
+exit estimates, with each source date, coverage gap and limitation kept separate.
+Client/model costs and fair-use limits may apply. Research calls do not execute trades.
+
 India bank and NBFC risk research from public filings. Live board: [liquilens.in](https://liquilens.in/).
 
 [Dated answers to common research questions](https://liquilens.in/questions/) explain the numbers, source dates and limits.
