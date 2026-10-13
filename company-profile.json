@@ -1,6 +1,6 @@
 {
   "schema": "liquilens.company-profile.v1",
-  "updated": "2026-10-05",
+  "updated": "2026-10-13",
   "canonical_url": "https://liquilens.in/company-profile.json",
   "company": {
     "name": "LiquiLens",
@@ -27,6 +27,7 @@
     "initial_commercial_focus": "Repeatable institution monitoring and liquidity review for treasury, credit and research teams, starting with existing India and USD evidence.",
     "expansion": "Additional jurisdictions and enterprise integrations are expansion opportunities, subject to source rights, local definitions and validation."
   },
+  "connection_policy": "The mcp fields are the recommended central hosted connections for public read-only tools. OpenAPI links document each publisher's wider native API; they do not imply that every native route is exposed centrally. Source websites, clocks, rights and separately scoped commercial services retain their own authority.",
   "products": [
     {
       "name": "LiquiLens",
@@ -34,7 +35,7 @@
       "question": "What is changing at this bank or lender?",
       "website": "https://liquilens.in/",
       "product_card": "https://liquilens.in/product-card.json",
-      "mcp": "https://api.liquilens.in/mcp",
+      "mcp": "https://agents.seiche.info/products/liquilens/mcp",
       "openapi": "https://api.liquilens.in/api/openapi.json",
       "coverage": "India and US public institution research; European named case files. Jurisdiction-specific definitions and served evidence eligibility apply.",
       "commercial_path": "Public research and free integrations; named-list software proposals; separately scoped paid proof pilots."
@@ -45,7 +46,7 @@
       "question": "What funding environment surrounds this exposure?",
       "website": "https://seiche.info/",
       "product_card": "https://seiche.info/product-card.json",
-      "mcp": "https://api.seiche.info/mcp",
+      "mcp": "https://agents.seiche.info/products/seiche/mcp",
       "openapi": "https://api.seiche.info/api/openapi.json",
       "coverage": "Deepest institutional desk coverage is USD funding. Broader money-market, FX and economic reference coverage carries market-specific clocks, rights and availability states.",
       "commercial_path": "Free AGPL public core; potential commercial support and integration services must preserve the open-source licence."
@@ -56,7 +57,7 @@
       "question": "What does liquidity look like at this position size?",
       "website": "https://liquilens-undertow.com/",
       "product_card": "https://liquilens-undertow.com/product-card.json",
-      "mcp": "https://api.seiche.info/undertow/mcp",
+      "mcp": "https://agents.seiche.info/products/undertow/mcp",
       "openapi": "https://api.seiche.info/undertow/x402/openapi.json",
       "coverage": "Cross-market public liquidity evidence; crypto exit estimates interpolate dated quote-depth bands. Gold scenarios require caller assumptions. Market segments can remain partial or unavailable.",
       "commercial_path": "Published Alerts, Agent and Desk plans; fund subscription offer; x402 machine-call pricing. Offers are not evidence of completed sales."
