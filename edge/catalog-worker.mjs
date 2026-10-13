@@ -1,6 +1,7 @@
+import { hostedEndpoint } from "./financial-evidence-hosted.mjs";
 import aiCatalog from "../.well-known/ai-catalog.json" with { type: "json" };
 import apiCatalog from "../.well-known/api-catalog.json" with { type: "json" };
-import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.7.json" with {
+import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.8.json" with {
   type: "json",
 };
 import financialEvidenceRouting from "../protocol/financial-evidence-routing-v0.1.6.json" with { type: "json" };
@@ -326,19 +327,21 @@ async function fetchSource(
       throw new Error("source URL is outside the HTTPS allowlist");
     }
 
-    const response = await fetchImpl(source.url, {
+    const transportUrl = hostedEndpoint(source.url);
+    const response = await fetchImpl(transportUrl, {
       method: "GET",
       headers: {
         Accept: "application/json",
+        "X-Financial-Evidence-Traffic-Class": "unverified",
         "User-Agent":
           "financial-evidence-remote/0.1 (+https://github.com/beepboop2025/financial-evidence-skills)",
       },
       redirect: "manual",
       signal: sourceSignal,
       cf: {
-        cacheEverything: true,
+        cacheEverything: false,
         cacheTtlByStatus: {
-          "200-299": 30,
+          "200-299": 0,
           "300-599": 0,
         },
       },
@@ -357,12 +360,12 @@ async function fetchSource(
       );
     }
 
-    const resolvedUrl = response.url || source.url;
+    const resolvedUrl = response.url || transportUrl;
     const resolved = new URL(resolvedUrl);
     if (
       resolved.protocol !== "https:" ||
-      !ALLOWED_HOSTS.has(resolved.hostname) ||
-      resolvedUrl !== source.url
+      resolved.hostname !== "agents.seiche.info" ||
+      resolvedUrl !== transportUrl
     ) {
       await rejectUnreadResponse(
         response,
