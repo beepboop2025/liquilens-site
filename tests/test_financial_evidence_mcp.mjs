@@ -1,8 +1,9 @@
+import { hostedEndpoint } from "../edge/financial-evidence-hosted.mjs";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { createHash } from "node:crypto";
 
-import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.7.json" with {
+import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.8.json" with {
   type: "json",
 };
 import semanticFixture from "./fixtures/financial-evidence-v0.1.6-semantics.json" with { type: "json" };
@@ -139,7 +140,7 @@ test("modern discovery is stateless and advertises the same server", async () =>
   );
   assert.equal(
     payload.result._meta["io.modelcontextprotocol/serverInfo"].version,
-    "0.1.7",
+    "0.1.8",
   );
   assert.equal(payload.result.resultType, "complete");
 });
@@ -225,14 +226,33 @@ test("fetch calls are allowlisted, bounded, hashed, and kept product-separate", 
     assert.equal(
       requested.every(
         ({ options }) =>
-          options.cf.cacheEverything === true &&
-          options.cf.cacheTtlByStatus["200-299"] === 30,
+          options.cf.cacheEverything === false &&
+          options.cf.cacheTtlByStatus["200-299"] === 0,
       ),
       true,
     );
   } finally {
     globalThis.fetch = originalFetch;
   }
+});
+
+test("hosted transport preserves provenance and has no native fallback", async () => {
+  const requested = [];
+  const packet = await buildPacket(["money-market"], {
+    fetchImpl: async (url, options) => {
+      requested.push({url, options});
+      return new Response("unavailable", {status: 503});
+    },
+  });
+  assert.equal(requested.length, 1);
+  assert.equal(requested[0].url, "https://agents.seiche.info/v1/data/seiche.money_markets");
+  assert.equal(requested[0].options.headers["X-Financial-Evidence-Traffic-Class"], "unverified");
+  assert.equal(requested[0].options.redirect, "manual");
+  assert.equal(requested[0].options.cf.cacheTtlByStatus["200-299"], 0);
+  assert.equal(packet.sources[0].source_url, "https://api.seiche.info/api/v2/money-markets");
+  assert.equal(packet.sources[0].ok, false);
+  assert.match(packet.sources[0].error, /503/);
+  assert.throws(() => hostedEndpoint("https://attacker.invalid/data"), /outside/);
 });
 
 test("a body over the byte cap is explicit unavailable evidence", async () => {
@@ -351,10 +371,10 @@ test("gift-city and gold reuse one bounded GET receipt without double-charging b
       assert.equal(options.method, "GET");
       assert.equal(options.body, undefined);
       assert.equal(options.redirect, "manual");
-      return new Response(url.endsWith("/gift-city") ? gift : forex, { headers: { "Content-Type": "application/json" } });
+      return new Response(url.endsWith("/seiche.gift_city") ? gift : forex, { headers: { "Content-Type": "application/json" } });
     },
   });
-  assert.deepEqual(requested, ["https://api.seiche.info/api/v2/gift-city", "https://api.seiche.info/api/v2/world-markets?section=forex"]);
+  assert.deepEqual(requested, ["https://agents.seiche.info/v1/data/seiche.gift_city", "https://agents.seiche.info/v1/data/seiche.forex"]);
   assert.equal(packet.transport_status, "complete");
   assert.equal(packet.evidence_status, "not_evaluated");
   assert.equal(packet.sources.length, 3);
@@ -372,7 +392,7 @@ test("shared-source failures stay identical and do not trigger another request",
   const packet = await buildPacket(["gift-city", "forex", "gold"], {
     fetchImpl: async (url) => {
       requested.push(url);
-      return url.endsWith("/gift-city")
+      return url.endsWith("/seiche.gift_city")
         ? new Response(null, { status: 503 })
         : new Response('{"status":"partial","forex":{"status":"unavailable"}}', { headers: { "Content-Type": "application/json" } });
     },
@@ -410,7 +430,7 @@ test("multi-topic fetches preserve the caller's per-source byte ceiling", async 
   globalThis.fetch = async (url) => {
     requested.push(url);
     return new Response(
-      url === "https://api.seiche.info/api/v2/money-markets"
+      url === "https://agents.seiche.info/v1/data/seiche.money_markets"
         ? largeFixture
         : smallFixture,
       {
@@ -914,7 +934,7 @@ test("the server factory is lazy about network access", () => {
   assert.ok(server);
   assert.equal(calls, 0);
   assert.equal(MAX_FETCH_TOPICS, 8);
-  assert.equal(DEFAULT_SOURCE_BYTES, 1_048_576);
+  assert.equal(DEFAULT_SOURCE_BYTES, 4_194_304);
   assert.equal(MAX_SOURCE_BYTES, 4_194_304);
   assert.equal(DEFAULT_TIMEOUT_SECONDS, 10);
   assert.equal(MAX_TIMEOUT_SECONDS, 30);
@@ -970,7 +990,7 @@ test("v0.1.6 fixed routes and all eight adapters match canonical stdio fixtures"
   assert.deepEqual((await responsePayload(response)).result.structuredContent, semanticFixture.routes);
   const byUrl = new Map(semanticFixture.cases.map((row) => [row.source_url, row]));
   const packet = await buildPacket(Object.keys(semanticFixture.routes.topics), {
-    fetchImpl: async (url) => new Response(byUrl.get(url).raw_document, { headers: { "Content-Type": "application/json" } }),
+    fetchImpl: async (url) => new Response(byUrl.get(semanticFixture.cases.find(row => hostedEndpoint(row.source_url) === url)?.source_url).raw_document, { headers: { "Content-Type": "application/json" } }),
   });
   assert.equal(packet.status, "complete");
   assert.equal(packet.transport_status, packet.status);
@@ -998,7 +1018,7 @@ test("unreported or nonscalar metadata is never recursively inferred", async () 
   }
 });
 
-test("an explicit larger ceiling delivers the expanded atlas with its complete receipt", async () => {
+test("the default delivers the expanded atlas and explicit smaller ceilings are respected", async () => {
   const document = {
     schema: "seiche.global-money-market-atlas.v1",
     status: "PARTIAL",
@@ -1010,8 +1030,14 @@ test("an explicit larger ceiling delivers the expanded atlas with its complete r
   const defaultPacket = await buildPacket(["money-market"], {
     fetchImpl: async () => new Response(body, { headers: { "Content-Type": "application/json" } }),
   });
-  assert.equal(defaultPacket.transport_status, "unavailable");
-  assert.match(defaultPacket.sources[0].error, /response exceeds 1048576 bytes/);
+  assert.equal(defaultPacket.transport_status, "complete");
+  assert.deepEqual(defaultPacket.sources[0].document, document);
+  const limitedPacket = await buildPacket(["money-market"], {
+    maxBytes: 1_048_576,
+    fetchImpl: async () => new Response(body, { headers: { "Content-Type": "application/json" } }),
+  });
+  assert.equal(limitedPacket.transport_status, "unavailable");
+  assert.match(limitedPacket.sources[0].error, /response exceeds 1048576 bytes/);
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async () => new Response(body, { headers: { "Content-Type": "application/json" } });
   try {
