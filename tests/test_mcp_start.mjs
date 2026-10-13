@@ -48,6 +48,7 @@ for (const task of Object.keys(TASKS)) test(`${task}: one explicit research call
     assert.equal(call.url, TASKS[task].endpoint);
     assert.equal(call.options.redirect, "error");
     assert.equal(call.options.credentials, "omit");
+    assert.equal(call.options.headers["X-Financial-Evidence-Traffic-Class"], "synthetic");
   }
 });
 

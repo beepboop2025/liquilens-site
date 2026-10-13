@@ -99,7 +99,7 @@ export async function runTask(task, {size = 100000, verification = false, fetche
   const protocol = "2025-11-25";
   const client = {name: verification ? "liquilens-start-operator-verification" : "liquilens-start-browser", version: "1.0.0"};
   const headers = {"Content-Type": "application/json", Accept: "application/json, text/event-stream", "MCP-Protocol-Version": protocol};
-  if (verification && task === "bank") headers["X-Liquilens-Traffic-Class"] = "synthetic";
+  if (verification) headers["X-Financial-Evidence-Traffic-Class"] = "synthetic";
   let sequence = 0;
   async function rpc(method, params, notification = false) {
     const id = ++sequence;
