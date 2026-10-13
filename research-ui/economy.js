@@ -1,6 +1,6 @@
 import {readJSON,element as el,link,dateOnly,dateText,finite,visibleRefresh} from './core.mjs';
 
-const API='https://api.seiche.info';
+const API='https://agents.seiche.info';
 const SERIES=[['SOFR','Overnight funding'],['DGS2','US Treasury · 2 years'],['DGS10','US Treasury · 10 years'],['INR','Indian rupee / US dollar'],['WRESBAL','Federal Reserve balances']];
 const NS='http://www.w3.org/2000/svg';
 const svgNode=(tag,attributes,text)=>{const node=document.createElementNS(NS,tag);for(const [key,value] of Object.entries(attributes))node.setAttribute(key,String(value));if(text!==undefined)node.textContent=text;return node;};
@@ -46,18 +46,18 @@ export function mountEconomy(target){
     const update=point=>{value.textContent=`${number(point.value,model.unit)} ${model.unit}`;date.textContent=`Observed ${dateText(point.date)}`;};update(model.points.at(-1));
     const figure=el('figure',undefined,'rw-chart');figure.append(plot(model,{onPoint:update}));
     const metadata=el('p',`${model.label}. ${model.cadence}. ${model.lag}. Source state: ${model.state||'not supplied'}.`,'rw-caption');
-    const source=/^[A-Za-z0-9_]+$/.test(model.remote||'')&&model.source==='fred'?`https://fred.stlouisfed.org/series/${model.remote}`:`${API}/api/series/index.json`;
-    const actions=el('div',undefined,'rw-actions');actions.append(link('Source and definition',source),link('Download source CSV',`${API}/api/series/${model.key}.csv`));chart.append(heading,tabs,reading,figure,metadata,actions,notice);
+    const source=/^[A-Za-z0-9_]+$/.test(model.remote||'')&&model.source==='fred'?`https://fred.stlouisfed.org/series/${model.remote}`:`${API}/v1/economy/series/index.json`;
+    const actions=el('div',undefined,'rw-actions');actions.append(link('Source and definition',source),link('Download source CSV',`${API}/v1/economy/series/${model.key}.csv`));chart.append(heading,tabs,reading,figure,metadata,actions,notice);
     rail.replaceChildren(el('h2','Across the economy'),el('p','Each series keeps its own reporting date and unit.','rw-caption'));
     const grid=el('div',undefined,'rw-mini-series');for(const [key,label]of SERIES.filter(([key])=>key!==selected)){const item=el('button',undefined,'rw-mini-chart');item.type='button';item.addEventListener('click',()=>{selected=key;render();});const row=models.get(key);item.disabled=!row;item.append(el('span',label));if(row){item.append(el('strong',`${number(row.points.at(-1).value,row.unit)} ${row.unit}`),el('small',dateText(row.asOf)));const figure=el('div',undefined,'rw-chart');figure.append(plot(row,{small:true}));item.append(figure);}else item.append(el('small','Source unavailable'));grid.append(item);}rail.append(grid);
   }
   async function refresh(){
     if(controller)return;controller=new AbortController();const signal=controller.signal,timer=setTimeout(()=>controller?.abort(),20000);
     try{
-      const catalog=await readJSON(`${API}/api/series/index.json`,{signal});if(catalog.schema!=='seiche.series-index.v1'||!Array.isArray(catalog.series))throw new Error('Series catalog unavailable.');
+      const catalog=await readJSON(`${API}/v1/economy/series/index.json`,{signal});if(catalog.schema!=='seiche.series-index.v1'||!Array.isArray(catalog.series))throw new Error('Series catalog unavailable.');
       let failures=0;
       // Only explicit, redistributable catalog members are requested.
-      for(let i=0;i<SERIES.length;i+=2){await Promise.all(SERIES.slice(i,i+2).map(async([key])=>{try{const entry=catalog.series.find(row=>row.mnemonic===key);if(!entry?.available||entry.csv_restricted||entry.json!==`/api/series/${key}`)throw new Error('Unavailable');const row=seriesModel(await readJSON(`${API}${entry.json}?n=120`,{signal}),entry);if(!disposed)models.set(key,row);}catch{failures++;}}));}
+      for(let i=0;i<SERIES.length;i+=2){await Promise.all(SERIES.slice(i,i+2).map(async([key])=>{try{const entry=catalog.series.find(row=>row.mnemonic===key);if(!entry?.available||entry.csv_restricted||entry.json!==`${API}/v1/economy/series/${key}`)throw new Error('Unavailable');const row=seriesModel(await readJSON(`${entry.json}?n=120`,{signal}),entry);if(!disposed)models.set(key,row);}catch{failures++;}}));}
       if(disposed)return;if(!models.has(selected))selected=models.keys().next().value||'SOFR';render();notice.textContent=failures?`${failures} series could not be refreshed. Any retained observations keep their original dates.`:`Checked ${new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'UTC'})} UTC. Hover or use arrow keys to inspect the chart.`;if(failures)notice.setAttribute('role','status');else notice.removeAttribute('role');
     }catch{if(!disposed){notice.textContent='Economic data could not be refreshed. Existing observations retain their original dates.';notice.setAttribute('role','status');}}
     finally{clearTimeout(timer);controller=null;}

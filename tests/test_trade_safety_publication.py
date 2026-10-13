@@ -232,7 +232,7 @@ def test_human_and_machine_surfaces_link_every_trade_safety_contract():
     )
 
     developers = _read("developers/index.html")
-    assert "https://trade-safety.liquilens.in/mcp" in developers
+    assert "https://agents.seiche.info/products/trade-safety/mcp" in developers
     assert "The Alpaca paper adapter is source-only" in developers
     assert 'data-event="mcp_endpoint_copied"' in developers
     assert 'data-event="openapi_opened"' in developers

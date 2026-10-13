@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var MCP_URL = "https://api.liquilens.in/mcp";
+  var MCP_URL = "https://agents.seiche.info/products/liquilens/mcp";
   var MCP_PROTOCOL_VERSION = "2026-07-28";
   var MAX_MCP_RESPONSE_BYTES = 1024 * 1024;
 
@@ -104,6 +104,9 @@
     output.dataset.state = "loading";
     output.textContent = "Calling failure_radar_board…";
     fetch(MCP_URL, {
+      credentials: "omit",
+      redirect: "error",
+      referrerPolicy: "no-referrer",
       method: "POST",
       headers: {
         "Content-Type": "application/json",

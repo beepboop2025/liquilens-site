@@ -1,15 +1,15 @@
 # Merge these entries into ~/.codex/config.toml; preserve your existing servers.
 [mcp_servers.liquilens]
-url = "https://api.liquilens.in/mcp"
+url = "https://agents.seiche.info/products/liquilens/mcp"
 
 [mcp_servers.seiche]
-url = "https://api.seiche.info/mcp"
+url = "https://agents.seiche.info/products/seiche/mcp"
 
 [mcp_servers.undertow]
-url = "https://api.seiche.info/undertow/mcp"
+url = "https://agents.seiche.info/products/undertow/mcp"
 
 [mcp_servers.palimpsest]
-url = "https://api.seiche.info/palimpsest/mcp"
+url = "https://agents.seiche.info/products/palimpsest/mcp"
 
 [mcp_servers.narcoscope]
-url = "https://www.narcoscope.com/mcp"
+url = "https://agents.seiche.info/products/narcoscope/mcp"

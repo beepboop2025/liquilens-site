@@ -24,7 +24,7 @@
       ],
       "parameters": {
         "serverTransport": "httpStreamable",
-        "endpointUrl": "https://api.liquilens.in/mcp",
+        "endpointUrl": "https://agents.seiche.info/products/liquilens/mcp",
         "authentication": "none",
         "tool": {
           "__rl": true,

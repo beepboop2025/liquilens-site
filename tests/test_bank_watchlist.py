@@ -88,7 +88,7 @@ def test_one_session_one_coverage_and_sequential_explicit_reviews():
                for _, payload, _ in transport.calls) == 1
     assert transport.review_slugs() == SLUGS
     for url, payload, headers in transport.calls[2:]:
-        assert url == "https://api.liquilens.in/mcp"
+        assert url == "https://agents.seiche.info/products/liquilens/mcp"
         assert headers["Mcp-Session-Id"] == "fixture-session"
         assert headers["MCP-Protocol-Version"] == "2025-11-25"
         if "slug" in payload["params"]["arguments"]:
@@ -194,7 +194,7 @@ def test_optional_id_and_synthetic_classification(client_id, verification):
     assert result["verification"] is verification
     assert UUID4 not in json.dumps(result)
     for url, _, headers in transport.calls:
-        assert url == "https://api.liquilens.in/mcp"
+        assert url == "https://agents.seiche.info/products/liquilens/mcp"
         if client_id is None:
             assert "X-Liquilens-Client-Id" not in headers
         else:

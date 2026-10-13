@@ -1,1 +1,1 @@
-codex mcp add seiche --url https://api.seiche.info/mcp
+codex mcp add seiche --url https://agents.seiche.info/products/seiche/mcp

@@ -2,11 +2,11 @@
   "servers": {
     "seiche": {
       "type": "http",
-      "url": "https://api.seiche.info/mcp"
+      "url": "https://agents.seiche.info/products/seiche/mcp"
     },
     "undertow": {
       "type": "http",
-      "url": "https://api.seiche.info/undertow/mcp"
+      "url": "https://agents.seiche.info/products/undertow/mcp"
     }
   }
 }

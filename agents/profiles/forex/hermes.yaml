@@ -1,5 +1,5 @@
 mcp_servers:
   seiche:
-    url: https://api.seiche.info/mcp
+    url: https://agents.seiche.info/products/seiche/mcp
     tools:
       include: ["data_health", "market_workbench", "gift_city_context"]

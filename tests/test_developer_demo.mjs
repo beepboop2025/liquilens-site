@@ -15,7 +15,7 @@ function environment({message, copyFails = false, httpFails = false} = {}) {
       addEventListener(name, fn) {this[name] = fn;}};
   }
   for (const id of ["runTool", "toolResult", "healthDot", "healthText"]) elements[id] = element();
-  const copy = element({"data-copy": "https://api.liquilens.in/mcp", "data-event": "mcp_endpoint_copied"});
+  const copy = element({"data-copy": "https://agents.seiche.info/products/liquilens/mcp", "data-event": "mcp_endpoint_copied"});
   const context = {
     document: {querySelectorAll(selector) {return selector === "[data-copy]" ? [copy] : [];},
       getElementById(id) {return elements[id];}},
@@ -25,6 +25,9 @@ function environment({message, copyFails = false, httpFails = false} = {}) {
     async fetch(url, options = {}) {
       if (url.endsWith("/api/events")) {events.push(JSON.parse(options.body)); return {};}
       if (url.includes("/api/health")) return {ok: true, json: async () => ({})};
+      assert.equal(url, "https://agents.seiche.info/products/liquilens/mcp");
+      assert.equal(options.redirect, "error");
+      assert.equal(options.credentials, "omit");
       const raw = new TextEncoder().encode(JSON.stringify(message));
       let supplied = false;
       return {ok: !httpFails, status: httpFails ? 429 : 200,

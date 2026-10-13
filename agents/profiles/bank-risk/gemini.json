@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "liquilens": {
-      "httpUrl": "https://api.liquilens.in/mcp",
+      "httpUrl": "https://agents.seiche.info/products/liquilens/mcp",
       "timeout": 30000,
       "includeTools": [
         "banking_specialisation_coverage",

@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "seiche": {
-      "httpUrl": "https://api.seiche.info/mcp",
+      "httpUrl": "https://agents.seiche.info/products/seiche/mcp",
       "timeout": 30000,
       "includeTools": [
         "data_health",
@@ -12,7 +12,7 @@
       ]
     },
     "liquilens": {
-      "httpUrl": "https://api.liquilens.in/mcp",
+      "httpUrl": "https://agents.seiche.info/products/liquilens/mcp",
       "timeout": 30000,
       "includeTools": [
         "banking_specialisation_coverage",
@@ -20,7 +20,7 @@
       ]
     },
     "undertow": {
-      "httpUrl": "https://api.seiche.info/undertow/mcp",
+      "httpUrl": "https://agents.seiche.info/products/undertow/mcp",
       "timeout": 30000,
       "includeTools": [
         "gold_cash_realisation"

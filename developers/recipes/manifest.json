@@ -12,7 +12,7 @@
   "recipes": [
     {
       "id": "bank-review",
-      "endpoint": "https://api.liquilens.in/mcp",
+      "endpoint": "https://agents.seiche.info/products/liquilens/mcp",
       "tools": [
         "banking_specialisation_coverage",
         "bank_asset_quality_review"
@@ -21,7 +21,7 @@
     },
     {
       "id": "funding-brief",
-      "endpoint": "https://api.seiche.info/mcp",
+      "endpoint": "https://agents.seiche.info/products/seiche/mcp",
       "tools": [
         "money_market_context"
       ],
@@ -29,7 +29,7 @@
     },
     {
       "id": "exit-brief",
-      "endpoint": "https://api.seiche.info/undertow/mcp",
+      "endpoint": "https://agents.seiche.info/products/undertow/mcp",
       "tools": [
         "exit_cost"
       ],
@@ -37,7 +37,7 @@
     },
     {
       "id": "connected-research",
-      "endpoint": "https://api.seiche.info/mcp",
+      "endpoint": "https://agents.seiche.info/products/seiche/mcp",
       "tools": [
         "research_network"
       ],

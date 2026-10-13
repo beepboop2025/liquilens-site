@@ -95,7 +95,7 @@ class BankRecipeTests(unittest.TestCase):
         self.assertIs(type(arguments["include_history"]), bool)
         self.assertEqual(set(arguments), {"slug", "include_history"})
         self.assertEqual((params["authentication"], params["serverTransport"]), ("none", "httpStreamable"))
-        self.assertEqual(params["endpointUrl"], "https://api.liquilens.in/mcp")
+        self.assertEqual(params["endpointUrl"], "https://agents.seiche.info/products/liquilens/mcp")
         self.assertEqual(node["typeVersion"], 1.1)  # 1.0 does not propagate tool errors.
         self.assertFalse(node.get("continueOnFail", False))
         self.assertFalse(node.get("retryOnFail", False))

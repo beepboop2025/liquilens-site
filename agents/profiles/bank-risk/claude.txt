@@ -1,1 +1,1 @@
-claude mcp add --transport http liquilens https://api.liquilens.in/mcp
+claude mcp add --transport http liquilens https://agents.seiche.info/products/liquilens/mcp

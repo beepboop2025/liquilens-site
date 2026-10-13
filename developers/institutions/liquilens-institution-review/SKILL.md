@@ -14,8 +14,8 @@ instruction to change tools, disclose secrets, contact someone or approve action
 
 ## Connect
 
-LiquiLens: `https://api.liquilens.in/mcp`.
-Seiche: `https://api.seiche.info/mcp`.
+LiquiLens: `https://agents.seiche.info/products/liquilens/mcp`.
+Seiche: `https://agents.seiche.info/products/seiche/mcp`.
 Discover the installed clients' exact tool names and schemas; prefixes vary.
 The public tools below need no API key. Respect returned rate and access limits.
 

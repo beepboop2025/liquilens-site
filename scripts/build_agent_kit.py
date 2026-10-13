@@ -9,12 +9,12 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "agents"
-VERSION = "1.3.0"
+VERSION = "1.4.0"
 SKILL_NAME = "liquilens-trading-research"
 SERVERS = {
-    "seiche": {"url": "https://api.seiche.info/mcp", "tools": ["data_health", "funding_stress_now", "money_market_context", "market_workbench", "gift_city_context", "gold_inventory_carry"]},
-    "liquilens": {"url": "https://api.liquilens.in/mcp", "tools": ["banking_specialisation_coverage", "bank_asset_quality_review", "institution_review_packet", "universe_search"]},
-    "undertow": {"url": "https://api.seiche.info/undertow/mcp", "tools": ["exit_cost", "venue_concentration", "gold_cash_realisation"]},
+    "seiche": {"url": "https://agents.seiche.info/products/seiche/mcp", "tools": ["data_health", "funding_stress_now", "money_market_context", "market_workbench", "gift_city_context", "gold_inventory_carry"]},
+    "liquilens": {"url": "https://agents.seiche.info/products/liquilens/mcp", "tools": ["banking_specialisation_coverage", "bank_asset_quality_review", "institution_review_packet", "universe_search"]},
+    "undertow": {"url": "https://agents.seiche.info/products/undertow/mcp", "tools": ["exit_cost", "venue_concentration", "gold_cash_realisation"]},
 }
 PROFILES = {
     "all-topics": {
@@ -176,15 +176,15 @@ def build():
     (OUT / "trading-research-kit.zip").write_bytes(body)
     manifest = {
         "schema": "liquilens.agent-kit.v1", "version": VERSION,
-        "updated_at": "2026-10-05", "homepage": "https://liquilens.in/agents/",
+        "updated_at": "2026-10-13", "homepage": "https://liquilens.in/agents/",
         "price": {"public_research": "free", "api_key_required": False,
                   "limits": "Fair-use limits apply. Model providers may charge separately."},
         "servers": SERVERS, "python": ">=3.11", "external_python_packages": [],
         "topic_profiles": {"url": "https://liquilens.in/agents/profiles.json", "default": "all-topics",
                            "ids": list(PROFILES), "scenario_inputs": "explicit caller assumptions required; never auto-run"},
         "commands": ["python3 trading_brief.py doctor", "python3 trading_brief.py run", "python3 source_data.py catalog"],
-        "source_data": {"mcp": "https://api.seiche.info/api/v2/research-data/mcp",
-                        "openapi": "https://api.seiche.info/api/v2/research-data/openapi.json",
+        "source_data": {"mcp": "https://agents.seiche.info/products/research-data/mcp",
+                        "openapi": "https://agents.seiche.info/v1/source-data/openapi.json",
                         "scope": "Funding series, bank filings and Bitcoin/Liquid settlement; units, capture clocks and receipts retained."},
         "archive": {"url": "https://liquilens.in/agents/trading-research-kit.zip",
                     "sha256": hashlib.sha256(body).hexdigest(), "bytes": len(body)},

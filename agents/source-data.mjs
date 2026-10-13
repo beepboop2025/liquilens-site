@@ -1,6 +1,6 @@
 import {boundedJson, configuration, safeUrl} from '../start/core.mjs';
 
-export const DATA_ROOT = 'https://api.seiche.info/api/v2/research-data';
+export const DATA_ROOT = 'https://agents.seiche.info/v1/source-data';
 const count = value => Number.isSafeInteger(value) && value >= 0 ? value.toLocaleString('en-US') : 'Not published';
 export function coverageRows(data) {
   if (data?.schema !== 'liquilens.research-data.v1' || !Array.isArray(data.datasets)) throw new Error('Unexpected source catalog.');

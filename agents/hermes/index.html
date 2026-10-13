@@ -2,7 +2,7 @@
 <html lang="en" class="family-design research-interface">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://api.liquilens.in; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://agents.seiche.info https://api.liquilens.in; object-src 'none'; base-uri 'self'; form-action 'none'">
   <title>Free financial research MCP for Hermes | LiquiLens</title>
   <meta name="description" content="Connect Hermes to free funding context, bank filing evidence and BTC market-depth estimates. Copy the tested MCP configuration and try a research task. No API key.">
   <link rel="canonical" href="https://liquilens.in/agents/hermes/">
@@ -35,15 +35,15 @@
   <header class="agent-hero"><div><p class="access">Hermes + free public research</p><h1>Give Hermes a financial research desk.</h1><p class="lede">Ask about funding conditions, a bank’s disclosed risks or the depth behind a BTC exit estimate. Get evidence with source dates and clear gaps.</p><div class="actions"><a class="primary" href="#connect">Connect Hermes</a><a href="/start/?task=funding">Try a funding question first</a></div><p class="fine">No account or API key. Public research tools are free with fair-use limits. Your agent or model provider may charge separately.</p></div><aside class="brief-preview" aria-label="Included research"><h2>Three desks. One connection kit.</h2><dl><div><dt>Seiche · 3 tools</dt><dd>Funding conditions, money markets and source health</dd></div><div><dt>LiquiLens · 4 tools</dt><dd>Institution coverage, filing evidence and review packets</dd></div><div><dt>Undertow · 2 tools</dt><dd>Published BTC exit estimates and venue concentration</dd></div></dl><p>Read-only evidence. Source dates travel with the result.</p></aside></header>
   <section id="topic-profiles"><h2>Choose a research topic</h2><p>The current default includes thirteen public tools. Use the <a href="/agents/#connect">topic selector</a> for GIFT City, reference FX, gold scenarios, money markets, covered-bank research or BTC exits. GIFT City routing serves importers and treasury desks, investors and fund managers, and banks or IFSC institutions. Gold scenarios run only on a requested task with explicit caller inputs; the connection itself makes no research call.</p><p><a href="/agents/profiles.json">Inspect all topic profiles</a> · <a href="/agents/README.md#choose-a-research-topic">Read input and coverage boundaries</a></p></section><section id="connect"><h2>Connect Hermes</h2><ol class="steps"><li><h3>Add the research servers</h3><p>Download <a data-config-download href="/agents/hermes.yaml" download>hermes.yaml</a>, or copy the configuration below. Merge its <code>mcp_servers</code> entries into <code>~/.hermes/config.yaml</code>, preserving your other settings and servers. Review the three endpoint URLs before saving.</p><details><summary>View the complete configuration</summary><pre><code id="client-configuration">mcp_servers:
   seiche:
-    url: https://api.seiche.info/mcp
+    url: https://agents.seiche.info/products/seiche/mcp
     tools:
       include: [&quot;data_health&quot;, &quot;funding_stress_now&quot;, &quot;money_market_context&quot;, &quot;market_workbench&quot;, &quot;gift_city_context&quot;, &quot;gold_inventory_carry&quot;]
   liquilens:
-    url: https://api.liquilens.in/mcp
+    url: https://agents.seiche.info/products/liquilens/mcp
     tools:
       include: [&quot;banking_specialisation_coverage&quot;, &quot;bank_asset_quality_review&quot;, &quot;institution_review_packet&quot;, &quot;universe_search&quot;]
   undertow:
-    url: https://api.seiche.info/undertow/mcp
+    url: https://agents.seiche.info/products/undertow/mcp
     tools:
       include: [&quot;exit_cost&quot;, &quot;venue_concentration&quot;, &quot;gold_cash_realisation&quot;]</code></pre></details><div class="actions"><button type="button" data-copy="client-configuration" data-action="config_copied">Copy configuration</button></div></li><li><h3>Check discovery</h3><pre><code>hermes mcp test seiche
 hermes mcp test liquilens
