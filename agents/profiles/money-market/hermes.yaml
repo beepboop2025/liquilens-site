@@ -1,5 +1,5 @@
 mcp_servers:
   seiche:
-    url: https://api.seiche.info/mcp
+    url: https://agents.seiche.info/products/seiche/mcp
     tools:
       include: ["data_health", "funding_stress_now", "money_market_context"]

@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "liquilens": {
-      "url": "https://api.liquilens.in/mcp"
+      "url": "https://agents.seiche.info/products/liquilens/mcp"
     }
   }
 }

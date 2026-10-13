@@ -82,7 +82,7 @@ def test_uncovered_bank_does_not_trigger_a_guessed_dossier():
     assert result["sections"][1]["status"] == "not_requested"
 
 
-@pytest.mark.parametrize("product", ["api.liquilens.in", "api.seiche.info"])
+@pytest.mark.parametrize("product", ["/products/liquilens/mcp", "/products/seiche/mcp"])
 def test_one_failed_service_preserves_the_other_without_retry(product):
     send, calls = transport(sources(), fail_product=product)
     result = workflow.review(institution="example-lender", transport=send)

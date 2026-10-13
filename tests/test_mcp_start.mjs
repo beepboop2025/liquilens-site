@@ -30,9 +30,9 @@ test("all supported clients produce fixed-endpoint configurations for twelve ser
   const claw = JSON.parse(configuration("openclaw", ids)).mcp.servers;
   assert.deepEqual(Object.values(claw).map(s => s.url), SERVERS.map(s => s.url));
   assert.ok(Object.values(claw).every(s => s.transport === "streamable-http"));
-  assert.match(configuration("hermes", ["liquilens"]), /^mcp_servers:\n  liquilens:\n    url: "https:\/\/api.liquilens.in\/mcp"$/);
+  assert.match(configuration("hermes", ["liquilens"]), /^mcp_servers:\n  liquilens:\n    url: "https:\/\/agents.seiche.info\/products\/liquilens\/mcp"$/);
   assert.equal(configuration("codex", ids).split("\n").length, 12);
-  assert.match(configuration("claude", ["undertow"]), /^claude mcp add --transport http undertow https:\/\/api.seiche.info\/undertow\/mcp$/);
+  assert.match(configuration("claude", ["undertow"]), /^claude mcp add --transport http undertow https:\/\/agents.seiche.info\/products\/undertow\/mcp$/);
   assert.throws(() => configuration("cursor", ["evil"]));
   assert.throws(() => configuration("unknown", ids));
 });

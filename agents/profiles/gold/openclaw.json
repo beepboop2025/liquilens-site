@@ -2,7 +2,7 @@
   "mcp": {
     "servers": {
       "seiche": {
-        "url": "https://api.seiche.info/mcp",
+        "url": "https://agents.seiche.info/products/seiche/mcp",
         "transport": "streamable-http",
         "toolFilter": {
           "include": [
@@ -13,7 +13,7 @@
         }
       },
       "undertow": {
-        "url": "https://api.seiche.info/undertow/mcp",
+        "url": "https://agents.seiche.info/products/undertow/mcp",
         "transport": "streamable-http",
         "toolFilter": {
           "include": [

@@ -2,7 +2,7 @@
   "mcp": {
     "servers": {
       "liquilens": {
-        "url": "https://api.liquilens.in/mcp",
+        "url": "https://agents.seiche.info/products/liquilens/mcp",
         "transport": "streamable-http",
         "toolFilter": {
           "include": [

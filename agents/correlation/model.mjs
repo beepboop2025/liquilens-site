@@ -1,4 +1,4 @@
-export const API = 'https://api.seiche.info/noisefloor';
+export const API = 'https://agents.seiche.info/v1/noisefloor';
 export const MAX_BYTES = 750000;
 export const CONTEXTS = {
   liquilens: 'Compare like-for-like peer funding measures. A common mode is research context, not a credit score.',
@@ -9,7 +9,7 @@ export const CONTEXTS = {
   palimpsest: 'Inspect movement in source coverage counts. Coverage correlation is not an economic risk factor or an adjustment for sampling bias.',
 };
 export function parseRequest(text) {
-  if (new TextEncoder().encode(text).length > MAX_BYTES) throw new Error('The request exceeds the 750 KB browser limit. Use a smaller panel or run locally.');
+  if (new TextEncoder().encode(text).length > MAX_BYTES) throw new Error('The request exceeds the 750 KB browser limit. Choose fewer series or a shorter observation window.');
   let request;
   try { request = JSON.parse(text); } catch { throw new Error('Enter valid JSON or load an example.'); }
   if (!request || typeof request !== 'object' || !Array.isArray(request.series) || typeof request.as_of !== 'string') throw new Error('The request needs series and an explicit as_of timestamp.');
@@ -21,11 +21,16 @@ export function assessment(body) {
   const reasons = [...(body.reasons || []), ...body.series.flatMap(s => (s.reasons || []).map(r => `${s.id}: ${r}`)), ...(body.latest?.reasons || [])];
   return {latest, reasons};
 }
-export async function post(route, request, fetcher = fetch) {
+export async function post(route, request, fetcher = fetch, {synthetic = false} = {}) {
+  if (!['/v1/spectral/assess', '/v1/research/dyson'].includes(route)) throw new Error('Unsupported hosted assessment route.');
+  const payload = JSON.stringify(request);
+  if (new TextEncoder().encode(payload).length > MAX_BYTES) throw new Error('The request exceeds the 750 KB browser limit.');
+  const headers = {'Content-Type': 'application/json'};
+  if (synthetic) headers['X-Financial-Evidence-Traffic-Class'] = 'synthetic';
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 20000);
+  const timer = setTimeout(() => controller.abort(), 120000);
   try {
-    const response = await fetcher(API + route, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(request), signal:controller.signal, credentials:'omit', referrerPolicy:'no-referrer'});
+    const response = await fetcher(API + route, {method:'POST', headers, body:payload, signal:controller.signal, credentials:'omit', redirect:'error', referrerPolicy:'no-referrer'});
     const body = await response.json();
     if (!response.ok) throw new Error(`API ${response.status}: ${typeof body.error === 'string' ? body.error : body.error?.message || 'request refused'}`);
     return body;

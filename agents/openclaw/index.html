@@ -2,7 +2,7 @@
 <html lang="en" class="family-design research-interface">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://api.liquilens.in; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://agents.seiche.info https://api.liquilens.in; object-src 'none'; base-uri 'self'; form-action 'none'">
   <title>Free financial research MCP for OpenClaw | LiquiLens</title>
   <meta name="description" content="Connect OpenClaw to free funding context, bank filing evidence and BTC market-depth estimates. Copy the tested MCP configuration and try a research task. No API key.">
   <link rel="canonical" href="https://liquilens.in/agents/openclaw/">
@@ -37,7 +37,7 @@
   &quot;mcp&quot;: {
     &quot;servers&quot;: {
       &quot;seiche&quot;: {
-        &quot;url&quot;: &quot;https://api.seiche.info/mcp&quot;,
+        &quot;url&quot;: &quot;https://agents.seiche.info/products/seiche/mcp&quot;,
         &quot;transport&quot;: &quot;streamable-http&quot;,
         &quot;toolFilter&quot;: {
           &quot;include&quot;: [
@@ -51,7 +51,7 @@
         }
       },
       &quot;liquilens&quot;: {
-        &quot;url&quot;: &quot;https://api.liquilens.in/mcp&quot;,
+        &quot;url&quot;: &quot;https://agents.seiche.info/products/liquilens/mcp&quot;,
         &quot;transport&quot;: &quot;streamable-http&quot;,
         &quot;toolFilter&quot;: {
           &quot;include&quot;: [
@@ -63,7 +63,7 @@
         }
       },
       &quot;undertow&quot;: {
-        &quot;url&quot;: &quot;https://api.seiche.info/undertow/mcp&quot;,
+        &quot;url&quot;: &quot;https://agents.seiche.info/products/undertow/mcp&quot;,
         &quot;transport&quot;: &quot;streamable-http&quot;,
         &quot;toolFilter&quot;: {
           &quot;include&quot;: [

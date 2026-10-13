@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "seiche": {
-      "url": "https://api.seiche.info/mcp"
+      "url": "https://agents.seiche.info/products/seiche/mcp"
     }
   }
 }

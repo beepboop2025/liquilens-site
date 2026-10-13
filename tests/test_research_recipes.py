@@ -200,7 +200,7 @@ def test_client_downloads_and_page_entry_are_consistent():
     codex = tomllib.loads((base / "codex-mcp.toml").read_text())
     assert cursor["mcpServers"] == codex["mcp_servers"]
     assert {row["url"] for row in cursor["mcpServers"].values()} == set(recipe.ENDPOINTS.values()) | {
-        "https://api.seiche.info/palimpsest/mcp", "https://www.narcoscope.com/mcp",
+        "https://agents.seiche.info/products/palimpsest/mcp", "https://agents.seiche.info/products/narcoscope/mcp",
     }
     manifest = json.loads((base / "manifest.json").read_text())
     assert manifest["clientInfo"] == recipe.CLIENT_INFO

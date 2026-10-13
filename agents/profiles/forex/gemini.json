@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "seiche": {
-      "httpUrl": "https://api.seiche.info/mcp",
+      "httpUrl": "https://agents.seiche.info/products/seiche/mcp",
       "timeout": 30000,
       "includeTools": [
         "data_health",

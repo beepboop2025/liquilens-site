@@ -1,1 +1,1 @@
-claude mcp add --transport http seiche https://api.seiche.info/mcp
+claude mcp add --transport http seiche https://agents.seiche.info/products/seiche/mcp

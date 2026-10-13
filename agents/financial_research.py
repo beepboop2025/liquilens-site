@@ -20,10 +20,10 @@ SUPPORTED_PROTOCOLS = (PROTOCOL, "2025-06-18", "2025-03-26")
 RESEARCH_DATA_ENDPOINT = "https://api.seiche.info/api/v2/research-data/mcp"
 CLIENT_INFO = {"name": "liquilens-research-recipes", "version": VERSION}
 ENDPOINTS = {
-    "bank-review": "https://api.liquilens.in/mcp",
-    "funding-brief": "https://api.seiche.info/mcp",
-    "connected-research": "https://api.seiche.info/mcp",
-    "exit-brief": "https://api.seiche.info/undertow/mcp",
+    "bank-review": "https://agents.seiche.info/products/liquilens/mcp",
+    "funding-brief": "https://agents.seiche.info/products/seiche/mcp",
+    "connected-research": "https://agents.seiche.info/products/seiche/mcp",
+    "exit-brief": "https://agents.seiche.info/products/undertow/mcp",
 }
 TIMEOUT = 20
 MAX_BYTES = 2 * 1024 * 1024

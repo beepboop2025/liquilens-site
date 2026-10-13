@@ -21,3 +21,17 @@ test('HTTP errors stay errors; public requests omit credentials',async()=>{
     return {ok:false,status:400,json:async()=>({error:'ineligible request'})};
   }),/400: ineligible request/);
 });
+
+test('hosted requests use reviewed routes and explicit synthetic attribution',async()=>{
+  const calls=[];
+  const fetcher=async(url,options)=>{calls.push({url,options});return {ok:true,json:async()=>({status:'synthetic'})};};
+  await post('/v1/spectral/assess',{},fetcher);
+  await post('/v1/research/dyson',{},fetcher,{synthetic:true});
+  assert.equal(calls[0].url,'https://agents.seiche.info/v1/noisefloor/v1/spectral/assess');
+  assert.equal(calls[0].options.headers['X-Financial-Evidence-Traffic-Class'],undefined);
+  assert.equal(calls[1].options.headers['X-Financial-Evidence-Traffic-Class'],'synthetic');
+  for(const {options} of calls){assert.equal(options.redirect,'error');assert.equal(options.credentials,'omit');}
+  await assert.rejects(post('/unknown',{},fetcher),/Unsupported/);
+  await assert.rejects(post('/v1/spectral/assess',{text:'x'.repeat(750001)},fetcher),/750 KB/);
+  assert.equal(calls.length,2);
+});

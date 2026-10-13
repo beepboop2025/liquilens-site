@@ -7,7 +7,7 @@
 3. Leave authentication set to **None** and transport set to **HTTP Streamable**. Use a version of n8n with **MCP Client 1.1**; version 1.0 does not reliably stop on tool-level errors.
 4. Select **Execute workflow** once, then open **Keep complete evidence** and select **JSON** in the output panel to read the nested research record.
 
-The tool is `bank_asset_quality_review` at `https://api.liquilens.in/mcp`. Its required argument is `slug`. `include_history` is optional and defaults to `false`; setting it to `true` requests the available history. An optional `as_of` date uses `YYYY-MM-DD` and must not be in the future. The workflow omits it to request the current evidence cutoff.
+The tool is `bank_asset_quality_review` at `https://agents.seiche.info/products/liquilens/mcp`. Its required argument is `slug`. `include_history` is optional and defaults to `false`; setting it to `true` requests the available history. An optional `as_of` date uses `YYYY-MM-DD` and must not be in the future. The workflow omits it to request the current evidence cutoff.
 
 The output retains the complete research record. Read `status`, `period_end`, `available_at`, `retrieved_at`, `sources`, `source_documents`, `historical_evidence`, and `interpretation_limits` with the metrics. The current cutoff is not the reporting period. Null figures remain missing. Observed, stale, historical and unavailable evidence are kept distinct. No result grants score, credit or execution authority.
 

@@ -11,7 +11,12 @@ Manifest and per-file SHA-256 digests: https://liquilens.in/agents/manifest.json
 
 ## Choose a research topic
 
-Kit 1.3.0 includes Gemini CLI connections and topic profiles at https://liquilens.in/agents/#connect and the
+Kit 1.4.0 routes the product connections through our free hosted gateway.
+The service records bounded request and outcome metadata as described in
+https://agents.seiche.info/privacy. Existing client credentials are not needed.
+Source-data and market-corpus connections retain their separate native contracts.
+
+The kit includes Gemini CLI connections and topic profiles at https://liquilens.in/agents/#connect and the
 machine-readable https://liquilens.in/agents/profiles.json. The default
 `hermes.yaml`, `openclaw.json` and `gemini.json` select thirteen public tools across the three
 servers. The same files are under `profiles/all-topics/` in the download.

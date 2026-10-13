@@ -1,13 +1,13 @@
 mcp_servers:
   seiche:
-    url: https://api.seiche.info/mcp
+    url: https://agents.seiche.info/products/seiche/mcp
     tools:
       include: ["data_health", "funding_stress_now", "money_market_context"]
   liquilens:
-    url: https://api.liquilens.in/mcp
+    url: https://agents.seiche.info/products/liquilens/mcp
     tools:
       include: ["banking_specialisation_coverage", "bank_asset_quality_review", "institution_review_packet", "universe_search"]
   undertow:
-    url: https://api.seiche.info/undertow/mcp
+    url: https://agents.seiche.info/products/undertow/mcp
     tools:
       include: ["exit_cost", "venue_concentration"]

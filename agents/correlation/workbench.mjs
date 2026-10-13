@@ -3,7 +3,7 @@ const $ = id => document.getElementById(id);
 const element = (tag, text, parent) => {const node = document.createElement(tag); node.textContent = text; if (parent) parent.append(node); return node;};
 const fmt = value => Number.isFinite(value) ? value.toFixed(2) : 'unresolved';
 const pct = value => Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : 'unresolved';
-let inputOrigin = 'Caller-supplied observations; declarations unverified', receipt = null, generation = 0;
+let inputOrigin = 'Caller-supplied observations; declarations unverified', receipt = null, generation = 0, inputSynthetic = false;
 const svgElement = (tag, attrs, parent) => { const node = document.createElementNS('http://www.w3.org/2000/svg', tag); for(const [key,value] of Object.entries(attrs)) node.setAttribute(key,String(value)); parent.append(node); return node; };
 function chart(parent, title) { parent.replaceChildren(); const svg = svgElement('svg',{viewBox:'0 0 640 260',role:'img'},parent); svgElement('title',{},svg).textContent=title; return svg; }
 function spectrum(latest) {
@@ -32,24 +32,24 @@ function showReport(body, origin) {
 }
 function clearResult(){generation++;receipt=null;$('result').hidden=true;$('empty').hidden=false;$('status').textContent='';}
 function setBusy(busy){for(const id of ['run','load-example','request','file','product'])$(id).disabled=busy;}
-function callerInput(){inputOrigin='Caller-supplied observations; declarations unverified';$('input-origin').textContent=inputOrigin;clearResult();}
+function callerInput(){inputSynthetic=false;inputOrigin='Caller-supplied observations; declarations unverified';$('input-origin').textContent=inputOrigin;clearResult();}
 $('request').addEventListener('input',callerInput);
 $('product').addEventListener('change',()=>{$('context').textContent=CONTEXTS[$('product').value];});
 const profile=new URL(location.href).searchParams.get('product');if(Object.hasOwn(CONTEXTS,profile))$('product').value=profile;
 $('context').textContent=CONTEXTS[$('product').value];
 $('load-example').addEventListener('click',async()=>{
   setBusy(true);clearResult();$('status').textContent='Loading synthetic example…';
-  try{const response=await fetch(`examples/${$('product').value}.json`);if(!response.ok)throw new Error('The example could not be loaded.');const request=await response.json();$('request').value=JSON.stringify(request,null,2);inputOrigin=`Synthetic ${$('product').selectedOptions[0].textContent} example`; $('input-origin').textContent=inputOrigin;$('status').textContent='Synthetic example loaded. Press Run to assess it.';}catch(error){$('status').textContent=error.message;}finally{setBusy(false);}
+  try{const response=await fetch(`examples/${$('product').value}.json`);if(!response.ok)throw new Error('The example could not be loaded.');const request=await response.json();$('request').value=JSON.stringify(request,null,2);inputSynthetic=true;inputOrigin=`Synthetic ${$('product').selectedOptions[0].textContent} example`; $('input-origin').textContent=inputOrigin;$('status').textContent='Synthetic example loaded. Press Run to assess it.';}catch(error){$('status').textContent=error.message;}finally{setBusy(false);}
 });
 $('file').addEventListener('change',async()=>{const file=$('file').files[0];if(!file)return;callerInput();try{if(file.size>MAX_BYTES)throw new Error('File exceeds the 750 KB browser limit.');const text=await file.text();parseRequest(text);$('request').value=text;}catch(error){$('request').value='';$('status').textContent=error.message;}$('file').value='';});
 $('run').addEventListener('click',async()=>{
   clearResult();setBusy(true);
-  try{const request=parseRequest($('request').value),origin=inputOrigin,runGeneration=generation;$('status').textContent='Assessing the supplied panel…';const body=await post('/v1/spectral/assess',request);if(runGeneration!==generation)return;showReport(body,origin);receipt={schema:'noisefloor.browser-review.v1',origin,request,response:body,received_at:new Date().toISOString(),execution_authority:false};$('status').textContent='Assessment received. Review source visibility and limitations.';}catch(error){$('status').textContent=error.message;}finally{setBusy(false);}
+  try{const request=parseRequest($('request').value),origin=inputOrigin,runGeneration=generation;$('status').textContent='Assessing the supplied panel…';const body=await post('/v1/spectral/assess',request,fetch,{synthetic:inputSynthetic});if(runGeneration!==generation)return;showReport(body,origin);receipt={schema:'noisefloor.browser-review.v1',origin,request,response:body,received_at:new Date().toISOString(),execution_authority:false};$('status').textContent='Assessment received. Review source visibility and limitations.';}catch(error){$('status').textContent=error.message;}finally{setBusy(false);}
 });
 $('download').addEventListener('click',()=>{if(!receipt)return;const url=URL.createObjectURL(new Blob([JSON.stringify(receipt,null,2)],{type:'application/json'}));const a=element('a','');a.href=url;a.download='noisefloor-review.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 $('simulate').addEventListener('click',async()=>{
   const button=$('simulate');button.disabled=true;$('dyson-chart').replaceChildren();$('dyson-detail').hidden=true;
-  try{const seed=Number($('seed').value);if(!Number.isInteger(seed)||seed<0||seed>4294967295)throw new Error('Choose an integer seed between 0 and 4294967295.');$('dyson-status').textContent='Simulating a symmetric Brownian matrix…';const report=await post('/v1/research/dyson',{dimension:Number($('dimension').value),steps:60,dt:0.05,seed});if(report.schema!=='noisefloor.dyson-reference.v1'||report.status!=='synthetic'||report.market_calibrated!==false)throw new Error('Unexpected simulation contract.');
+  try{const seed=Number($('seed').value);if(!Number.isInteger(seed)||seed<0||seed>4294967295)throw new Error('Choose an integer seed between 0 and 4294967295.');$('dyson-status').textContent='Simulating a symmetric Brownian matrix…';const report=await post('/v1/research/dyson',{dimension:Number($('dimension').value),steps:60,dt:0.05,seed},fetch,{synthetic:true});if(report.schema!=='noisefloor.dyson-reference.v1'||report.status!=='synthetic'||report.market_calibrated!==false)throw new Error('Unexpected simulation contract.');
   const paths=report.path,all=paths.flatMap(p=>p.eigenvalues),lo=Math.min(...all),hi=Math.max(...all),last=paths.at(-1).time;
   const svg=chart($('dyson-chart'),'Synthetic ordered eigenvalue paths; horizontal axis is simulation time');const y=v=>220-(v-lo)/(hi-lo)*185;
   svgElement('line',{x1:50,x2:610,y1:y(0),y2:y(0),stroke:'#c3cec0','stroke-dasharray':'4 4'},svg);
