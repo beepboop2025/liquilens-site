@@ -88,7 +88,8 @@ def test_selection_page_is_canonical_and_honest():
     page = read("use-cases/index.html")
     assert '<link rel="canonical" href="https://liquilens.in/use-cases/">' in page
     for required in ("/research/", "/replay/", "/developers/",
-                     "/product-card.json", "https://api.liquilens.in/mcp"):
+                     "/product-card.json", "https://agents.seiche.info/products/liquilens/mcp",
+                     "https://agents.seiche.info/v1/data/liquilens.failure_radar"):
         assert required in page
     assert "Do not use LiquiLens for" in page
     assert "not a credit rating" in page.lower()
