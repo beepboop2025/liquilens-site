@@ -1,0 +1,118 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-13-global-trust-bank-s-earliest-disclosed-warning-was-capital-and-asset-quality",
+  "product": "liquilens",
+  "slug": "2026-10-13-global-trust-bank-s-earliest-disclosed-warning-was-capital-and-asset-quality",
+  "date": "2026-10-13",
+  "article_type": "historical_replay",
+  "topic": "global-trust-bank",
+  "headline": "Global Trust Bank’s earliest disclosed warning was capital and asset quality, not funding",
+  "dek": "The replay finds CRAR and NNPA action-zone breaches before Global Trust Bank’s default. That is a filing-period signal, not market confirmation or a validated model forecast; fraud masking limits what the disclosures can establish.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-13-global-trust-bank-s-earliest-disclosed-warning-was-capital-and-asset-quality/",
+  "published_at": "2026-10-13T11:18:07Z",
+  "evidence_as_of": "2026-10-13",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "global-trust-bank",
+    "name": "Global Trust Bank",
+    "inst_type": "bank",
+    "default_date": "2004-07-24",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "global-trust-bank",
+      "inst_type": "bank",
+      "default_date": "2004-07-24",
+      "first_action_zone": {
+        "period_end": "2002-03-31",
+        "q": "FY2002",
+        "status": "threshold_2",
+        "knowledge_time_proxy": "2002-05-30",
+        "breaches": [
+          "CRAR",
+          "NNPA"
+        ]
+      },
+      "lead_months": 25,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "global-trust-bank",
+      "inst_type": "bank",
+      "scoreable": false,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1401,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:145c543fc0573863d4a936a749fe519a66acb8155f38ea5962aeb46bc37b7cfc",
+    "memory_fingerprint": "sha256:812a10164cf586787a62fed770b1caf1b79ad7bef2a3f2c1166cd08ed608104d",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 3,
+    "dossier_sha256": "3f830bee13e7ab76adb7650db57b4631da03dff05dc087c3beabeb2c43989595",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [],
+    "review_notes": [
+      "Reframed the central claim as a filing-period replay signal, not a market confirmation or model forecast.",
+      "Preserved fraud-masked, funding-ineligibility, construction-PIT, proxy-clock, and optimistic-lead disclosures.",
+      "Added the counter-case and separated LiquiLens, Seiche, and Undertow boundaries.",
+      "Shortened the dek below the gate limit.",
+      "Removed the leaked action-zone placeholder and retained only the supported breach description.",
+      "Preserved filing-period, market-price, model, fraud-masking, eligibility, and missing-data boundaries."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:145c543fc0573863d4a936a749fe519a66acb8155f38ea5962aeb46bc37b7cfc",
+      "memory_fingerprint": "sha256:812a10164cf586787a62fed770b1caf1b79ad7bef2a3f2c1166cd08ed608104d",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
