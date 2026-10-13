@@ -2,13 +2,13 @@
 
 ## Connect and ask one question
 
-Hosted Streamable HTTP MCP; no local server or API key for public read-only tools.
+Central hosted Streamable HTTP MCP; no local server or API key for public read-only tools.
 Add the products you need to Claude Code:
 
 ```sh
-claude mcp add --transport http liquilens https://api.liquilens.in/mcp
-claude mcp add --transport http seiche https://api.seiche.info/mcp
-claude mcp add --transport http undertow https://api.seiche.info/undertow/mcp
+claude mcp add --transport http liquilens https://agents.seiche.info/products/liquilens/mcp
+claude mcp add --transport http seiche https://agents.seiche.info/products/seiche/mcp
+claude mcp add --transport http undertow https://agents.seiche.info/products/undertow/mcp
 ```
 
 **Try this first:** What changed in Cosmos Co-operative Bank's NPAs? Cite the filing, reporting period and missing disclosures.

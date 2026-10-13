@@ -10,6 +10,8 @@ LiquiLens is a registered private limited company in India: LIQUILENS PRIVATE LI
 
 Keep each product's source dates, limitations and authority separate. Use only the products relevant to the user's question.
 
+Current hosted connections use https://agents.seiche.info/products/{product}/mcp for admitted public read-only tools. LiquiLens: https://agents.seiche.info/products/liquilens/mcp ; Seiche: https://agents.seiche.info/products/seiche/mcp ; Undertow: https://agents.seiche.info/products/undertow/mcp . No account or API key is required for these public calls. Discover tools on the central connection. Native versions, inventories, prompts, resources and dated receipts below describe their upstream services; they do not promise identical central inventory or subscriber access. Wider native API documentation and original source URLs remain provenance and compatibility references.
+
 ## Free agent starter kit
 
 - Connect Gemini CLI, Hermes, OpenClaw, Claude Code, Codex, Cursor or VS Code: https://liquilens.in/agents/
@@ -27,8 +29,8 @@ Keep each product's source dates, limitations and authority separate. Use only t
 - Agent skill discovery draft v0.2 with integrity digest: https://liquilens.in/.well-known/agent-skills/index.json
 - n8n funding API workflow: https://liquilens.in/agents/n8n-funding-research.json
 - Live source coverage and seven-client connection recipes: https://liquilens.in/agents/#source-data
-- Funding histories, bank filings and Bitcoin/Liquid settlement MCP: https://api.seiche.info/api/v2/research-data/mcp
-- Source-data OpenAPI 3.1 contract: https://api.seiche.info/api/v2/research-data/openapi.json
+- Funding histories, bank filings and Bitcoin/Liquid settlement MCP: https://agents.seiche.info/products/research-data/mcp
+- Source-data OpenAPI 3.1 contract: https://agents.seiche.info/v1/source-data/openapi.json
 - Standard-library history client: https://liquilens.in/agents/source_data.py
 
 Public research is free with no account or API key; fair-use limits apply.
@@ -36,8 +38,8 @@ The kit checks MCP connections, reads source-separated funding, optional bank
 evidence and BTC exit estimates, and compares the same request with a previous
 brief. No model dependency, background polling, automatic retries or execution.
 Keep source dates, unavailable sections and rights restrictions attached.
-The source-data connection exposes six read-only tools for catalog, series,
-entities, observations, tracked institutions and descriptive analysis. Historical
+The source-data connection exposes eight read-only tools for workspace, catalog,
+series summaries, series, entities, observations, tracked institutions and descriptive analysis. Historical
 observations keep native units, capture clocks and receipts. Paginate explicitly;
 an as-known-at filter cannot recover knowledge before the first archive capture.
 
@@ -59,8 +61,9 @@ Schema.org dataset catalog: https://liquilens.in/world-economy/evidence-catalog.
 Money-market evidence router: https://liquilens.in/money-markets/
 Capital-market evidence router: https://liquilens.in/capital-markets/
 China-economy evidence router: https://liquilens.in/china-economy/
-Financial Evidence Agent Skill: https://github.com/beepboop2025/financial-evidence-skills/tree/22096b824ac09d47cf24d7ab1612d9a97a13c7b3/financial-evidence
-Reviewed immutable source 22096b824ac09d47cf24d7ab1612d9a97a13c7b3; skill SHA-256 c2e9262fd2175c8181f59ef6b428fe91e3167ebc4fe24a33a1076c7243ed27ab. Topics: money-market, capital-market, china-economy, bank-risk, market-liquidity, gift-city, forex and gold. GIFT City and gold share one public GET receipt; forex uses a bounded reference context. No scenario runs automatically. Preserve source states, clocks, rights and gaps; transport success does not establish evidence eligibility or Carrier verification. This source pin makes no package, plugin or Registry release claim.
+Current Financial Evidence Research Desk MCP: https://agents.seiche.info/products/financial-evidence/mcp
+Historical Financial Evidence Agent Skill recipe: https://github.com/beepboop2025/financial-evidence-skills/tree/22096b824ac09d47cf24d7ab1612d9a97a13c7b3/financial-evidence
+Historical reviewed immutable source 22096b824ac09d47cf24d7ab1612d9a97a13c7b3; skill SHA-256 c2e9262fd2175c8181f59ef6b428fe91e3167ebc4fe24a33a1076c7243ed27ab. Topics: money-market, capital-market, china-economy, bank-risk, market-liquidity, gift-city, forex and gold. GIFT City and gold share one public GET receipt; forex uses a bounded reference context. No scenario runs automatically. Preserve source states, clocks, rights and gaps; transport success does not establish evidence eligibility or Carrier verification. This historical source pin makes no current package, plugin or Registry release claim; use the central Research Desk above for current hosted setup.
 Evidence Carrier protocol: https://liquilens.in/protocol/
 Evidence Carrier machine catalog: https://liquilens.in/protocol/catalog.json
 Trade Safety Receipt v1: https://liquilens.in/protocol/trade-safety/
@@ -86,7 +89,7 @@ The public evidence network covers a bounded financial-pressure chain plus revis
 
 - System funding: Seiche, https://seiche.info/, for US dollar funding, repo, reserves, Treasury cash, a granular USD money-market desk and a licence-aware global money-market atlas. Live coverage: https://api.seiche.info/api/v2/coverage
 - Institutions: LiquiLens, https://liquilens.in/research/, for covered banks, NBFCs, MFIs and lenders. Live evidence status: https://api.liquilens.in/api/evidence/markets
-- Market exits: Undertow, https://liquilens-undertow.com/, for provider concentration, market-depth evidence states and position-sized exit costs. Live public summary: https://api.seiche.info/undertow/x402/summary
+- Market exits: Undertow, https://liquilens-undertow.com/, for provider concentration, market-depth evidence states and position-sized exit costs. Live public summary: https://agents.seiche.info/v1/data/undertow.summary
 - China economy and information revisions: Palimpsest, https://palimpsest.info/china/, for bounded bitemporal observations, release and collection clocks, revision identities, provenance, coverage gates and abstentions. Financial authority: none. Observation manifest: https://palimpsest.info/readings/china-econ-observations-latest.json
 
 The machine catalog at https://liquilens.in/world-economy/evidence-catalog.json assigns each independent dataset a stable identifier, canonical landing page, machine-readable distributions, source lineage and evidence boundary. Cite each layer only for the claim it supports. An absent or unavailable input is not a calm signal, and a crawler or catalog entry does not guarantee an AI citation.
@@ -141,15 +144,15 @@ The interactive demonstration at https://demo.liquilens.in requires sign-in and 
 - Python standard-library recipe: https://liquilens.in/developers/recipes/financial_research.py
 - Recipe manifest and fixed endpoints: https://liquilens.in/developers/recipes/manifest.json
 - Manual n8n bank-review workflow and validation limits: https://liquilens.in/developers/recipes/n8n-bank-review.md
-- REST catalog: https://api.liquilens.in/api
-- OpenAPI 3.1 document: https://api.liquilens.in/api/openapi.json
-- Hosted MCP: https://api.liquilens.in/mcp
+- Publisher's wider native REST catalog: https://api.liquilens.in/api
+- Publisher's wider native OpenAPI 3.1 document: https://api.liquilens.in/api/openapi.json
+- Recommended hosted MCP: https://agents.seiche.info/products/liquilens/mcp
 - Terminal CLI: https://github.com/beepboop2025/liquilens-cli
-- Agent Skill for bounded product selection: https://github.com/beepboop2025/financial-evidence-skills/tree/22096b824ac09d47cf24d7ab1612d9a97a13c7b3/financial-evidence
+- Historical Agent Skill recipe for bounded product selection: https://github.com/beepboop2025/financial-evidence-skills/tree/22096b824ac09d47cf24d7ab1612d9a97a13c7b3/financial-evidence
 
-The public MCP and public evidence endpoints require no token. MCP v1.8.1 exposes 24 read-only tools and 5 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification.
+The public MCP and public evidence endpoints require no token. The upstream LiquiLens MCP v1.8.1 inventory records 24 read-only tools and 5 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification. Central access admits a reviewed tool list; native prompt and resource inventories are separate.
 
-The hosted endpoint accepts the current MCP 2026-07-28 method-discovery contract and its declared legacy protocol versions. It publishes empty resource and resource-template catalogs explicitly rather than implying unavailable resources.
+The native endpoint's MCP 2026-07-28 method-discovery contract, declared legacy protocol versions and empty resource catalogs describe that upstream interface. Negotiate the protocol and discover admitted tools on the recommended central connection.
 
 ## Portable Evidence Carrier
 
@@ -187,9 +190,9 @@ The public Trade Safety Gateway 0.2.2 is a free read-only sandbox at https://tra
 
 The site records only aggregate, property-free generic MCP-endpoint-copy and OpenAPI-open actions. Those are discovery signals, not proof of a gateway call or MCP activation. Gateway telemetry is enabled with optional pseudonymous installation identities, so no active-user, lead, customer, protected-order or revenue count may be inferred from site reach.
 
-Public Trade Safety Gateway endpoints:
+Recommended Trade Safety MCP and native sandbox REST references:
 
-- MCP: https://trade-safety.liquilens.in/mcp
+- MCP: https://agents.seiche.info/products/trade-safety/mcp
 - REST assessment: https://trade-safety.liquilens.in/v1/check
 - Capabilities and authority boundary: https://trade-safety.liquilens.in/v1/capabilities
 - OpenAPI: https://trade-safety.liquilens.in/openapi.json
@@ -242,8 +245,8 @@ The scoring boundary is fixed: generative features may explain served evidence, 
 - Seiche 0.13.13, https://seiche.info/: observed hosted runtime source 0778835d7c80f53c4d7c8382b857457b3599dc58, checked 2026-10-01T09:03:39.362779+00:00. US dollar funding stress, a granular USD money-market desk, a licence-aware global atlas and bounded money/FX/macro-capital context. Hosted MCP: https://api.seiche.info/mcp. Discovery: https://api.seiche.info/.well-known/mcp.json. Package verified at that dated check: seiche==0.13.13; https://pypi.org/project/seiche/0.13.13/. Registry: https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.13.13. PyPI, MCP Registry and public container ghcr.io/beepboop2025/seiche:0.13.13 were verified at the check time. Public 0.13.13 Zenodo archive https://doi.org/10.5281/zenodo.23076880 independently verified on 2026-10-01T07:09:43.050229+00:00: all 1,191 tracked files match the signed v0.13.13 source. These observations do not establish recovery or full-release acceptance. Inspect the live endpoints for current version, source clocks, coverage and limitations. This evidence context cannot authorize an order.
 
 - Seiche 0.13.2 historical signed acceptance bundle: fourteen anonymous read-only tools, four prompts and zero resources were recorded. Historical package: https://pypi.org/project/seiche/0.13.2/. Historical Registry: https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fseiche/versions/0.13.2. Application, website, packages and archive https://doi.org/10.5281/zenodo.22732023 were verified for 0.13.2; all 1,126 archive files match signed source 1deccedc16dc832f6c0bdef61a0426e4b9b2d9eb. Recovery and volume resize for 0.13.2 were owner-deferred. The signed 0.13.1 recovery receipt remains historical evidence for its original application. Historical application-and-distribution acceptance: https://liquilens.in/protocol/release-evidence/seiche/1deccedc16dc832f6c0bdef61a0426e4b9b2d9eb/application-distribution-acceptance.json. The bundle records unavailable China data with zero accepted series and an incomplete pre-March-2016 EFFR method-label correction. Its hashes, DOI and acceptance flags do not establish archive or recovery acceptance for the separately observed 0.13.13 runtime.
-- Seiche Market Atlas Corpus 1.0.0: https://api.seiche.info/api/v2/corpus/mcp exposes nine public read-only tools for dataset catalogs, structural inspection, bounded rights-approved BIS records, canonical market discovery and corpus health. Source clocks, immutable object identity and restricted metadata-only states remain explicit. Discover the current native contract at https://api.seiche.info/.well-known/mcp.json.
-- Undertow 1.13.0, https://liquilens-undertow.com/: market-liquidity tiers, depth concentration, estimated exit cost by venue and position size, request-bound Trade Safety exit context, and connected Palimpsest/Seiche research through research_network. Its hosted MCP at https://api.seiche.info/undertow/mcp exposes exactly sixteen anonymous public read-only tools, three visible prompts and zero resources; eight additional tools require a subscriber token. market_corpus_context returns canonical shared-corpus coverage, source identity, rights and separate source/retrieval clocks; https://liquilens-undertow.com/corpus/ presents the same projection. gold_cash_realisation is a caller-input scenario, not a quote or execution authorization.
+- Seiche Market Atlas Corpus 1.0.0: recommended MCP https://agents.seiche.info/products/seiche-market-corpus/mcp exposes nine public read-only tools for dataset catalogs, structural inspection, bounded rights-approved BIS records, canonical market discovery and corpus health. Source clocks, immutable object identity and restricted metadata-only states remain explicit. Discover the current native contract at https://api.seiche.info/.well-known/mcp.json.
+- Undertow 1.13.0, https://liquilens-undertow.com/: market-liquidity tiers, depth concentration, estimated exit cost by venue and position size, request-bound Trade Safety exit context, and connected Palimpsest/Seiche research through research_network. Recommended MCP: https://agents.seiche.info/products/undertow/mcp . The native publisher interface at https://api.seiche.info/undertow/mcp records sixteen anonymous public read-only tools, three visible prompts and zero resources; eight additional native tools require a subscriber token. Central access admits public tools only and does not forward subscriber credentials. market_corpus_context returns canonical shared-corpus coverage, source identity, rights and separate source/retrieval clocks; https://liquilens-undertow.com/corpus/ presents the same projection. gold_cash_realisation is a caller-input scenario, not a quote or execution authorization.
 - My Quant Doesn't Speak English, https://myquantdoesntspeakenglish.com/: every Seiche, LiquiLens, and Undertow dispatch in one editorial wire, plus original investigations.
 - Groundcheck, https://groundcheck.seiche.info/: live-source claim and citation verification.
 
@@ -253,7 +256,7 @@ Palimpsest, Evidence Signal, and NarcoScope are free public goods. They observe 
 
 - Funding page: https://palimpsest.info/fund.html
 - Evidence Signal: https://t.me/EvidenceSignalDesk
-- Palimpsest 1.9.3: https://palimpsest.info/ — seven anonymous public read-only MCP tools, four visible prompts and one metadata-only publication-rights resource at https://api.seiche.info/palimpsest/mcp. research_catalog pages the complete source registry and supplies a separate Seiche research handoff. A signed native host receipt binds the deployed source and runtime module; the original six-tool deployment receipts and unchanged official MCP Registry 1.9.3 manifest remain historical evidence. Initialize the remote and inspect tools/list for current version and inventory: https://palimpsest.info/.well-known/ai-catalog.json. The public data download catalog is https://www.palimpsest.info/readings/public-data-catalog-latest.json; freshness and download availability are stated per dataset. Rights-denied economic evidence stays explicitly unavailable and cannot become a zero, neutral, healthy or directional result.
+- Palimpsest 1.9.3: https://palimpsest.info/ — recommended MCP https://agents.seiche.info/products/palimpsest/mcp . Its native publisher interface at https://api.seiche.info/palimpsest/mcp records seven anonymous public read-only MCP tools, four visible prompts and one metadata-only publication-rights resource. The central connection admits public tools; native prompts and resources remain separate. research_catalog pages the complete source registry and supplies a separate Seiche research handoff. A signed native host receipt binds the deployed source and runtime module; the original six-tool deployment receipts and unchanged official MCP Registry 1.9.3 manifest remain historical evidence. Initialize the remote and inspect tools/list for current version and inventory: https://palimpsest.info/.well-known/ai-catalog.json. The public data download catalog is https://www.palimpsest.info/readings/public-data-catalog-latest.json; freshness and download availability are stated per dataset. Rights-denied economic evidence stays explicitly unavailable and cannot become a zero, neutral, healthy or directional result.
 - NarcoScope: https://narcoscope.com/
 
 ## Citation
@@ -331,17 +334,17 @@ Archive and full-text feeds: https://liquilens.in/articles/, https://liquilens.i
 ## Free NPA, small finance bank and urban cooperative bank research
 
 Guide and browser review: https://liquilens.in/banking/
-MCP: https://api.liquilens.in/mcp (free public research; no key or payment, rate limits apply).
-Coverage: https://api.liquilens.in/api/experimental/v1/banking/coverage
-Example: https://api.liquilens.in/api/experimental/v1/banking/institutions/cosmos-ucb?include_history=true
+MCP: https://agents.seiche.info/products/liquilens/mcp (free public research; no key or payment, rate limits apply).
+Coverage: https://agents.seiche.info/v1/banking/coverage
+Example: https://agents.seiche.info/v1/banking/institutions/cosmos-ucb?include_history=true
 
-Use banking_specialisation_coverage for exact slugs and observed, stale or historical evidence states. bank_asset_quality_review returns cited GNPA/NNPA, capital, distinct PCR definitions, comparable-period changes and disclosed NPA movements. bank_npa_reconciliation checks a complete caller-supplied movement in one explicit INR unit; write-offs and sales are not cash recoveries. bank_asset_quality_brief is the guided prompt.
+Use banking_specialisation_coverage for exact slugs and observed, stale or historical evidence states. bank_asset_quality_review returns cited GNPA/NNPA, capital, distinct PCR definitions, comparable-period changes and disclosed NPA movements. bank_npa_reconciliation checks a complete caller-supplied movement in one explicit INR unit; write-offs and sales are not cash recoveries. bank_asset_quality_brief is a native guided prompt; central access exposes the admitted tools separately.
 
 The selected FY2026 supplements for AU, Cosmos and Slice are review-only, outside model fitting. No universal bank coverage, new score, credit approval or deposit-safety guarantee is implied. Current UCB regulatory scope requires dated tier and supervisory evidence. Latest accepted does not guarantee latest available. Private tenant records and operational controls remain outside public access. For system money-market context use https://seiche.info/use-cases/money-market-research/.
 
 ## First research result
 
-- [Browser research examples](https://liquilens.in/start/): User-triggered bank NPA review, dollar-funding brief and BTC exit-cost estimates, with exact source responses and client setup for nine hosted MCPs.
+- [Browser research examples](https://liquilens.in/start/): User-triggered bank NPA review, dollar-funding brief and BTC exit-cost estimates, with exact source responses and client setup for fourteen hosted MCPs.
 - [Bank and credit example](https://liquilens.in/start/?task=bank)
 - [Agent and macro example](https://liquilens.in/start/?task=funding)
 - [Crypto market example](https://liquilens.in/start/?task=exit)
@@ -363,14 +366,14 @@ Current published history is not an as-published vintage archive. Integration re
 
 Setup and interface selection: https://liquilens.in/agents/infrastructure/
 Machine-readable scopes: https://beepboop2025.github.io/financial-evidence-skills/agents/system.json
-NoiseFloor 0.4.0 adds ten descriptive research tools for caller-supplied market series, headline repetition, measurement coverage and statistical evidence. MCP: https://api.seiche.info/noisefloor/mcp · OpenAPI: https://api.seiche.info/noisefloor/openapi.json
+NoiseFloor 0.4.0 adds ten descriptive research tools for caller-supplied market series, headline repetition, measurement coverage and statistical evidence. MCP: https://agents.seiche.info/products/noisefloor/mcp · OpenAPI: https://agents.seiche.info/v1/noisefloor/openapi.json
 NoiseFloor collects no feeds and grants no trading authority. Client integration, market utility and predictive performance require separate validation; publication does not establish integration across every family product.
-Financial Evidence 0.1.7 exposes the public three-tool router. The hosted Research Desk remains independently versioned at 1.1.3 with eight MCP tools and REST/OpenAPI. The six-tool local Runtime contract 1.0.0 uses package 0.1.7; Runtime Operations 1.0.3 adds private monitoring, stable backup schedules and verified encrypted restore. The private paper host has authenticated REST and stdio MCP, remains disabled by default and requires current eligible evidence. Its setup and capability catalog describe the exact qualification limits. Public research endpoints do not submit orders.
+Financial Evidence 0.1.8 recommends the nine-tool central Research Desk at https://agents.seiche.info/products/financial-evidence/mcp with central REST/OpenAPI at https://agents.seiche.info/v1/research/openapi.json . Begin with financial_evidence_datasets, then financial_evidence_workflow or financial_evidence_review. The separate legacy three-tool router remains https://liquilens.in/mcp/financial-evidence . The upstream Research Desk workspace remains independently versioned at 1.3.0, package 0.1.7, source 4802a9b3bfb9d652199f25bf52852cb1e5db1cb3. The six-tool local Runtime contract 1.0.0 uses package 0.1.8; Runtime Operations 1.0.3 adds private monitoring, stable backup schedules and verified encrypted restore. The private paper host has authenticated REST and stdio MCP, remains disabled by default and requires current eligible evidence. Its setup and capability catalog describe the exact qualification limits. Public research endpoints do not submit orders.
 
 ## Connected upgrades and institution monitoring
 
 - [Institution evidence monitor](https://liquilens.in/banking/monitoring/): Source-dated review queue across tracked institutions, including missing and overdue evidence; no scoring, credit or trading authority.
-- [Monitoring source register](https://api.liquilens.in/api/experimental/v1/banking/monitoring/watchlist): Same evidence contract as MCP tool `institution_evidence_monitor`. Counts are source responses, not a census or safety verdict.
+- [Monitoring source register](https://agents.seiche.info/v1/banking/monitoring/watchlist): Same evidence contract as MCP tool `institution_evidence_monitor`. Counts are source responses, not a census or safety verdict.
 - [Connected product upgrades](https://liquilens.in/updates/): Monitoring, recurring research, NoiseFloor and paper rehearsal with separate evidence boundaries.
 - [Capability record](https://liquilens.in/updates/capabilities.json): Dated, source-linked capability and authority manifest.
 

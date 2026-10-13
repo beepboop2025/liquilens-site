@@ -413,7 +413,8 @@ def test_product_card_exposes_the_read_only_gateway_without_execution_authority(
     assert access["trade_safety_openapi"] == (
         "https://trade-safety.liquilens.in/openapi.json"
     )
-    assert access["trade_safety_mcp"] == ("https://trade-safety.liquilens.in/mcp")
+    assert access["trade_safety_mcp"] == ("https://agents.seiche.info/products/trade-safety/mcp")
+    assert access["trade_safety_native_mcp"] == ("https://trade-safety.liquilens.in/mcp")
     assert access["trade_safety_gateway_version"] == "0.2.2"
     assert access["trade_safety_gateway_source_revision"] == (
         "747ea0ba50cea1d311d74e7ce0289aaa16af356a"

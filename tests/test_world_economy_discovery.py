@@ -244,9 +244,10 @@ def test_html_schema_routes_the_same_datasets_and_distributions():
         in page
     )
     for endpoint in (
-        "https://api.liquilens.in/mcp",
-        "https://api.seiche.info/mcp",
-        "https://api.seiche.info/undertow/mcp",
+        "https://agents.seiche.info/products/liquilens/mcp",
+        "https://agents.seiche.info/products/seiche/mcp",
+        "https://agents.seiche.info/products/undertow/mcp",
+        "https://agents.seiche.info/products/palimpsest/mcp",
     ):
         assert endpoint in page
 

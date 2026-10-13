@@ -23,7 +23,17 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["schema"] == "liquidity-lab.product-card.v1"
     assert card["product"]["name"] == "LiquiLens"
     assert card["product"]["canonical_url"] == "https://liquilens.in/"
-    assert card["access"]["mcp"] == "https://api.liquilens.in/mcp"
+    assert card["access"]["mcp"] == "https://agents.seiche.info/products/liquilens/mcp"
+    assert card["access"]["native_mcp"] == "https://api.liquilens.in/mcp"
+    company = json.loads(read("company-profile.json"))
+    connections = {entry["name"]: entry["mcp"] for entry in company["products"]}
+    assert connections == {
+        "LiquiLens": card["access"]["mcp"],
+        **{entry["name"]: entry["mcp"] for entry in card["siblings"]
+           if entry["name"] in {"Seiche", "Undertow"}},
+    }
+    manifest = json.loads(read("agents/manifest.json"))
+    assert set(connections.values()) == {entry["url"] for entry in manifest["servers"].values()}
     assert card["access"]["api_catalog"] == "https://api.liquilens.in/api"
     assert card["access"]["openapi"] == "https://api.liquilens.in/api/openapi.json"
     assert card["access"]["named_list"] == "https://liquilens.in/access/"
@@ -49,7 +59,7 @@ def test_product_card_has_stable_identity_and_public_entrypoints():
     assert card["access"]["evidence_carrier_browser_verifier"] == (
         "https://beepboop2025.github.io/liquilens-evidence-carrier/")
     assert card["access"]["cli_evidence_command"] == "npx liquilens --record"
-    assert card["updated"] == "2026-10-08"
+    assert card["updated"] == "2026-10-13"
     assert card["access"]["api_catalog_discovery"] == (
         "https://liquilens.in/.well-known/api-catalog")
     assert card["access"]["daily_articles"] == "https://liquilens.in/articles/"
@@ -78,7 +88,8 @@ def test_selection_page_is_canonical_and_honest():
     page = read("use-cases/index.html")
     assert '<link rel="canonical" href="https://liquilens.in/use-cases/">' in page
     for required in ("/research/", "/replay/", "/developers/",
-                     "/product-card.json", "https://api.liquilens.in/mcp"):
+                     "/product-card.json", "https://agents.seiche.info/products/liquilens/mcp",
+                     "https://agents.seiche.info/v1/data/liquilens.failure_radar"):
         assert required in page
     assert "Do not use LiquiLens for" in page
     assert "not a credit rating" in page.lower()
@@ -703,7 +714,7 @@ def test_sibling_product_cards_match_the_catalog_contracts():
     assert {
         "version": undertow["version"],
         "catalog": undertow["ai_catalog"],
-        "mcp": undertow["mcp"],
+        "mcp": undertow["native_mcp"],
         "server": undertow["mcp_server_name"],
         "protocols": undertow["protocol_versions"],
         "counts": (
@@ -722,13 +733,15 @@ def test_sibling_product_cards_match_the_catalog_contracts():
         "counts": (16, 3, 0),
     }
     assert undertow["trade_safety_tool"] == "trade_safety_exit_context"
+    assert undertow["mcp"] == "https://agents.seiche.info/products/undertow/mcp"
     assert undertow["corpus_context_tool"] == "market_corpus_context"
     assert undertow["gold_scenario_tool"] == "gold_cash_realisation"
     assert undertow["corpus_context"] == "https://liquilens-undertow.com/corpus/"
 
     palimpsest = siblings["Palimpsest"]
     assert palimpsest["version"] == "1.9.3"
-    assert palimpsest["mcp"] == "https://api.seiche.info/palimpsest/mcp"
+    assert palimpsest["mcp"] == "https://agents.seiche.info/products/palimpsest/mcp"
+    assert palimpsest["native_mcp"] == "https://api.seiche.info/palimpsest/mcp"
     assert palimpsest["protocol_versions"] == ["2025-06-18", "2025-03-26"]
     assert (
         palimpsest["public_tools"],
