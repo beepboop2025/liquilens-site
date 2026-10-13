@@ -8,9 +8,9 @@
  * an institution risk weight, or an exit cost.
  */
 
-export const ALLOCATION_URL = "https://api.seiche.info/riptide/api/v1/allocation";
-export const GAUGE_URL = "https://api.seiche.info/api/gauge";
-export const BOARD_URL = "https://api.seiche.info/undertow/board.json";
+export const ALLOCATION_URL = "https://agents.seiche.info/v1/data/riptide.allocation";
+export const GAUGE_URL = "https://agents.seiche.info/v1/data/seiche.gauge";
+export const BOARD_URL = "https://agents.seiche.info/v1/data/undertow.board";
 
 const REGIMES = ["abundant", "ample", "tightening", "strained", "acute"];
 const DEGRADED = new Set(["DEFICIENT", "STRAINED"]);

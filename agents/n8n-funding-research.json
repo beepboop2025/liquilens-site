@@ -24,7 +24,7 @@
       ],
       "parameters": {
         "method": "GET",
-        "url": "https://api.seiche.info/api/public",
+        "url": "https://agents.seiche.info/v1/data/seiche.public",
         "options": {
           "timeout": 20000,
           "redirect": {
@@ -51,7 +51,7 @@
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
-        "jsCode": "const items = $input.all();\nif (items.length !== 1) throw new Error('Expected one funding response');\nconst evidence = items[0].json;\nif (evidence.schema !== 'seiche.public.v2' || typeof evidence.generated_at !== 'string' || !Number.isFinite(Date.parse(evidence.generated_at)) || !evidence.data_quality || typeof evidence.data_quality !== 'object' || Array.isArray(evidence.data_quality)) throw new Error('Unexpected funding evidence contract');\nreturn [{ json: { schema: 'liquilens.n8n-funding-research.v1', endpoint: 'https://api.seiche.info/api/public', retrieved_at: new Date().toISOString(), execution_authority: false, note: 'Retrieval time is not source freshness. Inspect data_quality, headline source ages and each cited observation date.', evidence } }];"
+        "jsCode": "const items = $input.all();\nif (items.length !== 1) throw new Error('Expected one funding response');\nconst evidence = items[0].json;\nif (evidence.schema !== 'seiche.public.v2' || typeof evidence.generated_at !== 'string' || !Number.isFinite(Date.parse(evidence.generated_at)) || !evidence.data_quality || typeof evidence.data_quality !== 'object' || Array.isArray(evidence.data_quality)) throw new Error('Unexpected funding evidence contract');\nreturn [{ json: { schema: 'liquilens.n8n-funding-research.v1', endpoint: 'https://agents.seiche.info/v1/data/seiche.public', retrieved_at: new Date().toISOString(), execution_authority: false, note: 'Retrieval time is not source freshness. Inspect data_quality, headline source ages and each cited observation date.', evidence } }];"
       }
     },
     {

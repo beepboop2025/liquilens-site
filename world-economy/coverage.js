@@ -1,4 +1,4 @@
-const CATALOG_URL = "https://api.seiche.info/api/v2/corpus/v1/catalog";
+const CATALOG_URL = "https://agents.seiche.info/v1/corpus/v1/catalog";
 const MAX_RESPONSE_BYTES = 128 * 1024;
 const REFRESH_MS = 60_000;
 const TIMEOUT_MS = 10_000;

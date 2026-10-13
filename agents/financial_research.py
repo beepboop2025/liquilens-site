@@ -17,7 +17,7 @@ from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_ope
 VERSION = "1.1.0"
 PROTOCOL = "2025-11-25"
 SUPPORTED_PROTOCOLS = (PROTOCOL, "2025-06-18", "2025-03-26")
-RESEARCH_DATA_ENDPOINT = "https://api.seiche.info/api/v2/research-data/mcp"
+RESEARCH_DATA_ENDPOINT = "https://agents.seiche.info/products/research-data/mcp"
 CLIENT_INFO = {"name": "liquilens-research-recipes", "version": VERSION}
 ENDPOINTS = {
     "bank-review": "https://agents.seiche.info/products/liquilens/mcp",

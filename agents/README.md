@@ -14,7 +14,7 @@ Manifest and per-file SHA-256 digests: https://liquilens.in/agents/manifest.json
 Kit 1.4.0 routes the product connections through our free hosted gateway.
 The service records bounded request and outcome metadata as described in
 https://agents.seiche.info/privacy. Existing client credentials are not needed.
-Source-data and market-corpus connections retain their separate native contracts.
+Source-data and market-corpus connections use separate reviewed hosted contracts.
 
 The kit includes Gemini CLI connections and topic profiles at https://liquilens.in/agents/#connect and the
 machine-readable https://liquilens.in/agents/profiles.json. The default
@@ -198,9 +198,9 @@ https://liquilens.in/agents/clients.md.
 ## Source histories and filings
 
 Kit 1.1.0 adds `source_data.py`, a standard-library client for the separate
-[research archive](https://api.seiche.info/api/v2/research-data/).
-[Import its OpenAPI contract](https://api.seiche.info/api/v2/research-data/openapi.json)
-or connect `https://api.seiche.info/api/v2/research-data/mcp`. The connection builder
+[research archive](https://agents.seiche.info/v1/source-data/).
+[Import its OpenAPI contract](https://agents.seiche.info/v1/source-data/openapi.json)
+or connect `https://agents.seiche.info/products/research-data/mcp`. The connection builder
 at https://liquilens.in/start/ includes **Source data** for all supported clients.
 
 ```sh

@@ -63,7 +63,7 @@ for (const [label, mutation] of [
 
 test("render uses canonical source, exact counts, accessible status and one refresh timer", async () => {
   let options;
-  const h = harness(async (url, init) => { assert.equal(url, "https://api.seiche.info/api/v2/corpus/v1/catalog"); options = init; return jsonResponse(catalog()); });
+  const h = harness(async (url, init) => { assert.equal(url, "https://agents.seiche.info/v1/corpus/v1/catalog"); options = init; return jsonResponse(catalog()); });
   await settle();
   assert.equal(h.node("records").textContent, "30");
   assert.equal(h.node("values").hidden, false);
@@ -143,6 +143,6 @@ test("HTML retains a labeled historical snapshot and useful no-script links", as
   assert.match(html, /Historical discovery snapshot · 21 August 2026/);
   assert.match(html, /src="\/world-economy\/coverage.js"/);
   assert.match(html, /<noscript>/);
-  assert.match(html, /https:\/\/api.seiche.info\/api\/v2\/corpus\/mcp/);
+  assert.match(html, /https:\/\/agents.seiche.info\/products\/seiche-market-corpus\/mcp/);
   assert.ok(!html.includes("76,660,996"));
 });

@@ -310,7 +310,7 @@ def test_n8n_research_step_preserves_quality_and_rejects_gauge_or_invalid_clock(
     import subprocess
     workflow = json.loads((ROOT / "agents/n8n-funding-research.json").read_bytes())
     request = next(n for n in workflow["nodes"] if n["type"] == "n8n-nodes-base.httpRequest")
-    assert request["parameters"]["url"] == "https://api.seiche.info/api/public"
+    assert request["parameters"]["url"] == "https://agents.seiche.info/v1/data/seiche.public"
     script = next(n for n in workflow["nodes"] if n["type"] == "n8n-nodes-base.code")["parameters"]["jsCode"]
     runner = r"""
 const vm = require('node:vm');

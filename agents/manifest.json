@@ -61,19 +61,19 @@
     "python3 source_data.py catalog"
   ],
   "source_data": {
-    "mcp": "https://api.seiche.info/api/v2/research-data/mcp",
-    "openapi": "https://api.seiche.info/api/v2/research-data/openapi.json",
+    "mcp": "https://agents.seiche.info/products/research-data/mcp",
+    "openapi": "https://agents.seiche.info/v1/source-data/openapi.json",
     "scope": "Funding series, bank filings and Bitcoin/Liquid settlement; units, capture clocks and receipts retained."
   },
   "archive": {
     "url": "https://liquilens.in/agents/trading-research-kit.zip",
-    "sha256": "01fb6baf56a1b928df260527b09bd7bafd34657b3852bfb9e2d866d55c190085",
-    "bytes": 45694
+    "sha256": "f5ff86b880205a1116cf169bbf05b23cdd08fb772c95d0bdcb83f49ea3c055f4",
+    "bytes": 45695
   },
   "files": {
     "README.md": {
-      "sha256": "e94113340fc6cfd516ffd8bfc252ff63c42ae1cfa4142f5ee1a305cba291e7be",
-      "bytes": 13141
+      "sha256": "70085c07cc080fd41255da33ba8676e38e53aa6c181007766e070ecf9d7b4bea",
+      "bytes": 13140
     },
     "claude.txt": {
       "sha256": "1ae515687bac426287ab9a078f163789bb440352741defa5e3d4370c9cf5cc81",
@@ -88,8 +88,8 @@
       "bytes": 290
     },
     "financial_research.py": {
-      "sha256": "b8fdb5a0596f53e5e7851245f34d2f621f7a42327dcdca70cd45d46113f4eb28",
-      "bytes": 13341
+      "sha256": "41b1829337caea7a7eea4e3f4752feb07eef36b4462ab6934386cbb665a4c6bb",
+      "bytes": 13346
     },
     "gemini.json": {
       "sha256": "2d2df44639985274e263ee5d8dc8e29e10432f1aed1df20a84e67fc7e8a55105",
@@ -100,8 +100,8 @@
       "bytes": 601
     },
     "n8n-funding-research.json": {
-      "sha256": "d894815c861e7ac7e5c221fbc5aadc708aeee648bd0af190394837305b297543",
-      "bytes": 3189
+      "sha256": "03a9241ae846fd017be60bfb72899cb24f63612e45efc2d5e3ea18ae74ae7bdc",
+      "bytes": 3217
     },
     "openclaw.json": {
       "sha256": "8052c39d19d557874cbde71a9235e08d3532f11bf8db1ddf0cd032ddd388549c",

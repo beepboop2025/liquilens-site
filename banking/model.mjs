@@ -1,4 +1,4 @@
-export const API = "https://api.liquilens.in/api/experimental/v1/banking";
+export const API = "https://agents.seiche.info/v1/banking";
 const STATUSES = new Set(["observed", "stale", "historical", "unavailable"]);
 const LABELS = {observed: "Accepted filing evidence", stale: "Stale evidence", historical: "Historical evidence", unavailable: "Evidence unavailable"};
 const CORE_METRICS = ["gnpa_pct", "nnpa_pct", "crar_pct"];

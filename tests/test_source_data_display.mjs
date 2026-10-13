@@ -17,7 +17,7 @@ test('coverage preserves zero, missingness, clocks and source restrictions', () 
 
 test('source history connection is generated for every supported client', () => {
   for (const client of ['hermes','openclaw','claude','codex','cursor','vscode']) {
-    assert.match(configuration(client, ['research-data']), /https:\/\/api\.seiche\.info\/api\/v2\/research-data\/mcp/);
+    assert.match(configuration(client, ['research-data']), /https:\/\/agents\.seiche\.info\/products\/research-data\/mcp/);
   }
 });
 

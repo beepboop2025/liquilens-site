@@ -19,11 +19,11 @@ function fixtureFetch(task, mutate = x => x) {
   return {fetcher, calls};
 }
 
-test("all supported clients produce fixed-endpoint configurations for twelve servers", () => {
-  assert.equal(SERVERS.length, 12);
+test("all supported clients produce fixed-endpoint configurations for fourteen servers", () => {
+  assert.equal(SERVERS.length, 14);
   const ids = SERVERS.map(s => s.id);
-  assert.equal(Object.keys(JSON.parse(configuration("cursor", ids)).mcpServers).length, 12);
-  assert.equal(Object.keys(JSON.parse(configuration("vscode", ids)).servers).length, 12);
+  assert.equal(Object.keys(JSON.parse(configuration("cursor", ids)).mcpServers).length, 14);
+  assert.equal(Object.keys(JSON.parse(configuration("vscode", ids)).servers).length, 14);
   const gemini = JSON.parse(configuration("gemini", ids)).mcpServers;
   assert.deepEqual(Object.keys(gemini), ids);
   for (const server of SERVERS) assert.deepEqual(gemini[server.id], {httpUrl: server.url, timeout: 30000});
@@ -31,7 +31,7 @@ test("all supported clients produce fixed-endpoint configurations for twelve ser
   assert.deepEqual(Object.values(claw).map(s => s.url), SERVERS.map(s => s.url));
   assert.ok(Object.values(claw).every(s => s.transport === "streamable-http"));
   assert.match(configuration("hermes", ["liquilens"]), /^mcp_servers:\n  liquilens:\n    url: "https:\/\/agents.seiche.info\/products\/liquilens\/mcp"$/);
-  assert.equal(configuration("codex", ids).split("\n").length, 12);
+  assert.equal(configuration("codex", ids).split("\n").length, 14);
   assert.match(configuration("claude", ["undertow"]), /^claude mcp add --transport http undertow https:\/\/agents.seiche.info\/products\/undertow\/mcp$/);
   assert.throws(() => configuration("cursor", ["evil"]));
   assert.throws(() => configuration("unknown", ids));

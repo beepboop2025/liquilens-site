@@ -1,6 +1,6 @@
 import {dateOnly, sourceUrl} from './core.mjs';
 
-export const MONITOR_API = 'https://api.liquilens.in/api/experimental/v1/banking/monitoring';
+export const MONITOR_API = 'https://agents.seiche.info/v1/banking/monitoring';
 export const PRIORITIES = Object.freeze({urgent_review:'Deterioration review', evidence_review:'Evidence review', routine_review:'Routine review', historical_archive:'Historical archive'});
 export const TYPES = Object.freeze({bank:'Commercial bank', sfb:'Small finance bank', ucb:'Co-operative bank', nbfc:'NBFC', mfi:'Microfinance lender', hfc:'Housing finance company'});
 export const STATES = Object.freeze({review_required:'Review required', insufficient_visibility:'Visibility gaps', review_available:'Review available', historical:'Historical'});
