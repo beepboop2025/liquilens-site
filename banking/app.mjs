@@ -35,6 +35,25 @@ function render(data, url) {
     if (metric.basis) el.append(node("small", metric.basis));
     return el;
   }));
+  const provisional = byId("provisional-update");
+  provisional.replaceChildren();
+  provisional.hidden = !model.provisional;
+  if (model.provisional) {
+    const update = model.provisional;
+    const metrics = node("div", "", "metrics");
+    metrics.append(...update.metrics.map(metric => {
+      const el = node("div", "", "metric");
+      el.append(node("small", metric.label), node("strong", metric.value));
+      if (metric.basis) el.append(node("small", metric.basis));
+      return el;
+    }));
+    provisional.append(node("h3", update.title), node("p", update.clock), node("p", update.note), metrics);
+    for (const url of update.sources) {
+      const link = node("a", `Read the provisional disclosure: ${new URL(url).hostname}`);
+      link.href = url; link.target = "_blank"; link.rel = "noopener noreferrer";
+      const paragraph = node("p", ""); paragraph.append(link); provisional.append(paragraph);
+    }
+  }
   const movement = model.movement;
   byId("movement-status").textContent = movement.status === "unavailable" ? movement.reason : `Arithmetic: ${String(movement.status).replaceAll("_", " ")}. Period ${movement.period_start} to ${movement.period_end}. ${movement.interpretation || ""}`;
   const rows = movement.status === "unavailable" ? [] : [
