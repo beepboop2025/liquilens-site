@@ -22,7 +22,7 @@ function provisionalModel(data) {
       || !Number.isFinite(Date.parse(update.retrieved_at))) throw new Error("The provisional disclosure could not be verified.");
   return {
     title: `${update.status === "stale" ? "Stale provisional" : "Provisional"} business update · ${update.period_end}`,
-    clock: `Reporting period: ${update.period_end}. Published: ${update.publication_date}. Captured: ${update.retrieved_at}.`,
+    clock: `Reporting period: ${update.period_end}. Published: ${update.publication_date}. Captured: ${new Date(update.retrieved_at).toISOString().slice(0, 16).replace("T", " ")} UTC.`,
     note: `Subject to issuer review and approval. NPA and capital figures above remain dated ${data.period_end}.`,
     metrics: ["deposits", "advances", "gross_loan_portfolio", "casa_pct"].map(key => {
       const metric = update.metrics?.[key];
