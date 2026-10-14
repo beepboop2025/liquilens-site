@@ -3,6 +3,28 @@ import assert from "node:assert/strict";
 import {amount, readBounded, reviewModel} from "../banking/model.mjs";
 
 const record = () => ({schema: "liquilens.bank-specialisation.v1", status: "stale", name: "Test Bank", score_authority: false, can_authorize_credit: false, period_end: "2021-03-31", as_of: "2026-09-05", metrics: {gnpa_pct: {label: "Gross NPA", value: 0, unit: "percent", status: "observed"}}, sources: ["https://example.org/report.pdf", "javascript:alert(1)", "https://user:pass@example.org/private"], regulatory_comparison: {status: "scope_unverified"}});
+const provisional = () => ({status: "provisional", period_end: "2026-09-30", publication_date: "2026-10-03", retrieved_at: "2026-10-14T08:38:45Z", full_financial_results: false, asset_quality_period_refreshed: false, score_authority: false, training_eligible: false,
+  metrics: {deposits: {value: 170460, unit: "INR_crore", status: "observed"}, casa_pct: {value: 0, unit: "percent", status: "observed"}, gnpa_pct: {value: 99, unit: "percent", status: "observed"}}, sources: ["https://example.org/provisional.pdf", "javascript:alert(1)"]});
+
+test("provisional business figures retain a separate period without replacing NPA evidence", () => {
+  const data = {...record(), period_end: "2026-06-30", as_of: "2026-10-14", provisional_update: provisional()};
+  const model = reviewModel(data);
+  assert.match(model.clock, /2026-06-30/);
+  assert.equal(model.metrics[0].value, "0%");
+  assert.match(model.provisional.clock, /2026-09-30.*2026-10-03.*2026-10-14/);
+  assert.match(model.provisional.note, /NPA and capital figures above remain dated 2026-06-30/);
+  assert.deepEqual(model.provisional.metrics.map(m => m.value), ["1,70,460 INR crore", "Not disclosed", "Not disclosed", "0%"]);
+  assert.deepEqual(model.provisional.sources, ["https://example.org/provisional.pdf"]);
+  assert.match(reviewModel({...data, provisional_update: {...provisional(), status: "stale"}}).provisional.title, /^Stale provisional/);
+  assert.equal(reviewModel(record()).provisional, null);
+  assert.equal(reviewModel({...data, provisional_update: {status: "unavailable"}}).provisional, null);
+});
+
+test("unverified provisional boundaries and superseded periods fail closed", () => {
+  for (const patch of [{status: "observed"}, {full_financial_results: true}, {asset_quality_period_refreshed: true}, {score_authority: true}, {training_eligible: true}, {period_end: "2021-03-31"}, {publication_date: "today"}, {retrieved_at: null}]) {
+    assert.throws(() => reviewModel({...record(), provisional_update: {...provisional(), ...patch}}), /provisional disclosure/);
+  }
+});
 test("old evidence and zero measurements retain their meanings", () => {
   const model = reviewModel(record());
   assert.equal(model.status, "Stale evidence");

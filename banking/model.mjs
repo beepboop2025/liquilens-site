@@ -11,6 +11,27 @@ export function amount(value, unit) {
   return unit === "percent" ? `${number}%` : `${number} ${String(unit || "unit unavailable").replaceAll("_", " ")}`;
 }
 
+function provisionalModel(data) {
+  const update = data.provisional_update;
+  if (!update || update.status === "unavailable") return null;
+  const dated = value => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value));
+  if (!["provisional", "stale"].includes(update.status) || update.full_financial_results !== false
+      || update.asset_quality_period_refreshed !== false || update.score_authority !== false || update.training_eligible !== false
+      || !dated(update.period_end) || !dated(update.publication_date) || !dated(data.period_end)
+      || update.period_end <= data.period_end || typeof update.retrieved_at !== "string"
+      || !Number.isFinite(Date.parse(update.retrieved_at))) throw new Error("The provisional disclosure could not be verified.");
+  return {
+    title: `${update.status === "stale" ? "Stale provisional" : "Provisional"} business update · ${update.period_end}`,
+    clock: `Reporting period: ${update.period_end}. Published: ${update.publication_date}. Captured: ${new Date(update.retrieved_at).toISOString().slice(0, 16).replace("T", " ")} UTC.`,
+    note: `Subject to issuer review and approval. NPA and capital figures above remain dated ${data.period_end}.`,
+    metrics: ["deposits", "advances", "gross_loan_portfolio", "casa_pct"].map(key => {
+      const metric = update.metrics?.[key];
+      return {label: metric?.label || key.replaceAll("_", " "), value: metric?.status === "observed" ? amount(metric.value, metric.unit) : "Not disclosed", basis: metric?.basis || ""};
+    }),
+    sources: sourceLinks(update.sources),
+  };
+}
+
 export function reviewModel(data) {
   if (data?.schema !== "liquilens.bank-specialisation.v1" || !STATUSES.has(data.status) || typeof data.name !== "string") throw new Error("The API returned an unrecognised evidence contract.");
   if (data.score_authority !== false || data.can_authorize_credit !== false) throw new Error("The response does not confirm the public research boundary.");
@@ -18,6 +39,7 @@ export function reviewModel(data) {
     name: data.name,
     status: LABELS[data.status],
     clock: `Reporting period: ${data.period_end || "unavailable"}. Evidence cutoff: ${data.as_of || "unavailable"}. Captured: ${data.retrieved_at || data.available_at || "not recorded"}.`,
+    provisional: provisionalModel(data),
     metrics: METRICS.filter(key => CORE_METRICS.includes(key) || data.metrics?.[key]?.value != null).map(key => {
       const metric = data.metrics?.[key];
       return {label: metric?.label || key.replaceAll("_", " "), value: metric?.status === "observed" ? amount(metric.value, metric.unit) : "Not disclosed", basis: metric?.basis || ""};

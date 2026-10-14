@@ -75,6 +75,15 @@ test("unavailable evidence never becomes a zero or a research conclusion", () =>
   assert.throws(() => project("exit", {...fixtures.exit, sell_cost_bp_by_venue: []}));
 });
 
+test("scheduled funding events remain distinct from observed evidence in the review", () => {
+  const data = structuredClone(fixtures.funding);
+  data.editorial.evidence.push({label: "Settlement", claim: "A dated funding window", source: "Treasury", asof: "2026-09-30", evidence_type: "scheduled_event"});
+  const details = project("funding", data).details;
+  assert.ok(details.some(([, value]) => value.includes("Scheduled event date: 2026-09-30")));
+  assert.ok(details.some(([, value]) => value.includes("Evidence date: 2026-09-02")));
+  assert.ok(details.every(([, value]) => !value.includes("Observation: 2026-09-30")));
+});
+
 test("mismatched response IDs, protocol negotiation, tool errors and sizes fail without retries", async () => {
   for (const mutate of [x => ({...x, id: 999}), x => ({...x, error: {code: -1}}), x => ({...x, result: {...x.result, protocolVersion: "bad"}})]) {
     const t = fixtureFetch("bank", mutate);
