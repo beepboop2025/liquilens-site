@@ -120,6 +120,60 @@ class InventoryTests(unittest.TestCase):
             self.assertIn("Monitoring error", output.with_suffix(".md").read_text())
 
 
+class ReviewedRedirectTests(unittest.TestCase):
+    def setUp(self):
+        self.current = report()
+        self.row = self.current["products"][2]
+        self.old = self.row["origin"] + "/old-article/"
+        self.target = self.row["origin"] + "/reference/0/"
+        self.document = {"schema": "liquilens.search-retirements.v1", "retirements": [
+            {"product": "Undertow", "url": self.old, "redirect_to": self.target,
+             "reason": "Reviewed migration to the preserved original publication."}]}
+
+    def responses(self, status=301, location=None, canonical=None):
+        return {
+            self.old: {"status": status, "headers": {"location": location or self.target}, "body": b"", "error": None},
+            self.target: {"status": 200, "headers": {"content-type": "text/html"}, "error": None,
+                          "body": (f'<title>Article</title><meta name="description" content="Research article">'
+                                   f'<link rel="canonical" href="{canonical or self.target}">').encode()},
+        }
+
+    def test_redirect_remains_checked_after_it_leaves_the_baseline(self):
+        reasons = monitor.validate_retirements(self.document)
+        for status in (301, 308):
+            with self.subTest(status=status):
+                current = copy.deepcopy(self.current)
+                responses = self.responses(status=status)
+                monitor.audit_retirement_redirects(current, self.document, lambda url, origin: responses[url])
+                monitor.compare_inventory(current, self.current, reasons)
+                self.assertEqual(current["inventory_history"]["status"], "PASS")
+                self.assertEqual(current["products"][2]["reviewed_redirects"][0]["status"], "PASS")
+                self.assertIn("1/1 passed", monitor.summarize(current))
+
+    def test_broken_temporary_wrong_and_bad_canonical_redirects_fail(self):
+        for changes in ({"status": 404}, {"status": 302}, {"location": "https://other.example/"},
+                        {"canonical": self.row["origin"] + "/"}):
+            with self.subTest(changes=changes):
+                current = copy.deepcopy(self.current)
+                responses = self.responses(**changes)
+                monitor.audit_retirement_redirects(current, self.document, lambda url, origin: responses[url])
+                self.assertEqual(current["products"][2]["status"], "FAIL")
+                self.assertEqual(current["products"][2]["errors"][0]["url"], self.old)
+
+    def test_unlisted_destination_fails_without_fetching(self):
+        self.row["sitemap_urls"].remove(self.target)
+        monitor.audit_retirement_redirects(self.current, self.document,
+                                          lambda *args: self.fail("must not fetch an unlisted destination"))
+        self.assertIn("absent from the current sitemap", self.row["errors"][0]["problem"])
+
+    def test_offsite_self_and_non_string_destinations_are_rejected(self):
+        for target in ("https://other.example/", self.old, None, 1):
+            with self.subTest(target=target), self.assertRaises(ValueError):
+                document = copy.deepcopy(self.document)
+                document["retirements"][0]["redirect_to"] = target
+                monitor.validate_retirements(document)
+
+
 class BaselineSourceTests(unittest.TestCase):
     def test_only_successful_main_own_repository_live_runs_are_trusted(self):
         changes = [dict(event="pull_request"), dict(head_branch="feature"), dict(status="in_progress"),
