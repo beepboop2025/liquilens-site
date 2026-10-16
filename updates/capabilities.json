@@ -1,8 +1,8 @@
 {
   "schema": "liquilens.connected-upgrades.v1",
-  "reviewed_on": "2026-10-09",
+  "reviewed_on": "2026-10-16",
   "title": "A connected review, from evidence to follow-up",
-  "description": "Review the institution, check funding conditions, inspect market liquidity, then retain the evidence for the next review.",
+  "description": "Connect bank-disclosure research, dollar-funding context and market-liquidity evidence through public pages, MCP and source-history APIs.",
   "products": [
     {
       "name": "LiquiLens",
@@ -33,13 +33,13 @@
     },
     {
       "id": "research-infrastructure",
-      "title": "Make the review repeatable",
-      "description": "Connect the Research Desk, schedule bounded research and retain source records with operating diagnostics and recovery guidance.",
-      "action": "Set up recurring research",
-      "url": "https://liquilens.in/agents/infrastructure/",
+      "title": "Connect research to your AI workflow",
+      "description": "Use the central MCP connections, Financial Evidence Python 0.1.10 or AI SDK 0.1.1 to bring bank, funding and market-liquidity evidence into a repeatable review.",
+      "action": "Choose a research connection",
+      "url": "https://beepboop2025.github.io/financial-evidence-skills/connect/",
       "state": "Available for research",
       "boundary": "Each source keeps its dates, rights and missingness. Operator checks do not establish customer adoption.",
-      "source": "https://github.com/beepboop2025/financial-evidence-skills/commit/dd45f2f32ee8617fd5bf6853081356228d6ffe7d"
+      "source": "https://github.com/beepboop2025/financial-evidence-skills/commit/4810da365880a876d880cb7563ffa3805abdc3e7"
     },
     {
       "id": "noisefloor",
@@ -60,6 +60,46 @@
       "state": "Paper rehearsal; execution disabled",
       "boundary": "The workbench is a simulation. Source permissions, freshness and account controls remain separate execution requirements.",
       "source": "https://github.com/beepboop2025/financial-evidence-skills/commit/dd45f2f32ee8617fd5bf6853081356228d6ffe7d"
+    },
+    {
+      "id": "source-history",
+      "title": "Retrieve dated source histories",
+      "description": "Read funding histories, bank filings and Bitcoin or Liquid settlement observations through the shared source-data API and MCP. Keep units, observation dates and capture times attached.",
+      "action": "Explore the source-data connection",
+      "url": "https://liquilens.in/agents/#source-data",
+      "state": "Public read-only research",
+      "boundary": "Captured vintages begin with the archive. An as-known-at query cannot reconstruct observations before the first capture; missing values are not zero.",
+      "source": "https://github.com/beepboop2025/financial-evidence-skills/commit/4810da365880a876d880cb7563ffa3805abdc3e7"
+    },
+    {
+      "id": "source-status-updates",
+      "title": "Receive source-status updates",
+      "description": "Use reusable MCP sessions and bounded source-status updates. Clients retain expiry, source clocks, rights and missingness when a connection resets.",
+      "action": "Read the client and status-stream guide",
+      "url": "https://beepboop2025.github.io/financial-evidence-skills/agents/low-latency.md",
+      "state": "Research metadata; no market quotes",
+      "boundary": "The stream reports scheduled source-status metadata. It is not a tick feed, complete replay history, execution-ready input or an availability guarantee.",
+      "source": "https://github.com/beepboop2025/financial-evidence-skills/commit/fe9eb8c9d23e7fbef2c31016bf9d106b72741428"
+    },
+    {
+      "id": "provisional-bank-disclosures",
+      "title": "Separate bank updates from filings",
+      "description": "Review provisional business updates beside accepted filings, with distinct reporting and publication dates. Compare only the fields and periods the source actually discloses.",
+      "action": "Inspect the bank evidence workspace",
+      "url": "https://liquilens.in/banking/",
+      "state": "Source-dated institution research",
+      "boundary": "A provisional update is not an audited financial result. Missing asset-quality or capital measures remain unavailable; the view does not certify bank safety.",
+      "source": "https://github.com/beepboop2025/liquilens-site/commit/844027b42ab1752328606b71daa2d5aada900174"
+    },
+    {
+      "id": "public-agent-activity",
+      "title": "Inspect public agent activity evidence",
+      "description": "Browse selected agent registries, service catalogs and protocol events, with source and collection dates. Review what each observation can establish.",
+      "action": "Open agent activity research",
+      "url": "https://agents.seiche.info/activity/",
+      "state": "Bounded public observations",
+      "boundary": "Registrations, wallets, services and event logs are different units. They do not establish unique autonomous agents, customers, revenue or a complete global market. Private integrations require separate authorization.",
+      "source": "https://github.com/beepboop2025/seiche/commit/931513c7d8327bfa0932ddecf5be51704f4a5e64"
     }
   ],
   "authority": {
@@ -73,5 +113,9 @@
     "Funding conditions and market depth do not measure an institution’s deposit liquidity.",
     "Release dates do not establish the freshness of source observations.",
     "Evidence collection, delivery, validation and customer use are separate claims."
-  ]
+  ],
+  "previous_review": {
+    "reviewed_on": "2026-10-09",
+    "url": "https://liquilens.in/updates/archive/2026-10-09.json"
+  }
 }
