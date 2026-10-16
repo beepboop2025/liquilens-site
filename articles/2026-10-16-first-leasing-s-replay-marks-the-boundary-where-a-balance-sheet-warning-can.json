@@ -1,0 +1,112 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-16-first-leasing-s-replay-marks-the-boundary-where-a-balance-sheet-warning-can",
+  "product": "liquilens",
+  "slug": "2026-10-16-first-leasing-s-replay-marks-the-boundary-where-a-balance-sheet-warning-can",
+  "date": "2026-10-16",
+  "article_type": "historical_replay",
+  "topic": "first-leasing-company-of-india",
+  "headline": "First Leasing’s replay marks the boundary where a balance-sheet warning can fail",
+  "dek": "The case does not identify current default risk or establish a timely historical signal. It shows why a threshold screen cannot treat apparently compliant disclosures as proof of safety when the underlying record is fraud-masked.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-16-first-leasing-s-replay-marks-the-boundary-where-a-balance-sheet-warning-can/",
+  "published_at": "2026-10-16T11:18:12Z",
+  "evidence_as_of": "2026-10-16",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "first-leasing-company-of-india",
+    "name": "First Leasing Company Of India",
+    "inst_type": "nbfc",
+    "default_date": "2013-12-02",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "first-leasing-company-of-india",
+      "inst_type": "nbfc",
+      "default_date": "2013-12-02",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "first-leasing-company-of-india",
+      "inst_type": "nbfc",
+      "scoreable": true,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1438,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:f2c5348f6ccf5d274a3c57141297a692ba9996561a4b545c7b87bfc78faac2c0",
+    "memory_fingerprint": "sha256:3783fbcb9f53c1848b87ffd2acc68535f76323fb8329eb6082a46af1878445ba",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 3,
+    "dossier_sha256": "a8d11b35c20454631259cb188ae85e95908ca88e294559d7979cad7a307d9a77",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Reframed the case as a disclosure-integrity boundary rather than evidence of a missed warning.",
+      "Separated filing-period signals, market-price data, and model-derived tiers.",
+      "Preserved construction-PIT, eligibility, authorization, and missing-data limitations.",
+      "Added the strongest counter-case and retained required product-boundary language.",
+      "Removed the unsupported confidence-level notation while retaining the dossier’s confidence-interval endpoints.",
+      "Preserved fraud-masked status, missing First Leasing signal history, construction-PIT eligibility limits, and market authorization restrictions.",
+      "Separated filing-period evidence, market-price information, and model-derived tiers; retained the counter-case and product boundaries."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:f2c5348f6ccf5d274a3c57141297a692ba9996561a4b545c7b87bfc78faac2c0",
+      "memory_fingerprint": "sha256:3783fbcb9f53c1848b87ffd2acc68535f76323fb8329eb6082a46af1878445ba",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
