@@ -84,8 +84,8 @@ ROUTES = (
     RouteDefinition(
         "/updates/", "connected-upgrades", "LIQUILENS / SEICHE / UNDERTOW", "CONNECTED EVIDENCE REVIEWS",
         "Review the institution, funding and market liquidity together.",
-        "PRODUCT CAPABILITIES", "MONITOR / RESEARCH / REHEARSE",
-        "SEPARATE SOURCE CLOCKS / PERMISSIONS / AUTHORITY", "REVIEWED", "2026-10-08",
+        "PRODUCT CAPABILITIES", "BANKS / FUNDING / MCP",
+        "DATED SOURCE HISTORIES / STATUS UPDATES / RESEARCH", "REVIEWED", "2026-10-16",
         "HUMAN REVIEW / EXECUTION DISABLED", "REVIEWED PRODUCT RELEASES",
         signature_file="updates/capabilities.json",
     ),

@@ -85,12 +85,17 @@ def outputs(root=ROOT):
     intro = '<section class="research-intro"><div><h1>Institution monitoring.</h1><p>Keep the gaps in view. Review dated changes, overdue disclosures and the primary sources behind each institution record.</p></div></section>'
     monitor = intro + '<institution-monitor id="institution-monitor" aria-label="Institution evidence monitoring"><p>Enable JavaScript for the review queue, or <a href="https://agents.seiche.info/v1/banking/monitoring/watchlist">read the public source register</a>.</p></institution-monitor>'
     monitor += '<section class="rw-follow"><h2>Use the same evidence in your workflow</h2><p>The public API and MCP tool <code>institution_evidence_monitor</code> use the same monitoring contract. Source dates, missing fields and human review remain explicit.</p><p><a href="/agents/">Connect an agent</a> · <a href="/banking/institutions/">Read filing snapshots</a> · <a href="/updates/">Explore the connected tools</a></p></section>'
-    update_intro = '<section class="research-intro"><div><h1>Stronger reviews. Connected evidence.</h1><p>Recent upgrades connect institution monitoring, recurring research, noise analysis and paper rehearsal. Choose the part of the review you need; each product retains its own evidence and authority.</p></div></section>'
+    update_intro = '<section class="research-intro"><div><h1>Financial research tools. Current product capabilities.</h1><p>Use LiquiLens for bank disclosures, Seiche for dollar funding and Undertow for market liquidity. The latest upgrades add central MCP connections, dated source histories, reusable research sessions and source-status updates.</p></div></section>'
     products = '<section class="rw-follow"><h2>Three distinct evidence roles</h2><div class="rw-follow-grid">' + ''.join(f'<article><h3>{escape(p["name"])}</h3><p>{escape(p["owns"])}</p><a href="{escape(p["url"],quote=True)}">Open {escape(p["name"])}</a></article>' for p in data['products']) + '</div></section>'
     records = f'<section class="rw-follow"><h2>Release scope and evidence</h2><p>Reviewed {escape(data["reviewed_on"])}. This is a dated capability record. Source observations have their own dates; the monitor reads the current source register when opened.</p><dl class="upgrade-evidence">'
     for capability in data['capabilities']:
         records += f'<dt>{escape(capability["title"])}</dt><dd>{escape(capability["boundary"])} <a href="{escape(capability["source"],quote=True)}">Reviewed source</a></dd>'
-    records += '</dl><p><a href="/updates/capabilities.json">Machine-readable capability record</a></p></section>'
+    records += '</dl><p><a href="/updates/capabilities.json">Machine-readable capability record</a></p>'
+    previous = data.get('previous_review')
+    if previous:
+        records += f'<p><a href="{escape(previous["url"], quote=True)}">Previous capability record: {escape(previous["reviewed_on"])}</a></p>'
+    records += '</section>'
+    questions = '<section class="rw-follow" aria-labelledby="research-workflow-questions"><h2 id="research-workflow-questions">Choose a research workflow</h2><div class="rw-follow-grid"><article><h3>Which tools can an AI agent use for financial research?</h3><p>Connect LiquiLens for covered bank disclosures, Seiche for funding and reserve context, and Undertow for published market-depth and exit estimates. Financial Evidence supplies the shared connection and client workflow. Keep each result’s source date and limitations when combining them.</p><a href="/agents/">Choose an API or MCP connection</a></article><article><h3>Can I retrieve the underlying observations?</h3><p>The source-data interface provides bounded histories with units, observation dates, capture times and source references. Resolve the dataset and entity first, then follow the response’s pagination. Historical availability is limited to the recorded archive.</p><a href="/agents/#source-data">Read source-history examples</a></article><article><h3>Are the status updates live prices?</h3><p>No. They describe the scheduled source monitor’s freshness, permissions and missing evidence. A connected stream does not establish a current market quote, trading permission or a complete replay. The clients expire retained status at its stated deadline.</p><a href="https://beepboop2025.github.io/financial-evidence-skills/agents/low-latency.md">Read the status-stream contract</a></article></div></section>'
     home = (root / 'index.html').read_text()
     marked = START + '\n' + section + '\n' + END
     if START in home:
@@ -102,7 +107,7 @@ def outputs(root=ROOT):
     return {
         root / 'index.html': home,
         root / 'banking/monitoring/index.html': page('Institution monitoring', '/banking/monitoring/', 'Review institution evidence, changes and visibility gaps with original source dates and human review boundaries.', monitor),
-        root / 'updates/index.html': page('Connected product upgrades', '/updates/', data['description'], update_intro + section + products + records),
+        root / 'updates/index.html': page('Financial research tools and product updates', '/updates/', data['description'], update_intro + section + products + questions + records),
     }
 
 
