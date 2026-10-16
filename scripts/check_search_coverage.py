@@ -18,6 +18,7 @@ import xml.etree.ElementTree as ET
 PRODUCTS = (
     {"name": "LiquiLens", "origin": "https://liquilens.in", "minimum_urls": 124,
      "pages": ("/", "/start/", "/agents/", "/developers/"),
+     "homepage_links": ("/questions/", "/questions/small-finance-banks-rising-npas/"),
      "sitemaps": ("/sitemap.xml",)},
     {"name": "Seiche", "origin": "https://seiche.info", "minimum_urls": 166,
      "pages": ("/", "/money-markets/", "/markets/"),
@@ -27,6 +28,7 @@ PRODUCTS = (
                                                "/.well-known/api-catalog")}},
     {"name": "Undertow", "origin": "https://liquilens-undertow.com", "minimum_urls": 58,
      "pages": ("/", "/crypto/"),
+     "homepage_links": ("/questions/", "/questions/bitcoin-sell-100000/"),
      "sitemaps": ("/sitemap.xml", "/articles/sitemap.xml")},
 )
 AGENT = "LiquiLens-Discovery-Monitor/1.0 (+https://liquilens.in/)"
@@ -38,7 +40,9 @@ TOPIC_PAGES = {
                   "/questions/dollar-funding-and-bank-failure/", "/questions/tight-funding-bitcoin-exit/",
                   "/banking/", "/banking/institutions/", "/guides/how-to-assess-bank-risk/",
                   "/guides/rbi-nbfc-early-warning-system/", "/use-cases/"),
-    "Seiche": ("/money-markets/", "/markets/capital-markets/", "/markets/forex/",
+    "Seiche": ("/questions/", "/questions/why-sofr-above-iorb/",
+               "/questions/sofr-iorb-spread/", "/questions/are-bank-reserves-scarce/",
+               "/money-markets/", "/markets/capital-markets/", "/markets/forex/",
                "/gift-city/", "/use-cases/money-market-research/",
                "/use-cases/capital-market-transmission/"),
     "Undertow": ("/questions/", "/questions/bitcoin-sell-100000/",
@@ -200,9 +204,12 @@ class PageMetadata(HTMLParser):
         self.jsonld = []
         self.in_jsonld = False
         self.no_snippet = False
+        self.links = []
 
     def handle_starttag(self, tag, attrs):
         attrs = {key: value or "" for key, value in attrs}
+        if tag == "a" and "nofollow" not in attrs.get("rel", "").lower().split():
+            self.links.append(attrs.get("href", ""))
         if tag == "h1":
             self.h1_count += 1
         if tag in {"script", "style"}:
@@ -350,7 +357,8 @@ def audit_product(product, full=False, fetcher=fetch, *, topics=(),
     result["sitemap_urls"] = sorted(pages)
     if len(pages) < product["minimum_urls"]:
         problem(origin, f"sitemap coverage {len(pages)} below reviewed minimum {product['minimum_urls']}")
-    required = {origin + path for path in (*product["pages"], *topics)}
+    required = {origin + path for path in (*product["pages"], *topics,
+                                         *product.get("homepage_links", ()))}
     for url in sorted(required - pages):
         problem(url, "required entry page absent from sitemaps")
 
@@ -395,6 +403,16 @@ def audit_product(product, full=False, fetcher=fetch, *, topics=(),
         try:
             response = read(url)
             validate_page(response, url)
+            if url == origin + "/" and product.get("homepage_links"):
+                home = PageMetadata()
+                home.feed(response["body"].decode("utf-8"))
+                links = {urllib.parse.urldefrag(urllib.parse.urljoin(url, href))[0]
+                         for href in home.links if href}
+                result["homepage_links"] = {origin + path: origin + path in links
+                                            for path in product["homepage_links"]}
+                for destination, linked in result["homepage_links"].items():
+                    if not linked:
+                        problem(destination, "homepage omits a required research link")
             if url in {origin + path for path in topics}:
                 result["topic_pages"][url] = validate_topic_page(response)
         except ValueError as error:
@@ -513,6 +531,9 @@ def summarize(report):
                 lines.append(f"  - Reviewed retirement: `{item['url']}` — {item['reason']}")
         if p.get("topic_pages"):
             lines.append(f"\n- {p['product']}: {len(p['topic_pages'])} priority topic pages checked; full audit: {p.get('full_page_audit', False)}; discovery changed: {p.get('publication_change_detected', False)}.")
+        if p.get("homepage_links"):
+            links = p["homepage_links"]
+            lines.append(f"  - Homepage research links: {sum(links.values())}/{len(links)} present in HTML.")
         policy = p.get("gemini_policy")
         if policy:
             blocked = [url for url, allowed in policy.items() if not allowed]

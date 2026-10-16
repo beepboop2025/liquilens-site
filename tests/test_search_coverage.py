@@ -76,6 +76,30 @@ class CoverageTests(unittest.TestCase):
                                         previous_revision=first["discovery_revision"])
         self.assertTrue(changed["full_page_audit"])
 
+    def test_sitemap_presence_does_not_replace_homepage_navigation(self):
+        product = {**PRODUCT, "homepage_links": ("/guide/",)}
+        result = monitor.audit_product(product, fetcher=self.fetch)
+        self.assertEqual(result["status"], "FAIL")
+        self.assertIn("homepage omits", result["errors"][0]["problem"])
+        for anchor in ('<a href="/guide/">Read the guide</a>',
+                       f'<a href="{ORIGIN}/guide/#sources">Read the sources</a>'):
+            with self.subTest(anchor=anchor):
+                self.fixtures[ORIGIN + "/"] = page(ORIGIN + "/", anchor)
+                result = monitor.audit_product(product, fetcher=self.fetch)
+                self.assertEqual(result["status"], "PASS")
+                self.assertEqual(result["homepage_links"], {ORIGIN + "/guide/": True})
+
+    def test_metadata_script_and_nofollow_do_not_satisfy_navigation(self):
+        product = {**PRODUCT, "homepage_links": ("/guide/",)}
+        for markup in ('<link href="/guide/" rel="alternate">',
+                       '<script>const link = \'<a href="/guide/">Guide</a>\';</script>',
+                       '<a href="/guide/" rel="NOFOLLOW">Guide</a>',
+                       '<a href="https://another.test/guide/">Guide</a>'):
+            with self.subTest(markup=markup):
+                self.fixtures[ORIGIN + "/"] = page(ORIGIN + "/", markup)
+                result = monitor.audit_product(product, fetcher=self.fetch)
+                self.assertEqual(result["status"], "FAIL")
+
     def test_topic_content_jsonld_and_snippet_controls(self):
         valid = '<h1>Bank evidence</h1><p>' + 'Research evidence with source dates. ' * 12 + '</p>'
         self.assertEqual(monitor.validate_topic_page(page(ORIGIN, valid))["jsonld_blocks"], 0)
