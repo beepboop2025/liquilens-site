@@ -11,10 +11,16 @@ Record the baseline's source-run receipt and file hashes at installation.
 
 The timer runs 15 minutes after each completed audit, with up to 30 seconds of
 jitter. Sitemaps, robots, LLM references and AI catalog changes trigger a full
-audit for the affected product. The 21 priority topic pages are always checked.
+audit for the affected product. Every configured priority topic page is always checked.
 A full family audit also runs whenever the last successful full audit is at
 least 24 hours old. This detects new published URLs and changes to advertised
 discovery; it does not infer source-data freshness from publication timestamps.
+
+Reviewed URL retirements can name a `redirect_to` destination. Those redirects
+remain checked on every audit, even after the old URL leaves the baseline:
+the response must be permanent (301 or 308), point to the exact reviewed URL,
+and resolve to a current sitemap page with a valid self-referencing canonical.
+The retirement reason does not exempt the replacement from page validation.
 
 `latest.json` and `latest.md` preserve the most recent attempt, including
 failure. `baseline.json` advances only after a successful history comparison;

@@ -22,6 +22,7 @@ PRODUCTS = (
      "sitemaps": ("/sitemap.xml",)},
     {"name": "Seiche", "origin": "https://seiche.info", "minimum_urls": 166,
      "pages": ("/", "/money-markets/", "/markets/"),
+     "homepage_links": ("/questions/", "/questions/why-sofr-above-iorb/"),
      "sitemaps": ("/sitemap.xml",),
      "protected_robots": {"origin": "https://api.seiche.info", "agent": "Google-Extended",
                           "blocked_prefixes": ("/api", "/mcp", "/.well-known/mcp.json",
@@ -39,7 +40,8 @@ TOPIC_PAGES = {
                   "/questions/microfinance-lender-stress/", "/questions/small-finance-bank-vs-nbfc-mfi/",
                   "/questions/dollar-funding-and-bank-failure/", "/questions/tight-funding-bitcoin-exit/",
                   "/banking/", "/banking/institutions/", "/guides/how-to-assess-bank-risk/",
-                  "/guides/rbi-nbfc-early-warning-system/", "/use-cases/"),
+                  "/guides/rbi-nbfc-early-warning-system/", "/use-cases/",
+                  "/updates/", "/banking/monitoring/", "/agents/correlation/"),
     "Seiche": ("/questions/", "/questions/why-sofr-above-iorb/",
                "/questions/sofr-iorb-spread/", "/questions/are-bank-reserves-scarce/",
                "/money-markets/", "/markets/capital-markets/", "/markets/forex/",
@@ -488,8 +490,41 @@ def validate_retirements(document, products=PRODUCTS):
         key = (row["product"], url)
         if key in result or url in {product["origin"] + path for path in product["pages"]}:
             raise ValueError("retirement duplicates an entry or removes a required page")
+        if "redirect_to" in row:
+            target = row["redirect_to"]
+            if not isinstance(target, str) or target == url:
+                raise ValueError("reviewed redirect needs a distinct destination URL")
+            validate_url(target, product["origin"])
         result[key] = reason.strip()
     return result
+
+
+def audit_retirement_redirects(report, document, fetcher=fetch):
+    """Keep checking reviewed migrations after the old URL leaves the baseline."""
+    rows = {row["product"]: row for row in report["products"]}
+    for retirement in document["retirements"]:
+        target = retirement.get("redirect_to")
+        if target is None:
+            continue
+        row = rows[retirement["product"]]
+        url, origin = retirement["url"], row["origin"]
+        check = {"url": url, "target": target, "status": "FAIL"}
+        row.setdefault("reviewed_redirects", []).append(check)
+        try:
+            if target not in row["sitemap_urls"]:
+                raise ValueError("reviewed redirect destination is absent from the current sitemap")
+            response = fetcher(url, origin)
+            check["http_status"] = response["status"]
+            if response["error"] or response["status"] not in (301, 308):
+                raise ValueError(f"reviewed redirect requires HTTP 301 or 308, got {response['status']}: {response['error'] or ''}")
+            location = urllib.parse.urljoin(url, response["headers"].get("location", ""))
+            if location != target:
+                raise ValueError("reviewed redirect points to an unexpected destination")
+            validate_page(fetcher(target, origin), target)
+            check["status"] = "PASS"
+        except ValueError as error:
+            row["errors"].append({"url": url, "problem": str(error)})
+            row["status"] = "FAIL"
 
 
 def compare_inventory(report, baseline, retirements=None, products=PRODUCTS):
@@ -534,6 +569,9 @@ def summarize(report):
         if p.get("homepage_links"):
             links = p["homepage_links"]
             lines.append(f"  - Homepage research links: {sum(links.values())}/{len(links)} present in HTML.")
+        if p.get("reviewed_redirects"):
+            redirects = p["reviewed_redirects"]
+            lines.append(f"  - Reviewed permanent redirects: {sum(r['status'] == 'PASS' for r in redirects)}/{len(redirects)} passed, including destination canonicals.")
         policy = p.get("gemini_policy")
         if policy:
             blocked = [url for url, allowed in policy.items() if not allowed]
@@ -582,7 +620,9 @@ def main():
             if args.retirements:
                 if args.retirements.stat().st_size > MAX_BYTES:
                     raise ValueError("retirements exceed the reviewed byte limit")
-                retirements = validate_retirements(json.loads(args.retirements.read_text()))
+                retirement_document = json.loads(args.retirements.read_text())
+                retirements = validate_retirements(retirement_document)
+                audit_retirement_redirects(report, retirement_document)
             compare_inventory(report, baseline, retirements)
         except (OSError, ValueError) as error:
             report["inventory_history"] = {"status": "UNAVAILABLE"}
