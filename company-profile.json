@@ -24,8 +24,7 @@
   "global_strategy": {
     "distribution": "Public websites, REST APIs and hosted MCP make the products accessible to international users, subject to applicable terms.",
     "coverage": "Worldwide access is distinct from jurisdiction and market coverage. Follow each product card and the source dates served with each result.",
-    "initial_commercial_focus": "Repeatable institution monitoring and liquidity review for treasury, credit and research teams, starting with existing India and USD evidence.",
-    "expansion": "Additional jurisdictions and enterprise integrations are expansion opportunities, subject to source rights, local definitions and validation."
+    "initial_commercial_focus": "Repeatable institution monitoring and liquidity review for treasury, credit and research teams, starting with existing India and USD evidence."
   },
   "connection_policy": "The mcp fields are the recommended central hosted connections for public read-only tools. OpenAPI links document each publisher's wider native API; they do not imply that every native route is exposed centrally. Source websites, clocks, rights and separately scoped commercial services retain their own authority.",
   "products": [

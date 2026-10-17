@@ -58,10 +58,6 @@ TRADE_SAFETY_ARTIFACTS = {
         "https://liquilens.in/protocol/trade-safety/specification.md",
         "1b630294f2da9d12de73728712d09b96584aaf80f67c2ff7049811de608533ae",
     ),
-    "protocol/trade-safety/adoption-plan.md": (
-        "https://liquilens.in/protocol/trade-safety/adoption-plan.md",
-        "9e3afaa9811d8bd691a4a6013f2fc424f5d989baaddd4400600789694593299c",
-    ),
 }
 EXPECTED_CHANNELS = {
     "official-mcp-registry": (

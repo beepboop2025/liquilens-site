@@ -867,7 +867,6 @@
         "requestSchema": "https://liquilens.in/protocol/liquilens-trade-safety-request-v1.schema.json",
         "receiptSchema": "https://liquilens.in/protocol/liquilens-trade-safety-receipt-v1.schema.json",
         "specification": "https://liquilens.in/protocol/trade-safety/specification.md",
-        "adoptionPlan": "https://liquilens.in/protocol/trade-safety/adoption-plan.md",
         "offlineVerifierRegistry": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-evidence-carrier/versions/0.20.1",
         "gatewayStatus": "public read-only sandbox gateway 0.2.2; x402 disabled; no broker credentials, order submission, routing, custody, settlement, or execution surface",
         "gatewayRegistry": "https://registry.modelcontextprotocol.io/v0.1/servers/io.github.beepboop2025%2Fliquilens-trade-safety-gateway/versions/0.2.2",

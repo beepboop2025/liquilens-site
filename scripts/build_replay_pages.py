@@ -495,7 +495,6 @@ BASE_SITEMAP = [
     ("/protocol/", "2026-09-02", "monthly", "0.9"),
     ("/protocol/trade-safety/", "2026-09-02", "monthly", "0.95"),
     ("/protocol/trade-safety/specification.md", "2026-09-02", "never", "0.8"),
-    ("/protocol/trade-safety/adoption-plan.md", "2026-09-02", "monthly", "0.8"),
     ("/tools/ews-coverage-check/", "2026-08-21", "monthly", "0.9"),
     ("/guides/rbi-nbfc-early-warning-system/", "2026-08-21", "monthly", "0.9"),
     ("/guides/how-to-assess-bank-risk/", "2026-10-06", "monthly", "0.8"),

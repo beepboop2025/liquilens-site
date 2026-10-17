@@ -69,7 +69,6 @@ Evidence Carrier machine catalog: https://liquilens.in/protocol/catalog.json
 Trade Safety Receipt v1: https://liquilens.in/protocol/trade-safety/
 Free Trade Safety MCP and REST sandbox: https://trade-safety.liquilens.in/
 Trade Safety specification: https://liquilens.in/protocol/trade-safety/specification.md
-Trade Safety adoption plan: https://liquilens.in/protocol/trade-safety/adoption-plan.md
 Selection guide: https://liquilens.in/use-cases/
 Bank-risk reference guide: https://liquilens.in/guides/how-to-assess-bank-risk/ (asset quality, capital, funding, source clocks and a hypothetical ratio reconciliation; educational, not a credit rating)
 Free early-warning coverage check: https://liquilens.in/tools/ews-coverage-check/
@@ -182,7 +181,6 @@ Canonical Trade Safety contracts:
 - FDC3 receipt context: https://liquilens.in/protocol/fdc3/com.liquilens.trade-safety-receipt.schema.json
 - FDC3 intent fragments: https://liquilens.in/protocol/fdc3/trade-safety-intents.json
 - Normative specification: https://liquilens.in/protocol/trade-safety/specification.md
-- Infrastructure and adoption plan: https://liquilens.in/protocol/trade-safety/adoption-plan.md
 
 The released Evidence Carrier 0.20.1 package and CLI can issue or verify local receipts; its Python package also exposes synchronous and asynchronous operator-side paper-order guards. Only a fresh, exact, HMAC-authenticated `pass` receipt can reach the protected paper callback. The offline read-only MCP server exposes receipt verification, not issuance. Live mode fails closed until durable broker idempotency and uncertain-outcome reconciliation exist. An adopter makes the receipt mandatory by withholding raw order tools and broker credentials from the agent, then verifying the receipt inside the caller-owned OMS or gateway before its own action.
 
