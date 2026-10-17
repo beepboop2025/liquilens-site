@@ -1,0 +1,109 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-17-madhavpura-replay-the-warning-a-disclosure-screen-could-not-honestly-give",
+  "product": "liquilens",
+  "slug": "2026-10-17-madhavpura-replay-the-warning-a-disclosure-screen-could-not-honestly-give",
+  "date": "2026-10-17",
+  "article_type": "historical_replay",
+  "topic": "madhavpura-mercantile-co-operative-bank",
+  "headline": "Madhavpura replay: the warning a disclosure screen could not honestly give",
+  "dek": "Madhavpura Mercantile Co-operative Bank is classified as fraud-masked. Its record does not establish an early warning from either the PCA-style or funding lens; it establishes a boundary between reported filings, market prices, and model output.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-17-madhavpura-replay-the-warning-a-disclosure-screen-could-not-honestly-give/",
+  "published_at": "2026-10-17T11:17:15Z",
+  "evidence_as_of": "2026-10-17",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "madhavpura-mercantile-co-operative-bank",
+    "name": "Madhavpura Mercantile Co-operative Bank",
+    "inst_type": "ucb",
+    "default_date": "2012-06-04",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "madhavpura-mercantile-co-operative-bank",
+      "inst_type": "ucb",
+      "default_date": "2012-06-04",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "madhavpura-mercantile-co-operative-bank",
+      "inst_type": "ucb",
+      "scoreable": false,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1532,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:a2277c3c42b7cb20b6046d1de744340fc0632c68b22b4b75d6e2e1f03b03c7a2",
+    "memory_fingerprint": "sha256:5af833a7e7509282bd67cb20a852aecaf10cd3fa12d0e8fd15c79339887d9b72",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 3,
+    "dossier_sha256": "e18e11f71624b1f04dba9ba875a8f25502b28f90fecda2b69b987f87979fc260",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [],
+    "review_notes": [
+      "Reframed null and unscoreable fields as observability limits rather than negative stress findings.",
+      "Separated filing-period disclosures, market-price data, and model or tier authority.",
+      "Retained fraud-masked, eligibility, stale-data, construction-PIT, and market-admission disclosures.",
+      "Removed placeholder-style status labels and retained the underlying eligibility and timing disclosures in plain language.",
+      "Separated filing-period observations, unavailable market-price evidence, and model or tier authority throughout.",
+      "Preserved fraud-masked status, unscoreable funding status, construction-PIT limits, stale-data exclusions, and market publication restrictions."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:a2277c3c42b7cb20b6046d1de744340fc0632c68b22b4b75d6e2e1f03b03c7a2",
+      "memory_fingerprint": "sha256:5af833a7e7509282bd67cb20a852aecaf10cd3fa12d0e8fd15c79339887d9b72",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
