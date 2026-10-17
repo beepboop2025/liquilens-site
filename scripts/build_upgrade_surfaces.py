@@ -90,7 +90,7 @@ def outputs(root=ROOT):
     records = f'<section class="rw-follow"><h2>Release scope and evidence</h2><p>Reviewed {escape(data["reviewed_on"])}. This is a dated capability record. Source observations have their own dates; the monitor reads the current source register when opened.</p><dl class="upgrade-evidence">'
     for capability in data['capabilities']:
         records += f'<dt>{escape(capability["title"])}</dt><dd>{escape(capability["boundary"])} <a href="{escape(capability["source"],quote=True)}">Reviewed source</a></dd>'
-    records += '</dl><p><a href="/updates/capabilities.json">Machine-readable capability record</a></p>'
+    records += '</dl><p><a href="/updates/capabilities.json">Machine-readable capability record</a> · <a href="https://beepboop2025.github.io/financial-evidence-skills/distribution/">Current packages and marketplace listings</a> · <a href="/usage/2026-10-17/">17 October technical usage report</a></p>'
     previous = data.get('previous_review')
     if previous:
         records += f'<p><a href="{escape(previous["url"], quote=True)}">Previous capability record: {escape(previous["reviewed_on"])}</a></p>'
