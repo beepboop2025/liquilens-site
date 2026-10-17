@@ -2,6 +2,11 @@
   "schema": "liquilens.search-retirements.v1",
   "retirements": [
     {
+      "product": "LiquiLens",
+      "url_sha256": "f6502d78016b03df1572f325f6a5d8f3e01e7ebd0dd35172baafd299d0688609",
+      "reason": "Reference deliberately removed with no replacement. The route is excluded from the sitemap; its 404 response allows search engines to retire it."
+    },
+    {
       "product": "Undertow",
       "url": "https://liquilens-undertow.com/articles/2026-10-05-crypto-moves-tighter-by-0-09-inside-normal-funding-reads-strain/",
       "redirect_to": "https://liquilens-undertow.com/articles/2026-10-05-ig-moves-strained-to-normal-funding-reads-strain/",

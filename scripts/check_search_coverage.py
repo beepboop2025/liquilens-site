@@ -478,24 +478,41 @@ def validate_retirements(document, products=PRODUCTS):
             or len(document["retirements"]) > MAX_URLS):
         raise ValueError("invalid reviewed retirements document")
     expected = {p["name"]: p for p in products}
-    result = {}
+    result, seen = {}, set()
     for row in document["retirements"]:
         if not isinstance(row, dict) or not isinstance(row.get("product"), str) or row["product"] not in expected:
             raise ValueError("retirement has an unknown product")
         product = expected[row["product"]]
         url, reason = row.get("url"), row.get("reason")
-        if not isinstance(url, str) or not isinstance(reason, str) or not 12 <= len(reason.strip()) <= 2000:
+        if not isinstance(reason, str) or not 12 <= len(reason.strip()) <= 2000:
             raise ValueError("retirement needs an exact URL and a meaningful reason")
-        validate_url(url, product["origin"])
-        key = (row["product"], url)
-        if key in result or url in {product["origin"] + path for path in product["pages"]}:
+        if ("url" in row) == ("url_sha256" in row):
+            raise ValueError("retirement needs exactly one URL or URL fingerprint")
+        if "url_sha256" in row:
+            digest = row["url_sha256"]
+            if not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+                raise ValueError("retirement fingerprint must be a lowercase SHA256")
+            if "redirect_to" in row:
+                raise ValueError("reviewed redirects require an explicit source URL")
+            identifier = "sha256:" + digest
+        else:
+            if not isinstance(url, str):
+                raise ValueError("retirement needs an exact URL")
+            validate_url(url, product["origin"])
+            digest = hashlib.sha256(url.encode("utf-8")).hexdigest()
+            identifier = url
+        identity = (row["product"], digest)
+        required = {hashlib.sha256((product["origin"] + path).encode("utf-8")).hexdigest()
+                    for path in product["pages"]}
+        if identity in seen or digest in required:
             raise ValueError("retirement duplicates an entry or removes a required page")
+        seen.add(identity)
         if "redirect_to" in row:
             target = row["redirect_to"]
             if not isinstance(target, str) or target == url:
                 raise ValueError("reviewed redirect needs a distinct destination URL")
             validate_url(target, product["origin"])
-        result[key] = reason.strip()
+        result[(row["product"], identifier)] = reason.strip()
     return result
 
 
@@ -533,10 +550,20 @@ def compare_inventory(report, baseline, retirements=None, products=PRODUCTS):
     for row in report["products"]:
         before, current = previous[row["product"]], set(row["sitemap_urls"])
         removed = sorted(before - current)
-        approved = [{"url": url, "reason": retirements[(row["product"], url)]}
-                    for url in removed if (row["product"], url) in retirements]
-        unexpected = [url for url in removed if (row["product"], url) not in retirements]
-        row["inventory_changes"] = {"added": sorted(current - before), "removed": removed,
+        approved, unexpected, visible_removed = [], [], []
+        for url in removed:
+            digest = hashlib.sha256(url.encode("utf-8")).hexdigest()
+            fingerprint = "sha256:" + digest
+            if (row["product"], fingerprint) in retirements:
+                approved.append({"url_sha256": digest, "reason": retirements[(row["product"], fingerprint)]})
+                visible_removed.append(fingerprint)
+            elif (row["product"], url) in retirements:
+                approved.append({"url": url, "reason": retirements[(row["product"], url)]})
+                visible_removed.append(url)
+            else:
+                unexpected.append(url)
+                visible_removed.append(url)
+        row["inventory_changes"] = {"added": sorted(current - before), "removed": visible_removed,
                                     "reviewed_retirements": approved}
         row["errors"].extend({"url": url, "problem": "URL disappeared since the previous successful inventory"}
                              for url in unexpected)
@@ -563,7 +590,8 @@ def summarize(report):
         if changes:
             lines.append(f"\n- {p['product']} inventory: {len(changes['added'])} added, {len(changes['removed'])} removed, {len(changes['reviewed_retirements'])} reviewed retirements.")
             for item in changes["reviewed_retirements"]:
-                lines.append(f"  - Reviewed retirement: `{item['url']}` — {item['reason']}")
+                identifier = item.get("url") or "sha256:" + item["url_sha256"]
+                lines.append(f"  - Reviewed retirement: `{identifier}` — {item['reason']}")
         if p.get("topic_pages"):
             lines.append(f"\n- {p['product']}: {len(p['topic_pages'])} priority topic pages checked; full audit: {p.get('full_page_audit', False)}; discovery changed: {p.get('publication_change_detected', False)}.")
         if p.get("homepage_links"):
