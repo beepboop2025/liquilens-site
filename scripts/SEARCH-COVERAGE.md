@@ -65,6 +65,17 @@ through normal review. Wildcard retirements are not supported; required entry
 pages cannot be retired. This permission does not waive minimum counts, current
 page validation or robots checks. Reviewed removals remain visible in reports.
 
+An exact retirement without a redirect may use `url_sha256` instead of `url`:
+the lowercase SHA256 of the complete UTF-8 URL. This avoids repeating a retired
+path in the ledger or new reports. The private review must retain the URL and
+removal evidence. Fingerprints remain scoped to one product, cannot retire
+required entry pages, and cannot duplicate a plaintext retirement. Redirects
+still require explicit source and destination URLs for live validation. A
+fingerprint does not erase earlier inventories, artifacts or Git history.
+New workflow artifacts contain the current reports and baseline provenance
+receipt; the downloaded previous inventory remains an input and is not uploaded
+again.
+
 The probe is bounded to three exact HTTPS
 origins, at most 20 sitemaps and 2,500 URLs per product, 3 MiB per response, and
 a 15-second socket timeout. One product runs at a time per worker, with three

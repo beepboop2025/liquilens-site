@@ -2,6 +2,7 @@
 
 import copy
 from datetime import datetime, timedelta, timezone
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -118,6 +119,60 @@ class InventoryTests(unittest.TestCase):
             self.assertEqual(document["inventory_history"]["status"], "UNAVAILABLE")
             self.assertEqual(len(document["products"]), 3)
             self.assertIn("Monitoring error", output.with_suffix(".md").read_text())
+
+
+class FingerprintedRetirementTests(unittest.TestCase):
+    def setUp(self):
+        self.baseline = report()
+        self.current = copy.deepcopy(self.baseline)
+        self.row = self.current["products"][0]
+        self.url = self.row["origin"] + "/reference/0/"
+        self.digest = hashlib.sha256(self.url.encode("utf-8")).hexdigest()
+        self.row["sitemap_urls"].remove(self.url)
+        self.entry = {"product": "LiquiLens", "url_sha256": self.digest,
+                      "reason": "Reviewed removal with no replacement; route now returns 404."}
+
+    def reasons(self, *entries):
+        return monitor.validate_retirements({"schema": "liquilens.search-retirements.v1",
+                                            "retirements": list(entries) or [self.entry]})
+
+    def test_exact_fingerprint_accepts_removal_without_repeating_path(self):
+        monitor.compare_inventory(self.current, self.baseline, self.reasons())
+        self.assertEqual(self.current["inventory_history"]["status"], "PASS")
+        monitor.validate_baseline(self.current)
+        self.assertNotIn(self.url, json.dumps(self.current))
+        self.assertNotIn(self.url, monitor.summarize(self.current))
+        self.assertEqual(self.row["inventory_changes"]["removed"], ["sha256:" + self.digest])
+        self.assertEqual(self.row["inventory_changes"]["reviewed_retirements"][0]["url_sha256"], self.digest)
+
+    def test_another_loss_is_still_rejected(self):
+        unexpected = self.row["origin"] + "/reference/1/"
+        self.row["sitemap_urls"].remove(unexpected)
+        monitor.compare_inventory(self.current, self.baseline, self.reasons())
+        self.assertEqual(self.current["inventory_history"]["status"], "FAIL")
+        self.assertEqual([item["url"] for item in self.row["errors"]], [unexpected])
+        self.assertNotIn(self.url, json.dumps(self.current))
+
+    def test_fingerprint_cannot_authorize_another_product(self):
+        self.entry["product"] = "Seiche"
+        monitor.compare_inventory(self.current, self.baseline, self.reasons())
+        self.assertEqual(self.row["errors"][0]["url"], self.url)
+
+    def test_required_page_ambiguous_identity_and_redirect_are_rejected(self):
+        required = hashlib.sha256(b"https://liquilens.in/").hexdigest()
+        for changes in ({"url_sha256": required}, {"url": self.url},
+                        {"redirect_to": "https://liquilens.in/reference/1/"}):
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                self.reasons({**self.entry, **changes})
+
+    def test_malformed_and_duplicate_fingerprints_are_rejected(self):
+        for digest in (None, 1, "", "a" * 63, "a" * 65, "g" * 64, "A" * 64):
+            with self.subTest(digest=digest), self.assertRaises(ValueError):
+                self.reasons({**self.entry, "url_sha256": digest})
+        explicit = {"product": "LiquiLens", "url": self.url, "reason": self.entry["reason"]}
+        for entries in ((self.entry, self.entry), (self.entry, explicit), (explicit, self.entry)):
+            with self.subTest(entries=entries), self.assertRaises(ValueError):
+                self.reasons(*entries)
 
 
 class ReviewedRedirectTests(unittest.TestCase):

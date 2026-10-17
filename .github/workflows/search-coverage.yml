@@ -78,6 +78,9 @@ jobs:
         if: always() && github.event_name != 'pull_request'
         with:
           name: search-coverage-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/search-coverage/
+          path: |
+            ${{ runner.temp }}/search-coverage/report.json
+            ${{ runner.temp }}/search-coverage/report.md
+            ${{ runner.temp }}/search-coverage/baseline.source.json
           retention-days: 30
           if-no-files-found: error
