@@ -72,6 +72,9 @@ removal evidence. Fingerprints remain scoped to one product, cannot retire
 required entry pages, and cannot duplicate a plaintext retirement. Redirects
 still require explicit source and destination URLs for live validation. A
 fingerprint does not erase earlier inventories, artifacts or Git history.
+New workflow artifacts contain the current reports and baseline provenance
+receipt; the downloaded previous inventory remains an input and is not uploaded
+again.
 
 The probe is bounded to three exact HTTPS
 origins, at most 20 sitemaps and 2,500 URLs per product, 3 MiB per response, and
