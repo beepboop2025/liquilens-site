@@ -16,28 +16,19 @@ Financial reviews cross bank filings, funding charts and market-depth estimates.
 
 Each product works independently. Browser and agent workflows connect the relevant evidence while retaining separate clocks, coverage states and scores. Start with an institution, add funding context, and inspect market liquidity where the exposure has a relevant market exit.
 
-## Global direction
+## Current coverage
 
 Built in India for international treasury, credit, fund research and financial-software users. Public websites, REST APIs and hosted MCP provide human and machine distribution. Current evidence includes India and US institution research, European named case files, a deep USD funding desk, broader reference-market coverage and cross-market liquidity research. Global access does not mean uniform worldwide coverage. New jurisdictions require buyer demand, source rights, local definitions and validation.
 
 ## Commercial model
 
-LiquiLens offers named-list monitoring software and fixed-scope paid proof pilots. Undertow publishes Alerts, Agent and Desk subscriptions, a fund offer and machine-call pricing. Seiche remains a free AGPL public core; support and custom integration are expansion opportunities that preserve its licence. Published offers are not evidence of completed sales.
+LiquiLens offers named-list monitoring software and fixed-scope paid proof pilots. Undertow publishes Alerts, Agent and Desk subscriptions, a fund offer and machine-call pricing. Seiche remains a free AGPL public core; reuse remains subject to its licence and source rights. Published offers are not evidence of completed sales.
 
 Early commercial stage. Customer, revenue, pipeline and retention claims require separate dated diligence evidence. Traffic, downloads and tool calls are not reported as customers.
 
 ## Why one company
 
 The same review can open institution, funding and liquidity questions. Source-checkable contracts and exports give the products a shared integration discipline and multiple distribution entry points. Cross-product adoption, renewal and lower integration cost are commercial hypotheses to validate.
-
-## What capital should unlock
-
-1. Prove repeat use, paid conversion and renewal for a focused institution-monitoring workflow.
-2. Improve admitted sources, freshness, reliability and recovery for the markets buyers use.
-3. Expand integrations and jurisdictions after rights and validation review.
-4. Establish attributable acquisition, activation, retention and revenue reporting.
-
-Round size and terms will follow a reviewed runway and milestone plan; these materials make no funding guarantee.
 
 ## Inspect the evidence
 

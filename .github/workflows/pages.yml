@@ -88,7 +88,6 @@ jobs:
           cp protocol/trade-safety/index.html "$RUNNER_TEMP/pages-proof/protocol/trade-safety/index.html"
           cp protocol/trade-safety/share.png "$RUNNER_TEMP/pages-proof/protocol/trade-safety/share.png"
           cp protocol/trade-safety/specification.md "$RUNNER_TEMP/pages-proof/protocol/trade-safety/specification.md"
-          cp protocol/trade-safety/adoption-plan.md "$RUNNER_TEMP/pages-proof/protocol/trade-safety/adoption-plan.md"
           cp protocol/protocol/liquilens-trade-safety-request-v1.schema.json "$RUNNER_TEMP/pages-proof/protocol/protocol/liquilens-trade-safety-request-v1.schema.json"
           cp protocol/protocol/liquilens-trade-safety-policy-v1.schema.json "$RUNNER_TEMP/pages-proof/protocol/protocol/liquilens-trade-safety-policy-v1.schema.json"
           cp protocol/protocol/liquilens-broker-preview-reference-v1.schema.json "$RUNNER_TEMP/pages-proof/protocol/protocol/liquilens-broker-preview-reference-v1.schema.json"

@@ -120,7 +120,6 @@
     "evidence_carrier_fdc3_reference_consumer": "https://beepboop2025.github.io/financial-evidence-skills/integrations/fdc3/evidence-inspector/",
     "trade_safety_receipt": "https://liquilens.in/protocol/trade-safety/",
     "trade_safety_specification": "https://liquilens.in/protocol/trade-safety/specification.md",
-    "trade_safety_adoption_plan": "https://liquilens.in/protocol/trade-safety/adoption-plan.md",
     "trade_safety_request_schema": "https://liquilens.in/protocol/liquilens-trade-safety-request-v1.schema.json",
     "trade_safety_policy_schema": "https://liquilens.in/protocol/liquilens-trade-safety-policy-v1.schema.json",
     "trade_safety_broker_preview_schema": "https://liquilens.in/protocol/liquilens-broker-preview-reference-v1.schema.json",

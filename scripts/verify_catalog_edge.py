@@ -45,7 +45,6 @@ PAGES_TRADE_SAFETY_PATHS = (
     "protocol/trade-safety/index.html",
     "protocol/trade-safety/share.png",
     "protocol/trade-safety/specification.md",
-    "protocol/trade-safety/adoption-plan.md",
     "protocol/protocol/liquilens-trade-safety-request-v1.schema.json",
     "protocol/protocol/liquilens-trade-safety-policy-v1.schema.json",
     "protocol/protocol/liquilens-broker-preview-reference-v1.schema.json",
