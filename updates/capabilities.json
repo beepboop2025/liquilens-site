@@ -1,6 +1,6 @@
 {
   "schema": "liquilens.connected-upgrades.v1",
-  "reviewed_on": "2026-10-16",
+  "reviewed_on": "2026-10-18",
   "title": "A connected review, from evidence to follow-up",
   "description": "Connect bank-disclosure research, dollar-funding context and market-liquidity evidence through public pages, MCP and source-history APIs.",
   "products": [
@@ -34,22 +34,34 @@
     {
       "id": "research-infrastructure",
       "title": "Connect research to your AI workflow",
-      "description": "Use the central MCP connections, Financial Evidence Python 0.1.10 or AI SDK 0.1.1 to bring bank, funding and market-liquidity evidence into a repeatable review.",
-      "action": "Choose a research connection",
-      "url": "https://beepboop2025.github.io/financial-evidence-skills/connect/",
+      "description": "Use public MCP and REST, Financial Evidence Python 0.1.13 or AI SDK 0.1.2 to save cited reviews, compare later captures and build repeatable agent research.",
+      "action": "Choose a package or connection",
+      "url": "https://beepboop2025.github.io/financial-evidence-skills/distribution/",
       "state": "Available for research",
       "boundary": "Each source keeps its dates, rights and missingness. Operator checks do not establish customer adoption.",
-      "source": "https://github.com/beepboop2025/financial-evidence-skills/commit/4810da365880a876d880cb7563ffa3805abdc3e7"
+      "source": "https://github.com/beepboop2025/financial-evidence-skills/commit/e93613059bd65c1534ca0d65c0390dba348e165f"
+    },
+    {
+      "id": "exact-funding-context",
+      "title": "Ask for the funding evidence you need",
+      "description": "Seiche 0.16.5 provides compact funding context and exact metric retrieval, with compatible diagnostics, units and source dates retained.",
+      "action": "Explore funding API and MCP",
+      "url": "https://seiche.info/developers.html",
+      "state": "Published Python and MCP package",
+      "boundary": "Package publication is separate from the hosted runtime identity and the freshness of each observation. Funding context does not authorize execution.",
+      "source": "https://github.com/beepboop2025/seiche/commit/793dc42b391141c20aee911f6d18f000bd3feb8a"
     },
     {
       "id": "noisefloor",
       "title": "Inspect what moves together",
-      "description": "Use NoiseFloor 0.4.0 to inspect shared-factor concentration and rolling correlations. Explore a separate synthetic Dyson reference and retain source restrictions and gaps.",
+      "description": "Inspect shared-factor concentration and rolling correlations in the hosted NoiseFloor 0.4.0 workbench. Python/MCP 0.4.2 adds clearer input guidance with unchanged calculations.",
       "action": "Open correlation workbench",
       "url": "https://liquilens.in/agents/correlation/",
       "state": "Available for caller-supplied evidence",
       "boundary": "Noise analysis supplies research context. It does not grant feed rights, validate predictions or authorize a trade.",
-      "source": "https://github.com/beepboop2025/noisefloor/commit/18e7290a022c7cba0d1e5e417a4a467cccfaa7a0"
+      "source": "https://github.com/beepboop2025/noisefloor/commit/e94edf3969c25887b3cd8ced93905d83777aa2c6",
+      "hosted_source": "https://github.com/beepboop2025/noisefloor/commit/18e7290a022c7cba0d1e5e417a4a467cccfaa7a0",
+      "publication_receipt": "https://beepboop2025.github.io/financial-evidence-skills/distribution/noisefloor-0.4.2.json"
     },
     {
       "id": "execution-workbench",
@@ -115,7 +127,7 @@
     "Evidence collection, delivery, validation and customer use are separate claims."
   ],
   "previous_review": {
-    "reviewed_on": "2026-10-09",
-    "url": "https://liquilens.in/updates/archive/2026-10-09.json"
+    "reviewed_on": "2026-10-16",
+    "url": "https://liquilens.in/updates/archive/2026-10-16.json"
   }
 }

@@ -1,0 +1,449 @@
+{
+  "schema": "public-safe.technical-usage-evidence.v1",
+  "compiled_at": "2026-10-17T23:28:28.751915+00:00",
+  "measurement_status": "partial_technical_activity_identity_and_commercial_conversion_unverified",
+  "coverage_complete": false,
+  "public_positioning": "Public API/MCP products and packaged integrations are available. Early technical activity is measurable; independent active-user, retention and revenue figures have not been verified.",
+  "windows": [
+    {
+      "name": "latest_24h",
+      "start": "2026-10-16T23:18:00Z",
+      "end_exclusive": "2026-10-17T23:18:00Z",
+      "application": [
+        {
+          "product": "LiquiLens",
+          "source": "Railway MCP completion contract",
+          "observed_events": 1194,
+          "excluded_attributed_automation": 4,
+          "unattributed_or_unclassified_events": 1190,
+          "returned_or_successful_responses": 1180,
+          "other_response_outcomes": {
+            "protocol_error": 10
+          },
+          "identity_state": "disabled",
+          "installation_ids_observed": 0,
+          "attribution_limit": "Unattributed can include monitoring and operator activity not labeled by the event contract."
+        },
+        {
+          "product": "Seiche",
+          "source": "Railway named tool dispatch events",
+          "observed_events": 400,
+          "excluded_attributed_automation": null,
+          "unattributed_or_unclassified_events": 400,
+          "returned_or_successful_responses": 378,
+          "other_response_outcomes": {
+            "tool_error": 9,
+            "invalid_params": 13
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "No automation/operator labels in event grammar; counts include unknown verification and monitoring activity."
+        },
+        {
+          "product": "Undertow",
+          "source": "Host application dispatch journal",
+          "observed_events": 1494,
+          "excluded_attributed_automation": 50,
+          "unattributed_or_unclassified_events": 1444,
+          "returned_or_successful_responses": 571,
+          "other_response_outcomes": {
+            "error_or_refusal": 873
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "Unclassified is not external adoption; optional operator markers are incomplete for historical and some current producers."
+        },
+        {
+          "product": "Palimpsest",
+          "source": "Host application dispatch journal",
+          "observed_events": 160,
+          "excluded_attributed_automation": 0,
+          "unattributed_or_unclassified_events": 160,
+          "returned_or_successful_responses": 160,
+          "other_response_outcomes": {
+            "error_or_refusal": 0
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "Unclassified is not external adoption; optional operator markers are incomplete for historical and some current producers."
+        },
+        {
+          "product": "NoiseFloor",
+          "source": "Host application dispatch journal",
+          "observed_events": 9,
+          "excluded_attributed_automation": 0,
+          "unattributed_or_unclassified_events": 9,
+          "returned_or_successful_responses": 9,
+          "other_response_outcomes": {
+            "error_or_refusal": 0
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "Unclassified is not external adoption; optional operator markers are incomplete for historical and some current producers."
+        },
+        {
+          "product": "Groundcheck",
+          "source": "Host application dispatch journal",
+          "observed_events": 1,
+          "excluded_attributed_automation": 0,
+          "unattributed_or_unclassified_events": 1,
+          "returned_or_successful_responses": 1,
+          "other_response_outcomes": {
+            "error_or_refusal": 0
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "Unclassified is not external adoption; optional operator markers are incomplete for historical and some current producers."
+        },
+        {
+          "product": "Breach",
+          "source": "Host application dispatch journal",
+          "observed_events": 10,
+          "excluded_attributed_automation": 0,
+          "unattributed_or_unclassified_events": 10,
+          "returned_or_successful_responses": 7,
+          "other_response_outcomes": {
+            "error_or_refusal": 3
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "Unclassified is not external adoption; optional operator markers are incomplete for historical and some current producers."
+        }
+      ],
+      "transport": {
+        "mcp_posts_observed": 16130,
+        "observed_edge_start": "2026-10-16T23:18:02.404594+00:00",
+        "observed_edge_end": "2026-10-17T23:17:39.475571+00:00",
+        "full_requested_interval_proven": false,
+        "known_window_gap": false,
+        "interpretation": "Host edge transport only; do not add to dispatches or call users."
+      },
+      "website_sessions": null,
+      "verified_external_users": null,
+      "returning_users": null,
+      "retention": null,
+      "verified_paid_subscriptions": null,
+      "settled_payments": null,
+      "revenue": null
+    },
+    {
+      "name": "latest_7d",
+      "start": "2026-10-10T23:18:00Z",
+      "end_exclusive": "2026-10-17T23:18:00Z",
+      "application": [
+        {
+          "product": "LiquiLens",
+          "source": "Railway MCP completion contract",
+          "observed_events": 7639,
+          "excluded_attributed_automation": 84,
+          "unattributed_or_unclassified_events": 7555,
+          "returned_or_successful_responses": 7492,
+          "other_response_outcomes": {
+            "protocol_error": 58,
+            "unavailable": 5
+          },
+          "identity_state": "disabled",
+          "installation_ids_observed": 0,
+          "attribution_limit": "Unattributed can include monitoring and operator activity not labeled by the event contract."
+        },
+        {
+          "product": "Seiche",
+          "source": "Railway named tool dispatch events",
+          "observed_events": 2287,
+          "excluded_attributed_automation": null,
+          "unattributed_or_unclassified_events": 2287,
+          "returned_or_successful_responses": 2172,
+          "other_response_outcomes": {
+            "invalid_params": 75,
+            "tool_error": 40
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "No automation/operator labels in event grammar; counts include unknown verification and monitoring activity."
+        },
+        {
+          "product": "Undertow",
+          "source": "Host application dispatch journal",
+          "observed_events": 8030,
+          "excluded_attributed_automation": 286,
+          "unattributed_or_unclassified_events": 7744,
+          "returned_or_successful_responses": 2388,
+          "other_response_outcomes": {
+            "error_or_refusal": 5356
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "Unclassified is not external adoption; optional operator markers are incomplete for historical and some current producers."
+        },
+        {
+          "product": "Palimpsest",
+          "source": "Host application dispatch journal",
+          "observed_events": 939,
+          "excluded_attributed_automation": 0,
+          "unattributed_or_unclassified_events": 939,
+          "returned_or_successful_responses": 939,
+          "other_response_outcomes": {
+            "error_or_refusal": 0
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "Unclassified is not external adoption; optional operator markers are incomplete for historical and some current producers."
+        },
+        {
+          "product": "NoiseFloor",
+          "source": "Host application dispatch journal",
+          "observed_events": 50,
+          "excluded_attributed_automation": 0,
+          "unattributed_or_unclassified_events": 50,
+          "returned_or_successful_responses": 50,
+          "other_response_outcomes": {
+            "error_or_refusal": 0
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "Unclassified is not external adoption; optional operator markers are incomplete for historical and some current producers."
+        },
+        {
+          "product": "Groundcheck",
+          "source": "Host application dispatch journal",
+          "observed_events": 21,
+          "excluded_attributed_automation": 0,
+          "unattributed_or_unclassified_events": 21,
+          "returned_or_successful_responses": 17,
+          "other_response_outcomes": {
+            "error_or_refusal": 4
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "Unclassified is not external adoption; optional operator markers are incomplete for historical and some current producers."
+        },
+        {
+          "product": "Breach",
+          "source": "Host application dispatch journal",
+          "observed_events": 43,
+          "excluded_attributed_automation": 0,
+          "unattributed_or_unclassified_events": 43,
+          "returned_or_successful_responses": 29,
+          "other_response_outcomes": {
+            "error_or_refusal": 14
+          },
+          "identity_state": "not_measured_by_event_contract",
+          "installation_ids_observed": null,
+          "attribution_limit": "Unclassified is not external adoption; optional operator markers are incomplete for historical and some current producers."
+        }
+      ],
+      "transport": {
+        "mcp_posts_observed": 20500,
+        "observed_edge_start": "2026-10-16T16:30:42.275446+00:00",
+        "observed_edge_end": "2026-10-17T23:17:39.475571+00:00",
+        "full_requested_interval_proven": false,
+        "known_window_gap": true,
+        "interpretation": "Host edge transport only; do not add to dispatches or call users."
+      },
+      "website_sessions": null,
+      "verified_external_users": null,
+      "returning_users": null,
+      "retention": null,
+      "verified_paid_subscriptions": null,
+      "settled_payments": null,
+      "revenue": null
+    }
+  ],
+  "package_downloads": [
+    {
+      "registry": "pypi",
+      "package": "financial-evidence",
+      "url": "https://pypistats.org/api/packages/financial-evidence/overall?mirrors=false",
+      "observed_at": "2026-10-17T23:25:58.059546+00:00",
+      "status": 200,
+      "provider_calendar_day": "2026-10-16",
+      "calendar_day_downloads": 106,
+      "provider_calendar_7d_start": "2026-10-10",
+      "provider_calendar_7d_end_inclusive": "2026-10-16",
+      "calendar_7d_downloads": null,
+      "sum_observed_dates_in_calendar_7d": 193,
+      "missing_calendar_dates": [
+        "2026-10-10",
+        "2026-10-11",
+        "2026-10-12",
+        "2026-10-13",
+        "2026-10-14"
+      ]
+    },
+    {
+      "registry": "pypi",
+      "package": "seiche",
+      "url": "https://pypistats.org/api/packages/seiche/overall?mirrors=false",
+      "observed_at": "2026-10-17T23:25:58.060022+00:00",
+      "status": 200,
+      "provider_calendar_day": "2026-10-16",
+      "calendar_day_downloads": 18,
+      "provider_calendar_7d_start": "2026-10-10",
+      "provider_calendar_7d_end_inclusive": "2026-10-16",
+      "calendar_7d_downloads": 400,
+      "sum_observed_dates_in_calendar_7d": 400,
+      "missing_calendar_dates": []
+    },
+    {
+      "registry": "pypi",
+      "package": "openbb-seiche",
+      "url": "https://pypistats.org/api/packages/openbb-seiche/overall?mirrors=false",
+      "observed_at": "2026-10-17T23:25:58.060110+00:00",
+      "status": 200,
+      "provider_calendar_day": "2026-10-16",
+      "calendar_day_downloads": null,
+      "provider_calendar_7d_start": "2026-10-10",
+      "provider_calendar_7d_end_inclusive": "2026-10-16",
+      "calendar_7d_downloads": null,
+      "sum_observed_dates_in_calendar_7d": 4,
+      "missing_calendar_dates": [
+        "2026-10-11",
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15",
+        "2026-10-16"
+      ]
+    },
+    {
+      "registry": "pypi",
+      "package": "noisefloor",
+      "url": "https://pypistats.org/api/packages/noisefloor/overall?mirrors=false",
+      "observed_at": "2026-10-17T23:25:59.211251+00:00",
+      "status": 200,
+      "provider_calendar_day": "2026-10-16",
+      "calendar_day_downloads": 6,
+      "provider_calendar_7d_start": "2026-10-10",
+      "provider_calendar_7d_end_inclusive": "2026-10-16",
+      "calendar_7d_downloads": 49,
+      "sum_observed_dates_in_calendar_7d": 49,
+      "missing_calendar_dates": []
+    },
+    {
+      "registry": "pypi",
+      "package": "langchain-financial-evidence",
+      "url": "https://pypistats.org/api/packages/langchain-financial-evidence/overall?mirrors=false",
+      "observed_at": "2026-10-17T23:25:59.242533+00:00",
+      "status": 200,
+      "provider_calendar_day": "2026-10-16",
+      "calendar_day_downloads": 6,
+      "provider_calendar_7d_start": "2026-10-10",
+      "provider_calendar_7d_end_inclusive": "2026-10-16",
+      "calendar_7d_downloads": 162,
+      "sum_observed_dates_in_calendar_7d": 162,
+      "missing_calendar_dates": []
+    },
+    {
+      "registry": "pypi",
+      "package": "data-breach-detector",
+      "url": "https://pypistats.org/api/packages/data-breach-detector/overall?mirrors=false",
+      "observed_at": "2026-10-17T23:25:59.252946+00:00",
+      "status": 200,
+      "provider_calendar_day": "2026-10-16",
+      "calendar_day_downloads": 10,
+      "provider_calendar_7d_start": "2026-10-10",
+      "provider_calendar_7d_end_inclusive": "2026-10-16",
+      "calendar_7d_downloads": 53,
+      "sum_observed_dates_in_calendar_7d": 53,
+      "missing_calendar_dates": []
+    },
+    {
+      "registry": "pypi",
+      "package": "wake-commerce",
+      "url": "https://pypistats.org/api/packages/wake-commerce/overall?mirrors=false",
+      "observed_at": "2026-10-17T23:25:59.978788+00:00",
+      "status": 404,
+      "provider_calendar_day": null,
+      "calendar_day_downloads": null,
+      "provider_calendar_7d_start": null,
+      "provider_calendar_7d_end_inclusive": null,
+      "calendar_7d_downloads": null,
+      "sum_observed_dates_in_calendar_7d": null,
+      "missing_calendar_dates": null
+    },
+    {
+      "registry": "npm",
+      "package": "@moomoo202020/financial-evidence-ai-sdk",
+      "url": "https://api.npmjs.org/downloads/range/2026-10-10:2026-10-16/@moomoo202020%2Ffinancial-evidence-ai-sdk",
+      "observed_at": "2026-10-17T23:26:00.007729+00:00",
+      "status": 200,
+      "provider_calendar_day": "2026-10-16",
+      "calendar_day_downloads": 176,
+      "provider_calendar_7d_start": "2026-10-10",
+      "provider_calendar_7d_end_inclusive": "2026-10-16",
+      "calendar_7d_downloads": 176,
+      "sum_observed_dates_in_calendar_7d": 176,
+      "missing_calendar_dates": []
+    },
+    {
+      "registry": "npm",
+      "package": "liquilens",
+      "url": "https://api.npmjs.org/downloads/range/2026-10-10:2026-10-16/liquilens",
+      "observed_at": "2026-10-17T23:26:00.047068+00:00",
+      "status": 200,
+      "provider_calendar_day": "2026-10-16",
+      "calendar_day_downloads": 1,
+      "provider_calendar_7d_start": "2026-10-10",
+      "provider_calendar_7d_end_inclusive": "2026-10-16",
+      "calendar_7d_downloads": 3,
+      "sum_observed_dates_in_calendar_7d": 3,
+      "missing_calendar_dates": []
+    },
+    {
+      "registry": "npm",
+      "package": "n8n-nodes-financial-evidence",
+      "url": "https://api.npmjs.org/downloads/range/2026-10-10:2026-10-16/n8n-nodes-financial-evidence",
+      "observed_at": "2026-10-17T23:26:00.737097+00:00",
+      "status": 200,
+      "provider_calendar_day": "2026-10-16",
+      "calendar_day_downloads": 15,
+      "provider_calendar_7d_start": "2026-10-10",
+      "provider_calendar_7d_end_inclusive": "2026-10-16",
+      "calendar_7d_downloads": 338,
+      "sum_observed_dates_in_calendar_7d": 338,
+      "missing_calendar_dates": []
+    },
+    {
+      "registry": "npm",
+      "package": "pdf-suite-mcp",
+      "url": "https://api.npmjs.org/downloads/range/2026-10-10:2026-10-16/pdf-suite-mcp",
+      "observed_at": "2026-10-17T23:26:01.092937+00:00",
+      "status": 200,
+      "provider_calendar_day": "2026-10-16",
+      "calendar_day_downloads": 6,
+      "provider_calendar_7d_start": "2026-10-10",
+      "provider_calendar_7d_end_inclusive": "2026-10-16",
+      "calendar_7d_downloads": 42,
+      "sum_observed_dates_in_calendar_7d": 42,
+      "missing_calendar_dates": []
+    },
+    {
+      "registry": "npm",
+      "package": "groundcheck-mcp",
+      "url": "https://api.npmjs.org/downloads/range/2026-10-10:2026-10-16/groundcheck-mcp",
+      "observed_at": "2026-10-17T23:26:01.117107+00:00",
+      "status": 200,
+      "provider_calendar_day": "2026-10-16",
+      "calendar_day_downloads": 2,
+      "provider_calendar_7d_start": "2026-10-10",
+      "provider_calendar_7d_end_inclusive": "2026-10-16",
+      "calendar_7d_downloads": 27,
+      "sum_observed_dates_in_calendar_7d": 27,
+      "missing_calendar_dates": []
+    }
+  ],
+  "package_interpretation": "Provider UTC calendar dates; not equivalent to exact rolling application windows. Latest complete calendar day requested16Oct, seven complete days10-16Oct. Downloads can include automated builds, publisher checks and repeated fetches; they are not unique users.",
+  "limitations": [
+    "Application successes are protocol/result events, not verified usefulness, freshness, successful customer workflows or delivery.",
+    "Marked synthetic/operator calls are excluded from the unattributed columns, but unmarked operator and monitoring events can remain.",
+    "No matching qualified website session capture was available; website counts are unavailable, not zero.",
+    "The seven-day host edge series starts only 16 Oct 16:30 UTC; it cannot establish a complete seven-day total or week-over-week growth.",
+    "Subscriber access tiers and gateway paid-stage events do not establish paid customers, settled payments or revenue.",
+    "No product requests, public posts, messages or production changes were made for this audit."
+  ],
+  "sources": {
+    "application": "Publisher-owned application completion and dispatch logs, aggregated over the stated UTC windows. Raw requests and caller identifiers are not published.",
+    "transport": "Publisher-owned host edge MCP POST logs; coverage is stated separately for each requested interval.",
+    "packages": "Provider URLs and observation clocks are retained in each package_downloads row."
+  },
+  "aggregation_record_sha256": "ce11cf2d615e508a6803a7fb5baa04e00936ee5c6f785d4c1e47ca1f9b6980be"
+}

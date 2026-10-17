@@ -66,6 +66,14 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/usage/2026-10-17/", "technical-usage-20261017", "LIQUILENS / TECHNICAL ACTIVITY", "FIXED-WINDOW EVIDENCE",
+        "Recorded activity, with its attribution and coverage limits.",
+        "MEASUREMENT", "CALLS / DOWNLOADS",
+        "UNCLASSIFIED CALLS / PARTIAL COVERAGE / NO USER COUNT", "WINDOW END UTC", "2026-10-17 23:18",
+        "ADOPTION AND REVENUE UNVERIFIED", "PUBLISHER LOGS / REGISTRY PROVIDERS",
+        signature_file="usage/2026-10-17/aggregate.json", og_type="article",
+    ),
+    RouteDefinition(
         "/agents/correlation/", "correlation-research", "LIQUILENS / NOISEFLOOR 0.4.0", "SHARED-FACTOR RESEARCH",
         "How much moves together?",
         "CORRELATION REVIEW", "SPECTRA / CONCENTRATION",
@@ -76,7 +84,7 @@ ROUTES = (
     RouteDefinition(
         "/banking/monitoring/", "institution-monitoring", "LIQUILENS / INSTITUTION REVIEW", "CHANGES AND VISIBILITY GAPS",
         "Keep missing evidence in the institution review.",
-        "REVIEW QUEUE", "DATED DISCLOSURES / HUMAN REVIEW",
+        "REVIEW QUEUE", "DATED DISCLOSURES",
         "SOURCE CLOCKS / OVERDUE FIELDS / ORIGINAL RECORDS", "GUIDE CUT", "2026-10-08",
         "RESEARCH / NOT A SAFETY VERDICT", "PUBLIC INSTITUTION MONITOR",
         signature_file="updates/capabilities.json",
@@ -85,7 +93,7 @@ ROUTES = (
         "/updates/", "connected-upgrades", "LIQUILENS / SEICHE / UNDERTOW", "CONNECTED EVIDENCE REVIEWS",
         "Review the institution, funding and market liquidity together.",
         "PRODUCT CAPABILITIES", "BANKS / FUNDING / MCP",
-        "DATED SOURCE HISTORIES / STATUS UPDATES / RESEARCH", "REVIEWED", "2026-10-16",
+        "DATED SOURCE HISTORIES / STATUS UPDATES / RESEARCH", "REVIEWED", "2026-10-18",
         "HUMAN REVIEW / EXECUTION DISABLED", "REVIEWED PRODUCT RELEASES",
         signature_file="updates/capabilities.json",
     ),
