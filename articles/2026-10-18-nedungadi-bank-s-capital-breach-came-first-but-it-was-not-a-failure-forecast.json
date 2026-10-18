@@ -1,0 +1,117 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-18-nedungadi-bank-s-capital-breach-came-first-but-it-was-not-a-failure-forecast",
+  "product": "liquilens",
+  "slug": "2026-10-18-nedungadi-bank-s-capital-breach-came-first-but-it-was-not-a-failure-forecast",
+  "date": "2026-10-18",
+  "article_type": "historical_replay",
+  "topic": "nedungadi-bank",
+  "headline": "Nedungadi Bank’s capital breach came first—but it was not a failure forecast",
+  "dek": "The replay records a CRAR action-zone breach before Nedungadi Bank’s default and no scoreable funding signal. That ordering identifies a balance-sheet pressure point, not a causal timetable or a live prediction.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-18-nedungadi-bank-s-capital-breach-came-first-but-it-was-not-a-failure-forecast/",
+  "published_at": "2026-10-18T11:18:34Z",
+  "evidence_as_of": "2026-10-18",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "nedungadi-bank",
+    "name": "Nedungadi Bank",
+    "inst_type": "bank",
+    "default_date": "2002-11-02",
+    "fraud_masked": false,
+    "pca": {
+      "slug": "nedungadi-bank",
+      "inst_type": "bank",
+      "default_date": "2002-11-02",
+      "first_action_zone": {
+        "period_end": "1999-03-31",
+        "q": "FY1999",
+        "status": "threshold_1",
+        "knowledge_time_proxy": "1999-05-30",
+        "breaches": [
+          "CRAR"
+        ]
+      },
+      "lead_months": 41,
+      "fraud_masked": false
+    },
+    "funding": {
+      "slug": "nedungadi-bank",
+      "inst_type": "bank",
+      "scoreable": false,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1399,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:cd5bb5ae378ad92e9a03dcccd94f077024d0c15e767b13494ee352968d743b71",
+    "memory_fingerprint": "sha256:866cff19d1d6fafe97bf5b49f1a9b54cfdb3771b9a062ac2c7b736218bc40828",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 2,
+    "dossier_sha256": "c13441e18e04a1df94db08af96aa0d82377ff9ad589a9ac4aae0987ca6ba54ec",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "not_a_credit_rating",
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Removed unsupported causal language and completed the truncated limits section.",
+      "Separated filing-period timing, knowledge-time proxy, market-layer authority, and model outputs.",
+      "Preserved all eligibility, missing-data, construction-PIT, and market-publication restrictions."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:cd5bb5ae378ad92e9a03dcccd94f077024d0c15e767b13494ee352968d743b71",
+      "memory_fingerprint": "sha256:866cff19d1d6fafe97bf5b49f1a9b54cfdb3771b9a062ac2c7b736218bc40828",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
