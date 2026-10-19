@@ -1,0 +1,120 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-19-at-new-india-co-operative-bank-the-first-disclosed-stress-was-asset-quality",
+  "product": "liquilens",
+  "slug": "2026-10-19-at-new-india-co-operative-bank-the-first-disclosed-stress-was-asset-quality",
+  "date": "2026-10-19",
+  "article_type": "historical_replay",
+  "topic": "new-india-co-operative-bank",
+  "headline": "At New India Co-operative Bank, the first disclosed stress was asset quality—not funding",
+  "dek": "The replay places an NNPA action-zone breach at the FY2021 filing period, ahead of the 2025-02-13 event date. That is a filing-period signal under a construction-PIT proxy, not a market-price warning, a validated forecast, or proof that the record revealed fraud.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-19-at-new-india-co-operative-bank-the-first-disclosed-stress-was-asset-quality/",
+  "published_at": "2026-10-19T11:17:02Z",
+  "evidence_as_of": "2026-10-19",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "new-india-co-operative-bank",
+    "name": "New India Co-operative Bank",
+    "inst_type": "ucb",
+    "default_date": "2025-02-13",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "new-india-co-operative-bank",
+      "inst_type": "ucb",
+      "default_date": "2025-02-13",
+      "first_action_zone": {
+        "period_end": "2021-03-31",
+        "q": "FY2021",
+        "status": "saf_triggered",
+        "knowledge_time_proxy": "2021-05-30",
+        "breaches": [
+          "NNPA"
+        ]
+      },
+      "lead_months": 44,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "new-india-co-operative-bank",
+      "inst_type": "ucb",
+      "scoreable": true,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1382,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:b0d8fb0cbb36d21b4256007137d5d26667b015074972e8c9cebe9eaa565b7cab",
+    "memory_fingerprint": "sha256:8a4e0aaab7bf9503d5765126afcbcef82dde0fe94dc257f54b9c08abc41d3f3e",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "model_assisted",
+    "model": "openai/gpt-5.6-terra",
+    "passes": 3,
+    "dossier_sha256": "f8a0d4010ca7ed9f60d0af1bff0bc313b4d7e145658018b46d854565b4eb05f2",
+    "fallback_reason": null,
+    "deterministic_boundary_overlay": [
+      "not_a_credit_rating",
+      "not_investment_advice"
+    ],
+    "review_notes": [
+      "Reframed the core finding as a filing-period sequencing result rather than a forecast or funding-health claim.",
+      "Preserved fraud-masking, construction-PIT, missing-data, market-authority, and current-board eligibility disclosures.",
+      "Added explicit separation of filing signals, market-price signals, and model derivations, with a counter-case that can overturn the thesis.",
+      "Removed placeholder-style missing-value terminology from the article while preserving the disclosure that no first funding signal or lead is reported.",
+      "Retained the filing-period, market-price, and model-derivation distinctions, alongside fraud-masking and construction-PIT limits.",
+      "Preserved current-board eligibility, market-authority, and missing-liability disclosures."
+    ],
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:b0d8fb0cbb36d21b4256007137d5d26667b015074972e8c9cebe9eaa565b7cab",
+      "memory_fingerprint": "sha256:8a4e0aaab7bf9503d5765126afcbcef82dde0fe94dc257f54b9c08abc41d3f3e",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
