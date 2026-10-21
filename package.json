@@ -11,7 +11,7 @@
     "test:payments": "node --test tests/test_payment_ledger.mjs"
   },
   "dependencies": {
-    "@modelcontextprotocol/server": "2.0.0",
+    "@modelcontextprotocol/server": "2.3.0",
     "agents": "0.21.0",
     "zod": "4.4.3"
   },
