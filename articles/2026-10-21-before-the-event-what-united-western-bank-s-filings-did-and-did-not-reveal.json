@@ -1,0 +1,108 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-21-before-the-event-what-united-western-bank-s-filings-did-and-did-not-reveal",
+  "product": "liquilens",
+  "slug": "2026-10-21-before-the-event-what-united-western-bank-s-filings-did-and-did-not-reveal",
+  "date": "2026-10-21",
+  "article_type": "historical_replay",
+  "topic": "united-western-bank",
+  "headline": "Before the event: what United Western Bank's filings did and did not reveal",
+  "dek": "A construction-PIT replay of United Western Bank: the first published regulatory or funding signal, the disclosure clock, the miss, and the boundary that survives into today's screen.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-21-before-the-event-what-united-western-bank-s-filings-did-and-did-not-reveal/",
+  "published_at": "2026-10-21T11:19:01Z",
+  "evidence_as_of": "2026-10-21",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "united-western-bank",
+    "name": "United Western Bank",
+    "inst_type": "bank",
+    "default_date": "2006-09-02",
+    "fraud_masked": false,
+    "pca": {
+      "slug": "united-western-bank",
+      "inst_type": "bank",
+      "default_date": "2006-09-02",
+      "first_action_zone": {
+        "period_end": "2001-03-31",
+        "q": "FY2001",
+        "status": "threshold_2",
+        "knowledge_time_proxy": "2001-05-30",
+        "breaches": [
+          "NNPA"
+        ]
+      },
+      "lead_months": 63,
+      "fraud_masked": false
+    },
+    "funding": {
+      "slug": "united-western-bank",
+      "inst_type": "bank",
+      "scoreable": true,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1016,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:31c78833832b4a6b6dd11d0f68d6c4b2b60bb0eaeed8c6612920045ef8862dd4",
+    "memory_fingerprint": "sha256:75edcf1cac65c678f5b4de7a3c628c92960732a21b6b5152897c2c1c724b93b7",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "deterministic_fallback",
+    "model": null,
+    "passes": 4,
+    "dossier_sha256": "939891c2492e5e20dcd03cbab27ef8dcf2600e716b06ecc0b11990e20b54a23a",
+    "fallback_reason": "ValueError: placeholder leaked into article",
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:31c78833832b4a6b6dd11d0f68d6c4b2b60bb0eaeed8c6612920045ef8862dd4",
+      "memory_fingerprint": "sha256:75edcf1cac65c678f5b4de7a3c628c92960732a21b6b5152897c2c1c724b93b7",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
