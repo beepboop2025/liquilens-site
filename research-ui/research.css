@@ -127,6 +127,9 @@ a.research-skip:focus { top: 12px; }
 .rw-metrics dd { margin: 0; font-size: 23px; line-height: 1.3; font-weight: 450; overflow-wrap: anywhere; }
 .rw-metrics dd small { font-size: 12px; }
 .rw-metrics .rw-missing { font-size: 13px; color: var(--research-muted); }
+.rw-provisional { margin: 20px 0; padding: 16px; border: 1px solid var(--research-line); border-radius: 8px; background: var(--research-surface); }
+.rw-provisional .rw-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.rw-provisional .rw-metrics dd.rw-caption { font-size: 11px; color: var(--research-muted); margin-top: 6px; }
 .rw-detail { border-top: 1px solid var(--research-line); padding: 14px 0; }
 .rw-detail summary { color: var(--research-text); cursor: pointer; font-size: 13px; line-height: 1.4; }
 .rw-detail li { color: var(--research-muted); font-size: 12px; line-height: 1.65; margin-bottom: 9px; overflow-wrap: anywhere; }

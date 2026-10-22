@@ -126,6 +126,16 @@ primary homepage action opens the real data preview.
 Run `node --test tests/test_family_editorial.mjs` for the archive's publication,
 attribution, deduplication and URL-boundary checks.
 
+The homepage's institution inspector shows provisional business updates in a
+separate section. Their reporting, publication and capture dates never refresh
+the accepted filing's asset-quality or capital figures. Its GNPA chart keeps
+missing observations and duplicate reporting periods as gaps, preserves a
+disclosed zero, and draws isolated observations as dots. Duplicate periods are
+withheld rather than choosing one conflicting record. Run
+`node --test tests/test_institution_detail.mjs tests/test_banking_display.mjs`
+for these display boundaries. The US page labels reconstructed historical
+diagnostics at the headline and chart; these are not contemporaneous alerts.
+
 ## Preview locally
 
 The site is static and does not require a build step:

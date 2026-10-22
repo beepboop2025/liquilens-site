@@ -328,7 +328,7 @@ ROUTES = (
         "/us/", "us", "LIQUILENS / UNITED STATES", "US BANK FAILURE RECORD",
         "Current screens plus a 552-failure diagnostic, with recent misses named.",
         "HISTORICAL CONTRACT", "552 FAILURE REPLAYS",
-        "2 OF 4 IN 2026 FLAGGED / 2 MISSES NAMED", "REVIEWED CUT", "2026-08-09",
+        "2026 REPLAY: 2 OF 4 FLAGGED / 2 MISSES", "REVIEWED CUT", "2026-08-09",
         "AMENDED C-PIT", "US PUBLIC RECORD",
     ),
     RouteDefinition(

@@ -1,6 +1,7 @@
 import {API,reviewModel} from '../banking/model.mjs';
-import {BANK_STATES,SECTORS,bankCoverage,filterRows,dateOnly,dateText,finite,sourceUrl,csv,download,readJSON,element as el,link,statusBadge,sourceDetails,visibleRefresh} from './core.mjs';
+import {BANK_STATES,SECTORS,bankCoverage,filterRows,dateText,sourceUrl,csv,download,readJSON,element as el,link,statusBadge,sourceDetails,visibleRefresh} from './core.mjs';
 import {restoreView,rememberView} from './view-state.mjs';
+import {gnpaChart,provisionalSection} from './institution-detail.mjs';
 
 const root=document.querySelector('[data-institution-workspace]');
 if(root){
@@ -44,19 +45,6 @@ if(root){
     headers.forEach(title=>{const cell=el('th',title);cell.scope='col';tr.append(cell);});head.append(tr);table.append(head);
     const body=el('tbody');for(const row of rows){const tr=el('tr');row.forEach((value,index)=>{const cell=el(index?'td':'th',value);if(!index)cell.scope='row';tr.append(cell);});body.append(tr);}table.append(body);scroll.append(table);return scroll;
   }
-  function chart(data){
-    const points=(Array.isArray(data.history)?data.history:[]).filter(row=>dateOnly(row.period_end)&&row.metrics?.gnpa_pct?.status==='observed'&&row.metrics.gnpa_pct.unit==='percent'&&finite(row.metrics.gnpa_pct.value)!==null).map(row=>({date:row.period_end,value:row.metrics.gnpa_pct.value})).sort((a,b)=>a.date.localeCompare(b.date));
-    if(points.length<2)return el('p','At least two comparable GNPA observations are needed for a trend. The disclosure table below retains the available record.');
-    const figure=el('figure',undefined,'rw-chart'),ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 460 150');svg.setAttribute('role','img');
-    const title=document.createElementNS(ns,'title');title.textContent='Disclosed gross non-performing assets as a percentage: '+points.map(p=>`${p.date}: ${p.value}%`).join('; ');svg.append(title);
-    const maximum=Math.max(...points.map(p=>p.value),.1)*1.15,start=Date.parse(points[0].date),end=Date.parse(points.at(-1).date);
-    if(start===end)return el('p','The available observations have the same reporting date. Read the history table for details.');
-    const coordinates=points.map(p=>[38+(Date.parse(p.date)-start)/(end-start)*409,124-p.value/maximum*102]);
-    for(const level of [0,maximum/2,maximum]){const y=124-level/maximum*102,line=document.createElementNS(ns,'line');for(const [key,value]of Object.entries({x1:38,x2:450,y1:y,y2:y,stroke:'var(--research-line)'}))line.setAttribute(key,String(value));svg.append(line);const text=document.createElementNS(ns,'text');text.setAttribute('x','30');text.setAttribute('y',String(y+4));text.setAttribute('text-anchor','end');text.setAttribute('fill','var(--research-muted)');text.setAttribute('font-size','10');text.textContent=level.toFixed(1)+'%';svg.append(text);}
-    const path=document.createElementNS(ns,'path');path.setAttribute('d',coordinates.map(([x,y],i)=>`${i?'L':'M'}${x.toFixed(2)},${y.toFixed(2)}`).join(' '));path.setAttribute('fill','none');path.setAttribute('stroke','var(--research-accent)');path.setAttribute('stroke-width','2');svg.append(path);
-    for(const [i,[x,y]] of coordinates.entries()){const point=document.createElementNS(ns,'circle');point.setAttribute('cx',String(x));point.setAttribute('cy',String(y));point.setAttribute('r','3');point.setAttribute('fill','var(--research-accent)');const title=document.createElementNS(ns,'title');title.textContent=`${points[i].date}: ${points[i].value}%`;point.append(title);svg.append(point);}
-    const caption=el('figcaption');caption.append(el('span',dateText(points[0].date)),el('span','Gross NPAs / advances (%)'),el('span',dateText(points.at(-1).date)));figure.append(svg,caption);return figure;
-  }
   function renderComparison(){
     const section=byId('institution-comparison');section.hidden=comparisons.size===0;section.replaceChildren();if(!comparisons.size)return;
     section.append(el('h2','Compare disclosed evidence'));
@@ -82,7 +70,8 @@ if(root){
     panel.append(statusBadge(model.status,data.status),el('h2',model.name),el('p',model.clock,'rw-clock'));
     const metrics=el('dl',undefined,'rw-metrics');
     for(const metric of model.metrics.slice(0,6)){const item=el('div'),value=el('dd',metric.value,metric.value==='Not disclosed'?'rw-missing':undefined);item.append(el('dt',metric.label),value);metrics.append(item);}panel.append(metrics);
-    panel.append(el('h3','Disclosed asset quality'),chart(data));
+    const provisional=provisionalSection(model.provisional);if(provisional)panel.append(provisional);
+    panel.append(el('h3','Disclosed asset quality'),gnpaChart(data));
     const history=el('details',undefined,'rw-detail');history.append(el('summary',`Reporting history (${model.history.length} periods)`));
     history.append(model.history.length?table(['Reporting period','Gross NPA','Net NPA','Capital ratio'],model.history.map(row=>[dateText(row.period),...row.values])):el('p','No comparable historical periods were supplied.'));panel.append(history);
     const metricsDetail=el('details',undefined,'rw-detail');metricsDetail.append(el('summary','All disclosed metrics and definitions'),table(['Metric','Disclosed value'],model.metrics.map(row=>[row.label,row.value])));for(const row of model.metrics.filter(row=>row.basis))metricsDetail.append(el('p',`${row.label}: ${row.basis}`));panel.append(metricsDetail);
