@@ -1,0 +1,108 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-24-before-the-event-what-altico-s-filings-did-and-did-not-reveal",
+  "product": "liquilens",
+  "slug": "2026-10-24-before-the-event-what-altico-s-filings-did-and-did-not-reveal",
+  "date": "2026-10-24",
+  "article_type": "historical_replay",
+  "topic": "altico",
+  "headline": "Before the event: what Altico's filings did and did not reveal",
+  "dek": "A construction-PIT replay of Altico: the first published regulatory or funding signal, the disclosure clock, the miss, and the boundary that survives into today's screen.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-24-before-the-event-what-altico-s-filings-did-and-did-not-reveal/",
+  "published_at": "2026-10-24T11:18:39Z",
+  "evidence_as_of": "2026-10-24",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "altico",
+    "name": "Altico",
+    "inst_type": "nbfc",
+    "default_date": "2019-09-12",
+    "fraud_masked": false,
+    "pca": {
+      "slug": "altico",
+      "inst_type": "nbfc",
+      "default_date": "2019-09-12",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": false
+    },
+    "funding": {
+      "slug": "altico",
+      "inst_type": "nbfc",
+      "scoreable": true,
+      "first_signal": {
+        "period_end": "2017-03-31",
+        "index": 23.7,
+        "knowledge_time_proxy": "2017-05-30",
+        "band": "stable",
+        "flags": [
+          "CP reliance 29% (rollover-freeze exposure)"
+        ]
+      },
+      "lead_months": 27
+    }
+  },
+  "word_count": 1016,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:49c280d278cb45335bdd2638b9cc8526a324256b7008136e18445878a687bed8",
+    "memory_fingerprint": "sha256:2f4f6d0e0c99a85ca71294306352e0a8cadc4ccafd41e4fb8b0311c0e3ce1f6d",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "deterministic_fallback",
+    "model": null,
+    "passes": 0,
+    "dossier_sha256": "8308887150dc819d517eb644c43fa552aa1f71b205debeb59a1df68475f7948d",
+    "fallback_reason": "RuntimeError: writer pass failed: HTTPError: HTTP Error 402: Payment Required",
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:49c280d278cb45335bdd2638b9cc8526a324256b7008136e18445878a687bed8",
+      "memory_fingerprint": "sha256:2f4f6d0e0c99a85ca71294306352e0a8cadc4ccafd41e4fb8b0311c0e3ce1f6d",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
