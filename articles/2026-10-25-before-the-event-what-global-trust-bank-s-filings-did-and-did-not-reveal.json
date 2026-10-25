@@ -1,0 +1,109 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-25-before-the-event-what-global-trust-bank-s-filings-did-and-did-not-reveal",
+  "product": "liquilens",
+  "slug": "2026-10-25-before-the-event-what-global-trust-bank-s-filings-did-and-did-not-reveal",
+  "date": "2026-10-25",
+  "article_type": "historical_replay",
+  "topic": "global-trust-bank",
+  "headline": "Before the event: what Global Trust Bank's filings did and did not reveal",
+  "dek": "A construction-PIT replay of Global Trust Bank: the first published regulatory or funding signal, the disclosure clock, the miss, and the boundary that survives into today's screen.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-25-before-the-event-what-global-trust-bank-s-filings-did-and-did-not-reveal/",
+  "published_at": "2026-10-25T11:18:02Z",
+  "evidence_as_of": "2026-10-25",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "global-trust-bank",
+    "name": "Global Trust Bank",
+    "inst_type": "bank",
+    "default_date": "2004-07-24",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "global-trust-bank",
+      "inst_type": "bank",
+      "default_date": "2004-07-24",
+      "first_action_zone": {
+        "period_end": "2002-03-31",
+        "q": "FY2002",
+        "status": "threshold_2",
+        "knowledge_time_proxy": "2002-05-30",
+        "breaches": [
+          "CRAR",
+          "NNPA"
+        ]
+      },
+      "lead_months": 25,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "global-trust-bank",
+      "inst_type": "bank",
+      "scoreable": false,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1018,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:de76f0c6dcbf8aebb09882881d4e939cbc40c0a8661f745a9eb2bcd2e53a93fa",
+    "memory_fingerprint": "sha256:f25aa75898a7174c91bc0c4db1e6acf16d8fe825e791381e32fec174527e1686",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "deterministic_fallback",
+    "model": null,
+    "passes": 0,
+    "dossier_sha256": "512189672811f637adaf9db8f77b2f33e5616b1d171e1e43b96b8ffecc823965",
+    "fallback_reason": "RuntimeError: writer pass failed: HTTPError: HTTP Error 402: Payment Required",
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:de76f0c6dcbf8aebb09882881d4e939cbc40c0a8661f745a9eb2bcd2e53a93fa",
+      "memory_fingerprint": "sha256:f25aa75898a7174c91bc0c4db1e6acf16d8fe825e791381e32fec174527e1686",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
