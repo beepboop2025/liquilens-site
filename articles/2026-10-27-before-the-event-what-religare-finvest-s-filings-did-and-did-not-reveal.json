@@ -1,0 +1,106 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-10-27-before-the-event-what-religare-finvest-s-filings-did-and-did-not-reveal",
+  "product": "liquilens",
+  "slug": "2026-10-27-before-the-event-what-religare-finvest-s-filings-did-and-did-not-reveal",
+  "date": "2026-10-27",
+  "article_type": "historical_replay",
+  "topic": "religare-finvest",
+  "headline": "Before the event: what Religare Finvest's filings did and did not reveal",
+  "dek": "A construction-PIT replay of Religare Finvest: the first published regulatory or funding signal, the disclosure clock, the miss, and the boundary that survives into today's screen.",
+  "canonical_url": "https://liquilens.in/articles/2026-10-27-before-the-event-what-religare-finvest-s-filings-did-and-did-not-reveal/",
+  "published_at": "2026-10-27T11:21:13Z",
+  "evidence_as_of": "2026-10-27",
+  "board_signature": "83decc6e281132a487f9de730d0c53541979e1d3b105596cb37ebbef52dd5e4b",
+  "subject": {
+    "slug": "religare-finvest",
+    "name": "Religare Finvest",
+    "inst_type": "nbfc",
+    "default_date": "2018-01-18",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "religare-finvest",
+      "inst_type": "nbfc",
+      "default_date": "2018-01-18",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "religare-finvest",
+      "inst_type": "nbfc",
+      "scoreable": true,
+      "first_signal": {
+        "period_end": "2016-03-31",
+        "index": 44.3,
+        "knowledge_time_proxy": "2016-05-30",
+        "band": "watch",
+        "flags": []
+      },
+      "lead_months": 19
+    }
+  },
+  "word_count": 1018,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:84f5e64d030c6661c77f0802417f8dda9cc7866ea537a76f96be091c4a629f2e",
+    "memory_fingerprint": "sha256:30e1454285b9539aafa89defa11b60812dd00b341abfd19826cb7ff158fa3caf",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "deterministic_fallback",
+    "model": null,
+    "passes": 0,
+    "dossier_sha256": "00288da36dbd9977883ceee684136578e0f85c7ac120dcc1421736b14fa8d222",
+    "fallback_reason": "RuntimeError: writer pass failed: HTTPError: HTTP Error 402: Payment Required",
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:84f5e64d030c6661c77f0802417f8dda9cc7866ea537a76f96be091c4a629f2e",
+      "memory_fingerprint": "sha256:30e1454285b9539aafa89defa11b60812dd00b341abfd19826cb7ff158fa3caf",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
