@@ -53,12 +53,12 @@ def test_workflows_pin_the_runner_and_scope_checkout_credentials():
 
 def test_ci_dependencies_are_binary_only_and_hash_locked():
     requirements = (ROOT / "requirements-ci.txt").read_text(encoding="utf-8")
-    assert "pillow==12.3.0" in requirements
+    assert "pillow==13.0.0" in requirements
     # Ubuntu 24.04 + CPython 3.12 resolves this exact manylinux wheel.  Keep its
     # hash explicit so the post-merge Pages job cannot be the first place a
     # developer-only lock failure is discovered.
     assert (
-        "--hash=sha256:78cb2c6865a35ab8ff8b75fd122f6033b92a62c82801110e48ddd6c936a45d91"
+        "--hash=sha256:42d63be3af4f9b951b199b0a9d23365d37ab14687e6d77b74940432c8515c4ca"
         in requirements
     )
     # Five original pure-Python locks plus five reviewed Pillow platform wheels.
