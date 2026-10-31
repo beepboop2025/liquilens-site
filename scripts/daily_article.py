@@ -78,7 +78,9 @@ ENDPOINTS = {
     "validation": "https://api.liquilens.in/api/failure-radar/validation",
     "markets": "https://api.liquilens.in/api/evidence/markets",
     "ndfi": "https://api.liquilens.in/api/us-radar/ndfi",
-    "seiche": "https://api.seiche.info/api/overview",
+    # /api/overview is rights-withheld since 2026-10-28. Read only Seiche's
+    # release scope; never a legacy composite, thesis or static snapshot.
+    "seiche": "https://api.seiche.info/api",
     "undertow": "https://api.seiche.info/undertow/board.json",
 }
 
@@ -696,15 +698,11 @@ def build_dossier(datasets: dict[str, dict], *, date: str, article_type: str,
             } for row in (ndfi.get("ndfi_watch") or [])[:3]],
         },
         "system_context_seiche": {
-            "generated_at": seiche.get("generated_at"),
-            "editorial": {
-                key: (seiche.get("editorial") or {}).get(key)
-                for key in ("thesis", "standfirst", "confidence", "confidence_note")
+            "release_scope": {
+                key: (seiche.get("release_scope") or {}).get(key)
+                for key in ("schema", "status", "policy")
             },
-            "composite": {
-                key: ((seiche.get("engines") or {}).get("composite") or {}).get(key)
-                for key in ("value", "regime", "coverage_pct", "dead_inputs")
-            },
+            "legacy_system_reading": "withheld by Seiche pending source-rights qualification; not reconstructed, not calm",
         },
         "market_exit_context_undertow": compact_undertow(datasets["undertow"]),
         "required_sections": (
@@ -767,7 +765,7 @@ def current_fallback(dossier: dict) -> tuple[str, str, str]:
         for item in pca.get("headroom") or []
     ])
     system = dossier.get("system_context_seiche") or {}
-    seiche_editorial = system.get("editorial") or {}
+    seiche_scope = system.get("release_scope") or {}
     undertow = dossier.get("market_exit_context_undertow") or {}
 
     if market_dd is not None:
@@ -827,7 +825,7 @@ The forensic layer is also bounded. Honest deterioration may appear in published
 
 The next useful evidence is not another adjective. A newer vetted filing could show whether asset quality, capital and deposits confirmed or reversed the older direction. A fresh market print could move distance-to-default back above the screen's threshold. A disclosed funding series could illuminate one of the dark lenses. Any of those observations can change the tier or make this article's emphasis obsolete.
 
-The system layer is context only. Seiche currently says: **{clean(seiche_editorial.get('thesis') or 'system reading unavailable')}** That reading does not enter {name}'s score. Undertow's public board is dated **{clean(undertow.get('asof') or 'unavailable')}** and can test whether traded-market exit capacity is broadly impaired; it does not prove an institution-specific funding problem.
+The system layer is context only. Seiche's legacy system reading is withheld under its source-rights policy **{clean(seiche_scope.get('policy') or 'unavailable')}** and is not reconstructed here; a withheld reading is not a calm one, and none enters {name}'s score. Undertow's public board is dated **{clean(undertow.get('asof') or 'unavailable')}** and can test whether traded-market exit capacity is broadly impaired; it does not prove an institution-specific funding problem.
 
 ## Follow the pressure chain
 
@@ -841,7 +839,7 @@ For the deeper conversion path, the [six-week LiquiLens proof pilot]({SITE}/pilo
 - [Historical validation record]({ENDPOINTS['validation']}), including PCA, funding and hazard diagnostics with misses preserved.
 - [Three-market evidence index]({ENDPOINTS['markets']}), which states the construction-PIT status and eligibility boundary for India, the US and Europe.
 - [US NDFI watch]({ENDPOINTS['ndfi']}), used only as a cross-market institution context.
-- [Seiche live overview]({ENDPOINTS['seiche']}) and [Undertow public board]({ENDPOINTS['undertow']}), displayed as system and market context, never institution-score inputs.
+- [Seiche release scope]({ENDPOINTS['seiche']}) and [Undertow public board]({ENDPOINTS['undertow']}), displayed as system and market context, never institution-score inputs.
 - [LiquiLens research record]({SITE}/research/) and [reviewed investigations]({SITE}/investigations/).
 
 The board is a public-data risk screen, not a credit rating, allegation, recommendation, or prediction that an institution will fail. Its historical record is construction-PIT and is not eligible as a validated backtest or real-money evidence. Filing availability is proxied where the original publication clock is absent; lead times can therefore be optimistic. Market-derived values can move quickly and use simplified barriers. Research and market data, not investment advice.
@@ -922,7 +920,7 @@ Readers who need the rule tested on their own counterparties can use the [six-we
 - [The {name} replay]({SITE}/replay/{slug}/), a human-readable case file generated from that record.
 - [Three-market evidence index]({ENDPOINTS['markets']}), which states why India, US and Europe evidence has different status.
 - [Current Failure Radar board]({ENDPOINTS['board']}), used only for today's tier counts and coverage boundary.
-- [Seiche overview]({ENDPOINTS['seiche']}) and [Undertow public board]({ENDPOINTS['undertow']}), sibling layers not used to score this case.
+- [Seiche release scope]({ENDPOINTS['seiche']}) and [Undertow public board]({ENDPOINTS['undertow']}), sibling layers not used to score this case.
 - [LiquiLens research record]({SITE}/research/) and [reviewed investigations]({SITE}/investigations/).
 
 This article reports a construction-PIT historical diagnostic. It is not a validated backtest, a publication-vintage reconstruction or real-money evidence. It is **not a credit rating** or a prediction. Where an exact publication timestamp is absent, the record uses a filing-availability proxy. Fraud-masked cases expose a hard limit of honest-disclosure models. Similar mechanisms do not imply a repeated outcome. Research and market data, not investment advice.
