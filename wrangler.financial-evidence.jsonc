@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "liquilens-financial-evidence-pages",
+  "compatibility_date": "2026-10-31",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    {
+      "pattern": "https://liquilens.in/financial-evidence",
+      "zone_name": "liquilens.in"
+    },
+    {
+      "pattern": "https://liquilens.in/financial-evidence/*",
+      "zone_name": "liquilens.in"
+    }
+  ],
+  "assets": {
+    "directory": "./.financial-evidence-public",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  }
+}
