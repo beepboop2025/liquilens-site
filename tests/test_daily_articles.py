@@ -166,7 +166,10 @@ def datasets():
                                     "historical_evidence": evidence_status}]},
         "ndfi": {"as_of": "2026-03-31", "historical_evidence": evidence_status,
                  "system_context": {"available": False}, "ndfi_watch": []},
-        "seiche": {"generated_at": "2026-08-15T04:00:00Z",
+        "seiche": {"release_scope": {"schema": "seiche.source-rights-status.v1",
+                                     "status": "partial_release",
+                                     "policy": "seiche.public-source-rights.2026-10-28"},
+                   # Legacy fields a stale or sibling surface could still carry.
                    "editorial": {"thesis": "The calendar leads while cash prices remain calm."},
                    "engines": {"composite": {"value": 45.2, "regime": "STRAIN"}}},
         "undertow": {"asof": "2026-08-15", "segments": {
@@ -190,6 +193,19 @@ def test_first_changed_board_gets_current_analysis():
     assert "forensic lens fired is **none published**" in article["body_md"]
     assert article["published_at"] == "2026-08-15T07:21:34Z"
     assert article["published_at"] != "2026-08-15T11:15:00Z"
+
+
+def test_seiche_context_is_release_scope_never_withheld_legacy_values():
+    for previous in ([], [{"board_signature": daily_article.board_signature(datasets()["board"]),
+                           "topic": "some-other-case"}]):
+        article = daily_article.build_article(
+            datasets(), date="2026-08-16", recent_index=previous, configured_model=None,
+        )
+        published = json.dumps(article)
+        assert "api.seiche.info/api/overview" not in published
+        assert "calendar leads" not in published and "45.2" not in published
+    assert "seiche.public-source-rights.2026-10-28" in daily_article.build_article(
+        datasets(), date="2026-08-15", recent_index=[], configured_model=None)["body_md"]
 
 
 def test_unchanged_board_opens_historical_record():
