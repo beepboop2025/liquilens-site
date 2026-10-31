@@ -19,6 +19,10 @@ Stage into a new empty path on qualified storage:
       --commit EXACT_MAIN_SHA --destination /qualified-storage/new-public-directory
     npx --no-install wrangler deploy --config wrangler.financial-evidence.jsonc \
       --assets /qualified-storage/new-public-directory --dry-run
+    npx --no-install wrangler dev --config wrangler.financial-evidence.jsonc \
+      --assets /qualified-storage/new-public-directory --local --ip 127.0.0.1 --port FREE_PORT
+    python3 scripts/financial_evidence_publication.py verify \
+      --commit EXACT_MAIN_SHA --base-url http://127.0.0.1:FREE_PORT --attempts 1 --delay 0
     npx --no-install wrangler deploy --config wrangler.financial-evidence.jsonc \
       --assets /qualified-storage/new-public-directory --tag EXACT_MAIN_SHA
     python3 scripts/financial_evidence_publication.py verify \
@@ -28,6 +32,19 @@ Staging reads the exact committed Git blobs, not uncommitted working files. It
 copies only the fixed seven-file allowlist and a source-identity response header.
 Postdeployment verification requires every public byte, content type, canonical
 URL and source header to agree.
+
+A dry run packages the Worker but does not start the runtime. The local
+preview runs the pinned workerd against the staged files, so a runtime
+rejection appears before production does. Stop the preview before deploying.
+tests/test_wrangler_compatibility.mjs keeps every Worker compatibility_date at
+or below the date the pinned workerd declares, so a config dated today fails
+CI instead of failing at deploy time. Raise a compatibility date only together
+with a Wrangler upgrade that supports it.
+
+This Worker serves a snapshot of one commit. An edit to any of the seven files
+changes nothing public until it is staged and deployed again from the new main
+commit and the public verify passes. Google reviewers read these URLs, so
+redeploy in the same change window as any policy edit.
 
 Authenticate with the existing Cloudflare account using standard Wrangler login.
 Do not commit credentials. Retain the deployment version and readback receipt
