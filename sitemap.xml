@@ -309,4 +309,7 @@
   <url><loc>https://liquilens.in/banking/institutions/ujjivan-sfb/</loc><lastmod>2026-10-04</lastmod></url>
   <url><loc>https://liquilens.in/banking/institutions/utkarsh-sfb/</loc><lastmod>2026-10-04</lastmod></url>
 <!-- BANKING-SNAPSHOTS:END -->
+  <url><loc>https://liquilens.in/financial-evidence/</loc><lastmod>2026-10-31</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://liquilens.in/financial-evidence/privacy/</loc><lastmod>2026-10-31</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://liquilens.in/financial-evidence/terms/</loc><lastmod>2026-10-30</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 </urlset>

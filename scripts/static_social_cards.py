@@ -66,6 +66,27 @@ class RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/financial-evidence/", "financial-evidence-sheets", "LIQUILENS / FINANCIAL EVIDENCE", "GOOGLE SHEETS RESEARCH",
+        "Source-linked research, with dates and gaps in your spreadsheet.",
+        "RESEARCH REVIEW", "FUNDING / INSTITUTIONS",
+        "CURRENT SPREADSHEET / EXPLICIT REFRESH / SOURCE DATES", "PAGE CUT", "2026-10-31",
+        "GOOGLE MARKETPLACE REVIEW PENDING", "LIQUILENS PRIVATE LIMITED",
+    ),
+    RouteDefinition(
+        "/financial-evidence/privacy/", "financial-evidence-privacy", "LIQUILENS / FINANCIAL EVIDENCE", "GOOGLE USER DATA",
+        "How the add-on accesses, uses and protects your data.",
+        "PRIVACY", "ACCESS / USE / SHARING",
+        "CURRENT DOCUMENT / HTTPS / DELETION CONTROLS", "POLICY CUT", "2026-10-31",
+        "APP-SPECIFIC DISCLOSURES", "LIQUILENS PRIVATE LIMITED",
+    ),
+    RouteDefinition(
+        "/financial-evidence/terms/", "financial-evidence-terms", "LIQUILENS / FINANCIAL EVIDENCE", "RESEARCH TERMS",
+        "Public evidence for human review, with explicit limits.",
+        "TERMS", "RESEARCH / SOURCE RIGHTS",
+        "NO FINANCIAL ADVICE / NO EXECUTION", "TERMS CUT", "2026-08-24",
+        "EXISTING TERMS", "LIQUILENS PRIVATE LIMITED",
+    ),
+    RouteDefinition(
         "/usage/2026-10-17/", "technical-usage-20261017", "LIQUILENS / TECHNICAL ACTIVITY", "FIXED-WINDOW EVIDENCE",
         "Recorded activity, with its attribution and coverage limits.",
         "MEASUREMENT", "CALLS / DOWNLOADS",
