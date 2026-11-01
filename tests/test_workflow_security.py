@@ -71,6 +71,22 @@ def test_ci_dependencies_are_binary_only_and_hash_locked():
         assert "pytest>=" not in workflow
 
 
+
+def test_editorial_controller_lock_matches_the_root_lock():
+    # The Railway editorial controller refuses to run when the checked-out
+    # site lock differs from the lock baked into its reviewed image
+    # ("verification lock changed; reviewed image rebuild required"). The
+    # Pillow 13 upgrade changed only the root copy, so the 2026-11-01 11:15Z
+    # edition crashed. A lock change must update both copies in the same
+    # commit, and the controller image must then be rebuilt.
+    controller = ROOT / "deploy/railway-ci/editorial-controller"
+    assert (controller / "requirements-ci.txt").read_bytes() == (
+        ROOT / "requirements-ci.txt"
+    ).read_bytes()
+    dockerfile = (controller / "Dockerfile").read_text(encoding="utf-8")
+    assert "--only-binary=:all:" in dockerfile
+    assert "--require-hashes -r requirements-ci.txt" in dockerfile
+
 def test_workflow_permissions_match_their_jobs():
     for permission in ("contents: read", "pages: write", "id-token: write"):
         assert permission in PAGES
