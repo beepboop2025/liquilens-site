@@ -1,5 +1,6 @@
 import hashlib
 import json
+import re
 import socket
 import subprocess
 import sys
@@ -498,14 +499,37 @@ def test_mcp_receipt_decoder_accepts_one_json_or_sse_message():
         )
         == payload
     )
-    assert EXPECTED_MCP_VERSION == "0.1.8"
+    assert EXPECTED_MCP_VERSION == "0.1.16"
     assert EXPECTED_MCP_CONTRACT["serverInfo"] == {
         "name": "financial-evidence",
-        "version": "0.1.8",
+        "version": "0.1.16",
     }
     assert [tool["name"] for tool in EXPECTED_MCP_CONTRACT["tools"]] == list(
         EXPECTED_MCP_TOOLS
     )
+
+
+def test_hosted_financial_evidence_contract_is_one_file_and_the_newest():
+    # The Worker, its live verifier, the Pages proof copy and the API catalog
+    # must name the same contract, and it must be the newest one carried here,
+    # so the hosted identity cannot lag the packaged release unnoticed.
+    root = Path(__file__).resolve().parents[1]
+    pattern = r"financial-evidence-mcp-v([0-9]+\.[0-9]+\.[0-9]+)\.json"
+    carried = [
+        re.fullmatch(pattern, path.name).group(1)
+        for path in (root / "protocol").glob("financial-evidence-mcp-v*.json")
+    ]
+    newest = max(carried, key=lambda value: tuple(map(int, value.split("."))))
+    for name in (
+        "edge/catalog-worker.mjs",
+        "scripts/verify_catalog_edge.py",
+        ".github/workflows/pages.yml",
+        ".well-known/api-catalog.json",
+        "tests/test_financial_evidence_mcp.mjs",
+    ):
+        named = set(re.findall(pattern, (root / name).read_text(encoding="utf-8")))
+        assert named == {newest}, (name, named, newest)
+    assert EXPECTED_MCP_VERSION == newest
 
 
 def test_mcp_receipt_decoder_rejects_batches_and_multiple_sse_events():
