@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createHash } from "node:crypto";
 
-import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.8.json" with {
+import financialEvidenceMcpContract from "../protocol/financial-evidence-mcp-v0.1.16.json" with {
   type: "json",
 };
 import semanticFixture from "./fixtures/financial-evidence-v0.1.6-semantics.json" with { type: "json" };
@@ -140,7 +140,7 @@ test("modern discovery is stateless and advertises the same server", async () =>
   );
   assert.equal(
     payload.result._meta["io.modelcontextprotocol/serverInfo"].version,
-    "0.1.8",
+    "0.1.16",
   );
   assert.equal(payload.result.resultType, "complete");
 });
