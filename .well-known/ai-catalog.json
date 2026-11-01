@@ -1282,7 +1282,13 @@
       "description": "Registered company profile: LiquiLens institution evidence, Seiche funding conditions and Undertow market liquidity. International access, market-specific coverage, public evidence and investor materials.",
       "metadata": {
         "role": "company-profile",
-        "investors_url": "https://liquilens.in/investors/"
+        "investors_url": "https://liquilens.in/investors/",
+        "registration_number": "U62011RJ2026PTC116792",
+        "startup_recognition_certificate": "DIPP290644",
+        "startup_recognition_issuer": "DPIIT, Government of India (Startup India)",
+        "startup_recognition_approved_on": "2026-10-29",
+        "startup_recognition_verification_url": "https://www.startupindia.gov.in/content/sih/en/startupgov/validate-startup-recognition.html",
+        "startup_recognition_scope": "A registration status, not an endorsement, a licence or a regulatory approval. No tax exemption is claimed."
       },
       "identifier": "urn:air:liquilens.in:company:profile",
       "displayName": "LiquiLens registered company and connected products",
