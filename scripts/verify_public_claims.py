@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Check that the public surfaces of liquilens.in agree with reality.
 
-Five rules, checked over every file the Pages workflow uploads:
+Six rules, checked over every file the Pages workflow uploads:
 
   1. one US failure count, and it is the study denominator
   2. the Undertow price ladder, on Undertow surfaces only
@@ -12,13 +12,16 @@ Five rules, checked over every file the Pages workflow uploads:
   4. no surface claims something is withheld that a public API serves
   5. release discovery and human evidence ledgers carry the same exact status
      tokens, eligibility flags, MCP version, and public tool count
+  6. the headline evidence figures are generated from the reviewed capture
+     research/evidence-figures.json (scripts/public_numbers.py), never typed
 
-Rules 1 to 3 read only the checked out files, so they are deterministic and
-they set the exit code. An incomplete local walk or unreadable artifact also
-sets the exit code: uncertainty about what this checkout will publish is a
-failed verification. Rule 4 reads the live API, whose state belongs to
-another repo's deploy, so it only ever prints a warning. Set
-LIQUILENS_OFFLINE=1 to skip it; an endpoint that cannot be reached is never
+Rules 1 to 3, 5 and 6 read only the checked out files, so they are
+deterministic and they set the exit code. An incomplete local walk or
+unreadable artifact also sets the exit code: uncertainty about what this
+checkout will publish is a failed verification. Rule 4, and the comparison of
+the rule 6 capture with the live evidence API, read the live API, whose state
+belongs to another repo's deploy, so they only ever print a warning. Set
+LIQUILENS_OFFLINE=1 to skip them; an endpoint that cannot be reached is never
 treated as evidence either way.
 
     python3 scripts/verify_public_claims.py
@@ -39,13 +42,18 @@ import urllib.parse
 import urllib.request
 from typing import Any
 
+try:
+    from scripts import public_numbers
+except ModuleNotFoundError:  # direct execution
+    import public_numbers
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# This captured production response is the release evidence artifact used by
-# the site gate. Public copy must follow the artifact rather than a second
-# hand-maintained number in this verifier.
-US_VALIDATION_ARTIFACT = os.path.join(
-    ROOT, "tests", "fixtures", "us-radar-validation.json")
+# The reviewed capture of the production evidence API is the release evidence
+# artifact. scripts/public_numbers.py generates the published figures from it,
+# and this gate reads the same capture rather than a second hand-maintained
+# number of its own.
+US_VALIDATION_ARTIFACT = os.path.join(ROOT, public_numbers.CAPTURE_PATH)
 MAX_LIVE_JSON_BYTES = 8 * 1024 * 1024
 
 
@@ -76,32 +84,15 @@ def strict_json_load(handle: Any) -> Any:
 
 def load_us_study_metrics(path: str = US_VALIDATION_ARTIFACT) -> dict[str, str]:
     try:
-        with open(path, encoding="utf-8") as fh:
-            payload = strict_json_load(fh)
-        validation = payload["validation"]
-        count = validation["n_failure_events_with_data"]
-        recall = validation["recall_overall"]
-        auc = validation["auc_pooled_24m"]
-    except (OSError, KeyError, TypeError, ValueError) as exc:
+        figures = public_numbers.values(public_numbers.read_capture(path))
+    except public_numbers.ContractError as exc:
         raise RuntimeError(
-            f"cannot read the US validation release artifact {path}: {exc}"
+            f"cannot read the evidence release artifact {path}: {exc}"
         ) from exc
-    if isinstance(count, bool) or not isinstance(count, int) or count <= 0:
-        raise RuntimeError(
-            "US validation release artifact has no positive integer "
-            "n_failure_events_with_data")
-    if isinstance(recall, bool) or not isinstance(recall, (int, float)) or \
-            not 0 <= recall <= 1:
-        raise RuntimeError(
-            "US validation release artifact has no valid recall_overall")
-    if isinstance(auc, bool) or not isinstance(auc, (int, float)) or \
-            not 0 <= auc <= 1:
-        raise RuntimeError(
-            "US validation release artifact has no valid auc_pooled_24m")
     return {
-        "failure_count": str(count),
-        "recall_pct": f"{recall * 100:.1f}",
-        "auc": f"{auc:.3f}",
+        "failure_count": figures["us.failures"],
+        "recall_pct": figures["us.recall"],
+        "auc": figures["us.auc"],
     }
 
 
@@ -1049,10 +1040,15 @@ def check(root: str = ROOT,
         raw = readable(os.path.join(root, rel))
         if raw is None:
             continue
+        # A study on its own earlier cut and a dated card keep their own
+        # denominators. Each is pinned verbatim in scripts/public_numbers.py,
+        # so only that exact text leaves the count; any edit to it returns.
+        counted = plain(uncommented(public_numbers.mask_exempt(
+            rel.replace(os.sep, "/"), raw)))
         raw = uncommented(raw)
         text = plain(raw)
 
-        for value in FAILURE_COUNT.findall(text):
+        for value in FAILURE_COUNT.findall(counted):
             if YEAR.fullmatch(value):
                 continue
             counts.setdefault(value, []).append(rel)
@@ -1108,6 +1104,7 @@ def check(root: str = ROOT,
 
     if os.path.realpath(root) == os.path.realpath(ROOT):
         problems.extend(release_contract_problems(root))
+        problems.extend(public_numbers.problems(root))
 
     return problems
 
@@ -1234,6 +1231,28 @@ def check_live(root: str = ROOT, fetch=live_fetch):
                             f"{BOND_BOOK} carries a {MARK_QUALIFIER} at "
                             f"rows.{index}.{MARK_QUALIFIER} that does not "
                             f"match mark_semantics")
+
+    # The published figures come from a reviewed capture, so the capture is
+    # what can fall behind. Report it here, beside the other live checks,
+    # instead of letting the copy drift unseen.
+    capture_path = os.path.join(root, public_numbers.CAPTURE_PATH)
+    if not os.path.exists(capture_path):
+        notes.append(f"no {public_numbers.CAPTURE_PATH} in this root, so the "
+                     f"evidence capture is not compared with the live API")
+    else:
+        try:
+            capture = public_numbers.read_capture(capture_path)
+        except public_numbers.ContractError as exc:
+            problems.append(f"{public_numbers.CAPTURE_PATH}: {exc}")
+        else:
+            live = [fetch(public_numbers.SOURCES[key])
+                    for key in ("us", "india")]
+            if any(payload is None for payload in live):
+                notes.append("the live evidence API did not answer, so "
+                             f"{public_numbers.CAPTURE_PATH} is not compared "
+                             f"with it")
+            else:
+                problems.extend(public_numbers.drift(capture, *live))
     return problems, notes
 
 
@@ -1271,7 +1290,8 @@ def main() -> int:
         for p in local:
             print(f"  - {p}", file=sys.stderr)
         return 1
-    print(f"liquilens.in: one failure count ({US_FAILURE_COUNT}), one price "
+    print(f"liquilens.in: figures follow {public_numbers.CAPTURE_PATH}, "
+          f"one failure count ({US_FAILURE_COUNT}), one price "
           f"ladder, no retired access claims")
     return 0
 

@@ -161,6 +161,18 @@ node --test tests/*.mjs
 
 Run the verifier without `LIQUILENS_OFFLINE=1` to compare public copy with the live API. Live-service differences are reported separately because that deployment is maintained outside this repository.
 
+The headline evidence figures (US failures, recall, recall interval, median
+lead and pooled AUC; the India cohort, recall and median lead) are generated,
+not typed. `research/evidence-figures.json` is a reviewed capture of
+`api.liquilens.in/api/evidence/us` and `/api/evidence/summary`, and
+`scripts/public_numbers.py` writes every registered figure from it. Refresh
+with `python3 scripts/public_numbers.py --fetch`, then review the diff. The
+fetch refuses, and changes nothing, when either endpoint is unavailable or out
+of contract. `python3 scripts/public_numbers.py --check` (also run by the
+verifier and the test suite) refuses a stale figure, an evidence figure typed
+into any page, and the India ex-fraud recall without its qualifier. The live
+verifier reports when the capture falls behind the API.
+
 Every shareable public HTML route owns a contextual deterministic 1200x630
 social card. Daily articles and historical case files are regenerated from
 their reviewed structured records at `articles/<slug>/share.png` and
