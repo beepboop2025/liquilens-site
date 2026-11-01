@@ -50,7 +50,7 @@ class QuestionPageTests(unittest.TestCase):
             self.assertEqual(first, (root/'sitemap.xml').read_text())
             for block in blocks:self.assertEqual(first.count(block), 1)
             self.assertIn('<loc>https://liquilens.in/questions/</loc>\n    <lastmod>2026-10-06</lastmod>', first)
-            self.assertIn('<loc>https://liquilens.in/about/</loc>\n    <lastmod>2026-10-05</lastmod>', first)
+            self.assertIn('<loc>https://liquilens.in/about/</loc>\n    <lastmod>2026-11-01</lastmod>', first)
 
     def test_alias_noindex_does_not_cover_live_discovery_origins(self):
         if self.catalog['brand']!='Seiche':return

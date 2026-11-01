@@ -1,6 +1,6 @@
 {
   "schema": "liquilens.investor-claims.v1",
-  "updated": "2026-10-05",
+  "updated": "2026-11-01",
   "company_profile": "https://liquilens.in/company-profile.json",
   "claims": [
     {
@@ -8,6 +8,14 @@
       "status": "VERIFIED_COMPANY_RECORD",
       "public_source": "https://liquilens.in/about/",
       "record": "Certificate of incorporation dated 5 August 2026, CIN U62011RJ2026PTC116792. Certificate available in controlled diligence."
+    },
+    {
+      "claim": "LIQUILENS PRIVATE LIMITED is recognised as a startup by DPIIT under the Startup India programme.",
+      "status": "VERIFIED_COMPANY_RECORD",
+      "public_source": "https://liquilens.in/about/",
+      "verification_url": "https://www.startupindia.gov.in/content/sih/en/startupgov/validate-startup-recognition.html",
+      "record": "DPIIT Certificate of Recognition DIPP290644, approved 29 October 2026. Anyone can check the certificate number on the Startup India verification page.",
+      "limit": "Recognition is a registration status. It is not an endorsement, a licence or a regulatory approval, and no Section 80-IAC tax exemption is claimed."
     },
     {
       "claim": "The three products expose public browser, API and hosted MCP access.",

@@ -119,6 +119,13 @@ clearly labelled publication directory. No subscription research is republished.
 Public copy and structured metadata use the product name LiquiLens and the
 registered legal name LIQUILENS PRIVATE LIMITED, a private limited company
 incorporated in India on 5 August 2026 (CIN U62011RJ2026PTC116792).
+DPIIT startup recognition (Certificate of Recognition DIPP290644, approved
+29 October 2026) is recorded once as `company.recognitions` in
+`company-profile.json` and mirrored in `product-card.json`, the about and
+investor pages, the homepage and investor JSON-LD identifiers, the investor
+claims register and `llms.txt`. Copy states it as a registration status, never
+as an endorsement, a licence or a regulatory approval, and claims no tax
+exemption. `tests/test_company_recognition.py` keeps these surfaces in step.
 Contact links use company labels and retain the confirmed business mailbox.
 Personal biographies and unused legacy promotional banners are retired; the
 primary homepage action opens the real data preview.

@@ -2,7 +2,7 @@
 
 ## Company and connected products
 
-LiquiLens is a registered private limited company in India: LIQUILENS PRIVATE LIMITED, incorporated 5 August 2026 (CIN U62011RJ2026PTC116792). LiquiLens reviews institutions, Seiche adds funding conditions, and Undertow examines market liquidity and stated-size exits. International access does not imply uniform worldwide market coverage.
+LiquiLens is a registered private limited company in India: LIQUILENS PRIVATE LIMITED, incorporated 5 August 2026 (CIN U62011RJ2026PTC116792). It is a DPIIT recognised startup (Certificate of Recognition DIPP290644, approved 29 October 2026, checkable at https://www.startupindia.gov.in/content/sih/en/startupgov/validate-startup-recognition.html ); recognition is a registration status, not a regulatory approval. LiquiLens reviews institutions, Seiche adds funding conditions, and Undertow examines market liquidity and stated-size exits. International access does not imply uniform worldwide market coverage.
 
 - Company profile: https://liquilens.in/company-profile.json
 - Company and investors: https://liquilens.in/investors/
