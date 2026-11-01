@@ -9,6 +9,7 @@ from __future__ import annotations
 import copy
 import io
 import json
+import re
 import shutil
 from pathlib import Path
 
@@ -42,6 +43,12 @@ def edit(root: Path, relative: str, old: str, new: str, count: int = 1) -> None:
     text = path.read_text(encoding="utf-8")
     assert text.count(old) == count, (relative, old)
     path.write_text(text.replace(old, new), encoding="utf-8")
+
+
+def line_of(relative: str, needle: str, root: Path = ROOT) -> int:
+    text = (root / relative).read_text(encoding="utf-8")
+    assert text.count(needle) == 1, (relative, needle)
+    return text[:text.index(needle)].count("\n") + 1
 
 
 def append(root: Path, relative: str, snippet: str) -> None:
@@ -113,14 +120,18 @@ def test_the_pre_m9_hand_typed_copy_is_refused(tmp_path):
     for relative, current, old in PRE_M9:
         edit(root, relative, current, old)
     found = pn.problems(root)
+    us_card = line_of("index.html", 'data-market="US"', root)
+    india_card = line_of("index.html", 'data-market="IN"', root)
+    interval = line_of("us/index.html", "recall, 95% interval", root)
+    india_llms = line_of("llms.txt", "- India: PERIOD_END_PROXY", root)
     for expected in (
-            "index.html:333: publishes '552' where",
-            "index.html:333: publishes '72.8' where",
-            "index.html:333: publishes '0.854' where",
-            "index.html:333: publishes '21.7' where",
-            "index.html:332: publishes '<b>88.9%</b> recall' where",
-            "us/index.html:404: publishes '69.0' where",
-            "llms.txt:102: publishes '88.9 percent recall' where"):
+            f"index.html:{us_card}: publishes '552' where",
+            f"index.html:{us_card}: publishes '72.8' where",
+            f"index.html:{us_card}: publishes '0.854' where",
+            f"index.html:{us_card}: publishes '21.7' where",
+            f"index.html:{india_card}: publishes '<b>88.9%</b> recall' where",
+            f"us/index.html:{interval}: publishes '69.0' where",
+            f"llms.txt:{india_llms}: publishes '88.9 percent recall' where"):
         assert any(problem.startswith(expected) for problem in found), (
             expected, found)
     # Regenerating restores the reviewed copy exactly.
@@ -177,7 +188,8 @@ def test_a_qualifier_removed_from_a_registered_spot_is_refused(tmp_path):
     edit(root, "research/index.html",
          "<span>served recall excluding fraud-concealed books (76.2% overall)"
          "</span>", "<span>served recall</span>")
-    assert any("research/index.html:163: publishes ' recall' where" in p
+    tile = line_of("research/index.html", "<span>served recall</span>", root)
+    assert any(f"research/index.html:{tile}: publishes ' recall' where" in p
                for p in pn.problems(root))
 
 
@@ -193,6 +205,16 @@ def test_dated_history_is_left_alone(tmp_path):
          "<!-- DAILY-ARTICLES:START -->\n- 88.9% of non-fraud failures "
          "flagged across 552 US failures")
     assert pn.problems(root) == []
+    # The same text on a page that is not dated history is refused.
+    control = root / "guides" / "control" / "index.html"
+    control.parent.mkdir(parents=True)
+    control.write_text("552 failures since 2008, 72.8% recall, 88.9% recall",
+                       encoding="utf-8")
+    found = pn.problems(root)
+    assert any(p.startswith("guides/control/index.html:1: a US failure count "
+                            "552") for p in found), found
+    assert any("guides/control/index.html:1: a recall percentage 72.8" in p
+               for p in found), found
 
 
 def test_an_exemption_is_pinned_verbatim(tmp_path):
@@ -267,6 +289,12 @@ def mutated(change) -> dict:
     lambda c: c["india"]["ensemble_fisher"].update(p_value_one_sided="small"),
     lambda c: c["india"].update(source_url="https://example.com/evidence"),
     lambda c: c.update(captured_at="yesterday"),
+    lambda c: c["retired"].update({"us.failures": [c["us"]["summary"][
+        "failures_with_data"].__str__()]}),
+    lambda c: c["retired"].update({"us.lift": ["5.0"]}),
+    lambda c: c["retired"].update({"us.auc": ["about 0.85"]}),
+    lambda c: c["retired"].update({"us.auc": []}),
+    lambda c: c.pop("retired"),
 ])
 def test_an_out_of_contract_capture_stops_the_build(tmp_path, change):
     root = site_copy(tmp_path)
@@ -311,7 +339,7 @@ def test_the_served_shape_projects_back_to_the_capture():
         responses[pn.SOURCES["us"]], responses[pn.SOURCES["india"]],
         us_sha256=CAPTURE["us"]["response_sha256"],
         india_sha256=CAPTURE["india"]["response_sha256"],
-        captured_at=CAPTURE["captured_at"])
+        captured_at=CAPTURE["captured_at"], retired=CAPTURE["retired"])
     assert capture == CAPTURE
 
 
@@ -325,6 +353,29 @@ def test_a_failed_refresh_keeps_the_capture_and_pages(tmp_path, monkeypatch,
     def fetch(url):
         if failure == "network":
             raise pn.ContractError(f"{url} could not be fetched: timed out")
+        body = json.dumps(responses[url]).encode()
+        return body, json.loads(body)
+
+    monkeypatch.setattr(pn, "fetch_response", fetch)
+    assert pn.main(["--fetch", "--root", str(root)]) == 1
+    after = {r: (root / r).read_bytes() for r in [pn.CAPTURE_PATH, *REGISTERED]}
+    assert after == before
+
+
+@pytest.mark.parametrize("changes,refusal", [
+    ({("india", "median_lead_months"): 22.5}, "warning horizon"),
+    ({}, "says p < 0.001"),
+])
+def test_a_refresh_that_would_not_publish_writes_nothing(tmp_path, monkeypatch,
+                                                        changes, refusal):
+    root = site_copy(tmp_path)
+    before = {r: (root / r).read_bytes() for r in [pn.CAPTURE_PATH, *REGISTERED]}
+    responses = served(changes)
+    if not changes:
+        responses[pn.SOURCES["india"]]["ensemble_fisher"][
+            "p_value_one_sided"] = 0.002
+
+    def fetch(url):
         body = json.dumps(responses[url]).encode()
         return body, json.loads(body)
 
@@ -351,8 +402,45 @@ def test_a_refresh_regenerates_every_page_from_the_new_capture(tmp_path,
     assert "United States · 556 failures since 2008" in home
     assert "<b>73.3%</b> recall" in home
     assert "556 failures since 2008" in us and "554 failures" not in us
-    assert pn.load_capture(root)["us"]["summary"]["failures_with_data"] == 556
+    capture = pn.load_capture(root)
+    assert capture["us"]["summary"]["failures_with_data"] == 556
+    # The superseded figures join the retired set, so a stale copy of
+    # either is refused anywhere from now on.
+    assert capture["retired"]["us.failures"] == [
+        *CAPTURE["retired"]["us.failures"], FIGURES["us.failures"]]
+    assert capture["retired"]["us.recall"] == [
+        *CAPTURE["retired"]["us.recall"], FIGURES["us.recall"]]
     assert pn.problems(root) == []
+    append(root, "index.html", "<p>The record covers 554 FDIC failures.</p>")
+    assert any("554 was the published us.failures" in p
+               for p in pn.problems(root))
+
+
+def test_an_unreadable_committed_capture_stops_a_refresh(tmp_path,
+                                                         monkeypatch):
+    root = site_copy(tmp_path)
+    (root / pn.CAPTURE_PATH).write_text("{", encoding="utf-8")
+    monkeypatch.setattr(pn, "fetch_response", lambda url: pytest.fail(
+        "a refresh must not fetch over an unreadable capture"))
+    assert pn.main(["--fetch", "--root", str(root)]) == 1
+    assert (root / pn.CAPTURE_PATH).read_text(encoding="utf-8") == "{"
+
+
+def test_a_figure_that_returns_leaves_the_retired_set():
+    previous = mutated(lambda c: c["us"]["summary"].update(
+        failures_with_data=556))
+    previous["retired"]["us.failures"] = [
+        *CAPTURE["retired"]["us.failures"], FIGURES["us.failures"]]
+    previous = pn.validate(previous)
+    responses = pn.as_served(CAPTURE)
+
+    def fetch(url):
+        body = json.dumps(responses[url]).encode()
+        return body, json.loads(body)
+
+    capture = pn.fetch_capture(fetch, previous=previous)
+    assert capture["retired"]["us.failures"] == [
+        *CAPTURE["retired"]["us.failures"], "556"]
 
 
 class _Response(io.BytesIO):
@@ -421,8 +509,94 @@ def test_a_moved_india_median_refuses_until_the_horizon_is_redrawn(tmp_path):
     root = site_copy(tmp_path)
     write_capture(root, mutated(
         lambda c: c["india"]["summary"].update(median_lead_months=22.5)))
+    before = {r: (root / r).read_bytes() for r in REGISTERED}
+    with pytest.raises(pn.ContractError) as refused:
+        pn.render(root)
+    message = str(refused.value)
+    assert 'set data-month="22.5" data-progress=".451"' in message, message
+    assert "left:45.1%" in message, message
+    assert {r: (root / r).read_bytes() for r in REGISTERED} == before
+    # Drawing the chapter where the message says lets the figures through.
+    edit(root, "index.html", 'data-month="21.5" data-progress=".476"',
+         'data-month="22.5" data-progress=".451"')
+    edit(root, "index.html", 'style="left:47.6%"', 'style="left:45.1%"')
     pn.render(root)
-    found = pn.problems(root)
-    assert any('data-month="21.5"' in p and "22.5" in p for p in found), found
+    assert pn.problems(root) == []
     home = (root / "index.html").read_text(encoding="utf-8")
     assert "<b>22.5-month median alert</b>" in home
+
+
+# ------------------------------------------------ nets, both directions
+
+
+@pytest.mark.parametrize("snippet,expected", [
+    ("<p>The recall was {us.recall}% across the US record.</p>",
+     "a recall percentage {us.recall}"),
+    ("<p>US recall: {us.recall}%, AUROC {us.auc}.</p>", "an AUC {us.auc}"),
+    ("<p>AUC is {us.auc} on the pooled US panel.</p>", "an AUC {us.auc}"),
+    ("<p>{us.recall} per cent recall on FDIC failures.</p>",
+     "a recall percentage {us.recall}"),
+    ("<p>A median lead time of {us.median_lead} months.</p>",
+     "a median lead {us.median_lead}"),
+    ("<p>{us.failures} U.S. bank failures since 2008.</p>",
+     "a US failure count {us.failures}"),
+    ("<p>{us.failures} failed banks were replayed.</p>",
+     "a US failure count {us.failures}"),
+    ("<p>{us.failures}&nbsp;US failures since 2008.</p>",
+     "a US failure count {us.failures}"),
+    ("<p>{us.failures}\u00a0US failures since 2008.</p>",
+     "a US failure count {us.failures}"),
+    ("<p>95% CI {us.recall_ci_low}-{us.recall_ci_high}%</p>",
+     "a recall interval {us.recall_ci_low}"),
+    ("<p>{india.institutions} Indian lenders were replayed.</p>",
+     "an India cohort size {india.institutions}"),
+    ("<p>The diagnostic stood at {us.recall} on its own.</p>",
+     "us.recall {us.recall} is typed into the page"),
+    ("<p>The diagnostic once read 72.8 on the record.</p>",
+     "72.8 was the published us.recall"),
+])
+def test_the_nets_catch_other_phrasings(tmp_path, snippet, expected):
+    def fill(text: str) -> str:
+        return re.sub(r"\{([a-z_.]+)\}", lambda m: FIGURES[m.group(1)], text)
+
+    root = site_copy(tmp_path)
+    append(root, "index.html", fill(snippet))
+    found = pn.problems(root)
+    assert any(fill(expected) in p for p in found), found
+
+
+@pytest.mark.parametrize("snippet", [
+    "<p>A 503 failure means the origin did not answer.</p>",
+    "<p>The checker covers 12 institution types.</p>",
+    "<p>It serves 120 institution-level screens.</p>",
+    "<p>The median alert of 12 venues fired first.</p>",
+    "<p>Twelve of 16 venues answered in 2008 failures drills.</p>",
+])
+def test_the_nets_leave_ordinary_copy_alone(tmp_path, snippet):
+    root = site_copy(tmp_path)
+    append(root, "index.html", snippet)
+    assert pn.problems(root) == []
+
+
+def test_a_page_in_another_encoding_is_still_read(tmp_path):
+    root = site_copy(tmp_path)
+    page = root / "guides" / "legacy" / "index.html"
+    page.parent.mkdir(parents=True)
+    page.write_bytes("<p>Caf\u00e9 note: 552 failures since 2008 and "
+                     "72.8% recall.</p>".encode("cp1252"))
+    found = pn.problems(root)
+    assert any("guides/legacy/index.html:1: a US failure count 552" in p
+               for p in found), found
+
+
+def test_an_edit_beside_a_label_is_refused_not_swallowed(tmp_path):
+    root = site_copy(tmp_path)
+    label = pn.india_label(FIGURES, "percent")
+    edit(root, "llms.txt", f"reports {label} and",
+         f"reports {label}. Europe is NAMED_CASE_FILES_CONSTRUCTION_PIT and")
+    before = (root / "llms.txt").read_bytes()
+    assert any("llms.txt: the registered figure" in p and "appears 0" in p
+               for p in pn.problems(root))
+    with pytest.raises(pn.ContractError):
+        pn.render(root)
+    assert (root / "llms.txt").read_bytes() == before

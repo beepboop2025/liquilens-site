@@ -1097,3 +1097,37 @@ def test_a_walk_error_is_a_scan_error(tmp_path, monkeypatch):
     monkeypatch.setattr(vpc.os, "walk", denied_walk)
     with pytest.raises(vpc.ScanError, match="cannot walk publishable surface"):
         vpc.check(str(tmp_path))
+
+
+def test_the_capture_falling_behind_the_api_is_reported():
+    moved = copy.deepcopy(SERVED[US_EVIDENCE])
+    moved["summary"]["failures_with_data"] += 2
+    problems, notes = vpc.check_live(
+        ROOT, fetch=serving(**{US_EVIDENCE: moved}))
+    assert notes == []
+    assert any("research/evidence-figures.json is behind" in p
+               and "us.summary.failures_with_data" in p for p in problems), \
+        problems
+
+
+def test_a_moved_fisher_p_is_reported_too():
+    moved = copy.deepcopy(SERVED[INDIA_EVIDENCE])
+    moved["ensemble_fisher"]["p_value_one_sided"] = 0.002
+    problems, _ = vpc.check_live(
+        ROOT, fetch=serving(**{INDIA_EVIDENCE: moved}))
+    assert any("india.ensemble_fisher.p_value_one_sided" in p
+               for p in problems), problems
+
+
+def test_an_api_out_of_contract_is_reported_not_trusted():
+    broken = copy.deepcopy(SERVED[INDIA_EVIDENCE])
+    broken["summary"]["recall_ex_fraud_pct"] = 99.9
+    problems, _ = vpc.check_live(
+        ROOT, fetch=serving(**{INDIA_EVIDENCE: broken}))
+    assert any("out of the capture contract" in p for p in problems), problems
+
+
+def test_the_unchanged_api_reports_no_drift():
+    problems, notes = vpc.check_live(ROOT, fetch=serving())
+    assert not any("evidence-figures.json" in p for p in problems)
+    assert not any("evidence API" in n for n in notes)

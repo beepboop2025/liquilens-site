@@ -1,6 +1,27 @@
 {
   "schema": "liquilens.public-evidence-figures.v1",
   "captured_at": "2026-11-01T01:55:45Z",
+  "retired": {
+    "us.auc": [
+      "0.854"
+    ],
+    "us.failures": [
+      "550",
+      "552"
+    ],
+    "us.median_lead": [
+      "21.7"
+    ],
+    "us.recall": [
+      "72.8"
+    ],
+    "us.recall_ci_high": [
+      "76.6"
+    ],
+    "us.recall_ci_low": [
+      "69.0"
+    ]
+  },
   "us": {
     "source_url": "https://api.liquilens.in/api/evidence/us",
     "response_sha256": "05e4bf862297d204d995de9a63795c93e855d9ecfdc1be60a1f3eef88605f3ab",

@@ -44,7 +44,7 @@ from typing import Any
 
 try:
     from scripts import public_numbers
-except ModuleNotFoundError:  # direct execution
+except ImportError:  # direct execution: scripts/ is sys.path[0]
     import public_numbers
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -1040,9 +1040,11 @@ def check(root: str = ROOT,
         raw = readable(os.path.join(root, rel))
         if raw is None:
             continue
-        # A study on its own earlier cut and a dated card keep their own
-        # denominators. Each is pinned verbatim in scripts/public_numbers.py,
-        # so only that exact text leaves the count; any edit to it returns.
+        # A study on its own earlier cut, a dated card and a dated snapshot
+        # keep their own denominators. Each is pinned verbatim in
+        # scripts/public_numbers.py, so only that exact text leaves the count
+        # and any edit to it returns. The DAILY-ARTICLES blocks (dated article
+        # listings) are masked the same way; articles/ itself is still counted.
         counted = plain(uncommented(public_numbers.mask_exempt(
             rel.replace(os.sep, "/"), raw)))
         raw = uncommented(raw)
