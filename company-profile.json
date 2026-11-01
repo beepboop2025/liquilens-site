@@ -1,6 +1,6 @@
 {
   "schema": "liquilens.company-profile.v1",
-  "updated": "2026-10-13",
+  "updated": "2026-11-01",
   "canonical_url": "https://liquilens.in/company-profile.json",
   "company": {
     "name": "LiquiLens",
@@ -12,7 +12,20 @@
     "registration_number": "U62011RJ2026PTC116792",
     "website": "https://liquilens.in/",
     "investors_url": "https://liquilens.in/investors/",
-    "contact": "mailto:mrinal@liquilens.in?subject=LiquiLens%20investor%20conversation"
+    "contact": "mailto:mrinal@liquilens.in?subject=LiquiLens%20investor%20conversation",
+    "recognitions": [
+      {
+        "name": "DPIIT startup recognition",
+        "issuer": "DPIIT, Government of India (Startup India)",
+        "certificate_type": "Certificate of Recognition",
+        "certificate_number": "DIPP290644",
+        "approved_on": "2026-10-29",
+        "verification_url": "https://www.startupindia.gov.in/content/sih/en/startupgov/validate-startup-recognition.html",
+        "verification_method": "Select Certificate of Recognition and enter certificate number DIPP290644.",
+        "scope": "A registration status under the Startup India programme. It is not an endorsement, a licence or a regulatory approval, and it does not review or certify any research result.",
+        "tax_exemption": "Not claimed. Section 80-IAC eligibility requires a separate certificate."
+      }
+    ]
   },
   "purpose": "Financial evidence for decisions that cross institutions, funding systems and markets.",
   "positioning": "One company. Three connected products. Source-checkable financial research for people, software and AI agents.",

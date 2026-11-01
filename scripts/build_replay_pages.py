@@ -481,7 +481,7 @@ def case_file_index(
 
 
 BASE_SITEMAP = [
-    ("/", "2026-10-05", "weekly", "1.0"),
+    ("/", "2026-11-01", "weekly", "1.0"),
     ("/investigations/", "2026-08-12", "weekly", "0.9"),
     ("/investigations/the-5-64x-private-credit-concentration/",
      "2026-08-12", "monthly", "0.8"),
@@ -515,7 +515,7 @@ BASE_SITEMAP = [
     ("/questions/small-finance-bank-vs-nbfc-mfi/", "2026-10-06", "monthly", "0.8"),
     ("/questions/dollar-funding-and-bank-failure/", "2026-10-06", "monthly", "0.8"),
     ("/questions/tight-funding-bitcoin-exit/", "2026-10-06", "monthly", "0.8"),
-    ("/about/", "2026-10-05", None, None),
+    ("/about/", "2026-11-01", None, None),
     ("/security/", "2026-08-09", None, None),
     ("/status/", "2026-09-13", None, None),
     ("/privacy/", "2026-08-21", None, None),
