@@ -22,6 +22,7 @@ def _load():
 
 
 vpc = _load()
+from scripts import public_numbers  # noqa: E402
 
 MODEL_CARD = "https://api.liquilens.in/api/failure-radar/model-card"
 US_VALIDATION = "https://api.liquilens.in/api/us-radar/validation"
@@ -36,18 +37,28 @@ LIVE = {
     BOND_BOOK: "public-signals-bond-book.json",
 }
 
+# The evidence endpoints answer with the committed capture itself, so the
+# live checks see no drift until a test edits a response.
+CAPTURE = public_numbers.load_capture(ROOT)
+SERVED = public_numbers.as_served(CAPTURE)
+US_EVIDENCE = public_numbers.SOURCES["us"]
+INDIA_EVIDENCE = public_numbers.SOURCES["india"]
+
 
 def payload(url):
+    if url in SERVED:
+        return copy.deepcopy(SERVED[url])
     with open(os.path.join(FIXTURES, LIVE[url]), encoding="utf-8") as fh:
         return json.load(fh)
 
 
 def test_us_metrics_come_from_the_captured_release_response():
-    validation = payload(US_VALIDATION)["validation"]
-    assert vpc.US_FAILURE_COUNT == str(
-        validation["n_failure_events_with_data"])
-    assert vpc.US_RECALL_PCT == f"{validation['recall_overall'] * 100:.1f}"
-    assert vpc.US_AUC == f"{validation['auc_pooled_24m']:.3f}"
+    summary = CAPTURE["us"]["summary"]
+    assert vpc.US_VALIDATION_ARTIFACT == os.path.join(
+        ROOT, "research", "evidence-figures.json")
+    assert vpc.US_FAILURE_COUNT == str(summary["failures_with_data"])
+    assert vpc.US_RECALL_PCT == f"{summary['recall_pct']:.1f}"
+    assert vpc.US_AUC == f"{summary['auc_pooled_24m']:.3f}"
 
     exact_surfaces = {
         "brand/_x-banner.html": (f"{vpc.US_RECALL_PCT}%",),
@@ -68,7 +79,7 @@ def serving(**overrides):
     def fetch(url):
         if url in overrides:
             return overrides[url]
-        return payload(url) if url in LIVE else None
+        return payload(url) if url in LIVE or url in SERVED else None
     return fetch
 
 
@@ -540,7 +551,8 @@ def test_mark_schema_checks_do_not_depend_on_the_qualifier_being_named(
 def test_an_endpoint_that_does_not_answer_is_never_evidence():
     problems, notes = vpc.check_live(ROOT, fetch=lambda url: None)
     assert problems == []
-    assert len(notes) == 5
+    assert len(notes) == 6
+    assert any("evidence API did not answer" in note for note in notes)
 
 
 def test_the_live_api_warns_and_publishes_while_a_local_clash_still_blocks(
@@ -1085,3 +1097,37 @@ def test_a_walk_error_is_a_scan_error(tmp_path, monkeypatch):
     monkeypatch.setattr(vpc.os, "walk", denied_walk)
     with pytest.raises(vpc.ScanError, match="cannot walk publishable surface"):
         vpc.check(str(tmp_path))
+
+
+def test_the_capture_falling_behind_the_api_is_reported():
+    moved = copy.deepcopy(SERVED[US_EVIDENCE])
+    moved["summary"]["failures_with_data"] += 2
+    problems, notes = vpc.check_live(
+        ROOT, fetch=serving(**{US_EVIDENCE: moved}))
+    assert notes == []
+    assert any("research/evidence-figures.json is behind" in p
+               and "us.summary.failures_with_data" in p for p in problems), \
+        problems
+
+
+def test_a_moved_fisher_p_is_reported_too():
+    moved = copy.deepcopy(SERVED[INDIA_EVIDENCE])
+    moved["ensemble_fisher"]["p_value_one_sided"] = 0.002
+    problems, _ = vpc.check_live(
+        ROOT, fetch=serving(**{INDIA_EVIDENCE: moved}))
+    assert any("india.ensemble_fisher.p_value_one_sided" in p
+               for p in problems), problems
+
+
+def test_an_api_out_of_contract_is_reported_not_trusted():
+    broken = copy.deepcopy(SERVED[INDIA_EVIDENCE])
+    broken["summary"]["recall_ex_fraud_pct"] = 99.9
+    problems, _ = vpc.check_live(
+        ROOT, fetch=serving(**{INDIA_EVIDENCE: broken}))
+    assert any("out of the capture contract" in p for p in problems), problems
+
+
+def test_the_unchanged_api_reports_no_drift():
+    problems, notes = vpc.check_live(ROOT, fetch=serving())
+    assert not any("evidence-figures.json" in p for p in problems)
+    assert not any("evidence API" in n for n in notes)

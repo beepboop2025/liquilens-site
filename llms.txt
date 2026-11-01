@@ -99,8 +99,8 @@ Use https://liquilens.in/money-markets/ when the user intent starts with repo, r
 
 LiquiLens publishes three types of historical evidence and keeps their claims separate. The status tokens and eligibility flags below are served by https://api.liquilens.in/api/evidence/markets and are authoritative:
 
-- India: PERIOD_END_PROXY_CONSTRUCTION_PIT, a filing-availability-proxied construction-PIT diagnostic over 48 institutions. Validated-backtest eligible: false. Real-money eligible: false. The served headline reports 88.9 percent recall and 21.5-month median lead.
-- United States: CURRENT_AMENDED_CONSTRUCTION_PIT over all 552 FDIC failures since 2008. Validated-backtest eligible: false. Real-money eligible: false. The current diagnostic reports 72.8 percent recall, 21.7-month median lead, and pooled 24-month AUC 0.854; misses are named.
+- India: PERIOD_END_PROXY_CONSTRUCTION_PIT, a filing-availability-proxied construction-PIT diagnostic over 48 institutions. Validated-backtest eligible: false. Real-money eligible: false. The served headline reports 88.9 percent recall excluding fraud-concealed books (76.2 percent overall) and 21.5-month median lead.
+- United States: CURRENT_AMENDED_CONSTRUCTION_PIT over all 554 FDIC failures since 2008. Validated-backtest eligible: false. Real-money eligible: false. The current diagnostic reports 73.1 percent recall, 21.6-month median lead, and pooled 24-month AUC 0.851; misses are named.
 - Europe: NAMED_CASE_FILES_CONSTRUCTION_PIT over seven sourced case files. Validated-backtest eligible: false. Real-money eligible: false. This is not a cohort-level performance estimate.
 
 Evidence index: https://liquilens.in/research/

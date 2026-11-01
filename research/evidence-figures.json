@@ -1,0 +1,85 @@
+{
+  "schema": "liquilens.public-evidence-figures.v1",
+  "captured_at": "2026-11-01T01:55:45Z",
+  "retired": {
+    "us.auc": [
+      "0.854"
+    ],
+    "us.failures": [
+      "550",
+      "552"
+    ],
+    "us.median_lead": [
+      "21.7"
+    ],
+    "us.recall": [
+      "72.8"
+    ],
+    "us.recall_ci_high": [
+      "76.6"
+    ],
+    "us.recall_ci_low": [
+      "69.0"
+    ]
+  },
+  "us": {
+    "source_url": "https://api.liquilens.in/api/evidence/us",
+    "response_sha256": "05e4bf862297d204d995de9a63795c93e855d9ecfdc1be60a1f3eef88605f3ab",
+    "market": "united_states",
+    "provenance": {
+      "panel_bank_quarters": 532073,
+      "panel_last_quarter": "2026-06-30",
+      "exported": "2026-10-01"
+    },
+    "summary": {
+      "failures_with_data": 554,
+      "recall_pct": 73.1,
+      "recall_ci95_pct": [
+        69.5,
+        76.9
+      ],
+      "median_lead_months": 21.6,
+      "auc_pooled_24m": 0.851,
+      "min_lead_months": 3.0
+    },
+    "historical_evidence": {
+      "status": "CURRENT_AMENDED_CONSTRUCTION_PIT",
+      "validated_backtest_eligible": false,
+      "real_money_eligible": false
+    }
+  },
+  "india": {
+    "source_url": "https://api.liquilens.in/api/evidence/summary",
+    "response_sha256": "24345397a13b39a1bc86a3656c4482350dd90731079ed658ee9ff6874194c1e4",
+    "summary": {
+      "institutions": 48,
+      "failed_with_data": 21,
+      "flagged": 16,
+      "missed_fraud_masked": 3,
+      "recall_pct": 76.2,
+      "recall_ex_fraud_pct": 88.9,
+      "median_lead_months": 21.5,
+      "discrimination_auc": 0.713
+    },
+    "uncertainty": {
+      "recall_ex_fraud": {
+        "k": 16,
+        "n": 18,
+        "rate_pct": 88.9
+      },
+      "recall_all_failed": {
+        "k": 16,
+        "n": 21,
+        "rate_pct": 76.2
+      }
+    },
+    "ensemble_fisher": {
+      "p_value_one_sided": 0.00032
+    },
+    "historical_evidence": {
+      "status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
+      "validated_backtest_eligible": false,
+      "real_money_eligible": false
+    }
+  }
+}
