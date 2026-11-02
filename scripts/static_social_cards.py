@@ -19,6 +19,7 @@ from dataclasses import dataclass
 from typing import Any
 
 try:
+    from scripts import us_record_copy
     from scripts.social_cards import (
         CardFact,
         RenderedCard,
@@ -27,6 +28,7 @@ try:
         write_card,
     )
 except ModuleNotFoundError:  # direct execution
+    import us_record_copy
     from social_cards import (
         CardFact,
         RenderedCard,
@@ -62,6 +64,25 @@ class RouteDefinition:
     signature_file: str | None = None
     signature: str | None = None
     og_type: str = "website"
+
+
+def _us_route() -> RouteDefinition:
+    """The US card states the record's figures from its captured artifacts."""
+    validation = us_record_copy.load("us-radar-validation.json")
+    figures = us_record_copy.figures(validation, us_record_copy.load("us-evidence.json"))
+    failures2026 = [f for f in figures["_failures"] if f["fail_date"].startswith("2026")]
+    flagged_certs = {i["cert"] for i in figures["_flagged"]}
+    flagged = sum(f["cert"] in flagged_certs for f in failures2026)
+    total = len(failures2026)
+    misses = sum(m["fail_date"].startswith("2026") for m in figures["_misses"])
+    count = figures["count"]
+    return RouteDefinition(
+        "/us/", "us", "LIQUILENS / UNITED STATES", "US BANK FAILURE RECORD",
+        f"Current screens plus a {count}-failure diagnostic, with recent misses named.",
+        "HISTORICAL CONTRACT", f"{count} FAILURE REPLAYS",
+        f"2026 REPLAY: {flagged} OF {total} FLAGGED / {misses} MISSES", "FDIC QUARTER",
+        validation["as_of"], "AMENDED C-PIT", "US PUBLIC RECORD",
+    )
 
 
 ROUTES = (
@@ -114,7 +135,8 @@ ROUTES = (
         "/updates/", "connected-upgrades", "LIQUILENS / SEICHE / UNDERTOW", "CONNECTED EVIDENCE REVIEWS",
         "Review the institution, funding and market liquidity together.",
         "PRODUCT CAPABILITIES", "BANKS / FUNDING / MCP",
-        "DATED SOURCE HISTORIES / STATUS UPDATES / RESEARCH", "REVIEWED", "2026-10-18",
+        "DATED SOURCE HISTORIES / STATUS UPDATES / RESEARCH", "REVIEWED",
+        json.loads((ROOT / "updates/capabilities.json").read_text(encoding="utf-8"))["reviewed_on"],
         "HUMAN REVIEW / EXECUTION DISABLED", "REVIEWED PRODUCT RELEASES",
         signature_file="updates/capabilities.json",
     ),
@@ -345,13 +367,7 @@ ROUTES = (
         "NO PORTFOLIO DATA UPLOAD", "PAGE CUT", "2026-08-21",
         "FIVE-MINUTE SELF-AUDIT", "COVERAGE CHECK",
     ),
-    RouteDefinition(
-        "/us/", "us", "LIQUILENS / UNITED STATES", "US BANK FAILURE RECORD",
-        "Current screens plus a 552-failure diagnostic, with recent misses named.",
-        "HISTORICAL CONTRACT", "552 FAILURE REPLAYS",
-        "2026 REPLAY: 2 OF 4 FLAGGED / 2 MISSES", "REVIEWED CUT", "2026-08-09",
-        "AMENDED C-PIT", "US PUBLIC RECORD",
-    ),
+    _us_route(),
     RouteDefinition(
         "/use-cases/", "use-cases", "LIQUILENS / USE CASES", "INSTITUTION EARLY WARNING",
         "Use public filings, funding structure and market evidence as a review screen.",

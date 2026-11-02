@@ -9,7 +9,9 @@
  */
 
 export const ALLOCATION_URL = "https://agents.seiche.info/v1/data/riptide.allocation";
-export const GAUGE_URL = "https://agents.seiche.info/v1/data/seiche.gauge";
+// Seiche's own surface: when it withholds the gauge it says why (policy and
+// reason), where the proxy only reports that the upstream denied access.
+export const GAUGE_URL = "https://api.seiche.info/api/gauge";
 export const BOARD_URL = "https://agents.seiche.info/v1/data/undertow.board";
 
 const REGIMES = ["abundant", "ample", "tightening", "strained", "acute"];
@@ -28,6 +30,7 @@ const NOT_CAUSE = "This is the published rule applied to this board. The public 
 const UNREADABLE = "Riptide's public paper update could not be read. Nothing is filled in.";
 const NOT_PAPER = "Riptide's public paper update is not shown because real orders are not confirmed off. Nothing is filled in.";
 const GAUGE_MISSING = "Seiche funding gauge could not be read. The money-market reading is not filled in from Riptide.";
+const GAUGE_WITHHELD = "Seiche withholds its funding gauge under its source-rights policy";
 const BOARD_MISSING = "Undertow's published board could not be read. The paper rule is not filled in from a missing board.";
 
 function unavailable(line) {
@@ -119,6 +122,11 @@ export function riptidePaperView(payload) {
 
 export function seicheGaugeLine(gauge) {
   if (!gauge || typeof gauge !== "object" || Array.isArray(gauge)) return GAUGE_MISSING;
+  if (gauge.withheld === true) {
+    const policy = typeof gauge.policy === "string" && /^[A-Za-z0-9._:-]{1,80}$/.test(gauge.policy)
+      ? ` ${gauge.policy}` : "";
+    return `${GAUGE_WITHHELD}${policy}. That is a stated withholding, not an outage. The money-market reading is not filled in from Riptide or anywhere else.`;
+  }
   const { index, regime, generated_at: generatedAt } = gauge;
   const clock = typeof generatedAt === "string"
     && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(generatedAt);
@@ -205,9 +213,15 @@ export function composePaperNote(payload, gauge, board, lead, options = {}) {
   return { state: paper.state, lines };
 }
 
-async function readJson(fetchImpl, url) {
+async function readJson(fetchImpl, url, { refusals = false } = {}) {
   try {
     const response = await fetchImpl(url, { cache: "no-store", signal: AbortSignal.timeout(8000) });
+    if (refusals && response?.status === 403) {
+      // A source-rights refusal is a stated withholding with a named policy.
+      const body = await response.json().catch(() => null);
+      return body?.category === "source_rights_restricted"
+        ? { withheld: true, policy: body.policy } : null;
+    }
     if (!response?.ok) return null;
     return await response.json();
   } catch {
@@ -220,7 +234,7 @@ export async function loadPaperNote(fetchImpl = globalThis.fetch, options = {}) 
   const [payload, board, gauge] = await Promise.all([
     readJson(fetchImpl, options.allocationUrl || ALLOCATION_URL),
     readJson(fetchImpl, options.boardUrl || BOARD_URL),
-    skipGauge ? Promise.resolve(null) : readJson(fetchImpl, options.gaugeUrl || GAUGE_URL),
+    skipGauge ? Promise.resolve(null) : readJson(fetchImpl, options.gaugeUrl || GAUGE_URL, { refusals: true }),
   ]);
   return composePaperNote(payload, gauge, board, options.lead || "seiche", { skipGauge });
 }

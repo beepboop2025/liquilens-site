@@ -22,7 +22,18 @@ const funding=()=>({schema:'seiche.money-market-desk.v1',ok:true,sections:[{metr
 test('funding reader preserves older observation dates and units',()=>{const text=q.money(funding());assert.match(text,/2026-09-30/);assert.match(text,/-2 bp/);assert.match(text,/aging/);assert.match(text,/not a bank-failure signal/);});
 test('mismatched rate dates cannot create a synthetic current spread',()=>{const d=funding();d.sections[0].metrics[1].asof='2026-10-01';assert.throws(()=>q.money(d),/same-date/);});
 test('unavailable, duplicate, wrong-unit and inconsistent funding evidence fail closed',()=>{
-  for(const alter of [d=>d.sections[0].metrics[0].status='restricted',d=>d.sections[0].metrics[0].value=null,d=>d.sections[0].metrics[0].unit='bp',d=>d.sections[0].metrics[2].value=2,d=>d.sections[0].metrics.push({...d.sections[0].metrics[0]})]){const d=funding();alter(d);assert.throws(()=>q.money(d));}
+  for(const alter of [d=>d.sections[0].metrics[0].status='unavailable',d=>d.sections[0].metrics[0].value=null,d=>d.sections[0].metrics[0].unit='bp',d=>d.sections[0].metrics[2].value=2,d=>d.sections[0].metrics.push({...d.sections[0].metrics[0]})]){const d=funding();alter(d);assert.throws(()=>q.money(d));}
+});
+test('a value the source restricts is a stated withholding, never a failed or printed reading',()=>{
+  const d=funding();
+  for(const i of [0,1,2,3]){Object.assign(d.sections[0].metrics[i],{status:'restricted',value:i===0?3.88:null,rights_status:'redistribution_review_required',rights_reason:'Public redistribution permission is not established.'});}
+  const text=q.money(d);
+  assert.match(text,/sofr: withheld by the source \(redistribution_review_required\) · 2026-10-02/);
+  assert.match(text,/reserves: withheld by the source/);
+  assert.match(text,/Withheld under the source's rights policy, not missing: Public redistribution permission is not established\./);
+  assert.match(text,/srf: 0 \$B · 2026-10-02/);
+  assert.doesNotMatch(text,/3\.88/);
+  assert.doesNotMatch(text,/could not be verified/);
 });
 test('future, malformed and impossible source dates fail closed',()=>{for(const v of ['2099-01-01','2026-02-30','yesterday',''])assert.throws(()=>q.day(v));});
 test('filing reader does not turn an unavailable ratio into zero',()=>{const text=q.banks({current_disclosures:{rows:[{name:'Example SFB',sector:'sfb',status:'unavailable',metrics:{gnpa_pct:{value:0}}}]}});assert.match(text,/unavailable/);assert.doesNotMatch(text,/GNPA 0/);});
