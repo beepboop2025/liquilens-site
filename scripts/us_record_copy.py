@@ -97,9 +97,10 @@ TEMPLATES: tuple[tuple[str, str], ...] = (
     ("research/index.html",
      "Of the {n2026} 2026 failures in the served record, {flagged2026} were on the watchlist beforehand "
      "({leads2026} months ahead); {misses} recent misses are named."),
-    ("research/index.html", '<div class="stat"><b>{recall}%</b><span>recall ({ci_lo} to {ci_hi})</span></div>'),
-    ("research/index.html", '<div class="stat"><b>{lead} mo</b><span>median lead</span></div>'),
-    ("research/index.html", '<div class="stat"><b>{auc}</b><span>AUC</span></div>'),
+    ("research/index.html",
+     '<div class="stat"><b>{recall}%</b><span>recall ({ci_lo} to {ci_hi})</span></div>\n'
+     '        <div class="stat"><b>{lead} mo</b><span>median lead</span></div>\n'
+     '        <div class="stat"><b>{auc}</b><span>AUC</span></div>'),
     ("research/index.html", "while reporting {recall} percent recall."),
     ("research/index.html", '<p class="src">{bank_quarters} bank quarters · 9,903 institutions'),
     ("research/index.html",
@@ -139,6 +140,23 @@ TEMPLATES: tuple[tuple[str, str], ...] = (
     ("us/index.html", "<h3>The {misses} we missed, and why we show them</h3>"),
     ("us/index.html", "Five of the {misses} 2023 to 2026 misses were fraud driven failures;"),
 )
+
+# Phrases that legitimately repeat (meta tag triplets, the duplicated ticker
+# half). Every other template must match exactly once, so a lookalike phrase
+# about another market is reported instead of being rewritten.
+REPEATS = {
+    "Replays, studies and method notes from LiquiLens and Seiche.": 3,
+    "historical diagnostic over {count} failures since 2008, with misses": 3,
+    'panel <span class="live">': 2,
+    "construction-PIT diagnostic · recall": 2,
+    "SVB retrospective diagnostic lead": 2,
+    "2026 diagnostic: <span": 2,
+}
+
+
+def expected_matches(template: str) -> int:
+    return next((n for prefix, n in REPEATS.items() if template.startswith(prefix)), 1)
+
 
 # Generated blocks: everything between the markers is rendered.
 BLOCK = re.compile(r"(<!-- us-record:(?P<name>[a-z-]+) -->\n)(?P<body>.*?)(\s*<!-- /us-record:(?P=name) -->)", re.S)
@@ -284,8 +302,10 @@ def rewrite(text: str, path: str, values: dict, problems: list[str]) -> str:
         if rel != path:
             continue
         compiled = pattern(template)
-        if not compiled.search(text):
-            problems.append(f"{rel}: template no longer matches: {template[:90]}")
+        found = len(compiled.findall(text))
+        if found != expected_matches(template):
+            problems.append(f"{rel}: template matches {found} times, expected "
+                            f"{expected_matches(template)}: {template[:90]}")
             continue
         text = compiled.sub(lambda _m: render(template, values), text)
 

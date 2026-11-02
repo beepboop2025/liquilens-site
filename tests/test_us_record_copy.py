@@ -62,7 +62,7 @@ def test_a_typed_figure_in_a_managed_phrase_is_caught():
     moved = source.replace("The current diagnostic reports", "The diagnostic now reports")
     problems = []
     copy_gen.rewrite(moved, "llms.txt", values, problems)
-    assert any("template no longer matches" in p for p in problems)
+    assert any("template matches 0 times, expected 1" in p for p in problems)
 
 
 def test_no_retired_us_vintage_survives_on_a_published_page():
@@ -145,3 +145,21 @@ def test_capability_copy_carries_no_hand_typed_package_versions():
     assert data["previous_review"]["url"].endswith("/updates/archive/2026-10-18.json")
     archived = json.loads(read("updates/archive/2026-10-18.json"))
     assert archived["reviewed_on"] == data["previous_review"]["reviewed_on"]
+
+
+def test_india_figures_beside_a_us_lookalike_phrase_are_left_alone():
+    # The India record shares phrasing with the US stats ("median lead").
+    # Its stat must keep agreeing with the India sentence on the same page,
+    # and a template that matches a second phrase is reported, not applied.
+    research = read("research/index.html")
+    sentence = re.search(r"88\.9 percent recall and a ([0-9.]+)-month median lead", research)
+    stat = re.search(r'<b>88\.9%</b><span>served recall</span></div>\s*'
+                     r'<div class="stat"><b>([0-9.]+) mo</b>', research)
+    assert sentence and stat and sentence.group(1) == stat.group(1)
+    values = figures()
+    template = next(t for rel, t in copy_gen.TEMPLATES if rel == "research/index.html"
+                    and t.startswith("<h3>The United States"))
+    doubled = research + copy_gen.render(template, values)
+    problems = []
+    copy_gen.rewrite(doubled, "research/index.html", values, problems)
+    assert any("matches 2 times, expected 1" in p for p in problems)
