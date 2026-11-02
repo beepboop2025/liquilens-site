@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  GAUGE_URL,
   composePaperNote,
   loadPaperNote,
   riptidePaperView,
@@ -99,6 +100,30 @@ test("a missing Seiche gauge is not replaced with the paper regime", () => {
   assert.match(line, /separate from Riptide's paper regime/);
   assert.equal(line.includes("abundant"), false);
   assert.equal(seicheGaugeLine({ index: 0, regime: "CALM", generated_at: "2026-10-06T00:00:00Z" }).includes("reads 0,"), true);
+});
+
+test("a Seiche source-rights refusal is stated with its policy, never as an outage", async () => {
+  const refusal = {
+    schema: "seiche.source-rights-restriction.v1",
+    category: "source_rights_restricted",
+    policy: "seiche.public-source-rights.2026-10-28",
+    publication_allowed: false,
+  };
+  const note = await loadPaperNote(async (url) => {
+    if (url === GAUGE_URL) return { ok: false, status: 403, json: async () => refusal };
+    throw new Error("feed unavailable");
+  });
+  const text = note.lines.join("\n");
+  assert.match(text, /Seiche withholds its funding gauge under its source-rights policy seiche\.public-source-rights\.2026-10-28\./);
+  assert.match(text, /stated withholding, not an outage/);
+  assert.equal(text.includes("gauge could not be read"), false);
+  assert.equal(GAUGE_URL, "https://api.seiche.info/api/gauge");
+  const denied = await loadPaperNote(async (url) => {
+    if (url === GAUGE_URL) return { ok: false, status: 403, json: async () => ({ error: { code: "upstream_access_denied" } }) };
+    throw new Error("feed unavailable");
+  });
+  assert.match(denied.lines.join("\n"), /gauge could not be read/);
+  assert.equal(seicheGaugeLine({ withheld: true, policy: "<script>" }).includes("<script>"), false);
 });
 
 test("the Undertow rule counts rates and credit once and does not claim causation", () => {

@@ -13,9 +13,14 @@
     const all = d.sections.flatMap(s => Array.isArray(s.metrics) ? s.metrics : []);
     const ids = ["policy.sofr", "policy.iorb", "policy.sofr_minus_iorb", "liquidity.reserves", "liquidity.srf"];
     const ms = ids.map(id => { const found = all.filter(m => m.id === id); if (found.length !== 1) throw Error("Required source evidence is missing or ambiguous."); return found[0]; });
-    ms.forEach((m, i) => { if (m.status !== "available" || !finite(m.value) || m.unit !== ["%", "%", "bp", "$B", "$B"][i]) throw Error("Required evidence is unavailable or has changed units."); day(m.asof); });
-    if (new Set(ms.slice(0, 3).map(m => m.asof)).size !== 1 || Math.abs(100 * (ms[0].value - ms[1].value) - ms[2].value) > 1e-7) throw Error("Rate observations do not form a valid same-date spread.");
-    return "Latest published observations; source dates may precede today.\n" + ms.map(m => m.id.replace("policy.", "").replace("liquidity.", "").replaceAll("_", " ") + ": " + m.value + " " + m.unit + " · " + m.asof + " · publisher freshness: " + (m.freshness || "unknown")).join("\n") + "\nA matched rate spread is not a bank-failure signal. Weekly reserves have their own date.";
+    // "restricted" is the source withholding a value under its rights policy:
+    // a stated withholding, named with its rights status and never printed,
+    // estimated or replaced. Anything else that is not available still fails.
+    const withheld = m => m.status === "restricted";
+    ms.forEach((m, i) => { if ((!withheld(m) && (m.status !== "available" || !finite(m.value))) || m.unit !== ["%", "%", "bp", "$B", "$B"][i]) throw Error("Required evidence is unavailable or has changed units."); day(m.asof); });
+    if (!ms.slice(0, 3).some(withheld) && (new Set(ms.slice(0, 3).map(m => m.asof)).size !== 1 || Math.abs(100 * (ms[0].value - ms[1].value) - ms[2].value) > 1e-7)) throw Error("Rate observations do not form a valid same-date spread.");
+    const reasons = [...new Set(ms.filter(withheld).map(m => String(m.rights_reason || "No public redistribution permission is established.")))];
+    return "Latest published observations; source dates may precede today.\n" + ms.map(m => m.id.replace("policy.", "").replace("liquidity.", "").replaceAll("_", " ") + ": " + (withheld(m) ? "withheld by the source (" + String(m.rights_status || "restricted") + ")" : m.value + " " + m.unit) + " · " + m.asof + " · publisher freshness: " + (m.freshness || "unknown")).join("\n") + (reasons.length ? "\nWithheld under the source's rights policy, not missing: " + reasons.join(" ") + " No withheld value is shown or estimated." : "") + "\nA matched rate spread is not a bank-failure signal. Weekly reserves have their own date.";
   }
   function banks(d) {
     const c = d && d.current_disclosures;

@@ -85,6 +85,27 @@
       .then(r=>{ if(!r.ok) throw new Error('unreachable'); return r.json(); })
       .finally(()=>clearTimeout(t));
   }
+  // Seiche refuses some legacy surfaces under a published source-rights
+  // policy (HTTP 403, category source_rights_restricted). That refusal is a
+  // stated withholding with a reason, not an outage, so it is kept and shown.
+  function seicheJSON(url, ms){
+    const ctl = new AbortController();
+    const t = setTimeout(()=>ctl.abort(), ms || 9000);
+    return fetch(url,{mode:'cors',signal:ctl.signal})
+      .then(r=>r.json().catch(()=>null).then(body=>{
+        if(r.ok && body) return body;
+        const err = new Error('unreachable');
+        if(body && body.category === 'source_rights_restricted') err.withheld = body;
+        throw err;
+      }))
+      .finally(()=>clearTimeout(t));
+  }
+  function withheldBy(err){
+    const w = err && err.withheld;
+    if(!w) return '';
+    return 'Seiche withholds this reading under its source-rights policy ' + (w.policy || '') +
+      '. ' + (w.reason || 'Values are withheld pending source permission.');
+  }
   function fmtDate(iso){
     if(!iso) return '';
     const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -135,7 +156,7 @@
   })();
 
   // fetched once, consumed by the desk chip and the live desk panel
-  const seiPublic = liveJSON('https://api.seiche.info/api/public');
+  const seiPublic = seicheJSON('https://api.seiche.info/api/public');
 
   // live Seiche reading: fetched from the public API in your browser; never faked
   (function(){
@@ -158,10 +179,13 @@
           proof.innerHTML = 'Its own scoreboard, stated honestly: <b>recall ' + Math.round(p.recall*100) + '%</b> on ' + p.n_events + ' labelled events, median lead <b>' + Math.round(p.median_lead_d) + ' days</b>, caveats published beside every number.';
         }
       })
-      .catch(()=>{
-        stamp.textContent = 'the live board did not answer from here';
+      .catch((err)=>{
+        const withheld = withheldBy(err);
+        stamp.textContent = withheld ? 'withheld by Seiche under its source-rights policy' : 'the live board did not answer from here';
         val.textContent = '—';
-        line.textContent = 'No number is shown rather than a stale one. The terminal itself is one click below, and it always carries its own as of stamp.';
+        line.textContent = withheld
+          ? withheld + ' No number is shown, estimated or replaced.'
+          : 'No number is shown rather than a stale one. The terminal itself is one click below, and it always carries its own as of stamp.';
       });
   })();
 
@@ -250,8 +274,10 @@
     // the API is ours, but the page should stay safe even if it ever is not
     function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
     function pd(x){ return (x*100).toFixed(2) + '%'; }
-    function move(d){
-      if(d == null) return '<span class="mv flat">first vintage</span>';
+    function move(m){
+      const d = m && m.delta_pd_12m;
+      // A row with no comparable quarter has no movement, never zero movement.
+      if(d == null) return '<span class="mv flat" title="' + esc((m && m.reason) || 'no scored quarter 6 to 18 months earlier; the 12-month change is not computed and is not zero') + '">no comparable quarter</span>';
       const bp = Math.round(d*10000);
       if(bp === 0) return '<span class="mv flat">flat</span>';
       const cls = bp > 0 ? 'up' : 'down';
@@ -316,7 +342,7 @@
           '<td><span class="itype">' + esc(TYPE[r.inst_type] || r.inst_type) + '</span></td>' +
           '<td><span class="tier ' + tier + '" title="' + esc(why) + '">' + esc(tier.toUpperCase()) + '</span></td>' +
           '<td class="score" style="text-align:right">' + pd(r.hazard.pd_12m) + '</td>' +
-          '<td style="text-align:right">' + move(r.movement && r.movement.delta_pd_12m) + '</td>' +
+          '<td style="text-align:right">' + move(r.movement) + '</td>' +
           '<td class="score" style="text-align:right">' + dd + '</td>' +
         '</tr>';
       }).join('');
@@ -341,8 +367,8 @@
     const stamp = document.getElementById('seiBoardStamp');
     const fb = document.getElementById('seiBoardFallback');
     Promise.all([
-      liveJSON('https://api.seiche.info/api/gauge'),
-      liveJSON('https://api.seiche.info/api/overview'),
+      seicheJSON('https://api.seiche.info/api/gauge'),
+      seicheJSON('https://api.seiche.info/api/overview'),
       seiPublic.catch(()=>null)
     ]).then(function(res){
       const gauge = res[0], over = res[1], pub = res[2];
@@ -392,9 +418,18 @@
 
       body.hidden = false;
       stamp.textContent = 'live from api.seiche.info · ' + (gauge.generated_at||'').slice(0,16).replace('T',' ') + 'Z';
-    }).catch(function(){
+    }).catch(function(err){
       fb.hidden = false;
-      stamp.textContent = 'the terminal did not answer from here';
+      const withheld = withheldBy(err);
+      if(withheld){
+        // Name the refusal instead of implying the terminal is down.
+        fb.textContent = withheld + ' Nothing is shown, estimated or replaced. ';
+        const link = document.createElement('a');
+        link.href = 'https://seiche.info'; link.target = '_blank'; link.rel = 'noopener';
+        link.textContent = 'Seiche states its current release boundary at seiche.info.';
+        fb.appendChild(link);
+      }
+      stamp.textContent = withheld ? 'withheld by Seiche under its source-rights policy' : 'the terminal did not answer from here';
     });
   })();
 

@@ -1,6 +1,6 @@
 {
   "schema": "liquilens.connected-upgrades.v1",
-  "reviewed_on": "2026-10-18",
+  "reviewed_on": "2026-11-02",
   "title": "A connected review, from evidence to follow-up",
   "description": "Connect bank-disclosure research, dollar-funding context and market-liquidity evidence through public pages, MCP and source-history APIs.",
   "products": [
@@ -34,7 +34,7 @@
     {
       "id": "research-infrastructure",
       "title": "Connect research to your AI workflow",
-      "description": "Use public MCP and REST, Financial Evidence Python 0.1.13 or AI SDK 0.1.2 to save cited reviews, compare later captures and build repeatable agent research.",
+      "description": "Use public MCP and REST, the Financial Evidence Python package or the AI SDK to save cited reviews, compare later captures and build repeatable agent research. The distribution page states each current package version.",
       "action": "Choose a package or connection",
       "url": "https://beepboop2025.github.io/financial-evidence-skills/distribution/",
       "state": "Available for research",
@@ -44,7 +44,7 @@
     {
       "id": "exact-funding-context",
       "title": "Ask for the funding evidence you need",
-      "description": "Seiche 0.16.5 provides compact funding context and exact metric retrieval, with compatible diagnostics, units and source dates retained.",
+      "description": "Seiche provides compact funding context and exact metric retrieval, with compatible diagnostics, units and source dates retained. Its health endpoint and MCP discovery state the current release.",
       "action": "Explore funding API and MCP",
       "url": "https://seiche.info/developers.html",
       "state": "Published Python and MCP package",
@@ -54,7 +54,7 @@
     {
       "id": "noisefloor",
       "title": "Inspect what moves together",
-      "description": "Inspect shared-factor concentration and rolling correlations in the hosted NoiseFloor 0.4.0 workbench. Python/MCP 0.4.2 adds clearer input guidance with unchanged calculations.",
+      "description": "Inspect shared-factor concentration and rolling correlations in the hosted NoiseFloor workbench. The current Python and MCP package adds clearer input guidance with unchanged calculations; the publication receipt names its version.",
       "action": "Open correlation workbench",
       "url": "https://liquilens.in/agents/correlation/",
       "state": "Available for caller-supplied evidence",
@@ -127,7 +127,7 @@
     "Evidence collection, delivery, validation and customer use are separate claims."
   ],
   "previous_review": {
-    "reviewed_on": "2026-10-16",
-    "url": "https://liquilens.in/updates/archive/2026-10-16.json"
+    "reviewed_on": "2026-10-18",
+    "url": "https://liquilens.in/updates/archive/2026-10-18.json"
   }
 }

@@ -14,8 +14,14 @@
 
   function json(url) {
     return fetch(url, {headers: {Accept: "application/json"}}).then(function (res) {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return res.json();
+      if (res.ok) return res.json();
+      // A source-rights refusal carries its policy and reason. It is a stated
+      // withholding, so it is kept and shown rather than reported as silence.
+      return res.json().catch(function () { return null; }).then(function (body) {
+        var error = new Error("HTTP " + res.status);
+        if (body && body.category === "source_rights_restricted") error.withheld = body;
+        throw error;
+      });
     });
   }
 
@@ -103,7 +109,12 @@
     }
   }
 
-  function renderGauge(gauge) {
+  function renderGauge(gauge, refusal) {
+    if (refusal && refusal.withheld) {
+      text("plumbingLine", "Seiche withholds its funding gauge under its source-rights policy " +
+        String(refusal.withheld.policy || "") + ". No regime is shown or estimated. Absence is not calm.");
+      return;
+    }
     if (!gauge || !gauge.regime) {
       text("plumbingLine", "Seiche did not answer. Absence is not calm.");
       return;
@@ -131,7 +142,7 @@
     text("packStatus", "India " + indiaCount + " · US served " + usCount + ".");
     text("coverLine", coverLine(india, us, indiaRows, usRows));
     renderWatch(indiaRows, usRows);
-    renderGauge(gauge);
+    renderGauge(gauge, results[2].status === "rejected" ? results[2].reason : null);
     var slugs = indiaRows.map(function (row) { return row.slug; }).filter(Boolean).slice(0, 5);
     return Promise.allSettled(slugs.map(function (slug) {
       return json(REVIEW_URL + encodeURIComponent(slug));

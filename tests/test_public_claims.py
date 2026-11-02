@@ -28,7 +28,9 @@ US_VALIDATION = "https://api.liquilens.in/api/us-radar/validation"
 BOARD = "https://api.liquilens.in/api/failure-radar/board"
 BOND_BOOK = "https://api.liquilens.in/api/public-signals/bond-book"
 
-# Captured unauthenticated from the production API on 2026-08-03.
+# Captured unauthenticated from the production API on 2026-08-03, except
+# us-radar-validation.json, re-captured on 2026-11-02 by
+# scripts/us_record_copy.py --capture as the current US release artifact.
 LIVE = {
     MODEL_CARD: "failure-radar-model-card.json",
     US_VALIDATION: "us-radar-validation.json",
@@ -398,7 +400,11 @@ def test_the_live_model_card_refutes_the_sites_withheld_weights_claim():
 
 
 def test_the_live_us_validation_refutes_it_too():
-    problems, _ = vpc.check_live(ROOT, fetch=serving())
+    # The current release withholds the weights, so serve them explicitly to
+    # prove the rule still catches an API that publishes them.
+    validation = copy.deepcopy(payload(US_VALIDATION))
+    validation["validation"]["weights"] = {"uninsured_ratio": 1.5}
+    problems, _ = vpc.check_live(ROOT, fetch=serving(**{US_VALIDATION: validation}))
     assert any("fitted weights" in p and US_VALIDATION in p for p in problems)
 
 
@@ -406,7 +412,8 @@ def test_the_claim_stands_once_the_api_stops_serving_the_weights():
     card = copy.deepcopy(payload(MODEL_CARD))
     card["hazard_fit"]["coefficients"].pop("coef")
     validation = copy.deepcopy(payload(US_VALIDATION))
-    validation["validation"].pop("weights")
+    validation["validation"].pop("weights", None)
+    assert validation["validation"]["specification"] == "withheld"
     problems, notes = vpc.check_live(
         ROOT, fetch=serving(**{MODEL_CARD: card, US_VALIDATION: validation}))
     assert problems == []
