@@ -1,0 +1,100 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-11-03-before-the-event-what-ckp-co-operative-bank-s-filings-did-and-did-not-reveal",
+  "product": "liquilens",
+  "slug": "2026-11-03-before-the-event-what-ckp-co-operative-bank-s-filings-did-and-did-not-reveal",
+  "date": "2026-11-03",
+  "article_type": "historical_replay",
+  "topic": "ckp-co-operative-bank",
+  "headline": "Before the event: what CKP Co-operative Bank's filings did and did not reveal",
+  "dek": "A construction-PIT replay of CKP Co-operative Bank: the first published regulatory or funding signal, the disclosure clock, the miss, and the boundary that survives into today's screen.",
+  "canonical_url": "https://liquilens.in/articles/2026-11-03-before-the-event-what-ckp-co-operative-bank-s-filings-did-and-did-not-reveal/",
+  "published_at": "2026-11-03T11:16:12Z",
+  "evidence_as_of": "2026-11-03",
+  "board_signature": "bb99dc63a14ae777cea8d81db8456e9b1d21b6d1beb52a0db117fbdce5f9c6fc",
+  "subject": {
+    "slug": "ckp-co-operative-bank",
+    "name": "CKP Co-operative Bank",
+    "inst_type": "ucb",
+    "default_date": "2014-05-02",
+    "fraud_masked": false,
+    "pca": {
+      "slug": "ckp-co-operative-bank",
+      "inst_type": "ucb",
+      "default_date": "2014-05-02",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": false
+    },
+    "funding": {
+      "slug": "ckp-co-operative-bank",
+      "inst_type": "ucb",
+      "scoreable": false,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1096,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:406e0b56832223b1b457200bb89173858ef019cc9d8946a9323bdc2363b7b729",
+    "memory_fingerprint": "sha256:5c98ecc36e85aae4c682d81ccb818b79ca29e0bd073e0fab889364bf33daf8a5",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "deterministic_fallback",
+    "model": null,
+    "passes": 0,
+    "dossier_sha256": "e5f63c90dec6200319ae6f570334af72716873f8dc3bc9d8f44d55b0a9a08369",
+    "fallback_reason": "RuntimeError: writer pass failed: HTTPError: HTTP Error 403: Forbidden",
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:406e0b56832223b1b457200bb89173858ef019cc9d8946a9323bdc2363b7b729",
+      "memory_fingerprint": "sha256:5c98ecc36e85aae4c682d81ccb818b79ca29e0bd073e0fab889364bf33daf8a5",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
