@@ -1,4 +1,6 @@
-*This is a historical replay, not current news and not a forecast. Madhavpura Mercantile Co-operative Bank defaulted on 2012-06-04. Similar mechanisms do not imply the same outcome at any institution today.*
+**Correction, 3 November 2026.** LiquiLens now dates three co-operative bank failures in its India crisis record at their onset, the first RBI directions restricting depositors, instead of the later licence cancellation: Madhavpura Mercantile Co-operative Bank on 13 March 2001 (previously 4 June 2012), CKP Co-operative Bank on 2 May 2014 (previously 30 April 2020) and Rupee Co-operative Bank on 22 February 2013 (previously 22 September 2022). Sources: RBI press releases of [7 June 2012](https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=26606), [5 May 2014](https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=31124) and [25 February 2013](https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=28200). Each bank's only scored filing fell after its onset, so all three are now unscored for insufficient data rather than flagged. This article originally gave 2012-06-04, the day Madhavpura Mercantile Co-operative Bank's licence cancellation took effect, as its default date; the text below now gives 2001-03-13. The India figures cited below were regenerated: the share of non-fraud failures flagged moved from 88.9% to 86.7% (13 of 15), and the median lead from 21.5 to 23 months. Failure Radar tiers are now paused pending re-validation. Board states and validation statistics below are as served on the publication date, and the text is otherwise as published.
+
+*This is a historical replay, not current news and not a forecast. Madhavpura Mercantile Co-operative Bank defaulted on 2001-03-13. Similar mechanisms do not imply the same outcome at any institution today.*
 
 The conclusion from this replay is narrow. The institution that should feel stress first is not always the institution that a public-data balance-sheet engine can identify first. Madhavpura is fraud-masked. Its funding lens was not scoreable, and the replay records no first action-zone entry. Those absences do not establish calm before the event. They establish that the disclosed record did not yield a conventional warning through these lenses.
 
@@ -6,7 +8,7 @@ A filing-period signal, a market-price signal, and a model derivation are differ
 
 ## The record before the event
 
-Madhavpura Mercantile Co-operative Bank is classified as a UCB. The historical record gives its default date as 2012-06-04 and explicitly marks the case fraud-masked. It provides no first RBI action-zone breach, no PCA lead time, no scoreable funding series, no first funding signal, and no funding lead time.
+Madhavpura Mercantile Co-operative Bank is classified as a UCB. The historical record gives its default date as 2001-03-13 and explicitly marks the case fraud-masked. It provides no first RBI action-zone breach, no PCA lead time, no scoreable funding series, no first funding signal, and no funding lead time.
 
 The permitted inference is limited: these lenses contain no recorded conventional early warning to narrate. The record does not permit an inference that liquidity, capital, asset quality, depositor behaviour, or management conduct was sound. Missing, unusable, or falsified evidence is not evidence of calm.
 

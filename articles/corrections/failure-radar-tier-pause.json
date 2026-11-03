@@ -1,0 +1,164 @@
+{
+  "schema": "liquilens.article-correction.v1",
+  "id": "failure-radar-tier-pause",
+  "kind": "update",
+  "date": "2026-11-03",
+  "decision_date": "2026-11-02",
+  "summary": "Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. Tier states and counts in dated articles are as served on their publication date.",
+  "related": "https://liquilens.in/articles/corrections/co-operative-bank-onset.json",
+  "tier_publication": "paused pending re-validation; probabilities are research only",
+  "articles": [
+    {
+      "slug": "2026-08-15-esaf-s-warning-is-a-dated-filing-signal-meeting-a-live-market-price-signal-n",
+      "url": "https://liquilens.in/articles/2026-08-15-esaf-s-warning-is-a-dated-filing-signal-meeting-a-live-market-price-signal-n/"
+    },
+    {
+      "slug": "2026-08-16-global-trust-bank-replay-disclosed-capital-and-asset-quality-stress-arrived",
+      "url": "https://liquilens.in/articles/2026-08-16-global-trust-bank-replay-disclosed-capital-and-asset-quality-stress-arrived/"
+    },
+    {
+      "slug": "2026-08-17-il-fs-replay-the-funding-signal-arrived-first-but-the-record-cannot-prove-ca",
+      "url": "https://liquilens.in/articles/2026-08-17-il-fs-replay-the-funding-signal-arrived-first-but-the-record-cannot-prove-ca/"
+    },
+    {
+      "slug": "2026-08-18-religare-finvest-replay-a-funding-watch-came-before-default-but-fraud-limits",
+      "url": "https://liquilens.in/articles/2026-08-18-religare-finvest-replay-a-funding-watch-came-before-default-but-fraud-limits/"
+    },
+    {
+      "slug": "2026-08-19-esaf-is-the-clearest-observable-pressure-chain-not-a-settled-first-to-stress",
+      "url": "https://liquilens.in/articles/2026-08-19-esaf-is-the-clearest-observable-pressure-chain-not-a-settled-first-to-stress/"
+    },
+    {
+      "slug": "2026-08-20-esaf-s-stress-signal-is-not-funding-flight-it-is-a-narrowing-margin-for-erro",
+      "url": "https://liquilens.in/articles/2026-08-20-esaf-s-stress-signal-is-not-funding-flight-it-is-a-narrowing-margin-for-erro/"
+    },
+    {
+      "slug": "2026-08-21-utkarsh-is-the-orange-balance-sheet-watch-but-the-evidence-is-aging",
+      "url": "https://liquilens.in/articles/2026-08-21-utkarsh-is-the-orange-balance-sheet-watch-but-the-evidence-is-aging/"
+    },
+    {
+      "slug": "2026-08-22-united-western-bank-s-earliest-recorded-warning-was-a-filing-signal-not-a-ma",
+      "url": "https://liquilens.in/articles/2026-08-22-united-western-bank-s-earliest-recorded-warning-was-a-filing-signal-not-a-ma/"
+    },
+    {
+      "slug": "2026-08-24-before-the-event-what-new-india-co-operative-bank-s-filings-did-and-did-not",
+      "url": "https://liquilens.in/articles/2026-08-24-before-the-event-what-new-india-co-operative-bank-s-filings-did-and-did-not/"
+    },
+    {
+      "slug": "2026-08-26-abhyudaya-s-earliest-disclosed-warning-was-an-asset-quality-tripwire",
+      "url": "https://liquilens.in/articles/2026-08-26-abhyudaya-s-earliest-disclosed-warning-was-an-asset-quality-tripwire/"
+    },
+    {
+      "slug": "2026-08-27-altico-s-replay-points-to-rollover-funding-before-an-action-zone-signal",
+      "url": "https://liquilens.in/articles/2026-08-27-altico-s-replay-points-to-rollover-funding-before-an-action-zone-signal/"
+    },
+    {
+      "slug": "2026-08-31-before-the-event-what-sri-guru-raghavendra-sahakara-bank-s-filings-did-and-d",
+      "url": "https://liquilens.in/articles/2026-08-31-before-the-event-what-sri-guru-raghavendra-sahakara-bank-s-filings-did-and-d/"
+    },
+    {
+      "slug": "2026-09-03-nedungadi-bank-s-first-recorded-pressure-point-was-capital-not-a-market-call",
+      "url": "https://liquilens.in/articles/2026-09-03-nedungadi-bank-s-first-recorded-pressure-point-was-capital-not-a-market-call/"
+    },
+    {
+      "slug": "2026-09-04-new-india-co-operative-bank-showed-a-disclosed-stress-signal-first-but-the-r",
+      "url": "https://liquilens.in/articles/2026-09-04-new-india-co-operative-bank-showed-a-disclosed-stress-signal-first-but-the-r/"
+    },
+    {
+      "slug": "2026-09-05-sambandh-finserve-s-disclosed-funding-flag-was-the-earliest-visible-pressure",
+      "url": "https://liquilens.in/articles/2026-09-05-sambandh-finserve-s-disclosed-funding-flag-was-the-earliest-visible-pressure/"
+    },
+    {
+      "slug": "2026-09-06-united-western-bank-s-first-recorded-warning-was-on-the-balance-sheet-not-in",
+      "url": "https://liquilens.in/articles/2026-09-06-united-western-bank-s-first-recorded-warning-was-on-the-balance-sheet-not-in/"
+    },
+    {
+      "slug": "2026-09-10-global-trust-bank-s-first-disclosed-warning-was-capital-and-asset-quality-no",
+      "url": "https://liquilens.in/articles/2026-09-10-global-trust-bank-s-first-disclosed-warning-was-capital-and-asset-quality-no/"
+    },
+    {
+      "slug": "2026-09-12-il-fs-replay-a-funding-watch-arrived-first-but-the-record-cannot-certify-a-f",
+      "url": "https://liquilens.in/articles/2026-09-12-il-fs-replay-a-funding-watch-arrived-first-but-the-record-cannot-certify-a-f/"
+    },
+    {
+      "slug": "2026-09-15-nedungadi-bank-s-capital-breach-was-the-first-visible-warning-in-the-disclos",
+      "url": "https://liquilens.in/articles/2026-09-15-nedungadi-bank-s-capital-breach-was-the-first-visible-warning-in-the-disclos/"
+    },
+    {
+      "slug": "2026-09-18-before-the-event-what-united-western-bank-s-filings-did-and-did-not-reveal",
+      "url": "https://liquilens.in/articles/2026-09-18-before-the-event-what-united-western-bank-s-filings-did-and-did-not-reveal/"
+    },
+    {
+      "slug": "2026-09-19-before-the-event-what-abhyudaya-co-operative-bank-s-filings-did-and-did-not",
+      "url": "https://liquilens.in/articles/2026-09-19-before-the-event-what-abhyudaya-co-operative-bank-s-filings-did-and-did-not/"
+    },
+    {
+      "slug": "2026-09-20-altico-s-historical-warning-was-funding-dependence-not-a-forecast-of-failure",
+      "url": "https://liquilens.in/articles/2026-09-20-altico-s-historical-warning-was-funding-dependence-not-a-forecast-of-failure/"
+    },
+    {
+      "slug": "2026-09-21-global-trust-bank-s-replay-an-early-threshold-warning-and-the-disclosure-pro",
+      "url": "https://liquilens.in/articles/2026-09-21-global-trust-bank-s-replay-an-early-threshold-warning-and-the-disclosure-pro/"
+    },
+    {
+      "slug": "2026-09-22-religare-finvest-s-funding-warning-came-first-but-the-replay-cannot-forecast",
+      "url": "https://liquilens.in/articles/2026-09-22-religare-finvest-s-funding-warning-came-first-but-the-replay-cannot-forecast/"
+    },
+    {
+      "slug": "2026-09-26-nedungadi-bank-s-capital-breach-was-the-first-observable-link-in-a-long-pres",
+      "url": "https://liquilens.in/articles/2026-09-26-nedungadi-bank-s-capital-breach-was-the-first-observable-link-in-a-long-pres/"
+    },
+    {
+      "slug": "2026-09-28-sambandh-finserve-s-funding-signal-arrived-early-but-could-not-see-through-f",
+      "url": "https://liquilens.in/articles/2026-09-28-sambandh-finserve-s-funding-signal-arrived-early-but-could-not-see-through-f/"
+    },
+    {
+      "slug": "2026-10-08-new-india-co-operative-bank-s-earliest-disclosed-warning-was-asset-quality-n",
+      "url": "https://liquilens.in/articles/2026-10-08-new-india-co-operative-bank-s-earliest-disclosed-warning-was-asset-quality-n/"
+    },
+    {
+      "slug": "2026-10-11-before-the-event-what-abhyudaya-co-operative-bank-s-filings-did-and-did-not",
+      "url": "https://liquilens.in/articles/2026-10-11-before-the-event-what-abhyudaya-co-operative-bank-s-filings-did-and-did-not/"
+    },
+    {
+      "slug": "2026-10-13-global-trust-bank-s-earliest-disclosed-warning-was-capital-and-asset-quality",
+      "url": "https://liquilens.in/articles/2026-10-13-global-trust-bank-s-earliest-disclosed-warning-was-capital-and-asset-quality/"
+    },
+    {
+      "slug": "2026-10-14-religare-finvest-s-replay-shows-a-funding-warning-before-default-and-why-it",
+      "url": "https://liquilens.in/articles/2026-10-14-religare-finvest-s-replay-shows-a-funding-warning-before-default-and-why-it/"
+    },
+    {
+      "slug": "2026-10-19-at-new-india-co-operative-bank-the-first-disclosed-stress-was-asset-quality",
+      "url": "https://liquilens.in/articles/2026-10-19-at-new-india-co-operative-bank-the-first-disclosed-stress-was-asset-quality/"
+    },
+    {
+      "slug": "2026-10-21-before-the-event-what-united-western-bank-s-filings-did-and-did-not-reveal",
+      "url": "https://liquilens.in/articles/2026-10-21-before-the-event-what-united-western-bank-s-filings-did-and-did-not-reveal/"
+    },
+    {
+      "slug": "2026-10-23-before-the-event-what-abhyudaya-co-operative-bank-s-filings-did-and-did-not",
+      "url": "https://liquilens.in/articles/2026-10-23-before-the-event-what-abhyudaya-co-operative-bank-s-filings-did-and-did-not/"
+    },
+    {
+      "slug": "2026-10-24-before-the-event-what-altico-s-filings-did-and-did-not-reveal",
+      "url": "https://liquilens.in/articles/2026-10-24-before-the-event-what-altico-s-filings-did-and-did-not-reveal/"
+    },
+    {
+      "slug": "2026-10-25-before-the-event-what-global-trust-bank-s-filings-did-and-did-not-reveal",
+      "url": "https://liquilens.in/articles/2026-10-25-before-the-event-what-global-trust-bank-s-filings-did-and-did-not-reveal/"
+    },
+    {
+      "slug": "2026-10-27-before-the-event-what-religare-finvest-s-filings-did-and-did-not-reveal",
+      "url": "https://liquilens.in/articles/2026-10-27-before-the-event-what-religare-finvest-s-filings-did-and-did-not-reveal/"
+    },
+    {
+      "slug": "2026-10-28-before-the-event-what-il-fs-s-filings-did-and-did-not-reveal",
+      "url": "https://liquilens.in/articles/2026-10-28-before-the-event-what-il-fs-s-filings-did-and-did-not-reveal/"
+    },
+    {
+      "slug": "2026-11-02-before-the-event-what-sri-guru-raghavendra-sahakara-bank-s-filings-did-and-d",
+      "url": "https://liquilens.in/articles/2026-11-02-before-the-event-what-sri-guru-raghavendra-sahakara-bank-s-filings-did-and-d/"
+    }
+  ]
+}

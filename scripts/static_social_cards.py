@@ -21,7 +21,6 @@ from typing import Any
 try:
     from scripts import us_record_copy
     from scripts.social_cards import (
-        CardFact,
         RenderedCard,
         render_card,
         route_card_spec,
@@ -30,7 +29,6 @@ try:
 except ModuleNotFoundError:  # direct execution
     import us_record_copy
     from social_cards import (
-        CardFact,
         RenderedCard,
         render_card,
         route_card_spec,
@@ -40,7 +38,12 @@ except ModuleNotFoundError:  # direct execution
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SITE = "https://liquilens.in"
-BOARD_RECEIPT = ROOT / "research" / "share-card-board.json"
+# Failure Radar tier publication is paused pending re-validation (decided
+# 2 November 2026, after three co-operative bank failures in the Indian
+# crisis record were re-dated to their onset). The home card states the
+# pause and carries no tier count, so the retired board-count receipt
+# (research/share-card-board.json) is no longer read or published.
+TIER_PAUSE_DATE = "2026-11-02"
 INVESTIGATION_PATH = "/investigations/the-5-64x-private-credit-concentration/"
 SOCIAL_START = "<!-- SOCIAL-CARD:START -->"
 SOCIAL_END = "<!-- SOCIAL-CARD:END -->"
@@ -414,34 +417,13 @@ def _definition_card(row: RouteDefinition) -> RenderedCard:
 
 
 def _root_card() -> RenderedCard:
-    receipt = json.loads(BOARD_RECEIPT.read_text(encoding="utf-8"))
-    tiers = receipt.get("tiers")
-    if (
-        receipt.get("schema") != "liquilens.share-card-board.v1"
-        or not isinstance(tiers, dict)
-        or sum(tiers.get(key, -1) for key in ("red", "orange", "yellow", "green"))
-        != receipt.get("screened_rows")
-        or not re.fullmatch(r"[a-f0-9]{64}", str(receipt.get("board_signature") or ""))
-        or not re.fullmatch(r"[a-f0-9]{64}", str(receipt.get("source_response_sha256") or ""))
-    ):
-        raise ValueError("root share-card board receipt failed its identity contract")
-    screened = str(receipt["screened_rows"])
-    excluded = str(receipt["excluded_stale_rows"])
-    spec = route_card_spec(
-        slug="home", canonical_path="/", kind="overview",
-        eyebrow="LIQUILENS / FAILURE RADAR", subject="CURRENT PUBLIC BOARD",
-        title=f"{screened} institutions screened; {excluded} stale dossiers excluded, not scored.",
-        clock_label="AS OF", clock=receipt["as_of"], status="SCREEN / NOT RATING",
-        source="FAILURE RADAR BOARD", signature_label="BOARD",
-        signature=receipt["board_signature"], role_label="BOARD",
-        role_value="CURRENT PUBLIC SCREEN", role_detail="MISSING IS NOT CALM",
-        metric_label="CURRENT PUBLIC BOARD", metric_value=screened,
-        metric_detail=f"{excluded} STALE DOSSIERS EXCLUDED / MISSING NEVER BECOMES ZERO",
-        facts=tuple(CardFact(key, str(tiers[key])) for key in (
-            "red", "orange", "yellow", "green"
-        )),
-    )
-    return render_card(spec, SITE + "/")
+    return _definition_card(RouteDefinition(
+        "/", "home", "LIQUILENS / FAILURE RADAR", "INSTITUTION RISK SCREEN",
+        "Failure Radar tiers are paused pending re-validation. Probabilities are shown as research only.",
+        "TIERS", "PAUSED PENDING RE-VALIDATION",
+        "NO TIER COUNT IS SHOWN / MISSING IS NOT CALM", "PAUSED", TIER_PAUSE_DATE,
+        "SCREEN / NOT RATING", "FAILURE RADAR BOARD",
+    ))
 
 
 def _investigation_card() -> RenderedCard:

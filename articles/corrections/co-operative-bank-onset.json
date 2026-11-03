@@ -1,0 +1,362 @@
+{
+  "schema": "liquilens.article-correction.v1",
+  "id": "co-operative-bank-onset",
+  "kind": "correction",
+  "date": "2026-11-03",
+  "decision_date": "2026-11-02",
+  "summary": "Three co-operative bank failures in the India crisis record are dated at their onset, the first RBI directions restricting depositors, instead of the later licence cancellation. The India figures were regenerated, and Failure Radar tier publication is paused pending re-validation.",
+  "onsets": [
+    {
+      "slug": "madhavpura-mercantile-co-operative-bank",
+      "name": "Madhavpura Mercantile Co-operative Bank",
+      "previous_date": "2012-06-04",
+      "source_label": "7 June 2012",
+      "source_url": "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=26606",
+      "onset_date": "2001-03-13",
+      "verdict": "insufficient_data"
+    },
+    {
+      "slug": "ckp-co-operative-bank",
+      "name": "CKP Co-operative Bank",
+      "previous_date": "2020-04-30",
+      "source_label": "5 May 2014",
+      "source_url": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=31124",
+      "onset_date": "2014-05-02",
+      "verdict": "insufficient_data"
+    },
+    {
+      "slug": "rupee-co-operative-bank",
+      "name": "Rupee Co-operative Bank",
+      "previous_date": "2022-09-22",
+      "source_label": "25 February 2013",
+      "source_url": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=28200",
+      "onset_date": "2013-02-22",
+      "verdict": "insufficient_data"
+    }
+  ],
+  "record": {
+    "source": "https://api.liquilens.in/api/evidence/summary",
+    "capture_sha256": "cd743024f56887ca6fd6b67ae066c3e02a19a553d362d31c087a2de5ce13cf1a",
+    "recall_ex_fraud_pct": 86.7,
+    "flagged_ex_fraud": 13,
+    "failed_ex_fraud": 15,
+    "median_lead_months": 23.0,
+    "previous": {
+      "recall_ex_fraud_pct": 88.9,
+      "median_lead_months": 21.5
+    }
+  },
+  "tier_publication": "paused pending re-validation; probabilities are research only",
+  "articles": [
+    {
+      "slug": "2026-08-23-nedungadi-bank-s-capital-breach-preceded-the-event-the-harder-question-is-wh",
+      "url": "https://liquilens.in/articles/2026-08-23-nedungadi-bank-s-capital-breach-preceded-the-event-the-harder-question-is-wh/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-08-25-sambandh-finserve-s-funding-flag-arrived-early-but-did-not-make-failure-know",
+      "url": "https://liquilens.in/articles/2026-08-25-sambandh-finserve-s-funding-flag-arrived-early-but-did-not-make-failure-know/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-08-28-global-trust-bank-s-warning-appeared-before-the-event-but-its-limits-matter",
+      "url": "https://liquilens.in/articles/2026-08-28-global-trust-bank-s-warning-appeared-before-the-event-but-its-limits-matter/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-08-29-il-fs-replay-the-funding-signal-arrived-before-the-threshold-lenses-named-a",
+      "url": "https://liquilens.in/articles/2026-08-29-il-fs-replay-the-funding-signal-arrived-before-the-threshold-lenses-named-a/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-08-30-religare-finvest-s-funding-signal-was-early-not-a-clean-prediction-of-failur",
+      "url": "https://liquilens.in/articles/2026-08-30-religare-finvest-s-funding-signal-was-early-not-a-clean-prediction-of-failur/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-01-rupee-co-operative-bank-replay-the-signal-was-an-evidence-boundary-not-a-cle",
+      "url": "https://liquilens.in/articles/2026-09-01-rupee-co-operative-bank-replay-the-signal-was-an-evidence-boundary-not-a-cle/",
+      "cites_recall": false,
+      "cites_lead": false,
+      "mentions_tiers": true,
+      "dates_corrected": [
+        {
+          "from": "2022-09-22",
+          "to": "2013-02-22"
+        }
+      ]
+    },
+    {
+      "slug": "2026-09-02-utkarsh-small-finance-bank-s-first-visible-pressure-point-is-asset-quality-n",
+      "url": "https://liquilens.in/articles/2026-09-02-utkarsh-small-finance-bank-s-first-visible-pressure-point-is-asset-quality-n/",
+      "cites_recall": false,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-07-abhyudaya-s-earliest-replay-signal-was-asset-quality-not-funding",
+      "url": "https://liquilens.in/articles/2026-09-07-abhyudaya-s-earliest-replay-signal-was-asset-quality-not-funding/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-08-altico-s-replay-a-stable-funding-band-can-still-contain-a-refinancing-warnin",
+      "url": "https://liquilens.in/articles/2026-09-08-altico-s-replay-a-stable-funding-band-can-still-contain-a-refinancing-warnin/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-11-religare-finvest-s-earliest-visible-strain-was-funding-but-fraud-masks-the-b",
+      "url": "https://liquilens.in/articles/2026-09-11-religare-finvest-s-earliest-visible-strain-was-funding-but-fraud-masks-the-b/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-13-madhavpura-s-replay-shows-where-a-balance-sheet-radar-can-go-blind",
+      "url": "https://liquilens.in/articles/2026-09-13-madhavpura-s-replay-shows-where-a-balance-sheet-radar-can-go-blind/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": [
+        {
+          "from": "2012-06-04",
+          "to": "2001-03-13"
+        }
+      ]
+    },
+    {
+      "slug": "2026-09-14-first-leasing-replay-draws-the-line-between-disclosed-stress-and-forensic-ri",
+      "url": "https://liquilens.in/articles/2026-09-14-first-leasing-replay-draws-the-line-between-disclosed-stress-and-forensic-ri/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-16-new-india-co-operative-bank-a-disclosed-nnpa-warning-preceded-the-event-but",
+      "url": "https://liquilens.in/articles/2026-09-16-new-india-co-operative-bank-a-disclosed-nnpa-warning-preceded-the-event-but/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-17-sambandh-finserve-s-early-stress-signal-was-funding-not-a-forecast",
+      "url": "https://liquilens.in/articles/2026-09-17-sambandh-finserve-s-early-stress-signal-was-funding-not-a-forecast/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-23-il-fs-replay-funding-signalled-early-but-disclosure-limits-defeat-any-clean",
+      "url": "https://liquilens.in/articles/2026-09-23-il-fs-replay-funding-signalled-early-but-disclosure-limits-defeat-any-clean/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-24-rupee-co-operative-bank-replay-shows-where-a-balance-sheet-warning-ends",
+      "url": "https://liquilens.in/articles/2026-09-24-rupee-co-operative-bank-replay-shows-where-a-balance-sheet-warning-ends/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": [
+        {
+          "from": "2022-09-22",
+          "to": "2013-02-22"
+        }
+      ]
+    },
+    {
+      "slug": "2026-09-25-first-leasing-replay-when-a-public-balance-sheet-radar-cannot-see-through-th",
+      "url": "https://liquilens.in/articles/2026-09-25-first-leasing-replay-when-a-public-balance-sheet-radar-cannot-see-through-th/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-27-new-india-co-operative-bank-showed-a-disclosed-stress-breach-before-the-even",
+      "url": "https://liquilens.in/articles/2026-09-27-new-india-co-operative-bank-showed-a-disclosed-stress-breach-before-the-even/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-29-united-western-bank-s-first-disclosed-fault-line-was-asset-quality-not-fundi",
+      "url": "https://liquilens.in/articles/2026-09-29-united-western-bank-s-first-disclosed-fault-line-was-asset-quality-not-fundi/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-09-30-abhyudaya-s-replay-an-asset-quality-breach-arrived-before-the-recorded-event",
+      "url": "https://liquilens.in/articles/2026-09-30-abhyudaya-s-replay-an-asset-quality-breach-arrived-before-the-recorded-event/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-01-altico-s-funding-warning-arrived-before-the-event-but-the-replay-is-a-diagno",
+      "url": "https://liquilens.in/articles/2026-10-01-altico-s-funding-warning-arrived-before-the-event-but-the-replay-is-a-diagno/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-02-global-trust-bank-s-earliest-disclosed-warning-was-a-balance-sheet-breach-no",
+      "url": "https://liquilens.in/articles/2026-10-02-global-trust-bank-s-earliest-disclosed-warning-was-a-balance-sheet-breach-no/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-03-religare-finvest-s-funding-watch-was-early-but-fraud-masking-limits-what-the",
+      "url": "https://liquilens.in/articles/2026-10-03-religare-finvest-s-funding-watch-was-early-but-fraud-masking-limits-what-the/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-04-il-fs-showed-why-a-funding-warning-can-arrive-before-a-balance-sheet-looks-b",
+      "url": "https://liquilens.in/articles/2026-10-04-il-fs-showed-why-a-funding-warning-can-arrive-before-a-balance-sheet-looks-b/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-05-ckp-co-operative-bank-replay-when-a-missing-warning-is-not-an-all-clear",
+      "url": "https://liquilens.in/articles/2026-10-05-ckp-co-operative-bank-replay-when-a-missing-warning-is-not-an-all-clear/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": [
+        {
+          "from": "2020-04-30",
+          "to": "2014-05-02"
+        }
+      ]
+    },
+    {
+      "slug": "2026-10-06-rupee-co-operative-bank-the-warning-was-a-blank-record-not-an-early-signal",
+      "url": "https://liquilens.in/articles/2026-10-06-rupee-co-operative-bank-the-warning-was-a-blank-record-not-an-early-signal/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": [
+        {
+          "from": "2022-09-22",
+          "to": "2013-02-22"
+        }
+      ]
+    },
+    {
+      "slug": "2026-10-07-nedungadi-bank-s-capital-breach-was-an-early-warning-not-a-timetable",
+      "url": "https://liquilens.in/articles/2026-10-07-nedungadi-bank-s-capital-breach-was-an-early-warning-not-a-timetable/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-09-sambandh-finserve-s-funding-flag-was-an-early-warning-not-a-verdict",
+      "url": "https://liquilens.in/articles/2026-10-09-sambandh-finserve-s-funding-flag-was-an-early-warning-not-a-verdict/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-10-united-western-bank-s-earliest-disclosed-warning-was-asset-quality-not-a-fun",
+      "url": "https://liquilens.in/articles/2026-10-10-united-western-bank-s-earliest-disclosed-warning-was-asset-quality-not-a-fun/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-12-altico-s-funding-mix-identified-the-rollover-pressure-point-before-default",
+      "url": "https://liquilens.in/articles/2026-10-12-altico-s-funding-mix-identified-the-rollover-pressure-point-before-default/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-15-il-fs-replay-a-funding-warning-preceded-the-event-but-fraud-limits-what-the",
+      "url": "https://liquilens.in/articles/2026-10-15-il-fs-replay-a-funding-warning-preceded-the-event-but-fraud-limits-what-the/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-16-first-leasing-s-replay-marks-the-boundary-where-a-balance-sheet-warning-can",
+      "url": "https://liquilens.in/articles/2026-10-16-first-leasing-s-replay-marks-the-boundary-where-a-balance-sheet-warning-can/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-17-madhavpura-replay-the-warning-a-disclosure-screen-could-not-honestly-give",
+      "url": "https://liquilens.in/articles/2026-10-17-madhavpura-replay-the-warning-a-disclosure-screen-could-not-honestly-give/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": [
+        {
+          "from": "2012-06-04",
+          "to": "2001-03-13"
+        }
+      ]
+    },
+    {
+      "slug": "2026-10-18-nedungadi-bank-s-capital-breach-came-first-but-it-was-not-a-failure-forecast",
+      "url": "https://liquilens.in/articles/2026-10-18-nedungadi-bank-s-capital-breach-came-first-but-it-was-not-a-failure-forecast/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    },
+    {
+      "slug": "2026-10-20-sambandh-finserve-s-funding-flag-was-an-early-disclosure-signal-not-a-foreca",
+      "url": "https://liquilens.in/articles/2026-10-20-sambandh-finserve-s-funding-flag-was-an-early-disclosure-signal-not-a-foreca/",
+      "cites_recall": true,
+      "cites_lead": true,
+      "mentions_tiers": true,
+      "dates_corrected": []
+    }
+  ]
+}

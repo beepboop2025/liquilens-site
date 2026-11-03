@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 This historical replay is not current news and not a forecast.
 
 *This is a historical replay, not current news, a forecast, or investment advice. It uses a public-disclosure construction-PIT record. Similar signals do not imply the same outcome.*

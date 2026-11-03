@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 *This is a historical replay, not current news and not a forecast. Similar mechanisms do not imply the same outcome. The relevant filing period ended on 1999-03-31; the replay uses 1999-05-30 as its knowledge-time proxy. The separate market-data pack is as of 2026-09-25.*
 
 Nedungadi Bank should have appeared under pressure first through disclosed capital, not through a scored funding signal. The narrow thesis is that its CRAR entry into the first RBI action zone in FY1999 was the earliest observable warning in this replay. It preceded the bank’s 2002-11-02 default by 41 months. That does not prove capital caused the default, establish what market participants knew, or show that an investor could have traded a known outcome.

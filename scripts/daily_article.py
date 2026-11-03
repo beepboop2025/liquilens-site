@@ -114,8 +114,13 @@ a steel-manned counter-case, and a concrete test that could disprove the view.
 Hard rules:
 1. The dossier is the complete factual universe. Add no number, event, quote,
    institution allegation, or causal detail from memory.
-2. A risk tier is a screen, not a credit rating or prediction of failure. State
-   the filing as-of date separately from market and publication dates.
+2. Failure Radar tier publication is paused pending re-validation; the
+   dossier's failure_radar.tier_publication block states since when and why.
+   Name the pause. Never state or imply a tier, tier colour, grade letter or
+   tier count, never describe the board or an institution as calm or all green,
+   and present every probability as research only. A screen is not a credit
+   rating or prediction of failure. State the filing as-of date separately
+   from market and publication dates.
 3. Preserve every construction-PIT, eligibility, staleness, missing-data, and
    fraud-masking boundary. Never turn missing evidence into calm.
 4. Historical mode must say near the top that the piece is not current news and
@@ -139,8 +144,10 @@ REVIEW_SYSTEM = """You are LiquiLens's sceptical standards editor. Rewrite the
 submitted draft into a publication-ready article using only the EVIDENCE
 DOSSIER. Delete unsupported claims instead of repairing them from memory.
 Interrogate the difference between a filing-period signal, a market-price
-signal, and a model derivation. Make the counter-case capable of defeating the
-thesis. Preserve all eligibility and missing-data disclosures. The rewritten
+signal, and a model derivation. Failure Radar tiers are paused pending
+re-validation: delete any tier, tier colour, grade letter or tier count. Make
+the counter-case capable of defeating the thesis. Preserve all eligibility and
+missing-data disclosures. The rewritten
 body must be 1,050 to 1,250 words and use every required dossier heading; copy
 under 850 words is automatically rejected.
 Return publish only after the copy contains at least seven allowed Markdown
@@ -152,6 +159,96 @@ body_md, and notes (a short list of material edits). No prose outside JSON.
 """
 
 TIER_RANK = {"red": 0, "orange": 1, "yellow": 2, "green": 3}
+
+# Failure Radar tier publication is paused pending re-validation (decided
+# 2 November 2026, after three co-operative bank failures in the Indian crisis
+# record were re-dated to their onset). The served board carries a
+# ``tier_publication`` block (LiquiLens backend/tier_publication.py). Tiers
+# count as published only when that block says "published" and this switch is
+# off, so an older or partial response fails closed. While paused, the board
+# is stripped of tiers, tier counts, grade letters and the tier rule before any
+# selection, dossier or fallback reads it; rows rank by the research-only
+# 12-month PD, as the LiquiLens editorial desk does; a missing tier is never
+# read as any tier; and the gate rejects copy that names one.
+TIER_PUBLICATION_PAUSED = True
+WITHHELD_KEYS = frozenset({"tier", "tiers", "grade", "quadrant_rule", "tier_counts"})
+SITE_TIER_PAUSE = {
+    "state": "paused",
+    "label": "tiers paused pending re-validation",
+    "source": "liquilens-site: the served board carried no paused tier_publication block",
+}
+TIER_COLOUR = r"(?:red|orange|yellow|green)"
+TIER_LEAK = re.compile(
+    rf"\b{TIER_COLOUR}\b[^.\n]{{0,40}}\btiers?\b|\btiers?\b[^.\n]{{0,40}}\b{TIER_COLOUR}\b"
+    rf"|\b\d+\s+{TIER_COLOUR}\b|\b{TIER_COLOUR}[- ](?:rated|listed|names?|rows?)\b"
+    r"|\ball[- ]green\b|\bdisplay grade\b",
+    re.I,
+)
+GRADE_LEAK = re.compile(r"\bgrade\s+(?:AAA|AA|BBB|BB|CCC|CC|[ABCD])\b")
+
+
+def tier_publication_block(board: dict) -> dict:
+    """The served pause block, or the site's own when the board lacks one."""
+    block = board.get("tier_publication") if isinstance(board, dict) else None
+    if not isinstance(block, dict) or not isinstance(block.get("state"), str):
+        return dict(SITE_TIER_PAUSE)
+    if block["state"] == "published" and TIER_PUBLICATION_PAUSED:
+        return {**SITE_TIER_PAUSE, "served_state": "published"}
+    return copy.deepcopy(block)
+
+
+def tiers_published(board: dict) -> bool:
+    return tier_publication_block(board).get("state") == "published"
+
+
+def without_tier_publication(board: dict) -> dict:
+    """Return the board as it may be published, carrying its pause block."""
+    block = tier_publication_block(board)
+    if block.get("state") == "published":
+        return board
+    held = copy.deepcopy(board)
+    for key in WITHHELD_KEYS:
+        held.pop(key, None)
+    for row in held.get("rows") or []:
+        if isinstance(row, dict):
+            for key in WITHHELD_KEYS:
+                row.pop(key, None)
+            if isinstance(row.get("hazard"), dict):
+                row["hazard"].pop("grade", None)
+    held["tier_publication"] = block
+    return held
+
+
+def research_rank_key(row: dict) -> tuple:
+    """Highest research-only 12-month PD first, then slug: never a tier."""
+    pd12 = number((row.get("hazard") or {}).get("pd_12m"))
+    return (-(pd12 if pd12 is not None else -1.0), str(row.get("slug") or ""))
+
+
+def tier_pause_since(block: dict | None) -> str:
+    since = (block or {}).get("since")
+    return f" since {since}" if isinstance(since, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", since) else ""
+
+
+def tier_pause_sentence(block: dict | None) -> str:
+    return (
+        f"Failure Radar review tiers are paused pending re-validation{tier_pause_since(block)}, "
+        "so this article states no tier, tier colour, grade letter or tier count, and its "
+        "probabilities are research only."
+    )
+
+
+def tier_pause_reason(block: dict | None) -> str:
+    reason = (block or {}).get("reason")
+    return f" The board states why: {clean(reason)}" if isinstance(reason, str) and reason.strip() else ""
+
+
+def tier_leaks(*texts: str) -> list[str]:
+    found = []
+    for text in texts:
+        found += [m.group(0) for m in TIER_LEAK.finditer(str(text or ""))]
+        found += [m.group(0) for m in GRADE_LEAK.finditer(str(text or ""))]
+    return found
 ACRONYMS = {"ilfs": "IL&FS", "pmc": "PMC", "ckp": "CKP"}
 
 
@@ -478,7 +575,12 @@ def load_index(path: pathlib.Path = INDEX_PATH) -> list[dict]:
 
 
 def board_signature(board: dict) -> str:
-    """Hash only decision-relevant fields, excluding rebuild timestamps."""
+    """Hash only decision-relevant fields, excluding rebuild timestamps.
+
+    The hash covers the publishable board, so while tiers are paused a tier
+    change alone is not news and cannot open a current-analysis article.
+    """
+    board = without_tier_publication(board)
     rows = []
     for row in board.get("rows") or []:
         rows.append({
@@ -505,11 +607,13 @@ def board_signature(board: dict) -> str:
 
 
 def row_interest(row: dict) -> float:
+    """Editorial interest of a row, used only while tiers are published and
+    every row carries a known tier (see ranked_rows)."""
     pca = row.get("pca") or {}
     funding = row.get("funding") or {}
     market = row.get("market") or {}
     movement = number((row.get("movement") or {}).get("delta_pd_12m")) or 0.0
-    score = 100 - TIER_RANK.get(str(row.get("tier") or "green"), 3) * 20
+    score = 100 - TIER_RANK[str(row.get("tier"))] * 20
     score += 80 if pca.get("breaches") else 0
     score += 50 if row.get("signals_fired") else 0
     score += 30 if funding.get("flags") else 0
@@ -520,8 +624,18 @@ def row_interest(row: dict) -> float:
     return score
 
 
+def ranked_rows(board: dict, rows: list[dict]) -> list[dict]:
+    """Rows in editorial order. While tiers are paused, or when any row lacks a
+    known tier, the order is the research-only PD alone: a missing tier is
+    never read as green or as any other tier."""
+    if not tiers_published(board) or any(str(row.get("tier")) not in TIER_RANK for row in rows):
+        return sorted(rows, key=research_rank_key)
+    return sorted(rows, key=row_interest, reverse=True)
+
+
 def choose_current_subject(board: dict, excluded_topics: set[str] | None = None) -> dict | None:
     excluded = excluded_topics or set()
+    published = tiers_published(board)
     material = []
     for row in board.get("rows") or []:
         if str(row.get("slug") or "") in excluded:
@@ -531,14 +645,14 @@ def choose_current_subject(board: dict, excluded_topics: set[str] | None = None)
         market = row.get("market") or {}
         dd = number(market.get("dd"))
         if (
-            row.get("tier") in {"red", "orange"}
+            (published and row.get("tier") in {"red", "orange"})
             or row.get("signals_fired")
             or pca.get("breaches")
             or funding.get("flags")
             or (dd is not None and dd < 2)
         ):
             material.append(row)
-    return max(material, key=row_interest) if material else None
+    return ranked_rows(board, material)[0] if material else None
 
 
 def recent_current_topics(index: list[dict], date: str, *,
@@ -605,7 +719,7 @@ def compact_evidence_status(value: dict | None) -> dict:
 
 
 def compact_board(board: dict, subject_slug: str) -> dict:
-    selected = sorted(board.get("rows") or [], key=row_interest, reverse=True)
+    selected = ranked_rows(board, [row for row in board.get("rows") or [] if isinstance(row, dict)])
     comparisons = []
     for row in selected:
         if row.get("slug") == subject_slug:
@@ -613,14 +727,15 @@ def compact_board(board: dict, subject_slug: str) -> dict:
         comparisons.append({
             "slug": row.get("slug"), "name": row.get("name"),
             "as_of": row.get("as_of"), "age_months": row.get("age_months"),
-            "tier": row.get("tier"), "score": row.get("score"),
+            "score": row.get("score"),
             "signals_fired": row.get("signals_fired"),
             "market_dd": (row.get("market") or {}).get("dd"),
         })
         if len(comparisons) == 3:
             break
     return {
-        "as_of": board.get("as_of"), "tiers": board.get("tiers"),
+        "as_of": board.get("as_of"), "screened_count": len(board.get("rows") or []),
+        "tier_publication": tier_publication_block(board),
         "comparison_rows": comparisons,
         "excluded_stale_count": len(board.get("excluded_stale") or []),
         "historical_evidence": compact_evidence_status(board.get("historical_evidence")),
@@ -736,7 +851,6 @@ def current_fallback(dossier: dict) -> tuple[str, str, str]:
     row = dossier["subject"]
     radar = dossier["failure_radar"]
     name = clean(row.get("name") or name_from_slug(str(row.get("slug") or "institution")))
-    tier = clean(row.get("tier") or "unclassified").upper()
     as_of = clean(row.get("as_of") or "date unavailable")
     quarter = clean(row.get("quarter") or "period unavailable")
     age = fmt(row.get("age_months"), 0)
@@ -750,7 +864,7 @@ def current_fallback(dossier: dict) -> tuple[str, str, str]:
     market_asof = clean(market.get("as_of") or "not available")
     filing_pd = number(hazard.get("pd_12m"))
     pd_move = number(movement.get("delta_pd_12m"))
-    tiers = radar.get("tiers") or {}
+    pause = radar.get("tier_publication")
     signals = join_items(row.get("signals_fired") or [])
     funding_basis = join_items(funding.get("basis") or [])
     market_basis = join_items(market.get("basis") or [])
@@ -771,25 +885,25 @@ def current_fallback(dossier: dict) -> tuple[str, str, str]:
     if market_dd is not None:
         headline = f"{name}'s market warning is fresher than its filing"
         dek = (
-            f"LiquiLens places {name} in {tier}, but the useful story is the clock mismatch: "
+            f"LiquiLens screens {name} on public filings, but the useful story is the clock mismatch: "
             f"accounts dated {as_of} beside a market distance-to-default reading dated {market_asof}."
         )
     else:
-        headline = f"What LiquiLens's {tier} screen for {name} actually says"
+        headline = f"What LiquiLens's public screen for {name} actually says"
         dek = (
             f"A filing-led risk screen dated {as_of}, the balance-sheet mechanism behind it, "
             "the missing evidence, and the observation that would overturn the call."
         )
 
-    body = f"""LiquiLens is not publishing a verdict that **{name} will fail**. It is publishing a narrower and more useful finding: the institution sits in the **{tier}** risk-screen tier, and the evidence does not all run on the same clock. The vetted accounts are labelled **{quarter}**, with a period end of **{as_of}** and an age of **{age} months** on the board. The market layer, where available, is dated **{market_asof}**. A reader who collapses those dates into one apparently current score loses the most important fact in the story.
+    body = f"""LiquiLens is not publishing a verdict that **{name} will fail**. It is publishing a narrower and more useful finding: the evidence on the institution does not all run on the same clock. {tier_pause_sentence(pause)} The vetted accounts are labelled **{quarter}**, with a period end of **{as_of}** and an age of **{age} months** on the board. The market layer, where available, is dated **{market_asof}**. A reader who collapses those dates into one apparently current score loses the most important fact in the story.
 
 That clock mismatch is the thesis. Filed capital, asset quality and funding structure describe a balance sheet at a reporting date. Equity volatility and market value can reprice between filings. Neither source automatically wins. The filing can be stale; the market can be noisy. LiquiLens keeps them beside each other so disagreement remains visible and testable.
 
 ## The finding
 
-The live [Failure Radar board]({ENDPOINTS['board']}) contains **{fmt(tiers.get('red'), 0)} red, {fmt(tiers.get('orange'), 0)} orange, {fmt(tiers.get('yellow'), 0)} yellow and {fmt(tiers.get('green'), 0)} green** rows among institutions with a sufficiently recent vetted dossier. {name} is not isolated because a dramatic adjective was chosen. It was selected for this article because its published evidence creates the strongest current tension across tier, movement, regulatory distance, funding structure and market repricing.
+The live [Failure Radar board]({ENDPOINTS['board']}) screens **{fmt(radar.get('screened_count'), 0)}** institutions with a sufficiently recent vetted dossier. Its review tiers are paused pending re-validation{tier_pause_since(pause)}, so no tier count is given here, and an absent tier is not a calm reading.{tier_pause_reason(pause)} {name} is not isolated because a dramatic adjective was chosen. It was selected for this article because its published evidence creates the strongest current tension across movement, regulatory distance, funding structure and market repricing.
 
-Its disclosure-based 12-month monitoring probability is **{percent(filing_pd)}**. The change against the named reference period is **{percent(pd_move)}**, with the sign preserved. That number is a corpus-fitted monitoring probability, not a credit rating and not a calibrated promise about this institution. The board itself says exactly that. The fired signals are: **{signals}**.
+Its disclosure-based 12-month monitoring probability, research only, is **{percent(filing_pd)}**. The change against the named reference period is **{percent(pd_move)}**, with the sign preserved. That number is a corpus-fitted monitoring probability, not a credit rating and not a calibrated promise about this institution. The board itself says exactly that. The fired signals are: **{signals}**.
 
 ## The mechanism
 
@@ -799,7 +913,7 @@ LiquiLens does not blend those paths into a story after the fact. The screen kee
 
 ## What the filings say
 
-The filing layer's score is **{fmt(row.get('score'))}**, with display grade **{clean(row.get('grade') or 'unavailable')}**. The hazard basis says: **{join_items(hazard.get('basis') or [])}**. Its historical status is **{clean((hazard.get('historical_evidence') or {}).get('status') or (radar.get('historical_evidence') or {}).get('status'))}**. That label matters because the historical dossiers do not preserve a complete archive of every originally published value and revision.
+The filing layer's score is **{fmt(row.get('score'))}**; no grade letter is published while tiers are paused. The hazard basis says: **{join_items(hazard.get('basis') or [])}**. Its historical status is **{clean((hazard.get('historical_evidence') or {}).get('status') or (radar.get('historical_evidence') or {}).get('status'))}**. That label matters because the historical dossiers do not preserve a complete archive of every originally published value and revision.
 
 The regulator-distance lens reports **{clean(pca.get('status') or 'not assessed')}** under **{clean(pca.get('framework') or 'no applicable framework published')}**. Published breaches are **{join_items(pca.get('breaches') or [])}**. Items not assessed are **{join_items(pca.get('not_assessed') or [])}**. The correct reading is not that unassessed fields passed; it is that the public dossier did not support those tests.
 
@@ -823,7 +937,7 @@ The forensic layer is also bounded. Honest deterioration may appear in published
 
 ## What would change the call
 
-The next useful evidence is not another adjective. A newer vetted filing could show whether asset quality, capital and deposits confirmed or reversed the older direction. A fresh market print could move distance-to-default back above the screen's threshold. A disclosed funding series could illuminate one of the dark lenses. Any of those observations can change the tier or make this article's emphasis obsolete.
+The next useful evidence is not another adjective. A newer vetted filing could show whether asset quality, capital and deposits confirmed or reversed the older direction. A fresh market print could move distance-to-default back above the screen's threshold. A disclosed funding series could illuminate one of the dark lenses. Any of those observations can change the screen or make this article's emphasis obsolete.
 
 The system layer is context only. Seiche's legacy system reading is withheld under its source-rights policy **{clean(seiche_scope.get('policy') or 'unavailable')}** and is not reconstructed here; a withheld reading is not a calm one, and none enters {name}'s score. Undertow's public board is dated **{clean(undertow.get('asof') or 'unavailable')}** and can test whether traded-market exit capacity is broadly impaired; it does not prove an institution-specific funding problem.
 
@@ -835,7 +949,7 @@ For the deeper conversion path, the [six-week LiquiLens proof pilot]({SITE}/pilo
 
 ## Sources, method, and limits
 
-- [Failure Radar board]({ENDPOINTS['board']}), the source of the institution row, clocks, tiers and missing lenses.
+- [Failure Radar board]({ENDPOINTS['board']}), the source of the institution row, clocks and missing lenses.
 - [Historical validation record]({ENDPOINTS['validation']}), including PCA, funding and hazard diagnostics with misses preserved.
 - [Three-market evidence index]({ENDPOINTS['markets']}), which states the construction-PIT status and eligibility boundary for India, the US and Europe.
 - [US NDFI watch]({ENDPOINTS['ndfi']}), used only as a cross-market institution context.
@@ -858,7 +972,7 @@ def historical_fallback(dossier: dict) -> tuple[str, str, str]:
     default_date = clean(case.get("default_date") or "date unavailable")
     fraud = bool(case.get("fraud_masked"))
     radar = dossier["failure_radar"]
-    tiers = radar.get("tiers") or {}
+    pause = radar.get("tier_publication")
     validation = dossier["historical_validation"]
 
     headline = f"Before the event: what {name}'s filings did and did not reveal"
@@ -866,7 +980,7 @@ def historical_fallback(dossier: dict) -> tuple[str, str, str]:
         f"A construction-PIT replay of {name}: the first published regulatory or funding signal, "
         "the disclosure clock, the miss, and the boundary that survives into today's screen."
     )
-    body = f"""Nothing in today's Failure Radar evidence cleared the bar for a fresh institution story. This is therefore a historical replay, **not current news and not a forecast**. It opens the public {name} record because a quiet daily tape is better used to examine what an early-warning system could actually have known than to manufacture a new alarm.
+    body = f"""Nothing in today's Failure Radar evidence cleared the bar for a fresh institution story. This is therefore a historical replay, **not current news and not a forecast**. It opens the public {name} record because a day without a new material tension is better used to examine what an early-warning system could actually have known than to manufacture a new alarm.
 
 The recorded outcome date is **{default_date}**. LiquiLens's reconstruction asks two narrower questions. Did the disclosed ratios enter a published regulatory action zone? Did the disclosed liability structure enter a funding-fragility band? It does not ask whether a modern model, armed with later revisions and hindsight, can draw a persuasive line through the event.
 
@@ -900,13 +1014,13 @@ The record's fraud-masked flag for this case is **{clean(fraud)}**. If true, hon
 
 ## What today's board shares
 
-Today's board contains **{fmt(tiers.get('red'), 0)} red, {fmt(tiers.get('orange'), 0)} orange, {fmt(tiers.get('yellow'), 0)} yellow and {fmt(tiers.get('green'), 0)} green** rows. That is not evidence that any current institution is “the next {name}.” No similarity model is asserted here. The legitimate connection is methodological: current filings, market prices, regulatory distance and funding coverage still arrive on different clocks and can still disagree.
+Today's board screens **{fmt(radar.get('screened_count'), 0)}** institutions. Its review tiers are paused pending re-validation{tier_pause_since(pause)}, so no tier or tier count is given here, and an absent tier is not a calm reading.{tier_pause_reason(pause)} None of this is evidence that any current institution is “the next {name}.” No similarity model is asserted here. The legitimate connection is methodological: current filings, market prices, regulatory distance and funding coverage still arrive on different clocks and can still disagree.
 
 The board also excludes **{fmt(radar.get('excluded_stale_count'), 0)}** stale dossiers from current presentation. That abstention is part of the signal. An institution missing from the current table is not thereby safe; it may simply lack a fresh vetted record.
 
 ## The next falsifiable test
 
-For a current name, record the filing period, knowledge-time proxy and market date before reading the tier. Then ask whether a newer filing confirms the same asset-quality, capital or funding direction. If it reverses, the old screen should fall. If a dark funding lens becomes observable, grade whether it confirms or contradicts the tier. If the model cannot state what would change its mind, the historical lesson has not been learned.
+For a current name, record the filing period, knowledge-time proxy and market date before reading the screen. Then ask whether a newer filing confirms the same asset-quality, capital or funding direction. If it reverses, the old screen should fall. If a dark funding lens becomes observable, test whether it confirms or contradicts the screen. If the model cannot state what would change its mind, the historical lesson has not been learned.
 
 ## Follow the pressure chain
 
@@ -919,7 +1033,7 @@ Readers who need the rule tested on their own counterparties can use the [six-we
 - [LiquiLens historical validation record]({ENDPOINTS['validation']}), the structured source for every case value quoted above.
 - [The {name} replay]({SITE}/replay/{slug}/), a human-readable case file generated from that record.
 - [Three-market evidence index]({ENDPOINTS['markets']}), which states why India, US and Europe evidence has different status.
-- [Current Failure Radar board]({ENDPOINTS['board']}), used only for today's tier counts and coverage boundary.
+- [Current Failure Radar board]({ENDPOINTS['board']}), used only for today's screened count and coverage boundary.
 - [Seiche release scope]({ENDPOINTS['seiche']}) and [Undertow public board]({ENDPOINTS['undertow']}), sibling layers not used to score this case.
 - [LiquiLens research record]({SITE}/research/) and [reviewed investigations]({SITE}/investigations/).
 
@@ -1105,6 +1219,11 @@ def quality_issues(article: dict) -> list[str]:
         lower = body.lower()
         if "not current news" not in lower or "not a forecast" not in lower:
             issues.append("historical replay is not clearly labelled")
+    if TIER_PUBLICATION_PAUSED:
+        leaked = tier_leaks(article.get("headline"), article.get("dek"), body)
+        if leaked:
+            issues.append("tier publication is paused; remove tier colours, grades and counts: "
+                          + ", ".join(sorted(set(leaked)))[:200])
     if re.search(r"\b(?:nan|TODO|TBD|null)\b", body, flags=re.I):
         issues.append("placeholder leaked into article")
     lede = body.split("\n## ", 1)[0]
@@ -1188,6 +1307,7 @@ def build_article(datasets: dict[str, dict], *, date: str,
     publication_clock = publication_clock.astimezone(timezone.utc).replace(microsecond=0)
     publication_timestamp = publication_clock.isoformat().replace("+00:00", "Z")
     index = recent_index or []
+    datasets = {**datasets, "board": without_tier_publication(datasets["board"])}
     signature = board_signature(datasets["board"])
     previous_signature = str(index[0].get("board_signature") or "") if index else ""
     changed = not previous_signature or previous_signature != signature
@@ -1392,19 +1512,68 @@ def page_shell(*, title: str, description: str, canonical: str, jsonld: dict,
 <link rel="stylesheet" href="/family-design.css"><link rel="stylesheet" href="/family-pages.css"></head><body class="family-page"><header class="family-header"><nav class="family-nav" aria-label="Product family"><a class="family-brand" href="/" aria-label="LiquiLens home"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M9 20V12M14 23V9M19 20V12M24 17V15"/></svg>LiquiLens</a><div class="family-products"><a href="/" aria-current="page">LiquiLens</a><a href="https://seiche.info/">Seiche</a><a href="https://liquilens-undertow.com/">Undertow</a></div><a class="family-connect" href="/developers/institutions/">For agents</a></nav></header><header class="mast"><div class="wrap"><a class="brand" href="/"><b>L</b>LiquiLens</a><nav class="nav"><a href="/articles/">Daily articles</a><a href="/investigations/">Investigations</a><a href="/replay/">Case files</a><a href="/research/">Research</a></nav></div></header>{body}<footer><div class="wrap">Every article separates observed filings, market inputs and LiquiLens derivations. Screens are not credit ratings or predictions of failure. <a href="/research/">Evidence record</a> · <a href="/pilot/">Proof pilot</a> · not investment advice.</div></footer><script src="/ai-referral.js" defer></script></body></html>""", canonical)
 
 
+CORRECTION_LEADS = ("**Correction, ", "**Update, ")
+CORRECTION_STYLE = (
+    "border:1px solid #55482f;border-left:3px solid var(--gold);background:var(--panel);"
+    "padding:16px 20px;margin:0 auto 30px;font:15px/1.65 var(--sans);color:#dfe2e9"
+)
+
+
+def article_corrections(article: dict) -> list[dict]:
+    """Dated corrections recorded in an article's sidecar, oldest first."""
+    rows = [row for row in article.get("corrections") or []
+            if isinstance(row, dict) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(row.get("date") or ""))]
+    return sorted(rows, key=lambda row: str(row["date"]))
+
+
+def date_modified(article: dict) -> str:
+    """RFC 3339 time of the latest revision: publication or a dated correction."""
+    return max([str(article["published_at"])]
+               + [f"{row['date']}T00:00:00Z" for row in article_corrections(article)])
+
+
+def split_correction_notes(body_md: str) -> tuple[list[str], str]:
+    """Leading dated correction or update notes, and the article text as published."""
+    notes = []
+    rest = body_md
+    while rest.startswith(CORRECTION_LEADS):
+        note, _, rest = rest.partition("\n\n")
+        notes.append(note)
+        rest = rest.lstrip("\n")
+    return notes, rest
+
+
 def render_article(article: dict, *, social_card: RenderedCard | None = None) -> str:
     url = article["canonical_url"]
     card = social_card or render_article_card(article)
+    corrections = article_corrections(article)
     jsonld = {
         "@context": "https://schema.org", "@type": "AnalysisNewsArticle",
         "headline": article["headline"], "description": article["dek"],
-        "datePublished": article["published_at"], "dateModified": article["published_at"],
+        "datePublished": article["published_at"], "dateModified": date_modified(article),
         "articleSection": "Institution risk", "isAccessibleForFree": True,
         "wordCount": article["word_count"], "mainEntityOfPage": url,
         "author": {"@type": "Organization", "name": "LiquiLens", "url": f"{SITE}/"},
         "publisher": {"@type": "Organization", "name": "LiquiLens", "url": f"{SITE}/"},
         "image": card.url,
     }
+    comments = [
+        {"@type": "CorrectionComment", "datePublished": row["date"],
+         "text": str(row.get("text") or row.get("summary") or "")}
+        for row in corrections if row.get("kind", "correction") == "correction"
+    ]
+    if comments:
+        jsonld["correction"] = comments
+    notes, copy_md = (split_correction_notes(article["body_md"]) if corrections
+                      else ([], article["body_md"]))
+    notes_html = "".join(
+        f'<aside class="correction wrap" role="note" style="{CORRECTION_STYLE}">{inline_markdown(note)}</aside>'
+        for note in notes
+    )
+    corrected = (
+        f" · {'updated' if corrections[-1].get('kind') == 'update' else 'corrected'} "
+        f"{esc(corrections[-1]['date'])}" if corrections else ""
+    )
     mode = str(article["article_type"]).replace("_", " ")
     generation = article.get("generation") or {}
     receipt = (
@@ -1415,8 +1584,8 @@ def render_article(article: dict, *, social_card: RenderedCard | None = None) ->
     body = (
         f'<main><section class="hero"><div class="wrap"><p class="kicker">{esc(article["date"])} · {esc(mode)}</p>'
         f'<h1>{esc(article["headline"])}</h1><p class="dek">{esc(article["dek"])}</p>'
-        f'<p class="meta">{esc(article["word_count"])} words · institution risk · open evidence</p></div></section>'
-        f'<article class="copy wrap">{markdown_to_html(article["body_md"])}</article>'
+        f'<p class="meta">{esc(article["word_count"])} words · institution risk · open evidence{corrected}</p></div></section>'
+        f'{notes_html}<article class="copy wrap">{markdown_to_html(copy_md)}</article>'
         '<aside class="handoff wrap"><h2>Turn the public screen into a repeatable review.</h2>'
         '<p>Audit the controls around your current early-warning process, or send a named list of public India or US institutions for a generated review pack.</p>'
         '<div class="actions"><a href="/tools/ews-coverage-check/?utm_source=liquilens&amp;utm_medium=owned_content&amp;utm_campaign=daily_articles&amp;utm_content=article_handoff">Run the free coverage check</a>'
@@ -1456,15 +1625,18 @@ def render_archive(
                       social_card=card, og_type="website")
 
 
-def render_feed(index: list[dict], bodies: dict[str, str]) -> str:
+def render_feed(index: list[dict], bodies: dict[str, str],
+                metadata: dict[str, dict] | None = None) -> str:
     updated = index[0]["published_at"] if index else "2026-01-01T00:00:00Z"
     entries = []
     for row in index[:50]:
+        meta = (metadata or {}).get(row["slug"]) or {}
+        entry_updated = date_modified({**meta, "published_at": row["published_at"]})
         entries.append(
             "<entry>"
             f"<title>{html.escape(row['headline'])}</title><link href=\"{html.escape(row['canonical_url'], quote=True)}\"/>"
             f"<id>{html.escape(row['canonical_url'])}</id><published>{html.escape(row['published_at'])}</published>"
-            f"<updated>{html.escape(row['published_at'])}</updated><summary>{html.escape(row['dek'])}</summary>"
+            f"<updated>{html.escape(entry_updated)}</updated><summary>{html.escape(row['dek'])}</summary>"
             f"<content type=\"html\">{html.escape(markdown_to_html(bodies.get(row['slug'], '')))}</content></entry>"
         )
     return (
@@ -1492,6 +1664,8 @@ def render_json_feed(index: list[dict], bodies: dict[str, str],
             "summary": row["dek"],
             "content_text": bodies.get(slug, ""),
             "date_published": row["published_at"],
+            **({"date_modified": date_modified({**meta, "published_at": row["published_at"]})}
+               if article_corrections(meta) else {}),
             "tags": [str(row.get("article_type") or "analysis"), "institution risk"],
             "_liquidity_lab": {
                 "schema": "liquidity-lab.editorial-item.v1",
@@ -1536,14 +1710,19 @@ def replace_marked_block(text: str, start: str, end: str, block: str,
     return text.rstrip() + "\n\n" + marked + "\n"
 
 
-def update_discovery_files(index: list[dict], root: pathlib.Path) -> None:
+def update_discovery_files(index: list[dict], root: pathlib.Path,
+                           metadata: dict[str, dict] | None = None) -> None:
+    def lastmod(row: dict) -> str:
+        meta = (metadata or {}).get(row["slug"]) or {}
+        return date_modified({**meta, "published_at": row["date"]})[:10]
+
     sitemap_path = root / "sitemap.xml"
     sitemap = sitemap_path.read_text()
     sitemap_rows = [
         f"  <url><loc>{SITE}/articles/</loc><lastmod>{index[0]['date'] if index else ''}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>"
     ]
     sitemap_rows.extend(
-        f"  <url><loc>{row['canonical_url']}</loc><lastmod>{row['date']}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>"
+        f"  <url><loc>{row['canonical_url']}</loc><lastmod>{lastmod(row)}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>"
         for row in index
     )
     sitemap_path.write_text(replace_marked_block(
@@ -1675,9 +1854,9 @@ def refresh_article_surfaces(*, root: pathlib.Path = ROOT) -> list[str]:
     archive_card = article_archive_card(index)
     write_card(archive_share_path, archive_card)
     archive_path.write_text(render_archive(index, social_card=archive_card))
-    feed_path.write_text(render_feed(index, bodies))
+    feed_path.write_text(render_feed(index, bodies, metadata))
     json_feed_path.write_text(render_json_feed(index, bodies, metadata))
-    update_discovery_files(index, root)
+    update_discovery_files(index, root, metadata)
     return [
         *pages, *share_cards, str(learning_path), str(archive_path),
         str(archive_share_path), str(feed_path),

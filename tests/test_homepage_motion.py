@@ -2,9 +2,13 @@
 
 from pathlib import Path
 import re
+import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+
+import india_record_copy  # noqa: E402
 
 
 def read(path: str) -> str:
@@ -34,8 +38,14 @@ def test_warning_horizon_is_exact_and_progressively_enhanced():
         r'data-progress="([^"]+)" data-phase="([^"]+)"',
         home,
     )
-    assert [chapter[0] for chapter in chapters] == ["41", "27", "21.5", "17", "8", "0"]
-    assert [chapter[1] for chapter in chapters] == ["0", ".341", ".476", ".585", ".805", "1"]
+    # The cohort-median chapter is the served India median lead, rendered by
+    # scripts/india_record_copy.py from the captured evidence record.
+    india = india_record_copy.figures(india_record_copy.load("india-evidence.json"),
+                                      india_record_copy.load("india-alert-modes.json"))
+    assert [chapter[0] for chapter in chapters] == ["41", "27", india["lead"], "17", "8", "0"]
+    assert [chapter[1] for chapter in chapters] == [
+        "0", ".341", india["lead_progress"], ".585", ".805", "1"]
+    assert f'style="left:{india["lead_mark"]}%"' in home
     assert home.count('class="tminus__mark') == 6
     assert "Math.round(m)" not in home
     assert "tmCap" not in home

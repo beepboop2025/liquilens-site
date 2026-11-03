@@ -29,7 +29,7 @@
     if(rm){
       [flag,rec,brace].forEach(g=>g.setAttribute('opacity','1'));
       fill.style.opacity = '1';
-      count.textContent = '21.5 mo median diagnostic lead';
+      count.textContent = '23 mo median diagnostic lead';
       return;
     }
     path.style.strokeDasharray = L;
@@ -53,7 +53,7 @@
         const t0 = performance.now();
         (function tick(now){
           const p = Math.min(1,(now - t0 - 2700)/900);
-          if(p >= 0){ count.textContent = Math.round(21*p) + (Math.round(21*p)===1?' month':' months') + ' of warning'; }
+          if(p >= 0){ count.textContent = Math.round(23*p) + (Math.round(23*p)===1?' month':' months') + ' of warning'; }
           if(p < 1) requestAnimationFrame(tick);
         })(t0);
       }));
@@ -269,11 +269,23 @@
     const scroll = document.getElementById('radarScroll');
     const fallback = document.getElementById('radarFallback');
     const TYPE = {bank:'Bank', sfb:'SFB', ucb:'Co-op', nbfc:'NBFC', mfi:'MFI', hfc:'HFC'};
-    const TIERS = ['red','orange','yellow','green'];
+    // Failure Radar tier publication is paused pending re-validation after the
+    // Indian crisis record was corrected (decided 2 November 2026). The served
+    // tier_publication block names the pause. Whatever the payload carries, no
+    // tier, colour, grade letter or tier count is rendered and a missing tier
+    // is never read as any tier: rows rank by the research-only 12-month PD,
+    // as the LiquiLens editorial desk does, and a missing PD stays n/a.
+    const TIER_PAUSE = 'tiers paused pending re-validation';
+    function pauseNote(tp){
+      if(tp && typeof tp === 'object' && tp.state === 'published') return 'tiers not shown on this page';
+      const since = (tp && typeof tp.since === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(tp.since)) ? ' since ' + tp.since : '';
+      return TIER_PAUSE + since;
+    }
 
     // the API is ours, but the page should stay safe even if it ever is not
     function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-    function pd(x){ return (x*100).toFixed(2) + '%'; }
+    function pd12(r){ const x = r && r.hazard ? r.hazard.pd_12m : null; return (typeof x === 'number' && isFinite(x)) ? x : null; }
+    function pd(x){ return x == null ? 'n/a' : (x*100).toFixed(2) + '%'; }
     function move(m){
       const d = m && m.delta_pd_12m;
       // A row with no comparable quarter has no movement, never zero movement.
@@ -330,30 +342,39 @@
     }
 
     liveJSON('https://api.liquilens.in/api/failure-radar/board').then(function(b){
-      const rows = (b.rows || []);
+      const rows = (b.rows || []).slice();
       if(!rows.length) throw new Error('empty');
+      // Order by the research probability itself, never by a tier.
+      rows.sort(function(a, z){
+        const x = pd12(a), y = pd12(z);
+        if(x !== y){
+          if(x === null) return 1;
+          if(y === null) return -1;
+          return y - x;
+        }
+        const s = String(a.slug), u = String(z.slug);
+        return s < u ? -1 : (s > u ? 1 : 0);
+      });
       const tb = table.querySelector('tbody');
       tb.innerHTML = rows.slice(0, 12).map(function(r){
         const dd = marketState(r.market);
         const why = (r.signals_fired && r.signals_fired.length) ? r.signals_fired.join(', ') : 'no signals fired';
-        const tier = TIERS.indexOf(r.tier) >= 0 ? r.tier : 'green';
         return '<tr>' +
-          '<td class="inst-name">' + esc(String(r.name).replace(/ (Limited|Private Limited|Ltd\.?)$/,'')) + '</td>' +
+          '<td class="inst-name" title="' + esc(why) + '">' + esc(String(r.name).replace(/ (Limited|Private Limited|Ltd\.?)$/,'')) + '</td>' +
           '<td><span class="itype">' + esc(TYPE[r.inst_type] || r.inst_type) + '</span></td>' +
-          '<td><span class="tier ' + tier + '" title="' + esc(why) + '">' + esc(tier.toUpperCase()) + '</span></td>' +
-          '<td class="score" style="text-align:right">' + pd(r.hazard.pd_12m) + '</td>' +
+          '<td class="score" style="text-align:right">' + pd(pd12(r)) + '</td>' +
           '<td style="text-align:right">' + move(r.movement) + '</td>' +
           '<td class="score" style="text-align:right">' + dd + '</td>' +
         '</tr>';
       }).join('');
       scroll.hidden = false;
       fallback.hidden = true;
-      const t = b.tiers || {};
-      const parts = ['red','orange','yellow','green'].filter(k=>t[k]).map(k=>t[k] + ' ' + k);
-      let c = rows.length + ' institutions scored · ' + parts.join(' · ');
+      const tp = b.tier_publication;
+      let c = rows.length + ' institutions screened · ' + pauseNote(tp) + ' · 12-month probabilities are research only';
       if(b.as_of){ c += ' · board as of ' + fmtDate(b.as_of); }
       c += ' · ' + marketLayerState(b.market_layer || {});
       census.textContent = c;
+      if(tp && typeof tp.reason === 'string') census.title = tp.reason;
       stamp.textContent = 'public API response · clocks, freshness and tier authority printed from the payload';
     }).catch(function(){
       stamp.textContent = 'the public radar did not answer from here';

@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 *This is a historical replay, not current news and not a forecast. It examines Global Trust Bank before its default date of 2004-07-24. This is research, not investment advice, and it is not a credit rating.*
 
 The narrow answer to the desk question is Global Trust Bank. Its disclosed record first showed stress through CRAR and NNPA, which jointly breached the PCA action-zone criteria for the period ended 2002-03-31. The funding lens was not scoreable and produced no first signal.

@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 *This is a historical replay, not current news and not a forecast. The thesis is narrow: on the supplied record, Religare Finvest’s disclosed-liability lens registered before the available action-zone lens. The evidence clock is the filing publication time when available, otherwise period end plus 60 days. The stakes are equally narrow: confusing that reconstructed sequence with a live market signal, a causal explanation, or a prediction would overstate what the evidence can bear.*
 
 ## The record before the event

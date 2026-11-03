@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 ## The finding
 
 Among institutions represented by fresh-enough vetted public dossiers on the current LiquiLens screen, Utkarsh Small Finance Bank is the clearest balance-sheet pressure watch. This is deliberately narrower than a claim that the bank will fail, has an imminent liquidity problem, or is currently weaker than every institution outside the screen.

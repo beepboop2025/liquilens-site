@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 *This is a historical replay, not current news and not a forecast. Religare Finvest defaulted on 2018-01-18. Similar mechanisms do not imply the same outcome.*
 
 Religare Finvest is a test of a deliberately narrow proposition: which visible balance-sheet channel registered pressure first? The recorded answer is funding. The scoreable liability lens entered its watch band at the 2016-03-31 period end, with an index of 44.3, and the replay assigns a 19-month lead to default. But this is also a fraud-masked case. That designation is not a footnote: it prevents the stronger claim that the screen saw the condition that caused failure.

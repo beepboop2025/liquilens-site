@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 *This is a historical replay, not current news and not a forecast. It examines information around Religare Finvest’s default on 2018-01-18; similar mechanisms do not imply the same outcome elsewhere.*
 
 Religare Finvest is the balance sheet that should have felt financial stress first in this replay only in a limited sense: its disclosed funding profile entered a watch band before the event. The first signal was for 2016-03-31, with an index of 44.3 and a proxy knowledge date of 2016-05-30. The recorded lead is 19 months.

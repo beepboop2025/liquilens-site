@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 Nothing in today's Failure Radar evidence cleared the bar for a fresh institution story. This is therefore a historical replay, **not current news and not a forecast**. It opens the public United Western Bank record because a quiet daily tape is better used to examine what an early-warning system could actually have known than to manufacture a new alarm.
 
 The recorded outcome date is **2006-09-02**. LiquiLens's reconstruction asks two narrower questions. Did the disclosed ratios enter a published regulatory action zone? Did the disclosed liability structure enter a funding-fragility band? It does not ask whether a modern model, armed with later revisions and hindsight, can draw a persuasive line through the event.

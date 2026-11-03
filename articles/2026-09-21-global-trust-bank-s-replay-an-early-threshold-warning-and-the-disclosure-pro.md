@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 *This is not current news and is not a forecast. It is a historical replay of Global Trust Bank, whose default date is 2004-07-24. Similar balance-sheet mechanisms do not imply the same outcome elsewhere.*
 
 Global Trust Bank presents a deliberately uncomfortable answer to the question of which balance sheet should feel stress first. Its recorded supervisory-threshold signal appeared in reported capital adequacy and non-performing assets, not in a scoreable funding series and not in a market-price signal. For the period ended 2002-03-31, the replay records CRAR and NNPA breaches, a `threshold_2` action-zone status, and a knowledge-time proxy of 2002-05-30. That is a 25-month lead to default.

@@ -152,10 +152,11 @@ def test_india_figures_beside_a_us_lookalike_phrase_are_left_alone():
     # Its stat must keep agreeing with the India sentence on the same page,
     # and a template that matches a second phrase is reported, not applied.
     research = read("research/index.html")
-    sentence = re.search(r"88\.9 percent recall and a ([0-9.]+)-month median lead", research)
-    stat = re.search(r'<b>88\.9%</b><span>served recall</span></div>\s*'
+    sentence = re.search(r"The served headline is ([0-9.]+) percent recall excluding fraud-masked "
+                         r"failures \(\d+ of \d+\) and a ([0-9.]+)-month median lead", research)
+    stat = re.search(r'<b>([0-9.]+)%</b><span>served recall</span></div>\s*'
                      r'<div class="stat"><b>([0-9.]+) mo</b>', research)
-    assert sentence and stat and sentence.group(1) == stat.group(1)
+    assert sentence and stat and sentence.groups() == stat.groups()
     values = figures()
     template = next(t for rel, t in copy_gen.TEMPLATES if rel == "research/index.html"
                     and t.startswith("<h3>The United States"))

@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 *This is a historical replay, not current news and not a forecast. It examines New India Co-operative Bank around its 2025-02-13 event date. Similar mechanisms do not imply the same outcome elsewhere.*
 
 The narrow answer to the desk question is New India Co-operative Bank: disclosed balance-sheet stress appeared first in the asset-quality lens. The replay records an RBI action-zone breach for NNPA in FY2021, for the period ending 2021-03-31. Its assigned knowledge-time proxy is 2021-05-30, and the recorded lead is 44 months.

@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 *This is a historical replay, not current news and not a forecast. It examines United Western Bank through a construction-PIT public-disclosure record; similar mechanisms do not imply the same outcome elsewhere.*
 
 United Western Bank’s earliest recorded pressure in this file was a disclosed balance-sheet signal. The bank entered an RBI action-zone threshold in the period ended 2001-03-31, on an NNPA breach. The replay assigns that observation a knowledge-time proxy of 2001-05-30. Default followed on 2006-09-02, producing a 63-month lead in the record.

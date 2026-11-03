@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 *This is a historical replay, not current news and not a forecast. It examines the record available before Abhyudaya Co-operative Bank’s event date of 2023-11-24. Similar mechanisms do not imply the same outcome at another institution.*
 
 The narrow answer to the desk question is Abhyudaya Co-operative Bank: its disclosed asset-quality position should have demanded attention first because the replay records an RBI supervisory action-zone breach through NNPA. That is not the same as saying its funding failed first, that its market price predicted the event, or that a model assigned a reliable failure probability.

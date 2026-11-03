@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 ## The finding
 
 The disciplined answer to the desk question is conditional. ESAF Small Finance Bank is the clearest *observable* pressure-chain case among the current named comparisons with an available market-distance reading: a high impaired-loan measure in its vetted filing is paired with a market distance-to-default below the published yellow trigger. It is not established as the institution that will feel financial stress first.

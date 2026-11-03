@@ -16,6 +16,7 @@ Run from the repo root:  python3 scripts/build_replay_pages.py
 """
 from __future__ import annotations
 
+import argparse
 import datetime
 import json
 import pathlib
@@ -113,12 +114,16 @@ def complementarity_note(d: dict) -> str:
     )
 
 
-def fetch() -> dict:
-    req = urllib.request.Request(API, headers={"User-Agent": "liquilens-site-replay-build"})
-    with urllib.request.urlopen(req, timeout=45) as r:
-        if r.status != 200:
-            sys.exit(f"validation endpoint answered {r.status}, aborting, no pages written")
-        d = json.load(r)
+def fetch(path: str | None = None) -> dict:
+    """The validation payload: live, or a verbatim capture of the same endpoint."""
+    if path:
+        d = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+    else:
+        req = urllib.request.Request(API, headers={"User-Agent": "liquilens-site-replay-build"})
+        with urllib.request.urlopen(req, timeout=45) as r:
+            if r.status != 200:
+                sys.exit(f"validation endpoint answered {r.status}, aborting, no pages written")
+            d = json.load(r)
     for key in ("pca_replay", "funding_replay", "hazard"):
         if key not in d:
             sys.exit(f"payload missing {key}: schema drift, aborting")
@@ -481,14 +486,14 @@ def case_file_index(
 
 
 BASE_SITEMAP = [
-    ("/", "2026-11-01", "weekly", "1.0"),
+    ("/", "2026-11-03", "weekly", "1.0"),
     ("/investigations/", "2026-08-12", "weekly", "0.9"),
     ("/investigations/the-5-64x-private-credit-concentration/",
      "2026-08-12", "monthly", "0.8"),
     ("/banking/", "2026-09-05", "weekly", "0.9"),
     ("/developers/", "2026-08-21", "monthly", "0.9"),
     ("/use-cases/", "2026-10-06", "monthly", "0.9"),
-    ("/world-economy/", "2026-09-05", "weekly", "0.95"),
+    ("/world-economy/", "2026-11-03", "weekly", "0.95"),
     ("/money-markets/", "2026-09-05", "weekly", "0.95"),
     ("/capital-markets/", "2026-09-05", "weekly", "0.95"),
     ("/china-economy/", "2026-09-05", "weekly", "0.95"),
@@ -498,24 +503,24 @@ BASE_SITEMAP = [
     ("/tools/ews-coverage-check/", "2026-08-21", "monthly", "0.9"),
     ("/guides/rbi-nbfc-early-warning-system/", "2026-08-21", "monthly", "0.9"),
     ("/guides/how-to-assess-bank-risk/", "2026-10-06", "monthly", "0.8"),
-    ("/access/", "2026-08-18", "monthly", "0.95"),
-    ("/access/sample/", "2026-08-18", "daily", "0.8"),
+    ("/access/", "2026-11-03", "monthly", "0.95"),
+    ("/access/sample/", "2026-11-03", "daily", "0.8"),
     ("/pilot/", "2026-08-08", "monthly", "0.8"),
     ("/us/", "2026-08-09", "weekly", "0.9"),
-    ("/research/", "2026-08-21", "weekly", "0.9"),
+    ("/research/", "2026-11-03", "weekly", "0.9"),
     ("/research/lab-reviewed-status-2026-08-09.json", "2026-08-09", "never", "0.8"),
     ("/research/replay-atlas-2026-08-09.json", "2026-08-09", "never", "0.8"),
     ("/desk/", "2026-08-11", "daily", "0.9"),
     ("/replay/", "2026-08-04", "weekly", "0.8"),
-    ("/replay/index.json", "2026-08-09", "weekly", "0.8"),
-    ("/ship-log/", "2026-09-02", "weekly", "0.7"),
+    ("/replay/index.json", "2026-11-03", "weekly", "0.8"),
+    ("/ship-log/", "2026-11-03", "weekly", "0.7"),
     ("/questions/", "2026-10-06", "monthly", "0.8"),
     ("/questions/small-finance-banks-rising-npas/", "2026-10-06", "monthly", "0.8"),
     ("/questions/microfinance-lender-stress/", "2026-10-06", "monthly", "0.8"),
     ("/questions/small-finance-bank-vs-nbfc-mfi/", "2026-10-06", "monthly", "0.8"),
     ("/questions/dollar-funding-and-bank-failure/", "2026-10-06", "monthly", "0.8"),
     ("/questions/tight-funding-bitcoin-exit/", "2026-10-06", "monthly", "0.8"),
-    ("/about/", "2026-11-01", None, None),
+    ("/about/", "2026-11-03", None, None),
     ("/security/", "2026-08-09", None, None),
     ("/status/", "2026-09-13", None, None),
     ("/privacy/", "2026-08-21", None, None),
@@ -613,8 +618,12 @@ def write_sitemap(
     (ROOT / "sitemap.xml").write_text("\n".join(out) + "\n")
 
 
-def main() -> int:
-    d = fetch()
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Build the replay case files")
+    parser.add_argument(
+        "--input", help="read a captured GET /api/failure-radar/validation payload instead of fetching")
+    args = parser.parse_args(argv)
+    d = fetch(args.input)
     pca_by = {f["slug"]: f for f in d["pca_replay"]["failures"]}
     fund_by = {f["slug"]: f for f in d["funding_replay"]["failures"]}
     fraud_set = set(d["hazard"].get("fit_exclusions", {}).get("fraud_masked_failures", []))
