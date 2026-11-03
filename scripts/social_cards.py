@@ -251,7 +251,9 @@ def article_card_spec(article: dict[str, Any]) -> CardSpec:
             metric_value = f"{score:.1f}"
             metric_label = "PUBLIC SCREEN SCORE"
             tier = safe_text(subject.get("tier"), limit=24).upper()
-            metric_detail = f"{tier + ' / ' if tier else ''}SCREEN, NOT RATING"
+            # A missing tier is never shown as one: while Failure Radar tiers
+            # are paused the subject carries none, and the card says so.
+            metric_detail = f"{tier or 'TIERS PAUSED'} / SCREEN, NOT RATING"
     else:
         leads: list[tuple[float, str]] = []
         for key, label in (("pca", "ACTION-ZONE LENS"), ("funding", "FUNDING LENS")):

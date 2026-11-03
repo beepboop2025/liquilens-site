@@ -114,11 +114,13 @@ a steel-manned counter-case, and a concrete test that could disprove the view.
 Hard rules:
 1. The dossier is the complete factual universe. Add no number, event, quote,
    institution allegation, or causal detail from memory.
-2. Failure Radar tier publication is paused pending re-validation. Never state
-   or imply a tier, tier colour, grade letter or tier count, and present every
-   probability as research only. A screen is not a credit rating or prediction
-   of failure. State the filing as-of date separately from market and
-   publication dates.
+2. Failure Radar tier publication is paused pending re-validation; the
+   dossier's failure_radar.tier_publication block states since when and why.
+   Name the pause. Never state or imply a tier, tier colour, grade letter or
+   tier count, never describe the board or an institution as calm or all green,
+   and present every probability as research only. A screen is not a credit
+   rating or prediction of failure. State the filing as-of date separately
+   from market and publication dates.
 3. Preserve every construction-PIT, eligibility, staleness, missing-data, and
    fraud-masking boundary. Never turn missing evidence into calm.
 4. Historical mode must say near the top that the piece is not current news and
@@ -160,38 +162,85 @@ TIER_RANK = {"red": 0, "orange": 1, "yellow": 2, "green": 3}
 
 # Failure Radar tier publication is paused pending re-validation (decided
 # 2 November 2026, after three co-operative bank failures in the Indian crisis
-# record were re-dated to their onset). Until it resumes, the board is stripped
-# of tiers, tier counts, grade letters and the tier rule before any selection,
-# dossier or fallback reads it, and the gate rejects copy that names them.
+# record were re-dated to their onset). The served board carries a
+# ``tier_publication`` block (LiquiLens backend/tier_publication.py). Tiers
+# count as published only when that block says "published" and this switch is
+# off, so an older or partial response fails closed. While paused, the board
+# is stripped of tiers, tier counts, grade letters and the tier rule before any
+# selection, dossier or fallback reads it; rows rank by the research-only
+# 12-month PD, as the LiquiLens editorial desk does; a missing tier is never
+# read as any tier; and the gate rejects copy that names one.
 TIER_PUBLICATION_PAUSED = True
-TIER_PAUSE_SENTENCE = (
-    "Failure Radar tier publication is paused pending re-validation, so this "
-    "article states no tier, tier colour, grade letter or tier count, and its "
-    "probabilities are research only."
-)
+WITHHELD_KEYS = frozenset({"tier", "tiers", "grade", "quadrant_rule", "tier_counts"})
+SITE_TIER_PAUSE = {
+    "state": "paused",
+    "label": "tiers paused pending re-validation",
+    "source": "liquilens-site: the served board carried no paused tier_publication block",
+}
 TIER_COLOUR = r"(?:red|orange|yellow|green)"
 TIER_LEAK = re.compile(
     rf"\b{TIER_COLOUR}\b[^.\n]{{0,40}}\btiers?\b|\btiers?\b[^.\n]{{0,40}}\b{TIER_COLOUR}\b"
     rf"|\b\d+\s+{TIER_COLOUR}\b|\b{TIER_COLOUR}[- ](?:rated|listed|names?|rows?)\b"
-    r"|\bdisplay grade\b",
+    r"|\ball[- ]green\b|\bdisplay grade\b",
     re.I,
 )
 GRADE_LEAK = re.compile(r"\bgrade\s+(?:AAA|AA|BBB|BB|CCC|CC|[ABCD])\b")
 
 
+def tier_publication_block(board: dict) -> dict:
+    """The served pause block, or the site's own when the board lacks one."""
+    block = board.get("tier_publication") if isinstance(board, dict) else None
+    if not isinstance(block, dict) or not isinstance(block.get("state"), str):
+        return dict(SITE_TIER_PAUSE)
+    if block["state"] == "published" and TIER_PUBLICATION_PAUSED:
+        return {**SITE_TIER_PAUSE, "served_state": "published"}
+    return copy.deepcopy(block)
+
+
+def tiers_published(board: dict) -> bool:
+    return tier_publication_block(board).get("state") == "published"
+
+
 def without_tier_publication(board: dict) -> dict:
-    """Return the board as it may be published while tiers are paused."""
-    if not TIER_PUBLICATION_PAUSED:
+    """Return the board as it may be published, carrying its pause block."""
+    block = tier_publication_block(board)
+    if block.get("state") == "published":
         return board
     held = copy.deepcopy(board)
-    for key in ("tiers", "quadrant_rule"):
+    for key in WITHHELD_KEYS:
         held.pop(key, None)
     for row in held.get("rows") or []:
         if isinstance(row, dict):
-            row.pop("tier", None)
-            row.pop("grade", None)
-    held["tier_publication"] = "paused pending re-validation; probabilities are research only"
+            for key in WITHHELD_KEYS:
+                row.pop(key, None)
+            if isinstance(row.get("hazard"), dict):
+                row["hazard"].pop("grade", None)
+    held["tier_publication"] = block
     return held
+
+
+def research_rank_key(row: dict) -> tuple:
+    """Highest research-only 12-month PD first, then slug: never a tier."""
+    pd12 = number((row.get("hazard") or {}).get("pd_12m"))
+    return (-(pd12 if pd12 is not None else -1.0), str(row.get("slug") or ""))
+
+
+def tier_pause_since(block: dict | None) -> str:
+    since = (block or {}).get("since")
+    return f" since {since}" if isinstance(since, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", since) else ""
+
+
+def tier_pause_sentence(block: dict | None) -> str:
+    return (
+        f"Failure Radar review tiers are paused pending re-validation{tier_pause_since(block)}, "
+        "so this article states no tier, tier colour, grade letter or tier count, and its "
+        "probabilities are research only."
+    )
+
+
+def tier_pause_reason(block: dict | None) -> str:
+    reason = (block or {}).get("reason")
+    return f" The board states why: {clean(reason)}" if isinstance(reason, str) and reason.strip() else ""
 
 
 def tier_leaks(*texts: str) -> list[str]:
@@ -558,11 +607,13 @@ def board_signature(board: dict) -> str:
 
 
 def row_interest(row: dict) -> float:
+    """Editorial interest of a row, used only while tiers are published and
+    every row carries a known tier (see ranked_rows)."""
     pca = row.get("pca") or {}
     funding = row.get("funding") or {}
     market = row.get("market") or {}
     movement = number((row.get("movement") or {}).get("delta_pd_12m")) or 0.0
-    score = 100 - TIER_RANK.get(str(row.get("tier") or "green"), 3) * 20
+    score = 100 - TIER_RANK[str(row.get("tier"))] * 20
     score += 80 if pca.get("breaches") else 0
     score += 50 if row.get("signals_fired") else 0
     score += 30 if funding.get("flags") else 0
@@ -573,8 +624,18 @@ def row_interest(row: dict) -> float:
     return score
 
 
+def ranked_rows(board: dict, rows: list[dict]) -> list[dict]:
+    """Rows in editorial order. While tiers are paused, or when any row lacks a
+    known tier, the order is the research-only PD alone: a missing tier is
+    never read as green or as any other tier."""
+    if not tiers_published(board) or any(str(row.get("tier")) not in TIER_RANK for row in rows):
+        return sorted(rows, key=research_rank_key)
+    return sorted(rows, key=row_interest, reverse=True)
+
+
 def choose_current_subject(board: dict, excluded_topics: set[str] | None = None) -> dict | None:
     excluded = excluded_topics or set()
+    published = tiers_published(board)
     material = []
     for row in board.get("rows") or []:
         if str(row.get("slug") or "") in excluded:
@@ -584,14 +645,14 @@ def choose_current_subject(board: dict, excluded_topics: set[str] | None = None)
         market = row.get("market") or {}
         dd = number(market.get("dd"))
         if (
-            row.get("tier") in {"red", "orange"}
+            (published and row.get("tier") in {"red", "orange"})
             or row.get("signals_fired")
             or pca.get("breaches")
             or funding.get("flags")
             or (dd is not None and dd < 2)
         ):
             material.append(row)
-    return max(material, key=row_interest) if material else None
+    return ranked_rows(board, material)[0] if material else None
 
 
 def recent_current_topics(index: list[dict], date: str, *,
@@ -658,7 +719,7 @@ def compact_evidence_status(value: dict | None) -> dict:
 
 
 def compact_board(board: dict, subject_slug: str) -> dict:
-    selected = sorted(board.get("rows") or [], key=row_interest, reverse=True)
+    selected = ranked_rows(board, [row for row in board.get("rows") or [] if isinstance(row, dict)])
     comparisons = []
     for row in selected:
         if row.get("slug") == subject_slug:
@@ -674,7 +735,7 @@ def compact_board(board: dict, subject_slug: str) -> dict:
             break
     return {
         "as_of": board.get("as_of"), "screened_count": len(board.get("rows") or []),
-        "tier_publication": board.get("tier_publication"),
+        "tier_publication": tier_publication_block(board),
         "comparison_rows": comparisons,
         "excluded_stale_count": len(board.get("excluded_stale") or []),
         "historical_evidence": compact_evidence_status(board.get("historical_evidence")),
@@ -803,6 +864,7 @@ def current_fallback(dossier: dict) -> tuple[str, str, str]:
     market_asof = clean(market.get("as_of") or "not available")
     filing_pd = number(hazard.get("pd_12m"))
     pd_move = number(movement.get("delta_pd_12m"))
+    pause = radar.get("tier_publication")
     signals = join_items(row.get("signals_fired") or [])
     funding_basis = join_items(funding.get("basis") or [])
     market_basis = join_items(market.get("basis") or [])
@@ -833,13 +895,13 @@ def current_fallback(dossier: dict) -> tuple[str, str, str]:
             "the missing evidence, and the observation that would overturn the call."
         )
 
-    body = f"""LiquiLens is not publishing a verdict that **{name} will fail**. It is publishing a narrower and more useful finding: the evidence on the institution does not all run on the same clock. {TIER_PAUSE_SENTENCE} The vetted accounts are labelled **{quarter}**, with a period end of **{as_of}** and an age of **{age} months** on the board. The market layer, where available, is dated **{market_asof}**. A reader who collapses those dates into one apparently current score loses the most important fact in the story.
+    body = f"""LiquiLens is not publishing a verdict that **{name} will fail**. It is publishing a narrower and more useful finding: the evidence on the institution does not all run on the same clock. {tier_pause_sentence(pause)} The vetted accounts are labelled **{quarter}**, with a period end of **{as_of}** and an age of **{age} months** on the board. The market layer, where available, is dated **{market_asof}**. A reader who collapses those dates into one apparently current score loses the most important fact in the story.
 
 That clock mismatch is the thesis. Filed capital, asset quality and funding structure describe a balance sheet at a reporting date. Equity volatility and market value can reprice between filings. Neither source automatically wins. The filing can be stale; the market can be noisy. LiquiLens keeps them beside each other so disagreement remains visible and testable.
 
 ## The finding
 
-The live [Failure Radar board]({ENDPOINTS['board']}) screens **{fmt(radar.get('screened_count'), 0)}** institutions with a sufficiently recent vetted dossier. Its tiers are paused pending re-validation, so no tier count is given here, and an absent tier is not a calm reading. {name} is not isolated because a dramatic adjective was chosen. It was selected for this article because its published evidence creates the strongest current tension across movement, regulatory distance, funding structure and market repricing.
+The live [Failure Radar board]({ENDPOINTS['board']}) screens **{fmt(radar.get('screened_count'), 0)}** institutions with a sufficiently recent vetted dossier. Its review tiers are paused pending re-validation{tier_pause_since(pause)}, so no tier count is given here, and an absent tier is not a calm reading.{tier_pause_reason(pause)} {name} is not isolated because a dramatic adjective was chosen. It was selected for this article because its published evidence creates the strongest current tension across movement, regulatory distance, funding structure and market repricing.
 
 Its disclosure-based 12-month monitoring probability, research only, is **{percent(filing_pd)}**. The change against the named reference period is **{percent(pd_move)}**, with the sign preserved. That number is a corpus-fitted monitoring probability, not a credit rating and not a calibrated promise about this institution. The board itself says exactly that. The fired signals are: **{signals}**.
 
@@ -910,6 +972,7 @@ def historical_fallback(dossier: dict) -> tuple[str, str, str]:
     default_date = clean(case.get("default_date") or "date unavailable")
     fraud = bool(case.get("fraud_masked"))
     radar = dossier["failure_radar"]
+    pause = radar.get("tier_publication")
     validation = dossier["historical_validation"]
 
     headline = f"Before the event: what {name}'s filings did and did not reveal"
@@ -917,7 +980,7 @@ def historical_fallback(dossier: dict) -> tuple[str, str, str]:
         f"A construction-PIT replay of {name}: the first published regulatory or funding signal, "
         "the disclosure clock, the miss, and the boundary that survives into today's screen."
     )
-    body = f"""Nothing in today's Failure Radar evidence cleared the bar for a fresh institution story. This is therefore a historical replay, **not current news and not a forecast**. It opens the public {name} record because a quiet daily tape is better used to examine what an early-warning system could actually have known than to manufacture a new alarm.
+    body = f"""Nothing in today's Failure Radar evidence cleared the bar for a fresh institution story. This is therefore a historical replay, **not current news and not a forecast**. It opens the public {name} record because a day without a new material tension is better used to examine what an early-warning system could actually have known than to manufacture a new alarm.
 
 The recorded outcome date is **{default_date}**. LiquiLens's reconstruction asks two narrower questions. Did the disclosed ratios enter a published regulatory action zone? Did the disclosed liability structure enter a funding-fragility band? It does not ask whether a modern model, armed with later revisions and hindsight, can draw a persuasive line through the event.
 
@@ -951,7 +1014,7 @@ The record's fraud-masked flag for this case is **{clean(fraud)}**. If true, hon
 
 ## What today's board shares
 
-Today's board screens **{fmt(radar.get('screened_count'), 0)}** institutions. Its tiers are paused pending re-validation, so no tier or tier count is given here, and an absent tier is not a calm reading. None of this is evidence that any current institution is “the next {name}.” No similarity model is asserted here. The legitimate connection is methodological: current filings, market prices, regulatory distance and funding coverage still arrive on different clocks and can still disagree.
+Today's board screens **{fmt(radar.get('screened_count'), 0)}** institutions. Its review tiers are paused pending re-validation{tier_pause_since(pause)}, so no tier or tier count is given here, and an absent tier is not a calm reading.{tier_pause_reason(pause)} None of this is evidence that any current institution is “the next {name}.” No similarity model is asserted here. The legitimate connection is methodological: current filings, market prices, regulatory distance and funding coverage still arrive on different clocks and can still disagree.
 
 The board also excludes **{fmt(radar.get('excluded_stale_count'), 0)}** stale dossiers from current presentation. That abstention is part of the signal. An institution missing from the current table is not thereby safe; it may simply lack a fresh vetted record.
 

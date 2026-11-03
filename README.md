@@ -235,14 +235,22 @@ Failure Radar tier publication is paused pending re-validation (decided
 2 November 2026, after three co-operative bank failures in the Indian crisis
 record were re-dated to their onset). No surface prints a tier, tier colour,
 grade letter or tier count; probabilities are labelled research only, and an
-absent tier is never shown as calm. The pause lives in `TIER_PUBLICATION_PAUSED`
+absent tier is never shown as calm. Every consumer of the board reads the
+served `tier_publication` block (LiquiLens `backend/tier_publication.py`) to
+name the pause, fails closed when the block is missing or the payload still
+carries tiers, never reads a missing tier as green or any other tier, and
+ranks rows by the research-only 12-month PD with slug as the tie-break, as the
+LiquiLens editorial desk does. The pause lives in `TIER_PUBLICATION_PAUSED`
 in `scripts/daily_article.py` (the board is stripped before subject selection,
 the dossier and the fallbacks, and the gate rejects tier language), the radar
-renderer in `evidence-library.js`, `access/sample/app.js`, the home card in
-`scripts/static_social_cards.py`, and the copy on the home, research,
-world-economy, access and about pages and `llms.txt`.
-`tests/test_tier_pause.py` keeps them in step; resuming tiers is a reviewed
-change to all of them.
+renderer in `evidence-library.js`, `access/sample/app.js`, the article and
+home cards in `scripts/social_cards.py` and `scripts/static_social_cards.py`,
+and the copy on the home, research, world-economy, access and about pages and
+`llms.txt`. `tests/test_tier_pause.py` keeps them in step, and
+`tests/test_tier_pause_served.py` runs the publisher and both browser
+consumers against `tests/fixtures/failure-radar-board-paused.json`, the board
+as LiquiLens serves it while paused. Resuming tiers is a reviewed change to all
+of them.
 
 ## Public discovery surfaces
 

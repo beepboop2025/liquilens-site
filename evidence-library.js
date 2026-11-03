@@ -270,10 +270,17 @@
     const fallback = document.getElementById('radarFallback');
     const TYPE = {bank:'Bank', sfb:'SFB', ucb:'Co-op', nbfc:'NBFC', mfi:'MFI', hfc:'HFC'};
     // Failure Radar tier publication is paused pending re-validation after the
-    // Indian crisis record was corrected (decided 2 November 2026). Whatever
-    // the payload carries, no tier, colour, grade letter or tier count is
-    // rendered; probabilities are research only, and a missing one stays n/a.
+    // Indian crisis record was corrected (decided 2 November 2026). The served
+    // tier_publication block names the pause. Whatever the payload carries, no
+    // tier, colour, grade letter or tier count is rendered and a missing tier
+    // is never read as any tier: rows rank by the research-only 12-month PD,
+    // as the LiquiLens editorial desk does, and a missing PD stays n/a.
     const TIER_PAUSE = 'tiers paused pending re-validation';
+    function pauseNote(tp){
+      if(tp && typeof tp === 'object' && tp.state === 'published') return 'tiers not shown on this page';
+      const since = (tp && typeof tp.since === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(tp.since)) ? ' since ' + tp.since : '';
+      return TIER_PAUSE + since;
+    }
 
     // the API is ours, but the page should stay safe even if it ever is not
     function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
@@ -345,7 +352,8 @@
           if(y === null) return -1;
           return y - x;
         }
-        return String(a.name).localeCompare(String(z.name));
+        const s = String(a.slug), u = String(z.slug);
+        return s < u ? -1 : (s > u ? 1 : 0);
       });
       const tb = table.querySelector('tbody');
       tb.innerHTML = rows.slice(0, 12).map(function(r){
@@ -361,10 +369,12 @@
       }).join('');
       scroll.hidden = false;
       fallback.hidden = true;
-      let c = rows.length + ' institutions screened · ' + TIER_PAUSE + ' · 12-month probabilities are research only';
+      const tp = b.tier_publication;
+      let c = rows.length + ' institutions screened · ' + pauseNote(tp) + ' · 12-month probabilities are research only';
       if(b.as_of){ c += ' · board as of ' + fmtDate(b.as_of); }
       c += ' · ' + marketLayerState(b.market_layer || {});
       census.textContent = c;
+      if(tp && typeof tp.reason === 'string') census.title = tp.reason;
       stamp.textContent = 'public API response · clocks, freshness and tier authority printed from the payload';
     }).catch(function(){
       stamp.textContent = 'the public radar did not answer from here';
