@@ -289,7 +289,7 @@ def test_world_economy_routes_are_discoverable_across_human_and_agent_surfaces()
         if node.findtext("sm:loc", namespaces=namespace) == WORLD_ECONOMY_URL
     ]
     assert len(nodes) == 1
-    assert nodes[0].findtext("sm:lastmod", namespaces=namespace) == "2026-09-06"
+    assert nodes[0].findtext("sm:lastmod", namespaces=namespace) == "2026-11-03"
 
     for path in (
         "index.html",

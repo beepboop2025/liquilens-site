@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 This is a historical replay, not current news and not a forecast. Its narrow question is which part of a balance sheet may register financial stress first when continued refinancing matters. IL&FS is a case study, not a template for asserting that another institution will have the same outcome.
 
 IL&FS defaulted on 2018-08-28. Its first funding signal belongs to the period ending 2015-03-31, with a knowledge-time proxy of 2015-05-30. That distinction is central. The replay supplies a filing-period signal: a result derived from reported information and an assumed availability clock. It is not a contemporaneous market-price signal, and it is not proof that the model discovered a causal mechanism before the event.

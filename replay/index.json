@@ -108,14 +108,14 @@
       "modified_at": "2026-08-09T20:27:48+05:30",
       "canonical_url": "https://liquilens.in/replay/ckp-co-operative-bank/",
       "clocks": {
-        "event_time": "2020-04-30",
+        "event_time": "2014-05-02",
         "knowledge_time": "2026-08-09T20:27:48+05:30"
       },
       "evidence_as_of": "2026-08-09",
       "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
       "point_in_time_status": "RECONSTRUCTED_LATER",
       "outcome_window": {
-        "end": "2020-04-30",
+        "end": "2014-05-02",
         "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
       },
       "verdicts": {
@@ -284,14 +284,14 @@
       "modified_at": "2026-08-09T20:27:48+05:30",
       "canonical_url": "https://liquilens.in/replay/madhavpura-mercantile-co-operative-bank/",
       "clocks": {
-        "event_time": "2012-06-04",
+        "event_time": "2001-03-13",
         "knowledge_time": "2026-08-09T20:27:48+05:30"
       },
       "evidence_as_of": "2026-08-09",
       "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
       "point_in_time_status": "RECONSTRUCTED_LATER",
       "outcome_window": {
-        "end": "2012-06-04",
+        "end": "2001-03-13",
         "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
       },
       "verdicts": {
@@ -504,14 +504,14 @@
       "modified_at": "2026-08-09T20:27:48+05:30",
       "canonical_url": "https://liquilens.in/replay/rupee-co-operative-bank/",
       "clocks": {
-        "event_time": "2022-09-22",
+        "event_time": "2013-02-22",
         "knowledge_time": "2026-08-09T20:27:48+05:30"
       },
       "evidence_as_of": "2026-08-09",
       "evidence_status": "PERIOD_END_PROXY_CONSTRUCTION_PIT",
       "point_in_time_status": "RECONSTRUCTED_LATER",
       "outcome_window": {
-        "end": "2022-09-22",
+        "end": "2013-02-22",
         "definition": "First qualifying pre-failure signal in the published construction-PIT diagnostic."
       },
       "verdicts": {

@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 *This is not current news and is not a forecast. It is a historical replay of Sambandh Finserve, which defaulted on 2020-10-13. Similar mechanisms do not imply the same outcome elsewhere.*
 
 The balance sheet that should have felt pressure first was Sambandh Finserve’s funding structure. The evidence does not show that a model foresaw default, or that a market price confirmed an approaching event. It shows something narrower: on 2016-03-31, disclosed wholesale leverage was 8.51x, above the funding lens’s 7x flag, and the lens classified the institution as fragile.

@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 ## The finding
 
 ESAF Small Finance Bank is the clearest case in this eligible comparison set where a dated balance-sheet warning and a current market-price warning point in the same direction. That is not the same as saying it will fail first, that funding stress has begun, or that the market has measured a default probability. The case is narrower: ESAF’s filing shows GNPA of 8.5%, while its market distance-to-default is 1.927, below the yellow-screen trigger of 2.

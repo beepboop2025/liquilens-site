@@ -1,4 +1,6 @@
-*This is a historical replay, not current news and not a forecast. Similar mechanisms do not imply the same outcome. Madhavpura Mercantile Co-operative Bank’s recorded default date is 2012-06-04; this article was published on 2026-10-17.*
+**Correction, 3 November 2026.** LiquiLens now dates three co-operative bank failures in its India crisis record at their onset, the first RBI directions restricting depositors, instead of the later licence cancellation: Madhavpura Mercantile Co-operative Bank on 13 March 2001 (previously 4 June 2012), CKP Co-operative Bank on 2 May 2014 (previously 30 April 2020) and Rupee Co-operative Bank on 22 February 2013 (previously 22 September 2022). Sources: RBI press releases of [7 June 2012](https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=26606), [5 May 2014](https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=31124) and [25 February 2013](https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=28200). Each bank's only scored filing fell after its onset, so all three are now unscored for insufficient data rather than flagged. This article originally gave 2012-06-04, the day Madhavpura Mercantile Co-operative Bank's licence cancellation took effect, as its default date; the text below now gives 2001-03-13. The India figures cited below were regenerated: the share of non-fraud failures flagged moved from 88.9% to 86.7% (13 of 15), and the median lead from 21.5 to 23 months. Failure Radar tiers are now paused pending re-validation. Board states and validation statistics below are as served on the publication date, and the text is otherwise as published.
+
+*This is a historical replay, not current news and not a forecast. Similar mechanisms do not imply the same outcome. Madhavpura Mercantile Co-operative Bank’s recorded default date is 2001-03-13; this article was published on 2026-10-17.*
 
 Madhavpura Mercantile Co-operative Bank presents the hardest version of LiquiLens’s desk question: which institution balance sheet should feel financial stress first, and why? The honest answer cannot be manufactured from an incomplete record. The dossier classifies Madhavpura as fraud-masked, records no PCA first action-zone date or lead-month measure, and says the funding lens is not scoreable.
 
@@ -6,7 +8,7 @@ That does not mean the institution was sound before its recorded default. Nor do
 
 ## The record before the event
 
-Madhavpura is classified as an urban co-operative bank, with a recorded default date of 2012-06-04. The dossier marks it fraud-masked. No institution-specific filing as-of date is supplied. That absence matters: a missing publication or filing date cannot be converted into proof that the reported position was stable, timely, or representative of the economic position.
+Madhavpura is classified as an urban co-operative bank, with a recorded default date of 2001-03-13. The dossier marks it fraud-masked. No institution-specific filing as-of date is supplied. That absence matters: a missing publication or filing date cannot be converted into proof that the reported position was stable, timely, or representative of the economic position.
 
 The PCA replay records no first action-zone breach and no measured lead for Madhavpura. The funding lens is explicitly not scoreable, with no first signal and no lead time. Those are eligibility and observability results, not negative findings on financial stress.
 
@@ -52,7 +54,7 @@ The market layer is fresh on its own clock, with an as-of date of 2026-10-15, bu
 
 ## The next falsifiable test
 
-This interpretation would weaken if preserved pre-default disclosures established that Madhavpura crossed the PCA-style action zone before 2012-06-04. It would also weaken if a qualifying liability series produced an earlier funding signal under the stated rule. Either result would create a measured institution-specific lead that the current dossier does not provide.
+This interpretation would weaken if preserved pre-default disclosures established that Madhavpura crossed the PCA-style action zone before 2001-03-13. It would also weaken if a qualifying liability series produced an earlier funding signal under the stated rule. Either result would create a measured institution-specific lead that the current dossier does not provide.
 
 The opposite result would also be informative. If the historical record continued to contain no usable eligible disclosures for either lens, fraud masking and missing eligibility would remain the better explanation for the non-signal. That would not establish that every fraud-masked institution behaves alike. It would preserve the narrower claim about this case and this record.
 

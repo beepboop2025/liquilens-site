@@ -796,7 +796,7 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     sitemap = read("sitemap.xml")
     assert (
         "<loc>https://liquilens.in/ship-log/</loc>\n"
-        "    <lastmod>2026-09-02</lastmod>"
+        "    <lastmod>2026-11-03</lastmod>"
     ) in sitemap
     assert (
         "<loc>https://liquilens.in/status/</loc>\n"
@@ -805,7 +805,7 @@ def test_sibling_release_status_ship_log_and_sitemap_are_converged():
     generator = read("scripts/build_replay_pages.py")
     assert '("/protocol/", "2026-09-02", "monthly", "0.9")' in generator
     assert '("/protocol/trade-safety/", "2026-09-02", "monthly", "0.95")' in generator
-    assert '("/ship-log/", "2026-09-02", "weekly", "0.7")' in generator
+    assert '("/ship-log/", "2026-11-03", "weekly", "0.7")' in generator
     assert '("/status/", "2026-09-13", None, None)' in generator
 
 

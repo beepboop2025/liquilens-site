@@ -5,7 +5,10 @@
   var US_BOARD_URL = "https://api.liquilens.in/api/us-radar/board";
   var REVIEW_URL = "https://api.liquilens.in/api/failure-radar/review/";
   var GAUGE_URL = "https://api.seiche.info/api/gauge";
-  var WATCH_TIERS = {red: true, orange: true, yellow: true};
+  // Failure Radar tier publication is paused pending re-validation after the
+  // Indian crisis record was corrected. India names are shown by their served
+  // 12-month probability as research only; no tier is read or printed.
+  var INDIA_TIER_PAUSE = "India Failure Radar tiers are paused pending re-validation";
 
   function text(id, value) {
     var node = document.getElementById(id);
@@ -25,11 +28,18 @@
     });
   }
 
+  function pd12(row) {
+    var value = row && row.hazard ? row.hazard.pd_12m : null;
+    return typeof value === "number" && isFinite(value) ? value : null;
+  }
+
   function indiaWatch(board) {
     var rows = Array.isArray(board && board.rows) ? board.rows : [];
     return rows.filter(function (row) {
-      return WATCH_TIERS[row.tier] === true;
-    }).slice(0, 8);
+      return pd12(row) !== null;
+    }).sort(function (a, b) {
+      return pd12(b) - pd12(a);
+    }).slice(0, 5);
   }
 
   function usWatch(board) {
@@ -53,7 +63,8 @@
     if (!parts.length) {
       return "Neither public board answered. No stale pack is shown.";
     }
-    return parts.join("; ") + ". " + watch + " names sit on the sample watch slice.";
+    return parts.join("; ") + ". " + watch + " names sit on the sample slice. " + INDIA_TIER_PAUSE +
+      ", so India names are listed by 12-month probability, research only.";
   }
 
   function addName(list, market, label, detail) {
@@ -73,17 +84,19 @@
     list.innerHTML = "";
     indiaRows.forEach(function (row) {
       var signals = Array.isArray(row.signals_fired) ? row.signals_fired.join(", ") : "";
-      addName(list, "IN " + (row.tier || "n/a"), row.name || row.slug || "unnamed", signals);
+      var probability = "12-month PD " + (pd12(row) * 100).toFixed(2) + "%, research only";
+      addName(list, "IN research", row.name || row.slug || "unnamed",
+        probability + (signals ? " · " + signals : ""));
     });
     usRows.forEach(function (row) {
       var score = row.undertow_score_v02 == null ? "" : "score " + row.undertow_score_v02;
       addName(list, "US cert " + (row.cert || "?"), row.bank || "unnamed", score);
     });
     if (!indiaRows.length && !usRows.length) {
-      text("watchFine", "No watch names returned. Quiet is a reading too.");
+      text("watchFine", "No names returned. " + INDIA_TIER_PAUSE + "; an empty list is not a calm reading.");
       return;
     }
-    text("watchFine", "Copied from the public boards. The pack does not re-score.");
+    text("watchFine", "Copied from the public boards. The pack does not re-score. " + INDIA_TIER_PAUSE + ".");
   }
 
   function renderDark(packets) {

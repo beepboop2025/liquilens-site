@@ -173,9 +173,9 @@ social card. Daily articles and historical case files are regenerated from
 their reviewed structured records at `articles/<slug>/share.png` and
 `replay/<slug>/share.png`; their archive publishers also own the collection
 cards. Static product, guide, policy and evidence-routing pages use explicit
-non-metric cards unless the route has a supported public datum. The home card's
-public-board counts are pinned with source identity in
-`research/share-card-board.json`. Image bytes bind a digest revision to the
+non-metric cards unless the route has a supported public datum. While Failure
+Radar tiers are paused pending re-validation, the home card states the pause
+and carries no tier count. Image bytes bind a digest revision to the
 Open Graph, Twitter and JSON-LD image URL.
 
 For an offline detail-card refresh without fetching evidence, run:
@@ -194,6 +194,55 @@ python3 scripts/static_social_cards.py --check
 
 The renderer uses Pillow's pinned embedded font rather than host fonts, so the
 same evidence produces the same PNG bytes on CI and developer machines.
+
+## Evidence figures, corrections and the tier pause
+
+No evidence figure on a live page is typed by hand. The India crisis-record
+headline (recall excluding fraud-masked failures, the flagged count, the median
+lead, the Fisher test and both alert dials) on the home page, the research
+index, `llms.txt` and `evidence-library.js` is rendered by
+`scripts/india_record_copy.py` from two verbatim captures of the endpoints the
+`evidence_india` MCP tool reads: `tests/fixtures/india-evidence.json`
+(`GET /api/evidence/summary`) and `tests/fixtures/india-alert-modes.json`
+(`GET /api/evidence/alert-modes`). US figures work the same way through
+`scripts/us_record_copy.py`. To refresh after a LiquiLens evidence release:
+
+```bash
+python3 scripts/india_record_copy.py --capture   # refresh both captures
+python3 scripts/india_record_copy.py             # rewrite the managed phrases
+python3 scripts/india_record_copy.py --check     # also run by pytest
+```
+
+Review the capture diff before committing. `--check` fails when a managed
+phrase moved or a figure differs from the capture.
+
+Daily articles are dated publications and are never rewritten to new figures.
+When the record they quote changes, `scripts/article_corrections.py` adds a
+short dated note at the top of each affected article, corrects a fact the
+article stated wrongly in place, and records the correction in
+`articles/corrections/<id>.json` and in each sidecar's `corrections` list. The
+note lives in the article Markdown, so the page, the `.md` file and the feeds
+carry it, and the page gets `dateModified` and a schema.org `correction`. A
+note's figures are frozen when the correction is recorded; `--date YYYY-MM-DD`
+redates the notes, for example to the day they publish. Rebuild the pages and
+feeds afterwards with `python3 scripts/daily_article.py --refresh-surfaces` on
+Linux with the pinned Pillow, so article card bytes stay unchanged.
+
+Replay case files can be rebuilt from a captured validation payload with
+`python3 scripts/build_replay_pages.py --input <capture.json>`.
+
+Failure Radar tier publication is paused pending re-validation (decided
+2 November 2026, after three co-operative bank failures in the Indian crisis
+record were re-dated to their onset). No surface prints a tier, tier colour,
+grade letter or tier count; probabilities are labelled research only, and an
+absent tier is never shown as calm. The pause lives in `TIER_PUBLICATION_PAUSED`
+in `scripts/daily_article.py` (the board is stripped before subject selection,
+the dossier and the fallbacks, and the gate rejects tier language), the radar
+renderer in `evidence-library.js`, `access/sample/app.js`, the home card in
+`scripts/static_social_cards.py`, and the copy on the home, research,
+world-economy, access and about pages and `llms.txt`.
+`tests/test_tier_pause.py` keeps them in step; resuming tiers is a reviewed
+change to all of them.
 
 ## Public discovery surfaces
 

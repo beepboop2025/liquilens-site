@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 ## The finding
 
 ESAF Small Finance Bank is the balance sheet in this screen most likely to merit early scrutiny if financial stress develops. That is not the same as saying that it will fail first, that it is already in a funding event, or that its deposits are running. The available evidence supports a narrower proposition: reported asset-quality pressure and a market-derived fragility signal could leave the institution more exposed to a further adverse turn before a clean funding signal makes that turn obvious.

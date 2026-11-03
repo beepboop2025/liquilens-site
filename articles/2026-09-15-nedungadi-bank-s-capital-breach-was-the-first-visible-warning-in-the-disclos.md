@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 This historical replay is not current news and not a forecast. It uses a construction-PIT record that is not eligible for validated-backtest or real-money use. Similar mechanisms do not imply the same outcome.
 
 Nedungadi Bank offers a narrow answer to LiquiLens’s question: which balance sheet should appear stressed first, and why? In the available record, the first observable warning was regulatory capital. CRAR crossed the first RBI action-zone threshold in the period ending **1999-03-31**, identified as **FY1999**. The replay assigns a knowledge-time proxy of **1999-05-30**. Default followed on **2002-11-02**, with a stated lead of **41 months**.

@@ -108,5 +108,16 @@
       "institution_boundary",
       "evidence_status"
     ]
-  }
+  },
+  "corrections": [
+    {
+      "id": "failure-radar-tier-pause",
+      "kind": "update",
+      "date": "2026-11-03",
+      "url": "https://liquilens.in/articles/corrections/failure-radar-tier-pause.json",
+      "summary": "Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. Tier states and counts in dated articles are as served on their publication date.",
+      "note": "**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.",
+      "text": "Update, 3 November 2026. Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published."
+    }
+  ]
 }

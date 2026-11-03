@@ -1,3 +1,5 @@
+**Update, 3 November 2026.** Failure Radar tier publication is paused pending re-validation, after three co-operative bank failures in the India crisis record were re-dated to their onset. The tier states and counts below are as served on the publication date. They are not a current reading, and they do not show that any institution is safe. The text is otherwise as published.
+
 *This is not current news and not a forecast. It is a historical replay of United Western Bank, which defaulted on 2006-09-02. Similar balance-sheet mechanisms do not imply the same outcome elsewhere.*
 
 United Western Bank supplies a deliberately narrow answer to LiquiLens’s question: which balance sheet should have felt financial stress first, and why? The replay’s first recorded action-zone entry is at the period ended 2001-03-31. The listed breach is NNPA, and the knowledge-time proxy is 2001-05-30. The stated lead to default is 63 months.
