@@ -523,7 +523,7 @@ BASE_SITEMAP = [
     ("/about/", "2026-11-03", None, None),
     ("/security/", "2026-08-09", None, None),
     ("/status/", "2026-09-13", None, None),
-    ("/privacy/", "2026-08-21", None, None),
+    ("/privacy/", "2026-11-03", None, None),
     ("/terms/", "2026-08-04", None, None),
 ]
 
