@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createEvidenceLoader, DEFAULT_PLACE, evidenceModel, formatNumber, recentMonths, safeSource, validPlace} from '../banking/geography/evidence-model.mjs';
+import {initEvidence} from '../banking/geography/evidence.mjs';
+import {Element, installDOM, settle} from './fixtures/geography-dom.mjs';
 
 const district = () => ({id: DEFAULT_PLACE, name: 'Jaipur', state: 'Rajasthan',
   jjas: {year: 2026, mm: 482, normal_mm: 602, departure_pct: -20, category: 'Deficient'},
@@ -93,4 +95,29 @@ test('all-India discovery contains only unique district labels and IDs, never ge
   assert.equal(places.length, 735); assert.equal(new Set(places.map(place => place.id)).size, places.length);
   assert.ok(places.some(place => place.id === DEFAULT_PLACE));
   assert.ok(places.every(place => validPlace(place.id) && Object.keys(place).sort().join() === 'id,name,state'));
+});
+test('rejected district searches cancel pending evidence and clear previously displayed evidence', async t => {
+  installDOM(t);
+  const directory = [{id: DEFAULT_PLACE, name: 'Jaipur', state: 'Rajasthan'},
+    {id: 'in-dist-first-duplicate', name: 'Duplicate', state: 'First'},
+    {id: 'in-dist-second-duplicate', name: 'Duplicate', state: 'Second'}];
+  let complete, requestSignal, delay = true;
+  globalThis.fetch = async (url, options) => {
+    if (String(url).endsWith('places.json')) return new Response(JSON.stringify(directory));
+    requestSignal = options.signal;
+    return delay ? new Promise(resolve => { complete = resolve; }) : new Response(JSON.stringify(response()));
+  };
+  const root = new Element('main'), ui = initEvidence(root); t.after(() => ui.destroy());
+  await settle();
+  const form = root.children[0].children[2], input = form.children[0].children[0];
+  const status = root.children[4], results = root.children[5];
+  const pending = ui.load(DEFAULT_PLACE);
+  input.value = 'Unknown district'; form.listeners.submit({preventDefault() {}});
+  const rejectedStatus = status.textContent;
+  assert.equal(requestSignal.aborted, true); assert.equal(results.attributes['aria-busy'], 'false');
+  complete(new Response(JSON.stringify(response()))); await pending;
+  assert.equal(status.textContent, rejectedStatus); assert.equal(results.children.length, 0);
+  delay = false; await ui.load(DEFAULT_PLACE); assert.ok(results.children.length > 0);
+  input.value = 'Duplicate'; form.listeners.submit({preventDefault() {}});
+  assert.match(status.textContent, /more than one state/); assert.equal(results.children.length, 0);
 });

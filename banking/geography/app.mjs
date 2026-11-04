@@ -3,6 +3,10 @@ import {PRESETS, imageURL, moveBox, stateFromURL, validDate} from './imagery-mod
 
 const $ = id => document.getElementById(id);
 const state = stateFromURL(location.search);
+function syncRegion() {
+  $('region').value = Object.entries(PRESETS).find(([, preset]) => preset.bbox.every((value, index) => value === state.bbox[index]))?.[0] || 'custom';
+}
+syncRegion();
 let generation = 0, controller, objectURLs = [], pointer;
 const today = new Date().toISOString().slice(0, 10);
 for (const key of ['before', 'after']) { $(key).value = state[key]; $(key).max = today; }
@@ -87,7 +91,7 @@ async function loadImages() {
     if (version === generation) viewer.setAttribute('aria-busy', 'false');
   }
 }
-function navigate(scale = 1, dx = 0, dy = 0) { state.bbox = moveBox(state.bbox, scale, dx, dy); loadImages(); }
+function navigate(scale = 1, dx = 0, dy = 0) { state.bbox = moveBox(state.bbox, scale, dx, dy); syncRegion(); loadImages(); }
 $('image-form').addEventListener('submit', event => {event.preventDefault(); loadImages();});
 $('region').addEventListener('change', event => {state.bbox = [...PRESETS[event.target.value].bbox]; loadImages();});
 $('swipe').addEventListener('input', swipe);
