@@ -90,6 +90,13 @@ def _us_route() -> RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/banking/geography/", "lending-geography", "LIQUILENS / LENDING GEOGRAPHY", "INDIA FROM ABOVE",
+        "Compare satellite images. Read the district evidence.",
+        "RESEARCH CONTEXT", "IMAGES / DISTRICTS / LENDERS",
+        "SEPARATE SOURCES / OBSERVATION DATES / EXPLICIT GAPS", "PAGE CUT", "2026-11-05",
+        "RESEARCH / NOT A CREDIT RATING", "NASA GIBS / DATED DISTRICT SOURCES",
+    ),
+    RouteDefinition(
         "/financial-evidence/", "financial-evidence-sheets", "LIQUILENS / FINANCIAL EVIDENCE", "GOOGLE SHEETS RESEARCH",
         "Source-linked research, with dates and gaps in your spreadsheet.",
         "RESEARCH REVIEW", "FUNDING / INSTITUTIONS",
