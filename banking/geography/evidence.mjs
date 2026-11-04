@@ -94,7 +94,7 @@ export function initEvidence(root) {
     const query = districtInput.value.trim().toLowerCase();
     const matching = places.filter(place => (!stateSelect.value || place.state === stateSelect.value) &&
       (`${place.name}, ${place.state}`.toLowerCase() === query || place.name.toLowerCase() === query));
-    if (matching.length !== 1) {status.textContent = matching.length > 1 ? 'That district name occurs in more than one state. Choose a state or the full district name.' : 'Choose a district from the suggestions, or use an exact research ID.'; districtInput.focus(); return;}
+    if (matching.length !== 1) {loader.cancel(); results.replaceChildren(); results.setAttribute('aria-busy', 'false'); status.textContent = matching.length > 1 ? 'That district name occurs in more than one state. Choose a state or the full district name.' : 'Choose a district from the suggestions, or use an exact research ID.'; districtInput.focus(); return;}
     load(matching[0].id);
   });
   fetch(new URL('./places.json', import.meta.url), {credentials: 'omit'}).then(response => {
