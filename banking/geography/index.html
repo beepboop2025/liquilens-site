@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" class="research-interface">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: https://gibs.earthdata.nasa.gov; connect-src 'self' https://api.liquilens.in https://gibs.earthdata.nasa.gov; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>India satellite &amp; lending geography explorer | LiquiLens</title>
+  <meta name="description" content="Compare dated satellite images across India and explore source-linked district rainfall, vegetation health, soil moisture and cooperative bank geography.">
+  <link rel="canonical" href="https://liquilens.in/banking/geography/">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/research-ui/research.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="research-skip" href="#main">Skip to explorer</a>
+  <header class="research-header"><div class="research-mast"><a class="research-identity" href="/"><span><strong>LiquiLens</strong><small>Institution intelligence</small></span></a><nav class="research-network" aria-label="Research"><a href="/banking/">Banking research</a><a href="/banking/geography/" aria-current="page">Lending geography</a></nav><a class="research-api" href="/agents/">API &amp; agents</a></div></header>
+  <main id="main">
+    <div class="intro"><div><p class="research-label">Lending geography · Research</p><h1>See the landscape.<br>Read the evidence.</h1><p>Explore India from above. Compare dated satellite images, then inspect rainfall, vegetation and soil observations for a district or cooperative bank.</p></div><div class="intro-note">Satellite views show landscape context. District measurements below come from their own dated sources. Neither establishes a bank’s credit risk.</div></div>
+    <section class="imagery-panel" aria-labelledby="imagery-heading">
+      <div class="section-heading"><h2 id="imagery-heading">India from above</h2><a href="https://bhoonidhi.nrsc.gov.in/bhoonidhi/" target="_blank" rel="noopener noreferrer">Open ISRO Bhoonidhi ↗</a></div>
+      <form id="image-form" class="image-form">
+        <label>View<select id="region"><option value="india">India overview</option><option value="north">North India</option><option value="west">West India</option><option value="east">East and northeast India</option><option value="south">South India</option><option value="jaipur">Jaipur surroundings</option></select></label>
+        <label>Earlier image<input id="before" type="date" min="2015-11-24" required></label>
+        <label>Later image<input id="after" type="date" min="2015-11-24" required></label>
+        <button type="submit">Load images</button>
+        <button type="button" id="share" class="secondary">Copy view link</button>
+      </form>
+      <p id="image-status" class="status" role="status" aria-live="polite">Loading satellite images…</p>
+      <div class="viewer-wrap">
+        <div id="viewer" class="viewer" tabindex="0" role="group" aria-label="Satellite comparison. Drag to pan; use arrow keys to pan, plus and minus to zoom.">
+          <img id="image-before" alt="Earlier satellite image" draggable="false" hidden>
+          <img id="image-after" alt="Later satellite image" draggable="false" hidden>
+          <div id="divider" class="divider" hidden></div>
+          <div class="image-label earlier" id="before-label"></div><div class="image-label later" id="after-label"></div>
+          <div id="image-empty" class="image-empty">Retrieving NASA satellite imagery</div>
+        </div>
+        <div class="map-controls" aria-label="Map controls"><button id="zoom-in" type="button" aria-label="Zoom in">+</button><button id="zoom-out" type="button" aria-label="Zoom out">−</button><button id="reset" type="button">India</button><button id="fullscreen" type="button">Full screen</button></div>
+      </div>
+      <div class="compare-control"><label for="swipe">Earlier image</label><input id="swipe" type="range" min="0" max="100" value="50" aria-label="Reveal earlier or later image"><span>Later image</span><output id="swipe-value" for="swipe">50%</output></div>
+      <div class="image-footer"><span>NASA GIBS · Terra MODIS · True colour · 250 m source layer; displayed resolution varies</span><span id="view-coordinates"></span></div>
+      <p class="quiet">Drag the image to move; use + / − to zoom. Clouds, missing swaths and black areas may obscure the surface. Image pixels are not district measurements or parcel boundaries. Date comparison alone does not measure change.</p>
+      <details><summary>Image sources and access</summary><p>This viewer requests dated NASA GIBS imagery directly. It does not contain downloaded ISRO scenes. Bhoonidhi remains the source portal for ISRO scene discovery and access under its terms.</p><p><a href="https://nasa-gibs.github.io/gibs-api-docs/" target="_blank" rel="noopener noreferrer">NASA GIBS documentation</a> · <a href="https://bhoonidhi.nrsc.gov.in/bhoonidhi/" target="_blank" rel="noopener noreferrer">ISRO Bhoonidhi</a></p></details>
+    </section>
+    <section class="evidence-panel" aria-labelledby="evidence-heading"><div class="section-heading"><h2 id="evidence-heading">Explore district evidence</h2><span class="quiet">Independent of the image viewport</span></div><p class="quiet">Search a district, state or cooperative bank. Each measurement keeps its observation date and source. Area-of-operation links do not measure a bank’s lending share.</p><div id="evidence"></div></section>
+    <footer class="page-footer"><a href="/banking/">Back to banking research</a><span>Research context · No ratings or credit decisions</span></footer>
+  </main>
+  <noscript><p class="noscript">Enable JavaScript to compare images and load district evidence. You can also <a href="https://bhoonidhi.nrsc.gov.in/bhoonidhi/">browse Bhoonidhi</a> directly.</p></noscript>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>
