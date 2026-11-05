@@ -24,16 +24,28 @@ function showMonths(months) {
   select.value = months.at(-1).month; label.append(select);
   const summary = el('p', null, 'evidence-month-summary'); summary.setAttribute('aria-live', 'polite');
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', '0 0 640 160'); svg.setAttribute('role', 'img');
+  svg.setAttribute('viewBox', '0 0 640 220'); svg.setAttribute('role', 'img');
   svg.setAttribute('aria-label', 'Monthly rainfall bars; full values are in the table below.'); svg.classList.add('evidence-chart');
   const maximum = Math.max(1, ...months.flatMap(row => [row.mm, row.normal].filter(value => typeof value === 'number')));
+  const chartNodes = [];
+  for (const fraction of [0, .5, 1]) {
+    const y = 176 - fraction * 144;
+    const line = document.createElementNS(svg.namespaceURI, 'line');
+    line.setAttribute('x1', '48'); line.setAttribute('x2', '630'); line.setAttribute('y1', String(y)); line.setAttribute('y2', String(y)); line.setAttribute('class', 'chart-grid'); svg.append(line);
+    const tick = document.createElementNS(svg.namespaceURI, 'text'); tick.setAttribute('x', '42'); tick.setAttribute('y', String(y + 4)); tick.setAttribute('text-anchor', 'end'); tick.setAttribute('class', 'chart-axis'); tick.textContent = formatNumber(Math.round(maximum * fraction)); svg.append(tick);
+  }
+  const unit = document.createElementNS(svg.namespaceURI, 'text'); unit.setAttribute('x', '48'); unit.setAttribute('y', '16'); unit.setAttribute('class', 'chart-axis'); unit.textContent = 'Rainfall (mm)'; svg.append(unit);
   months.forEach((row, index) => {
-    const x = 8 + index * 624 / months.length, step = 624 / months.length;
+    const x = 50 + index * 578 / months.length, step = 578 / months.length;
+    if (index === 0 || index === Math.floor(months.length / 2) || index === months.length - 1) {
+      const tick = document.createElementNS(svg.namespaceURI, 'text'); tick.setAttribute('x', String(x + step / 2)); tick.setAttribute('y', '202'); tick.setAttribute('text-anchor', index === 0 ? 'start' : index === months.length - 1 ? 'end' : 'middle'); tick.setAttribute('class', 'chart-axis'); tick.textContent = row.month; svg.append(tick);
+    }
     for (const [key, offset, css] of [['normal', 0, 'evidence-bar-normal'], ['mm', step * 0.4, 'evidence-bar-observed']]) {
       if (row[key] == null) continue;
       const rect = document.createElementNS(svg.namespaceURI, 'rect');
-      rect.setAttribute('x', String(x + offset)); rect.setAttribute('y', String(150 - row[key] / maximum * 140));
-      rect.setAttribute('width', String(step * 0.35)); rect.setAttribute('height', String(Math.max(1, row[key] / maximum * 140))); rect.setAttribute('class', css);
+      rect.setAttribute('x', String(x + offset)); rect.setAttribute('y', String(176 - row[key] / maximum * 144));
+      rect.setAttribute('width', String(step * 0.35)); rect.setAttribute('height', String(Math.max(0, row[key] / maximum * 144))); rect.setAttribute('class', css);
+      chartNodes.push({node: rect, month: row.month});
       const title = document.createElementNS(svg.namespaceURI, 'title'); title.textContent = `${row.month} ${key === 'mm' ? 'observed' : 'normal'}: ${formatNumber(row[key])} mm`; rect.append(title); svg.append(rect);
     }
   });
@@ -49,15 +61,17 @@ function showMonths(months) {
   table.append(body); scroller.append(table); details.append(scroller);
   const update = () => {
     const row = months.find(item => item.month === select.value);
+    for (const mark of chartNodes) mark.node.setAttribute('data-selected', String(mark.month === row.month));
     summary.textContent = `${row.month}: ${formatNumber(row.mm)} mm · normal ${formatNumber(row.normal)} mm · departure ${formatNumber(row.departure)}%.${row.lowNormal ? ' Normal is below 10 mm; small changes can produce large percentage departures.' : ''}`;
   };
   select.addEventListener('change', update); update();
-  wrap.append(label, summary, svg, el('p', 'Paired bars: muted = normal; green = observed. Missing values have no bar.', 'evidence-muted'), details);
+  wrap.append(label, summary, svg, el('p', 'Paired bars: slate = normal; blue = observed. The selected month is outlined in amber. Missing values have no bar.', 'evidence-muted'), details);
   return wrap;
 }
 
-export function initEvidence(root) {
+export function initEvidence(root, options = {}) {
   const loader = createEvidenceLoader();
+  const directoryController = new AbortController(); let disposed = false;
   let currentId = DEFAULT_PLACE, currentOffset = 0, history = [], places = [];
   const discovery = el('div', null, 'evidence-discovery');
   const stateLabel = el('label', 'Browse a state '), stateSelect = el('select');
@@ -80,6 +94,16 @@ export function initEvidence(root) {
   const results = el('div', null, 'evidence-results');
   const exact = el('details'); exact.append(el('summary', 'Look up an exact bank or district ID'), form);
   root.replaceChildren(discovery, examples, exact, help, status, results);
+  let searchVisible = true;
+  const toggleSearch = button('Change place', () => setSearchVisible(!searchVisible));
+  toggleSearch.className = 'place-toggle'; toggleSearch.hidden = true;
+  root.append(toggleSearch);
+  function setSearchVisible(visible) {
+    searchVisible = visible;
+    for (const control of [discovery, examples, exact, help]) control.hidden = !visible;
+    toggleSearch.textContent = visible ? 'Hide place search' : 'Change place';
+    toggleSearch.setAttribute('aria-expanded', String(visible));
+  }
   status.textContent = 'All India · choose a district or state to load its evidence.';
   const refreshDistricts = () => {
     datalist.replaceChildren();
@@ -94,27 +118,33 @@ export function initEvidence(root) {
     const query = districtInput.value.trim().toLowerCase();
     const matching = places.filter(place => (!stateSelect.value || place.state === stateSelect.value) &&
       (`${place.name}, ${place.state}`.toLowerCase() === query || place.name.toLowerCase() === query));
-    if (matching.length !== 1) {loader.cancel(); results.replaceChildren(); results.setAttribute('aria-busy', 'false'); status.textContent = matching.length > 1 ? 'That district name occurs in more than one state. Choose a state or the full district name.' : 'Choose a district from the suggestions, or use an exact research ID.'; districtInput.focus(); return;}
+    if (matching.length !== 1) {loader.cancel(); options.onInvalid?.(); results.replaceChildren(); results.setAttribute('aria-busy', 'false'); status.textContent = matching.length > 1 ? 'That district name occurs in more than one state. Choose a state or the full district name.' : 'Choose a district from the suggestions, or use an exact research ID.'; districtInput.focus(); return;}
     load(matching[0].id);
   });
-  fetch(new URL('./places.json', import.meta.url), {credentials: 'omit'}).then(response => {
+  fetch(new URL('./places.json', import.meta.url), {credentials: 'omit', signal: directoryController.signal}).then(response => {
     if (!response.ok) throw new Error('District directory unavailable'); return response.json();
   }).then(rows => {
+    if (disposed) return;
     if (!Array.isArray(rows) || rows.length > 2000 || rows.some(row => !validPlace(row.id) || typeof row.name !== 'string' || typeof row.state !== 'string')) throw new Error('Invalid district directory');
     places = rows;
     [...new Set(rows.map(row => row.state))].sort().forEach(state => {const option = el('option', state); option.value = state; stateSelect.append(option);});
     refreshDistricts();
-  }).catch(() => {discovery.append(el('p', 'The district directory could not be loaded. Use the examples or an exact ID below.', 'evidence-error'));});
+    options.onDirectory?.(places);
+  }).catch(() => {if (!disposed) discovery.append(el('p', 'The district directory could not be loaded. Use the examples or an exact ID below.', 'evidence-error'));});
 
   async function load(id, offset = 0, previous = null) {
-    if (!validPlace(id)) {loader.cancel(); results.replaceChildren(); results.setAttribute('aria-busy', 'false'); status.textContent = 'Enter an exact ID beginning in-dist-, in-state-, in-dccb-, or in-stcb-.'; input.focus(); return;}
+    if (!validPlace(id)) {loader.cancel(); options.onInvalid?.(); results.replaceChildren(); results.setAttribute('aria-busy', 'false'); status.textContent = 'Enter an exact ID beginning in-dist-, in-state-, in-dccb-, or in-stcb-.'; input.focus(); return;}
     currentId = id; currentOffset = offset; input.value = id;
+    options.onLoading?.({id, offset});
     history = previous ?? [];
     results.replaceChildren(); results.setAttribute('aria-busy', 'true');
     status.textContent = `Loading evidence for ${id}…`;
     try {
       const model = await loader.load(id, offset);
       if (!model) return;
+      if (disposed) return;
+      options.onModel?.(model, places);
+      if (model.districts.length) {toggleSearch.hidden = false; setSearchVisible(false);}
       results.setAttribute('aria-busy', 'false');
       status.textContent = `${model.name} · ${model.status.replaceAll('_', ' ')}. Response dated ${model.generated}; observation dates are shown separately.`;
       if (!model.districts.length) {
@@ -152,10 +182,12 @@ export function initEvidence(root) {
       });
       provenance.append(list); model.limits.forEach(limit => provenance.append(el('p', limit))); results.append(provenance);
     } catch (error) {
+      if (disposed) return;
+      options.onError?.(error);
       results.setAttribute('aria-busy', 'false'); status.textContent = 'Evidence could not be loaded.';
       results.replaceChildren(el('p', error.message || 'A network error occurred.', 'evidence-error'), button('Retry this place', () => load(currentId, currentOffset, history)));
     }
   }
   form.addEventListener('submit', event => {event.preventDefault(); load(input.value.trim(), 0);});
-  return {load, destroy() {loader.cancel(); root.replaceChildren();}};
+  return {load, destroy() {disposed = true; directoryController.abort(); loader.cancel(); root.replaceChildren();}};
 }

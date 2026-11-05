@@ -1,0 +1,28 @@
+{
+  "product": "geoBoundaries IND ADM2 (gbOpen)",
+  "credit": "District boundaries: geoBoundaries IND ADM2, from Pathways Data Pvt. Ltd. and lgdirectory.gov.in. Contains information from geoBoundaries, made available under the Open Database License (ODbL) 1.0.",
+  "citation": "Runfola, D. et al. (2020). geoBoundaries: A global database of political administrative boundaries. PLoS ONE 15(4): e0231866.",
+  "boundary_id": "IND-ADM2-76128533",
+  "year_represented": "2021",
+  "upstream": "Pathways Data Pvt. Ltd., lgdirectory.gov.in",
+  "licence": "Open Data Commons Open Database License 1.0",
+  "download": "https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/IND/ADM2/geoBoundaries-IND-ADM2.geojson",
+  "sha256": "8bef6929fd65432e7dc775e7c44473e84efff064ebddbfd6b834e6291546db40",
+  "schema": "liquilens-district-viewports/v1",
+  "district_count": 735,
+  "coordinate_system": "EPSG:4326",
+  "coordinate_order": "west,south,east,north",
+  "licence_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "state_assignment": {
+    "boundary_id": "IND-ADM1-1811400",
+    "upstream": "DataMeet India community, Election Commission of India",
+    "licence": "Creative Commons Attribution 2.5 India (CC BY 2.5 IN)",
+    "api": "https://www.geoboundaries.org/api/current/gbOpen/IND/ADM1/",
+    "download": "https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/IND/ADM1/geoBoundaries-IND-ADM1.geojson",
+    "sha256": "47aa0acb6f69868daee49143276f3ce323f18905ba7d38d0a86816b405028736",
+    "overrides": {
+      "Yanam": "Puducherry"
+    }
+  },
+  "use": "District bounding extents for satellite viewport framing only. Not parcel outlines, current legal boundaries, or measurements derived from imagery."
+}

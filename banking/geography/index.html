@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LiquiLens">
 <meta property="og:url" content="https://liquilens.in/banking/geography/">
-<meta property="og:title" content="See the landscape. Read the evidence.">
+<meta property="og:title" content="India geography">
 <meta property="og:description" content="Compare dated satellite images across India and explore source-linked district rainfall, vegetation health, soil moisture and cooperative bank geography.">
 <meta property="og:image" content="https://liquilens.in/banking/geography/share.png?v=99f884dc467ba3d1">
 <meta property="og:image:secure_url" content="https://liquilens.in/banking/geography/share.png?v=99f884dc467ba3d1">
@@ -23,7 +23,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="LiquiLens route card for INDIA FROM ABOVE: Compare satellite images. Read the district evidence. RESEARCH CONTEXT: IMAGES / DISTRICTS / LENDERS. SEPARATE SOURCES / OBSERVATION DATES / EXPLICIT GAPS. PAGE CUT 2026-11-05; status RESEARCH / NOT A CREDIT RATING.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="See the landscape. Read the evidence.">
+<meta name="twitter:title" content="India geography">
 <meta name="twitter:description" content="Compare dated satellite images across India and explore source-linked district rainfall, vegetation health, soil moisture and cooperative bank geography.">
 <meta name="twitter:image" content="https://liquilens.in/banking/geography/share.png?v=99f884dc467ba3d1">
 <meta name="twitter:image:alt" content="LiquiLens route card for INDIA FROM ABOVE: Compare satellite images. Read the district evidence. RESEARCH CONTEXT: IMAGES / DISTRICTS / LENDERS. SEPARATE SOURCES / OBSERVATION DATES / EXPLICIT GAPS. PAGE CUT 2026-11-05; status RESEARCH / NOT A CREDIT RATING.">
@@ -32,18 +32,20 @@
 </head>
 <body>
   <a class="research-skip" href="#main">Skip to explorer</a>
-  <header class="research-header"><div class="research-mast"><a class="research-identity" href="/"><span><strong>LiquiLens</strong><small>Institution intelligence</small></span></a><nav class="research-network" aria-label="Research"><a href="/banking/">Banking research</a><a href="/banking/geography/" aria-current="page">Lending geography</a></nav><a class="research-api" href="/agents/">API &amp; agents</a></div></header>
+  <header class="research-header"><div class="research-mast"><a class="research-identity" href="/"><span><strong>LiquiLens</strong><small>Institution intelligence</small></span></a><nav class="research-network" aria-label="Research"><a href="/banking/">Banking research</a><a href="/banking/geography/" aria-current="page">India geography</a><a href="/banking/real-assets/">Land &amp; planning</a></nav><a class="research-api" href="/agents/">API &amp; agents</a></div></header>
   <main id="main">
-    <div class="intro"><div><p class="research-label">Lending geography · Research</p><h1>See the landscape.<br>Read the evidence.</h1><p>Explore India from above. Compare dated satellite images, then inspect rainfall, vegetation and soil observations for a district or cooperative bank.</p></div><div class="intro-note">Satellite views show landscape context. District measurements below come from their own dated sources. Neither establishes a bank’s credit risk.</div></div>
+    <div class="intro"><div><h1>India geography</h1><p>Dated satellite imagery and source-linked district evidence, in one research workspace.</p></div><div class="intro-note"><span class="research-state">Public-source research</span><span>Satellite images and measurements keep their own observation dates.</span></div></div>
+    <nav class="workflow-strip" aria-label="Example research workflows"><span>Start a research view</span><button id="flow-district" type="button">Jaipur district conditions</button><button id="flow-lender" type="button">Jaipur lender geography</button><button id="flow-state" type="button">Rajasthan overview</button><a id="real-assets-link" href="/banking/real-assets/">Land &amp; planning workspace</a></nav>
+    <div class="workspace-grid">
     <section class="imagery-panel" aria-labelledby="imagery-heading">
-      <div class="section-heading"><h2 id="imagery-heading">India from above</h2><a href="https://bhoonidhi.nrsc.gov.in/bhoonidhi/" target="_blank" rel="noopener noreferrer">Open ISRO Bhoonidhi ↗</a></div>
+      <div class="section-heading"><div><h2 id="imagery-heading">Satellite comparison</h2><p id="framing-label" class="quiet">All-India landscape view.</p></div><button type="button" id="share" class="secondary share-button">Copy research view</button></div>
       <form id="image-form" class="image-form">
         <label>View<select id="region"><option value="custom" disabled>Custom view</option><option value="india">India overview</option><option value="north">North India</option><option value="west">West India</option><option value="east">East and northeast India</option><option value="south">South India</option><option value="jaipur">Jaipur surroundings</option></select></label>
         <label>Earlier image<input id="before" type="date" min="2015-11-24" required></label>
         <label>Later image<input id="after" type="date" min="2015-11-24" required></label>
         <button type="submit">Load images</button>
-        <button type="button" id="share" class="secondary">Copy view link</button>
       </form>
+      <p class="date-note">Reproducible example dates are preselected. Choose another date to inspect a different observation.</p>
       <p id="image-status" class="status" role="status" aria-live="polite">Loading satellite images…</p>
       <div class="viewer-wrap">
         <div id="viewer" class="viewer" tabindex="0" role="group" aria-label="Satellite comparison. Drag to pan; use arrow keys to pan, plus and minus to zoom.">
@@ -58,10 +60,15 @@
       <div class="compare-control"><label for="swipe">Earlier image</label><input id="swipe" type="range" min="0" max="100" value="50" aria-label="Reveal earlier or later image"><span>Later image</span><output id="swipe-value" for="swipe">50%</output></div>
       <div class="image-footer"><span>NASA GIBS · Terra MODIS · True colour · 250 m source layer; displayed resolution varies</span><span id="view-coordinates"></span></div>
       <p class="quiet">Drag the image to move; use + / − to zoom. Clouds, missing swaths and black areas may obscure the surface. Image pixels are not district measurements or parcel boundaries. Date comparison alone does not measure change.</p>
-      <details><summary>Image sources and access</summary><p>This viewer requests dated NASA GIBS imagery directly. It does not contain downloaded ISRO scenes. Bhoonidhi remains the source portal for ISRO scene discovery and access under its terms.</p><p><a href="https://nasa-gibs.github.io/gibs-api-docs/" target="_blank" rel="noopener noreferrer">NASA GIBS documentation</a> · <a href="https://bhoonidhi.nrsc.gov.in/bhoonidhi/" target="_blank" rel="noopener noreferrer">ISRO Bhoonidhi</a></p></details>
+      <details id="source-access"><summary>Image sources and access</summary><p>This viewer requests dated NASA GIBS imagery directly. It does not contain downloaded ISRO scenes. Bhoonidhi publishes the Indian collection names, and IN-SPACe publishes the dissemination rules. Neither one is queried from this page.</p><p><a href="https://nasa-gibs.github.io/gibs-api-docs/" target="_blank" rel="noopener noreferrer">NASA GIBS documentation</a> · <a href="https://bhoonidhi.nrsc.gov.in/bhoonidhi/" target="_blank" rel="noopener noreferrer">ISRO Bhoonidhi</a> · <a href="/banking/real-assets/#indian-catalogue">Indian collection catalogue</a></p><p>District viewports use geoBoundaries 2021 administrative extents. These frame a landscape view and do not draw parcel outlines or establish current legal boundaries. <a href="./places-source.json">View boundary provenance</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener noreferrer">ODbL 1.0</a></p></details>
     </section>
-    <section class="evidence-panel" aria-labelledby="evidence-heading"><div class="section-heading"><h2 id="evidence-heading">Explore district evidence</h2><span class="quiet">Independent of the image viewport</span></div><p class="quiet">Search a district, state or cooperative bank. Each measurement keeps its observation date and source. Area-of-operation links do not measure a bank’s lending share.</p><div id="evidence"></div></section>
-    <footer class="page-footer"><a href="/banking/">Back to banking research</a><span>Research context · No ratings or credit decisions</span></footer>
+    <section class="evidence-panel" aria-labelledby="evidence-heading"><div class="section-heading"><div><h2 id="evidence-heading">District evidence</h2><p class="quiet">Rainfall, vegetation, soil moisture and lender links</p></div></div>
+      <div class="brief-tools" aria-label="Research brief downloads"><p id="brief-scope">Choose a district or lender to create a source-linked brief.</p><div class="brief-actions"><button id="download-brief" type="button" disabled>Download brief</button><button id="download-csv" type="button" class="secondary" disabled>CSV</button><button id="download-json" type="button" class="secondary" disabled>JSON</button></div><p id="brief-status" role="status" aria-live="polite"></p></div>
+      <div id="evidence"></div></section>
+    </div>
+    <section class="indian-sources" id="indian-sources" aria-labelledby="indian-sources-heading"><div><h2 id="indian-sources-heading">Indian satellite routes</h2><p>The comparison above is NASA imagery. The Indian archive, the urban built-up layer, and the dissemination rule live on other official sites. They are linked here with their limits, and they are not loaded into this map.</p></div><ul><li><a href="/banking/real-assets/#indian-catalogue">Bhoonidhi collection names, including Resourcesat, EOS-04, EOS-06 and NISAR</a></li><li><a href="https://vedas.sac.gov.in/" target="_blank" rel="noopener noreferrer">VEDAS built-up layer for 500 AMRUT cities, and its API</a></li><li><a href="https://bhuvan.nrsc.gov.in/" target="_blank" rel="noopener noreferrer">Bhuvan satellite and cadastral viewing layers</a></li><li><a href="https://www.inspace.gov.in/" target="_blank" rel="noopener noreferrer">IN-SPACe dissemination rules</a></li></ul></section>
+    <section class="pilot-panel" aria-labelledby="pilot-heading"><div><h2 id="pilot-heading">Bring a defined research question.</h2><p>Explore an agricultural lending geography, compare environmental observations, or organise land and planning evidence. Keep a shareable view and source-linked brief for a joint evaluation.</p></div><div><p>For a pilot, name the geography, the decision workflow, the data you can contribute and how we should measure usefulness.</p><a class="pilot-link" href="mailto:mrinal@liquilens.in?subject=Geography%20research%20pilot">Discuss a research pilot</a><a href="/banking/real-assets/">Explore land &amp; planning evidence</a></div></section>
+    <footer class="page-footer"><a href="/banking/">Back to banking research</a><span>Research context. No property valuation, ratings or automated credit decisions.</span></footer>
   </main>
   <noscript><p class="noscript">Enable JavaScript to compare images and load district evidence. You can also <a href="https://bhoonidhi.nrsc.gov.in/bhoonidhi/">browse Bhoonidhi</a> directly.</p></noscript>
   <script type="module" src="./app.mjs"></script>

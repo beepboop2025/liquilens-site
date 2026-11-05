@@ -68,7 +68,7 @@ export function evidenceModel(data, expectedId, expectedOffset = 0) {
       data.score_authority !== false || data.scoring_eligible !== false || data.training_corpus_changed !== false ||
       !validPlace(data.id) || data.id !== expectedId || !day(data.as_of) ||
       !['observed', 'mapped', 'unmapped', 'not_covered', 'unavailable'].includes(data.status)) throw contractError();
-  const base = {id: data.id, name: text(data.name) || text(data.state) || data.id, generated: data.as_of, status: data.status,
+  const base = {id: data.id, name: text(data.name) || text(data.state) || data.id, generated: data.as_of, status: data.status, payload: data,
     reason: text(data.reason), districts: [], sources: [], institutions: [], limits: [], offset: 0, nextOffset: null, total: 0};
   if (['unmapped', 'not_covered', 'unavailable'].includes(data.status)) return base;
   if (!['district', 'institution', 'state'].includes(data.kind) || !record(data.sources)) throw contractError();

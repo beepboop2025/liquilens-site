@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" class="research-interface">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: https://gibs.earthdata.nasa.gov; connect-src 'self' https://gibs.earthdata.nasa.gov; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Land, price and planning research | LiquiLens</title>
+  <meta name="description" content="Build a sourced land and property research case. Keep asking prices, registered sales, guidance values, planning notes and satellite context distinct.">
+  <link rel="canonical" href="https://liquilens.in/banking/real-assets/">
+  <link rel="icon" href="data:,"><link rel="stylesheet" href="/research-ui/research.css"><link rel="stylesheet" href="../geography/style.css"><link rel="stylesheet" href="./style.css">
+
+<!-- SOCIAL-CARD:START -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LiquiLens">
+<meta property="og:url" content="https://liquilens.in/banking/real-assets/">
+<meta property="og:title" content="Land, price and place">
+<meta property="og:description" content="Build a sourced land and property research case. Keep asking prices, registered sales, guidance values, planning notes and satellite context distinct.">
+<meta property="og:image" content="https://liquilens.in/banking/real-assets/share.png?v=7cdfac9125cbca6a">
+<meta property="og:image:secure_url" content="https://liquilens.in/banking/real-assets/share.png?v=7cdfac9125cbca6a">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LiquiLens route card for LAND, PRICE AND PLACE: Keep prices, planning records and satellite context distinct. RESEARCH CASE: SOURCED RECORDS / EXPLICIT ASSUMPTIONS. SEPARATE PRICE BASES / OBSERVATION DATES / EXPORTABLE CASE. PAGE CUT 2026-11-05; status RESEARCH / NOT A VALUATION.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Land, price and place">
+<meta name="twitter:description" content="Build a sourced land and property research case. Keep asking prices, registered sales, guidance values, planning notes and satellite context distinct.">
+<meta name="twitter:image" content="https://liquilens.in/banking/real-assets/share.png?v=7cdfac9125cbca6a">
+<meta name="twitter:image:alt" content="LiquiLens route card for LAND, PRICE AND PLACE: Keep prices, planning records and satellite context distinct. RESEARCH CASE: SOURCED RECORDS / EXPLICIT ASSUMPTIONS. SEPARATE PRICE BASES / OBSERVATION DATES / EXPORTABLE CASE. PAGE CUT 2026-11-05; status RESEARCH / NOT A VALUATION.">
+<script type="application/ld+json" data-social-card>{"@context":"https://schema.org","@type":"WebPage","@id":"https://liquilens.in/banking/real-assets/#social-card","url":"https://liquilens.in/banking/real-assets/","image":"https://liquilens.in/banking/real-assets/share.png?v=7cdfac9125cbca6a","primaryImageOfPage":{"@type":"ImageObject","contentUrl":"https://liquilens.in/banking/real-assets/share.png?v=7cdfac9125cbca6a","width":1200,"height":630,"caption":"LiquiLens route card for LAND, PRICE AND PLACE: Keep prices, planning records and satellite context distinct. RESEARCH CASE: SOURCED RECORDS / EXPLICIT ASSUMPTIONS. SEPARATE PRICE BASES / OBSERVATION DATES / EXPORTABLE CASE. PAGE CUT 2026-11-05; status RESEARCH / NOT A VALUATION."}}</script>
+<!-- SOCIAL-CARD:END -->
+</head>
+<body class="land-workspace">
+  <a class="research-skip" href="#main">Skip to land research</a>
+  <header class="research-header"><div class="research-mast"><a class="research-identity" href="/"><span><strong>LiquiLens</strong><small>Institution intelligence</small></span></a><nav class="research-network" aria-label="Research"><a href="/banking/">Banking research</a><a href="/banking/geography/">India geography</a><a href="/banking/real-assets/" aria-current="page">Land &amp; planning</a></nav><a class="research-api" href="/agents/">API &amp; agents</a></div></header>
+  <main id="main">
+    <div class="intro"><div><h1>Land, price and place</h1><p>Organise source-backed property observations, planning records and satellite context into a reviewable research case.</p></div><div class="intro-note"><span class="research-state">Researcher-supplied evidence</span><span>Price records stay in this tab. Export your case before leaving.</span></div></div>
+    <div class="case-toolbar"><form id="district-form"><label for="district-input">Geographic context<input id="district-input" name="district" list="land-districts" placeholder="Choose a district and state" autocomplete="off" required></label><datalist id="land-districts"></datalist><button type="submit">Set district</button></form><div class="case-actions"><label class="file-button">Import JSON<input id="import-case" type="file" accept=".json,application/json"></label><button id="export-case" type="button" disabled>Download case</button><button id="export-evidence" type="button" class="secondary" disabled>Evidence JSON</button><button id="export-csv" type="button" class="secondary" disabled>CSV</button><button id="export-print" type="button" class="secondary" disabled>Print brief</button></div></div>
+    <p id="case-status" class="case-status" role="status" aria-live="polite">No price feed is connected. Start with your own sourced observation or import a RealAssets evidence file.</p>
+    <nav class="case-nav" aria-label="Case sections"><a href="#price-evidence">Price evidence</a><a href="#planning">Planning records</a><a href="#scenario">Scenario</a><a href="#indian-catalogue">Indian catalogue</a><a href="#source-register">Source access</a></nav>
+    <div class="land-grid">
+      <div class="land-main">
+        <section id="price-evidence" class="land-panel" aria-labelledby="price-heading"><div class="panel-title"><div><h2 id="price-heading">Price evidence</h2><p>Each price keeps its basis, location, units and source.</p></div><span id="record-count" class="count-label">0 observations</span></div>
+          <div id="price-results"></div><button id="undo-observation" type="button" class="secondary" hidden>Undo removed observation</button><div id="series-results"></div>
+          <details class="entry-form" id="price-entry"><summary>Add a source-backed observation</summary><p class="quiet">Enter a record you have reviewed. Fields are checked for consistency; authenticity, rights and comparability still need your review.</p>
+            <form id="observation-form">
+              <fieldset><legend>Observation</legend><div class="field-grid">
+                <label>City / locality identifier<input name="city_id" placeholder="Your consistent city identifier" required pattern="[A-Za-z0-9][A-Za-z0-9._:\-]{0,127}"></label>
+                <label>Locality or asset reference<input name="locality" placeholder="Use the source’s location or asset label" required maxlength="2000"></label>
+                <label>Asset type<select name="asset_type"><option value="land">Land</option><option value="housing">Housing</option></select></label>
+                <label>Price basis<select name="price_basis"><option value="asking_price">Asking price</option><option value="registered_sale">Registered sale</option><option value="circle_rate">DLC / circle rate</option><option value="valuation">Reported valuation</option><option value="housing_index">Housing price index</option></select></label>
+                <label>Value<input name="value" type="number" min="0.000000000001" step="any" required placeholder="Enter the reported value"></label>
+                <label>Unit<select name="unit"><option value="INR/sqm">INR / square metre</option><option value="INR/sqft">INR / square foot</option><option value="INR/sqyd">INR / square yard</option><option value="index">Index points</option></select></label>
+                <label>Observation date<input name="as_of" type="date" required></label>
+                <label>Series identifier<input name="series_id" placeholder="Reuse only for truly comparable observations" required pattern="[A-Za-z0-9][A-Za-z0-9._:\-]{0,127}"></label>
+                <label>Comparison basis<select name="comparison_basis"><option value="same_asset">Same asset</option><option value="reviewed_comparables">Reviewed comparable sample</option><option value="published_index">Published index</option></select></label>
+                <label>Sample count<input name="sample_size" type="number" min="1" max="1000000" step="1" placeholder="Number of source observations" required></label>
+                <label>Evidence type<select name="evidence_type"><option value="reported">Reported in a source</option><option value="declared">Declared by a party</option></select></label>
+                <label class="wide">Methodology / comparability basis<input name="methodology" placeholder="Explain what is measured; include the base year for an index" required maxlength="2000"></label>
+              </div></fieldset>
+              <fieldset><legend>Source record</legend><label>Use a source<select id="source-choice" name="source_choice"><option value="new">Add a new source</option></select></label><div id="new-source-fields" class="field-grid">
+                <label class="wide">Source title<input name="source_title" required maxlength="2000" placeholder="Document, dataset or listing title"></label>
+                <label class="wide">Public source URL<input name="source_url" type="url" required placeholder="https://..."></label>
+                <label class="wide">Page, row or record locator<input name="locator" required maxlength="2000" placeholder="How another reviewer can find this record"></label>
+                <label>Publication date, if supplied<input name="published_at" type="date"></label>
+                <label>When you accessed the source<input name="retrieved_at" type="datetime-local" required></label>
+                <label>Rights status<select name="rights"><option value="unknown">Not established</option><option value="licensed">Licensed for your use</option><option value="user_owned">Owned by you</option><option value="restricted">Restricted</option></select></label>
+              </div></fieldset>
+              <p class="quiet">Source URLs are recorded as references and are not fetched. Housing indices need housing, index units, a published-index basis and an explicit base year.</p><button id="save-observation" type="submit">Add reviewed record</button> <button id="cancel-edit" type="button" class="secondary" hidden>Cancel edit</button><p id="observation-status" class="form-status" role="status" aria-live="polite"></p>
+            </form>
+          </details>
+        </section>
+        <section id="planning" class="land-panel" aria-labelledby="planning-heading"><div class="panel-title"><div><h2 id="planning-heading">Planning and land-use records</h2><p>Keep official documents and researcher notes separate from imagery.</p></div><span id="planning-count" class="count-label">0 records</span></div><div id="planning-results"></div>
+          <details class="entry-form"><summary>Add a sourced planning record</summary><form id="planning-form"><div class="field-grid"><label class="wide">Area / parcel reference<input name="area_reference" required placeholder="Reference from the official document" maxlength="2000"></label><label class="wide">Document title<input name="document_title" required maxlength="2000"></label><label>Recorded land use / designation<input name="land_use" required maxlength="2000"></label><label>Document observation date<input name="as_of" type="date" required></label><label class="wide">Official source URL<input name="source_url" type="url" required placeholder="https://..."></label><label class="wide">Research notes<textarea name="notes" rows="3" maxlength="2000" placeholder="Record amendments, uncertainty and checks still needed"></textarea></label></div><p class="quiet">The selected district supplies context. This entry is a researcher-recorded note, not a confirmation of title or development permission.</p><button type="submit">Add planning record</button><p id="planning-status" class="form-status" role="status" aria-live="polite"></p></form></details>
+        </section>
+        <section id="scenario" class="land-panel" aria-labelledby="scenario-heading"><div class="panel-title"><div><h2 id="scenario-heading">Assumption scenario</h2><p>Explore purchase, holding and exit arithmetic using your own inputs.</p></div><span class="count-label">Not a valuation</span></div><form id="scenario-form"><div class="field-grid scenario-fields">
+          <label>Purchase price (INR)<input name="price_inr" type="number" min="1" step="any" required placeholder="Your assumption"></label><label>Debt at purchase (INR)<input name="debt_inr" type="number" min="0" step="any" required placeholder="Enter 0 for no debt"></label><label>Annual appreciation (%)<input name="annual_appreciation_pct" type="number" min="-99" max="100" step="any" required placeholder="May be negative"></label><label>Annual interest (%)<input name="annual_interest_pct" type="number" min="0" max="99.99" step="any" required placeholder="Your assumption"></label><label>Annual carrying cost (%)<input name="annual_carry_pct" type="number" min="0" max="99.99" step="any" required placeholder="Share of purchase price"></label><label>Entry cost (%)<input name="entry_cost_pct" type="number" min="0" max="99.99" step="any" required placeholder="Share of purchase price"></label><label>Exit selling cost (%)<input name="exit_cost_pct" type="number" min="0" max="99.99" step="any" required placeholder="Share of discounted sale"></label><label>Exit haircut (%)<input name="exit_haircut_pct" type="number" min="0" max="99.99" step="any" required placeholder="Your assumption"></label><label>Holding period (months)<input name="months" type="number" min="1" max="120" step="1" required placeholder="1 to 120 months"></label>
+        </div><button type="submit">Calculate scenario</button><p id="scenario-status" class="form-status" role="status" aria-live="polite"></p></form><div id="scenario-results"></div></section>
+      </div>
+      <aside class="land-aside" aria-label="Geographic context">
+        <section class="land-panel context-panel"><div class="panel-title"><div><h2 id="context-heading">District context</h2><p id="context-state">Choose a district to frame the imagery.</p></div></div><div class="context-view"><img id="context-image-after" alt="Later dated satellite context" hidden><img id="context-image-before" alt="Earlier dated satellite context" hidden><span id="context-empty">Satellite context loads after you choose a district.</span><span id="context-before-label" class="context-date first"></span><span id="context-after-label" class="context-date last"></span></div><label class="mini-compare">Compare images<input id="context-swipe" type="range" min="0" max="100" value="50" disabled aria-label="Reveal earlier and later district satellite context"></label><form id="image-context-form" class="context-dates"><label>Earlier image<input id="context-before" type="date" required></label><label>Later image<input id="context-after" type="date" required></label><button type="submit">Load dates</button></form><p id="context-status" class="quiet" role="status" aria-live="polite">Dates are a reproducible example, not a current feed.</p><p class="quiet">NASA GIBS / Terra MODIS true colour. 250 m source layer; displayed resolution varies. Framed from geoBoundaries 2021 district extents.</p><a id="open-geography" class="context-link" href="/banking/geography/">Open full geography workspace</a><button id="share-context" type="button" class="secondary">Copy geographic context</button><p class="quiet">The link includes the district and image dates only. Price records, notes and scenarios are not shared.</p><details><summary>What imagery can establish</summary><p>Images provide dated regional context. They do not establish parcel boundaries, title, development permission, a measured land-use change or a property value.</p><p><a href="../geography/places-source.json">Boundary provenance</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener noreferrer">ODbL 1.0</a></p></details></section>
+        <section class="land-panel case-guide"><h2>A useful first case</h2><ol><li>Choose a district and record the exact locality or asset reference in each observation.</li><li>Add comparable records from reviewed sources. Keep price bases and methodologies separate.</li><li>Add the applicable planning document, then export the evidence and open questions.</li></ol><p class="quiet">A single price record cannot establish appreciation. A city index cannot value a parcel.</p></section>
+      </aside>
+    </div>
+    <section id="indian-catalogue" class="land-panel catalogue" aria-labelledby="indian-catalogue-heading">
+      <div class="panel-title"><div><h2 id="indian-catalogue-heading">Indian satellite and policy catalogue</h2><p id="catalogue-place">National catalogue. Choose a district to draft a scene search for that extent. This page does not query Bhoonidhi.</p></div><span class="count-label">Not a scene search</span></div>
+      <p class="quiet catalogue-lead">Collection identifiers were read from the Bhoonidhi API specification on 5 Nov 2026. The home page also names Landsat 8 and 9 and Sentinel-2, without collection identifiers in that table. EOS-06 scatterometer wind collections are on the API list and are left out of this land view. VEDAS and Bhuvan are ISRO platforms. IN-SPACe publishes the dissemination rule and has introduced VEDAS to industry. None of these routes has been queried for the district on screen.</p>
+      <div id="catalogue-rules" class="catalogue-rules"></div>
+      <div id="catalogue-filters" class="catalogue-filters" role="toolbar" aria-label="Catalogue questions"></div>
+      <div id="catalogue-grid" class="catalogue-grid"></div>
+      <pre id="catalogue-draft" class="catalogue-draft" hidden></pre>
+    </section>
+    <section id="source-register" class="land-panel" aria-labelledby="sources-heading"><div class="panel-title"><div><h2 id="sources-heading">Source access register</h2><p>Official portals to support a research case. Access and viewing links do not constitute connected or licensed data feeds.</p></div></div><div id="source-register-results"></div></section>
+    <section class="pilot-panel"><div><h2>Evaluate a defined land-research workflow.</h2><p>Bring a geography, a specific research question and records you can lawfully use. LiquiLens can help organise the evidence, source gaps and a measurable pilot.</p></div><div><a class="pilot-link" href="mailto:mrinal@liquilens.in?subject=Land%20and%20planning%20research%20pilot">Discuss a research pilot</a><a href="/banking/geography/">Explore district observations</a><p class="quiet">Bhoonidhi access and IN-SPACe facilitation remain separate routes. No Indian satellite or property-price feed is connected here.</p></div></section>
+    <footer class="page-footer"><a href="/banking/">Back to banking research</a><span>Research records and assumptions. No automated valuation or lending decision.</span></footer>
+  </main>
+  <noscript><p class="noscript">Enable JavaScript to organise a local research case. <a href="/banking/geography/">Explore geographic research</a>.</p></noscript>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>
