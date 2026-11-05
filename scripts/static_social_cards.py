@@ -90,6 +90,13 @@ def _us_route() -> RouteDefinition:
 
 ROUTES = (
     RouteDefinition(
+        "/banking/real-assets/", "land-research", "LIQUILENS / LAND RESEARCH", "LAND, PRICE AND PLACE",
+        "Keep prices, planning records and satellite context distinct.",
+        "RESEARCH CASE", "SOURCED RECORDS / EXPLICIT ASSUMPTIONS",
+        "SEPARATE PRICE BASES / OBSERVATION DATES / EXPORTABLE CASE", "PAGE CUT", "2026-11-05",
+        "RESEARCH / NOT A VALUATION", "RESEARCHER-SUPPLIED PRICE AND PLANNING RECORDS",
+    ),
+    RouteDefinition(
         "/banking/geography/", "lending-geography", "LIQUILENS / LENDING GEOGRAPHY", "INDIA FROM ABOVE",
         "Compare satellite images. Read the district evidence.",
         "RESEARCH CONTEXT", "IMAGES / DISTRICTS / LENDERS",

@@ -90,11 +90,12 @@ test('timeouts, rate limits, and oversized transport bodies produce actionable f
   await assert.rejects(createEvidenceLoader(async () => new Response('{}', {status: 404})).load(DEFAULT_PLACE), /not covered/);
   await assert.rejects(createEvidenceLoader(async () => new Response('x'.repeat(256 * 1024 + 1))).load(DEFAULT_PLACE), /display limit/);
 });
-test('all-India discovery contains only unique district labels and IDs, never geometry', () => {
+test('all-India discovery contains unique IDs with source-derived district extents, not parcel geometry', () => {
   const places = JSON.parse(readFileSync(new URL('../banking/geography/places.json', import.meta.url)));
   assert.equal(places.length, 735); assert.equal(new Set(places.map(place => place.id)).size, places.length);
   assert.ok(places.some(place => place.id === DEFAULT_PLACE));
-  assert.ok(places.every(place => validPlace(place.id) && Object.keys(place).sort().join() === 'id,name,state'));
+  assert.ok(places.every(place => validPlace(place.id) && typeof place.gb_shape_id === 'string' && place.boundary_vintage === '2021'
+    && Array.isArray(place.bbox) && place.bbox.length === 4 && place.bbox.every(Number.isFinite) && !('geometry' in place)));
 });
 test('rejected district searches cancel pending evidence and clear previously displayed evidence', async t => {
   installDOM(t);
