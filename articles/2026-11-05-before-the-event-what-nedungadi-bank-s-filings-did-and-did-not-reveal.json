@@ -1,0 +1,108 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-11-05-before-the-event-what-nedungadi-bank-s-filings-did-and-did-not-reveal",
+  "product": "liquilens",
+  "slug": "2026-11-05-before-the-event-what-nedungadi-bank-s-filings-did-and-did-not-reveal",
+  "date": "2026-11-05",
+  "article_type": "historical_replay",
+  "topic": "nedungadi-bank",
+  "headline": "Before the event: what Nedungadi Bank's filings did and did not reveal",
+  "dek": "A construction-PIT replay of Nedungadi Bank: the first published regulatory or funding signal, the disclosure clock, the miss, and the boundary that survives into today's screen.",
+  "canonical_url": "https://liquilens.in/articles/2026-11-05-before-the-event-what-nedungadi-bank-s-filings-did-and-did-not-reveal/",
+  "published_at": "2026-11-05T11:18:05Z",
+  "evidence_as_of": "2026-11-05",
+  "board_signature": "bb99dc63a14ae777cea8d81db8456e9b1d21b6d1beb52a0db117fbdce5f9c6fc",
+  "subject": {
+    "slug": "nedungadi-bank",
+    "name": "Nedungadi Bank",
+    "inst_type": "bank",
+    "default_date": "2002-11-02",
+    "fraud_masked": false,
+    "pca": {
+      "slug": "nedungadi-bank",
+      "inst_type": "bank",
+      "default_date": "2002-11-02",
+      "first_action_zone": {
+        "period_end": "1999-03-31",
+        "q": "FY1999",
+        "status": "threshold_1",
+        "knowledge_time_proxy": "1999-05-30",
+        "breaches": [
+          "CRAR"
+        ]
+      },
+      "lead_months": 41,
+      "fraud_masked": false
+    },
+    "funding": {
+      "slug": "nedungadi-bank",
+      "inst_type": "bank",
+      "scoreable": false,
+      "first_signal": null,
+      "lead_months": null
+    }
+  },
+  "word_count": 1084,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:af6f9a0fd20de3b34ab713abe96f480130952fdeb23f6d338e59926b0d30354d",
+    "memory_fingerprint": "sha256:86fb9ef3adb427092d657e9813bf3bcb873b05db2fba24c9815a9b1c01fbdbaa",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "deterministic_fallback",
+    "model": null,
+    "passes": 0,
+    "dossier_sha256": "2c833f2ef7c4002b479bdf4bf1e00dbd2267d6bad91b36c85089d0576020057c",
+    "fallback_reason": "RuntimeError: writer pass failed: HTTPError: HTTP Error 403: Forbidden",
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:af6f9a0fd20de3b34ab713abe96f480130952fdeb23f6d338e59926b0d30354d",
+      "memory_fingerprint": "sha256:86fb9ef3adb427092d657e9813bf3bcb873b05db2fba24c9815a9b1c01fbdbaa",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
