@@ -150,7 +150,7 @@ The interactive demonstration at https://demo.liquilens.in requires sign-in and 
 - Terminal CLI: https://github.com/beepboop2025/liquilens-cli
 - Historical Agent Skill recipe for bounded product selection: https://github.com/beepboop2025/financial-evidence-skills/tree/22096b824ac09d47cf24d7ab1612d9a97a13c7b3/financial-evidence
 
-The public MCP and public evidence endpoints require no token. The upstream LiquiLens MCP v1.8.1 inventory records 24 read-only tools and 5 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification. Central access admits a reviewed tool list; native prompt and resource inventories are separate.
+The public MCP and public evidence endpoints require no token. The upstream LiquiLens MCP v1.8.1 inventory records 25 read-only tools and 5 discoverable prompts: today's exact full-text editorial, the Failure Radar, institution details, historical-evidence records, RBI registry and enforcement data, transmission signals, display-only crypto context, and record verification. Central access admits a reviewed tool list; native prompt and resource inventories are separate.
 
 The native endpoint's MCP 2026-07-28 method-discovery contract, declared legacy protocol versions and empty resource catalogs describe that upstream interface. Negotiate the protocol and discover admitted tools on the recommended central connection.
 
