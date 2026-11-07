@@ -2530,7 +2530,7 @@ def _validate_github_deployment(
 
 def _verify_sibling_deployment_proof(label: str, card: dict[str, Any]) -> str:
     metadata = card.get("metadata", {})
-    if metadata.get("productionDeploymentProvider") == "railway-fleet":
+    if metadata.get("productionDeploymentProvider") in ("railway-fleet", "hetzner-fleet"):
         if label != "NarcoScope":
             raise RuntimeError("Fleet deployment proof is only reviewed for NarcoScope")
         try:
