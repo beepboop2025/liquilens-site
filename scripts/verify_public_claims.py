@@ -149,6 +149,7 @@ MCP_TOOLS = (
     "institution_research_coverage",
     "institution_review_packet",
     "latest_article",
+    "lending_geography",
     "rbi_supervisory_tape",
     "research_network",
     "stablecoin_rails_board",

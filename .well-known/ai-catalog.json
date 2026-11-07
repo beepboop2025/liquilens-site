@@ -60,6 +60,7 @@
         "institution_research_coverage",
         "institution_review_packet",
         "latest_article",
+        "lending_geography",
         "rbi_supervisory_tape",
         "research_network",
         "stablecoin_rails_board",
@@ -92,7 +93,7 @@
       "metadata": {
         "authentication": "none",
         "access": "public-read-only",
-        "publicToolCount": 24,
+        "publicToolCount": 25,
         "articleJsonFeed": "https://liquilens.in/articles/feed.json",
         "telegramBot": "https://t.me/LiquiLens_bot",
         "telegramChannel": "https://t.me/LiquidityLabDesk",
@@ -116,7 +117,9 @@
         "connectedCapabilityRecord": "https://liquilens.in/updates/capabilities.json",
         "runtimeIdentityUrl": "https://api.liquilens.in/api/v1/release/identity",
         "runtimeIdentityVerification": "self_reported_not_independently_verified",
-        "runtimeIdentityObservedAt": "2026-10-08T15:30:44.271754+00:00"
+        "runtimeIdentityObservedAt": "2026-10-08T15:30:44.271754+00:00",
+        "capabilitiesObservedAt": "2026-11-07T05:52:48.981530+00:00",
+        "capabilitiesObservationScope": "Anonymous complete tools/list from the accepted Hetzner runtime; historical discovery receipts retain their original observation dates."
       }
     },
     {
