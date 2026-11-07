@@ -146,3 +146,70 @@ def test_native_ci_cannot_be_replaced_by_an_unrelated_success(mutation):
         card["metadata"]["registryPublicationMethod"] = "unverified"
     with pytest.raises(RuntimeError):
         _validate_narcoscope_native_ci(card, payload)
+
+
+NATIVE_DIRECTORY = DIRECTORY.parents[3] / release.NATIVE_EVIDENCE
+NATIVE_BYTES = (NATIVE_DIRECTORY / "receipt.json").read_bytes()
+NATIVE = json.loads(NATIVE_BYTES)
+NATIVE_MANIFEST = (NATIVE_DIRECTORY / "release-manifest.json").read_bytes()
+HISTORICAL_NATIVE_ANCHOR = (DIRECTORY.parent / "e818c33feaf5f8081cbfc5807aced0cd50d8952f" / "receipt.json").read_bytes()
+
+
+def test_reviewed_actual_native_transition_signature_and_manifest_verify():
+    release.verify_signature(NATIVE_BYTES, (NATIVE_DIRECTORY / "receipt.json.sig").read_bytes(),
+                             namespace="hetzner-hosting")
+    release.validate_native_receipt(NATIVE, NATIVE_MANIFEST, HISTORICAL_NATIVE_ANCHOR)
+
+
+def test_native_transition_signature_is_scoped_and_cannot_be_reused_as_fleet_authority():
+    with pytest.raises(RuntimeError, match="signature"):
+        release.verify_signature(NATIVE_BYTES, (NATIVE_DIRECTORY / "receipt.json.sig").read_bytes())
+
+
+@pytest.mark.parametrize("mutation", ["provider", "history", "image", "source", "release", "tree", "host", "origin", "identity", "railway"])
+def test_native_transition_rejects_changed_claims(mutation):
+    receipt = copy.deepcopy(NATIVE)
+    if mutation == "provider":
+        receipt["provider"] = "railway"
+    elif mutation == "history":
+        receipt["historical_receipt_sha256"] = "0" * 64
+    elif mutation == "image":
+        receipt["image_id"] = "mutable-tag"
+    elif mutation in ("source", "release", "tree"):
+        receipt[{"source": "source_commit", "release": "release_id", "tree": "tree_sha256"}[mutation]] = "a" * 64
+    elif mutation == "host":
+        receipt["public_health"]["url"] = release.HEALTH_URLS[0]
+    elif mutation == "origin":
+        receipt["public_health"]["hosting_origin"] = "railway"
+    elif mutation == "identity":
+        receipt["public_health"]["body"] = current_health()
+    else:
+        receipt["railway_called"] = True
+    with pytest.raises(RuntimeError):
+        release.validate_native_receipt(receipt, NATIVE_MANIFEST, HISTORICAL_NATIVE_ANCHOR)
+
+
+def test_native_current_origin_keeps_later_data_refresh_and_never_contacts_railway():
+    card, _ = native_card_and_status()
+    calls = []
+    def fetch(url, **kwargs):
+        calls.append(url)
+        return json.dumps(current_health()).encode(), {"x-hosting-origin": "hetzner-sin1"}, url
+    result = release.verify_release(card, DIRECTORY.parents[3], fetch)
+    assert "current native public origin" in result
+    assert calls == [release.NATIVE_HEALTH_URL]
+
+
+@pytest.mark.parametrize("mutation", ["redirect", "origin", "digest", "location"])
+def test_native_live_check_rejects_wrong_route_or_substituted_evidence(mutation):
+    card, _ = native_card_and_status()
+    if mutation == "digest":
+        card["metadata"]["nativeHostingReceiptSha256"] = "sha256:" + "0" * 64
+    elif mutation == "location":
+        card["metadata"]["nativeHostingReceipt"] = "https://attacker.example/receipt.json"
+    def fetch(url, **kwargs):
+        return (json.dumps(current_health()).encode(),
+                {"x-hosting-origin": "railway" if mutation == "origin" else "hetzner-sin1"},
+                release.HEALTH_URLS[0] if mutation == "redirect" else url)
+    with pytest.raises(RuntimeError):
+        release.verify_release(card, DIRECTORY.parents[3], fetch)

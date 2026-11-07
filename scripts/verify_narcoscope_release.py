@@ -38,7 +38,7 @@ def canonical(value):
                        ensure_ascii=False) + "\n").encode()
 
 
-def verify_signature(receipt, signature):
+def verify_signature(receipt, signature, namespace="fleet-release"):
     """The signer comes from reviewed code, never the catalog or receipt."""
     with tempfile.TemporaryDirectory(prefix="narcoscope-release-") as directory:
         root = Path(directory)
@@ -53,7 +53,7 @@ def verify_signature(receipt, signature):
         (root / "receipt.sig").write_bytes(signature)
         result = subprocess.run(
             ["ssh-keygen", "-Y", "verify", "-f", str(root / "allowed_signers"),
-             "-I", "fleet-owner", "-n", "fleet-release", "-s", str(root / "receipt.sig")],
+             "-I", "fleet-owner", "-n", namespace, "-s", str(root / "receipt.sig")],
             input=receipt, capture_output=True, timeout=10,
         )
         require(result.returncode == 0, "owner signature is invalid")
@@ -102,7 +102,7 @@ def validate_receipt(receipt, manifest_bytes, expected_sha, deployment_id):
                 for item in health), "historical health proof")
 
 
-def validate_current_origins(health):
+def validate_current_origins(health, expected_count=2):
     identities = []
     for body in health:
         require(body.get("status") == "ready" and body.get("service") == "narcoscope"
@@ -112,8 +112,75 @@ def validate_current_origins(health):
                     for size, value in zip((40, 64, 64), identity)), "current identity format")
         require(body.get("revision") == identity[0], "current revision differs")
         identities.append(identity)
-    require(len(identities) == 2 and identities[0] == identities[1], "current origins disagree")
+    require(len(identities) == expected_count and len(set(identities)) == 1, "current origins disagree")
     return identities[0]
+
+
+
+NATIVE_HEALTH_URL = "https://www.narcoscope.com/healthz"
+NATIVE_EVIDENCE = "protocol/release-evidence/narcoscope-native/20261107"
+
+
+def validate_native_receipt(receipt, manifest_bytes, historical_receipt):
+    require(receipt.get("format") == "narcoscope-native-hosting-receipt/v1" and
+            receipt.get("product_id") == "narcoscope" and
+            receipt.get("provider") == "hetzner" and
+            receipt.get("outcome") == "succeeded" and
+            receipt.get("railway_called") is False, "native hosting boundary")
+    require(receipt.get("historical_receipt_sha256") ==
+            hashlib.sha256(historical_receipt).hexdigest(), "native historical anchor")
+    observed = datetime.fromisoformat(receipt["verified_at"].replace("Z", "+00:00"))
+    require(observed.tzinfo is not None and observed <= datetime.now(timezone.utc),
+            "native observation time")
+    require(re.fullmatch(r"sha256:[0-9a-f]{64}", receipt.get("image_id", "")) and
+            re.fullmatch(r"[0-9a-f]{64}", receipt.get("publisher_sha256", "")),
+            "native execution identity")
+    manifest = json.loads(manifest_bytes)
+    require(canonical(manifest) == manifest_bytes and
+            manifest.get("format") == "fleet-release-manifest/v1" and
+            manifest.get("product_id") == "narcoscope", "native manifest format")
+    require(manifest.get("source") == {
+        "branch": "main", "commit": receipt.get("source_commit"),
+        "repository": "https://github.com/beepboop2025/narcoscope.git",
+    }, "native manifest source")
+    require(receipt.get("release_id") == hashlib.sha256(manifest_bytes).hexdigest(),
+            "native manifest digest")
+    files = manifest.get("files")
+    require(isinstance(files, list) and bool(files), "native manifest files")
+    tree = hashlib.sha256(canonical(files)).hexdigest()
+    require(receipt.get("tree_sha256") == manifest.get("tree_sha256") == tree,
+            "native tree digest")
+    health = receipt.get("public_health", {})
+    require(health.get("url") == NATIVE_HEALTH_URL and health.get("status") == 200 and
+            health.get("hosting_origin") == "hetzner-sin1" and
+            re.fullmatch(r"[0-9a-f]{64}", health.get("body_sha256", "")),
+            "native public origin")
+    identity = validate_current_origins([health.get("body", {})], expected_count=1)
+    require(identity == tuple(receipt.get(k) for k in
+            ("source_commit", "release_id", "tree_sha256")), "native public identity")
+
+
+def verify_native_hosting(metadata, root, historical_receipt, fetch_bytes):
+    require(metadata.get("nativeHostingReceipt") ==
+            "https://liquilens.in/" + NATIVE_EVIDENCE + "/receipt.json",
+            "native receipt location")
+    directory = root / NATIVE_EVIDENCE
+    receipt = (directory / "receipt.json").read_bytes()
+    signature = (directory / "receipt.json.sig").read_bytes()
+    manifest = (directory / "release-manifest.json").read_bytes()
+    require(0 < len(receipt) <= 32768 and 0 < len(signature) <= 8192 and
+            0 < len(manifest) <= 512000, "native evidence size")
+    require(metadata.get("nativeHostingReceiptSha256") ==
+            "sha256:" + hashlib.sha256(receipt).hexdigest(), "native receipt digest")
+    verify_signature(receipt, signature, namespace="hetzner-hosting")
+    validate_native_receipt(json.loads(receipt), manifest, historical_receipt)
+    body, headers, final_url = fetch_bytes(
+        NATIVE_HEALTH_URL, accept="application/json", timeout=5, max_bytes=32768)
+    require(final_url == NATIVE_HEALTH_URL and
+            headers.get("x-hosting-origin") == "hetzner-sin1", "current native origin")
+    current = validate_current_origins([json.loads(body)], expected_count=1)
+    return ("; signed historical Fleet release and Hetzner hosting transition, "
+            "current native public origin at " + current[0][:12])
 
 
 def verify_release(card, root, fetch_bytes):
@@ -136,6 +203,10 @@ def verify_release(card, root, fetch_bytes):
     verify_signature(receipt_bytes, signature)
     validate_receipt(json.loads(receipt_bytes), manifest, sha,
                      metadata.get("productionDeploymentId", ""))
+    if metadata.get("productionDeploymentProvider") == "hetzner-fleet":
+        return verify_native_hosting(metadata, root, receipt_bytes, fetch_bytes)
+    require(metadata.get("productionDeploymentProvider") == "railway-fleet",
+            "unreviewed hosting provider")
     health = []
     for url in HEALTH_URLS:
         body, _, _ = fetch_bytes(url, accept="application/json", timeout=5, max_bytes=32768)

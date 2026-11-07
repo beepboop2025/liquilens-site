@@ -1,4 +1,4 @@
-"""Manual, exact-main Railway executor for the single catalog Worker."""
+"""Manual, exact-main Hetzner executor for the single catalog Worker."""
 
 from contextlib import contextmanager, nullcontext
 import fcntl
@@ -42,7 +42,7 @@ def require(value, message):
 def current_main(expected):
     request = urllib.request.Request(
         "https://api.github.com/repos/beepboop2025/liquilens-site/branches/main",
-        headers={"Accept": "application/vnd.github+json", "User-Agent": "railway-catalog-publisher"},
+        headers={"Accept": "application/vnd.github+json", "User-Agent": "hetzner-catalog-publisher"},
     )
     with urllib.request.build_opener(NoRedirect()).open(request, timeout=25) as response:
         body = response.read(65537)
@@ -55,13 +55,13 @@ def current_main(expected):
 def version_metadata(source):
     return {"main_module": "catalog-worker.mjs", "compatibility_date": "2026-08-06",
             "bindings": BINDINGS, "keep_bindings": ["secret_text", "secret_key"],
-            "annotations": {"workers/tag": source, "workers/message": "Railway-" + source,
+            "annotations": {"workers/tag": source, "workers/message": "Hetzner-" + source,
                             "workers/commit_sha": source,
                             "workers/repository_url": "https://github.com/beepboop2025/liquilens-site"}}
 
 
 def multipart(module, source):
-    boundary = "railway-catalog-" + uuid.uuid4().hex
+    boundary = "hetzner-catalog-" + uuid.uuid4().hex
     require(boundary.encode() not in module, "Multipart boundary collision")
     fields = [
         ("metadata", None, "application/json", json.dumps(version_metadata(source)).encode()),
@@ -96,7 +96,7 @@ class Cloudflare:
             f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT}/workers/scripts/{SCRIPT}" + path,
             data=body, method=method,
             headers={"Authorization": "Bearer " + self.token, "Content-Type": content_type,
-                     "User-Agent": "railway-liquilens-catalog-publisher/1"},
+                     "User-Agent": "hetzner-liquilens-catalog-publisher/1"},
         )
         try:
             with urllib.request.build_opener(NoRedirect()).open(request, timeout=timeout) as response:
@@ -240,12 +240,12 @@ def rollback(api, previous, candidate, transaction=None):
             require(stable_version(current) == previous, "Previous traffic identity changed")
             return  # No stage occurred, or the exact original deployment is still active.
         owned = {transaction.get("staged_deployment_id"), transaction.get("promoted_deployment_id")}
-        messages = {"Railway stage " + transaction["operation_id"],
-                    "Railway promote " + transaction["operation_id"]}
+        messages = {"Hetzner stage " + transaction["operation_id"],
+                    "Hetzner promote " + transaction["operation_id"]}
         require(current.get("id") in (owned - {None}) or
                 current.get("annotations", {}).get("workers/message") in messages,
                 "Active deployment is not owned by this publication transaction")
-    api.deploy([(previous, 100)], "Railway rollback after failed exact-main publication")
+    api.deploy([(previous, 100)], "Hetzner rollback after failed exact-main publication")
     require(stable_version(api.latest()) == previous, "Rollback did not restore the exact prior version")
 
 
@@ -269,7 +269,7 @@ def execute(source, apply, evidence):
         module = prepare(source, Path(directory))
         digest = hashlib.sha256(module).hexdigest()
         if apply == "0":
-            print(f"RAILWAY_CATALOG_PREPARED source={source} sha256={digest}", flush=True)
+            print(f"HETZNER_CATALOG_PREPARED source={source} sha256={digest}", flush=True)
             return
         api = Cloudflare(os.environ.get("CLOUDFLARE_API_TOKEN", ""))
         pending = evidence / "pending.json"
@@ -290,7 +290,7 @@ def execute(source, apply, evidence):
         version = uploaded_version(api, candidate)
         annotations = version.get("annotations", {})
         require(version.get("id") == candidate and annotations.get("workers/tag") == source
-                and annotations.get("workers/message") == "Railway-" + source,
+                and annotations.get("workers/message") == "Hetzner-" + source,
                 "Uploaded candidate is not bound to the requested source")
         transaction = {"account": ACCOUNT, "script": SCRIPT, "source": source,
                        "operation_id": uuid.uuid4().hex,
@@ -303,7 +303,7 @@ def execute(source, apply, evidence):
         try:
             current_main(source)
             assert_active(api, previous_deployment_id, [(previous, 100)])
-            staged = api.deploy([(previous, 100), (candidate, 0)], "Railway stage " + transaction["operation_id"])
+            staged = api.deploy([(previous, 100), (candidate, 0)], "Hetzner stage " + transaction["operation_id"])
             require(re.fullmatch(UUID, staged.get("id", "")), "Invalid staged deployment identity")
             transaction["staged_deployment_id"] = staged["id"]
             durable_json(pending, transaction)
@@ -313,7 +313,7 @@ def execute(source, apply, evidence):
                    "--no-palimpsest-proof", "--no-sibling-proof")
             current_main(source)
             assert_active(api, staged["id"], [(previous, 100), (candidate, 0)])
-            promoted = api.deploy([(candidate, 100)], "Railway promote " + transaction["operation_id"])
+            promoted = api.deploy([(candidate, 100)], "Hetzner promote " + transaction["operation_id"])
             transaction["promoted_deployment_id"] = promoted["id"]
             verify("--expected-version-tag", source, "--expected-worker-version-id", candidate,
                    "--attempts", "24", "--delay", "5",
@@ -321,11 +321,11 @@ def execute(source, apply, evidence):
             current_main(source)
             assert_active(api, promoted["id"], [(candidate, 100)])
             transaction.update({"outcome": "succeeded", "completed_at": time.time(),
-                                "deployment": os.environ.get("RAILWAY_DEPLOYMENT_ID", "unknown")})
+                                "deployment": os.environ.get("HETZNER_EXECUTION_ID", "unknown")})
             durable_json(evidence / (source + "-" + candidate + ".json"), transaction)
             pending.unlink()
         except BaseException:
             rollback(api, previous, candidate, transaction)
             pending.unlink()
             raise
-        print(f"RAILWAY_CATALOG_PUBLISH_PASS source={source} version={candidate} previous={previous}", flush=True)
+        print(f"HETZNER_CATALOG_PUBLISH_PASS source={source} version={candidate} previous={previous}", flush=True)

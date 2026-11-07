@@ -1,14 +1,14 @@
-# Manual Railway catalog Worker publisher
+# Manual Hetzner catalog Worker publisher
 
 This isolated controller replaces the execution of `deploy-catalog-edge.yml`
 for the single `liquilens-ai-catalog` Worker. It has no cron, repository trigger,
 public endpoint or PR environment instance. Each invocation requires an explicit
 `EXPECTED_MAIN_SHA` equal to current protected main. `PUBLISH_APPLY=0` prepares
 and verifies without Cloudflare credentials; `PUBLISH_APPLY=1` performs the
-reviewed publication transaction. Use one replica and restart policy `NEVER`.
+reviewed publication transaction. Run one explicit invocation at a time, with no automatic restart.
 
 Assemble an owner-signed controller commit with `assemble.py OUTPUT`, then
-upload that standalone context to the dedicated validation service. The image
+build that standalone context on the dedicated Hetzner publisher. The image
 runs Linux UID-isolation regressions under Tini before it can deploy. A change
 to the pinned verification scripts, original release workflow, Worker config
 or CI command requires a newly reviewed signed controller.
@@ -46,6 +46,11 @@ inside 90 seconds. The upload is never retried by this check; authorization
 errors and invalid metadata remain immediate failures before traffic changes.
 
 Service credential updates do not authorize source changes. Keep the API token
-only on this validation service; application and PR CI must have no copy.
-`RAILWAY_CATALOG_PREPARED` and `RAILWAY_CATALOG_PUBLISH_PASS` identify exact-source
-proof; Railway deployment status alone is insufficient.
+only on the dedicated Hetzner publisher; application and PR CI must have no copy.
+`HETZNER_CATALOG_PREPARED` and `HETZNER_CATALOG_PUBLISH_PASS` identify exact-source
+proof; Container exit status alone is insufficient.
+
+The directory name retains its historical location. The source CI still uses
+`RAILWAY_GIT_COMMIT_SHA` as an exact-source input; this is not a provider call.
+Set `HETZNER_EXECUTION_ID` to the unique native invocation ID. Retain `/evidence`
+on the host and pass only the scoped Worker token to the trusted controller.

@@ -99,7 +99,9 @@ def test_narcoscope_exposes_the_live_host_and_active_registry_release():
     assert entry["metadata"]["sourceUpgradeCommit"] == (
         "e818c33feaf5f8081cbfc5807aced0cd50d8952f"
     )
-    assert entry["metadata"]["productionDeploymentProvider"] == "railway-fleet"
+    assert entry["metadata"]["productionDeploymentProvider"] == "hetzner-fleet"
+    assert entry["metadata"]["historicalDeploymentProvider"] == "railway-fleet"
+    assert entry["metadata"]["nativeHostingReceipt"].endswith("/narcoscope-native/20261107/receipt.json")
     assert entry["metadata"]["productionReleaseReceipt"].endswith("/" + entry["metadata"]["sourceUpgradeCommit"] + "/receipt.json")
     assert entry["metadata"]["registryPublicationMethod"] == "official-maintainer-client"
     assert entry["metadata"]["sourceValidationProvider"] == "railway-native"
