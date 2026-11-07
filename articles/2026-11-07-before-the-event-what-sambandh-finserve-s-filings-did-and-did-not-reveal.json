@@ -1,0 +1,108 @@
+{
+  "schema": "liquilens.daily-article.v1",
+  "id": "liquilens:article:2026-11-07-before-the-event-what-sambandh-finserve-s-filings-did-and-did-not-reveal",
+  "product": "liquilens",
+  "slug": "2026-11-07-before-the-event-what-sambandh-finserve-s-filings-did-and-did-not-reveal",
+  "date": "2026-11-07",
+  "article_type": "historical_replay",
+  "topic": "sambandh-finserve",
+  "headline": "Before the event: what Sambandh Finserve's filings did and did not reveal",
+  "dek": "A construction-PIT replay of Sambandh Finserve: the first published regulatory or funding signal, the disclosure clock, the miss, and the boundary that survives into today's screen.",
+  "canonical_url": "https://liquilens.in/articles/2026-11-07-before-the-event-what-sambandh-finserve-s-filings-did-and-did-not-reveal/",
+  "published_at": "2026-11-07T12:58:39Z",
+  "evidence_as_of": "2026-11-07",
+  "board_signature": "bb99dc63a14ae777cea8d81db8456e9b1d21b6d1beb52a0db117fbdce5f9c6fc",
+  "subject": {
+    "slug": "sambandh-finserve",
+    "name": "Sambandh Finserve",
+    "inst_type": "mfi",
+    "default_date": "2020-10-13",
+    "fraud_masked": true,
+    "pca": {
+      "slug": "sambandh-finserve",
+      "inst_type": "mfi",
+      "default_date": "2020-10-13",
+      "first_action_zone": null,
+      "lead_months": null,
+      "fraud_masked": true
+    },
+    "funding": {
+      "slug": "sambandh-finserve",
+      "inst_type": "mfi",
+      "scoreable": true,
+      "first_signal": {
+        "period_end": "2016-03-31",
+        "index": 78.7,
+        "knowledge_time_proxy": "2016-05-30",
+        "band": "fragile",
+        "flags": [
+          "wholesale leverage 8.51x >= 7x"
+        ]
+      },
+      "lead_months": 52
+    }
+  },
+  "word_count": 1093,
+  "editorial_memory": {
+    "status": "applied",
+    "source_run_id": "sha256:82922e15f7b445a6d3e4da194da8ea1b5856bf70e21ffbeb85286d01e4758f94",
+    "memory_fingerprint": "sha256:b95bd66d3667a9f32eb1ea0592f83b2c9464bf924f4c729e4a39120bb33ccb37",
+    "rubric_version": "mqdnse.editorial-rubric.v1",
+    "directives": [
+      "preserve_current_standard"
+    ]
+  },
+  "generation": {
+    "mode": "deterministic_fallback",
+    "model": null,
+    "passes": 0,
+    "dossier_sha256": "af6a1cb25522fd59b0b084ae0be2cd235fbdf125b1d55b992ed055140d310831",
+    "fallback_reason": "editorial model is not configured",
+    "editorial_memory": {
+      "status": "applied",
+      "source_run_id": "sha256:82922e15f7b445a6d3e4da194da8ea1b5856bf70e21ffbeb85286d01e4758f94",
+      "memory_fingerprint": "sha256:b95bd66d3667a9f32eb1ea0592f83b2c9464bf924f4c729e4a39120bb33ccb37",
+      "rubric_version": "mqdnse.editorial-rubric.v1",
+      "directives": [
+        "preserve_current_standard"
+      ]
+    }
+  },
+  "funnel": [
+    {
+      "product": "seiche",
+      "job": "system funding",
+      "url": "https://seiche.info/articles/"
+    },
+    {
+      "product": "undertow",
+      "job": "market exits",
+      "url": "https://liquilens-undertow.com/articles/"
+    },
+    {
+      "product": "liquilens-coverage-check",
+      "job": "workflow audit",
+      "url": "https://liquilens.in/tools/ews-coverage-check/"
+    },
+    {
+      "product": "liquilens-pilot",
+      "job": "private-book proof",
+      "url": "https://liquilens.in/pilot/"
+    }
+  ],
+  "quality_gate": {
+    "status": "PASS",
+    "checks": [
+      "depth",
+      "structure",
+      "lede",
+      "countercase",
+      "sources",
+      "funnel",
+      "numeric_grounding",
+      "link_grounding",
+      "institution_boundary",
+      "evidence_status"
+    ]
+  }
+}
